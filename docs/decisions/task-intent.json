@@ -1,0 +1,27 @@
+{
+  "version": "1.0",
+  "taskId": "portfolio-phase-1-foundation",
+  "title": "Carlos Carpio immersive editorial portfolio foundation",
+  "prompt": "Build a multi-page, SEO-sensitive editorial portfolio whose homepage progressively enhances the approved Natural Observatory composition with React-based motion, optional Three.js, and a server-only CC AI route.",
+  "requestedStages": ["plan", "design", "build", "review"],
+  "constraints": {
+    "experienceType": "seo-fullstack-web",
+    "requiresSEO": true,
+    "requiresVision": true,
+    "requiresImageGeneration": false,
+    "preferredProviders": ["outline"],
+    "excludedProviders": [],
+    "latencyPreference": "balanced",
+    "budgetPreference": "balanced",
+    "designProvider": "outline"
+  },
+  "context": {
+    "host": "external",
+    "sourceDocs": [
+      "maintaskplan.md",
+      "deep-research-report (8).md",
+      "mainUI.png"
+    ],
+    "currentArtifactIds": []
+  }
+}

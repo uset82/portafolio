@@ -1,0 +1,4 @@
+interface:
+  display_name: "Portfolio Delivery"
+  short_description: "Execute and verify one portfolio plan task"
+  default_prompt: "Use $portfolio-delivery to complete the next ready task in maintaskplan.md."

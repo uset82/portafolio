@@ -1,0 +1,4 @@
+ignoredBuiltDependencies:
+  - "@openrouter/sdk"
+  - sharp
+  - unrs-resolver

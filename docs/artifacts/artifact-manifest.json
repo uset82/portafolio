@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "generatedWorkspace": "site",
+  "stackDecision": "docs/decisions/stack-selection.json",
+  "designArtifact": "docs/design/DESIGN.md",
+  "framework": "Next.js App Router",
+  "language": "TypeScript",
+  "packageManager": "pnpm@10.13.1",
+  "status": "semantic-ai-knowledge-boundary",
+  "entrypoints": [
+    "site/src/app/layout.tsx",
+    "site/src/app/page.tsx",
+    "site/src/app/globals.css",
+    "site/src/components/ui/index.ts",
+    "site/src/components/media/index.ts",
+    "site/src/app/sound/page.tsx",
+    "site/src/lib/ai/openrouter-client.ts",
+    "site/src/app/api/cc-ai/route.ts"
+  ],
+  "publicAssets": ["site/public/images/observatory-poster.png"],
+  "verification": {
+    "format": "passed",
+    "lint": "passed",
+    "typecheck": "passed",
+    "productionBuild": "passed",
+    "desktopVisual": "inspected at 1440x900",
+    "mobileVisual": "inspected at 390x844",
+    "keyboardFocus": "skip link and focus ring inspected",
+    "console": "no warnings or errors",
+    "mediaFoundation": "manual mute-first native media and consent-gated lazy provider embeds; no unapproved source loaded",
+    "baselineTests": "4 passing locally; clean-checkout evidence pending first repository revision and pull request",
+    "continuousIntegration": "workflow authored; pull-request run pending first repository revision",
+    "openRouterBoundary": "@openrouter/sdk 0.13.65 is server-only, mockable, attribution-configured, and absent from emitted client chunks",
+    "unitTests": "40 passing without external media or AI network requests",
+    "ccAiRoute": "disabled-by-default non-streaming JSON boundary; production request verified safe 503/no-store contract",
+    "ccAiModelPolicy": "variable free-router prototype, named override, ordered fallback models, actual-model disclosure, strict ZDR/data-collection denial, and paid production switch are configuration-driven",
+    "ccAiAbuseControl": "same-origin JSON requests, trusted hosting IP plus server session fixed-window limits, per-session/process concurrency caps, bounded state, explicit retry timing, and one provider attempt",
+    "ccAiKnowledgeContext": "validated structured records only; verified/user-approved plus all-public-source gates; whole-record 8,000-character JSON bound; source metadata; private/design-only content exclusion; honest unknown instruction",
+    "clientAiScan": "no SDK name, key variable, enable flag, or OpenRouter key prefix in .next/static"
+  },
+  "deferred": [
+    "verified project/CV/media content",
+    "Three.js and React Three Fiber runtime",
+    "rights-cleared production 3D assets",
+    "OpenRouter activation, public knowledge ledger, and durable multi-instance rate limiting if required",
+    "clean pull-request CI evidence and expanded accessibility/end-to-end tests",
+    "preview deployment"
+  ]
+}

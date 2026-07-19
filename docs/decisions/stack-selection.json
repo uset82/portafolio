@@ -1,0 +1,19 @@
+{
+  "version": "1.0",
+  "selectionId": "seo-fullstack-web-nextjs-observatory-v1",
+  "experienceType": "seo-fullstack-web",
+  "frontendRuntime": "nextjs",
+  "backendRuntime": "nextjs-route-handlers",
+  "dataLayer": "none",
+  "deploymentTarget": "vercel",
+  "designProvider": "outline",
+  "integrations": [],
+  "rationale": [
+    "The portfolio requires indexable multi-page content, static prerendering, metadata, and dynamic project routes.",
+    "React Three Fiber and Animate UI share one React runtime without an Astro island boundary around the primary homepage experience.",
+    "Next.js Route Handlers keep OpenRouter credentials server-only without adding a separate Express deployment.",
+    "Local typed content avoids CMS cost and operational complexity for v1 while preserving a later migration path.",
+    "Vercel is the curated WebDesigner deployment target for Next.js; deployment remains unconfigured until the release phase.",
+    "The approved mainUI.png reference makes an additional design-generation provider unnecessary, so the outline path is selected."
+  ]
+}

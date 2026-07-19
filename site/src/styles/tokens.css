@@ -1,0 +1,92 @@
+:root {
+  color-scheme: light;
+
+  --swatch-taupe: #a38772;
+  --swatch-sage-stone: #c1bfb0;
+  --swatch-sage-muted: #b1b199;
+  --swatch-sand: #ecdfcf;
+  --swatch-warm-ivory: #fef4ea;
+  --swatch-clay: #cfa18a;
+  --swatch-sage-pale: #cccab5;
+  --swatch-off-white: #e5dfd3;
+  --swatch-sage-dark: #77715b;
+  --swatch-taupe-warm: #be967d;
+  --swatch-buff: #dcc1ac;
+  --swatch-dusty-pink: #e8bdb4;
+
+  --scene-parchment: #e8dfd5;
+  --scene-stone: #aea090;
+  --scene-taupe: #9d8a73;
+  --scene-sand: #c9b49e;
+  --scene-linen: #d7c7b5;
+  --scene-shadow-sage: #6f6655;
+  --scene-oak: #8b755d;
+  --scene-walnut: #5f4b35;
+  --scene-espresso: #2e2417;
+  --scene-deep-wood: #4b3520;
+
+  --color-canvas: var(--scene-parchment);
+  --color-canvas-soft: var(--swatch-warm-ivory);
+  --color-linen: var(--swatch-sand);
+  --color-buff: var(--swatch-buff);
+  --color-off-white: var(--swatch-off-white);
+  --color-sage-light: var(--swatch-sage-stone);
+  --color-sage-muted: var(--swatch-sage-muted);
+  --color-sage-pale: var(--swatch-sage-pale);
+  --color-sage-dark: var(--swatch-sage-dark);
+  --color-moss: #69705a;
+  --color-taupe: var(--swatch-taupe);
+  --color-taupe-warm: var(--swatch-taupe-warm);
+  --color-clay: var(--swatch-clay);
+  --color-dusty-pink: var(--swatch-dusty-pink);
+  --color-oak: var(--scene-oak);
+  --color-walnut: var(--scene-walnut);
+  --color-espresso: var(--scene-espresso);
+  --color-deep-espresso: #2a1d16;
+  --color-water-slate: #5b6965;
+  --color-water-light: #87918a;
+  --color-pewter: #9b9d96;
+  --color-silver: #c8c7be;
+  --color-text-primary: #2a1d16;
+  --color-text-secondary: #6e5b4d;
+  --color-text-on-dark: var(--swatch-warm-ivory);
+  --color-border-soft: #cdb69e;
+  --color-focus: var(--swatch-sage-dark);
+
+  --font-display: var(--font-cormorant), Georgia, "Times New Roman", serif;
+  --font-body: var(--font-manrope), Inter, "Segoe UI", sans-serif;
+  --page-gutter: clamp(1rem, 3vw, 3.5rem);
+  --page-max: 112rem;
+  --reading-max: 42rem;
+  --header-height: 5.25rem;
+  --control-height: 2.75rem;
+
+  --radius-control: 0.5rem;
+  --radius-panel: 1rem;
+  --shadow-soft: 0 1.25rem 3.5rem rgb(46 36 23 / 16%);
+  --shadow-focus: 0 0 0 3px var(--color-canvas-soft), 0 0 0 6px var(--color-focus);
+
+  --duration-fast: 160ms;
+  --duration-base: 220ms;
+  --duration-reveal: 520ms;
+  --duration-scene: 650ms;
+  --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --z-scene: 0;
+  --z-content: 10;
+  --z-header: 20;
+  --z-chat: 30;
+  --z-navigation: 40;
+  --z-modal: 50;
+  --z-skip: 60;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 1ms;
+    --duration-base: 1ms;
+    --duration-reveal: 1ms;
+    --duration-scene: 1ms;
+  }
+}

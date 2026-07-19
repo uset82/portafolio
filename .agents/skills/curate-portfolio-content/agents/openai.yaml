@@ -1,0 +1,4 @@
+interface:
+  display_name: "Curate Portfolio Content"
+  short_description: "Create accurate portfolio case-study content"
+  default_prompt: "Use $curate-portfolio-content to turn verified project sources into a portfolio case study."
