@@ -143,6 +143,12 @@ The knowledge builder reads the already-validated structured content only; it ne
 
 The current repository has no records that pass all public-knowledge gates, so the built context contains zero facts and explicitly requires “I don't know based on the approved public portfolio information.” Task 2.30 must supply the approved public knowledge ledger. `CC_AI_ENABLED=false` keeps the route unavailable until that content and the release gates are complete.
 
+## Observatory progressive loading
+
+The homepage always renders the semantic hero and optimized priority poster before any optional WebGL work. Device capability and manual quality resolve outside Canvas. The typed registry then builds a full or reduced LOD plan: every hero-critical model must have an approved URL before Canvas can mount, critical models load first, deferred models wait for idle time, and on-demand models wait for selection.
+
+The current registry intentionally has no public model URLs, so `observatory-shell` and `robot-guide` keep the route in truthful poster mode with no GLB requests. Failed critical loads also preserve the poster. The live owner aborts pending attempts, cancels idle work, disposes loaded resources, and evicts only plan-owned cache URLs when it unmounts. Browser no-blank and real-model validation remain part of task 4.33.
+
 ## Deployment
 
 The selected output is Vercel-compatible, but no deployment project has been linked and no production deployment is authorized. Use a preview deployment for review when the release phase begins.

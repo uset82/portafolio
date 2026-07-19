@@ -1,5 +1,6 @@
 import { CcAiPanel } from "@/components/cc-ai-panel";
 import { HeroReveal, HeroRevealItem, SceneReveal } from "@/components/hero-reveal";
+import { ObservatoryProgressiveExperience } from "@/components/three/observatory-progressive-experience";
 import { ActionLink, EditorialLinkItem, ImageFrame } from "@/components/ui";
 import { selectedSystems, siteContent } from "@/content/site";
 
@@ -10,17 +11,23 @@ export default function Home() {
     <main id="main-content">
       <section className="observatory-hero" aria-labelledby="hero-title">
         <SceneReveal>
-          <ImageFrame
-            className="observatory-media-frame"
-            imageClassName="observatory-poster"
-            src="/images/observatory-poster.png"
-            alt="A warm sunlit observatory with a ceramic robot touching a sage-colored water basin among instruments for sound, celestial patterns, numerology, electronics, and energy."
-            fill
-            priority
-            sizes="100vw"
-            bleed
+          <ObservatoryProgressiveExperience
+            poster={
+              <>
+                <ImageFrame
+                  className="observatory-media-frame"
+                  imageClassName="observatory-poster"
+                  src="/images/observatory-poster.png"
+                  alt="A warm sunlit observatory with a ceramic robot touching a sage-colored water basin among instruments for sound, celestial patterns, numerology, electronics, and energy."
+                  fill
+                  priority
+                  sizes="100vw"
+                  bleed
+                />
+                <div className="poster-bottom-cover" aria-hidden="true" />
+              </>
+            }
           />
-          <div className="poster-bottom-cover" aria-hidden="true" />
         </SceneReveal>
 
         <div className="editorial-field">
@@ -59,10 +66,6 @@ export default function Home() {
               </p>
             </HeroRevealItem>
           </HeroReveal>
-        </div>
-
-        <div className="scene-status" aria-label="Observatory scene status">
-          <span aria-hidden="true">●</span> Poster mode · immersive scene follows
         </div>
 
         <CcAiPanel />

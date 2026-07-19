@@ -460,6 +460,31 @@ a {
   transform-origin: 65% 45%;
 }
 
+.observatory-progressive-experience,
+.observatory-poster-layer,
+.observatory-canvas-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.observatory-poster-layer {
+  z-index: 0;
+}
+
+.observatory-canvas-layer {
+  z-index: 1;
+}
+
+.observatory-canvas-layer[aria-hidden="true"] {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.observatory-canvas {
+  width: 100%;
+  height: 100%;
+}
+
 .observatory-media-frame {
   position: absolute;
   inset: 0;

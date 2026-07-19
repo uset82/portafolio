@@ -52,10 +52,11 @@ Slice: semantic poster-first foundation
 - An external reducer/store owns quality, motion/pause/visibility, muted scene sound, real loading progress and safe failure/retry states, selected artifact, and monotonic cancellable camera requests. The R3F shell projects snapshots without `useFrame` or React state updates in the frame loop; eight focused tests bring the deterministic suite to 66 while the shell remains unmounted.
 - The unmounted water group now owns a locked-palette procedural shader with shallow wave displacement, analytic reflected light, and demand invalidation capped at 30 updates per second. Reduced motion/quality uses one still two-triangle standard material and the static path renders nothing; four contract tests bring the suite to 70 without a browser or performance claim.
 - An outside-Canvas capability controller now resolves WebGL2, viewport, DPR, optional memory/CPU, reduced motion/data, connection, battery, visibility, and manual preference through one fail-closed policy. Version 2 scene state owns signals/reasons, and an unmounted semantic Auto/Full/Reduced/Poster fieldset completes the manual path; eight tests bring the suite to 78.
+- The homepage now mounts a poster-first progressive boundary without mounting Canvas while the current critical model URLs remain rights-gated. A typed quality-aware plan selects full/reduced LODs, requires both critical models, then stages sequential critical, idle-deferred, and selection-driven on-demand attempts behind dynamic client boundaries; safe status, abort, disposal, and scoped cache eviction bring the deterministic suite to 83. Browser no-blank and real-model evidence remain open.
 
 ## Intentionally deferred
 
-- Browser-compiled and measured water validation, mounted Three.js/R3F scene, poster-first loading system, and production 3D assets.
+- Browser-compiled and measured water validation, browser-verified progressive scene presentation, approved production 3D assets, and no-blank failure-path evidence.
 - Live CC AI activation, user-approved public knowledge records, optional normalized streaming, and a durable shared limiter if production uses multiple function instances.
 - Unverified project, CV, music, video, travel, social, email, and metrics content.
 - Expanded accessibility/end-to-end coverage, the first clean CI run, deployment, and release work.
