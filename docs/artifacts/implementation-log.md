@@ -50,10 +50,11 @@ Slice: semantic poster-first foundation
 - Deterministic Meshopt variant generation preserves the contract, validates before writing, emits a pinned-toolchain/input/output hash sidecar, refuses implicit overwrite, and supports byte-for-byte regeneration checks. Five synthetic-fixture tests bring the deterministic suite to 58 while the public registry correctly remains empty.
 - Typed Observatory scene configuration assigns all 12 registry assets exactly once across seven named groups and defines provisional storyboard camera views, a locked-palette no-shadow local light rig, a transparent sRGB environment with no external map, and explicit renderer/camera/scene/state/frame/DOM ownership.
 - An external reducer/store owns quality, motion/pause/visibility, muted scene sound, real loading progress and safe failure/retry states, selected artifact, and monotonic cancellable camera requests. The R3F shell projects snapshots without `useFrame` or React state updates in the frame loop; eight focused tests bring the deterministic suite to 66 while the shell remains unmounted.
+- The unmounted water group now owns a locked-palette procedural shader with shallow wave displacement, analytic reflected light, and demand invalidation capped at 30 updates per second. Reduced motion/quality uses one still two-triangle standard material and the static path renders nothing; four contract tests bring the suite to 70 without a browser or performance claim.
 
 ## Intentionally deferred
 
-- Mounted Three.js/R3F scene, loader/quality/state systems, and production 3D assets.
+- Browser-compiled and measured water validation, mounted Three.js/R3F scene, capability/poster-first loading systems, and production 3D assets.
 - Live CC AI activation, user-approved public knowledge records, optional normalized streaming, and a durable shared limiter if production uses multiple function instances.
 - Unverified project, CV, music, video, travel, social, email, and metrics content.
 - Expanded accessibility/end-to-end coverage, the first clean CI run, deployment, and release work.

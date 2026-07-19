@@ -17,6 +17,7 @@ import {
   useObservatorySceneSnapshot,
   useObservatorySceneStore,
 } from "./observatory-scene-provider";
+import { ObservatoryWaterSurface } from "./observatory-water-surface";
 
 function ObservatoryCamera() {
   const cameraRef = useRef<PerspectiveCamera>(null);
@@ -112,7 +113,9 @@ export function ObservatorySceneShell() {
               loadingPriority: group.loadingPriority,
               assetIds: [...group.assetIds],
             }}
-          />
+          >
+            {group.id === "water" ? <ObservatoryWaterSurface /> : null}
+          </group>
         ))}
       </group>
     </>

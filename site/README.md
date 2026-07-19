@@ -101,6 +101,8 @@ The optimizer preserves named contract nodes and clips, applies deterministic re
 
 `src/lib/three/scene-state.ts` is the single application-state owner for the future live scene. Its external store controls quality, motion/pause/visibility, muted scene sound, lifecycle/progress/errors, selected artifact, and cancellable camera requests; React observes snapshots but does not update state from the frame loop. `ObservatorySceneShell` projects that state into one perspective camera, a locked-palette local light rig, and seven named groups covering all 12 registry assets. The environment has no external HDR or asset URL. The shell remains unmounted until the later capability and poster-first loading tasks are complete.
 
+The water-group proof of concept is also intentionally unmounted. Its full tier uses one procedural ripple/reflected-light shader with 6,912 triangles and at most 30 demand invalidations per second; it allocates no textures, reflection targets, shadows, or post passes. Reduced motion/quality uses a still two-triangle standard material, while static or not-ready state renders no water so the existing poster remains visible. These are deterministic structural limits, not measured FPS claims; browser and mobile diagnostics remain approval-gated.
+
 ## Environment
 
 The current semantic/poster shell requires no secrets. CC AI will use a server-only OpenRouter key after its public knowledge, privacy, abuse, and cost controls are ready. Never place a real key in a browser-visible variable or commit it to the repository.

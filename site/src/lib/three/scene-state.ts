@@ -13,6 +13,8 @@ export type SceneLifecycle =
 export type SceneErrorCode =
   "asset-load" | "decoder" | "webgl-unsupported" | "context-lost" | "unknown";
 
+export type SceneMotionMode = "static" | "paused" | "reduced" | "full";
+
 export type SceneError = {
   code: SceneErrorCode;
   message: string;
@@ -294,7 +296,7 @@ export function observatorySceneReducer(
   }
 }
 
-export function resolveSceneMotionMode(state: ObservatorySceneState) {
+export function resolveSceneMotionMode(state: ObservatorySceneState): SceneMotionMode {
   if (state.quality.tier === "static" || state.loading.lifecycle !== "ready") return "static";
   if (state.motion.userPaused || !state.motion.documentVisible) return "paused";
   if (state.motion.preference === "reduce") return "reduced";

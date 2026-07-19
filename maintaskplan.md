@@ -1,9 +1,9 @@
 # Portfolio Master Task Plan
 
-Last updated: 2026-07-19 — typed Observatory scene shell and state ownership verified
+Last updated: 2026-07-19 — bounded Observatory water POC implemented; visual/performance QA pending approval
 Repository: `uset82/portafolio`  
 Primary research: `deep-research-report (8).md`  
-Status: Next.js implementation is underway; the responsive semantic Observatory shell, route foundation, typed content/inventory contracts, guarded natural palette, UI/media foundations, Motion/Animate UI layer, honest CC AI prototype, disabled server-only CC AI/OpenRouter boundary, configuration-driven model/fallback/privacy policy, per-process abuse/cost controls, public-only bounded knowledge-context builder, clean-checkout semantic gate, client-only Three.js/R3F/Drei runtime foundation, typed provider-neutral 3D registry, shared glTF/GLB decoder/lifecycle runtime, deterministic offline GLB validation/optimization gate, and typed unmounted Observatory scene shell/state ownership are verified. User-owned launch content, approved public knowledge records, mounted scene and rights-cleared 3D assets, live CC AI activation, paid model choice, and any required durable multi-instance limiter remain pending.
+Status: Next.js implementation is underway; the responsive semantic Observatory shell, route foundation, typed content/inventory contracts, guarded natural palette, UI/media foundations, Motion/Animate UI layer, honest CC AI prototype, disabled server-only CC AI/OpenRouter boundary, configuration-driven model/fallback/privacy policy, per-process abuse/cost controls, public-only bounded knowledge-context builder, clean-checkout semantic gate, client-only Three.js/R3F/Drei runtime foundation, typed provider-neutral 3D registry, shared glTF/GLB decoder/lifecycle runtime, deterministic offline GLB validation/optimization gate, and typed unmounted Observatory scene shell/state ownership are verified. The unmounted water POC passes its automatic structural gate but remains pending approved browser compile, visual, and desktop/mobile performance evidence. User-owned launch content, approved public knowledge records, mounted scene and rights-cleared 3D assets, live CC AI activation, paid model choice, and any required durable multi-instance limiter remain pending.
 
 ## How this plan must be maintained
 
@@ -526,6 +526,7 @@ Exit criteria: tasks 4.1–4.36 are checked; production build and foundation che
   Acceptance: camera, lights, environment, scene groups, selected artifact, quality tier, sound state, motion preference, and loading/error state have typed ownership without React state in the frame loop.
 - [ ] ☐ **4.31 — Build the WebGL water proof of concept.**  
   Acceptance: a bounded shader or render-target prototype demonstrates ripples/reflections at acceptable desktop and mobile cost, with a simpler material and static-poster fallback.
+  Status 2026-07-19: the unmounted full shader, still reduced material, zero-work poster tier, structural budgets, and four deterministic tests are implemented; all 70 tests, lint, and type-check pass. This task remains open because real shader compilation, visual ripple/reflection review, and measured desktop/mobile renderer diagnostics are approval-gated and have not run.
 - [ ] ☐ **4.32 — Implement capability and quality detection.**  
   Acceptance: WebGL support, device memory/hardware hints where available, viewport, DPR, reduced motion, reduced data, battery-safe defaults, and manual quality control resolve to a documented tier.
 - [ ] ☐ **4.33 — Implement poster-first progressive scene loading.**  
