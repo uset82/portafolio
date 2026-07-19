@@ -99,6 +99,8 @@ pnpm assets:verify-variant -- --asset robot-guide --input ../candidate-assets/ro
 
 The optimizer preserves named contract nodes and clips, applies deterministic resampling/deduplication/pruning plus medium Meshopt compression, validates the result before writing, and creates a `.pipeline.json` sidecar with pinned tool versions and input/output hashes. It refuses to overwrite either output without `--force` and never permits input and output to be the same file. The gate inspects existing KTX2/Basis textures but deliberately does not re-encode textures: ETC1S versus UASTC is chosen later from measured visual quality for each approved asset.
 
+`src/lib/three/scene-state.ts` is the single application-state owner for the future live scene. Its external store controls quality, motion/pause/visibility, muted scene sound, lifecycle/progress/errors, selected artifact, and cancellable camera requests; React observes snapshots but does not update state from the frame loop. `ObservatorySceneShell` projects that state into one perspective camera, a locked-palette local light rig, and seven named groups covering all 12 registry assets. The environment has no external HDR or asset URL. The shell remains unmounted until the later capability and poster-first loading tasks are complete.
+
 ## Environment
 
 The current semantic/poster shell requires no secrets. CC AI will use a server-only OpenRouter key after its public knowledge, privacy, abuse, and cost controls are ready. Never place a real key in a browser-visible variable or commit it to the repository.

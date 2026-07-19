@@ -48,6 +48,8 @@ Slice: semantic poster-first foundation
 - Scoped GLB cache eviction, abort support, permanent decoder teardown, and deduplicated cleanup for geometries, materials, textures, closable image bitmaps, and skeletons. Five focused loader tests and the tightened public-rights registry contract bring the deterministic suite to 53.
 - Offline GLB gate using pinned glTF Transform, Khronos glTF Validator, Draco, and meshoptimizer tooling. It reports source hash/bytes, official validity, meter dimensions, transforms, required nodes/clips, materials, textures, visible triangles, draw calls, extensions, and per-registry/manifest budgets.
 - Deterministic Meshopt variant generation preserves the contract, validates before writing, emits a pinned-toolchain/input/output hash sidecar, refuses implicit overwrite, and supports byte-for-byte regeneration checks. Five synthetic-fixture tests bring the deterministic suite to 58 while the public registry correctly remains empty.
+- Typed Observatory scene configuration assigns all 12 registry assets exactly once across seven named groups and defines provisional storyboard camera views, a locked-palette no-shadow local light rig, a transparent sRGB environment with no external map, and explicit renderer/camera/scene/state/frame/DOM ownership.
+- An external reducer/store owns quality, motion/pause/visibility, muted scene sound, real loading progress and safe failure/retry states, selected artifact, and monotonic cancellable camera requests. The R3F shell projects snapshots without `useFrame` or React state updates in the frame loop; eight focused tests bring the deterministic suite to 66 while the shell remains unmounted.
 
 ## Intentionally deferred
 
