@@ -46,6 +46,8 @@ Slice: semantic poster-first foundation
 - Self-hosted Three.js 0.185.1 Draco and Basis/KTX2 decoder files with pinned hashes and the upstream MIT license; no mutable decoder CDN or version mixing.
 - Shared glTF loader configuration attaches one reusable Draco instance, meshopt, renderer-detected KTX2, and two-worker ceilings; each explicit attempt uses a fresh LoadingManager and a first-fatal-error latch so retry/progress state cannot drift.
 - Scoped GLB cache eviction, abort support, permanent decoder teardown, and deduplicated cleanup for geometries, materials, textures, closable image bitmaps, and skeletons. Five focused loader tests and the tightened public-rights registry contract bring the deterministic suite to 53.
+- Offline GLB gate using pinned glTF Transform, Khronos glTF Validator, Draco, and meshoptimizer tooling. It reports source hash/bytes, official validity, meter dimensions, transforms, required nodes/clips, materials, textures, visible triangles, draw calls, extensions, and per-registry/manifest budgets.
+- Deterministic Meshopt variant generation preserves the contract, validates before writing, emits a pinned-toolchain/input/output hash sidecar, refuses implicit overwrite, and supports byte-for-byte regeneration checks. Five synthetic-fixture tests bring the deterministic suite to 58 while the public registry correctly remains empty.
 
 ## Intentionally deferred
 

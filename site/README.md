@@ -18,22 +18,25 @@ Open the local address printed by Next.js. The initial implementation is semanti
 
 ## Commands
 
-| Command               | Purpose                                                                  |
-| --------------------- | ------------------------------------------------------------------------ |
-| `pnpm dev`            | Start local development                                                  |
-| `pnpm build`          | Create the production build                                              |
-| `pnpm start`          | Run a completed production build                                         |
-| `pnpm preview`        | Preview a completed production build                                     |
-| `pnpm lint`           | Run the Next.js ESLint rules with zero warnings                          |
-| `pnpm typecheck`      | Run strict TypeScript checks without emitting files                      |
-| `pnpm content:check`  | Validate runtime content, inventory, provenance references, and failures |
-| `pnpm palette:check`  | Reject colors outside the approved Natural Observatory palette           |
-| `pnpm boundary:check` | Reject OpenRouter runtime/key use outside the server-only boundary       |
-| `pnpm test:unit`      | Run baseline schema and critical static-render tests                     |
-| `pnpm test`           | Run unit, content, and palette contract tests                            |
-| `pnpm format`         | Apply Prettier formatting                                                |
-| `pnpm format:check`   | Verify formatting without changing files                                 |
-| `pnpm verify`         | Run every formatting, lint, type, contract, test, and build check        |
+| Command                      | Purpose                                                                      |
+| ---------------------------- | ---------------------------------------------------------------------------- |
+| `pnpm dev`                   | Start local development                                                      |
+| `pnpm build`                 | Create the production build                                                  |
+| `pnpm start`                 | Run a completed production build                                             |
+| `pnpm preview`               | Preview a completed production build                                         |
+| `pnpm lint`                  | Run the Next.js ESLint rules with zero warnings                              |
+| `pnpm typecheck`             | Run strict TypeScript checks without emitting files                          |
+| `pnpm content:check`         | Validate runtime content, inventory, provenance references, and failures     |
+| `pnpm palette:check`         | Reject colors outside the approved Natural Observatory palette               |
+| `pnpm boundary:check`        | Reject OpenRouter runtime/key use outside the server-only boundary           |
+| `pnpm assets:check`          | Validate every public registry GLB or one explicit candidate against budgets |
+| `pnpm assets:optimize`       | Generate a deterministic Meshopt GLB and provenance sidecar                  |
+| `pnpm assets:verify-variant` | Rebuild a variant and verify its input, output, toolchain, and byte hashes   |
+| `pnpm test:unit`             | Run schema, service, GLB-pipeline, and critical static-render tests          |
+| `pnpm test`                  | Run unit, content, palette, boundary, and published-3D-asset checks          |
+| `pnpm format`                | Apply Prettier formatting                                                    |
+| `pnpm format:check`          | Verify formatting without changing files                                     |
+| `pnpm verify`                | Run every formatting, lint, type, contract, test, asset, and build check     |
 
 Pull requests and pushes to `main` use `.github/workflows/verify.yml` to install from the frozen lockfile and run the complete verification gate in a clean Linux checkout. Dependency caching accelerates downloads but never replaces the locked install.
 
@@ -76,6 +79,25 @@ Three.js, React Three Fiber, Drei, and matching Three.js types are exact-version
 The provider-neutral runtime registry lives in `src/lib/three/asset-registry.ts`. It covers all 12 planned scene assets and keeps every GLB/LOD URL `null` until provenance, rights, optimization, and runtime approval are complete. The adjacent Zod schema is used by tests and authoring checks; registry data imports it as types only, so validation code is not added to a future scene bundle. Never bypass the registry with an ad hoc model URL.
 
 `src/lib/three/gltf-runtime.ts` owns every future GLB loading path. It uses self-hosted Three.js-version-matched Draco and Basis/KTX2 files, bundled meshopt, renderer capability detection, bounded decoder workers, a fresh progress/error manager for each explicit attempt, scoped cache eviction, and shared-resource-safe disposal. Do not instantiate `GLTFLoader`, `DRACOLoader`, or `KTX2Loader` elsewhere. A real decoder smoke test waits for the first rights-approved registry URL; build/tests do not pretend that an absent model was decoded.
+
+## 3D asset gate
+
+`pnpm assets:check` validates every non-null registry URL. Today it reports zero public variants because all production models remain rights-gated. To inspect an unpublished candidate without adding it to the registry:
+
+```bash
+pnpm assets:check -- --asset robot-guide --file ../candidate-assets/robot.glb --lod 0 --json
+```
+
+The timestamp-free report records the source hash, official Khronos glTF validation result, scene dimensions, visible triangles, draw calls, transforms, stable nodes, authored clips, materials, texture dimensions/estimated memory, extensions, and the exact manifest/LOD budget. Specification errors, missing required nodes or clips, negative/zero scale, or file/triangle/material/texture/dimension overruns fail the command.
+
+Generate and then independently verify a Meshopt variant with explicit paths:
+
+```bash
+pnpm assets:optimize -- --asset robot-guide --input ../candidate-assets/robot.glb --output ../candidate-assets/robot-lod0.meshopt.glb --lod 0
+pnpm assets:verify-variant -- --asset robot-guide --input ../candidate-assets/robot.glb --output ../candidate-assets/robot-lod0.meshopt.glb --lod 0
+```
+
+The optimizer preserves named contract nodes and clips, applies deterministic resampling/deduplication/pruning plus medium Meshopt compression, validates the result before writing, and creates a `.pipeline.json` sidecar with pinned tool versions and input/output hashes. It refuses to overwrite either output without `--force` and never permits input and output to be the same file. The gate inspects existing KTX2/Basis textures but deliberately does not re-encode textures: ETC1S versus UASTC is chosen later from measured visual quality for each approved asset.
 
 ## Environment
 

@@ -6,7 +6,7 @@
   "framework": "Next.js App Router",
   "language": "TypeScript",
   "packageManager": "pnpm@10.13.1",
-  "status": "gltf-runtime-boundary",
+  "status": "three-asset-pipeline",
   "entrypoints": [
     "site/src/app/layout.tsx",
     "site/src/app/page.tsx",
@@ -18,7 +18,9 @@
     "site/src/app/api/cc-ai/route.ts",
     "site/src/components/three/lazy-three-canvas.tsx",
     "site/src/lib/three/asset-registry.ts",
-    "site/src/lib/three/gltf-runtime.ts"
+    "site/src/lib/three/gltf-runtime.ts",
+    "site/scripts/check-3d-assets.ts",
+    "site/scripts/optimize-3d-asset.ts"
   ],
   "publicAssets": [
     "site/public/images/observatory-poster.png",
@@ -40,8 +42,9 @@
     "threeRuntime": "exact Three.js 0.185.1, Fiber 9.6.1, Drei 10.7.7, and matching types; lazy client-only SSR-disabled Canvas with bounded demand rendering and named utility allowlist",
     "threeAssetRegistry": "12 typed provider-neutral assets match the design manifest; URLs remain null until rights/runtime approval; node, clip, material, LOD, fallback, interaction, provenance, and priority contracts are validated",
     "gltfRuntime": "shared Draco and renderer-detected KTX2 with self-hosted Three.js 0.185.1 decoder hashes; bundled meshopt; fresh progress manager per attempt; first-error latch; scoped cache, abort, retry, permanent teardown, and deduplicated scene disposal",
+    "threeAssetPipeline": "pinned glTF Transform/Khronos Validator/Draco/meshoptimizer gate inspects validity, transforms, animation, dimensions, materials, texture size, visible triangles, draw calls, extensions, and manifest/LOD budgets; deterministic Meshopt variants carry reproducible hash sidecars",
     "openRouterBoundary": "@openrouter/sdk 0.13.65 is server-only, mockable, attribution-configured, and absent from emitted client chunks",
-    "unitTests": "53 passing without external media, AI network requests, public model URLs, or a mounted WebGL scene",
+    "unitTests": "58 passing without external media, AI network requests, public model URLs, or a mounted WebGL scene",
     "ccAiRoute": "disabled-by-default non-streaming JSON boundary; production request verified safe 503/no-store contract",
     "ccAiModelPolicy": "variable free-router prototype, named override, ordered fallback models, actual-model disclosure, strict ZDR/data-collection denial, and paid production switch are configuration-driven",
     "ccAiAbuseControl": "same-origin JSON requests, trusted hosting IP plus server session fixed-window limits, per-session/process concurrency caps, bounded state, explicit retry timing, and one provider attempt",
