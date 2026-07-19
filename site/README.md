@@ -103,6 +103,8 @@ The optimizer preserves named contract nodes and clips, applies deterministic re
 
 The water-group proof of concept is also intentionally unmounted. Its full tier uses one procedural ripple/reflected-light shader with 6,912 triangles and at most 30 demand invalidations per second; it allocates no textures, reflection targets, shadows, or post passes. Reduced motion/quality uses a still two-triangle standard material, while static or not-ready state renders no water so the existing poster remains visible. These are deterministic structural limits, not measured FPS claims; browser and mobile diagnostics remain approval-gated.
 
+`ObservatorySceneRuntimeProvider` owns browser capability assessment outside the optional Canvas. WebGL2 support, viewport, DPR, optional device memory/CPU/network/battery hints, reduced motion/data, visibility, and an Auto/Full/Reduced/Poster preference resolve through `capability-policy.ts` into versioned scene state. Unsupported WebGL2 always preserves the poster; missing optional APIs are neutral; every listener is cleaned up. `ObservatoryQualityControl` provides the unmounted semantic radio-group UI for the same preference. Task 4.33 will compose these foundations into the poster-first route boundary.
+
 ## Environment
 
 The current semantic/poster shell requires no secrets. CC AI will use a server-only OpenRouter key after its public knowledge, privacy, abuse, and cost controls are ready. Never place a real key in a browser-visible variable or commit it to the repository.

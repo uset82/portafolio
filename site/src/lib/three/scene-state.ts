@@ -6,6 +6,14 @@ import {
   type SceneQualityTier,
 } from "./scene-config";
 import type { ObservatoryAssetId } from "./asset-registry-schema";
+import {
+  INITIAL_BROWSER_CAPABILITY_SNAPSHOT,
+  INITIAL_QUALITY_DECISION,
+  type BrowserCapabilitySnapshot,
+  type QualityDecision,
+  type QualityPreference,
+  type QualityReasonCode,
+} from "./capability-policy";
 
 export type SceneLifecycle =
   "poster" | "preparing" | "ready" | "error" | "unsupported" | "context-lost";
@@ -23,10 +31,13 @@ export type SceneError = {
 };
 
 export type ObservatorySceneState = {
-  version: 1;
+  version: 2;
+  capabilities: BrowserCapabilitySnapshot;
   quality: {
     tier: SceneQualityTier;
     source: "automatic" | "manual";
+    preference: QualityPreference;
+    reasons: readonly QualityReasonCode[];
   };
   motion: {
     preference: "no-preference" | "reduce";
@@ -57,6 +68,12 @@ export type ObservatorySceneState = {
 
 export type ObservatorySceneAction =
   | { type: "quality/set"; tier: SceneQualityTier; source: "automatic" | "manual" }
+  | { type: "quality/preference"; preference: QualityPreference }
+  | {
+      type: "capabilities/apply";
+      snapshot: BrowserCapabilitySnapshot;
+      decision: QualityDecision;
+    }
   | { type: "motion/preference"; preference: "no-preference" | "reduce" }
   | { type: "motion/pause"; paused: boolean }
   | { type: "motion/visibility"; visible: boolean }
@@ -82,8 +99,9 @@ export type ObservatorySceneAction =
   | { type: "sound/unavailable" };
 
 export const INITIAL_OBSERVATORY_SCENE_STATE: ObservatorySceneState = {
-  version: 1,
-  quality: { tier: "static", source: "automatic" },
+  version: 2,
+  capabilities: INITIAL_BROWSER_CAPABILITY_SNAPSHOT,
+  quality: INITIAL_QUALITY_DECISION,
   motion: {
     preference: "no-preference",
     userPaused: false,
@@ -121,32 +139,85 @@ function normalizeProgress(loaded: number, total: number) {
   };
 }
 
+function qualityReasonForSet(
+  tier: SceneQualityTier,
+  source: "automatic" | "manual",
+): QualityReasonCode {
+  if (source === "automatic") return tier === "static" ? "webgl2-unknown" : "balanced-default";
+  if (tier === "static") return "manual-static";
+  if (tier === "reduced") return "manual-reduced";
+  return "manual-full";
+}
+
+function applyQualityDecision(
+  state: ObservatorySceneState,
+  decision: QualityDecision,
+  capabilities: BrowserCapabilitySnapshot = state.capabilities,
+): ObservatorySceneState {
+  const quality = {
+    tier: decision.tier,
+    source: decision.source,
+    preference: decision.preference,
+    reasons: decision.reasons,
+  };
+  const unsupported = decision.reasons.includes("webgl2-unsupported");
+  const nextState = { ...state, capabilities, quality };
+
+  if (decision.tier !== "static") {
+    if (state.loading.lifecycle !== "unsupported") return nextState;
+    return {
+      ...nextState,
+      loading: { ...state.loading, lifecycle: "poster", error: null },
+    };
+  }
+
+  const cameraAlreadyFallback =
+    state.camera.view === "fallback" && state.camera.phase === "settled";
+  return {
+    ...nextState,
+    sound: { status: "muted", muted: true },
+    loading: {
+      ...state.loading,
+      lifecycle: unsupported ? "unsupported" : "poster",
+      activeGroup: null,
+      error: unsupported
+        ? {
+            code: "webgl-unsupported",
+            message:
+              "The interactive Observatory is unavailable; the complete poster experience remains.",
+            recoverable: false,
+            assetId: null,
+          }
+        : null,
+    },
+    camera: cameraAlreadyFallback
+      ? state.camera
+      : {
+          view: "fallback",
+          phase: "settled",
+          requestId: state.camera.requestId + 1,
+        },
+  };
+}
+
 export function observatorySceneReducer(
   state: ObservatorySceneState,
   action: ObservatorySceneAction,
 ): ObservatorySceneState {
   switch (action.type) {
     case "quality/set": {
-      const quality = { tier: action.tier, source: action.source };
-      if (action.tier !== "static") return { ...state, quality };
-
-      return {
-        ...state,
-        quality,
-        sound: { status: "muted", muted: true },
-        loading: {
-          ...state.loading,
-          lifecycle: "poster",
-          activeGroup: null,
-          error: null,
-        },
-        camera: {
-          view: "fallback",
-          phase: "settled",
-          requestId: state.camera.requestId + 1,
-        },
-      };
+      return applyQualityDecision(state, {
+        tier: action.tier,
+        source: action.source,
+        preference: action.source === "manual" ? action.tier : state.quality.preference,
+        reasons: [qualityReasonForSet(action.tier, action.source)],
+      });
     }
+    case "quality/preference":
+      if (state.quality.preference === action.preference) return state;
+      return { ...state, quality: { ...state.quality, preference: action.preference } };
+    case "capabilities/apply":
+      return applyQualityDecision(state, action.decision, action.snapshot);
     case "motion/preference":
       return { ...state, motion: { ...state.motion, preference: action.preference } };
     case "motion/pause":
@@ -208,28 +279,16 @@ export function observatorySceneReducer(
         },
       };
     case "loading/unsupported":
-      return {
-        ...state,
-        quality: { tier: "static", source: "automatic" },
-        sound: { status: "muted", muted: true },
-        loading: {
-          ...state.loading,
-          lifecycle: "unsupported",
-          activeGroup: null,
-          error: {
-            code: "webgl-unsupported",
-            message:
-              "The interactive Observatory is unavailable; the complete poster experience remains.",
-            recoverable: false,
-            assetId: null,
-          },
+      return applyQualityDecision(
+        state,
+        {
+          tier: "static",
+          source: "automatic",
+          preference: state.quality.preference,
+          reasons: ["webgl2-unsupported"],
         },
-        camera: {
-          view: "fallback",
-          phase: "settled",
-          requestId: state.camera.requestId + 1,
-        },
-      };
+        { ...state.capabilities, webgl2: "unsupported" },
+      );
     case "loading/context-lost":
       return {
         ...state,
