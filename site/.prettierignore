@@ -3,4 +3,5 @@ node_modules
 coverage
 out
 public/images
+public/three/decoders
 pnpm-lock.yaml

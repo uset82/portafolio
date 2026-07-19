@@ -6,7 +6,7 @@
   "framework": "Next.js App Router",
   "language": "TypeScript",
   "packageManager": "pnpm@10.13.1",
-  "status": "semantic-foundation-gate-passed",
+  "status": "gltf-runtime-boundary",
   "entrypoints": [
     "site/src/app/layout.tsx",
     "site/src/app/page.tsx",
@@ -15,9 +15,15 @@
     "site/src/components/media/index.ts",
     "site/src/app/sound/page.tsx",
     "site/src/lib/ai/openrouter-client.ts",
-    "site/src/app/api/cc-ai/route.ts"
+    "site/src/app/api/cc-ai/route.ts",
+    "site/src/components/three/lazy-three-canvas.tsx",
+    "site/src/lib/three/asset-registry.ts",
+    "site/src/lib/three/gltf-runtime.ts"
   ],
-  "publicAssets": ["site/public/images/observatory-poster.png"],
+  "publicAssets": [
+    "site/public/images/observatory-poster.png",
+    "site/public/three/decoders/"
+  ],
   "verification": {
     "format": "passed",
     "lint": "passed",
@@ -30,9 +36,12 @@
     "mediaFoundation": "manual mute-first native media and consent-gated lazy provider embeds; no unapproved source loaded",
     "baselineTests": "40 passing from exact commit 71368ad in a clean checkout after frozen-lockfile installation",
     "cleanCheckout": "pnpm install --frozen-lockfile and pnpm verify passed; 13-page production build inspected at 1440x900 and 390x844",
-    "continuousIntegration": "workflow authored; pull-request run pending first repository revision",
+    "continuousIntegration": "workflow authored; pull-request run blocked until project command policy permits the prepared branch push",
+    "threeRuntime": "exact Three.js 0.185.1, Fiber 9.6.1, Drei 10.7.7, and matching types; lazy client-only SSR-disabled Canvas with bounded demand rendering and named utility allowlist",
+    "threeAssetRegistry": "12 typed provider-neutral assets match the design manifest; URLs remain null until rights/runtime approval; node, clip, material, LOD, fallback, interaction, provenance, and priority contracts are validated",
+    "gltfRuntime": "shared Draco and renderer-detected KTX2 with self-hosted Three.js 0.185.1 decoder hashes; bundled meshopt; fresh progress manager per attempt; first-error latch; scoped cache, abort, retry, permanent teardown, and deduplicated scene disposal",
     "openRouterBoundary": "@openrouter/sdk 0.13.65 is server-only, mockable, attribution-configured, and absent from emitted client chunks",
-    "unitTests": "40 passing without external media or AI network requests",
+    "unitTests": "53 passing without external media, AI network requests, public model URLs, or a mounted WebGL scene",
     "ccAiRoute": "disabled-by-default non-streaming JSON boundary; production request verified safe 503/no-store contract",
     "ccAiModelPolicy": "variable free-router prototype, named override, ordered fallback models, actual-model disclosure, strict ZDR/data-collection denial, and paid production switch are configuration-driven",
     "ccAiAbuseControl": "same-origin JSON requests, trusted hosting IP plus server session fixed-window limits, per-session/process concurrency caps, bounded state, explicit retry timing, and one provider attempt",
@@ -41,7 +50,7 @@
   },
   "deferred": [
     "verified project/CV/media content",
-    "Three.js and React Three Fiber runtime",
+    "mounted Three.js scene, quality detection, loaders, and scene-state integration",
     "rights-cleared production 3D assets",
     "OpenRouter activation, public knowledge ledger, and durable multi-instance rate limiting if required",
     "clean pull-request CI evidence and expanded accessibility/end-to-end tests",

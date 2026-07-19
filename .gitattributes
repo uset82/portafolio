@@ -16,3 +16,7 @@
 *.ico binary
 *.jpg binary
 *.png binary
+*.wasm binary
+site/public/three/decoders/**/*.js binary
+site/public/three/decoders/**/*.wasm binary
+site/public/three/decoders/THREE-LICENSE.txt binary

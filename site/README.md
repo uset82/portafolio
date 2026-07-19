@@ -69,7 +69,13 @@ The natural palette follows the same boundary: CSS tokens live in `src/styles/to
 
 ## Motion and immersive work
 
-The root uses Motion with the visitor's reduced-motion preference. The small animated button primitive is adapted from Animate UI's MIT-licensed copy-first registry; visual styling stays within this project's natural token system. Three.js and React Three Fiber will be added only through the ready tasks in the living plan, with poster, reduced-quality, no-WebGL, and no-JavaScript fallbacks.
+The root uses Motion with the visitor's reduced-motion preference. The small animated button primitive is adapted from Animate UI's MIT-licensed copy-first registry; visual styling stays within this project's natural token system.
+
+Three.js, React Three Fiber, Drei, and matching Three.js types are exact-version dependencies. `src/components/three/lazy-three-canvas.tsx` is the only application-facing Canvas boundary: it is client-only, disables SSR, bounds DPR, renders on demand, and requires its caller to preserve the semantic poster plus a useful unsupported-WebGL fallback. The approved Drei allowlist is named explicitly in `drei-tools.ts`; route files do not import WebGL packages directly. No scene is mounted yet, so the homepage remains entirely poster-first until its later scene-state and progressive-loading tasks are verified.
+
+The provider-neutral runtime registry lives in `src/lib/three/asset-registry.ts`. It covers all 12 planned scene assets and keeps every GLB/LOD URL `null` until provenance, rights, optimization, and runtime approval are complete. The adjacent Zod schema is used by tests and authoring checks; registry data imports it as types only, so validation code is not added to a future scene bundle. Never bypass the registry with an ad hoc model URL.
+
+`src/lib/three/gltf-runtime.ts` owns every future GLB loading path. It uses self-hosted Three.js-version-matched Draco and Basis/KTX2 files, bundled meshopt, renderer capability detection, bounded decoder workers, a fresh progress/error manager for each explicit attempt, scoped cache eviction, and shared-resource-safe disposal. Do not instantiate `GLTFLoader`, `DRACOLoader`, or `KTX2Loader` elsewhere. A real decoder smoke test waits for the first rights-approved registry URL; build/tests do not pretend that an absent model was decoded.
 
 ## Environment
 

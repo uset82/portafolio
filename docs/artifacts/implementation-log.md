@@ -38,10 +38,18 @@ Slice: semantic poster-first foundation
 - Public-only CC AI knowledge builder over the validated content model: factual approval, publication, rights, and all-public-source gates exclude private/design-only/held records without reading provenance files.
 - Deterministic whole-record JSON context capped at 8,000 characters, traceable public source IDs, response knowledge metadata, status-preservation rules, prompt-injection boundary, and an exact honest-unknown instruction. The current approved context correctly contains zero facts.
 - Clean-checkout foundation proof for exact commit `71368ad`: frozen-lockfile install, all 40 tests and standard checks, 13-page production build, desktop/mobile production inspection, overflow/image/console checks, and the mobile navigation keyboard path.
+- Exact compatible Three.js runtime set: Three.js 0.185.1, React Three Fiber 9.6.1, Drei 10.7.7, and matching Three.js types on React 19.2.4.
+- Reusable `LazyThreeCanvas` project boundary with SSR disabled, an internal renderer owner, bounded DPR, demand rendering, transparent antialiasing, no preserved drawing buffer/default shadows, caller-owned accessible fallback, and a named `useGLTF`/`useKTX2`/`Preload`/`PerformanceMonitor` Drei allowlist.
+- Three runtime contract tests bring the deterministic suite to 43; the full production build passes and its current initial client chunks contain no Three.js runtime markers because no scene is mounted yet.
+- Typed Zod contract plus bundle-safe registry data for all 12 Observatory assets, including stable IDs, meter scale, planned nodes/clips, material roles, per-LOD triangle budgets and nullable URLs, poster/DOM fallbacks, interaction targets, explicit provenance/copyright gaps, and hero/deferred/on-demand priority.
+- Registry-to-manifest tests prove ID and LOD parity, local fallback existence, palette-role integrity, and fail-closed behavior: no current candidate has a public GLB URL, and adding one before runtime/provenance approval is rejected.
+- Self-hosted Three.js 0.185.1 Draco and Basis/KTX2 decoder files with pinned hashes and the upstream MIT license; no mutable decoder CDN or version mixing.
+- Shared glTF loader configuration attaches one reusable Draco instance, meshopt, renderer-detected KTX2, and two-worker ceilings; each explicit attempt uses a fresh LoadingManager and a first-fatal-error latch so retry/progress state cannot drift.
+- Scoped GLB cache eviction, abort support, permanent decoder teardown, and deduplicated cleanup for geometries, materials, textures, closable image bitmaps, and skeletons. Five focused loader tests and the tightened public-rights registry contract bring the deterministic suite to 53.
 
 ## Intentionally deferred
 
-- Three.js/R3F canvas and production 3D assets.
+- Mounted Three.js/R3F scene, loader/quality/state systems, and production 3D assets.
 - Live CC AI activation, user-approved public knowledge records, optional normalized streaming, and a durable shared limiter if production uses multiple function instances.
 - Unverified project, CV, music, video, travel, social, email, and metrics content.
 - Expanded accessibility/end-to-end coverage, the first clean CI run, deployment, and release work.

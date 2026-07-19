@@ -1,9 +1,9 @@
 # Portfolio Master Task Plan
 
-Last updated: 2026-07-19 — clean-checkout semantic foundation gate passed  
+Last updated: 2026-07-19 — shared glTF/GLB decoder and lifecycle runtime verified
 Repository: `uset82/portafolio`  
 Primary research: `deep-research-report (8).md`  
-Status: Next.js implementation is underway; the responsive semantic Observatory shell, route foundation, typed content/inventory contracts, guarded natural palette, UI/media foundations, Motion/Animate UI layer, honest CC AI prototype, disabled server-only CC AI/OpenRouter boundary, configuration-driven model/fallback/privacy policy, per-process abuse/cost controls, public-only bounded knowledge-context builder, and clean-checkout semantic foundation gate are verified. User-owned launch content, approved public knowledge records, Three.js assets, live CC AI activation, paid model choice, and any required durable multi-instance limiter remain pending.
+Status: Next.js implementation is underway; the responsive semantic Observatory shell, route foundation, typed content/inventory contracts, guarded natural palette, UI/media foundations, Motion/Animate UI layer, honest CC AI prototype, disabled server-only CC AI/OpenRouter boundary, configuration-driven model/fallback/privacy policy, per-process abuse/cost controls, public-only bounded knowledge-context builder, clean-checkout semantic gate, client-only Three.js/R3F/Drei runtime foundation, typed provider-neutral 3D registry, and shared glTF/GLB decoder/lifecycle runtime are verified. User-owned launch content, approved public knowledge records, mounted scene and rights-cleared 3D assets, live CC AI activation, paid model choice, and any required durable multi-instance limiter remain pending.
 
 ## How this plan must be maintained
 
@@ -244,7 +244,7 @@ Exit criteria: tasks 0.1–0.12, 0.14, and 0.15 are checked. Task 0.13 requires 
   Acceptance: the fresh task reports the root `AGENTS.md`, both repo skills, WebDesigner 1.1.0 skills/MCP, and the project rules as available.  
 - [ ] ☐ **0.13 — Create and publish the baseline setup commit.**  
   Acceptance: the user authorizes publishing; a focused commit contains the research, plan, instructions, skills, and rules; it is pushed to `origin/main` or a named setup branch.  
-  Status: external GitHub write; do not perform without explicit authorization.
+  Status 2026-07-19: local branch `codex/portfolio-foundation` contains focused commits `71368ad` and `37147fb`; the clean-checkout gate passed. The authorized push attempt was blocked by the repository command policy because this session has no approval channel, so the task remains open until the branch reaches GitHub.
 - [x] ☑ **0.14 — Make every task checkbox visible in raw and rendered Markdown views.**  
   Acceptance: every atomic task uses `[ ] ☐` when open or `[x] ☑` when complete; no task is missing either its Markdown marker or visible box symbol.
 - [x] ☑ **0.15 — Consolidate the approved immersive plan and remove superseded planning artifacts.**  
@@ -497,12 +497,12 @@ Exit criteria: tasks 4.1–4.36 are checked; production build and foundation che
   Acceptance: content/schema validation and at least one critical render or route test run in a clean checkout.
 - [ ] ☐ **4.17 — Add continuous integration.**  
   Acceptance: pull requests run install, formatting/lint, type/content checks, tests, and production build with dependency caching that does not mask lockfile errors.
-  Status 2026-07-19: `.github/workflows/verify.yml` now checks out the repository, installs the pinned Node/pnpm versions, restores pnpm's dependency cache, runs a frozen-lockfile install, and executes `pnpm verify`. The task remains open until an authorized pull request proves the workflow run.
+  Status 2026-07-19: `.github/workflows/verify.yml` checks out the repository, installs pinned Node/pnpm versions, restores pnpm's dependency cache, runs a frozen-lockfile install, and executes `pnpm verify`. Local clean-checkout evidence passes, but the command-policy-blocked branch push prevents a pull-request run; the task remains open until GitHub Actions proves the workflow.
 - [x] ☑ **4.18 — Write contributor/setup documentation.**  
   Acceptance: README explains purpose, prerequisites, setup, commands, content editing, assets, environment, verification, and preview deployment without stale instructions.
 - [x] ☑ **4.19 — Run the semantic foundation gate.**  
   Acceptance: clean install and all standard checks pass; route shell is inspected on mobile and desktop; results are recorded before heavy 3D dependencies are added.
-- [ ] ☐ **4.20 — Install and configure the approved Three.js stack.**  
+- [x] ☑ **4.20 — Install and configure the approved Three.js stack.**
   Acceptance: `three`, `@react-three/fiber`, approved Drei utilities, version compatibility, tree-shaking, Canvas boundaries, and SSR/client-only behavior are verified.
 - [x] ☑ **4.21 — Adopt selected Animate UI open-code components and configure Motion.**  
   Acceptance: Animate UI is treated as a copy-first component distribution rather than an opaque UI dependency; only approved source components are added, their MIT/third-party notices are preserved, default styling is replaced with project tokens, and the application root uses `MotionConfig reducedMotion="user"`.
@@ -516,9 +516,9 @@ Exit criteria: tasks 4.1–4.36 are checked; production build and foundation che
   Acceptance: request/body limits, per-IP/session rate limit, concurrency cap, origin/CSRF strategy where relevant, retry limits, and user-facing limit messages are tested.
 - [x] ☑ **4.26 — Implement the CC AI knowledge/context builder.**  
   Acceptance: only approved public records are included, context is size-bounded, sources remain traceable, private files are excluded, and unknown answers instruct the model to say so.
-- [ ] ☐ **4.27 — Create the 3D asset registry.**  
+- [x] ☑ **4.27 — Create the 3D asset registry.**
   Acceptance: typed metadata maps asset IDs to URLs, nodes, clips, materials, LODs, poster/fallback, interaction target, copyright/provenance, and loading priority.
-- [ ] ☐ **4.28 — Configure glTF/GLB loading and decoder reuse.**  
+- [x] ☑ **4.28 — Configure glTF/GLB loading and decoder reuse.**
   Acceptance: GLTF loading supports the selected Draco or meshopt strategy, one reusable decoder configuration, KTX2 detection where used, loading manager progress, cache behavior, and disposal.
 - [ ] ☐ **4.29 — Add the asset validation and optimization scripts.**  
   Acceptance: commands inspect GLB validity, transforms, animations, dimensions, materials, texture sizes, triangle counts, and generate or verify compressed variants reproducibly.
@@ -1035,6 +1035,9 @@ These are not assumed facts. Add or refine items as Phase 1–2 discovers them.
 | 2026-07-19 | 4.26 | Implemented the public-only, size-bounded CC AI knowledge/context builder. | The service reads only validated structured records and requires factual approval, applicable publication/rights readiness, and all-public provenance; it never reads source files and excludes design-only, held, pending-rights, private, or mixed-source records. Whole JSON records and public source IDs fit an 8,000-character budget, response metadata remains traceable, and the system instruction preserves status and requires an exact honest-unknown answer. The current production context correctly contains zero facts pending task 2.30. Forty deterministic tests, `pnpm verify`, the dynamic route build, and a client-bundle prompt/private-source scan pass. |
 | 2026-07-19 | 4.16 | Proved the baseline content, schema, route, media, AI-boundary, and fallback tests from a clean repository checkout. | Exact commit `71368ad` was cloned into a disposable directory; `pnpm install --frozen-lockfile` and `pnpm verify` passed with 40 tests and the 13-page production build. |
 | 2026-07-19 | 4.19 | Passed the semantic foundation gate before adding the Three.js runtime. | The same clean checkout passed every standard command, then its production server was inspected at 1440×900 and 390×844: one H1, complete optimized poster/alt text, matching client/scroll widths, zero console warnings/errors, and a keyboard-Escape mobile-menu close path. |
+| 2026-07-19 | 4.20 | Installed and configured the optional Three.js runtime behind a reusable client-only boundary. | Exact `three` 0.185.1, Fiber 9.6.1, Drei 10.7.7, and matching types satisfy the current React 19.2.4 peer ranges. `LazyThreeCanvas` disables SSR; the internal owner bounds DPR, uses demand rendering, requires fallback/label input, and exposes only a four-utility named Drei allowlist. Three focused tests, all 43 tests, `pnpm verify`, the 13-page production build, and an initial-client-chunk scan passed; no scene is mounted and no Three.js marker entered the current critical chunks. |
+| 2026-07-19 | 4.27 | Created the typed runtime registry for all 12 provider-neutral Observatory assets. | Strict schemas and data map stable IDs to planned GLB/LOD URLs, required node and clip contracts, approved material roles, scale, poster/DOM fallback, interaction targets, provenance/copyright fields, and loading priority. The registry matches the specification manifest and LOD counts; every current public model URL is `null`, every fallback resolves locally, and unsafe or rights-pending public URLs are rejected. Five focused registry tests pass. |
+| 2026-07-19 | 4.28 | Configured one reusable glTF runtime with self-hosted, version-matched decoders and explicit asset lifecycle ownership. | Shared Draco and KTX2 instances use pinned Three.js 0.185.1 files; meshopt is bundled, KTX2 detects renderer support, and each explicit attempt receives a fresh LoadingManager whose first fatal URL cannot be overwritten by late progress. Scoped cache eviction, abort, retry isolation, permanent decoder teardown, and deduplicated geometry/material/texture/image/skeleton disposal are implemented. Five focused loader tests verify decoder hashes, progress/error behavior, clean retries, disposal/cache semantics, and configuration source; all 53 tests and `pnpm verify` pass. No real GLB decode was claimed because every registry URL is still rights-gated and `null`. |
 
 ## Implementation research notes
 
@@ -1128,7 +1131,7 @@ Design mobile and desktop intentionally. Keep touch targets at least 44px, keybo
 
 - Portfolio content, CV facts, portrait, personal media, and asset rights still need user confirmation.
 - Live demo availability and repository facts can change and must be re-verified during curation.
-- The GitHub repository is empty and no baseline commit has been authorized or published.
+- The GitHub repository still has no published branch; the prepared local foundation branch cannot be pushed until the project command policy permits the external write.
 - Hunyuan production use is unresolved: the current Hunyuan3D 2.1 license does not cover use/display in the EU, UK, or South Korea, and the hosted Studio terms still require an archived review. A rights-cleared alternative must remain available.
 - Any generated 3D mesh may require substantial retopology, UV/material repair, rigging, manual art direction, and rights review before it is web-ready.
 - Hunyuan3D 2.1 local shape and texture generation has significant GPU requirements; the official repository currently reports 10 GB, 21 GB, and 29 GB VRAM for shape, texture, and combined paths respectively.
