@@ -37,10 +37,11 @@ Slice: semantic poster-first foundation
 - Provider work remains single-attempt: model/provider fallback occurs inside one bounded OpenRouter request, while visitor retries are explicit and pass through the local limit guard.
 - Public-only CC AI knowledge builder over the validated content model: factual approval, publication, rights, and all-public-source gates exclude private/design-only/held records without reading provenance files.
 - Deterministic whole-record JSON context capped at 8,000 characters, traceable public source IDs, response knowledge metadata, status-preservation rules, prompt-injection boundary, and an exact honest-unknown instruction. The current approved context correctly contains zero facts.
+- Clean-checkout foundation proof for exact commit `71368ad`: frozen-lockfile install, all 40 tests and standard checks, 13-page production build, desktop/mobile production inspection, overflow/image/console checks, and the mobile navigation keyboard path.
 
 ## Intentionally deferred
 
 - Three.js/R3F canvas and production 3D assets.
-- Live CC AI activation, optional normalized streaming, public knowledge builder, and a durable shared limiter if production uses multiple function instances.
+- Live CC AI activation, user-approved public knowledge records, optional normalized streaming, and a durable shared limiter if production uses multiple function instances.
 - Unverified project, CV, music, video, travel, social, email, and metrics content.
 - Expanded accessibility/end-to-end coverage, the first clean CI run, deployment, and release work.

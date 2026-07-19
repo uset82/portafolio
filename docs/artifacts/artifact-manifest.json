@@ -6,7 +6,7 @@
   "framework": "Next.js App Router",
   "language": "TypeScript",
   "packageManager": "pnpm@10.13.1",
-  "status": "semantic-ai-knowledge-boundary",
+  "status": "semantic-foundation-gate-passed",
   "entrypoints": [
     "site/src/app/layout.tsx",
     "site/src/app/page.tsx",
@@ -28,7 +28,8 @@
     "keyboardFocus": "skip link and focus ring inspected",
     "console": "no warnings or errors",
     "mediaFoundation": "manual mute-first native media and consent-gated lazy provider embeds; no unapproved source loaded",
-    "baselineTests": "4 passing locally; clean-checkout evidence pending first repository revision and pull request",
+    "baselineTests": "40 passing from exact commit 71368ad in a clean checkout after frozen-lockfile installation",
+    "cleanCheckout": "pnpm install --frozen-lockfile and pnpm verify passed; 13-page production build inspected at 1440x900 and 390x844",
     "continuousIntegration": "workflow authored; pull-request run pending first repository revision",
     "openRouterBoundary": "@openrouter/sdk 0.13.65 is server-only, mockable, attribution-configured, and absent from emitted client chunks",
     "unitTests": "40 passing without external media or AI network requests",

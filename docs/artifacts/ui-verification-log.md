@@ -75,3 +75,12 @@ Automated accessibility audits, 200% zoom, screen-reader runs, performance profi
 - Provider source is absent from the DOM before consent. When approved and loaded, the frame is lazy, titled, sandboxed, privacy-described, non-autoplaying by contract, and paired with retry/external recovery.
 - The existing `prefers-reduced-motion` and Motion user-preference paths apply, while playback remains manual in every mode.
 - `pnpm verify` passed formatting, lint, strict types, negative content and palette contracts, and the 13-page production build.
+
+## Clean-checkout semantic foundation gate — 2026-07-19
+
+- Cloned exact commit `71368ad` into a disposable directory with no working-tree changes.
+- `pnpm install --frozen-lockfile` completed, then `pnpm verify` passed formatting, lint, strict types, 40 tests, content/palette/boundary checks, and the 13-page production build.
+- The clean production server was inspected at 1440×900 and 390×844 before any Three.js dependency was added.
+- Desktop metrics: 1425px client/scroll width, one H1, complete 1254px-wide optimized poster, 26 focusable controls, and no console warnings/errors.
+- Mobile metrics: 375px client/scroll width, one H1, complete 339px responsive poster, 26 focusable controls, and no console warnings/errors.
+- The settled mobile first viewport kept identity, readable headline/support, both actions, and the CC AI entry. The labeled Menu exposed all six routes and closed with Escape, restoring the Menu control.

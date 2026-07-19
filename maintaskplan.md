@@ -1,9 +1,9 @@
 # Portfolio Master Task Plan
 
-Last updated: 2026-07-19 — CC AI public-only knowledge context implemented and verified  
+Last updated: 2026-07-19 — clean-checkout semantic foundation gate passed  
 Repository: `uset82/portafolio`  
 Primary research: `deep-research-report (8).md`  
-Status: Next.js implementation is underway; the responsive semantic Observatory shell, route foundation, typed content/inventory contracts, guarded natural palette, UI/media foundations, Motion/Animate UI layer, honest CC AI prototype, disabled server-only CC AI/OpenRouter boundary, configuration-driven model/fallback/privacy policy, per-process abuse/cost controls, and public-only bounded knowledge-context builder are verified. User-owned launch content, approved public knowledge records, Three.js assets, live CC AI activation, paid model choice, and any required durable multi-instance limiter remain pending.
+Status: Next.js implementation is underway; the responsive semantic Observatory shell, route foundation, typed content/inventory contracts, guarded natural palette, UI/media foundations, Motion/Animate UI layer, honest CC AI prototype, disabled server-only CC AI/OpenRouter boundary, configuration-driven model/fallback/privacy policy, per-process abuse/cost controls, public-only bounded knowledge-context builder, and clean-checkout semantic foundation gate are verified. User-owned launch content, approved public knowledge records, Three.js assets, live CC AI activation, paid model choice, and any required durable multi-instance limiter remain pending.
 
 ## How this plan must be maintained
 
@@ -493,15 +493,14 @@ Exit criteria: tasks 4.1–4.36 are checked; production build and foundation che
   Acceptance: `.env.example` contains safe placeholders only and every variable has purpose, required/optional state, and local/deploy instructions.
 - [x] ☑ **4.15 — Create standard project scripts.**  
   Acceptance: development, build, preview, lint, format-check, type/content check, test, and full verification commands exist and are documented.
-- [ ] ☐ **4.16 — Add baseline tests.**  
+- [x] ☑ **4.16 — Add baseline tests.**  
   Acceptance: content/schema validation and at least one critical render or route test run in a clean checkout.
-  Status 2026-07-19: four baseline tests now cover approved content, video accessibility requirements, embed autoplay rejection, and the semantic Sound fallback; local frozen-lockfile `pnpm verify` passes. The clean-checkout run remains open because this empty repository has no `HEAD` revision yet; the new CI workflow will provide that evidence after the first authorized commit/pull request.
 - [ ] ☐ **4.17 — Add continuous integration.**  
   Acceptance: pull requests run install, formatting/lint, type/content checks, tests, and production build with dependency caching that does not mask lockfile errors.
   Status 2026-07-19: `.github/workflows/verify.yml` now checks out the repository, installs the pinned Node/pnpm versions, restores pnpm's dependency cache, runs a frozen-lockfile install, and executes `pnpm verify`. The task remains open until an authorized pull request proves the workflow run.
 - [x] ☑ **4.18 — Write contributor/setup documentation.**  
   Acceptance: README explains purpose, prerequisites, setup, commands, content editing, assets, environment, verification, and preview deployment without stale instructions.
-- [ ] ☐ **4.19 — Run the semantic foundation gate.**  
+- [x] ☑ **4.19 — Run the semantic foundation gate.**  
   Acceptance: clean install and all standard checks pass; route shell is inspected on mobile and desktop; results are recorded before heavy 3D dependencies are added.
 - [ ] ☐ **4.20 — Install and configure the approved Three.js stack.**  
   Acceptance: `three`, `@react-three/fiber`, approved Drei utilities, version compatibility, tree-shaking, Canvas boundaries, and SSR/client-only behavior are verified.
@@ -1034,6 +1033,8 @@ These are not assumed facts. Add or refine items as Phase 1–2 discovers them.
 | 2026-07-19 | 4.24 | Implemented the configuration-driven CC AI model, fallback, and provider privacy policy. | Prototype mode defaults to the variable `openrouter/free` router with a named override; production requires a paid named model; both modes support deduplicated ordered fallbacks and return actual responding-model metadata. Requests enforce ZDR plus denied provider data collection, while 402, 429, and provider failure remain distinct safe states. Twenty-four deterministic tests, `pnpm verify`, the dynamic route build, and a `.next/static` policy-identifier scan pass. |
 | 2026-07-19 | 4.25 | Implemented the disabled route's abuse and cost-control foundation. | Exact same-origin/Fetch Metadata checks reject cross-site or unverifiable sources; bounded JSON/body/history/output, trusted hosting IP plus server-issued HttpOnly session fixed-window limits, per-session/process concurrency caps, bounded tracking state, explicit `Retry-After`, single provider attempts, and distinct forbidden/rate/busy messages are tested. Thirty-three deterministic tests, `pnpm verify`, the dynamic production route build, and a `.next/static` scan pass. The limiter is intentionally per process; task 8.19 remains the durable multi-instance production gate. |
 | 2026-07-19 | 4.26 | Implemented the public-only, size-bounded CC AI knowledge/context builder. | The service reads only validated structured records and requires factual approval, applicable publication/rights readiness, and all-public provenance; it never reads source files and excludes design-only, held, pending-rights, private, or mixed-source records. Whole JSON records and public source IDs fit an 8,000-character budget, response metadata remains traceable, and the system instruction preserves status and requires an exact honest-unknown answer. The current production context correctly contains zero facts pending task 2.30. Forty deterministic tests, `pnpm verify`, the dynamic route build, and a client-bundle prompt/private-source scan pass. |
+| 2026-07-19 | 4.16 | Proved the baseline content, schema, route, media, AI-boundary, and fallback tests from a clean repository checkout. | Exact commit `71368ad` was cloned into a disposable directory; `pnpm install --frozen-lockfile` and `pnpm verify` passed with 40 tests and the 13-page production build. |
+| 2026-07-19 | 4.19 | Passed the semantic foundation gate before adding the Three.js runtime. | The same clean checkout passed every standard command, then its production server was inspected at 1440×900 and 390×844: one H1, complete optimized poster/alt text, matching client/scroll widths, zero console warnings/errors, and a keyboard-Escape mobile-menu close path. |
 
 ## Implementation research notes
 
