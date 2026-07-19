@@ -17,13 +17,15 @@
     "palette:check": "tsx scripts/validate-palette.ts",
     "boundary:check": "tsx scripts/validate-server-boundaries.ts",
     "assets:check": "tsx scripts/check-3d-assets.ts",
+    "immersive:check": "tsx scripts/validate-immersive-build.ts",
     "assets:optimize": "tsx scripts/optimize-3d-asset.ts",
     "assets:verify-variant": "tsx scripts/optimize-3d-asset.ts --verify",
     "test:unit": "tsx --test src/tests/*.test.ts",
     "test": "pnpm test:unit && pnpm content:check && pnpm palette:check && pnpm boundary:check && pnpm assets:check",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build"
+    "verify:prebuild": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test",
+    "verify": "pnpm verify:prebuild && pnpm build && pnpm immersive:check"
   },
   "dependencies": {
     "@openrouter/sdk": "0.13.65",

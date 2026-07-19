@@ -35,6 +35,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={`${displayFont.variable} ${bodyFont.variable}`}>
       <body>
+        <noscript>
+          <style>{`.scene-reveal,
+.hero-copy > div {
+  opacity: 1 !important;
+  transform: none !important;
+}`}</style>
+        </noscript>
         <MotionProvider>
           <a className="skip-link" href="#main-content">
             Skip to main content

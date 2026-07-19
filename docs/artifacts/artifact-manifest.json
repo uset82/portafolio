@@ -6,8 +6,9 @@
   "framework": "Next.js App Router",
   "language": "TypeScript",
   "packageManager": "pnpm@10.13.1",
-  "status": "immersive-test-doubles",
+  "status": "immersive-ci-gate",
   "entrypoints": [
+    ".github/workflows/verify.yml",
     "site/src/app/layout.tsx",
     "site/src/app/page.tsx",
     "site/src/app/globals.css",
@@ -34,6 +35,7 @@
     "site/src/testing/observatory-test-doubles.ts",
     "site/src/testing/cc-ai-test-doubles.ts",
     "site/scripts/check-3d-assets.ts",
+    "site/scripts/validate-immersive-build.ts",
     "site/scripts/optimize-3d-asset.ts"
   ],
   "publicAssets": [
@@ -52,7 +54,7 @@
     "mediaFoundation": "manual mute-first native media and consent-gated lazy provider embeds; no unapproved source loaded",
     "baselineTests": "40 passing from exact commit 71368ad in a clean checkout after frozen-lockfile installation",
     "cleanCheckout": "pnpm install --frozen-lockfile and pnpm verify passed; 13-page production build inspected at 1440x900 and 390x844",
-    "continuousIntegration": "workflow authored; pull-request run blocked until project command policy permits the prepared branch push",
+    "continuousIntegration": "read-only frozen-lockfile workflow explicitly runs prebuild source/contracts/tests, production build, and post-build immersive artifact validation; first hosted run remains task 4.36 and requires an authorized branch push",
     "threeRuntime": "exact Three.js 0.185.1, Fiber 9.6.1, Drei 10.7.7, and matching types; lazy client-only SSR-disabled Canvas with bounded demand rendering and named utility allowlist",
     "threeAssetRegistry": "12 typed provider-neutral assets match the design manifest; URLs remain null until rights/runtime approval; node, clip, material, LOD, fallback, interaction, provenance, and priority contracts are validated",
     "gltfRuntime": "shared Draco and renderer-detected KTX2 with self-hosted Three.js 0.185.1 decoder hashes; bundled meshopt; fresh progress manager per attempt; first-error latch; scoped cache, abort, retry, permanent teardown, and deduplicated scene disposal",
@@ -62,6 +64,7 @@
     "observatoryCapabilityPolicy": "outside-Canvas controller resolves optional WebGL2, viewport, DPR, memory, CPU, reduced-motion, reduced-data, connection, battery, and visibility signals through a documented fail-closed auto/manual policy; versioned external scene state and a semantic four-choice 44px control own the result",
     "observatoryProgressiveLoading": "homepage keeps semantic HTML and the optimized priority poster ahead of two dynamic client boundaries; a typed full/reduced plan gates Canvas on all hero-critical URLs, then stages critical, idle-deferred, and selection-driven GLBs with truthful failure status, abort, scoped cache eviction, and disposal; current rights-gated critical URLs correctly prevent Canvas and model requests; browser no-blank QA remains open",
     "immersiveTestDoubles": "schema-valid repository-only model URLs plus an injectable in-memory GLTF attempt factory cover success, exact URL failure, abort, progress, route/component seams, and request recording without files or fetch; a scripted provider and real-handler route double cover success/errors and serializable browser-fulfill payloads without OpenRouter; production client chunks contain none of their markers",
+    "immersiveCiGate": "post-build validation checks 12 manifest assets against registry status/scale/LOD/triangle metadata, inspects every public GLB, scans 24 client files for OpenRouter secrets and test-double markers, and verifies the actual prerendered semantic poster/no-script fallback contains no Canvas while critical URLs remain rights-gated",
     "openRouterBoundary": "@openrouter/sdk 0.13.65 is server-only, mockable, attribution-configured, and absent from emitted client chunks",
     "unitTests": "90 passing without external media, AI network requests, public model URLs, or a mounted WebGL scene",
     "ccAiRoute": "disabled-by-default non-streaming JSON boundary; production request verified safe 503/no-store contract",

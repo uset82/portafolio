@@ -30,15 +30,17 @@ Open the local address printed by Next.js. The initial implementation is semanti
 | `pnpm palette:check`         | Reject colors outside the approved Natural Observatory palette               |
 | `pnpm boundary:check`        | Reject OpenRouter runtime/key use outside the server-only boundary           |
 | `pnpm assets:check`          | Validate every public registry GLB or one explicit candidate against budgets |
+| `pnpm immersive:check`       | Validate the built asset contracts, client boundary, and poster fallback     |
 | `pnpm assets:optimize`       | Generate a deterministic Meshopt GLB and provenance sidecar                  |
 | `pnpm assets:verify-variant` | Rebuild a variant and verify its input, output, toolchain, and byte hashes   |
 | `pnpm test:unit`             | Run schema, service, GLB-pipeline, and critical static-render tests          |
 | `pnpm test`                  | Run unit, content, palette, boundary, and published-3D-asset checks          |
 | `pnpm format`                | Apply Prettier formatting                                                    |
 | `pnpm format:check`          | Verify formatting without changing files                                     |
+| `pnpm verify:prebuild`       | Run formatting, lint, types, tests, and source/asset contracts               |
 | `pnpm verify`                | Run every formatting, lint, type, contract, test, asset, and build check     |
 
-Pull requests and pushes to `main` use `.github/workflows/verify.yml` to install from the frozen lockfile and run the complete verification gate in a clean Linux checkout. Dependency caching accelerates downloads but never replaces the locked install.
+Pull requests and pushes to `main` use `.github/workflows/verify.yml` to install from the frozen lockfile, run the prebuild source/contracts/tests gate, create the production build, then inspect the emitted immersive artifact. The final stage validates registry/manifest budgets, every public GLB, client-secret and test-double isolation, and the actual semantic poster/no-script fallback. Dependency caching accelerates downloads but never replaces the locked install.
 
 ## Source ownership
 

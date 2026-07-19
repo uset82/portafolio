@@ -42,5 +42,11 @@ jobs:
       - name: Install locked dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run the complete verification gate
-        run: pnpm verify
+      - name: Validate source, contracts, asset metadata, and deterministic chat
+        run: pnpm verify:prebuild
+
+      - name: Build the production portfolio
+        run: pnpm build
+
+      - name: Validate immersive production artifacts and fallback
+        run: pnpm immersive:check
