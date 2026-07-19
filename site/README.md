@@ -149,6 +149,12 @@ The homepage always renders the semantic hero and optimized priority poster befo
 
 The current registry intentionally has no public model URLs, so `observatory-shell` and `robot-guide` keep the route in truthful poster mode with no GLB requests. Failed critical loads also preserve the poster. The live owner aborts pending attempts, cancels idle work, disposes loaded resources, and evicts only plan-owned cache URLs when it unmounts. Browser no-blank and real-model validation remain part of task 4.33.
 
+## Immersive test doubles
+
+Test code may import the repository-only helpers from `@/testing`. `createObservatoryTestRegistry()` supplies schema-valid lightweight model URLs, while `createObservatoryGltfAttemptDouble()` returns minimal in-memory Three.js scenes and scripts exact failures or aborts without reading a GLB or calling `fetch`. The progressive content component accepts that factory through a client-only injection seam; the public homepage API does not.
+
+`createCcAiProviderDouble()` scripts deterministic replies and records provider calls. `createCcAiRouteDouble()` composes it with the real handler and can return either a normal route response or a serializable `{ status, headers, body }` payload for browser request interception. These helpers import no OpenRouter SDK and are absent from production client chunks.
+
 ## Deployment
 
 The selected output is Vercel-compatible, but no deployment project has been linked and no production deployment is authorized. Use a preview deployment for review when the release phase begins.

@@ -78,7 +78,16 @@ export class GltfAssetLoadError extends Error {
   }
 }
 
-export function createGltfLoadingAttempt(renderer: WebGLRenderer) {
+export type GltfLoadingAttempt = {
+  getSnapshot: ReturnType<typeof createGltfProgressController>["getSnapshot"];
+  subscribe: ReturnType<typeof createGltfProgressController>["subscribe"];
+  abort: () => void;
+  load: (urls: readonly string[]) => Promise<GLTF[]>;
+};
+
+export type GltfLoadingAttemptFactory = (renderer: WebGLRenderer) => GltfLoadingAttempt;
+
+export const createGltfLoadingAttempt: GltfLoadingAttemptFactory = (renderer) => {
   Cache.enabled = true;
 
   const progress = createGltfProgressController();
@@ -113,7 +122,7 @@ export function createGltfLoadingAttempt(renderer: WebGLRenderer) {
       );
     },
   };
-}
+};
 
 export function evictGltfCache(urls: readonly string[]) {
   urls.forEach((url) => Cache.remove(url));

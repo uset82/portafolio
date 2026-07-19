@@ -4,6 +4,8 @@ import dynamic from "next/dynamic";
 import { useMemo, type ReactNode } from "react";
 
 import { observatoryAssetRegistry } from "@/lib/three/asset-registry";
+import type { ObservatoryAsset } from "@/lib/three/asset-registry-schema";
+import type { GltfLoadingAttemptFactory } from "@/lib/three/gltf-runtime";
 import {
   buildProgressiveLoadPlan,
   describeProgressiveSceneStatus,
@@ -22,11 +24,20 @@ export type ObservatoryProgressiveExperienceProps = {
   poster: ReactNode;
 };
 
-function ProgressiveExperienceContent({ poster }: ObservatoryProgressiveExperienceProps) {
+export type ObservatoryProgressiveExperienceContentProps = ObservatoryProgressiveExperienceProps & {
+  assets?: readonly ObservatoryAsset[];
+  createLoadingAttempt?: GltfLoadingAttemptFactory;
+};
+
+export function ObservatoryProgressiveExperienceContent({
+  poster,
+  assets = observatoryAssetRegistry.assets,
+  createLoadingAttempt,
+}: ObservatoryProgressiveExperienceContentProps) {
   const scene = useObservatorySceneSnapshot();
   const plan = useMemo(
-    () => buildProgressiveLoadPlan(observatoryAssetRegistry.assets, scene.quality.tier),
-    [scene.quality.tier],
+    () => buildProgressiveLoadPlan(assets, scene.quality.tier),
+    [assets, scene.quality.tier],
   );
   const status = describeProgressiveSceneStatus(scene, plan);
 
@@ -40,7 +51,10 @@ function ProgressiveExperienceContent({ poster }: ObservatoryProgressiveExperien
             className="observatory-canvas"
             fallback={null}
           >
-            <LazyObservatoryLiveScene plan={plan} />
+            <LazyObservatoryLiveScene
+              plan={plan}
+              {...(createLoadingAttempt ? { createLoadingAttempt } : {})}
+            />
           </LazyThreeCanvas>
         </div>
       ) : null}
@@ -54,7 +68,7 @@ function ProgressiveExperienceContent({ poster }: ObservatoryProgressiveExperien
 export function ObservatoryProgressiveExperience(props: ObservatoryProgressiveExperienceProps) {
   return (
     <ObservatorySceneRuntimeProvider>
-      <ProgressiveExperienceContent {...props} />
+      <ObservatoryProgressiveExperienceContent {...props} />
     </ObservatorySceneRuntimeProvider>
   );
 }

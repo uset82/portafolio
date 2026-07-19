@@ -13,6 +13,8 @@ import {
   createGltfLoadingAttempt,
   disposeGltfAsset,
   evictGltfCache,
+  type GltfLoadingAttempt,
+  type GltfLoadingAttemptFactory,
 } from "@/lib/three/gltf-runtime";
 
 import { useObservatorySceneStore } from "./observatory-scene-provider";
@@ -26,15 +28,19 @@ type IdleWindow = Window &
 
 export type ObservatoryLiveSceneProps = {
   plan: ProgressiveLoadPlan;
+  createLoadingAttempt?: GltfLoadingAttemptFactory;
 };
 
-export function ObservatoryLiveScene({ plan }: ObservatoryLiveSceneProps) {
+export function ObservatoryLiveScene({
+  plan,
+  createLoadingAttempt = createGltfLoadingAttempt,
+}: ObservatoryLiveSceneProps) {
   const renderer = useThree((state) => state.gl);
   const store = useObservatorySceneStore();
   const loadedAssets = useRef(new Map<string, GLTF>());
 
   useEffect(() => {
-    const attempts = new Set<ReturnType<typeof createGltfLoadingAttempt>>();
+    const attempts = new Set<GltfLoadingAttempt>();
     const loadingUrls = new Set<string>();
     const loadedUrls = loadedAssets.current;
     const idleWindow = window as IdleWindow;
@@ -54,7 +60,7 @@ export function ObservatoryLiveScene({ plan }: ObservatoryLiveSceneProps) {
       let allLoaded = true;
 
       for (const [index, entry] of pendingEntries.entries()) {
-        const attempt = createGltfLoadingAttempt(renderer);
+        const attempt = createLoadingAttempt(renderer);
         attempts.add(attempt);
 
         try {
@@ -143,7 +149,7 @@ export function ObservatoryLiveScene({ plan }: ObservatoryLiveSceneProps) {
       );
       loadedUrls.clear();
     };
-  }, [plan, renderer, store]);
+  }, [createLoadingAttempt, plan, renderer, store]);
 
   return <ObservatorySceneShell />;
 }
