@@ -1,9 +1,9 @@
 # Portfolio Master Task Plan
 
-Last updated: 2026-07-19 — immersive source, build, and fallback CI gate verified locally
+Last updated: 2026-07-19 — water and poster-first desktop/mobile WebGL gates verified
 Repository: `uset82/portafolio`  
 Primary research: `deep-research-report (8).md`  
-Status: Next.js implementation is underway; the responsive semantic Observatory shell, route foundation, typed content/inventory contracts, guarded natural palette, UI/media foundations, Motion/Animate UI layer, honest CC AI prototype, disabled server-only CC AI/OpenRouter boundary, configuration-driven model/fallback/privacy policy, per-process abuse/cost controls, public-only bounded knowledge-context builder, clean-checkout semantic gate, client-only Three.js/R3F/Drei runtime foundation, typed provider-neutral 3D registry, shared glTF/GLB decoder/lifecycle runtime, deterministic offline GLB validation/optimization gate, typed Observatory scene shell/state ownership, outside-Canvas capability/manual-quality policy, homepage poster-first progressive loading boundary, shared no-network Observatory/CC AI test doubles, and the explicit immersive source/build/artifact CI gate are verified automatically. The water POC and progressive scene presentation remain pending approved browser compile, no-blank visual, and desktop/mobile performance evidence; current rights-gated critical model URLs correctly prevent Canvas and GLB requests. User-owned launch content, approved public knowledge records, rights-cleared 3D assets, live CC AI activation, paid model choice, and any required durable multi-instance limiter remain pending.
+Status: Next.js implementation is underway; the semantic Observatory shell, natural palette, route/content/media foundations, Motion/Animate UI layer, honest disabled CC AI/OpenRouter boundary, bounded public knowledge and abuse controls, client-only Three.js/R3F/Drei runtime, provider-neutral registry, shared glTF lifecycle, deterministic asset gate, typed scene ownership, capability/quality policy, feathered full/reduced water tiers, poster-first loading, no-network test doubles, and immersive build gate are verified. Approved browser QA compiled the real shader and proved desktop Full, mobile Reduced, Poster, and failed-load fallbacks without a blank viewport; current rights-gated model URLs still correctly prevent production Canvas/GLB requests. The immersive clean-checkout gate, user-owned launch content, approved public knowledge, rights-cleared 3D assets, live CC AI activation, paid model choice, and any required durable multi-instance limiter remain pending.
 
 ## How this plan must be maintained
 
@@ -524,14 +524,14 @@ Exit criteria: tasks 4.1–4.36 are checked; production build and foundation che
   Acceptance: commands inspect GLB validity, transforms, animations, dimensions, materials, texture sizes, triangle counts, and generate or verify compressed variants reproducibly.
 - [x] ☑ **4.30 — Build the scene shell and state model.**
   Acceptance: camera, lights, environment, scene groups, selected artifact, quality tier, sound state, motion preference, and loading/error state have typed ownership without React state in the frame loop.
-- [ ] ☐ **4.31 — Build the WebGL water proof of concept.**  
+- [x] ☑ **4.31 — Build the WebGL water proof of concept.**
   Acceptance: a bounded shader or render-target prototype demonstrates ripples/reflections at acceptable desktop and mobile cost, with a simpler material and static-poster fallback.
-  Status 2026-07-19: the unmounted full shader, still reduced material, zero-work poster tier, structural budgets, and four deterministic tests are implemented; all 78 tests, lint, type-check, and production build pass. This task remains open because real shader compilation, visual ripple/reflection review, and measured desktop/mobile renderer diagnostics are approval-gated and have not run.
+  Evidence 2026-07-19: approved browser QA compiled the real WebGL2/GLSL scene with deterministic in-memory assets. At the requested 1440×900 desktop viewport, Full rendered one program, one draw call, 6,912 triangles, one geometry, zero textures, DPR 1, and 30.9 observed active frames per second; visual review led to a softer feathered reflection that preserves the poster hierarchy. At 390×844, Reduced rendered one program, one draw call, two triangles, one geometry, zero textures, and zero continuous frames during a 1.004-second sample; its 44px controls, 375px client/canvas width, 496px scene height, and zero horizontal overflow passed. Poster mode removed the Canvas on both viewports. No page or shader error occurred; the current Fiber runtime emitted one upstream `THREE.Clock` deprecation warning, tracked for release follow-up.
 - [x] ☑ **4.32 — Implement capability and quality detection.**
   Acceptance: WebGL support, device memory/hardware hints where available, viewport, DPR, reduced motion, reduced data, battery-safe defaults, and manual quality control resolve to a documented tier.
-- [ ] ☐ **4.33 — Implement poster-first progressive scene loading.**  
+- [x] ☑ **4.33 — Implement poster-first progressive scene loading.**
   Acceptance: meaningful HTML and an optimized poster appear before the canvas; heavy assets load by priority; the poster remains on failure; no blank first viewport occurs.
-  Status 2026-07-19: the homepage poster and semantic content now precede a dynamic, rights-gated Canvas boundary; typed full/reduced LOD planning, sequential critical loading, idle-deferred loading, selection-driven loading, safe failure status, abort, scoped cache eviction, and disposal are implemented. All 90 tests plus format, lint, type-check, content, palette, server-boundary, public-asset, diff, and 13-route production-build checks pass. This task remains unchecked because approved browser no-blank/failure-path evidence has not run and the two critical model URLs remain intentionally `null` pending rights/asset approval.
+  Evidence 2026-07-19: approved desktop/mobile browser QA exercised deterministic critical-load success and exact critical-load failure through the real progressive component. Success reached `ready` after both critical assets, then Full→Reduced→Poster controls changed shader, still, and zero-Canvas states without errors. On a failed `observatory-shell` request, the poster stayed visible while the Canvas layer remained `aria-hidden="true"` at opacity 0 with an honest failure status. The real `/` route kept its optimized meaningful poster and semantic hero visible with zero Canvas requests, no blank viewport, no horizontal overflow, and the truthful rights-gated status at 1440×900 and 390×844. The two production model URLs correctly remain `null` until rights-cleared assets are approved.
 - [x] ☑ **4.34 — Add deterministic 3D and chat test doubles.**
   Acceptance: route, component, and end-to-end tests can run without downloading large GLBs or making real OpenRouter requests.
 - [x] ☑ **4.35 — Add immersive CI checks.**
@@ -814,7 +814,7 @@ Exit criteria: tasks 7.1–7.44 are checked; no critical/high issue is open; low
 ## Phase 8 — Deployment and launch
 
 Dependencies: Phase 7 release-candidate gate and explicit user authorization for external writes.  
-Exit criteria: tasks 8.1–8.24 are checked; production is live with verified 3D assets, CC AI, fallbacks, observability, documentation, and rollback.
+Exit criteria: tasks 8.1–8.25 are checked; production is live with verified 3D assets, CC AI, fallbacks, observability, documentation, and rollback.
 
 - [ ] ☐ **8.1 — Run the deployment-advisor workflow.**  
   Acceptance: `$deploy-advisor` confirms the approved provider, build settings, environment, caching, redirects, headers, preview behavior, and rollback path.
@@ -864,6 +864,8 @@ Exit criteria: tasks 8.1–8.24 are checked; production is live with verified 3D
   Acceptance: CDN transfer, serverless/edge execution, OpenRouter request volume, rate limits, logs, and alerts remain within the approved launch assumptions.
 - [ ] ☐ **8.24 — Complete the immersive production launch gate.**  
   Acceptance: user confirms the live Observatory, Sound Lab, ASTRAEA, PINÁCULO, water, artifacts, CC AI, and all fallback tiers meet launch intent; unresolved issues have backlog IDs.
+- [ ] ☐ **8.25 — Resolve the upstream Three.js Clock deprecation warning.**
+  Acceptance: a compatible Three.js/React Three Fiber update or verified upstream resolution removes the `THREE.Clock` browser warning without regressing Canvas loading, Full/Reduced/Poster tiers, tests, or production build.
 
 ---
 
@@ -1045,6 +1047,8 @@ These are not assumed facts. Add or refine items as Phase 1–2 discovers them.
 | 2026-07-19 | 4.32 | Implemented the outside-Canvas capability detector, versioned quality state, and semantic manual tier control. | WebGL2, viewport, DPR, optional memory/CPU, reduced motion/data, connection, battery, visibility, and Auto/Full/Reduced/Poster preference resolve through documented hard/soft precedence. Missing limited APIs are neutral, listeners clean up, unsupported WebGL2 remains poster-only, and the 44px radio fieldset uses project tokens. Eight focused tests, all 78 tests, `pnpm verify`, and the 13-page build pass; no route mounts the runtime, so no browser/device claim is made. |
 | 2026-07-19 | 4.34 | Added deterministic Observatory and CC AI test doubles for route, component, and browser-interception tests. | A schema-valid repository-only model plan plus injectable in-memory GLTF success/failure/abort attempts perform no file or network load; the scripted provider uses the real handler and emits normal or serializable fulfill responses without OpenRouter. Seven focused contracts, all 90 tests, `pnpm verify`, the 13-route build, and a production client-chunk marker scan pass. |
 | 2026-07-19 | 4.35 | Added the explicit immersive source, production-build, and emitted-artifact CI gate. | The workflow now runs frozen-lockfile prebuild contracts/tests, `next build`, and post-build validation of 12 manifest assets, all public GLBs, 24 client files for AI secrets/test markers, and the actual semantic poster/no-script fallback. The no-script Motion visibility defect was fixed; all 90 tests and the complete local `pnpm verify` chain pass. The first hosted run remains task 4.36. |
+| 2026-07-19 | 4.31 | Browser-verified and visually refined the bounded water proof of concept. | Deterministic WebGL2 QA measured Full at 6,912 triangles/one draw/zero textures/30.9 active FPS and Reduced at two triangles/one draw/zero textures/zero continuous frames; desktop/mobile screenshots confirmed feathered Natural Observatory blending, 44px mobile controls, no overflow, and Poster removes the Canvas. Five focused water tests and all 91 tests pass. |
+| 2026-07-19 | 4.33 | Browser-verified poster-first loading, successful quality transitions, and exact failure retention. | The real progressive component loaded both critical test assets, changed Full→Reduced→Poster, and kept the poster over a hidden failed Canvas; the production homepage stayed meaningful and Canvas-free at 1440×900 and 390×844 while rights-gated URLs remain `null`. Browser console had no page/shader errors; `pnpm verify` passed the 13-route production build and immersive artifact scan. |
 
 ## Implementation research notes
 

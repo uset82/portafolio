@@ -5,6 +5,8 @@ import test from "node:test";
 
 import {
   OBSERVATORY_WATER_FRAGMENT_SHADER,
+  OBSERVATORY_WATER_SIMPLE_FRAGMENT_SHADER,
+  OBSERVATORY_WATER_SIMPLE_VERTEX_SHADER,
   OBSERVATORY_WATER_TECHNICAL_ART,
   OBSERVATORY_WATER_VERTEX_SHADER,
   resolveWaterPresentation,
@@ -82,6 +84,14 @@ test("the full water shader contains bounded ripples and analytic light reflecti
   assert.doesNotMatch(combinedShader, /sampler(?:2D|Cube)|texture2D|textureCube/);
 });
 
+test("the reduced water material feathers one still two-triangle surface without texture sampling", () => {
+  const combinedShader = `${OBSERVATORY_WATER_SIMPLE_VERTEX_SHADER}\n${OBSERVATORY_WATER_SIMPLE_FRAGMENT_SHADER}`;
+
+  assert.match(OBSERVATORY_WATER_SIMPLE_FRAGMENT_SHADER, /edgeFeather/);
+  assert.match(OBSERVATORY_WATER_SIMPLE_FRAGMENT_SHADER, /quietReflection/);
+  assert.doesNotMatch(combinedShader, /uTime|sin\(|sampler(?:2D|Cube)|texture2D|textureCube/);
+});
+
 test("the scene integrates one demand-rendered water owner with no React frame state or render target", () => {
   const waterSource = readSource("src/components/three/observatory-water-surface.tsx");
   const shellSource = readSource("src/components/three/observatory-scene-shell.tsx");
@@ -89,7 +99,7 @@ test("the scene integrates one demand-rendered water owner with no React frame s
   assert.match(waterSource, /useFrame/);
   assert.match(waterSource, /window\.setInterval\(invalidate/);
   assert.match(waterSource, /maximumAnimatedFps/);
-  assert.match(waterSource, /meshStandardMaterial/);
+  assert.doesNotMatch(waterSource, /meshStandardMaterial/);
   assert.match(waterSource, /presentation\.tier === "poster"/);
   assert.doesNotMatch(waterSource, /useState|\.dispatch\(|WebGLRenderTarget|MeshReflectorMaterial/);
   assert.match(shellSource, /group\.id === "water" \? <ObservatoryWaterSurface/);

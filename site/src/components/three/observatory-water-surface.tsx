@@ -7,6 +7,8 @@ import { Color, ShaderMaterial, Vector3 } from "three";
 import { resolveSceneMotionMode } from "@/lib/three/scene-state";
 import {
   OBSERVATORY_WATER_FRAGMENT_SHADER,
+  OBSERVATORY_WATER_SIMPLE_FRAGMENT_SHADER,
+  OBSERVATORY_WATER_SIMPLE_VERTEX_SHADER,
   OBSERVATORY_WATER_TECHNICAL_ART,
   OBSERVATORY_WATER_VERTEX_SHADER,
   resolveWaterPresentation,
@@ -38,7 +40,7 @@ function ObservatoryShaderWater({ animated }: { animated: boolean }) {
       uReflectionColor: { value: new Color(colors.reflection) },
       uWarmGlintColor: { value: new Color(colors.warmGlint) },
       uLightDirection: { value: new Vector3(-0.45, 0.82, 0.35).normalize() },
-      uOpacity: { value: 0.88 },
+      uOpacity: { value: 0.46 },
     }),
     [colors],
   );
@@ -82,6 +84,15 @@ function ObservatoryShaderWater({ animated }: { animated: boolean }) {
 
 function ObservatorySimpleWater() {
   const tier = OBSERVATORY_WATER_TECHNICAL_ART.tiers.simple;
+  const colors = OBSERVATORY_WATER_TECHNICAL_ART.colors;
+  const uniforms = useMemo(
+    () => ({
+      uSurfaceColor: { value: new Color(colors.surface) },
+      uReflectionColor: { value: new Color(colors.reflection) },
+      uOpacity: { value: 0.34 },
+    }),
+    [colors],
+  );
 
   return (
     <mesh
@@ -99,14 +110,14 @@ function ObservatorySimpleWater() {
           tier.segments[1],
         ]}
       />
-      <meshStandardMaterial
+      <shaderMaterial
         name="ObservatoryWaterSimpleMaterial"
-        color={OBSERVATORY_WATER_TECHNICAL_ART.colors.surface}
-        roughness={0.24}
-        metalness={0}
+        uniforms={uniforms}
+        vertexShader={OBSERVATORY_WATER_SIMPLE_VERTEX_SHADER}
+        fragmentShader={OBSERVATORY_WATER_SIMPLE_FRAGMENT_SHADER}
         transparent
-        opacity={0.82}
         depthWrite={false}
+        toneMapped
       />
     </mesh>
   );

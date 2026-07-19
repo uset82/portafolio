@@ -155,12 +155,42 @@ export const OBSERVATORY_WATER_FRAGMENT_SHADER = /* glsl */ `
     float glint = pow(max(dot(reflectedLight, viewDirection), 0.0), 42.0);
     float crest = smoothstep(0.025, 0.08, vWaterHeight);
     float basinFalloff = smoothstep(0.0, 0.34, min(min(vWaterUv.x, 1.0 - vWaterUv.x), min(vWaterUv.y, 1.0 - vWaterUv.y)));
+    float edgeFeather = smoothstep(0.0, 0.55, basinFalloff);
 
     vec3 basinColor = mix(uDepthColor, uSurfaceColor, basinFalloff * 0.58 + crest * 0.18);
     vec3 reflectedColor = mix(basinColor, uReflectionColor, fresnel * 0.62);
     vec3 finalColor = reflectedColor + uWarmGlintColor * glint * 0.28;
+    float reflectedOpacity = uOpacity * edgeFeather * (0.62 + fresnel * 0.28 + crest * 0.1);
 
-    gl_FragColor = vec4(finalColor, uOpacity);
+    gl_FragColor = vec4(finalColor, reflectedOpacity);
+    #include <tonemapping_fragment>
+    #include <colorspace_fragment>
+  }
+`;
+
+export const OBSERVATORY_WATER_SIMPLE_VERTEX_SHADER = /* glsl */ `
+  varying vec2 vWaterUv;
+
+  void main() {
+    vWaterUv = uv;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`;
+
+export const OBSERVATORY_WATER_SIMPLE_FRAGMENT_SHADER = /* glsl */ `
+  uniform vec3 uSurfaceColor;
+  uniform vec3 uReflectionColor;
+  uniform float uOpacity;
+
+  varying vec2 vWaterUv;
+
+  void main() {
+    float edgeDistance = min(min(vWaterUv.x, 1.0 - vWaterUv.x), min(vWaterUv.y, 1.0 - vWaterUv.y));
+    float edgeFeather = smoothstep(0.0, 0.18, edgeDistance);
+    float quietReflection = smoothstep(0.12, 0.88, vWaterUv.y) * 0.14;
+    vec3 finalColor = mix(uSurfaceColor, uReflectionColor, quietReflection);
+
+    gl_FragColor = vec4(finalColor, uOpacity * edgeFeather);
     #include <tonemapping_fragment>
     #include <colorspace_fragment>
   }
