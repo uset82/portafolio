@@ -1,0 +1,172 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-07-24",
+  "status": "pending-file-level-clearance",
+  "assets": [
+    {
+      "id": "local-firefly-jpg",
+      "path": "imagesandvideo/Firefly.jpg",
+      "kind": "image",
+      "bytes": 2471295,
+      "sha256": "8076E2E8A84D3294669B4ABB67252428C26FCB9B557F90A2077D8151B3D174BE",
+      "source": "User-supplied local file; its creation source and provider history are not recorded.",
+      "owner": "Repository publication was authorized by Carlos; file-level authorship is not established.",
+      "rights": "pending",
+      "license": "No public-display or runtime-reuse license is recorded.",
+      "attribution": "No approved public credit line is recorded; keep the file excluded until one is known.",
+      "decision": "exclude",
+      "requiredClearance": [
+        "Record the creator, source inputs, and applicable terms.",
+        "Approve public display, attribution, accessibility treatment, and optimized derivative."
+      ],
+      "accessibilityPlan": "Decide whether it is decorative or provide approved descriptive alt text before publication.",
+      "technicalReview": "No web derivative, metadata-safety review, or responsive performance budget has been approved.",
+      "evidence": "Tracked local file with the recorded byte length and SHA-256; no runtime reference is permitted."
+    },
+    {
+      "id": "local-front-ui-png",
+      "path": "imagesandvideo/frontUI.png",
+      "kind": "image",
+      "bytes": 2713543,
+      "sha256": "449B1B4A10FE793A465CF9A3CA7B4532A56C360BA69190317DA2A7083C2228A0",
+      "source": "User-supplied local Observatory reference; its creation source and generation history are not recorded.",
+      "owner": "Repository publication was authorized by Carlos; file-level authorship is not established.",
+      "rights": "pending",
+      "license": "No public-display or runtime-reuse license is recorded.",
+      "attribution": "No approved public credit line is recorded; keep the file excluded until one is known.",
+      "decision": "exclude",
+      "requiredClearance": [
+        "Record the creator, source inputs, and applicable terms.",
+        "Approve public display, attribution, accessibility treatment, and optimized derivative."
+      ],
+      "accessibilityPlan": "Provide an approved scene description if this reference ever becomes informative public media.",
+      "technicalReview": "No responsive crop, optimized derivative, or performance budget has been approved.",
+      "evidence": "Tracked local file with the recorded byte length and SHA-256; no runtime reference is permitted."
+    },
+    {
+      "id": "local-logo-glb",
+      "path": "imagesandvideo/logo.glb",
+      "kind": "model",
+      "bytes": 85465832,
+      "sha256": "DC70A856617F6FA659EC3D4322B05826B597E2BC122E215D7C53F4ED83ACC43A",
+      "source": "User-supplied local GLB; its authoring tool, source inputs, and embedded asset provenance are not recorded.",
+      "owner": "Repository publication was authorized by Carlos; file-level authorship is not established.",
+      "rights": "pending",
+      "license": "No public-display, runtime-reuse, or third-party redistribution license is recorded.",
+      "attribution": "No approved public credit line is recorded; keep the model excluded until one is known.",
+      "decision": "exclude",
+      "requiredClearance": [
+        "Record the authoring source, source inputs, and every applicable third-party term.",
+        "Validate embedded materials, geometry, animation, runtime budget, and public-display approval."
+      ],
+      "accessibilityPlan": "Define a semantic DOM equivalent before any interactive model is approved for runtime use.",
+      "technicalReview": "No glTF validation, optimization review, material audit, or device-tier budget has been approved.",
+      "evidence": "Tracked local file with the recorded byte length and SHA-256; the public 3D registry continues to expose no GLB URL."
+    },
+    {
+      "id": "local-logo-png",
+      "path": "imagesandvideo/logo.png",
+      "kind": "image",
+      "bytes": 1421710,
+      "sha256": "338AC3A9F8A7E04985A40BDD5CBA3DA67634E5E7033D982F26051CAFEDDD8C8F",
+      "source": "User-supplied local monogram sheet; mark authorship and generation history are not recorded.",
+      "owner": "Repository publication was authorized by Carlos; file-level authorship is not established.",
+      "rights": "pending",
+      "license": "No public-display or runtime-reuse license is recorded.",
+      "attribution": "No approved public credit line is recorded; keep the file excluded until one is known.",
+      "decision": "exclude",
+      "requiredClearance": [
+        "Confirm mark ownership and whether the full legal-name treatment may be public.",
+        "Approve public display, attribution, accessibility treatment, and a web-ready derivative."
+      ],
+      "accessibilityPlan": "Decide whether the mark is decorative or provide an approved accessible name and alt treatment.",
+      "technicalReview": "No SVG/raster master, transparent export, metadata-safety review, or responsive budget has been approved.",
+      "evidence": "Tracked local file with the recorded byte length and SHA-256; the typographic CC fallback remains authoritative."
+    },
+    {
+      "id": "local-main-ui-png",
+      "path": "imagesandvideo/mainUI.png",
+      "kind": "image",
+      "bytes": 2595384,
+      "sha256": "B4E11D325297CEB8FFB021866FFA2903B316D5D2443DEF67BA890B4B3F3058BF",
+      "source": "Carlos-supplied approved visual reference; underlying authorship and generation history are not recorded.",
+      "owner": "Repository publication was authorized by Carlos; file-level authorship is not established.",
+      "rights": "pending",
+      "license": "No public-display or runtime-reuse license is recorded.",
+      "attribution": "No approved public credit line is recorded; keep the original local file excluded until one is known.",
+      "decision": "exclude",
+      "requiredClearance": [
+        "Record the creator, source inputs, and applicable terms for public display.",
+        "Approve the existing poster derivative or replace it with a rights-cleared visual."
+      ],
+      "accessibilityPlan": "Approve concise scene alt text and verify that embedded interface text is not the sole carrier of information.",
+      "technicalReview": "The byte-identical poster derivative remains a launch hold pending rights; responsive derivatives require separate approval.",
+      "evidence": "Tracked local file with the recorded byte length and SHA-256, matching the archived poster reference hash."
+    },
+    {
+      "id": "local-robot-water-video",
+      "path": "imagesandvideo/Robot_kneeling_in_reflective_water_202607192339.mp4",
+      "kind": "video",
+      "bytes": 16746229,
+      "sha256": "BC48DE7B6290F7BB1A9D20B88169285056640F9CED0E2717C9D81690B19C0B5D",
+      "source": "User-supplied local video; creator, source inputs, audio ownership, and generation history are not recorded.",
+      "owner": "Repository publication was authorized by Carlos; file-level authorship is not established.",
+      "rights": "pending",
+      "license": "No public-display, streaming, audio, or runtime-reuse license is recorded.",
+      "attribution": "No approved public credit line is recorded; keep the video excluded until one is known.",
+      "decision": "exclude",
+      "requiredClearance": [
+        "Record the creator, source inputs, video terms, and any audio/music rights.",
+        "Approve public playback, caption or transcript treatment, poster, and delivery budget."
+      ],
+      "accessibilityPlan": "Provide approved captions or transcript, an informative description, a poster, and a reduced-motion fallback before publication.",
+      "technicalReview": "No codec inspection, audio audit, poster, streaming strategy, or mobile performance budget has been approved.",
+      "evidence": "Tracked local file with the recorded byte length and SHA-256; no player, source element, or runtime reference is permitted."
+    },
+    {
+      "id": "local-robot-glb",
+      "path": "imagesandvideo/robot.glb",
+      "kind": "model",
+      "bytes": 90817492,
+      "sha256": "83DD41497DB9175804B9BD571BDEC7426F15548D08AA7DF44CB2E608C88CD025",
+      "source": "User-supplied local GLB; its authoring tool, source inputs, rig, and embedded asset provenance are not recorded.",
+      "owner": "Repository publication was authorized by Carlos; file-level authorship is not established.",
+      "rights": "pending",
+      "license": "No public-display, runtime-reuse, or third-party redistribution license is recorded.",
+      "attribution": "No approved public credit line is recorded; keep the model excluded until one is known.",
+      "decision": "exclude",
+      "requiredClearance": [
+        "Record the authoring source, source inputs, rig/animation provenance, and applicable third-party terms.",
+        "Validate the model, optimize it, approve public display, and confirm the runtime accessibility and device budgets."
+      ],
+      "accessibilityPlan": "Define the semantic fallback, focus behavior, descriptions, and non-WebGL equivalent before runtime integration.",
+      "technicalReview": "No glTF validation, optimization review, material audit, animation audit, or device-tier budget has been approved.",
+      "evidence": "Tracked local file with the recorded byte length and SHA-256; the production robot registry URL remains null."
+    },
+    {
+      "id": "local-rotating-monogram-video",
+      "path": "imagesandvideo/Rotating Golden Monogram Emblem Animation.mp4",
+      "kind": "video",
+      "bytes": 1574738,
+      "sha256": "96D4A439BAB12B44506C6CF7A91CE1CB95279F3AB3FFA747A67D39876E202AFA",
+      "source": "User-supplied local monogram animation; creator, source assets, audio ownership, and generation history are not recorded.",
+      "owner": "Repository publication was authorized by Carlos; file-level authorship is not established.",
+      "rights": "pending",
+      "license": "No public-display, streaming, audio, or runtime-reuse license is recorded.",
+      "attribution": "No approved public credit line is recorded; keep the video excluded until one is known.",
+      "decision": "exclude",
+      "requiredClearance": [
+        "Confirm the mark, animation, source assets, and any audio/music rights.",
+        "Approve public playback, caption or transcript treatment, poster, and reduced-motion behavior."
+      ],
+      "accessibilityPlan": "If informative, provide an approved description and transcript; if decorative, mute it and retain a static fallback.",
+      "technicalReview": "No audio audit, poster, muted export, streaming strategy, or mobile performance budget has been approved.",
+      "evidence": "Tracked local file with the recorded byte length and SHA-256; no player, source element, or runtime reference is permitted."
+    }
+  ],
+  "reviewNotes": [
+    "This file records identity and integrity facts only. Carlos's repository-publication instruction is not a file-level public-display or runtime-reuse license.",
+    "Every listed asset remains excluded from the public runtime until its listed clearance items have been documented and approved.",
+    "The site-level content gate compares this register to the actual imagesandvideo directory, byte lengths, and SHA-256 hashes so later additions or substitutions cannot silently bypass review."
+  ]
+}

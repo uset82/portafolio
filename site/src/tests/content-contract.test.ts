@@ -1,8 +1,14 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import test from "node:test";
 
 import { rawSiteContent } from "@/content/records";
-import { mediaAssetSchema, siteContentSchema } from "@/content/schemas";
+import {
+  localMediaClearanceRegisterSchema,
+  mediaAssetSchema,
+  siteContentSchema,
+} from "@/content/schemas";
 
 test("approved display records satisfy the site content contract", () => {
   const content = siteContentSchema.parse(rawSiteContent);
@@ -144,4 +150,40 @@ test("external embed records reject autoplay provider URLs", () => {
   assert.ok(
     result.error.issues.some((issue) => issue.message === "Embed URLs must not request autoplay"),
   );
+});
+
+test("pending local media stays hash-pinned and excluded from publication", () => {
+  const registerPath = resolve(
+    process.cwd(),
+    "../docs/content/local-media-clearance-register.json",
+  );
+  const register = localMediaClearanceRegisterSchema.parse(
+    JSON.parse(readFileSync(registerPath, "utf8")),
+  );
+
+  assert.equal(register.status, "pending-file-level-clearance");
+  assert.deepEqual(
+    register.assets.map((asset) => asset.path).sort(),
+    [
+      "imagesandvideo/Firefly.jpg",
+      "imagesandvideo/Rotating Golden Monogram Emblem Animation.mp4",
+      "imagesandvideo/Robot_kneeling_in_reflective_water_202607192339.mp4",
+      "imagesandvideo/frontUI.png",
+      "imagesandvideo/logo.glb",
+      "imagesandvideo/logo.png",
+      "imagesandvideo/mainUI.png",
+      "imagesandvideo/robot.glb",
+    ].sort(),
+  );
+  assert.ok(register.assets.every((asset) => asset.rights === "pending"));
+  assert.ok(register.assets.every((asset) => asset.decision === "exclude"));
+  assert.ok(register.assets.every((asset) => /^[A-F0-9]{64}$/.test(asset.sha256)));
+
+  const unsafePublication = localMediaClearanceRegisterSchema.safeParse({
+    ...register,
+    assets: register.assets.map((asset, index) =>
+      index === 0 ? { ...asset, decision: "include" } : asset,
+    ),
+  });
+  assert.equal(unsafePublication.success, false);
 });

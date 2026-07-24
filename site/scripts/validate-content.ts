@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { extname, relative, resolve } from "node:path";
 
 import { rawSiteContent } from "../src/content/records";
@@ -11,6 +11,7 @@ import {
   ccAiPublicKnowledgeLedgerSchema,
   flagshipProjectSummaryLedgerSchema,
   inventoryLedgerSchema,
+  localMediaClearanceRegisterSchema,
   projectLinkRegisterSchema,
   projectMediaInventorySchema,
   siteContentSchema,
@@ -69,6 +70,13 @@ const assetLicensingRegisterPath = resolve(
 const assetLicensingRegisterInput: unknown = JSON.parse(
   readFileSync(assetLicensingRegisterPath, "utf8"),
 );
+const localMediaClearanceRegisterPath = resolve(
+  process.cwd(),
+  "../docs/content/local-media-clearance-register.json",
+);
+const localMediaClearanceRegisterInput: unknown = JSON.parse(
+  readFileSync(localMediaClearanceRegisterPath, "utf8"),
+);
 const unresolvedContentBlockerLedgerPath = resolve(
   process.cwd(),
   "../docs/content/unresolved-content-blockers.json",
@@ -88,6 +96,9 @@ const voiceAndCopyContractResult = voiceAndCopyContractSchema.safeParse(voiceAnd
 const assetLicensingRegisterResult = assetLicensingRegisterSchema.safeParse(
   assetLicensingRegisterInput,
 );
+const localMediaClearanceRegisterResult = localMediaClearanceRegisterSchema.safeParse(
+  localMediaClearanceRegisterInput,
+);
 const unresolvedContentBlockerLedgerResult = unresolvedContentBlockerLedgerSchema.safeParse(
   unresolvedContentBlockerLedgerInput,
 );
@@ -106,6 +117,7 @@ let deferredNonProjectAssetCount = 0;
 let voiceStatusLabelCount = 0;
 let assetLicensingDecisionCount = 0;
 let heldLaunchAssetCount = 0;
+let localMediaClearanceCount = 0;
 let unresolvedContentBlockerCount = 0;
 let productionContentBlockerCount = 0;
 let publicKnowledgeRecordCount = 0;
@@ -368,6 +380,57 @@ if (
 }
 if (sha256(faviconPath) !== expectedFaviconHash) {
   failures.push("assetLicensingRegister.nextjs-starter-favicon: hash mismatch");
+}
+
+if (!localMediaClearanceRegisterResult.success) {
+  failures.push(
+    formatIssues("localMediaClearanceRegister", localMediaClearanceRegisterResult.error.issues),
+  );
+} else {
+  localMediaClearanceCount = localMediaClearanceRegisterResult.data.assets.length;
+
+  if (localMediaClearanceRegisterResult.data.assets.some((asset) => asset.decision !== "exclude")) {
+    failures.push(
+      "localMediaClearanceRegister.assets: every pending local-media file must remain excluded",
+    );
+  }
+
+  const localMediaRoot = resolve(process.cwd(), "../imagesandvideo");
+  if (!existsSync(localMediaRoot)) {
+    failures.push("localMediaClearanceRegister: imagesandvideo directory is missing");
+  } else {
+    const repositoryRoot = resolve(process.cwd(), "..");
+    const actualPaths = readdirSync(localMediaRoot, { withFileTypes: true })
+      .filter((entry) => entry.isFile())
+      .map((entry) =>
+        relative(repositoryRoot, resolve(localMediaRoot, entry.name)).replaceAll("\\", "/"),
+      )
+      .sort();
+    const recordedPaths = localMediaClearanceRegisterResult.data.assets
+      .map((asset) => asset.path)
+      .sort();
+
+    if (JSON.stringify(recordedPaths) !== JSON.stringify(actualPaths)) {
+      failures.push(
+        `localMediaClearanceRegister.assets: expected exact local-media inventory ${actualPaths.join(", ")}`,
+      );
+    }
+
+    localMediaClearanceRegisterResult.data.assets.forEach((asset) => {
+      const assetPath = resolve(repositoryRoot, asset.path);
+      if (!existsSync(assetPath)) {
+        failures.push(`localMediaClearanceRegister.${asset.id}: missing ${asset.path}`);
+        return;
+      }
+
+      if (statSync(assetPath).size !== asset.bytes) {
+        failures.push(`localMediaClearanceRegister.${asset.id}: byte-length mismatch`);
+      }
+      if (sha256(assetPath) !== asset.sha256) {
+        failures.push(`localMediaClearanceRegister.${asset.id}: SHA-256 mismatch`);
+      }
+    });
+  }
 }
 
 const requiredLicensePaths = [
@@ -634,6 +697,18 @@ if (assetLicensingRegisterResult.success) {
   });
 }
 
+if (localMediaClearanceRegisterResult.success) {
+  negativeContracts.push({
+    name: "a pending local-media asset marked for inclusion",
+    passed: !localMediaClearanceRegisterSchema.safeParse({
+      ...localMediaClearanceRegisterResult.data,
+      assets: localMediaClearanceRegisterResult.data.assets.map((asset, index) =>
+        index === 0 ? { ...asset, decision: "include" } : asset,
+      ),
+    }).success,
+  });
+}
+
 if (unresolvedContentBlockerLedgerResult.success) {
   negativeContracts.push({
     name: "an unresolved content blocker without a fallback",
@@ -690,7 +765,7 @@ if (failures.length > 0) {
   process.exitCode = 1;
 } else {
   console.log(
-    `Content valid: ${approvedDisplayRecordCount} approved display records, ${heldFlagshipSummaryCount} held flagship summary drafts, ${auditedProjectLinkCount} audited project links, ${reusableProjectMediaCount} reusable project media, ${blockedProjectMediaCandidateCount} blocked project-media candidates, ${deferredNonProjectAssetCount} deferred local reference assets, ${voiceStatusLabelCount} voice/status labels, ${assetLicensingDecisionCount} asset-license decisions with ${heldLaunchAssetCount} launch hold, ${unresolvedContentBlockerCount} unresolved content blockers with ${productionContentBlockerCount} production blockers, ${publicKnowledgeRecordCount} public CC AI records with ${publicKnowledgeExclusionCount} explicit exclusions, ${ccAiEvaluationCaseCount} specified CC AI evaluation cases, and ${inventoryEntryCount} inventory entries.`,
+    `Content valid: ${approvedDisplayRecordCount} approved display records, ${heldFlagshipSummaryCount} held flagship summary drafts, ${auditedProjectLinkCount} audited project links, ${reusableProjectMediaCount} reusable project media, ${blockedProjectMediaCandidateCount} blocked project-media candidates, ${deferredNonProjectAssetCount} deferred local reference assets, ${voiceStatusLabelCount} voice/status labels, ${assetLicensingDecisionCount} asset-license decisions with ${heldLaunchAssetCount} launch hold, ${localMediaClearanceCount} hash-pinned pending local-media records, ${unresolvedContentBlockerCount} unresolved content blockers with ${productionContentBlockerCount} production blockers, ${publicKnowledgeRecordCount} public CC AI records with ${publicKnowledgeExclusionCount} explicit exclusions, ${ccAiEvaluationCaseCount} specified CC AI evaluation cases, and ${inventoryEntryCount} inventory entries.`,
   );
   console.log(`Negative contract checks passed: ${negativeContracts.length}.`);
 }

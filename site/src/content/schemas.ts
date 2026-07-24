@@ -916,6 +916,108 @@ export const assetLicensingRegisterSchema = z
     }
   });
 
+const localMediaClearanceAssetSchema = z
+  .object({
+    id: idSchema,
+    path: z
+      .string()
+      .regex(/^imagesandvideo\/[^/]+$/, "Use one repository-relative local-media file path"),
+    kind: z.enum(["image", "video", "model"]),
+    bytes: z.number().int().positive(),
+    sha256: z.string().regex(/^[A-F0-9]{64}$/, "Use an uppercase SHA-256 hash"),
+    source: z.string().min(20),
+    owner: z.string().min(20),
+    rights: rightsStateSchema,
+    license: z.string().min(12),
+    attribution: z.string().min(20),
+    decision: z.enum(["include", "exclude"]),
+    requiredClearance: z.array(z.string().min(12)).min(2),
+    accessibilityPlan: z.string().min(20),
+    technicalReview: z.string().min(20),
+    evidence: z.string().min(30),
+  })
+  .strict()
+  .superRefine((asset, context) => {
+    const isImage = /\.(?:png|jpe?g)$/i.test(asset.path);
+    const isVideo = /\.mp4$/i.test(asset.path);
+    const isModel = /\.glb$/i.test(asset.path);
+
+    if (
+      (asset.kind === "image" && !isImage) ||
+      (asset.kind === "video" && !isVideo) ||
+      (asset.kind === "model" && !isModel)
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["kind"],
+        message: "Local-media kind must match the file extension",
+      });
+    }
+
+    if (
+      asset.decision === "include" &&
+      !["owned", "permission-granted", "permissive-license", "attribution-required"].includes(
+        asset.rights,
+      )
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["rights"],
+        message: "Included local media needs affirmative publication rights",
+      });
+    }
+  });
+
+export const localMediaClearanceRegisterSchema = z
+  .object({
+    version: z.literal(1),
+    reviewedOn: partialDateSchema,
+    status: z.literal("pending-file-level-clearance"),
+    assets: z.array(localMediaClearanceAssetSchema).min(1),
+    reviewNotes: z.array(z.string().min(20)).min(1),
+  })
+  .strict()
+  .superRefine((register, context) => {
+    const ids = new Set<string>();
+    const paths = new Set<string>();
+    const hashes = new Set<string>();
+
+    register.assets.forEach((asset, index) => {
+      if (ids.has(asset.id)) {
+        context.addIssue({
+          code: "custom",
+          path: ["assets", index, "id"],
+          message: `Duplicate local-media clearance ID: ${asset.id}`,
+        });
+      }
+      if (paths.has(asset.path)) {
+        context.addIssue({
+          code: "custom",
+          path: ["assets", index, "path"],
+          message: `Duplicate local-media clearance path: ${asset.path}`,
+        });
+      }
+      if (hashes.has(asset.sha256)) {
+        context.addIssue({
+          code: "custom",
+          path: ["assets", index, "sha256"],
+          message: `Duplicate local-media clearance hash: ${asset.sha256}`,
+        });
+      }
+      ids.add(asset.id);
+      paths.add(asset.path);
+      hashes.add(asset.sha256);
+
+      if (asset.rights === "pending" && asset.decision !== "exclude") {
+        context.addIssue({
+          code: "custom",
+          path: ["assets", index, "decision"],
+          message: "Pending local media must remain excluded",
+        });
+      }
+    });
+  });
+
 export const unresolvedContentBlockerSchema = z
   .object({
     id: idSchema,
@@ -1602,6 +1704,8 @@ export type ProjectMediaInventory = z.infer<typeof projectMediaInventorySchema>;
 export type VoiceAndCopyContract = z.infer<typeof voiceAndCopyContractSchema>;
 export type AssetLicensingEntry = z.infer<typeof assetLicensingEntrySchema>;
 export type AssetLicensingRegister = z.infer<typeof assetLicensingRegisterSchema>;
+export type LocalMediaClearanceAsset = z.infer<typeof localMediaClearanceAssetSchema>;
+export type LocalMediaClearanceRegister = z.infer<typeof localMediaClearanceRegisterSchema>;
 export type UnresolvedContentBlocker = z.infer<typeof unresolvedContentBlockerSchema>;
 export type UnresolvedContentBlockerLedger = z.infer<typeof unresolvedContentBlockerLedgerSchema>;
 export type CcAiPublicKnowledgeRecord = z.infer<typeof ccAiPublicKnowledgeRecordSchema>;
