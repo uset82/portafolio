@@ -96,6 +96,7 @@
     "keyboardFocus": "skip link and focus ring inspected",
     "console": "general UI journeys have no warnings or errors; live Three.js Canvas has only the tracked Three.Clock deprecation in task 8.25, which source inspection attributes to current React Three Fiber runtime ownership rather than application code, and no page or shader error after the 2026-07-23 water fix",
     "mediaFoundation": "manual mute-first native media and consent-gated lazy provider embeds remain available for approved records; the public Sound route currently loads no media source or provider",
+    "localMediaRuntimeBoundary": "content validation requires the eight committed imagesandvideo candidates to remain excluded in the licensing register and rejects any runtime source reference outside the local-path schema, so repository inclusion cannot silently become public runtime use before file-level rights, accessibility, and performance review",
     "caseStudyLayout": "typed held/verified branches with rights-gated media, architecture/demo/source/related-work slots, and browser-inspected desktop/mobile editorial reflow",
     "baselineTests": "40 passing from exact commit 71368ad in a clean checkout after frozen-lockfile installation",
     "cleanCheckout": "pnpm install --frozen-lockfile and pnpm verify passed; 13-page production build inspected at 1440x900 and 390x844",

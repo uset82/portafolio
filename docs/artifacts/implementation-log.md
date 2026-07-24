@@ -98,6 +98,8 @@ Slice: semantic poster-first foundation
 
 - The published GitHub Actions workflow now has hosted proof: [run 30120350422](https://github.com/uset82/portafolio/actions/runs/30120350422) passed against `main` commit `8db4d2e`. The lockfile install, source/contracts/test stage, production build, and emitted immersive artifact/fallback stage all completed in the read-only `Format, test, and build` job. The `pull_request` trigger, lockfile-keyed pnpm cache, concurrency cancellation, and deployment separation remain intact.
 
+- The content gate now fails closed around the eight committed but pending local Observatory/monogram files. `validate-content.ts` requires their licensing-group decision to remain `exclude` and scans every runtime source file—apart from the schema that validates local-path records—for an `imagesandvideo/` reference. A source import or direct runtime path therefore fails `pnpm content:check` before it can become a public-site dependency. The ledger still distinguishes Carlos's repository-publication instruction from file-level public-display, accessibility, provenance, and performance clearance; a fresh complete `pnpm verify` passes 216 tests, 13 routes, 12 manifest assets, zero public GLBs, and 26 client files.
+
 ## Intentionally deferred
 
 - Real mobile water input, pointer/robot ripple and pause/visibility inspection, renderer draw/triangle counters, approved production 3D assets, and production-robot presentation.

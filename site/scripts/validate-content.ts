@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { extname, relative, resolve } from "node:path";
 
 import { rawSiteContent } from "../src/content/records";
 import ccAiEvaluationSetInput from "../src/content/cc-ai-evaluation.json";
@@ -20,6 +20,19 @@ import {
 
 const formatIssues = (label: string, issues: { path: PropertyKey[]; message: string }[]) =>
   issues.map((issue) => `${label}.${issue.path.join(".") || "root"}: ${issue.message}`).join("\n");
+
+const sourceExtensions = new Set([".ts", ".tsx"]);
+
+function collectRuntimeSourceFiles(directory: string): string[] {
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const candidate = resolve(directory, entry.name);
+    if (entry.isDirectory()) {
+      if (entry.name === "tests" || entry.name === "testing") return [];
+      return collectRuntimeSourceFiles(candidate);
+    }
+    return sourceExtensions.has(extname(entry.name)) ? [candidate] : [];
+  });
+}
 
 const inventoryPath = resolve(process.cwd(), "../docs/content/content-inventory.json");
 const inventoryInput: unknown = JSON.parse(readFileSync(inventoryPath, "utf8"));
@@ -315,6 +328,28 @@ if (!assetLicensingRegisterResult.success) {
       failures.push(`assetLicensingRegister.paths: missing ${runtimePath}`);
     }
   });
+
+  const localMediaGroup = assetLicensingRegisterResult.data.assets.find(
+    (asset) => asset.id === "local-observatory-monogram-media",
+  );
+  if (!localMediaGroup || localMediaGroup.decision !== "exclude") {
+    failures.push(
+      "assetLicensingRegister.local-observatory-monogram-media: pending local media must stay excluded",
+    );
+  }
+
+  const sourceRoot = resolve(process.cwd(), "src");
+  const allowedContentSchemaPath = resolve(sourceRoot, "content/schemas.ts");
+  const localMediaReferences = collectRuntimeSourceFiles(sourceRoot)
+    .filter((file) => file !== allowedContentSchemaPath)
+    .filter((file) => /\bimagesandvideo[\\/]/i.test(readFileSync(file, "utf8")))
+    .map((file) => relative(process.cwd(), file));
+
+  if (localMediaReferences.length > 0) {
+    failures.push(
+      `local media runtime boundary: pending imagesandvideo assets are referenced by ${localMediaReferences.join(", ")}`,
+    );
+  }
 }
 
 const sha256 = (path: string) =>
