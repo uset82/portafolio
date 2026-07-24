@@ -2,7 +2,6 @@
 /1061ef42-3385-4527-a2cf-b2ed0c5d8579.png
 /Firefly.jpg
 /logo.png
-/imagesandvideo/
 
 # Common local/editor artifacts outside the generated application.
 .DS_Store
