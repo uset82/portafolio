@@ -196,7 +196,7 @@
       "requestedAction": "Create or approve a small original media set for each project with file-level ownership, permission, privacy, caption, alt-text, and optimization evidence.",
       "fallback": "Use the verified typographic project summaries and links without project screenshots, video, generated imagery, or third-party brand assets.",
       "launchImpact": "All five projects have an honest text-and-links fallback, but no project image or video may ship yet.",
-      "notes": "The verified reusable-project-media count is zero. Nine repository candidate groups are excluded or marked never-republish because rights, provenance, privacy, safety, or license evidence is missing. Five local Observatory/monogram assets were measured but are explicitly deferred as non-project design or brand references; their authorship and public-display rights remain unconfirmed."
+      "notes": "The verified reusable-project-media count is zero. Nine repository candidate groups are excluded or marked never-republish because rights, provenance, privacy, safety, or license evidence is missing. Five local 2D/video Observatory/monogram assets are measured and explicitly deferred as non-project design or brand references, while three local GLB/video candidates are recorded in the asset-licensing register; all remain outside runtime use until authorship, public-display rights, accessibility, and performance evidence are confirmed."
     },
     {
       "id": "portrait-brand",
@@ -342,7 +342,7 @@
       "requestedAction": "Carlos must confirm public portfolio display rights for the archived Observatory poster, including its underlying authorship or generation source, or approve a rights-cleared replacement before production release.",
       "fallback": "Replace the poster with an original rights-cleared asset while retaining the semantic page, Natural Observatory palette, procedural water, and zero-GLB fallback.",
       "launchImpact": "Preview implementation may continue, but production remains held by the poster decision; all other current runtime assets have a license, notice, authored-code boundary, or exclusion decision.",
-      "notes": "The register covers 11 current or excluded asset groups. Cormorant Garamond and Manrope OFL notices, the Next.js favicon MIT notice, and the Three.js decoder MIT license are bundled. The favicon is legally reusable but scheduled for brand replacement. Project media, local monogram files, planned GLBs/HDR, and all unapproved audio/video remain excluded."
+      "notes": "The register covers 11 current or excluded asset groups. Cormorant Garamond and Manrope OFL notices, the Next.js favicon MIT notice, and the Three.js decoder MIT license are bundled. The favicon is legally reusable but scheduled for brand replacement. Project media, the eight committed local Observatory/monogram image/video/GLB files, planned GLBs/HDR, and all unapproved audio/video remain excluded from runtime use."
     },
     {
       "id": "homepage-reference",

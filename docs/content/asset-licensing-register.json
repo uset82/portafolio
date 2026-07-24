@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "reviewedOn": "2026-07-20",
+  "reviewedOn": "2026-07-24",
   "releaseDecision": "hold",
   "assets": [
     {
@@ -136,14 +136,14 @@
       "scope": "excluded",
       "kind": "reference-group",
       "paths": ["imagesandvideo/"],
-      "source": "Five user-supplied local files measured in the project-media inventory.",
-      "owner": "Authorship, generation history, source inputs, and AAC audio ownership are unconfirmed.",
+      "source": "Eight user-supplied local image, video, and GLB files committed to main at Carlos's explicit 2026-07-24 repository-publication request.",
+      "owner": "Carlos authorized repository publication, but underlying authorship, generation history, source inputs, GLB provenance, and AAC audio ownership remain unconfirmed.",
       "rights": "pending",
-      "license": "No public-display or redistribution license is recorded.",
+      "license": "No file-level public-display, runtime-reuse, or third-party redistribution license is recorded beyond Carlos's repository-publication instruction.",
       "attribution": "Not applicable while excluded.",
       "decision": "exclude",
       "launchCritical": false,
-      "evidence": "The files remain untracked and outside the live site; only the separately archived poster reference currently has a preview copy."
+      "evidence": "All eight files are tracked in GitHub commit 8db4d2e but remain outside the live site and the public runtime registry. The known mainUI reference hash still matches the archived poster; every local media and GLB candidate remains held for file-level provenance, rights, accessibility, and performance review before runtime import."
     },
     {
       "id": "planned-3d-environment-assets",
