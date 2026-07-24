@@ -10,6 +10,11 @@ import {
   type EffectiveConnectionType,
   type QualityPreference,
 } from "@/lib/three/capability-policy";
+import {
+  resolveSceneMotionPreference,
+  type ObservatoryExperiencePreferences,
+  type SceneMotionSetting,
+} from "@/lib/three/experience-preferences";
 
 import {
   useObservatorySceneSnapshot,
@@ -147,28 +152,56 @@ export function ObservatoryCapabilityController() {
     store.dispatch({ type: "capabilities/apply", snapshot, decision });
     store.dispatch({
       type: "motion/preference",
-      preference: snapshot.reducedMotion ? "reduce" : "no-preference",
+      preference: resolveSceneMotionPreference(scene.motion.setting, snapshot.reducedMotion),
     });
-  }, [decision, snapshot, store]);
+  }, [decision, scene.motion.setting, snapshot, store]);
 
   return null;
 }
 
-export function useObservatoryQualityControl() {
+export function useObservatoryExperienceControl() {
   const scene = useObservatorySceneSnapshot();
   const store = useObservatorySceneStore();
-  const setPreference = useCallback(
+  const setQualityPreference = useCallback(
     (preference: QualityPreference) => {
       store.dispatch({ type: "quality/preference", preference });
     },
     [store],
   );
+  const setMotionSetting = useCallback(
+    (setting: SceneMotionSetting) => {
+      store.dispatch({ type: "motion/setting", setting });
+    },
+    [store],
+  );
+  const setPaused = useCallback(
+    (paused: boolean) => {
+      store.dispatch({ type: "motion/pause", paused });
+    },
+    [store],
+  );
+  const applyPreferences = useCallback(
+    (preferences: ObservatoryExperiencePreferences) => {
+      store.dispatch({ type: "preferences/apply", preferences });
+    },
+    [store],
+  );
+  const resetPreferences = useCallback(() => {
+    store.dispatch({ type: "preferences/reset" });
+  }, [store]);
+  const markSoundUnavailable = useCallback(() => {
+    store.dispatch({ type: "sound/unavailable" });
+  }, [store]);
 
   return {
-    preference: scene.quality.preference,
-    tier: scene.quality.tier,
-    source: scene.quality.source,
-    reasons: scene.quality.reasons,
-    setPreference,
+    quality: scene.quality,
+    motion: scene.motion,
+    sound: scene.sound,
+    setQualityPreference,
+    setMotionSetting,
+    setPaused,
+    applyPreferences,
+    resetPreferences,
+    markSoundUnavailable,
   };
 }

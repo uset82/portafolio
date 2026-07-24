@@ -1,0 +1,351 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-07-20",
+  "publication": "hold",
+  "reusableProjectMediaCount": 0,
+  "projects": [
+    {
+      "projectId": "strudelai",
+      "sourcePack": "docs/content/strudelai-source-pack.md",
+      "reusableMedia": [],
+      "fallback": "Use the verified title, summary, stack, outcome, and canonical links in a typographic case-study layout.",
+      "notes": "Repository screenshots, generated imagery, branded product imagery, third-party documents, audio, video, and framework marks are not approved for reuse."
+    },
+    {
+      "projectId": "codex-avatar-studio",
+      "sourcePack": "docs/content/avatar-studio-source-pack.md",
+      "reusableMedia": [],
+      "fallback": "Use verified architecture and release facts with repository and release links only.",
+      "notes": "Private likeness material, Blender scenes, GLBs, workspace previews, placeholder assets, icons, logos, and the smoke screenshot remain excluded."
+    },
+    {
+      "projectId": "ifoundyou-dommedag",
+      "sourcePack": "docs/content/ifoundyou-source-pack.md",
+      "reusableMedia": [],
+      "fallback": "Use a text-led system story with no map, contact, phone, location, or device imagery.",
+      "notes": "Any future visual must use synthetic identities and coordinates, remove secrets and identifiers, and pass a dedicated privacy and rights review."
+    },
+    {
+      "projectId": "opennemoclaw",
+      "sourcePack": "docs/content/opennemoclaw-source-pack.md",
+      "reusableMedia": [],
+      "fallback": "Use a text-led package and control-boundary explanation with the verified repository link.",
+      "notes": "The README hero, CLI captures, Web UI, diagrams, and generated agent output have no approved provenance or portfolio permission."
+    },
+    {
+      "projectId": "webdesigner",
+      "sourcePack": "docs/content/webdesigner-source-pack.md",
+      "reusableMedia": [],
+      "fallback": "Use verified plugin, skill, token, lifecycle, and MCP facts with the repository link.",
+      "notes": "No original public screenshot or demo has been created and approved; generated sites and private workspaces are not evidence by default."
+    }
+  ],
+  "candidates": [
+    {
+      "id": "strudelai-readme-image",
+      "projectId": "strudelai",
+      "type": "image",
+      "source": "Public repository path image/README/1765671236142.png",
+      "owner": "Unknown; authorship is not documented in the reviewed repository.",
+      "permission": "pending",
+      "license": "Unresolved because the repository has no license file.",
+      "dimensions": {
+        "status": "not-measured",
+        "reason": "The asset was not copied or downloaded because reuse rights are unresolved."
+      },
+      "captionIntent": "No public caption while excluded; if cleared, describe the exact product surface and prototype date without claiming production use.",
+      "altTextIntent": "No public alt text while excluded; if cleared, describe only visible interface evidence and omit unsupported feature claims.",
+      "optimizationNeeds": [
+        "Measure intrinsic dimensions after rights approval.",
+        "Create responsive AVIF/WebP derivatives and a PNG fallback if transparency is required.",
+        "Strip private data and metadata before publication."
+      ],
+      "decision": "exclude",
+      "reason": "Authorship, license, permission, and safe-publication review are missing."
+    },
+    {
+      "id": "strudelai-sonic-interface-images",
+      "projectId": "strudelai",
+      "type": "image-group",
+      "source": "Three public repository PNG files under src/components/image/SonicInterface/",
+      "owner": "Unknown; file-level authorship is not documented.",
+      "permission": "pending",
+      "license": "Unresolved because the repository has no license file.",
+      "dimensions": {
+        "status": "not-measured",
+        "reason": "The files were not copied or downloaded because the whole group is rights-blocked."
+      },
+      "captionIntent": "No public caption while excluded; if cleared, label each image as prototype interface evidence with its source date.",
+      "altTextIntent": "No public alt text while excluded; if cleared, write separate useful descriptions for each distinct interface image.",
+      "optimizationNeeds": [
+        "Inventory each filename and intrinsic dimension after rights approval.",
+        "Redact credentials, prompts, personal data, and third-party media.",
+        "Export responsive derivatives only for images selected after visual review."
+      ],
+      "decision": "exclude",
+      "reason": "Provenance and portfolio reuse permission are undocumented."
+    },
+    {
+      "id": "strudelai-generated-image",
+      "projectId": "strudelai",
+      "type": "image",
+      "source": "Public repository file whose name begins Gemini_Generated_Image_",
+      "owner": "Unknown; the filename suggests generated media but no author or provider record exists.",
+      "permission": "pending",
+      "license": "No model, terms snapshot, source-input record, or output permission is documented.",
+      "dimensions": {
+        "status": "not-measured",
+        "reason": "The asset was not copied because its generation provenance and rights are incomplete."
+      },
+      "captionIntent": "Do not caption or present as project evidence unless the generation record and relevance are approved.",
+      "altTextIntent": "No public alt text while excluded; any future description must identify it as generated imagery rather than a real product screenshot.",
+      "optimizationNeeds": [
+        "Recover the provider, model, date, prompt/input rights, and terms snapshot before visual processing.",
+        "Run likeness, trademark, and misleading-evidence review.",
+        "Optimize only if the asset passes provenance and publication approval."
+      ],
+      "decision": "exclude",
+      "reason": "Generation provenance, input rights, output rights, and public-display approval are absent."
+    },
+    {
+      "id": "strudelai-product-brand-images",
+      "projectId": "strudelai",
+      "type": "image-group",
+      "source": "Public repository files images/hercules.png and images/PioneerDJ.jpg",
+      "owner": "Unknown; third-party product and brand rights may apply.",
+      "permission": "pending",
+      "license": "No file-level license or portfolio permission is recorded.",
+      "dimensions": {
+        "status": "not-measured",
+        "reason": "The files were not copied because third-party product and brand rights are unresolved."
+      },
+      "captionIntent": "No portfolio caption or brand association is approved.",
+      "altTextIntent": "No public alt text while excluded; do not imply endorsement or product integration.",
+      "optimizationNeeds": [
+        "Prefer an original rights-cleared interface capture instead of third-party product imagery.",
+        "If review ever proceeds, verify trademark context and obtain permission before measuring or transforming the files."
+      ],
+      "decision": "never-republish",
+      "reason": "The assets are not necessary case-study evidence and carry unresolved third-party brand and image rights."
+    },
+    {
+      "id": "avatar-studio-public-repository-graphics",
+      "projectId": "codex-avatar-studio",
+      "type": "image-group",
+      "source": "Placeholder SVG/Pixi assets, extension icon, publisher logo, and docs/assets/webview-smoke.png in the public repository",
+      "owner": "Unconfirmed; the repository is published under Carlos's account but individual asset authorship is not assigned.",
+      "permission": "pending",
+      "license": "UNLICENSED / all rights reserved; no separate portfolio permission is recorded.",
+      "dimensions": {
+        "status": "not-measured",
+        "reason": "The assets were not copied because the all-rights-reserved source does not grant portfolio redistribution."
+      },
+      "captionIntent": "No public caption while excluded; any approved future screenshot must distinguish the SVG fallback from optional renderer paths.",
+      "altTextIntent": "No public alt text while excluded; if an original safe screenshot is approved, describe the visible assistant state without exposing workspace details.",
+      "optimizationNeeds": [
+        "Create a new original screenshot from a synthetic clean workspace rather than reusing repository graphics.",
+        "Verify reduced-motion and SVG fallback states in the capture plan.",
+        "Export responsive formats only after explicit rights approval."
+      ],
+      "decision": "exclude",
+      "reason": "The source is all rights reserved and no asset has separate reuse permission."
+    },
+    {
+      "id": "avatar-studio-private-likeness-workspace-assets",
+      "projectId": "codex-avatar-studio",
+      "type": "image-group",
+      "source": "Private local Cholita artwork, .blend scenes, GLBs, .codex-avatar data, caches, exports, and workspace previews described by the public repository boundary",
+      "owner": "Private and unconfirmed; no asset was accessed for this inventory.",
+      "permission": "rejected",
+      "license": "Private material outside the public repository and outside the portfolio scope.",
+      "dimensions": {
+        "status": "not-measured",
+        "reason": "Private assets were deliberately not located, opened, copied, or reconstructed."
+      },
+      "captionIntent": "None; these materials must not appear in the portfolio without a separate user-initiated rights review.",
+      "altTextIntent": "None because the materials must remain private.",
+      "optimizationNeeds": [
+        "Do not process, reconstruct, export, or inspect these assets.",
+        "Use a synthetic original screenshot if public visual evidence is later required."
+      ],
+      "decision": "never-republish",
+      "reason": "The repository explicitly excludes the likeness, Blender, GLB, and workspace materials from its public boundary."
+    },
+    {
+      "id": "ifoundyou-screenshots-maps-schema",
+      "projectId": "ifoundyou-dommedag",
+      "type": "image-group",
+      "source": "Repository screenshots, schema images, map captures, phone UI, contact/location data, and device imagery",
+      "owner": "Unknown; file-level authorship, consent, and data ownership are not documented.",
+      "permission": "pending",
+      "license": "Unresolved because the repository has no license file and no per-file permission record.",
+      "dimensions": {
+        "status": "not-measured",
+        "reason": "The assets were not copied because rights and privacy risks outweigh their current evidentiary value."
+      },
+      "captionIntent": "No public caption while excluded; a future original visual must clearly label synthetic identities, coordinates, and prototype state.",
+      "altTextIntent": "No public alt text while excluded; any future approved map description must avoid precise real-world location or contact details.",
+      "optimizationNeeds": [
+        "Recreate evidence with synthetic accounts and coordinates rather than reusing current repository captures.",
+        "Remove secrets, identifiers, notifications, contacts, and private locations.",
+        "Run privacy, safety, and rights review before responsive image optimization."
+      ],
+      "decision": "never-republish",
+      "reason": "The existing media combines unresolved rights with unacceptable contact, map, location, or device privacy risk."
+    },
+    {
+      "id": "ifoundyou-generated-launcher-assets",
+      "projectId": "ifoundyou-dommedag",
+      "type": "image-group",
+      "source": "Generated mobile launcher assets in the public repository",
+      "owner": "Unknown; no generation or authorship record is documented.",
+      "permission": "pending",
+      "license": "No repository license, generation record, or portfolio permission is recorded.",
+      "dimensions": {
+        "status": "not-measured",
+        "reason": "The assets were not copied because provenance and permission are missing."
+      },
+      "captionIntent": "No caption or brand claim is approved for these launcher assets.",
+      "altTextIntent": "No public alt text while excluded; any replacement should identify the experimental product name selected by Carlos.",
+      "optimizationNeeds": [
+        "Resolve the public product name before creating replacement brand assets.",
+        "Create an original rights-cleared mark with a recorded authoring or generation trail."
+      ],
+      "decision": "exclude",
+      "reason": "Product naming, generation provenance, license, and public reuse permission are unresolved."
+    },
+    {
+      "id": "opennemoclaw-readme-hero",
+      "projectId": "opennemoclaw",
+      "type": "image",
+      "source": "GitHub user-attachment hero embedded by the public repository README",
+      "owner": "Unknown; author and source are not documented.",
+      "permission": "pending",
+      "license": "No repository license, generation record, terms snapshot, or portfolio permission is recorded.",
+      "dimensions": {
+        "status": "not-measured",
+        "reason": "The remote user attachment was not copied or hotlinked because provenance is incomplete."
+      },
+      "captionIntent": "No public caption while excluded; a future original diagram should describe package and control boundaries without security-certification language.",
+      "altTextIntent": "No public alt text while excluded; an approved replacement should describe the actual architecture rather than decorative agent imagery.",
+      "optimizationNeeds": [
+        "Prefer an original repository-derived architecture diagram with no credentials or generated agent output.",
+        "Record authorship and source facts before producing responsive derivatives."
+      ],
+      "decision": "exclude",
+      "reason": "Author, source, generation method, license, and portfolio permission are undocumented."
+    }
+  ],
+  "deferredNonProjectAssets": [
+    {
+      "id": "local-main-ui-reference",
+      "path": "imagesandvideo/mainUI.png",
+      "type": "image",
+      "dimensions": {
+        "status": "known",
+        "width": 1672,
+        "height": 941,
+        "bytes": 2595384
+      },
+      "owner": "Unconfirmed; supplied in the local workspace, but authorship and generation rights are not yet recorded.",
+      "permission": "pending",
+      "license": "Unconfirmed",
+      "captionIntent": "Design reference for the approved Submerged Earth Observatory composition, not evidence for any flagship project.",
+      "altTextIntent": "If separately approved as a public poster, describe the observatory scene and interface purpose rather than generated text details.",
+      "optimizationNeeds": [
+        "Keep as a private design reference until public-display rights are confirmed.",
+        "If approved, create responsive poster derivatives and verify embedded text at mobile sizes."
+      ],
+      "routing": "Design-reference and asset-rights gates; do not attach to a project case study."
+    },
+    {
+      "id": "local-front-ui-scene",
+      "path": "imagesandvideo/frontUI.png",
+      "type": "image",
+      "dimensions": {
+        "status": "known",
+        "width": 1672,
+        "height": 941,
+        "bytes": 2713543
+      },
+      "owner": "Unconfirmed; supplied in the local workspace, but authorship and generation rights are not yet recorded.",
+      "permission": "pending",
+      "license": "Unconfirmed",
+      "captionIntent": "Possible Observatory scene reference only; it is not project outcome evidence.",
+      "altTextIntent": "If separately approved, describe the bright workshop, central robot, water surface, and surrounding instruments.",
+      "optimizationNeeds": [
+        "Confirm generation and public-display rights.",
+        "If approved, create responsive AVIF/WebP poster derivatives and retain a suitable fallback."
+      ],
+      "routing": "Design-reference and asset-rights gates; do not attach to a project case study."
+    },
+    {
+      "id": "local-logo-sheet",
+      "path": "imagesandvideo/logo.png",
+      "type": "image",
+      "dimensions": {
+        "status": "known",
+        "width": 1448,
+        "height": 1086,
+        "bytes": 1421710
+      },
+      "owner": "Unconfirmed; supplied in the local workspace, but mark authorship and generation rights are not yet recorded.",
+      "permission": "pending",
+      "license": "Unconfirmed",
+      "captionIntent": "Candidate personal monogram sheet, not flagship project media.",
+      "altTextIntent": "If approved, identify the gold Carlos Alfredo Carpio Meza monogram and wordmark variants.",
+      "optimizationNeeds": [
+        "Confirm mark ownership and whether the full legal name should be public.",
+        "Rebuild an accessible SVG or transparent raster master before Web use."
+      ],
+      "routing": "Task 2.14 personal-brand review."
+    },
+    {
+      "id": "local-firefly-logo-sheet",
+      "path": "imagesandvideo/Firefly.jpg",
+      "type": "image",
+      "dimensions": {
+        "status": "known",
+        "width": 5792,
+        "height": 4344,
+        "bytes": 2471295
+      },
+      "owner": "Unconfirmed; the filename may indicate generated media, but no provider, input, or terms record is available.",
+      "permission": "pending",
+      "license": "Unconfirmed",
+      "captionIntent": "Candidate personal monogram reference, not flagship project media.",
+      "altTextIntent": "If approved, identify the gold monogram and full-name wordmark on a dark background.",
+      "optimizationNeeds": [
+        "Recover generation provenance, input rights, and the applicable terms snapshot.",
+        "Downscale, remove metadata, and replace with a clean master only after approval."
+      ],
+      "routing": "Task 2.14 personal-brand and generated-asset rights review."
+    },
+    {
+      "id": "local-rotating-monogram-video",
+      "path": "imagesandvideo/Rotating Golden Monogram Emblem Animation.mp4",
+      "type": "video",
+      "dimensions": {
+        "status": "known",
+        "width": 1280,
+        "height": 720,
+        "bytes": 1574738,
+        "durationSeconds": 8.026984,
+        "frameRate": 24,
+        "videoCodec": "h264",
+        "audioCodec": "aac"
+      },
+      "owner": "Unconfirmed; supplied in the local workspace, but animation authorship, source assets, audio rights, and generation history are not recorded.",
+      "permission": "pending",
+      "license": "Unconfirmed",
+      "captionIntent": "Candidate personal-brand animation only; not flagship project media and not approved for autoplay.",
+      "altTextIntent": "If approved as informative media, provide a concise description or transcript; if decorative, mute it, provide a still fallback, and remove it from the accessibility tree.",
+      "optimizationNeeds": [
+        "Confirm animation, logo, and AAC audio rights.",
+        "Create a poster, muted/no-audio Web export, and reduced-motion static alternative.",
+        "Do not autoplay audible media."
+      ],
+      "routing": "Task 2.14 personal-brand review and later accessible-media validation."
+    }
+  ]
+}

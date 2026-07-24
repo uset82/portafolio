@@ -1,9 +1,16 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useThree } from "@react-three/fiber";
 import type { GLTF } from "three/addons/loaders/GLTFLoader.js";
 
+import type { ObservatoryAssetId } from "@/lib/three/asset-registry-schema";
+import type { AstraeaDiagnostics } from "@/lib/three/astraea-system";
+import type { CameraTransitionDiagnostics } from "@/lib/three/camera-transition";
+import type { DroneDiagnostics } from "@/lib/three/drone-system";
+import type { ElectronicsAiDiagnostics } from "@/lib/three/electronics-ai-system";
+import type { FutureEnergyDiagnostics } from "@/lib/three/future-energy-system";
+import type { PinaculoDiagnostics } from "@/lib/three/pinaculo-system";
 import {
   findOnDemandEntry,
   type ProgressiveAssetEntry,
@@ -16,6 +23,9 @@ import {
   type GltfLoadingAttempt,
   type GltfLoadingAttemptFactory,
 } from "@/lib/three/gltf-runtime";
+import { assertRobotAssetContract, type RobotDiagnostics } from "@/lib/three/robot-system";
+import type { SoundLabDiagnostics } from "@/lib/three/sound-lab-system";
+import type { WaterSurfaceDiagnostics } from "@/lib/three/water-system";
 
 import { useObservatorySceneStore } from "./observatory-scene-provider";
 import { ObservatorySceneShell } from "./observatory-scene-shell";
@@ -29,20 +39,41 @@ type IdleWindow = Window &
 export type ObservatoryLiveSceneProps = {
   plan: ProgressiveLoadPlan;
   createLoadingAttempt?: GltfLoadingAttemptFactory;
+  onAstraeaDiagnosticsReady?: (diagnostics: AstraeaDiagnostics | null) => void;
+  onCameraDiagnosticsReady?: (diagnostics: CameraTransitionDiagnostics | null) => void;
+  onDroneDiagnosticsReady?: (diagnostics: DroneDiagnostics | null) => void;
+  onElectronicsAiDiagnosticsReady?: (diagnostics: ElectronicsAiDiagnostics | null) => void;
+  onFutureEnergyDiagnosticsReady?: (diagnostics: FutureEnergyDiagnostics | null) => void;
+  onPinaculoDiagnosticsReady?: (diagnostics: PinaculoDiagnostics | null) => void;
+  onRobotDiagnosticsReady?: (diagnostics: RobotDiagnostics | null) => void;
+  onSoundLabDiagnosticsReady?: (diagnostics: SoundLabDiagnostics | null) => void;
+  onWaterDiagnosticsReady?: (diagnostics: WaterSurfaceDiagnostics | null) => void;
 };
 
 export function ObservatoryLiveScene({
   plan,
   createLoadingAttempt = createGltfLoadingAttempt,
+  onAstraeaDiagnosticsReady,
+  onCameraDiagnosticsReady,
+  onDroneDiagnosticsReady,
+  onElectronicsAiDiagnosticsReady,
+  onFutureEnergyDiagnosticsReady,
+  onPinaculoDiagnosticsReady,
+  onRobotDiagnosticsReady,
+  onSoundLabDiagnosticsReady,
+  onWaterDiagnosticsReady,
 }: ObservatoryLiveSceneProps) {
   const renderer = useThree((state) => state.gl);
   const store = useObservatorySceneStore();
-  const loadedAssets = useRef(new Map<string, GLTF>());
+  const loadedAssetsByUrl = useRef(new Map<string, GLTF>());
+  const [presentedAssets, setPresentedAssets] = useState<ReadonlyMap<ObservatoryAssetId, GLTF>>(
+    () => new Map(),
+  );
 
   useEffect(() => {
     const attempts = new Set<GltfLoadingAttempt>();
     const loadingUrls = new Set<string>();
-    const loadedUrls = loadedAssets.current;
+    const loadedUrls = loadedAssetsByUrl.current;
     const idleWindow = window as IdleWindow;
     let disposed = false;
     let idleHandle: number | null = null;
@@ -71,7 +102,20 @@ export function ObservatoryLiveScene({
             clearQueuedEntries();
             return false;
           }
+          if (entry.assetId === "robot-guide") {
+            try {
+              assertRobotAssetContract(gltf);
+            } catch (error) {
+              disposeGltfAsset(gltf);
+              throw error;
+            }
+          }
           loadedUrls.set(entry.url, gltf);
+          setPresentedAssets((current) => {
+            const next = new Map(current);
+            next.set(entry.assetId, gltf);
+            return next;
+          });
           if (fatal) {
             store.dispatch({
               type: "loading/progress",
@@ -151,5 +195,18 @@ export function ObservatoryLiveScene({
     };
   }, [createLoadingAttempt, plan, renderer, store]);
 
-  return <ObservatorySceneShell />;
+  return (
+    <ObservatorySceneShell
+      loadedAssets={presentedAssets}
+      {...(onAstraeaDiagnosticsReady ? { onAstraeaDiagnosticsReady } : {})}
+      {...(onCameraDiagnosticsReady ? { onCameraDiagnosticsReady } : {})}
+      {...(onDroneDiagnosticsReady ? { onDroneDiagnosticsReady } : {})}
+      {...(onElectronicsAiDiagnosticsReady ? { onElectronicsAiDiagnosticsReady } : {})}
+      {...(onFutureEnergyDiagnosticsReady ? { onFutureEnergyDiagnosticsReady } : {})}
+      {...(onPinaculoDiagnosticsReady ? { onPinaculoDiagnosticsReady } : {})}
+      {...(onRobotDiagnosticsReady ? { onRobotDiagnosticsReady } : {})}
+      {...(onSoundLabDiagnosticsReady ? { onSoundLabDiagnosticsReady } : {})}
+      {...(onWaterDiagnosticsReady ? { onWaterDiagnosticsReady } : {})}
+    />
+  );
 }

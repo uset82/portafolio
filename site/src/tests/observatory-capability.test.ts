@@ -162,7 +162,7 @@ test("capability assessment and manual preference have typed scene-store ownersh
   const decision = resolveQualityDecision(snapshot, "auto");
 
   store.dispatch({ type: "capabilities/apply", snapshot, decision });
-  assert.equal(store.getSnapshot().version, 2);
+  assert.equal(store.getSnapshot().version, 3);
   assert.equal(store.getSnapshot().capabilities, snapshot);
   assert.equal(store.getSnapshot().quality.tier, "full");
   assert.deepEqual(store.getSnapshot().quality.reasons, ["balanced-default"]);
@@ -193,9 +193,11 @@ test("the client controller feature-detects optional signals, cleans listeners, 
   const runtimeProviderSource = readSource(
     "src/components/three/observatory-scene-runtime-provider.tsx",
   );
-  const qualityControlSource = readSource("src/components/three/observatory-quality-control.tsx");
-  const qualityControlStyles = readSource(
-    "src/components/three/observatory-quality-control.module.css",
+  const experienceControlSource = readSource(
+    "src/components/three/observatory-experience-controls.tsx",
+  );
+  const experienceControlStyles = readSource(
+    "src/components/three/observatory-experience-controls.module.css",
   );
   const shellSource = readSource("src/components/three/observatory-scene-shell.tsx");
 
@@ -210,12 +212,20 @@ test("the client controller feature-detects optional signals, cleans listeners, 
   assert.match(controllerSource, /\.catch\(\(\) => undefined\)/);
   assert.match(controllerSource, /removeEventListener\("resize"/);
   assert.match(controllerSource, /quality\/preference/);
+  assert.match(controllerSource, /motion\/setting/);
   assert.match(runtimeProviderSource, /<ObservatoryCapabilityController/);
   assert.doesNotMatch(shellSource, /ObservatoryCapabilityController/);
-  assert.match(qualityControlSource, /<fieldset/);
-  assert.match(qualityControlSource, /type="radio"/);
-  assert.match(qualityControlSource, /aria-live="polite"/);
-  assert.match(qualityControlSource, /"auto"[\s\S]*"full"[\s\S]*"reduced"[\s\S]*"static"/);
-  assert.match(qualityControlStyles, /min-block-size: var\(--control-height\)/);
-  assert.match(qualityControlStyles, /prefers-reduced-motion: reduce/);
+  assert.match(experienceControlSource, /<details/);
+  assert.match(experienceControlSource, /<fieldset/);
+  assert.match(experienceControlSource, /type="radio"/);
+  assert.match(experienceControlSource, /aria-live="polite"/);
+  assert.match(experienceControlSource, /"auto"[\s\S]*"full"[\s\S]*"reduced"[\s\S]*"static"/);
+  assert.match(experienceControlSource, /Pause scene motion/);
+  assert.match(experienceControlSource, /Reset settings/);
+  assert.match(experienceControlStyles, /min-height: var\(--control-height\)/);
+  assert.match(
+    experienceControlStyles,
+    /@media \(max-width: 47\.99rem\)[\s\S]*?\.root\s*\{[^}]*z-index:\s*var\(--z-content\)/,
+  );
+  assert.match(experienceControlStyles, /prefers-reduced-motion: reduce/);
 });

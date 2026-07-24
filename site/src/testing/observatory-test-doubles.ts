@@ -1,7 +1,7 @@
-import { Group } from "three";
+import { AnimationClip, BoxGeometry, Group, Mesh, MeshBasicMaterial, SphereGeometry } from "three";
 import type { GLTF } from "three/addons/loaders/GLTFLoader.js";
 
-import { observatoryAssetRegistry } from "@/lib/three/asset-registry";
+import { getObservatoryAsset, observatoryAssetRegistry } from "@/lib/three/asset-registry";
 import {
   observatoryAssetRegistrySchema,
   type ObservatoryAssetRegistry,
@@ -40,15 +40,49 @@ export function createObservatoryTestRegistry(): ObservatoryAssetRegistry {
   });
 }
 
-function createTestGltf(url: string): GLTF {
+function assetIdFromUrl(url: string) {
+  return observatoryAssetRegistry.assets.find((asset) => url.includes(`/${asset.id}-lod-`))?.id;
+}
+
+export function createObservatoryTestGltf(url: string): GLTF {
   const scene = new Group();
   scene.name = `TestDouble:${url.split("/").at(-1) ?? "asset"}`;
   scene.userData = { testDouble: true, sourceUrl: url };
+  const assetId = assetIdFromUrl(url);
+  const asset = assetId ? getObservatoryAsset(assetId) : null;
+  let animations: AnimationClip[] = [];
+
+  if (asset?.id === "robot-guide") {
+    const root = new Group();
+    root.name = "RobotRoot";
+
+    const body = new Group();
+    body.name = "RobotBody";
+    body.position.y = 0.8;
+    body.add(new Mesh(new BoxGeometry(0.72, 1.2, 0.54), new MeshBasicMaterial()));
+
+    const head = new Group();
+    head.name = "RobotHead";
+    head.position.y = 1.52;
+    head.add(new Mesh(new SphereGeometry(0.28, 8, 6), new MeshBasicMaterial()));
+
+    const handContact = new Group();
+    handContact.name = "RobotHandContact";
+    handContact.position.set(-0.54, 0.06, 0.34);
+
+    const interaction = new Group();
+    interaction.name = "RobotInteraction";
+    interaction.position.set(0, 1.05, 0.08);
+
+    root.add(body, head, handContact, interaction);
+    scene.add(root);
+    animations = asset.clips.map((clip) => new AnimationClip(clip.id, 1, []));
+  }
 
   return {
     scene,
     scenes: [scene],
-    animations: [],
+    animations,
     cameras: [],
     asset: { generator: "portfolio-observatory-test-double", version: "2.0" },
     parser: {},
@@ -63,7 +97,7 @@ export type ObservatoryGltfAttemptDoubleOptions = {
 
 export function createObservatoryGltfAttemptDouble({
   failUrls = [],
-  createAsset = createTestGltf,
+  createAsset = createObservatoryTestGltf,
 }: ObservatoryGltfAttemptDoubleOptions = {}) {
   const failures = new Set(failUrls);
   const requestedUrls: string[] = [];

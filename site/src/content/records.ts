@@ -1,3 +1,5 @@
+import ccAiPublicKnowledgeLedger from "./cc-ai-public-knowledge.json";
+
 export const rawSiteContent = {
   sources: [
     {
@@ -28,6 +30,28 @@ export const rawSiteContent = {
       path: "../docs/decisions/001-portfolio-foundation.md",
       checkedOn: "2026-07-19",
     },
+    {
+      id: "approved-public-profile",
+      label: "Carlos-approved public profile and biography",
+      kind: "user-approval",
+      owner: "Carlos Carpio",
+      public: true,
+      path: "../docs/content/public-profile-approval.md",
+      checkedOn: "2026-07-19",
+      notes:
+        "Approved name, role, privacy-safe location omission, biographies, /contact path, GitHub account, and no additional social links.",
+    },
+    {
+      id: "github-uset82",
+      label: "Carlos Carpio public GitHub account",
+      kind: "external-page",
+      owner: "Carlos Carpio",
+      public: true,
+      url: "https://github.com/uset82",
+      checkedOn: "2026-07-19",
+      notes:
+        "Carlos approved this as the canonical public GitHub account; volatile repository counts are excluded.",
+    },
   ],
   metadata: {
     name: "Carlos Carpio",
@@ -57,8 +81,103 @@ export const rawSiteContent = {
       sourceIds: ["approved-main-ui", "approved-design-copy"],
       external: false,
     },
+    mediaTeaser: {
+      eyebrow: "Sound + moving image / 02",
+      heading: "Sound and moving image as pattern, memory, and response.",
+      description:
+        "This room remains mute and player-free until each selected track or video has approved credits, captions, and reuse rights.",
+      status: "Awaiting approved sources",
+      formats: ["Music", "Moving image"],
+      action: {
+        id: "visit-sound-foundation",
+        label: "Visit Sound",
+        href: "/sound",
+        kind: "navigation",
+        verification: "reference-approved",
+        sourceIds: ["approved-main-ui", "foundation-decision"],
+        external: false,
+      },
+      verification: "reference-approved",
+      sourceIds: ["approved-main-ui", "approved-public-profile", "foundation-decision"],
+    },
+    personalTeaser: {
+      eyebrow: "Travel + personal practice / 03",
+      heading: "The observations that happen away from the workbench.",
+      description:
+        "Travel, astrology, and numerology belong here as reflective and creative practice. Specific stories, places, dates, and images remain unpublished until Carlos approves their privacy and reuse rights.",
+      status: "Personal stories held for review",
+      themes: ["Travel notes", "Astrology studies", "Numerology studies"],
+      claimsBoundary:
+        "Creative and personal practice—not scientific, medical, or predictive advice.",
+      action: {
+        id: "enter-cosmos-foundation",
+        label: "Enter Cosmos",
+        href: "/cosmos",
+        kind: "navigation",
+        verification: "reference-approved",
+        sourceIds: ["approved-design-copy", "foundation-decision"],
+        external: false,
+      },
+      verification: "reference-approved",
+      sourceIds: ["approved-design-copy", "approved-public-profile", "foundation-decision"],
+    },
+    profileTeaser: {
+      eyebrow: "Profile / CV",
+      heading: "One practice, many ways of seeing.",
+      role: "Engineer · Inventor · Creative Technologist",
+      biography:
+        "Carlos works across artificial intelligence, electronics, resilient energy, music, astrology, and numerology. His portfolio connects engineering practice with creative experimentation, presenting verified work separately from prototypes, personal studies, and future concepts.",
+      practiceThreads: ["AI and electronics", "Resilient energy", "Music and symbolic systems"],
+      primaryAction: {
+        id: "explore-profile-cv",
+        label: "Explore profile and CV",
+        href: "/story",
+        kind: "navigation",
+        verification: "user-approved",
+        sourceIds: ["approved-public-profile", "foundation-decision"],
+        external: false,
+      },
+      secondaryAction: {
+        id: "view-github-profile",
+        label: "View GitHub",
+        href: "https://github.com/uset82",
+        kind: "social",
+        verification: "verified",
+        sourceIds: ["approved-public-profile", "github-uset82"],
+        external: true,
+      },
+      verification: "user-approved",
+      sourceIds: ["approved-public-profile", "github-uset82"],
+    },
+    footer: {
+      eyebrow: "Contact / 05",
+      heading: "Let’s turn a difficult idea into a working system.",
+      description:
+        "The contact route remains privacy-first while the final public email or form decision is still open.",
+      status: "Public contact method pending",
+      primaryAction: {
+        id: "footer-visit-contact",
+        label: "Visit Contact",
+        href: "/contact",
+        kind: "navigation",
+        verification: "user-approved",
+        sourceIds: ["approved-public-profile", "foundation-decision"],
+        external: false,
+      },
+      secondaryAction: {
+        id: "footer-view-github",
+        label: "View GitHub",
+        href: "https://github.com/uset82",
+        kind: "social",
+        verification: "verified",
+        sourceIds: ["approved-public-profile", "github-uset82"],
+        external: true,
+      },
+      verification: "reference-approved",
+      sourceIds: ["approved-public-profile", "github-uset82", "foundation-decision"],
+    },
     verification: "reference-approved",
-    sourceIds: ["approved-main-ui", "approved-design-copy"],
+    sourceIds: ["approved-main-ui", "approved-design-copy", "approved-public-profile"],
   },
   navigation: [
     ["nav-work", "Work", "/work"],
@@ -161,4 +280,5 @@ export const rawSiteContent = {
   education: [],
   trips: [],
   hobbies: [],
+  knowledgeRecords: ccAiPublicKnowledgeLedger.records,
 };

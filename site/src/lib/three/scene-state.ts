@@ -7,6 +7,12 @@ import {
 } from "./scene-config";
 import type { ObservatoryAssetId } from "./asset-registry-schema";
 import {
+  DEFAULT_OBSERVATORY_EXPERIENCE_PREFERENCES,
+  resolveSceneMotionPreference,
+  type ObservatoryExperiencePreferences,
+  type SceneMotionSetting,
+} from "./experience-preferences";
+import {
   INITIAL_BROWSER_CAPABILITY_SNAPSHOT,
   INITIAL_QUALITY_DECISION,
   type BrowserCapabilitySnapshot,
@@ -31,7 +37,7 @@ export type SceneError = {
 };
 
 export type ObservatorySceneState = {
-  version: 2;
+  version: 3;
   capabilities: BrowserCapabilitySnapshot;
   quality: {
     tier: SceneQualityTier;
@@ -40,6 +46,7 @@ export type ObservatorySceneState = {
     reasons: readonly QualityReasonCode[];
   };
   motion: {
+    setting: SceneMotionSetting;
     preference: "no-preference" | "reduce";
     userPaused: boolean;
     documentVisible: boolean;
@@ -61,7 +68,7 @@ export type ObservatorySceneState = {
   };
   camera: {
     view: CameraViewId;
-    phase: "settled" | "requested";
+    phase: "settled" | "requested" | "transitioning";
     requestId: number;
   };
 };
@@ -75,6 +82,7 @@ export type ObservatorySceneAction =
       decision: QualityDecision;
     }
   | { type: "motion/preference"; preference: "no-preference" | "reduce" }
+  | { type: "motion/setting"; setting: SceneMotionSetting }
   | { type: "motion/pause"; paused: boolean }
   | { type: "motion/visibility"; visible: boolean }
   | { type: "loading/start"; total: number; activeGroup: SceneGroupId | null }
@@ -92,17 +100,24 @@ export type ObservatorySceneAction =
   | { type: "artifact/select"; artifactId: SceneArtifactId }
   | { type: "artifact/clear" }
   | { type: "camera/request"; view: CameraViewId }
+  | { type: "camera/started"; requestId: number }
   | { type: "camera/settled"; requestId: number }
   | { type: "sound/play"; userInitiated: true }
   | { type: "sound/pause" }
   | { type: "sound/mute" }
-  | { type: "sound/unavailable" };
+  | { type: "sound/unavailable" }
+  | {
+      type: "preferences/apply";
+      preferences: ObservatoryExperiencePreferences;
+    }
+  | { type: "preferences/reset" };
 
 export const INITIAL_OBSERVATORY_SCENE_STATE: ObservatorySceneState = {
-  version: 2,
+  version: 3,
   capabilities: INITIAL_BROWSER_CAPABILITY_SNAPSHOT,
   quality: INITIAL_QUALITY_DECISION,
   motion: {
+    setting: DEFAULT_OBSERVATORY_EXPERIENCE_PREFERENCES.motion,
     preference: "no-preference",
     userPaused: false,
     documentVisible: true,
@@ -121,6 +136,7 @@ export const INITIAL_OBSERVATORY_SCENE_STATE: ObservatorySceneState = {
 };
 
 function requestCamera(state: ObservatorySceneState, view: CameraViewId): ObservatorySceneState {
+  if (state.camera.view === view && state.camera.phase === "settled") return state;
   return {
     ...state,
     camera: {
@@ -194,7 +210,7 @@ function applyQualityDecision(
       ? state.camera
       : {
           view: "fallback",
-          phase: "settled",
+          phase: "requested",
           requestId: state.camera.requestId + 1,
         },
   };
@@ -220,6 +236,8 @@ export function observatorySceneReducer(
       return applyQualityDecision(state, action.decision, action.snapshot);
     case "motion/preference":
       return { ...state, motion: { ...state.motion, preference: action.preference } };
+    case "motion/setting":
+      return { ...state, motion: { ...state.motion, setting: action.setting } };
     case "motion/pause":
       return { ...state, motion: { ...state.motion, userPaused: action.paused } };
     case "motion/visibility":
@@ -336,8 +354,13 @@ export function observatorySceneReducer(
       );
     case "camera/request":
       return requestCamera(state, state.quality.tier === "static" ? "fallback" : action.view);
-    case "camera/settled":
+    case "camera/started":
       if (state.camera.phase !== "requested" || action.requestId !== state.camera.requestId) {
+        return state;
+      }
+      return { ...state, camera: { ...state.camera, phase: "transitioning" } };
+    case "camera/settled":
+      if (state.camera.phase === "settled" || action.requestId !== state.camera.requestId) {
         return state;
       }
       return { ...state, camera: { ...state.camera, phase: "settled" } };
@@ -352,6 +375,39 @@ export function observatorySceneReducer(
       return { ...state, sound: { status: "muted", muted: true } };
     case "sound/unavailable":
       return { ...state, sound: { status: "unavailable", muted: true } };
+    case "preferences/apply":
+      return {
+        ...state,
+        quality: { ...state.quality, preference: action.preferences.quality },
+        motion: {
+          ...state.motion,
+          setting: action.preferences.motion,
+          preference: resolveSceneMotionPreference(
+            action.preferences.motion,
+            state.capabilities.reducedMotion,
+          ),
+          userPaused: action.preferences.paused,
+        },
+      };
+    case "preferences/reset":
+      return {
+        ...state,
+        quality: {
+          ...state.quality,
+          preference: DEFAULT_OBSERVATORY_EXPERIENCE_PREFERENCES.quality,
+        },
+        motion: {
+          ...state.motion,
+          setting: DEFAULT_OBSERVATORY_EXPERIENCE_PREFERENCES.motion,
+          preference: resolveSceneMotionPreference(
+            DEFAULT_OBSERVATORY_EXPERIENCE_PREFERENCES.motion,
+            state.capabilities.reducedMotion,
+          ),
+          userPaused: DEFAULT_OBSERVATORY_EXPERIENCE_PREFERENCES.paused,
+        },
+        sound:
+          state.sound.status === "unavailable" ? state.sound : { status: "muted", muted: true },
+      };
   }
 }
 

@@ -113,13 +113,18 @@ test("new camera requests supersede stale completions", () => {
   const store = prepareFullScene();
   store.dispatch({ type: "camera/request", view: "astraea" });
   const staleRequestId = store.getSnapshot().camera.requestId;
+  store.dispatch({ type: "camera/started", requestId: staleRequestId });
+  assert.equal(store.getSnapshot().camera.phase, "transitioning");
   store.dispatch({ type: "camera/request", view: "pinaculo" });
   const activeRequestId = store.getSnapshot().camera.requestId;
 
+  store.dispatch({ type: "camera/started", requestId: staleRequestId });
   store.dispatch({ type: "camera/settled", requestId: staleRequestId });
   assert.equal(store.getSnapshot().camera.phase, "requested");
   assert.equal(store.getSnapshot().camera.view, "pinaculo");
 
+  store.dispatch({ type: "camera/started", requestId: activeRequestId });
+  assert.equal(store.getSnapshot().camera.phase, "transitioning");
   store.dispatch({ type: "camera/settled", requestId: activeRequestId });
   assert.equal(store.getSnapshot().camera.phase, "settled");
 });
@@ -179,7 +184,10 @@ test("scene store and shell use external snapshots and contain no frame-loop Rea
   assert.doesNotMatch(stateSource, /from\s+["']react["']/);
   assert.match(providerSource, /useSyncExternalStore/);
   assert.match(providerSource, /createObservatorySceneStore/);
-  assert.doesNotMatch(shellSource, /useFrame/);
+  assert.match(shellSource, /useFrame/);
+  assert.doesNotMatch(shellSource, /useState|requestAnimationFrame/);
+  assert.match(shellSource, /window\.setInterval/);
+  assert.match(shellSource, /window\.clearInterval/);
   assert.match(shellSource, /<perspectiveCamera/);
   assert.match(shellSource, /OBSERVATORY_LIGHT_RIG\.map/);
   assert.match(shellSource, /Object\.values\(SCENE_GROUPS\)\.map/);

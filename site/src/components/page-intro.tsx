@@ -1,4 +1,5 @@
-import { ActionLink, EditorialHeading } from "@/components/ui";
+import { RecoveryState } from "@/components/recovery-state";
+import { EditorialHeading } from "@/components/ui";
 
 type PageIntroProps = {
   eyebrow: string;
@@ -24,22 +25,14 @@ export function PageIntro({ eyebrow, title, description, meta, children }: PageI
           {children}
         </div>
       </section>
-      <section
-        className="preparation-state layout-container layout-grid"
-        aria-labelledby="preparation-title"
-      >
-        <span aria-hidden="true">CC / 01</span>
-        <div>
-          <h2 id="preparation-title">Source verification in progress</h2>
-          <p>
-            This route is part of the working site. Its publishable content will appear only after
-            project facts, media rights, and links are verified—there is no invented filler here.
-          </p>
-        </div>
-        <ActionLink className="text-link" href="/">
-          Return to the Observatory <span aria-hidden="true">→</span>
-        </ActionLink>
-      </section>
+      <RecoveryState
+        className="layout-container"
+        eyebrow="Publication gate / held"
+        title="Source verification in progress"
+        description="This route is part of the working site. Its publishable content will appear only after project facts, media rights, and links are verified—there is no invented filler here."
+        marker="CC / 01"
+        primaryAction={{ href: "/", label: "Return to the Observatory" }}
+      />
     </main>
   );
 }

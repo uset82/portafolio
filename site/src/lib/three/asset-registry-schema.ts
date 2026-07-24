@@ -87,6 +87,7 @@ export const assetRegistryEntrySchema = z
       "planned-rights-review-required",
       "planned-rights-and-audio-review-required",
       "specified",
+      "specified-audio-review-required",
     ]),
     scaleMeters: z.tuple([
       z.number().nonnegative(),

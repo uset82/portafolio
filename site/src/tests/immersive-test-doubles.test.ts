@@ -38,9 +38,9 @@ test("the Observatory registry double is schema-valid and enables deterministic 
   assert.equal(full.canMountCanvas, true);
   assert.equal(reduced.canMountCanvas, true);
   assert.deepEqual(full.missingHeroCritical, []);
-  assert.equal(full.heroCritical.length, 2);
-  assert.equal(full.deferred.length, 2);
-  assert.equal(full.onDemand.length, 5);
+  assert.equal(full.heroCritical.length, 1);
+  assert.equal(full.deferred.length, 1);
+  assert.equal(full.onDemand.length, 0);
   assert.equal(
     [...full.heroCritical, ...full.deferred, ...full.onDemand].every((entry) =>
       entry.url.startsWith(`${OBSERVATORY_TEST_ASSET_ROOT}/`),
@@ -59,12 +59,12 @@ test("the GLTF attempt double returns disposable Three scenes without a file or 
 
   assert.deepEqual(double.requestedUrls, urls);
   assert.equal(double.attemptCount, 1);
-  assert.equal(loaded.length, 2);
+  assert.equal(loaded.length, 1);
   assert.equal(
     loaded.every((asset) => asset.scene.userData.testDouble === true),
     true,
   );
-  assert.deepEqual(attempt.getSnapshot(), { status: "ready", loaded: 2, total: 2, url: null });
+  assert.deepEqual(attempt.getSnapshot(), { status: "ready", loaded: 1, total: 1, url: null });
 
   attempt.abort();
   assert.equal(double.abortCount, 1);
@@ -114,6 +114,24 @@ test("the poster-first component accepts test assets and a loader double without
   const loader = createObservatoryGltfAttemptDouble();
   const registry = createObservatoryTestRegistry();
   const content = createElement(ObservatoryProgressiveExperienceContent, {
+    artifacts: [
+      {
+        artifactId: "astraea",
+        href: "/work/astraea",
+        title: "ASTRAEA",
+        descriptor: "Celestial intelligence",
+        status: "concept",
+        mechanismDescription: "Three marked rings align when focused.",
+      },
+      {
+        artifactId: "pinaculo",
+        href: "/work/pinaculo",
+        title: "PINÁCULO",
+        descriptor: "Numerological engine",
+        status: "concept",
+        mechanismDescription: "A 24-position pattern mechanism.",
+      },
+    ],
     poster: createElement("span", null, "Deterministic poster"),
     assets: registry.assets,
     createLoadingAttempt: loader.createLoadingAttempt,
@@ -125,6 +143,22 @@ test("the poster-first component accepts test assets and a loader double without
 
   assert.equal(
     html.indexOf("Deterministic poster") < html.indexOf("observatory-canvas-layer"),
+    true,
+  );
+  assert.match(html, /<figure[^>]*class="observatory-progressive-experience"/);
+  assert.match(html, /<figcaption id="observatory-scene-caption" class="visually-hidden">/);
+  assert.match(html, /data-scene-layer="poster" aria-hidden="false"/);
+  assert.match(html, /data-scene-layer="canvas" aria-hidden="true"/);
+  assert.equal(
+    html.indexOf('data-scene-layer="canvas"') < html.indexOf('data-scene-layer="artifact-access"'),
+    true,
+  );
+  assert.match(html, /href="\/work\/astraea"/);
+  assert.match(html, /ASTRAEA/);
+  assert.match(html, /href="\/work\/pinaculo"/);
+  assert.match(html, /PINÁCULO/);
+  assert.equal(
+    html.indexOf('data-scene-layer="artifact-access"') < html.indexOf('data-scene-layer="status"'),
     true,
   );
   assert.match(html, /Poster mode · immersive scene ready to prepare/);

@@ -1,0 +1,193 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-07-20",
+  "releaseDecision": "hold",
+  "assets": [
+    {
+      "id": "runtime-observatory-poster",
+      "label": "Observatory poster fallback",
+      "scope": "launch",
+      "kind": "image",
+      "paths": [
+        "site/public/images/observatory-poster.png",
+        "docs/design/reference/mainUI-approved.png"
+      ],
+      "source": "Carlos-supplied approved visual reference; both files are byte-identical with SHA-256 B4E11D325297CEB8FFB021866FFA2903B316D5D2443DEF67BA890B4B3F3058BF.",
+      "owner": "Carlos Carpio supplied the source, but underlying authorship, generation history, and public-display rights remain unconfirmed.",
+      "rights": "pending",
+      "license": "Private portfolio design reference; no public reuse license is recorded.",
+      "attribution": "No public credit line is approved.",
+      "decision": "hold",
+      "launchCritical": true,
+      "evidence": "The 1672×941, 2,595,384-byte runtime poster exactly matches the archived reference. It may remain in local and preview builds, but production publication requires explicit public-display approval or a rights-cleared replacement."
+    },
+    {
+      "id": "nextjs-starter-favicon",
+      "label": "Temporary Next.js starter favicon",
+      "scope": "launch",
+      "kind": "icon",
+      "paths": ["site/src/app/favicon.ico"],
+      "source": "Unmodified official Next.js app-tw/ts starter favicon; local and canonical files share SHA-256 2B8AD2D33455A8F736FC3A8EBF8F0BDEA8848AD4C0DB48A2833BD0F9CD775932.",
+      "owner": "Vercel, Inc. / Next.js project",
+      "rights": "permissive-license",
+      "license": "MIT; bundled at site/LICENSES/NEXTJS-MIT.txt.",
+      "attribution": "Recorded in site/THIRD_PARTY_NOTICES.md.",
+      "decision": "replace",
+      "launchCritical": false,
+      "evidence": "The file is legally reusable under MIT but is visually generic. Replace it with an approved Carlos mark during task 2.14 without treating that branding change as a license emergency."
+    },
+    {
+      "id": "cormorant-garamond-font",
+      "label": "Cormorant Garamond font family",
+      "scope": "launch",
+      "kind": "font",
+      "paths": ["Next.js production-build font output for Cormorant Garamond"],
+      "source": "Google Fonts Cormorant Garamond family loaded through next/font/google.",
+      "owner": "The Cormorant Project Authors",
+      "rights": "attribution-required",
+      "license": "SIL Open Font License 1.1; copyright and license bundled at site/LICENSES/FONTS-OFL-1.1.txt.",
+      "attribution": "Copyright and license are included in site/LICENSES/FONTS-OFL-1.1.txt and linked from site/THIRD_PARTY_NOTICES.md.",
+      "decision": "include",
+      "launchCritical": true,
+      "evidence": "The application requests Latin weights 400, 500, and 600 through Next.js font optimization; no browser request to a third-party font host is used at runtime."
+    },
+    {
+      "id": "manrope-font",
+      "label": "Manrope font family",
+      "scope": "launch",
+      "kind": "font",
+      "paths": ["Next.js production-build font output for Manrope"],
+      "source": "Google Fonts Manrope family loaded through next/font/google.",
+      "owner": "The Manrope Project Authors",
+      "rights": "attribution-required",
+      "license": "SIL Open Font License 1.1; copyright and license bundled at site/LICENSES/FONTS-OFL-1.1.txt.",
+      "attribution": "Copyright and license are included in site/LICENSES/FONTS-OFL-1.1.txt and linked from site/THIRD_PARTY_NOTICES.md.",
+      "decision": "include",
+      "launchCritical": true,
+      "evidence": "The application requests Latin weights 400, 500, and 600 through Next.js font optimization; no browser request to a third-party font host is used at runtime."
+    },
+    {
+      "id": "threejs-decoder-bundle",
+      "label": "Self-hosted Three.js Draco and Basis decoders",
+      "scope": "conditional",
+      "kind": "decoder",
+      "paths": ["site/public/three/decoders/"],
+      "source": "Version-matched files from three@0.185.1 examples/jsm/libs/draco/gltf and examples/jsm/libs/basis.",
+      "owner": "three.js authors",
+      "rights": "attribution-required",
+      "license": "MIT; bundled at site/public/three/decoders/THREE-LICENSE.txt.",
+      "attribution": "File hashes, source directories, and license path are recorded in site/public/three/decoders/README.md.",
+      "decision": "include",
+      "launchCritical": false,
+      "evidence": "Five decoder files have pinned sizes and SHA-256 hashes and are requested only if a future approved compressed asset needs them."
+    },
+    {
+      "id": "repository-authored-visual-runtime",
+      "label": "Procedural water, fallback geometry, CSS materials, and scene lighting",
+      "scope": "launch",
+      "kind": "procedural-visual",
+      "paths": [
+        "site/src/lib/three/water-system.ts",
+        "site/src/components/three/observatory-live-scene.tsx",
+        "site/src/styles/"
+      ],
+      "source": "Repository-authored TypeScript, shader, React, and CSS output using the locked Natural Observatory palette.",
+      "owner": "Portfolio implementation",
+      "rights": "not-applicable",
+      "license": "No imported visual media; third-party runtime libraries remain covered by their package licenses and notices.",
+      "attribution": "No public visual-asset attribution required.",
+      "decision": "include",
+      "launchCritical": true,
+      "evidence": "The current runtime uses authored geometry, materials, and bounded shaders. The public 3D registry exposes zero GLB URLs while model provenance is pending."
+    },
+    {
+      "id": "repository-authored-cc-mark",
+      "label": "Geometric CC interface mark",
+      "scope": "launch",
+      "kind": "procedural-visual",
+      "paths": ["site/src/components/cc-mark.tsx"],
+      "source": "Repository-authored semantic component derived from the approved circular CC design direction without importing the local gold monogram files.",
+      "owner": "Portfolio implementation",
+      "rights": "not-applicable",
+      "license": "Code-authored interface geometry; no external image file is embedded.",
+      "attribution": "No public visual-asset attribution required.",
+      "decision": "include",
+      "launchCritical": true,
+      "evidence": "The component remains the privacy-safe fallback while the separate personal monogram files await task 2.14 approval."
+    },
+    {
+      "id": "flagship-project-media-groups",
+      "label": "Repository screenshots, generated media, product imagery, and private project assets",
+      "scope": "excluded",
+      "kind": "reference-group",
+      "paths": ["docs/content/project-media-inventory.json"],
+      "source": "Nine candidate groups audited across the five flagship project source packs.",
+      "owner": "Mixed, unknown, private, or unconfirmed.",
+      "rights": "pending",
+      "license": "No candidate has complete file-level publication rights.",
+      "attribution": "Not applicable while excluded.",
+      "decision": "exclude",
+      "launchCritical": false,
+      "evidence": "Reusable project media count is zero. Text-and-links fallbacks are defined for every project."
+    },
+    {
+      "id": "local-observatory-monogram-media",
+      "label": "Local Observatory scene and gold monogram image/video files",
+      "scope": "excluded",
+      "kind": "reference-group",
+      "paths": ["imagesandvideo/"],
+      "source": "Five user-supplied local files measured in the project-media inventory.",
+      "owner": "Authorship, generation history, source inputs, and AAC audio ownership are unconfirmed.",
+      "rights": "pending",
+      "license": "No public-display or redistribution license is recorded.",
+      "attribution": "Not applicable while excluded.",
+      "decision": "exclude",
+      "launchCritical": false,
+      "evidence": "The files remain untracked and outside the live site; only the separately archived poster reference currently has a preview copy."
+    },
+    {
+      "id": "planned-3d-environment-assets",
+      "label": "Planned GLB models, textures, HDR environment, and audio-reactive assets",
+      "scope": "excluded",
+      "kind": "3d",
+      "paths": [
+        "docs/assets/observatory-3d-manifest.json",
+        "docs/assets/reference-packs/",
+        "docs/assets/3d-provenance-register.json",
+        "docs/research/openai-image-reference-rights-review.md"
+      ],
+      "source": "Specification-only provider-neutral 3D manifest plus four internal modeling-reference sheets produced with Codex built-in image generation from the Carlos-supplied approved Observatory image.",
+      "owner": "The reference sheets were generated for this portfolio, but their input image has no recorded underlying authorship or generation history; no candidate 3D asset has completed authorship and provenance approval.",
+      "rights": "pending",
+      "license": "Per-candidate rights, provider terms, attribution, and likeness review are required before import.",
+      "attribution": "Not applicable until a candidate passes provenance review.",
+      "decision": "exclude",
+      "launchCritical": false,
+      "evidence": "Four hash-pinned internal sheets now cover all 12 planned registry assets with multi-view guidance, scale, materials, prompts, and negative constraints. Four provenance records capture source, service, unknown model/version, output date, conditional official terms snapshots, territory, notice, influence, likeness, engineering, and reuse decisions. They remain under docs only, the registry contains zero public GLB URLs, and the semantic, procedural-water, and poster fallback remains complete without them."
+    },
+    {
+      "id": "unapproved-audio-video",
+      "label": "Music, Sound Lab audio, portfolio video, and external embeds",
+      "scope": "excluded",
+      "kind": "audio-video",
+      "paths": [
+        "docs/content/content-inventory.json",
+        "docs/content/project-media-inventory.json"
+      ],
+      "source": "No launch audio, video, poster, transcript, caption, credit, or embed set has been approved.",
+      "owner": "Unconfirmed because no launch set exists.",
+      "rights": "pending",
+      "license": "No reusable launch media license is recorded.",
+      "attribution": "Not applicable while excluded.",
+      "decision": "exclude",
+      "launchCritical": false,
+      "evidence": "Sound and video routes retain explicit preparation or unavailable states and do not autoplay or hotlink unapproved media."
+    }
+  ],
+  "reviewNotes": [
+    "The only production-blocking visual-rights issue in the current runtime is the Observatory poster's unconfirmed public-display permission.",
+    "The Next.js starter favicon is licensed and attributed but remains a branding replacement candidate.",
+    "Fonts and Three.js decoder license texts are now bundled locally.",
+    "No excluded project, local brand, 3D, audio, video, generated reference sheet, or generated model is allowed into runtime content by this register."
+  ]
+}

@@ -4,7 +4,7 @@ import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { MotionProvider } from "@/components/motion-provider";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { navigation } from "@/content/site";
+import { navigation, siteContent } from "@/content/site";
 
 import "./globals.css";
 
@@ -33,7 +33,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${displayFont.variable} ${bodyFont.variable}`}>
+    <html
+      lang="en"
+      className={`${displayFont.variable} ${bodyFont.variable}`}
+      data-scroll-behavior="smooth"
+    >
       <body>
         <noscript>
           <style>{`.scene-reveal,
@@ -48,7 +52,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </a>
           <SiteHeader navigation={navigation} />
           {children}
-          <SiteFooter />
+          <SiteFooter content={siteContent.metadata.footer} navigation={navigation} />
         </MotionProvider>
       </body>
     </html>

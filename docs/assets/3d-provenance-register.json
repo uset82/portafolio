@@ -1,0 +1,289 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-07-20",
+  "policy": "Every generated reference image and future 3D candidate remains non-public until its source rights, exact service agreement, provider/model evidence, territory, attribution, third-party influence, likeness, engineering, and permitted-reuse fields pass human review.",
+  "termsReviewPath": "docs/research/openai-image-reference-rights-review.md",
+  "publicModelCandidateCount": 0,
+  "candidates": [
+    {
+      "id": "reference-observatory-environment",
+      "sheetId": "observatory-environment",
+      "kind": "generated-reference-image",
+      "file": "docs/assets/reference-packs/observatory-environment-reference.png",
+      "sha256": "5D617525F2441C7E80E5B8C6D058018A26694C90A3F964047384448EC621FA6E",
+      "outputDate": "2026-07-20",
+      "promptIds": ["environment-base", "environment-remove-robot"],
+      "sourceImages": [
+        {
+          "path": "docs/design/reference/mainUI-approved.png",
+          "sha256": "B4E11D325297CEB8FFB021866FFA2903B316D5D2443DEF67BA890B4B3F3058BF",
+          "rightsState": "pending",
+          "purpose": "Carlos-supplied palette, material, composition, and world-building reference"
+        }
+      ],
+      "intermediateSources": [
+        {
+          "sha256": "5A7C76FC8ECBA9B4A91A49602023D33A92F4F193B4BF74B27A13F7A064CADCDE",
+          "retainedInRepository": false,
+          "reason": "Rejected generated base introduced a robot in the architecture-only lighting panel; retained by hash only because it is not an accepted project asset."
+        }
+      ],
+      "authorship": {
+        "directionOwner": "Carlos Carpio",
+        "promptAuthor": "Portfolio implementation",
+        "generationService": "OpenAI Codex built-in image generation",
+        "generationModel": null,
+        "modelVersion": null,
+        "unavailableReason": "The built-in interface exposed neither model name nor model version; skill documentation is not treated as run-specific model evidence."
+      },
+      "terms": {
+        "governingAgreement": "unknown-account-type",
+        "exactAccountAgreementConfirmed": false,
+        "snapshotIds": [
+          "openai-europe-terms-2026-01-16",
+          "openai-services-agreement-2026-01-01",
+          "openai-service-terms-2026-07-20"
+        ],
+        "reviewPath": "docs/research/openai-image-reference-rights-review.md"
+      },
+      "territory": {
+        "requestContext": "Europe/Oslo workspace context; user and account jurisdiction not independently confirmed",
+        "processingLocation": null,
+        "reviewedServiceRestriction": "No output-display territory restriction was located in the reviewed OpenAI terms, but the account agreement and input-image rights remain unresolved.",
+        "publicDisplayRights": "held"
+      },
+      "noticeAttribution": {
+        "reviewedTermsRequirement": "No blanket OpenAI credit line was located; AI output must not be represented as human-generated.",
+        "repositoryDisclosure": "Manifest and prompt record identify Codex built-in image generation and preserve all accepted and rejected-output hashes.",
+        "finalPublicDecision": "pending"
+      },
+      "thirdPartyInfluence": [
+        "Only the Carlos-supplied Observatory image is an intentional visual influence; no named architect, product, studio, brand, or stock asset was requested."
+      ],
+      "humanLikenessRisk": "none-visible-human",
+      "likenessReview": "The accepted sheet contains architecture, plants, water, and props with no visible person or humanoid subject.",
+      "engineeringClaimRisk": "low",
+      "engineeringReview": "The architecture is concept guidance rather than a structural, architectural, water-safety, or construction claim.",
+      "permittedReuse": [
+        "internal 3D modeling reference",
+        "internal palette and material review",
+        "internal camera and composition planning"
+      ],
+      "prohibitedReuse": [
+        "public website image",
+        "downloadable or redistributable reference pack",
+        "training or evaluation dataset",
+        "proof of authorship or architectural feasibility"
+      ],
+      "rightsState": "pending",
+      "approvedForPublicRuntime": false
+    },
+    {
+      "id": "reference-robot-and-drone",
+      "sheetId": "robot-and-drone",
+      "kind": "generated-reference-image",
+      "file": "docs/assets/reference-packs/robot-drone-reference.png",
+      "sha256": "5182113D0DB388951ED29596A0EED0F0DE2E9578108EA6BD3C75F796A7605E0C",
+      "outputDate": "2026-07-20",
+      "promptIds": ["robot-drone-base"],
+      "sourceImages": [
+        {
+          "path": "docs/design/reference/mainUI-approved.png",
+          "sha256": "B4E11D325297CEB8FFB021866FFA2903B316D5D2443DEF67BA890B4B3F3058BF",
+          "rightsState": "pending",
+          "purpose": "Carlos-supplied palette, material, proportion, and mechanical-language reference"
+        }
+      ],
+      "intermediateSources": [],
+      "authorship": {
+        "directionOwner": "Carlos Carpio",
+        "promptAuthor": "Portfolio implementation",
+        "generationService": "OpenAI Codex built-in image generation",
+        "generationModel": null,
+        "modelVersion": null,
+        "unavailableReason": "The built-in interface exposed neither model name nor model version; skill documentation is not treated as run-specific model evidence."
+      },
+      "terms": {
+        "governingAgreement": "unknown-account-type",
+        "exactAccountAgreementConfirmed": false,
+        "snapshotIds": [
+          "openai-europe-terms-2026-01-16",
+          "openai-services-agreement-2026-01-01",
+          "openai-service-terms-2026-07-20"
+        ],
+        "reviewPath": "docs/research/openai-image-reference-rights-review.md"
+      },
+      "territory": {
+        "requestContext": "Europe/Oslo workspace context; user and account jurisdiction not independently confirmed",
+        "processingLocation": null,
+        "reviewedServiceRestriction": "No output-display territory restriction was located in the reviewed OpenAI terms, but the account agreement and input-image rights remain unresolved.",
+        "publicDisplayRights": "held"
+      },
+      "noticeAttribution": {
+        "reviewedTermsRequirement": "No blanket OpenAI credit line was located; AI output must not be represented as human-generated.",
+        "repositoryDisclosure": "Manifest and prompt record identify Codex built-in image generation and preserve the accepted sheet hash.",
+        "finalPublicDecision": "pending"
+      },
+      "thirdPartyInfluence": [
+        "Only the Carlos-supplied Observatory image is an intentional visual influence; no named robot, vehicle, manufacturer, film, game, studio, or living artist was requested."
+      ],
+      "humanLikenessRisk": "low-non-human-humanoid",
+      "likenessReview": "No person is depicted, but the humanoid robot silhouette requires manual comparison for derivative character, product, costume, and face-like design similarity before modeling approval.",
+      "engineeringClaimRisk": "low",
+      "engineeringReview": "Joint and rotor layouts are visual modeling guidance, not validated robotics, aviation, safety, payload, or performance engineering.",
+      "permittedReuse": [
+        "internal 3D modeling reference",
+        "internal joint and silhouette planning",
+        "internal originality review"
+      ],
+      "prohibitedReuse": [
+        "public website image",
+        "downloadable or redistributable reference pack",
+        "training or evaluation dataset",
+        "claim of safe or functional robot or drone engineering"
+      ],
+      "rightsState": "pending",
+      "approvedForPublicRuntime": false
+    },
+    {
+      "id": "reference-artifact-systems",
+      "sheetId": "artifact-systems",
+      "kind": "generated-reference-image",
+      "file": "docs/assets/reference-packs/artifact-systems-reference.png",
+      "sha256": "6931FB0D7E756B594A8DECA17A7468F2B54FF1E832485742E9A42E5C447DAEF2",
+      "outputDate": "2026-07-20",
+      "promptIds": ["artifact-systems-base", "artifact-systems-remove-writing"],
+      "sourceImages": [
+        {
+          "path": "docs/design/reference/mainUI-approved.png",
+          "sha256": "B4E11D325297CEB8FFB021866FFA2903B316D5D2443DEF67BA890B4B3F3058BF",
+          "rightsState": "pending",
+          "purpose": "Carlos-supplied palette, material, scale, and artifact-language reference"
+        }
+      ],
+      "intermediateSources": [
+        {
+          "sha256": "1B1AE7177529B41E60FC5069A553C8FEC84484665A184C5E5C3F86C384409E1F",
+          "retainedInRepository": false,
+          "reason": "Rejected generated base introduced pseudo-writing and glyph-like surface marks; retained by hash only because it is not an accepted project asset."
+        }
+      ],
+      "authorship": {
+        "directionOwner": "Carlos Carpio",
+        "promptAuthor": "Portfolio implementation",
+        "generationService": "OpenAI Codex built-in image generation",
+        "generationModel": null,
+        "modelVersion": null,
+        "unavailableReason": "The built-in interface exposed neither model name nor model version; skill documentation is not treated as run-specific model evidence."
+      },
+      "terms": {
+        "governingAgreement": "unknown-account-type",
+        "exactAccountAgreementConfirmed": false,
+        "snapshotIds": [
+          "openai-europe-terms-2026-01-16",
+          "openai-services-agreement-2026-01-01",
+          "openai-service-terms-2026-07-20"
+        ],
+        "reviewPath": "docs/research/openai-image-reference-rights-review.md"
+      },
+      "territory": {
+        "requestContext": "Europe/Oslo workspace context; user and account jurisdiction not independently confirmed",
+        "processingLocation": null,
+        "reviewedServiceRestriction": "No output-display territory restriction was located in the reviewed OpenAI terms, but the account agreement and input-image rights remain unresolved.",
+        "publicDisplayRights": "held"
+      },
+      "noticeAttribution": {
+        "reviewedTermsRequirement": "No blanket OpenAI credit line was located; AI output must not be represented as human-generated.",
+        "repositoryDisclosure": "Manifest and prompt record identify Codex built-in image generation, the pseudo-writing correction, and both base and accepted hashes.",
+        "finalPublicDecision": "pending"
+      },
+      "thirdPartyInfluence": [
+        "Only the Carlos-supplied Observatory image is an intentional visual influence; no named instrument maker, astrology chart, numerology system, brand, studio, or living artist was requested."
+      ],
+      "humanLikenessRisk": "none-visible-human",
+      "likenessReview": "The accepted sheet contains only mechanical artifact forms and no person, body, face, portrait, or human-like character.",
+      "engineeringClaimRisk": "low",
+      "engineeringReview": "The artifacts are interface and sculptural concepts; they do not evidence celestial prediction, numerological validity, acoustic performance, or manufactured function.",
+      "permittedReuse": [
+        "internal 3D modeling reference",
+        "internal mechanical-layout planning",
+        "internal originality and symbol review"
+      ],
+      "prohibitedReuse": [
+        "public website image",
+        "downloadable or redistributable reference pack",
+        "training or evaluation dataset",
+        "claim of predictive, scientific, or acoustic validity"
+      ],
+      "rightsState": "pending",
+      "approvedForPublicRuntime": false
+    },
+    {
+      "id": "reference-energy-and-electronics",
+      "sheetId": "energy-and-electronics",
+      "kind": "generated-reference-image",
+      "file": "docs/assets/reference-packs/energy-electronics-reference.png",
+      "sha256": "3684CCFFB1AEB6932B2BD48C27EA7296EB63D7F320986DA7C401547DA673E51F",
+      "outputDate": "2026-07-20",
+      "promptIds": ["energy-electronics-base"],
+      "sourceImages": [
+        {
+          "path": "docs/design/reference/mainUI-approved.png",
+          "sha256": "B4E11D325297CEB8FFB021866FFA2903B316D5D2443DEF67BA890B4B3F3058BF",
+          "rightsState": "pending",
+          "purpose": "Carlos-supplied palette, material, proportion, and scientific-instrument reference"
+        }
+      ],
+      "intermediateSources": [],
+      "authorship": {
+        "directionOwner": "Carlos Carpio",
+        "promptAuthor": "Portfolio implementation",
+        "generationService": "OpenAI Codex built-in image generation",
+        "generationModel": null,
+        "modelVersion": null,
+        "unavailableReason": "The built-in interface exposed neither model name nor model version; skill documentation is not treated as run-specific model evidence."
+      },
+      "terms": {
+        "governingAgreement": "unknown-account-type",
+        "exactAccountAgreementConfirmed": false,
+        "snapshotIds": [
+          "openai-europe-terms-2026-01-16",
+          "openai-services-agreement-2026-01-01",
+          "openai-service-terms-2026-07-20"
+        ],
+        "reviewPath": "docs/research/openai-image-reference-rights-review.md"
+      },
+      "territory": {
+        "requestContext": "Europe/Oslo workspace context; user and account jurisdiction not independently confirmed",
+        "processingLocation": null,
+        "reviewedServiceRestriction": "No output-display territory restriction was located in the reviewed OpenAI terms, but the account agreement and input-image rights remain unresolved.",
+        "publicDisplayRights": "held"
+      },
+      "noticeAttribution": {
+        "reviewedTermsRequirement": "No blanket OpenAI credit line was located; AI output must not be represented as human-generated.",
+        "repositoryDisclosure": "Manifest and prompt record identify Codex built-in image generation and preserve the accepted sheet hash.",
+        "finalPublicDecision": "pending"
+      },
+      "thirdPartyInfluence": [
+        "Only the Carlos-supplied Observatory image is an intentional visual influence; no named battery, electronics manufacturer, product, laboratory, studio, or living artist was requested."
+      ],
+      "humanLikenessRisk": "none-visible-human",
+      "likenessReview": "The accepted sheet contains only energy and electronics devices with no person, portrait, body, face, or human-like character.",
+      "engineeringClaimRisk": "moderate",
+      "engineeringReview": "The flow-battery piping, pressure vessels, electronics, cooling, and controls are visual concepts and must not be presented as safe, functional, certified, efficient, or production-ready engineering.",
+      "permittedReuse": [
+        "internal 3D modeling reference",
+        "internal material and silhouette planning",
+        "internal misleading-engineering review"
+      ],
+      "prohibitedReuse": [
+        "public website image",
+        "downloadable or redistributable reference pack",
+        "training or evaluation dataset",
+        "claim of energy, electrical, safety, efficiency, or certification performance"
+      ],
+      "rightsState": "pending",
+      "approvedForPublicRuntime": false
+    }
+  ]
+}

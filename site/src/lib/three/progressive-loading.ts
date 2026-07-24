@@ -100,7 +100,7 @@ export function describeProgressiveSceneStatus(
     return "Poster mode · interactive scene could not be prepared";
   }
   if (scene.loading.lifecycle === "ready") {
-    return "Interactive Observatory prepared behind the poster";
+    return "Interactive Observatory ready";
   }
   return "Poster mode · immersive scene ready to prepare";
 }

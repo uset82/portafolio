@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 
-import { PageIntro } from "@/components/page-intro";
+import { CosmosFoundation } from "@/components/cosmos-foundation";
+import { rawSiteContent } from "@/content/records";
+import { siteContentSchema } from "@/content/schemas";
 
-export const metadata: Metadata = { title: "Cosmos" };
+const siteContent = siteContentSchema.parse(rawSiteContent);
+
+export const metadata: Metadata = {
+  title: "Cosmos",
+  description:
+    "Carlos Carpio's privacy-first space for future travel notes, astrology studies, and numerology studies, framed as creative and personal practice.",
+};
 
 export default function CosmosPage() {
-  return (
-    <PageIntro
-      eyebrow="Cosmos"
-      title="Personal systems for observing patterns and meaning."
-      description="Astrology and numerology are presented here as Carlos’s creative and personal practices—not as scientific, medical, or predictive claims."
-    />
-  );
+  return <CosmosFoundation content={siteContent.metadata.personalTeaser} />;
 }

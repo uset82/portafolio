@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { PageIntro } from "@/components/page-intro";
-import { StatusTag } from "@/components/ui";
-import { selectedSystems } from "@/content/site";
+import { CaseStudyJourney } from "@/components/case-study-journey";
+import { CaseStudyLayout } from "@/components/case-study-layout";
+import { selectedSystems, siteContent } from "@/content/site";
 
 type ProjectPageProps = {
   params: Promise<{ slug: string }>;
@@ -22,15 +22,16 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
   const system = selectedSystems.find((item) => item.slug === slug);
+  const project = siteContent.projects.find((item) => item.slug === slug);
 
-  if (!system) notFound();
+  if (!system || !project) notFound();
 
   return (
-    <PageIntro
-      eyebrow={`${system.group} / ${system.index}`}
-      title={system.title}
-      description={`${system.descriptor}. This named system comes from the approved Observatory composition; its case-study claims and source links remain unpublished until verified.`}
-      meta={<StatusTag tone="concept">Concept · source review</StatusTag>}
+    <CaseStudyLayout
+      project={project}
+      index={system.index}
+      group={system.group}
+      relatedWork={<CaseStudyJourney currentSlug={slug} systems={selectedSystems} />}
     />
   );
 }

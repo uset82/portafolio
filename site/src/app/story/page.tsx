@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
 
-import { PageIntro } from "@/components/page-intro";
+import { StoryProfile } from "@/components/story-profile";
+import { rawSiteContent } from "@/content/records";
+import { siteContentSchema } from "@/content/schemas";
 
-export const metadata: Metadata = { title: "Story" };
+const siteContent = siteContentSchema.parse(rawSiteContent);
+
+export const metadata: Metadata = {
+  title: "Story",
+  description:
+    "Carlos Carpio's approved public biography, creative-engineering practice, and privacy-safe CV publication status.",
+};
 
 export default function StoryPage() {
   return (
-    <PageIntro
-      eyebrow="Story"
-      title="The person behind the systems."
-      description="Biography, experience, education, skills, and a résumé path will be added from user-confirmed CV material without invented dates or claims."
-    />
+    <StoryProfile name={siteContent.metadata.name} content={siteContent.metadata.profileTeaser} />
   );
 }

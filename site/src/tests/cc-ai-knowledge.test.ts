@@ -35,16 +35,23 @@ const withPublicKnowledge = (): SiteContent => {
   return content;
 };
 
-test("current private and design-only records produce no public CC AI facts", () => {
+test("current public ledger exposes only approved profile and contact facts", () => {
   const context = buildCcAiKnowledgeContext(baseContent);
 
-  assert.deepEqual(context.entries, []);
-  assert.deepEqual(context.sources, []);
+  assert.deepEqual(
+    context.entries.map((entry) => entry.id),
+    ["profile-carlos-carpio", "public-contact-links"],
+  );
+  assert.deepEqual(
+    context.sources.map((source) => source.id),
+    ["approved-public-profile", "github-uset82"],
+  );
   assert.match(
     context.systemMessage,
     new RegExp(CC_AI_UNKNOWN_ANSWER.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
   );
   assert.doesNotMatch(context.systemMessage, /mainUI|approved-main-ui|foundation-decision/);
+  assert.doesNotMatch(context.systemMessage, /StrudelAI|private résumé|project-astraea/);
 });
 
 test("builder includes only approved public records with traceable source IDs", () => {
@@ -52,17 +59,12 @@ test("builder includes only approved public records with traceable source IDs", 
 
   assert.deepEqual(
     context.entries.map((entry) => entry.id),
-    ["profile-carlos-carpio", "project-astraea"],
+    ["profile-carlos-carpio", "public-contact-links", "project-astraea"],
   );
-  assert.deepEqual(context.sources, [
-    {
-      id: "public-portfolio-source",
-      label: "Approved public portfolio record",
-      kind: "external-page",
-      locator: "https://portfolio.example/work",
-      checkedOn: "2026-07-19",
-    },
-  ]);
+  assert.deepEqual(
+    context.sources.map((source) => source.id),
+    ["approved-public-profile", "github-uset82", "public-portfolio-source"],
+  );
   assert.match(context.systemMessage, /\[source-id\]/);
   assert.match(context.systemMessage, /public-portfolio-source/);
   assert.match(context.systemMessage, /Status: concept/);
@@ -78,13 +80,18 @@ test("a record with any private source dependency is excluded", () => {
 
   const context = buildCcAiKnowledgeContext(content);
 
-  assert.deepEqual(context.entries, []);
+  assert.deepEqual(
+    context.entries.map((entry) => entry.id),
+    ["profile-carlos-carpio", "public-contact-links"],
+  );
   assert.doesNotMatch(context.systemMessage, /approved-main-ui|mainUI/);
 });
 
 test("knowledge context is deterministically bounded without cutting JSON records", () => {
   const content = withPublicKnowledge();
-  content.metadata.supportingStatement = "Verified public profile detail. ".repeat(200);
+  const profile = content.knowledgeRecords[0];
+  if (!profile) throw new Error("Expected the approved public profile record.");
+  profile.facts[0] = "Verified public profile detail. ".repeat(200);
 
   const context = buildCcAiKnowledgeContext(content, { maxCharacters: 2_000 });
 
@@ -138,8 +145,8 @@ test("service sends the bounded context first and returns its public source meta
   );
 
   assert.deepEqual(response.knowledge, {
-    records: 2,
-    sourceIds: ["public-portfolio-source"],
+    records: 3,
+    sourceIds: ["approved-public-profile", "github-uset82", "public-portfolio-source"],
     truncated: false,
   });
 });

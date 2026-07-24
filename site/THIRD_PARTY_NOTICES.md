@@ -28,3 +28,23 @@ The server-only CC AI integration boundary uses the official OpenRouter TypeScri
 ## Fonts
 
 Cormorant Garamond and Manrope are loaded through Next.js font optimization and distributed under the SIL Open Font License. They are bundled by the production build rather than loaded from a third-party browser request.
+
+- Cormorant Garamond source: <https://github.com/google/fonts/tree/main/ofl/cormorantgaramond>
+- Manrope source: <https://github.com/google/fonts/tree/main/ofl/manrope>
+- Bundled license and copyright notices: `LICENSES/FONTS-OFL-1.1.txt`
+
+## Next.js starter favicon
+
+`src/app/favicon.ico` is the unmodified favicon from the official Next.js `app-tw/ts` starter template. Its SHA-256 matches the current canonical template file reviewed on 2026-07-20.
+
+- Project: <https://github.com/vercel/next.js>
+- Source: <https://github.com/vercel/next.js/blob/canary/packages/create-next-app/templates/app-tw/ts/app/favicon.ico>
+- License: MIT
+- Bundled license: `LICENSES/NEXTJS-MIT.txt`
+- Product decision: legally permitted but visually temporary; replace it with an approved Carlos mark during the personal-brand task.
+
+## Launch asset boundary
+
+- The runtime Observatory poster is byte-identical to Carlos's approved private design reference. It is permitted for the current local/preview implementation only; production publication remains on hold until Carlos confirms public-display rights or approves a rights-cleared replacement.
+- No project screenshots, audio, video, repository hero art, local monogram media, HDR environment, or GLB model is approved for production publication.
+- Current water, scene fallback geometry, and the CC mark are repository-authored code/CSS/SVG output rather than imported third-party media.

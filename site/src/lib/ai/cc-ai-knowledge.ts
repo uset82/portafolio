@@ -69,11 +69,30 @@ const collectEligibleEntries = (
   publicSources: Map<string, SourceReference>,
 ): CcAiKnowledgeEntry[] => {
   const entries: CcAiKnowledgeEntry[] = [];
+  const entryIds = new Set<string>();
   const eligible = (verification: string, sourceIds: string[]) =>
     isApproved(verification) && sourcesArePublic(sourceIds, publicSources);
+  const addEntry = (entry: CcAiKnowledgeEntry) => {
+    if (entryIds.has(entry.id)) return;
+    entryIds.add(entry.id);
+    entries.push(entry);
+  };
+
+  for (const record of content.knowledgeRecords) {
+    if (!hasApprovedRights(record.rights) || !eligible(record.verification, record.sourceIds)) {
+      continue;
+    }
+    addEntry({
+      id: record.id,
+      type: record.type,
+      title: record.title,
+      facts: record.facts,
+      sourceIds: record.sourceIds,
+    });
+  }
 
   if (eligible(content.metadata.verification, content.metadata.sourceIds)) {
-    entries.push({
+    addEntry({
       id: "profile-carlos-carpio",
       type: "profile",
       title: content.metadata.name,
@@ -116,7 +135,7 @@ const collectEligibleEntries = (
       if (project.year) facts.push(`Year: ${project.year}`);
     }
 
-    entries.push({
+    addEntry({
       id: project.id,
       type: "project",
       title: project.title,
@@ -133,7 +152,7 @@ const collectEligibleEntries = (
     ) {
       continue;
     }
-    entries.push({
+    addEntry({
       id: media.id,
       type: "media",
       title: media.title,
@@ -149,7 +168,7 @@ const collectEligibleEntries = (
 
   for (const experience of content.experiences) {
     if (!eligible(experience.verification, experience.sourceIds)) continue;
-    entries.push({
+    addEntry({
       id: experience.id,
       type: "experience",
       title: `${experience.role} — ${experience.organization}`,
@@ -170,7 +189,7 @@ const collectEligibleEntries = (
       facts.push(`Period: ${education.start ?? "not public"} to ${education.end ?? "not public"}`);
     }
     if (education.summary) facts.push(`Summary: ${education.summary}`);
-    entries.push({
+    addEntry({
       id: education.id,
       type: "education",
       title: education.program,
@@ -181,7 +200,7 @@ const collectEligibleEntries = (
 
   for (const trip of content.trips) {
     if (!eligible(trip.verification, trip.sourceIds)) continue;
-    entries.push({
+    addEntry({
       id: trip.id,
       type: "trip",
       title: trip.title,
@@ -196,7 +215,7 @@ const collectEligibleEntries = (
 
   for (const hobby of content.hobbies) {
     if (!eligible(hobby.verification, hobby.sourceIds)) continue;
-    entries.push({
+    addEntry({
       id: hobby.id,
       type: "hobby",
       title: hobby.title,

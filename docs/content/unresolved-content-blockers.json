@@ -1,0 +1,241 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-07-20",
+  "deadlinePolicy": "Dates are not invented. Each unresolved item is due at a named publication milestone; optional material is omitted when that milestone arrives without approval.",
+  "blockers": [
+    {
+      "id": "observatory-poster-public-rights",
+      "category": "rights-provenance",
+      "status": "awaiting-user",
+      "priority": "production-blocker",
+      "owner": "Carlos Carpio",
+      "sourceInventoryIds": ["asset-rights-register", "homepage-reference"],
+      "requestedAction": "Confirm the approved Observatory image's authorship or generation source and grant public-display permission, or approve a rights-cleared replacement poster.",
+      "fallback": "Create an original palette-locked poster from repository-authored geometry and typography; keep the supplied reference internal until its rights are confirmed.",
+      "resolutionBy": "Before task 2.32 v1 content and asset freeze and before any public production preview.",
+      "launchImpact": "The current runtime poster may be used for private review but cannot be cleared for public production while its underlying rights are ambiguous.",
+      "blocks": ["task 2.20", "task 2.32", "public production preview"]
+    },
+    {
+      "id": "public-contact-and-availability",
+      "category": "identity-contact",
+      "status": "awaiting-user",
+      "priority": "production-blocker",
+      "owner": "Carlos Carpio",
+      "sourceInventoryIds": ["contact-social", "public-profile"],
+      "requestedAction": "Confirm whether the approved /contact route should offer GitHub only, a public email, or a later form, and approve or omit any availability wording.",
+      "fallback": "Keep the route informational, link only the approved GitHub account, publish no private address, and make no availability claim.",
+      "resolutionBy": "Before the contact journey is accepted for the production preview and no later than task 2.32.",
+      "launchImpact": "Identity and biography copy can ship, but the primary contact journey remains incomplete until visitors have an intentionally approved contact action.",
+      "blocks": ["task 2.18", "contact journey acceptance", "task 2.32"]
+    },
+    {
+      "id": "strudelai-publication-gates",
+      "category": "project-publication",
+      "status": "awaiting-user-and-project-change",
+      "priority": "section-blocker",
+      "owner": "Carlos Carpio and StrudelAI maintainers",
+      "sourceInventoryIds": ["project-strudelai", "flagship-selection"],
+      "requestedAction": "Approve Carlos's exact contribution wording, add a repository license file if MIT is intended, and clear any original screenshots selected for publication.",
+      "fallback": "Publish only verified text and canonical links without repository media, sole-authorship language, release claims, or outcome claims.",
+      "resolutionBy": "Before the StrudelAI case study changes from held draft to a public project route.",
+      "launchImpact": "The project may use its honest text-and-links fallback, but a full media-led case study remains held.",
+      "blocks": ["StrudelAI full case study", "flagship publication approval"]
+    },
+    {
+      "id": "avatar-studio-publication-gates",
+      "category": "project-publication",
+      "status": "awaiting-user",
+      "priority": "section-blocker",
+      "owner": "Carlos Carpio",
+      "sourceInventoryIds": ["project-avatar-studio", "flagship-selection"],
+      "requestedAction": "Approve Carlos's exact contribution wording and authorize a specifically rights-cleared, privacy-safe public screenshot if visual media is desired.",
+      "fallback": "Use verified architecture and release facts with canonical links only; publish no private artwork, blend files, GLBs, icons, or workspace previews.",
+      "resolutionBy": "Before the Codex Avatar Studio case study changes from held draft to a public project route.",
+      "launchImpact": "The architecture can be described conservatively, but contribution attribution and all visual media remain held.",
+      "blocks": [
+        "Codex Avatar Studio full case study",
+        "flagship publication approval"
+      ]
+    },
+    {
+      "id": "ifoundyou-publication-gates",
+      "category": "project-publication",
+      "status": "awaiting-user-and-project-change",
+      "priority": "section-blocker",
+      "owner": "Carlos Carpio and iFoundYou maintainers",
+      "sourceInventoryIds": ["project-ifoundyou", "flagship-selection"],
+      "requestedAction": "Choose the public product name, approve Carlos's contribution wording, document location consent and retention/deletion behavior, complete privacy and safety review, and clear any synthetic visuals.",
+      "fallback": "Present only the verified research-prototype architecture and open safety questions with no privacy-first, emergency-ready, offline-reliability, or live-service claims.",
+      "resolutionBy": "Before the iFoundYou / Dommedag case study changes from held draft to a public project route.",
+      "launchImpact": "A cautious research-prototype summary is possible, but the full case study remains held by naming, privacy, safety, licensing, and visual-rights decisions.",
+      "blocks": [
+        "iFoundYou / Dommedag full case study",
+        "flagship publication approval"
+      ]
+    },
+    {
+      "id": "opennemoclaw-publication-gates",
+      "category": "project-publication",
+      "status": "awaiting-user-and-project-change",
+      "priority": "section-blocker",
+      "owner": "Carlos Carpio and OpenNemoClaw maintainers",
+      "sourceInventoryIds": ["project-opennemoclaw", "flagship-selection"],
+      "requestedAction": "Approve Carlos's contribution wording, repair every installer repository URL, add the intended license, publish passing release or CI evidence, and clear original media.",
+      "fallback": "Describe only the verified package and blueprint architecture as an unreleased prototype; omit installer, security, license, provider-breadth, and sole-authorship claims.",
+      "resolutionBy": "Before the OpenNemoClaw case study changes from held draft to a public project route.",
+      "launchImpact": "A bounded prototype summary is possible, but the full case study and installation actions remain held.",
+      "blocks": [
+        "OpenNemoClaw full case study",
+        "installer action",
+        "flagship publication approval"
+      ]
+    },
+    {
+      "id": "webdesigner-publication-gates",
+      "category": "project-publication",
+      "status": "awaiting-user-and-project-change",
+      "priority": "section-blocker",
+      "owner": "Carlos Carpio and WebDesigner maintainers",
+      "sourceInventoryIds": ["project-webdesigner", "flagship-selection"],
+      "requestedAction": "Approve detailed contribution and collaborator wording, add the intended repository license, and create one original privacy-safe screenshot or demo if visual media is desired.",
+      "fallback": "Use verified architecture, package, skill, token, and MCP facts with repository links only; make no sole-authorship claim and publish no repository media.",
+      "resolutionBy": "Before the WebDesigner case study changes from held draft to a public project route.",
+      "launchImpact": "A verified text summary is possible, but detailed contribution, licensing, and media remain held.",
+      "blocks": ["WebDesigner full case study", "flagship publication approval"]
+    },
+    {
+      "id": "public-resume-download",
+      "category": "identity-contact",
+      "status": "deferred-with-fallback",
+      "priority": "enhancement-deferred",
+      "owner": "Carlos Carpio",
+      "sourceInventoryIds": ["cv-source"],
+      "requestedAction": "Create and separately approve a privacy-safe public résumé that removes private identity and contact fields before enabling a download.",
+      "fallback": "Publish approved Story and career copy without exposing or linking the private source PDF.",
+      "resolutionBy": "Before enabling any résumé download; otherwise omit the download from v1.",
+      "launchImpact": "The Story route can launch without a downloadable résumé, while the private source remains excluded from the repository and public site.",
+      "blocks": ["public résumé download"]
+    },
+    {
+      "id": "portrait-and-brand-assets",
+      "category": "media-asset",
+      "status": "deferred-with-fallback",
+      "priority": "enhancement-deferred",
+      "owner": "Carlos Carpio",
+      "sourceInventoryIds": ["portrait-brand"],
+      "requestedAction": "Provide and approve any portrait, signature, or personal mark with explicit reuse permission, attribution needs, and privacy review.",
+      "fallback": "Use the repository-authored typographic CC mark and publish no portrait or unverified signature asset.",
+      "resolutionBy": "Before adding photographic identity or a supplied personal mark; otherwise retain the typographic v1 identity.",
+      "launchImpact": "The portfolio remains intentionally typographic and can launch without a portrait or supplied brand media.",
+      "blocks": ["portrait presentation", "supplied personal mark"]
+    },
+    {
+      "id": "project-media-assets",
+      "category": "media-asset",
+      "status": "deferred-with-fallback",
+      "priority": "enhancement-deferred",
+      "owner": "Carlos Carpio and project maintainers",
+      "sourceInventoryIds": ["project-media"],
+      "requestedAction": "Create or approve a small original media set for each project with file-level ownership, permission, privacy, caption, alt text, dimensions, and optimization evidence.",
+      "fallback": "Use verified typographic summaries and canonical links without screenshots, video, generated imagery, or third-party brand assets.",
+      "resolutionBy": "Before any project media is added to the public allowlist; otherwise use the text-and-links v1 fallback.",
+      "launchImpact": "Project navigation and summaries can launch, but media-led case-study storytelling remains unavailable.",
+      "blocks": ["project media allowlist", "media-led project layouts"]
+    },
+    {
+      "id": "music-and-sound-lab-inputs",
+      "category": "media-asset",
+      "status": "awaiting-user",
+      "priority": "section-blocker",
+      "owner": "Carlos Carpio",
+      "sourceInventoryIds": ["music-audio", "sound-lab-inputs"],
+      "requestedAction": "Choose the launch tracks and audio sources, then approve files or embeds, artwork, credits, rights, captions, posters, metadata, and player requirements.",
+      "fallback": "Keep Sound as an honest mute-first introduction with no playback, waveform, analyser, or audio-reactive visual claims.",
+      "resolutionBy": "Before enabling playable Sound Lab media; otherwise freeze the route in its no-playback fallback state.",
+      "launchImpact": "The route can explain the intended work, but Sound Lab cannot provide a verified playable or audio-reactive experience.",
+      "blocks": ["task 2.15", "playable Sound Lab", "audio-reactive visuals"]
+    },
+    {
+      "id": "video-launch-set",
+      "category": "media-asset",
+      "status": "deferred-with-fallback",
+      "priority": "enhancement-deferred",
+      "owner": "Carlos Carpio",
+      "sourceInventoryIds": ["video-content"],
+      "requestedAction": "Select public videos and provide approved hosts or files, posters, captions, transcripts, credits, privacy review, and reuse rights.",
+      "fallback": "Omit video embeds and controls from v1 rather than publishing inaccessible or unverified material.",
+      "resolutionBy": "Before adding any video embed or file; otherwise omit video content from v1.",
+      "launchImpact": "No primary journey is blocked, but the portfolio launches without video work.",
+      "blocks": ["task 2.16", "public video presentation"]
+    },
+    {
+      "id": "trips-and-hobbies-launch-set",
+      "category": "personal-content",
+      "status": "deferred-with-fallback",
+      "priority": "enhancement-deferred",
+      "owner": "Carlos Carpio",
+      "sourceInventoryIds": ["trips-hobbies"],
+      "requestedAction": "Select a small set of stories and approve titles, safe place and time granularity, reflections, original images, rights, alt-text intent, and privacy boundaries.",
+      "fallback": "Omit travel and hobby stories from v1 and make no inferred location, lifestyle, astrology, or numerology claims.",
+      "resolutionBy": "Before adding personal stories to the public site; otherwise omit them from v1.",
+      "launchImpact": "The portfolio remains professionally complete but includes less personal context.",
+      "blocks": ["task 2.17", "public Trips and Hobbies stories"]
+    },
+    {
+      "id": "observatory-concept-status",
+      "category": "project-publication",
+      "status": "awaiting-user",
+      "priority": "section-blocker",
+      "owner": "Carlos Carpio",
+      "sourceInventoryIds": ["observatory-concepts"],
+      "requestedAction": "Decide whether ASTRAEA, PINÁCULO, and Future Energy represent real projects, experiments, or visual concepts, and provide evidence before any stronger status is used.",
+      "fallback": "Keep the names only as clearly labeled Observatory concepts and do not imply shipped work, ownership, outcomes, or public availability.",
+      "resolutionBy": "Before promoting any Observatory concept into a project summary or case study.",
+      "launchImpact": "The names may support the approved composition, but they cannot carry evidence-backed project claims.",
+      "blocks": [
+        "Observatory concept case studies",
+        "stronger project-status labels"
+      ]
+    },
+    {
+      "id": "public-three-d-candidates",
+      "category": "rights-provenance",
+      "status": "deferred-with-fallback",
+      "priority": "enhancement-deferred",
+      "owner": "Carlos Carpio and portfolio implementation",
+      "sourceInventoryIds": ["three-d-reference-packs", "three-d-provenance"],
+      "requestedAction": "Use the completed reference and provenance records to produce rights-cleared candidates, resolve worldwide authoring and display rights, and approve each candidate's originality, likeness, engineering, and optimized output before import.",
+      "fallback": "Ship semantic HTML with repository-authored procedural visuals and a rights-cleared static poster; keep the public GLB allowlist empty.",
+      "resolutionBy": "Before importing any public GLB or enabling a 3D enhancement tier; otherwise retain the zero-GLB fallback.",
+      "launchImpact": "The core portfolio can launch without external 3D assets, but the richer immersive enhancement remains deferred.",
+      "blocks": ["task 6.13", "task 6.14", "public 3D asset import"]
+    },
+    {
+      "id": "cc-ai-public-knowledge-and-evaluation",
+      "category": "experimental-feature",
+      "status": "awaiting-user-and-implementation",
+      "priority": "section-blocker",
+      "owner": "Carlos Carpio and portfolio implementation",
+      "sourceInventoryIds": ["cc-ai-knowledge", "cc-ai-evaluation"],
+      "requestedAction": "Preserve the completed public-only ledger and 24-case evaluation contract, then select the production model/provider policy, run task 6.30 against the live path, verify privacy and retention behavior, and obtain explicit activation approval.",
+      "fallback": "Keep CC AI unavailable and direct visitors to verified static pages and canonical project links.",
+      "resolutionBy": "Before enabling the public chat endpoint or presenting CC AI as a working portfolio feature.",
+      "launchImpact": "The portfolio can launch without chat, but CC AI remains an explicitly unavailable experiment until live-model, provider-policy, privacy, safety, and user-approval gates pass.",
+      "blocks": ["task 6.30", "task 7.37", "task 7.38", "public CC AI"]
+    },
+    {
+      "id": "v1-content-and-asset-freeze",
+      "category": "content-freeze",
+      "status": "awaiting-user-and-implementation",
+      "priority": "production-blocker",
+      "owner": "Carlos Carpio and portfolio implementation",
+      "sourceInventoryIds": ["v1-content-freeze"],
+      "requestedAction": "Resolve or explicitly defer every production and section blocker, record the final v1 include/hold/omit decisions, and obtain Carlos's approval of the public content and asset set.",
+      "fallback": "Continue private preview work using only already approved facts and code-authored fallbacks; do not label the project production-ready.",
+      "resolutionBy": "At task 2.32, after every preceding Phase 2 gate has current evidence and before production release review.",
+      "launchImpact": "Production release remains held until the final public boundary is frozen and approved; implementation and private preview work may continue safely.",
+      "blocks": ["task 2.32", "production release review"]
+    }
+  ]
+}

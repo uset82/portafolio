@@ -1,12 +1,12 @@
 # Observatory capability and quality policy
 
-Date: 2026-07-19
-Task: 4.32
-Status: verified, intentionally unmounted
+Date: 2026-07-23
+Tasks: 4.32 and 5.34
+Status: mounted and browser-verified; the live Canvas remains rights-gated
 
 ## Ownership
 
-`ObservatorySceneRuntimeProvider` wraps the optional Canvas. Its capability controller therefore runs before the poster-first mounting decision instead of depending on a WebGL renderer that may not exist. Browser signals and the resolved decision are projected into version 2 of `ObservatorySceneStore`; no Three.js object is the source of truth.
+`ObservatorySceneRuntimeProvider` wraps the hero scene and its experience controls. Its capability controller therefore runs before the poster-first mounting decision instead of depending on a WebGL renderer that may not exist. Browser signals and the resolved decision are projected into version 3 of `ObservatorySceneStore`; no Three.js object is the source of truth.
 
 The controller observes:
 
@@ -33,19 +33,30 @@ Every non-baseline API is feature-detected. Missing device-memory, connection, o
 
 WebGL2 support is the only hard gate against a manual Full request. Manual Full does not override the separate motion preference: reduced-motion still projects the non-animated scene behavior. Automatic data-saving remains conservative, while a deliberate manual choice can opt back into a live tier.
 
-## Manual control
+## Visitor controls and persistence
 
-`ObservatoryQualityControl` is a semantic fieldset with four radio choices: Auto, Full, Reduced, and Poster. It reports the current resolved tier and whether the choice is automatic or manual through a polite live region. Each option is at least 44px high, has a visible focus path, uses the locked Natural Observatory tokens, reflows to two columns on narrow widths, and removes transitions under reduced motion.
+`ObservatoryExperienceControls` is mounted as one native disclosure in the homepage hero and is also linked from the desktop header. It contains:
 
-The control is exported but not mounted in a route. Task 4.33 will place the runtime provider, poster, optional Canvas, status, and manual control in one progressive-enhancement boundary.
+- Auto, Full, Reduced, and Poster quality radios;
+- Follow system and Reduce motion radios;
+- a Pause/Resume scene-motion button;
+- a truthful mute-first Sound status and `/sound` route;
+- one Reset settings action;
+- one atomic polite status describing resolved quality, motion, and sound.
+
+The sound state remains muted and unavailable until approved tracks, credits, and rights exist. Sound activation and autoplay are never persisted.
+
+Only explicit quality, motion, and pause preferences use browser-local storage. The versioned parser rejects malformed or incompatible data; cross-tab changes are applied atomically; storage failures leave the controls functional; Reset clears the stored entry and restores Auto, Follow system, and unpaused motion. Capability signals, sound state, browsing data, and device details are never stored or transmitted.
+
+Every visible option/action is at least 44px high, has a visible focus path, uses the locked Natural Observatory tokens, and removes transitions under reduced motion. Escape and Close collapse the disclosure and restore focus to its summary. Desktop places the drawer above the scene and the CC AI launcher; mobile makes the complete control an in-flow section after the poster so opening it cannot clip or cover the following semantic content.
 
 ## Verification
 
-Eight deterministic tests cover successful, null, and exception WebGL2 probes; hard-gate behavior; all manual choices; reduced-data and slow-network poster behavior; the complete reduced-tier signal set; healthy and missing-hint defaults; versioned scene-store ownership; listener cleanup; the outside-Canvas runtime boundary; and the semantic 44px reduced-motion-aware manual control.
+Thirteen focused deterministic tests cover successful, null, and exception WebGL2 probes; hard-gate behavior; all manual choices; reduced-data and slow-network poster behavior; the complete reduced-tier signal set; healthy and missing-hint defaults; versioned scene-store ownership; listener cleanup; strict preference parsing/storage/removal; atomic apply/reset; mute-first sound; the outside-Canvas runtime boundary; semantic controls; and mobile in-flow behavior.
 
-All 78 unit tests, lint, strict type-check, palette validation, and the production build pass. The build remains 13 pages, and capability/runtime markers are absent from initial route chunks because no route imports the scene.
+Production-browser inspection at 1440×900 confirmed separate scene-status/control layers, an unobstructed drawer above the CC AI launcher, 44px targets, manual Poster and Reduce motion choices, Pause/Resume, persistence after reload, atomic Reset, Escape focus restoration, no horizontal overflow, and no console warnings/errors. Inspection at 390×844 confirmed an in-flow 358px-wide open control with 44px targets, reachable sound/reset/following content, no clipping, no horizontal overflow, Close focus restoration, and an unchanged Selected Systems route.
 
-Extended browser QA was not run. This slice makes no claim about a real device's exposed hints or the visual presentation of the unmounted control. Desktop and mobile QA remain separately approval-gated.
+The production build remains 13 routes. This verification makes no live-model or renderer-performance claim: the critical robot URL is still rights-gated, so the public homepage correctly retained its complete poster experience throughout.
 
 ## Browser API references
 

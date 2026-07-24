@@ -78,6 +78,11 @@ test("registry maps nodes, clips, materials, interactions, provenance, and loadi
 
   assert.equal(getObservatoryAsset("robot-guide").interaction?.action, "overview");
   assert.equal(getObservatoryAsset("sound-lab").fallback.domHref, "/sound");
+  assert.equal(getObservatoryAsset("sound-lab").kind, "procedural");
+  assert.equal(getObservatoryAsset("sound-lab").status, "specified-audio-review-required");
+  assert.equal(getObservatoryAsset("observatory-shell").kind, "procedural");
+  assert.equal(getObservatoryAsset("observatory-shell").status, "specified");
+  assert.equal(getObservatoryAsset("lighting-environment").status, "specified");
 });
 
 test("schema rejects a public model URL before provenance approval", () => {
@@ -97,7 +102,7 @@ test("schema rejects a public model URL before provenance approval", () => {
 
 test("schema requires an explicit rights approval and attribution for a public model", () => {
   const candidateRegistry = structuredClone(observatoryAssetRegistry) as ObservatoryAssetRegistry;
-  const candidate = candidateRegistry.assets[0]!;
+  const candidate = candidateRegistry.assets.find((asset) => asset.id === "robot-guide")!;
   candidate.lods[0]!.url = "/models/observatory-shell.glb";
   candidate.provenance.approvedForPublicRuntime = true;
 

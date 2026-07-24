@@ -30,6 +30,50 @@ const siteRoot = process.cwd();
 const repositoryRoot = path.resolve(siteRoot, "..");
 const buildRoot = path.join(siteRoot, ".next");
 
+type StaticRouteContract = {
+  name: string;
+  outputFile: string;
+  forbiddenElements?: readonly string[];
+};
+
+const globalNavigationHrefs = [
+  "/work",
+  "/laboratory",
+  "/sound",
+  "/cosmos",
+  "/story",
+  "/contact",
+] as const;
+
+const staticRouteContracts: readonly StaticRouteContract[] = [
+  { name: "Home", outputFile: "index.html" },
+  { name: "Work", outputFile: "work.html" },
+  {
+    name: "Laboratory",
+    outputFile: "laboratory.html",
+    forbiddenElements: ["audio", "video", "iframe", "canvas"],
+  },
+  {
+    name: "Sound",
+    outputFile: "sound.html",
+    forbiddenElements: ["audio", "video", "iframe"],
+  },
+  {
+    name: "Cosmos",
+    outputFile: "cosmos.html",
+    forbiddenElements: ["audio", "video", "iframe", "canvas"],
+  },
+  {
+    name: "Story",
+    outputFile: "story.html",
+  },
+  {
+    name: "Contact",
+    outputFile: "contact.html",
+    forbiddenElements: ["form", "input", "textarea", "select"],
+  },
+];
+
 function invariant(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(message);
 }
@@ -167,12 +211,51 @@ async function validateFallbackRender() {
   );
 }
 
+async function validateStaticRouteSemantics() {
+  const outputRoot = path.join(buildRoot, "server/app");
+
+  for (const route of staticRouteContracts) {
+    const outputPath = path.join(outputRoot, route.outputFile);
+    const markup = await readFile(outputPath, "utf8");
+
+    invariant(
+      (markup.match(/<main\b[^>]*\bid="main-content"/g) ?? []).length === 1,
+      `${route.name} must emit exactly one main landmark with the skip-link target.`,
+    );
+    invariant(
+      (markup.match(/<h1\b/g) ?? []).length === 1,
+      `${route.name} must emit exactly one primary heading.`,
+    );
+    invariant(
+      !/<main\b[^>]*aria-hidden=/i.test(markup),
+      `${route.name} main content cannot be hidden from assistive technology.`,
+    );
+
+    for (const href of globalNavigationHrefs) {
+      invariant(
+        markup.includes(`href="${href}"`),
+        `${route.name} must retain the global navigation link to ${href}.`,
+      );
+    }
+
+    for (const element of route.forbiddenElements ?? []) {
+      invariant(
+        !new RegExp(`<${element}\\b`, "i").test(markup),
+        `${route.name} must not publish a ${element} element before its content is ready.`,
+      );
+    }
+  }
+
+  return staticRouteContracts.length;
+}
+
 async function main() {
   const assetSummary = await validateAssetContracts();
   const clientFiles = await validateClientChunks();
   await validateFallbackRender();
+  const semanticRoutes = await validateStaticRouteSemantics();
   console.log(
-    `Immersive build valid: ${assetSummary.manifestAssets} manifest assets, ${assetSummary.publicGlbs} public GLBs, ${clientFiles} client files, and one semantic poster fallback.`,
+    `Immersive build valid: ${assetSummary.manifestAssets} manifest assets, ${assetSummary.publicGlbs} public GLBs, ${clientFiles} client files, one semantic poster fallback, and ${semanticRoutes} semantic static routes.`,
   );
 }
 

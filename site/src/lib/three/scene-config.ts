@@ -1,8 +1,29 @@
 import type { ObservatoryAssetId } from "./asset-registry-schema";
-import { threeMaterialPalette } from "@/styles/palette";
+import { naturalPalette } from "@/styles/palette";
 
 export const SCENE_QUALITY_TIERS = ["static", "reduced", "full"] as const;
 export type SceneQualityTier = (typeof SCENE_QUALITY_TIERS)[number];
+export type InteractiveSceneQualityTier = Exclude<SceneQualityTier, "static">;
+
+export const OBSERVATORY_SCENE_RUNTIME_BUDGETS = {
+  full: {
+    maximumDrawCalls: 120,
+    maximumTriangles: 180_000,
+    maximumMaterials: 24,
+  },
+  reduced: {
+    maximumDrawCalls: 70,
+    maximumTriangles: 90_000,
+    maximumMaterials: 16,
+  },
+} as const satisfies Record<
+  InteractiveSceneQualityTier,
+  {
+    maximumDrawCalls: number;
+    maximumTriangles: number;
+    maximumMaterials: number;
+  }
+>;
 
 export const SCENE_ARTIFACT_IDS = [
   "robot-guide",
@@ -217,32 +238,32 @@ export const OBSERVATORY_LIGHT_RIG = [
   {
     id: "hemisphere",
     kind: "hemisphere",
-    color: threeMaterialPalette.observatoryArchitecture,
-    groundColor: threeMaterialPalette.waterBasin,
-    intensity: 1.15,
+    color: naturalPalette.warmIvory,
+    groundColor: naturalPalette.mutedSage,
+    intensity: 0.9,
   },
   {
     id: "key",
     kind: "directional",
-    color: threeMaterialPalette.ceramicRobot,
-    intensity: 2.2,
-    position: [-4, 8, 6],
+    color: naturalPalette.warmIvory,
+    intensity: 2.05,
+    position: [-5, 9, 7],
     castShadow: false,
   },
   {
     id: "fill",
     kind: "directional",
-    color: threeMaterialPalette.futureEnergy,
-    intensity: 0.85,
-    position: [7, 4, 4],
+    color: naturalPalette.buff,
+    intensity: 0.72,
+    position: [7, 4, 6],
     castShadow: false,
   },
   {
     id: "rim",
     kind: "directional",
-    color: threeMaterialPalette.waterHighlight,
-    intensity: 1.1,
-    position: [1, 6, -8],
+    color: naturalPalette.silver,
+    intensity: 0.92,
+    position: [0, 7, -8],
     castShadow: false,
   },
 ] as const satisfies readonly ObservatoryLight[];

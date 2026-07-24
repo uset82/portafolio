@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 
-import { PageIntro } from "@/components/page-intro";
+import { ContactPath } from "@/components/contact-path";
+import { rawSiteContent } from "@/content/records";
+import { siteContentSchema } from "@/content/schemas";
 
-export const metadata: Metadata = { title: "Contact" };
+const siteContent = siteContentSchema.parse(rawSiteContent);
+
+export const metadata: Metadata = {
+  title: "Contact",
+  description:
+    "Carlos Carpio's privacy-first contact route with one verified public GitHub profile and no unapproved direct contact details.",
+};
 
 export default function ContactPage() {
-  return (
-    <PageIntro
-      eyebrow="Contact"
-      title="Let’s turn a difficult idea into a working system."
-      description="The final email and contact behavior will appear here once Carlos confirms the public address, availability wording, and privacy preference."
-    />
-  );
+  return <ContactPath content={siteContent.metadata.footer} />;
 }

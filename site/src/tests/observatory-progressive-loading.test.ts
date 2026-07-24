@@ -52,11 +52,11 @@ function supportedStore() {
   return store;
 }
 
-test("the current rights-gated registry refuses Canvas mounting and names missing hero models", () => {
+test("the procedural environment leaves only the rights-gated robot blocking Canvas mounting", () => {
   const plan = buildProgressiveLoadPlan(observatoryAssetRegistry.assets, "full");
 
   assert.equal(plan.canMountCanvas, false);
-  assert.deepEqual(plan.missingHeroCritical, ["observatory-shell", "robot-guide"]);
+  assert.deepEqual(plan.missingHeroCritical, ["robot-guide"]);
   assert.deepEqual(plan.heroCritical, []);
   assert.deepEqual(plan.deferred, []);
   assert.deepEqual(plan.onDemand, []);
@@ -78,13 +78,18 @@ test("full and reduced plans choose deterministic LODs in priority order", () =>
   );
   assert.deepEqual(
     full.heroCritical.map((entry) => entry.assetId),
-    ["observatory-shell", "robot-guide"],
+    ["robot-guide"],
   );
   assert.deepEqual(
     full.deferred.map((entry) => entry.assetId),
-    ["drone", "props-and-plants"],
+    ["props-and-plants"],
   );
-  assert.equal(findOnDemandEntry(full, "astraea")?.assetId, "astraea");
+  assert.equal(findOnDemandEntry(full, "drone"), null);
+  assert.equal(findOnDemandEntry(full, "astraea"), null);
+  assert.equal(findOnDemandEntry(full, "pinaculo"), null);
+  assert.equal(findOnDemandEntry(full, "sound-lab"), null);
+  assert.equal(findOnDemandEntry(full, "future-energy"), null);
+  assert.equal(findOnDemandEntry(full, "electronics-ai"), null);
   assert.equal(findOnDemandEntry(full, null), null);
 });
 
@@ -124,6 +129,13 @@ test("scene status remains truthful from capability check through loading and fa
     describeProgressiveSceneStatus(store.getSnapshot(), loadablePlan),
     "Poster mode · interactive scene could not be prepared",
   );
+
+  store.dispatch({ type: "loading/start", total: 2, activeGroup: "architecture" });
+  store.dispatch({ type: "loading/ready" });
+  assert.equal(
+    describeProgressiveSceneStatus(store.getSnapshot(), loadablePlan),
+    "Interactive Observatory ready",
+  );
 });
 
 test("poster markup precedes the conditional Canvas and Three stays behind dynamic boundaries", () => {
@@ -136,8 +148,8 @@ test("poster markup precedes the conditional Canvas and Three stays behind dynam
 
   assert.match(pageSource, /ObservatoryProgressiveExperience[\s\S]*ImageFrame/);
   assert.equal(
-    experienceSource.indexOf("observatory-poster-layer") <
-      experienceSource.indexOf("plan.canMountCanvas"),
+    experienceSource.indexOf('data-scene-layer="poster"') <
+      experienceSource.indexOf("{plan.canMountCanvas ?"),
     true,
   );
   assert.match(experienceSource, /dynamic\([\s\S]*observatory-live-scene/);

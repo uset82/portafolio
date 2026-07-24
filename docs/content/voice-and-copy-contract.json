@@ -1,0 +1,282 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-07-20",
+  "locale": "en",
+  "voice": {
+    "qualities": ["calm", "precise", "curious", "warm", "technically grounded"],
+    "avoid": [
+      "hype",
+      "startup slogans",
+      "vague futurism",
+      "sales pressure",
+      "mystical certainty",
+      "unsupported confidence"
+    ],
+    "sentenceGuideline": "Lead with the verified present state, use concrete nouns and active verbs, and add technical depth only when it improves understanding."
+  },
+  "perspective": {
+    "identity": "first-person",
+    "evidence": "third-person",
+    "interface": "direct",
+    "rules": [
+      "First-person identity, focus, contact, and reflection copy requires Carlos's approval.",
+      "Project summaries, contribution boundaries, source-derived outcomes, and biography facts use third person.",
+      "Editorial learnings are never written as Carlos's first-person reflection without approval.",
+      "The interface addresses the visitor as you only when it helps them understand or complete an action.",
+      "We is used only for a named and verified collaboration."
+    ]
+  },
+  "casing": {
+    "headings": "sentence-case",
+    "navigation": "title-case",
+    "controls": "sentence-case",
+    "preserveOfficialNames": true,
+    "rules": [
+      "Preserve the approved Enter the Observatory and Explore Selected Work labels until a deliberate revision is approved.",
+      "All caps are limited to official all-cap names, technical abbreviations, and accessible compact metadata.",
+      "Generic project categories and status words remain lowercase inside sentences."
+    ]
+  },
+  "punctuation": {
+    "serialComma": true,
+    "exclamationDefault": false,
+    "rules": [
+      "Use terminal punctuation for prose, captions, errors, privacy notes, and explanations.",
+      "Omit terminal punctuation from short navigation labels, buttons, filters, and compact status tags.",
+      "Use numerals for versions, counts, dimensions, durations, and technical limits.",
+      "Use ISO dates in internal ledgers and readable dates in public prose.",
+      "Hyphenate compound modifiers when doing so improves clarity."
+    ]
+  },
+  "technologyNames": [
+    {
+      "canonical": "CC AI",
+      "avoid": ["CCAI", "CC-AI"],
+      "note": "Portfolio assistant name, not a model name."
+    },
+    {
+      "canonical": "OpenRouter",
+      "avoid": ["Open Router", "openrouter"],
+      "note": "Use @openrouter/sdk only for code or package references."
+    },
+    {
+      "canonical": "Next.js",
+      "avoid": ["NextJS", "Next JS"],
+      "note": "Add a version only when verified and relevant."
+    },
+    {
+      "canonical": "React",
+      "avoid": ["React.js"],
+      "note": "Use the official library name."
+    },
+    {
+      "canonical": "TypeScript",
+      "avoid": ["Typescript", "Type Script"],
+      "note": "Preserve the capital S."
+    },
+    {
+      "canonical": "Three.js",
+      "avoid": ["ThreeJS", "Three JS"],
+      "note": "Use React Three Fiber and Drei for their respective packages."
+    },
+    {
+      "canonical": "WebGL",
+      "avoid": ["Web GL", "webgl"],
+      "note": "Use WebGL 2 when the version matters."
+    },
+    {
+      "canonical": "glTF",
+      "avoid": ["GLTF"],
+      "note": "Use GLB for the binary container and .glb only for filenames."
+    },
+    {
+      "canonical": "VS Code",
+      "avoid": ["VScode", "vscode in prose"],
+      "note": "Do not imply marketplace publication without a verified listing."
+    },
+    {
+      "canonical": "Codex",
+      "avoid": ["codex in prose"],
+      "note": "Use OpenAI Codex when source context requires the full name."
+    },
+    {
+      "canonical": "WebDesigner",
+      "avoid": ["Web Designer", "webdesigner in prose"],
+      "note": "Lowercase is reserved for paths and repository identifiers."
+    },
+    {
+      "canonical": "Nightglass",
+      "avoid": ["Night Glass"],
+      "note": "A default design system, not this portfolio's color palette."
+    },
+    {
+      "canonical": "StrudelAI",
+      "avoid": ["Strudel AI"],
+      "note": "Distinguish the project from the Strudel library."
+    },
+    {
+      "canonical": "Codex Avatar Studio",
+      "avoid": ["avatar-studio in prose"],
+      "note": "Lowercase is reserved for the repository slug."
+    },
+    {
+      "canonical": "iFoundYou / Dommedag",
+      "avoid": ["Mesh Guardian as a settled name"],
+      "note": "Keep the dual name until Carlos approves one public product name."
+    },
+    {
+      "canonical": "OpenNemoClaw",
+      "avoid": ["OpenNemo Claw", "OpenNemoC"],
+      "note": "Never reproduce the broken opennemoc installer path as a public action."
+    },
+    {
+      "canonical": "MapLibre GL JS",
+      "avoid": ["Map Libre"],
+      "note": "MapLibre is acceptable after the full name is established."
+    },
+    {
+      "canonical": "Supabase",
+      "avoid": ["SupaBase"],
+      "note": "Configuration does not prove that a public backend is operating."
+    },
+    {
+      "canonical": "Socket.IO",
+      "avoid": ["SocketIO"],
+      "note": "Preserve official casing."
+    },
+    {
+      "canonical": "PixiJS",
+      "avoid": ["Pixi.js"],
+      "note": "Preserve official casing."
+    },
+    {
+      "canonical": "Tailwind CSS",
+      "avoid": ["Tailwind in formal stack metadata"],
+      "note": "The shorter form is acceptable after the full name is established."
+    },
+    {
+      "canonical": "Hunyuan 3D",
+      "avoid": ["Hunyuan3D as a generic provider label"],
+      "note": "Use only with a recorded provider, model/version, terms, and asset-provenance entry."
+    }
+  ],
+  "statusLabels": [
+    {
+      "internal": "shipped",
+      "display": "Shipped",
+      "useWhen": "The intended public experience or product is available and the shipped scope is evidenced."
+    },
+    {
+      "internal": "maintained",
+      "display": "Maintained",
+      "useWhen": "A usable artifact exists and current maintenance evidence has been checked."
+    },
+    {
+      "internal": "prototype",
+      "display": "Prototype",
+      "useWhen": "A working implementation exists, but completeness, reliability, release, or adoption is not established."
+    },
+    {
+      "internal": "experiment",
+      "display": "Experiment",
+      "useWhen": "The work primarily tests an idea, architecture, interaction, or technical path."
+    },
+    {
+      "internal": "concept",
+      "display": "Concept",
+      "useWhen": "The item is an approved idea, visual, or navigational object without project evidence."
+    },
+    {
+      "internal": "preparation",
+      "display": "In preparation",
+      "useWhen": "Content or implementation is being prepared and is not yet available as a case study."
+    },
+    {
+      "internal": "archived",
+      "display": "Archived",
+      "useWhen": "The artifact remains part of the record but is not actively maintained."
+    },
+    {
+      "internal": "hold",
+      "display": "On hold",
+      "useWhen": "Verification, contribution, privacy, rights, or release gates prevent publication."
+    },
+    {
+      "internal": "private",
+      "display": "Private",
+      "useWhen": "The source or asset is intentionally not public and has no public action."
+    }
+  ],
+  "prohibitedClaims": [
+    {
+      "id": "sole-authorship",
+      "rule": "Do not claim sole creation, implementation, design, or ownership from account or repository ownership.",
+      "evidenceNeeded": "An approved contribution record naming Carlos's work and relevant collaborators."
+    },
+    {
+      "id": "production-readiness",
+      "rule": "Do not call a prototype production-ready, enterprise-ready, professional-grade, battle-tested, or proven at scale.",
+      "evidenceNeeded": "Verified release scope, real use, reliability, and current operational evidence."
+    },
+    {
+      "id": "security-privacy",
+      "rule": "Do not claim secure, hardened, completely isolated, privacy-first, anonymous, or safe by default.",
+      "evidenceNeeded": "A defined threat model, tested controls, privacy behavior, and completed review."
+    },
+    {
+      "id": "offline-emergency",
+      "rule": "Do not claim guaranteed offline delivery, catastrophe readiness, emergency readiness, or life-critical suitability.",
+      "evidenceNeeded": "Field tests, safety constraints, delivery evidence, and approved operational scope."
+    },
+    {
+      "id": "license-status",
+      "rule": "Do not call a repository open source or MIT-licensed when the distributed repository lacks its license file.",
+      "evidenceNeeded": "The applicable license file and any required attribution record."
+    },
+    {
+      "id": "release-availability",
+      "rule": "Do not claim a working installer, marketplace listing, passing CI, release, demo, or live service without a dated check.",
+      "evidenceNeeded": "Current primary-source metadata and a successful relevant availability check."
+    },
+    {
+      "id": "automatic-ai-quality",
+      "rule": "Do not promise automatic accessibility, security, deployment, design quality, productivity, or provider stability from AI-assisted workflows.",
+      "evidenceNeeded": "A scoped evaluation or audit for the specific output and environment."
+    },
+    {
+      "id": "unsupported-metrics",
+      "rule": "Do not invent or infer users, revenue, conversion, performance gains, uptime, awards, clients, testimonials, or adoption.",
+      "evidenceNeeded": "A primary source, date, scope, and publication approval."
+    },
+    {
+      "id": "private-personal-facts",
+      "rule": "Do not publish employers, credentials, dates, locations, contact details, collaborators, or roles beyond the approved source boundary.",
+      "evidenceNeeded": "User approval and the relevant primary source with privacy review."
+    },
+    {
+      "id": "symbolic-authority",
+      "rule": "Do not present astrology or numerology as scientific, medical, financial, diagnostic, or predictive authority.",
+      "evidenceNeeded": "Not applicable; frame the material as creative or personal practice."
+    },
+    {
+      "id": "generated-media-evidence",
+      "rule": "Do not present generated imagery as a real screenshot, shipped asset, human-authored illustration, or documented outcome.",
+      "evidenceNeeded": "A provenance record plus a truthful generated-media label and approved use."
+    },
+    {
+      "id": "rights-by-possession",
+      "rule": "Do not infer public reuse rights from repository visibility, a generated filename, account ownership, or possession of a local file.",
+      "evidenceNeeded": "File-level ownership, permission or license, attribution, and privacy review."
+    }
+  ],
+  "requiredReviewChecks": [
+    "Source supports the nouns, verbs, status, contribution, and outcome.",
+    "First-person language is approved and editorial inference is not presented as a user quote.",
+    "Official product and technology names use canonical casing.",
+    "Status is the least ambitious accurate label across every surface.",
+    "Links have current verification and unavailable actions are removed or explained.",
+    "Selected assets have rights, privacy, caption, alt-text, credit, and accessibility evidence.",
+    "Unsupported metrics, collaborators, dates, employers, clients, testimonials, locations, and security claims are absent.",
+    "The same meaning remains available without animation, WebGL, audio, video, or chat."
+  ]
+}

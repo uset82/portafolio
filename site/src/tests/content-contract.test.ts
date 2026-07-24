@@ -12,6 +12,94 @@ test("approved display records satisfy the site content contract", () => {
   assert.ok(content.projects.every((project) => project.publication === "hold"));
 });
 
+test("homepage identity content stays focused and approval-backed", () => {
+  const { metadata } = siteContentSchema.parse(rawSiteContent);
+
+  assert.equal(metadata.name, "Carlos Carpio");
+  assert.equal(metadata.eyebrow, "Engineer · Inventor · Creative Technologist");
+  assert.match(metadata.headline, /\.$/);
+  assert.equal(metadata.headline.split(/[.!?]+/).filter(Boolean).length, 1);
+  assert.ok(metadata.supportingStatement.length <= 180);
+  assert.deepEqual(
+    [metadata.primaryAction.href, metadata.secondaryAction.href],
+    ["#selected-systems", "/work"],
+  );
+  assert.notEqual(metadata.primaryAction.label, metadata.secondaryAction.label);
+  assert.ok(metadata.sourceIds.includes("approved-public-profile"));
+});
+
+test("homepage profile teaser stays approval-backed and excludes private CV material", () => {
+  const { profileTeaser } = siteContentSchema.parse(rawSiteContent).metadata;
+
+  assert.equal(profileTeaser.verification, "user-approved");
+  assert.equal(profileTeaser.role, "Engineer · Inventor · Creative Technologist");
+  assert.equal(
+    profileTeaser.biography,
+    "Carlos works across artificial intelligence, electronics, resilient energy, music, astrology, and numerology. His portfolio connects engineering practice with creative experimentation, presenting verified work separately from prototypes, personal studies, and future concepts.",
+  );
+  assert.deepEqual(profileTeaser.practiceThreads, [
+    "AI and electronics",
+    "Resilient energy",
+    "Music and symbolic systems",
+  ]);
+  assert.equal(profileTeaser.primaryAction.href, "/story");
+  assert.equal(profileTeaser.secondaryAction.href, "https://github.com/uset82");
+  assert.equal(profileTeaser.primaryAction.external, false);
+  assert.equal(profileTeaser.secondaryAction.external, true);
+  assert.ok(profileTeaser.sourceIds.includes("approved-public-profile"));
+  assert.doesNotMatch(
+    JSON.stringify(profileTeaser),
+    /(?:birth date|citizenship|street address|phone number|private email|\.pdf)/i,
+  );
+});
+
+test("homepage media teaser stays player-free until sources and rights are approved", () => {
+  const { mediaTeaser } = siteContentSchema.parse(rawSiteContent).metadata;
+
+  assert.equal(mediaTeaser.status, "Awaiting approved sources");
+  assert.deepEqual(mediaTeaser.formats, ["Music", "Moving image"]);
+  assert.equal(mediaTeaser.action.href, "/sound");
+  assert.equal(mediaTeaser.action.external, false);
+  assert.ok(mediaTeaser.sourceIds.includes("approved-public-profile"));
+  assert.match(mediaTeaser.description, /mute and player-free/);
+  assert.doesNotMatch(JSON.stringify(mediaTeaser), /(?:src|embed|autoplay|\.mp[34]|youtube)/i);
+});
+
+test("homepage personal teaser adds approved depth without publishing private stories", () => {
+  const { personalTeaser } = siteContentSchema.parse(rawSiteContent).metadata;
+
+  assert.equal(personalTeaser.verification, "reference-approved");
+  assert.equal(personalTeaser.status, "Personal stories held for review");
+  assert.deepEqual(personalTeaser.themes, [
+    "Travel notes",
+    "Astrology studies",
+    "Numerology studies",
+  ]);
+  assert.equal(personalTeaser.action.href, "/cosmos");
+  assert.equal(personalTeaser.action.external, false);
+  assert.match(personalTeaser.claimsBoundary, /not scientific, medical, or predictive advice/);
+  assert.ok(personalTeaser.sourceIds.includes("approved-public-profile"));
+  assert.doesNotMatch(
+    JSON.stringify(personalTeaser),
+    /(?:latitude|longitude|street address|postal code|flight|hotel|\.jpe?g|\.png)/i,
+  );
+});
+
+test("footer contact content exposes only the approved privacy-safe paths", () => {
+  const { footer } = siteContentSchema.parse(rawSiteContent).metadata;
+
+  assert.equal(footer.status, "Public contact method pending");
+  assert.equal(footer.primaryAction.href, "/contact");
+  assert.equal(footer.primaryAction.external, false);
+  assert.equal(footer.secondaryAction.href, "https://github.com/uset82");
+  assert.equal(footer.secondaryAction.external, true);
+  assert.ok(footer.sourceIds.includes("approved-public-profile"));
+  assert.doesNotMatch(
+    JSON.stringify(footer),
+    /(?:mailto:|@(?:gmail|outlook|protonmail)|phone|street address|available for hire|book a call)/i,
+  );
+});
+
 test("video records fail without a poster and accessibility text", () => {
   const result = mediaAssetSchema.safeParse({
     id: "test-video",

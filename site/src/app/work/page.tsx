@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 
-import { PageIntro } from "@/components/page-intro";
+import { ProjectRegister } from "@/components/project-register";
+import { rawSiteContent } from "@/content/records";
+import { siteContentSchema } from "@/content/schemas";
 
-export const metadata: Metadata = { title: "Work" };
+const siteContent = siteContentSchema.parse(rawSiteContent);
+
+export const metadata: Metadata = {
+  title: "Work",
+  description:
+    "A navigable register of Carlos Carpio's validated Observatory concepts, labeled by their current evidence state.",
+};
 
 export default function WorkPage() {
-  return (
-    <PageIntro
-      eyebrow="Work"
-      title="Selected systems, shown with evidence."
-      description="Software, AI, interfaces, and physical-digital experiments will appear here as their source packs, roles, links, and outcomes are verified."
-    />
-  );
+  return <ProjectRegister projects={siteContent.projects} />;
 }

@@ -1,0 +1,339 @@
+{
+  "version": 1,
+  "reviewedOn": "2026-07-20",
+  "publication": "hold",
+  "selection": [
+    "strudelai",
+    "codex-avatar-studio",
+    "ifoundyou-dommedag",
+    "opennemoclaw",
+    "webdesigner"
+  ],
+  "projects": [
+    {
+      "id": "strudelai",
+      "slug": "strudelai",
+      "order": 1,
+      "title": "StrudelAI",
+      "tagline": "AI-assisted live coding for layered music exploration.",
+      "category": "sound",
+      "status": "prototype",
+      "summary": "StrudelAI is an evolving browser-based prototype that brings Strudel live coding, browser audio, analysis tools, real-time session features, and configurable AI integrations into one creative workspace.",
+      "contribution": "Carlos maintains the public StrudelAI repository and is a documented contributor to the prototype. Other visible commit identities are present, so this draft does not claim sole authorship or assign individual features to Carlos.",
+      "stack": [
+        "Next.js 16",
+        "React 19",
+        "TypeScript",
+        "Tailwind CSS 4",
+        "Strudel",
+        "Web Audio",
+        "Tone.js",
+        "Socket.IO",
+        "Configurable AI integrations"
+      ],
+      "problem": "The project investigates how live coding, browser-audio analysis, session controls, and optional AI assistance can coexist in a single music-making interface.",
+      "constraints": [
+        "Browser audio and recording depend on user gestures, permissions, and compatible devices.",
+        "AI features inherit provider credentials, availability, rate limits, cost, and data-policy constraints.",
+        "Optional YouTube analysis and MusicGen paths require separate local services and are not proven on both public deployments.",
+        "No adoption, performance, reliability, accessibility, or business metrics are verified."
+      ],
+      "approach": "The repository combines a typed Next.js interface with Strudel and browser-audio libraries, a custom Socket.IO server, configurable AI modules, and optional Python media-generation or analysis helpers.",
+      "outcome": "The verified result is a substantial public prototype with two reachable deployment URLs, visible application architecture, and implemented creative-audio modules; no production or adoption outcome is claimed.",
+      "learnings": [
+        {
+          "text": "Creative-audio features need explicit capability checks and useful fallbacks because browser, device, and provider support varies.",
+          "provenance": "Editorial inference from the audited browser-audio, permission, deployment, and optional-service constraints; this is not a user quote."
+        },
+        {
+          "text": "AI provider and model names should remain configurable instead of becoming permanent product claims.",
+          "provenance": "Editorial inference from the differing provider names across the repository configuration and source; this is not a user quote."
+        }
+      ],
+      "links": [
+        {
+          "label": "Repository",
+          "kind": "repository",
+          "href": "https://github.com/uset82/StrudelAI",
+          "verification": "verified",
+          "checkedOn": "2026-07-19",
+          "result": "Public, unarchived repository and main branch reviewed."
+        },
+        {
+          "label": "Primary prototype",
+          "kind": "demo",
+          "href": "https://strudelzeroai.app.canner.ca/",
+          "verification": "verified",
+          "checkedOn": "2026-07-19",
+          "result": "HTTP 200 with the page title Aether Sonic Workstation."
+        },
+        {
+          "label": "Public mirror",
+          "kind": "demo",
+          "href": "https://strudelai.netlify.app/",
+          "verification": "verified",
+          "checkedOn": "2026-07-19",
+          "result": "HTTP 200 with the page title Aether Sonic Workstation."
+        }
+      ],
+      "sourcePack": "docs/content/strudelai-source-pack.md",
+      "provenanceNotes": [
+        "Drafted only from the reviewed public repository, current package/deployment configuration, GitHub metadata, and two README-listed deployments.",
+        "The README says MIT, but no repository license file exists and GitHub detects no license.",
+        "No screenshot, audio, video, logo, or generated image is approved for portfolio reuse."
+      ],
+      "verification": "verified",
+      "rights": "pending",
+      "publication": "hold",
+      "mediaDecision": "exclude"
+    },
+    {
+      "id": "codex-avatar-studio",
+      "slug": "codex-avatar-studio",
+      "order": 2,
+      "title": "Codex Avatar Studio",
+      "tagline": "A local animated IDE assistant with SVG-first fallbacks.",
+      "category": "creative-tools",
+      "status": "prototype",
+      "summary": "Codex Avatar Studio is a downloadable VS Code extension prototype for a local animated assistant, with typed activity states, local asset workflows, reduced-motion controls, and a permanent SVG fallback beneath optional PixiJS, Three.js, and Blender paths.",
+      "contribution": "Codex Avatar Studio is published from Carlos Carpio's GitHub account as a public prototype. All visible commits are linked to another GitHub identity, so Carlos's individual architecture, implementation, design, testing, and release contribution remains unassigned in this draft.",
+      "stack": [
+        "TypeScript monorepo",
+        "pnpm workspaces",
+        "VS Code extension APIs",
+        "React",
+        "Vite",
+        "SVG",
+        "PixiJS",
+        "Optional Three.js",
+        "Optional Blender"
+      ],
+      "problem": "The project explores how an IDE assistant can communicate coding activity through animation while keeping workspace data local and preserving an accessible non-WebGL path.",
+      "constraints": [
+        "Asset-changing operations require a trusted workspace and validated local messages and packages.",
+        "Three.js, GLB, and Blender workflows are optional and require a package-local SVG fallback.",
+        "The latest visible GitHub Actions run failed, so a passing current CI state cannot be claimed.",
+        "Private Cholita artwork, Blender scenes, GLBs, and workspace previews are explicitly excluded."
+      ],
+      "approach": "The workspace separates VS Code integration, a React/Vite Webview, shared avatar contracts, local asset processing, and renderer adapters, with bounded validation and progressive SVG-to-PixiJS-to-WebGL capability layers.",
+      "outcome": "GitHub provides a non-draft v0.1.0 release with a downloadable VSIX that returned HTTP 200 during review; no installation, reliability, marketplace, performance, or accessibility outcome is claimed.",
+      "learnings": [
+        {
+          "text": "A permanent SVG fallback and validated package boundary can keep optional 3D from blocking the core assistant experience.",
+          "provenance": "Editorial inference from the audited architecture, security documentation, and renderer fallback design; this is not a user quote."
+        }
+      ],
+      "links": [
+        {
+          "label": "Repository",
+          "kind": "repository",
+          "href": "https://github.com/uset82/avatar-studio",
+          "verification": "verified",
+          "checkedOn": "2026-07-19",
+          "result": "Public repository, architecture, security documentation, tree, and commit identities reviewed."
+        },
+        {
+          "label": "v0.1.0 release",
+          "kind": "release",
+          "href": "https://github.com/uset82/avatar-studio/releases/tag/v0.1.0",
+          "verification": "verified",
+          "checkedOn": "2026-07-19",
+          "result": "Release page reviewed and its VSIX asset returned HTTP 200."
+        }
+      ],
+      "sourcePack": "docs/content/avatar-studio-source-pack.md",
+      "provenanceNotes": [
+        "Drafted from the public repository, architecture/security documents, GitHub release metadata, commit identities, repository tree, and downloadable VSIX.",
+        "The source is UNLICENSED and all rights reserved; public visibility does not grant portfolio redistribution rights.",
+        "The portfolio media allowlist is empty, including icons, SVGs, screenshots, GLBs, Blender files, avatars, and private workspace previews."
+      ],
+      "verification": "verified",
+      "rights": "pending",
+      "publication": "hold",
+      "mediaDecision": "exclude"
+    },
+    {
+      "id": "ifoundyou-dommedag",
+      "slug": "ifoundyou-dommedag",
+      "order": 3,
+      "title": "iFoundYou / Dommedag",
+      "tagline": "An experimental trusted-circle map and off-grid communication study.",
+      "category": "software",
+      "status": "experiment",
+      "summary": "iFoundYou / Dommedag is a broad public prototype exploring trusted-circle location, community alerts, chat, maps, and Web and native peer-to-peer communication paths while significant privacy, safety, and reliability questions remain open.",
+      "contribution": "Carlos's confirmed GitHub account owns the public repository, and all 47 visible commits are linked to that account. This evidence does not establish sole authorship, production ownership, or the provenance of research documents and media.",
+      "stack": [
+        "Vite 7",
+        "React 19",
+        "TypeScript",
+        "MapLibre GL JS",
+        "Supabase Auth",
+        "Postgres and PostGIS",
+        "Supabase Realtime and RLS",
+        "Netlify Functions",
+        "Meshtastic Web transports",
+        "React Native experiments"
+      ],
+      "problem": "The project investigates how trusted contacts might share location, messages, alerts, and peer-to-peer communication paths when ordinary connectivity or coordination is limited.",
+      "constraints": [
+        "The Web app can resume exact-coordinate sharing after sign-in without a separate in-app consent confirmation when browser permission already exists.",
+        "Location history and last-location records are written while sharing, with no evidenced retention or deletion behavior and no applied coarse-location path.",
+        "Native BLE discovery and store-and-forward behavior are labeled as future milestones rather than field-tested delivery.",
+        "The privileged Wi-Fi and MAC-address helper is a high-risk local experiment and must not be advertised or deployed from the portfolio."
+      ],
+      "approach": "The repository combines a Vite/React map and communication interface with Supabase data and row-level policies, Web Meshtastic transports, PWA behavior, Netlify functions, and experimental React Native peer-to-peer modules.",
+      "outcome": "The defensible result is a broad public research and code prototype with meaningful privacy controls and several transport experiments, not a shipped safety product or a field-tested emergency service.",
+      "learnings": [
+        {
+          "text": "Location consent must be explicit, reversible, and paired with visible retention, deletion, and precision controls before privacy-first language is defensible.",
+          "provenance": "Editorial inference from the audited Web sharing flow, database policy, coarse-location, and deletion gaps; this is not a user quote."
+        },
+        {
+          "text": "Emergency and offline features need field evidence and carefully bounded language because source presence alone does not prove safe delivery.",
+          "provenance": "Editorial inference from the audited native milestones, transport code, and absence of field-test evidence; this is not a user quote."
+        }
+      ],
+      "links": [
+        {
+          "label": "Repository",
+          "kind": "repository",
+          "href": "https://github.com/uset82/iFoundYou",
+          "verification": "verified",
+          "checkedOn": "2026-07-19",
+          "result": "Public repository, 47 commits, Web/native source, policies, deployment files, continuity ledger, and media tree reviewed."
+        }
+      ],
+      "sourcePack": "docs/content/ifoundyou-source-pack.md",
+      "provenanceNotes": [
+        "The public product name remains unresolved because the repository name is iFoundYou while the README and Web interface use Dommedag and Mesh Guardian.",
+        "No release, canonical live demo, workflow run, license, or verified production backend is recorded.",
+        "No repository screenshot, map capture, contact/location data, schema image, or launcher asset is approved for portfolio reuse."
+      ],
+      "verification": "verified",
+      "rights": "pending",
+      "publication": "hold",
+      "mediaDecision": "exclude"
+    },
+    {
+      "id": "opennemoclaw",
+      "slug": "opennemoclaw",
+      "order": 4,
+      "title": "OpenNemoClaw",
+      "tagline": "A modular local agent framework with Docker and policy controls.",
+      "category": "ai",
+      "status": "prototype",
+      "summary": "OpenNemoClaw is a public TypeScript prototype for developers experimenting with local AI-agent runtimes through a CLI, API, Web interface, Docker sandbox controls, policy evaluation, connectors, and reusable blueprints.",
+      "contribution": "Carlos hosts OpenNemoClaw under his public GitHub account and is a documented contributor alongside another GitHub contributor. GitHub attributes one visible commit to Carlos's account and three to the other contributor, so this draft makes no sole-author or primary-architecture claim.",
+      "stack": [
+        "TypeScript",
+        "npm workspaces",
+        "Node.js",
+        "CLI and HTTP API",
+        "Vite and React",
+        "Dockerode",
+        "Policy engine",
+        "OpenRouter connector",
+        "Generic HTTP connector"
+      ],
+      "problem": "The project explores how developers can configure and operate local agent experiments across runtime, connector, policy, sandbox, API, CLI, and Web boundaries.",
+      "constraints": [
+        "Docker isolation depends on images, daemon and host configuration, network mode, mounts, capabilities, and runtime settings.",
+        "Configuration permits privileged mode, capability additions, host networking, port exposure, and writable bind mounts.",
+        "The policy engine allows requests when no policy is loaded, so default-deny behavior is not guaranteed across every configuration.",
+        "All README installer and clone targets use a nonexistent repository name and return 404."
+      ],
+      "approach": "Seven workspace packages separate CLI, API, runtime, connectors, policy evaluation, Docker execution, and Web management, while two blueprint examples define bounded assistant and Web-scraping experiments.",
+      "outcome": "The verified result is a multi-package public prototype with Docker and policy controls, tests, and two blueprints; there is no verified release, installable public package, live service, working documented installer, security result, or adoption outcome.",
+      "learnings": [
+        {
+          "text": "Security copy must describe implemented controls and configuration limits instead of treating a sandbox abstraction as complete isolation.",
+          "provenance": "Editorial inference from the audited Docker provider, configuration types, policy behavior, and missing independent security evidence; this is not a user quote."
+        },
+        {
+          "text": "Installation claims should be withheld until canonical repository paths and release smoke tests are reproducible.",
+          "provenance": "Editorial inference from the three broken README installation targets and absent public release; this is not a user quote."
+        }
+      ],
+      "links": [
+        {
+          "label": "Repository",
+          "kind": "repository",
+          "href": "https://github.com/uset82/opennemoclaw",
+          "verification": "verified",
+          "checkedOn": "2026-07-19",
+          "result": "Public repository, seven package surfaces, two blueprints, tests, and contributor history reviewed."
+        }
+      ],
+      "sourcePack": "docs/content/opennemoclaw-source-pack.md",
+      "provenanceNotes": [
+        "The README and package manifests say MIT, but the repository contains no LICENSE file and GitHub detects no license.",
+        "Provider language is limited to verified OpenRouter and extensible HTTP connector experiments.",
+        "The README hero and all other repository media remain excluded because provenance and portfolio permission are undocumented."
+      ],
+      "verification": "verified",
+      "rights": "pending",
+      "publication": "hold",
+      "mediaDecision": "exclude"
+    },
+    {
+      "id": "webdesigner",
+      "slug": "webdesigner",
+      "order": 5,
+      "title": "WebDesigner",
+      "tagline": "A Codex plugin for structured design, build, review, and optional 3D workflows.",
+      "category": "creative-tools",
+      "status": "maintained",
+      "summary": "WebDesigner 1.1.0 is an installable Codex plugin and repository marketplace that coordinates project intake, stack selection, design, implementation, security review, visual review, deployment guidance, and conditional specialist 3D workflows.",
+      "contribution": "The plugin manifest names Carlos Carpio as author and developer, and the repository is owned by his confirmed GitHub account. The visible history contains one commit from Carlos's account and two from another identity, so this draft does not claim sole implementation or ownership of bundled third-party specialist material.",
+      "stack": [
+        "TypeScript",
+        "Node.js",
+        "Model Context Protocol SDK",
+        "Zod",
+        "esbuild",
+        "Codex plugin manifests",
+        "Codex skills",
+        "Nightglass design tokens"
+      ],
+      "problem": "The project explores how a reusable Codex plugin can make design and delivery stages explicit while routing work to bounded skills, tools, providers, and review gates.",
+      "constraints": [
+        "Workflow stages and tools are orchestration contracts, not proof that generated output is automatically correct, secure, accessible, or deployable.",
+        "Mint, Blender, Stitch, model providers, and hosting remain separate conditional capabilities and are not installed or guaranteed by the plugin.",
+        "Third-party specialist sources require their recorded provenance, while the repository itself has no top-level license.",
+        "No verified user, installation, benchmark, accessibility, security, deployment, or commercial metric is available."
+      ],
+      "approach": "The package combines plugin and marketplace manifests, a TypeScript orchestrator, 15 discoverable skills, an 86-token Nightglass contract, six lifecycle stages, and a bundled MCP server exposing five structured workflow tools.",
+      "outcome": "The installed version 1.1.0 passed its package verifier with 15 skills and 86 Nightglass tokens, and its real MCP handshake exposed five tools; this is packaging and discovery evidence, not a product-quality or adoption benchmark.",
+      "learnings": [
+        {
+          "text": "A default design system should yield to a stronger explicit brief while keeping its accessibility, hierarchy, and review discipline.",
+          "provenance": "Editorial inference from the audited Nightglass override rule and this portfolio's approved natural Observatory palette; this is not a user quote."
+        },
+        {
+          "text": "Optional 3D and provider integrations are easier to govern when their capability and provenance boundaries are explicit.",
+          "provenance": "Editorial inference from the plugin's conditional skill and provider routing; this is not a user quote."
+        }
+      ],
+      "links": [
+        {
+          "label": "Repository",
+          "kind": "repository",
+          "href": "https://github.com/uset82/webdesigner",
+          "verification": "verified",
+          "checkedOn": "2026-07-20",
+          "result": "Public repository, manifests, installed package, verifier, MCP handshake, third-party notices, and contributor history reviewed."
+        }
+      ],
+      "sourcePack": "docs/content/webdesigner-source-pack.md",
+      "provenanceNotes": [
+        "The maintained portfolio label reflects the current installed and locally verified 1.1.0 package; it does not imply central-marketplace publication, GitHub release, or adoption.",
+        "Nightglass is not the portfolio palette: the approved natural Observatory visual direction remains the explicit design override.",
+        "No screenshot, generated site, workspace, or brand asset is approved for portfolio reuse."
+      ],
+      "verification": "verified",
+      "rights": "pending",
+      "publication": "hold",
+      "mediaDecision": "exclude"
+    }
+  ]
+}

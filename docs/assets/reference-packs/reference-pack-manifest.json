@@ -1,0 +1,338 @@
+{
+  "version": 1,
+  "status": "internal-reference-only",
+  "generatedOn": "2026-07-20",
+  "units": "meters",
+  "coordinateSystem": "Y-up",
+  "providerNeutralRule": "These sheets describe form, scale, materials, and view intent for any rights-cleared manual or automated 3D authoring workflow. They contain no Hunyuan-specific input or output requirement.",
+  "rightsBoundary": "The sheets are internal modeling references, not public runtime assets. They inherit a publication hold because the Carlos-supplied mainUI reference has no recorded underlying authorship or generation history yet.",
+  "promptDocument": "docs/assets/reference-packs/generation-prompts.md",
+  "paletteReference": {
+    "path": "docs/design/reference/mainUI-approved.png",
+    "sha256": "B4E11D325297CEB8FFB021866FFA2903B316D5D2443DEF67BA890B4B3F3058BF"
+  },
+  "globalNegativeConstraints": [
+    "No baked website UI, words, letters, numerals, pseudo-writing, logos, trademarks, or watermarks.",
+    "No blue neon, violet, cyan glow, black sci-fi void, glossy generic consumer electronics, or unrelated cyberpunk styling.",
+    "No public runtime use until source rights, output provenance, likeness risk, and asset-specific publication approval pass task 2.25."
+  ],
+  "sheets": [
+    {
+      "id": "observatory-environment",
+      "file": "docs/assets/reference-packs/observatory-environment-reference.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2611848,
+      "sha256": "5D617525F2441C7E80E5B8C6D058018A26694C90A3F964047384448EC621FA6E",
+      "panelCount": 6,
+      "generationTool": "Codex built-in image generation",
+      "promptIds": ["environment-base", "environment-remove-robot"],
+      "sourceImages": [
+        {
+          "path": "docs/design/reference/mainUI-approved.png",
+          "sha256": "B4E11D325297CEB8FFB021866FFA2903B316D5D2443DEF67BA890B4B3F3058BF",
+          "role": "palette, material, composition, and world-building reference"
+        }
+      ],
+      "rightsState": "pending",
+      "approvedForPublicRuntime": false
+    },
+    {
+      "id": "robot-and-drone",
+      "file": "docs/assets/reference-packs/robot-drone-reference.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2294827,
+      "sha256": "5182113D0DB388951ED29596A0EED0F0DE2E9578108EA6BD3C75F796A7605E0C",
+      "panelCount": 8,
+      "generationTool": "Codex built-in image generation",
+      "promptIds": ["robot-drone-base"],
+      "sourceImages": [
+        {
+          "path": "docs/design/reference/mainUI-approved.png",
+          "sha256": "B4E11D325297CEB8FFB021866FFA2903B316D5D2443DEF67BA890B4B3F3058BF",
+          "role": "palette, material, proportion, and mechanical-language reference"
+        }
+      ],
+      "rightsState": "pending",
+      "approvedForPublicRuntime": false
+    },
+    {
+      "id": "artifact-systems",
+      "file": "docs/assets/reference-packs/artifact-systems-reference.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2784522,
+      "sha256": "6931FB0D7E756B594A8DECA17A7468F2B54FF1E832485742E9A42E5C447DAEF2",
+      "panelCount": 9,
+      "generationTool": "Codex built-in image generation",
+      "promptIds": ["artifact-systems-base", "artifact-systems-remove-writing"],
+      "sourceImages": [
+        {
+          "path": "docs/design/reference/mainUI-approved.png",
+          "sha256": "B4E11D325297CEB8FFB021866FFA2903B316D5D2443DEF67BA890B4B3F3058BF",
+          "role": "palette, material, scale, and artifact-language reference"
+        }
+      ],
+      "rightsState": "pending",
+      "approvedForPublicRuntime": false
+    },
+    {
+      "id": "energy-and-electronics",
+      "file": "docs/assets/reference-packs/energy-electronics-reference.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2583696,
+      "sha256": "3684CCFFB1AEB6932B2BD48C27EA7296EB63D7F320986DA7C401547DA673E51F",
+      "panelCount": 6,
+      "generationTool": "Codex built-in image generation",
+      "promptIds": ["energy-electronics-base"],
+      "sourceImages": [
+        {
+          "path": "docs/design/reference/mainUI-approved.png",
+          "sha256": "B4E11D325297CEB8FFB021866FFA2903B316D5D2443DEF67BA890B4B3F3058BF",
+          "role": "palette, material, proportion, and scientific-instrument reference"
+        }
+      ],
+      "rightsState": "pending",
+      "approvedForPublicRuntime": false
+    }
+  ],
+  "assets": [
+    {
+      "id": "observatory-shell",
+      "sheetId": "observatory-environment",
+      "panels": [1, 2, 3, 6],
+      "views": [
+        "interior perspective",
+        "front elevation-like",
+        "overhead plan-like",
+        "lighting perspective"
+      ],
+      "targetScaleMeters": [18, 7, 14],
+      "materials": [
+        "linen plaster",
+        "pale carved stone",
+        "oak",
+        "walnut",
+        "aged pewter",
+        "muted sage"
+      ],
+      "negativeConstraints": [
+        "No sealed dark dome or opaque roof.",
+        "No ornamental fantasy architecture or impossible unsupported arches."
+      ],
+      "modelingNotes": "Keep the circular oculus, readable arched bays, shallow basin clearance, and broad calm floor plane. Build repeatable wall and shelf modules before adding props."
+    },
+    {
+      "id": "water-basin",
+      "sheetId": "observatory-environment",
+      "panels": [1, 2, 3, 4, 6],
+      "views": [
+        "context perspective",
+        "front elevation-like",
+        "overhead plan-like",
+        "rim detail",
+        "lighting perspective"
+      ],
+      "targetScaleMeters": [9, 0.25, 7],
+      "materials": ["slate-sage water", "silver reflection", "pale stone rim"],
+      "negativeConstraints": [
+        "No deep pool, waterfall, foam, or ocean surface.",
+        "No baked high-frequency ripple texture or mirror-like chrome water."
+      ],
+      "modelingNotes": "Author one shallow two-triangle runtime surface inside a low stepped stone ring. The image defines color, rim profile, and ripple scale rather than shader implementation."
+    },
+    {
+      "id": "robot-guide",
+      "sheetId": "robot-and-drone",
+      "panels": [1, 2, 3, 4],
+      "views": ["front", "left profile", "back", "three-quarter"],
+      "targetScaleMeters": [1.2, 1.7, 1.1],
+      "materials": [
+        "off-white ceramic",
+        "linen stone",
+        "aged pewter",
+        "graphite joints",
+        "restrained walnut detail"
+      ],
+      "negativeConstraints": [
+        "No human skin, projected face, weapon, wings, extra limbs, or aggressive military silhouette.",
+        "No glossy white consumer-electronics finish or exposed cables without mechanical purpose."
+      ],
+      "modelingNotes": "Use the four views to preserve one silhouette and joint hierarchy. Five-finger hand topology, water-contact reach, stable kneel pose, and animation deformation require manual review."
+    },
+    {
+      "id": "drone",
+      "sheetId": "robot-and-drone",
+      "panels": [5, 6, 7, 8],
+      "views": ["front", "side", "top", "three-quarter"],
+      "targetScaleMeters": [1.4, 0.45, 1.4],
+      "materials": [
+        "off-white ceramic",
+        "aged pewter",
+        "espresso joints",
+        "clear camera glass"
+      ],
+      "negativeConstraints": [
+        "No weapon mounts, military camouflage, anthropomorphic face, or exposed dangerous blades.",
+        "No blue status lights, neon trails, or continuous fast hovering motion."
+      ],
+      "modelingNotes": "Keep a compact central camera body, four protected rotors, balanced arm length, and a stable frozen hover pose for reduced motion."
+    },
+    {
+      "id": "astraea",
+      "sheetId": "artifact-systems",
+      "panels": [1, 2, 3],
+      "views": ["front", "side", "three-quarter"],
+      "targetScaleMeters": [2.6, 2.8, 1.1],
+      "materials": [
+        "parchment ceramic",
+        "aged pewter",
+        "walnut",
+        "muted sage accent"
+      ],
+      "negativeConstraints": [
+        "No zodiac glyphs, pseudo-writing, proprietary symbols, or magical particles.",
+        "No dense unreadable engraving or screen-based interface."
+      ],
+      "modelingNotes": "Model a tilted astrolabe-like assembly with concentric rings, radial lines, round fasteners, a central pivot, and a mechanically plausible walnut support."
+    },
+    {
+      "id": "pinaculo",
+      "sheetId": "artifact-systems",
+      "panels": [4, 5, 6],
+      "views": ["front", "top", "three-quarter"],
+      "targetScaleMeters": [2.7, 0.65, 2.7],
+      "materials": [
+        "walnut",
+        "clay taupe",
+        "buff",
+        "espresso grooves",
+        "wooden markers"
+      ],
+      "negativeConstraints": [
+        "No numerals, pseudo-writing, divination claims, glowing runes, or magical effects.",
+        "No loose markers that lack a stable track or collision-safe rest position."
+      ],
+      "modelingNotes": "Use a low circular body, concentric construction grooves, and one restrained ring of movable wooden markers. Selection motion must remain bounded and legible."
+    },
+    {
+      "id": "sound-lab",
+      "sheetId": "artifact-systems",
+      "panels": [7, 8, 9],
+      "views": ["front", "top", "three-quarter"],
+      "targetScaleMeters": [2.5, 0.75, 1.7],
+      "materials": [
+        "walnut",
+        "buff",
+        "graphite",
+        "aged pewter",
+        "muted sage accent"
+      ],
+      "negativeConstraints": [
+        "No keyboard, DJ-brand mimicry, words, waveform baked into geometry, or autoplay implication.",
+        "No dense wall of controls, nightclub neon, or rapid flashing indicator array."
+      ],
+      "modelingNotes": "Keep one central circular harmonic dial with a restrained set of tactile knobs and sliders. The visual must remain useful when audio and motion are unavailable."
+    },
+    {
+      "id": "future-energy",
+      "sheetId": "energy-and-electronics",
+      "panels": [1, 2, 3],
+      "views": ["front", "side", "three-quarter"],
+      "targetScaleMeters": [2.5, 2.4, 1.6],
+      "materials": [
+        "aged pewter",
+        "clear neutral glass",
+        "sage mineral liquid",
+        "tea-brown liquid",
+        "walnut"
+      ],
+      "negativeConstraints": [
+        "No oil-industry branding, impossible pipe terminations, pressure-unsafe exposed glass, or medical-device styling.",
+        "No emissive fantasy liquid, blue glow, pseudo-scientific labels, or implied performance metric."
+      ],
+      "modelingNotes": "Preserve two protected reservoirs, a legible closed pipe loop, pump housings, a central service panel, and a low wood/metal base. Liquid motion is a later runtime effect."
+    },
+    {
+      "id": "electronics-ai-module",
+      "sheetId": "energy-and-electronics",
+      "panels": [4, 5, 6],
+      "views": ["front", "top", "three-quarter"],
+      "targetScaleMeters": [2.2, 1.3, 1.3],
+      "materials": [
+        "aged metal",
+        "graphite",
+        "walnut",
+        "pewter",
+        "muted circuit green"
+      ],
+      "negativeConstraints": [
+        "No proprietary board logo, brand-identifiable device copy, pseudo-writing, or live data screen.",
+        "No exposed hazardous mains wiring, excessive cable clutter, or blinking indicator wall."
+      ],
+      "modelingNotes": "Build a compact horizontal chassis with modular boards behind protective grilles, tactile controls, cable sockets, cooling detail, and one blank status window."
+    },
+    {
+      "id": "props-and-plants",
+      "sheetId": "observatory-environment",
+      "panels": [1, 3, 5, 6],
+      "views": [
+        "room context",
+        "overhead distribution",
+        "kit lineup",
+        "lighting context"
+      ],
+      "targetScaleMeters": [8, 4, 5],
+      "materials": [
+        "sage foliage",
+        "oak",
+        "walnut",
+        "linen ceramic",
+        "paper",
+        "clear neutral glass"
+      ],
+      "negativeConstraints": [
+        "No branded books, readable labels, rare identifiable specimens, or clutter that competes with navigation.",
+        "No high-poly leaf cards, alpha-heavy forest density, or animated foliage."
+      ],
+      "modelingNotes": "Author a small reusable kit of shelves, workbench, stool, pots, low-detail plants, bottles, and one neutral armillary prop. Instance repeated pieces."
+    },
+    {
+      "id": "lighting-environment",
+      "sheetId": "observatory-environment",
+      "panels": [1, 2, 6],
+      "views": ["wide daylight", "neutral elevation", "camera mood"],
+      "targetScaleMeters": [18, 7, 14],
+      "materials": [
+        "warm daylight",
+        "neutral reflection",
+        "soft parchment bounce",
+        "muted sage exterior foliage"
+      ],
+      "negativeConstraints": [
+        "No blue moonlight, violet fill, neon rim, black background, or blown-out white oculus.",
+        "No HDR environment without documented commercial-display rights."
+      ],
+      "modelingNotes": "Reproduce the exposure with runtime-authored warm key light, soft neutral fill, restrained contact shadows, and a transparent no-HDR environment until rights are cleared."
+    },
+    {
+      "id": "camera-rig",
+      "sheetId": "observatory-environment",
+      "panels": [1, 3, 6],
+      "views": [
+        "home perspective",
+        "overhead spatial check",
+        "artifact-focus mood"
+      ],
+      "targetScaleMeters": [0, 0, 0],
+      "materials": ["not applicable; framing and exposure reference only"],
+      "negativeConstraints": [
+        "No automatic orbit, infinite camera loop, roll, whip-pan, or motion that hides semantic UI.",
+        "No framing that crops the robot head, water-contact hand, active artifact, or DOM safe zones."
+      ],
+      "modelingNotes": "Use the sheet as framing intent only. Runtime cameras remain cancellable, responsive, reduced-motion aware, and subordinate to semantic page navigation."
+    }
+  ]
+}

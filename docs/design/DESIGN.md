@@ -26,14 +26,14 @@ Nightglass contributes its discipline—hierarchy, semantic states, quiet contro
 
 ## Originality and reference audit
 
-| Reference | Lesson used | Must not copy |
-| --- | --- | --- |
-| Carlos's `mainUI.png` | Approved hierarchy, subject placement, material warmth, object naming, and first-viewport balance | Embedded raster text as the real interface |
-| Refero Styles | Design-token documentation, spacing discipline, and state completeness | Product branding, screenshots, exact layouts, or signature components |
-| Nightglass | One dominant idea, cardless structure, quiet DOM overlays, accessible interaction states | Near-black canvas, aqua accent, or dark glass surfaces |
-| Editorial museum catalogues | Large serif title, measured captions, and object-led sequencing | Any specific publication grid or wordmark |
-| Scientific instrument plates | Fine dividers, engraved labels, index numbers, and provenance detail | Faux historical claims or ornamental illegibility |
-| Calm spatial portfolios | Canvas-first presentation with DOM routes and poster fallback | Scroll hijacking, mystery navigation, or inaccessible canvas-only content |
+| Reference                    | Lesson used                                                                                       | Must not copy                                                             |
+| ---------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Carlos's `mainUI.png`        | Approved hierarchy, subject placement, material warmth, object naming, and first-viewport balance | Embedded raster text as the real interface                                |
+| Refero Styles                | Design-token documentation, spacing discipline, and state completeness                            | Product branding, screenshots, exact layouts, or signature components     |
+| Nightglass                   | One dominant idea, cardless structure, quiet DOM overlays, accessible interaction states          | Near-black canvas, aqua accent, or dark glass surfaces                    |
+| Editorial museum catalogues  | Large serif title, measured captions, and object-led sequencing                                   | Any specific publication grid or wordmark                                 |
+| Scientific instrument plates | Fine dividers, engraved labels, index numbers, and provenance detail                              | Faux historical claims or ornamental illegibility                         |
+| Calm spatial portfolios      | Canvas-first presentation with DOM routes and poster fallback                                     | Scroll hijacking, mystery navigation, or inaccessible canvas-only content |
 
 ## Locked color system
 
@@ -143,6 +143,7 @@ The first viewport is a poster: identity and promise on the left; observatory vi
 
 - Default: ordered editorial list with image, title, category, status, one-sentence contribution, and year only when verified.
 - Filters are introduced only when at least eight verified projects exist; until then, category anchor links suffice.
+- Implementation decision 2026-07-20: the current runtime has only three held concept records and no publishable project index, so `/work` deliberately ships no filter controls or filter URL state. Revisit only after eight verified public projects exist.
 - If filters exist, they are real buttons, announce result count, retain all items in DOM, and expose a clear Reset. No-result copy explains how to recover.
 
 ### Case study
@@ -172,13 +173,13 @@ All interactive elements specify default, hover, focus-visible, active/pressed, 
 
 ## Responsive contract
 
-| Viewport | Hero | Scene crop | Navigation | Chat | Selected systems |
-| --- | --- | --- | --- | --- | --- |
-| 320–389 | Single column; copy first; poster below | Robot hand/water and one artifact; no text baked into essential area | Menu sheet | Collapsed button; opens bottom sheet | Vertical editorial list |
-| 390–639 | Copy occupies top 52–58svh; visual continues below | Robot, water, ASTRAEA edge | Menu sheet | Bottom sheet, max 78svh | Two-up only if labels fit |
-| 640–1023 | 8-column overlap | Robot centered; Sound Lab/PINÁCULO foreground | Compact link row or menu by fit | Right sheet | Two columns |
-| 1024–1439 | 4/12 copy, 8/12 scene | Matches approved image anchors | Full navigation | 360–400px panel | Three editorial columns |
-| 1440+ | Copy capped at 580px; scene can bleed | Approved wide framing; no extra decorative objects | Full navigation | 400px panel | Three columns with wider media |
+| Viewport  | Hero                                               | Scene crop                                                           | Navigation                      | Chat                                 | Selected systems               |
+| --------- | -------------------------------------------------- | -------------------------------------------------------------------- | ------------------------------- | ------------------------------------ | ------------------------------ |
+| 320–389   | Single column; copy first; poster below            | Robot hand/water and one artifact; no text baked into essential area | Menu sheet                      | Collapsed button; opens bottom sheet | Vertical editorial list        |
+| 390–639   | Copy occupies top 52–58svh; visual continues below | Robot, water, ASTRAEA edge                                           | Menu sheet                      | Bottom sheet, max 78svh              | Two-up only if labels fit      |
+| 640–1023  | 8-column overlap                                   | Robot centered; Sound Lab/PINÁCULO foreground                        | Compact link row or menu by fit | Right sheet                          | Two columns                    |
+| 1024–1439 | 4/12 copy, 8/12 scene                              | Matches approved image anchors                                       | Full navigation                 | 360–400px panel                      | Three editorial columns        |
+| 1440+     | Copy capped at 580px; scene can bleed              | Approved wide framing; no extra decorative objects                   | Full navigation                 | 400px panel                          | Three columns with wider media |
 
 No horizontal page scroll. At 200% zoom, desktop navigation may switch to the mobile sheet. Touch targets remain 44px. Cropping protects the robot face/hand, ASTRAEA label zone, and the headline calm zone; Sound Lab and PINÁCULO may fall below the fold on narrow screens.
 
@@ -192,16 +193,16 @@ Easing: emphasized `cubic-bezier(.16, 1, .3, 1)` for entrances/camera endpoints;
 
 ## Cross-system animation ownership
 
-| Transition | Owner | Trigger | Duration | Cancellation | Reduced motion | Cost |
-| --- | --- | --- | ---: | --- | --- | --- |
-| Header/hero assemble | Motion / Animate UI open-code pattern | First render | 520–650ms | Route change | Immediate | Low |
-| Button/link feedback | CSS | Pointer/focus/press | 160ms | Input ends | Immediate | Low |
-| Mobile menu/chat sheet | Motion | Activate | 220ms | Escape/reverse | Immediate | Low |
-| Section/figure reveal | Motion | First intersection | 420ms | Unmount | Immediate | Low |
-| Scene camera focus | R3F | Artifact action | 600–900ms | New input cancels | Camera cut | Medium |
-| Robot/drone idle | R3F animation mixer/procedural | Scene ready + visible | Slow loop | Pause/hidden/input | Frozen authored pose | Medium |
-| Water ripples | R3F shader | Pointer/touch/robot hand | ≤1.2s decay | New impulse/quality change | Static normal map | High |
-| Chat streaming cursor | CSS | Server stream | 480ms cadence | Complete/stop | Static progress text | Low |
+| Transition             | Owner                                 | Trigger                  |      Duration | Cancellation               | Reduced motion       | Cost   |
+| ---------------------- | ------------------------------------- | ------------------------ | ------------: | -------------------------- | -------------------- | ------ |
+| Header/hero assemble   | Motion / Animate UI open-code pattern | First render             |     520–650ms | Route change               | Immediate            | Low    |
+| Button/link feedback   | CSS                                   | Pointer/focus/press      |         160ms | Input ends                 | Immediate            | Low    |
+| Mobile menu/chat sheet | Motion                                | Activate                 |         220ms | Escape/reverse             | Immediate            | Low    |
+| Section/figure reveal  | Motion                                | First intersection       |         420ms | Unmount                    | Immediate            | Low    |
+| Scene camera focus     | R3F                                   | Artifact action          |     600–900ms | New input cancels          | Camera cut           | Medium |
+| Robot/drone idle       | R3F animation mixer/procedural        | Scene ready + visible    |     Slow loop | Pause/hidden/input         | Frozen authored pose | Medium |
+| Water ripples          | R3F shader                            | Pointer/touch/robot hand |   ≤1.2s decay | New impulse/quality change | Static normal map    | High   |
+| Chat streaming cursor  | CSS                                   | Server stream            | 480ms cadence | Complete/stop              | Static progress text | Low    |
 
 ## Accessibility and fallback rules
 

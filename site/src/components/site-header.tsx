@@ -46,13 +46,10 @@ export function SiteHeader({ navigation }: { navigation: NavigationItem[] }) {
         </nav>
 
         <div className="site-header__status" aria-label="Experience settings">
-          <button className="quiet-control" type="button" aria-label="Sound is muted" disabled>
-            <span aria-hidden="true">◖</span>
-            <span>Muted</span>
-          </button>
-          <span className="motion-status">
-            <span aria-hidden="true">•</span> Motion follows system
-          </span>
+          <Link className="quiet-control" href="/#observatory-experience-settings">
+            <span aria-hidden="true">◌</span>
+            <span>Experience</span>
+          </Link>
         </div>
 
         <AnimatedButton
