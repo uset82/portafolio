@@ -96,6 +96,8 @@ Slice: semantic poster-first foundation
 
 - The post-build immersive validator now inspects the actual emitted HTML for Home, Work, Laboratory, Sound, Cosmos, Story, and Contact. It requires one visible `main#main-content`, one H1, and the complete global navigation on every primary static route, then enforces the held Laboratory, Sound, Cosmos, and Contact no-media/no-collection boundaries in the production artifact itself. The existing homepage poster/no-script assertion remains separate, retaining its Canvas-free rights-gated fallback. A fresh full verification still passes 216 deterministic tests, 13 routes, 12 manifest assets, zero public GLBs, and 26 client files; browser review remains intentionally open.
 
+- The published GitHub Actions workflow now has hosted proof: [run 30120350422](https://github.com/uset82/portafolio/actions/runs/30120350422) passed against `main` commit `8db4d2e`. The lockfile install, source/contracts/test stage, production build, and emitted immersive artifact/fallback stage all completed in the read-only `Format, test, and build` job. The `pull_request` trigger, lockfile-keyed pnpm cache, concurrency cancellation, and deployment separation remain intact.
+
 ## Intentionally deferred
 
 - Real mobile water input, pointer/robot ripple and pause/visibility inspection, renderer draw/triangle counters, approved production 3D assets, and production-robot presentation.

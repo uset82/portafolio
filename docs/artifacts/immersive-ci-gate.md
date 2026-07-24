@@ -12,7 +12,11 @@ The pull-request workflow and local `pnpm verify` command now run the same expli
 2. the Next.js production build;
 3. validation of the emitted immersive production artifacts.
 
-The hosted workflow remains read-only, uses the frozen lockfile, and keeps its existing concurrency cancellation. A first GitHub-hosted run belongs to task 4.36 and is not claimed here.
+The hosted workflow remains read-only, uses the frozen lockfile, and keeps its existing concurrency cancellation.
+
+## Hosted verification
+
+On 2026-07-24, [GitHub Actions run 30120350422](https://github.com/uset82/portafolio/actions/runs/30120350422) passed on published `main` commit `8db4d2e`. Its `Format, test, and build` job completed the locked dependency installation, source/contracts/tests, production build, and immersive production-artifact fallback validation successfully. This is the hosted proof for task 4.17; preview and production deployment checks remain separate release work.
 
 ## Asset manifest and GLB validation
 
@@ -48,4 +52,4 @@ This check exposed that Motion's server output starts the scene and reading-orde
 - Content, palette, OpenRouter source-boundary, asset-manifest, and public-GLB checks: passed.
 - Next.js 16.2.10 Turbopack build: passed with all 13 routes generated.
 - Immersive build artifact gate: passed with 12 manifest assets, zero public GLBs, 24 client files, and one semantic poster fallback.
-- GitHub Actions workflow syntax was formatted by the repository's pinned Prettier tool; the first remote run remains task 4.36 evidence.
+- GitHub Actions run 30120350422 passed the complete workflow on published `main`; its hosted proof is recorded under task 4.17.
