@@ -1,20 +1,20 @@
 {
   "version": 1,
-  "reviewedOn": "2026-07-20",
+  "reviewedOn": "2026-07-25",
   "deadlinePolicy": "Dates are not invented. Each unresolved item is due at a named publication milestone; optional material is omitted when that milestone arrives without approval.",
   "blockers": [
     {
       "id": "observatory-poster-public-rights",
       "category": "rights-provenance",
-      "status": "awaiting-user",
-      "priority": "production-blocker",
+      "status": "deferred-with-fallback",
+      "priority": "enhancement-deferred",
       "owner": "Carlos Carpio",
       "sourceInventoryIds": ["asset-rights-register", "homepage-reference"],
-      "requestedAction": "Confirm the approved Observatory image's authorship or generation source and grant public-display permission, or approve a rights-cleared replacement poster.",
-      "fallback": "Create an original palette-locked poster from repository-authored geometry and typography; keep the supplied reference internal until its rights are confirmed.",
-      "resolutionBy": "Before task 2.32 v1 content and asset freeze and before any public production preview.",
-      "launchImpact": "The current runtime poster may be used for private review but cannot be cleared for public production while its underlying rights are ambiguous.",
-      "blocks": ["task 2.20", "task 2.32", "public production preview"]
+      "requestedAction": "Resolved 2026-07-25: Carlos owns the Observatory visual and the runtime poster is approved for public production display. Keep monitoring only if the poster file is replaced.",
+      "fallback": "If the poster binary is replaced, re-hash it, re-record ownership, and re-approve public display before production use.",
+      "resolutionBy": "Completed for the current poster binary on 2026-07-25; re-open only if the file changes.",
+      "launchImpact": "The current ownership-recorded poster no longer blocks production publication on rights grounds.",
+      "blocks": ["poster replacement re-approval only"]
     },
     {
       "id": "public-contact-and-availability",

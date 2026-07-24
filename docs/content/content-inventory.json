@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "reviewedOn": "2026-07-20",
+  "reviewedOn": "2026-07-25",
   "items": [
     {
       "id": "approved-site-copy",
@@ -196,7 +196,7 @@
       "requestedAction": "Create or approve a small original media set for each project with file-level ownership, permission, privacy, caption, alt-text, and optimization evidence.",
       "fallback": "Use the verified typographic project summaries and links without project screenshots, video, generated imagery, or third-party brand assets.",
       "launchImpact": "All five projects have an honest text-and-links fallback, but no project image or video may ship yet.",
-      "notes": "The verified reusable-project-media count is zero. Nine repository candidate groups are excluded or marked never-republish because rights, provenance, privacy, safety, or license evidence is missing. Five local 2D/video Observatory/monogram assets are measured and explicitly deferred as non-project design or brand references, while three local GLB/video candidates are recorded in the asset-licensing register; all remain outside runtime use until authorship, public-display rights, accessibility, and performance evidence are confirmed."
+      "notes": "The verified reusable-project-media count is zero. Nine repository candidate groups are excluded or marked never-republish because rights, provenance, privacy, safety, or license evidence is missing. Five local 2D/video Observatory/monogram assets plus three local GLB/video candidates are ownership-recorded to Carlos as of 2026-07-25 and remain outside runtime use until public-display, accessibility, and performance clearance are complete."
     },
     {
       "id": "portrait-brand",
@@ -332,17 +332,15 @@
       "title": "Launch asset licensing and attribution register",
       "owner": "Portfolio implementation",
       "source": "docs/content/asset-licensing-register.json, site/THIRD_PARTY_NOTICES.md, bundled license texts, runtime asset hashes, and current exclusion ledgers",
-      "verification": "needs-user-confirmation",
-      "rights": "pending",
-      "missingFields": [
-        "Observatory poster public-display approval or a rights-cleared replacement"
-      ],
+      "verification": "verified",
+      "rights": "owned",
+      "missingFields": [],
       "priority": "launch-critical",
-      "launchDecision": "hold",
-      "requestedAction": "Carlos must confirm public portfolio display rights for the archived Observatory poster, including its underlying authorship or generation source, or approve a rights-cleared replacement before production release.",
-      "fallback": "Replace the poster with an original rights-cleared asset while retaining the semantic page, Natural Observatory palette, procedural water, and zero-GLB fallback.",
-      "launchImpact": "Preview implementation may continue, but production remains held by the poster decision; all other current runtime assets have a license, notice, authored-code boundary, or exclusion decision.",
-      "notes": "The register covers 11 current or excluded asset groups. Cormorant Garamond and Manrope OFL notices, the Next.js favicon MIT notice, and the Three.js decoder MIT license are bundled. The favicon is legally reusable but scheduled for brand replacement. Project media, the eight committed local Observatory/monogram image/video/GLB files, planned GLBs/HDR, and all unapproved audio/video remain excluded from runtime use."
+      "launchDecision": "include",
+      "requestedAction": "Keep the ownership-recorded Observatory poster as the public production visual; re-approve only if the binary is replaced.",
+      "fallback": "If the poster binary changes, re-hash it and re-approve public display while retaining the semantic page, Natural Observatory palette, procedural water, and zero-GLB fallback.",
+      "launchImpact": "Current runtime assets have a license, notice, authored-code boundary, ownership-backed poster approval, or explicit exclusion decision. Local monogram/video/GLB candidates remain excluded from runtime.",
+      "notes": "The register covers 11 current or excluded asset groups. Cormorant Garamond and Manrope OFL notices, the Next.js favicon MIT notice, and the Three.js decoder MIT license are bundled. The root repository LICENSE is MIT. The favicon is legally reusable but scheduled for brand replacement. The eight local Observatory/monogram image/video/GLB files are ownership-recorded and still excluded from runtime use pending accessibility and performance work."
     },
     {
       "id": "homepage-reference",
@@ -350,16 +348,14 @@
       "title": "Approved Natural Observatory homepage reference",
       "owner": "Carlos Carpio",
       "source": "docs/design/reference/mainUI-approved.png and provenance record",
-      "verification": "reference-approved",
-      "rights": "pending",
-      "missingFields": [
-        "Final decision on whether the image itself may ship publicly"
-      ],
+      "verification": "verified",
+      "rights": "owned",
+      "missingFields": [],
       "priority": "launch-critical",
-      "launchDecision": "fallback",
-      "requestedAction": "Use it as the design source and confirm public poster permission separately.",
-      "fallback": "Replace it with a rights-cleared authored scene poster before production.",
-      "launchImpact": "The implementation direction is stable; the production poster may change."
+      "launchDecision": "include",
+      "requestedAction": "Use the ownership-recorded poster as the public production visual and keep the local imagesandvideo source out of runtime imports.",
+      "fallback": "If the poster binary is replaced, re-hash and re-approve public display before production use.",
+      "launchImpact": "The implementation direction and production poster rights are stable for the current binary."
     },
     {
       "id": "three-d-reference-packs",
@@ -370,7 +366,7 @@
       "verification": "verified",
       "rights": "pending",
       "missingFields": [
-        "Underlying mainUI authorship or generation history before any public reuse"
+        "Runtime approval and optimization for any public GLB derived from the ownership-recorded Observatory reference"
       ],
       "priority": "launch-important",
       "launchDecision": "fallback",

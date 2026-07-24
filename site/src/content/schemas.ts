@@ -972,7 +972,11 @@ export const localMediaClearanceRegisterSchema = z
   .object({
     version: z.literal(1),
     reviewedOn: partialDateSchema,
-    status: z.literal("pending-file-level-clearance"),
+    status: z.enum([
+      "pending-file-level-clearance",
+      "ownership-recorded-runtime-hold",
+      "runtime-approved",
+    ]),
     assets: z.array(localMediaClearanceAssetSchema).min(1),
     reviewNotes: z.array(z.string().min(20)).min(1),
   })
@@ -981,6 +985,10 @@ export const localMediaClearanceRegisterSchema = z
     const ids = new Set<string>();
     const paths = new Set<string>();
     const hashes = new Set<string>();
+    const runtimeHoldStatuses = new Set([
+      "pending-file-level-clearance",
+      "ownership-recorded-runtime-hold",
+    ]);
 
     register.assets.forEach((asset, index) => {
       if (ids.has(asset.id)) {
@@ -1013,6 +1021,14 @@ export const localMediaClearanceRegisterSchema = z
           code: "custom",
           path: ["assets", index, "decision"],
           message: "Pending local media must remain excluded",
+        });
+      }
+
+      if (runtimeHoldStatuses.has(register.status) && asset.decision !== "exclude") {
+        context.addIssue({
+          code: "custom",
+          path: ["assets", index, "decision"],
+          message: "Local media must remain excluded while runtime clearance is held",
         });
       }
     });

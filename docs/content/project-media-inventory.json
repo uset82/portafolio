@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "reviewedOn": "2026-07-20",
+  "reviewedOn": "2026-07-25",
   "publication": "hold",
   "reusableProjectMediaCount": 0,
   "projects": [
@@ -247,13 +247,13 @@
         "height": 941,
         "bytes": 2595384
       },
-      "owner": "Unconfirmed; supplied in the local workspace, but authorship and generation rights are not yet recorded.",
-      "permission": "pending",
-      "license": "Unconfirmed",
+      "owner": "Carlos Carpio; sole creator claim recorded 2026-07-25.",
+      "permission": "owned",
+      "license": "Owner-declared original media; no separate SPDX media license file is recorded.",
       "captionIntent": "Design reference for the approved Submerged Earth Observatory composition, not evidence for any flagship project.",
-      "altTextIntent": "If separately approved as a public poster, describe the observatory scene and interface purpose rather than generated text details.",
+      "altTextIntent": "If separately approved as a public poster, describe the observatory scene and interface purpose rather than embedded interface text details.",
       "optimizationNeeds": [
-        "Keep as a private design reference until public-display rights are confirmed.",
+        "Confirm production public-display on the live site.",
         "If approved, create responsive poster derivatives and verify embedded text at mobile sizes."
       ],
       "routing": "Design-reference and asset-rights gates; do not attach to a project case study."
@@ -268,13 +268,13 @@
         "height": 941,
         "bytes": 2713543
       },
-      "owner": "Unconfirmed; supplied in the local workspace, but authorship and generation rights are not yet recorded.",
-      "permission": "pending",
-      "license": "Unconfirmed",
+      "owner": "Carlos Carpio; sole creator claim recorded 2026-07-25.",
+      "permission": "owned",
+      "license": "Owner-declared original media; no separate SPDX media license file is recorded.",
       "captionIntent": "Possible Observatory scene reference only; it is not project outcome evidence.",
       "altTextIntent": "If separately approved, describe the bright workshop, central robot, water surface, and surrounding instruments.",
       "optimizationNeeds": [
-        "Confirm generation and public-display rights.",
+        "Confirm public-display on the live site.",
         "If approved, create responsive AVIF/WebP poster derivatives and retain a suitable fallback."
       ],
       "routing": "Design-reference and asset-rights gates; do not attach to a project case study."
@@ -289,13 +289,13 @@
         "height": 1086,
         "bytes": 1421710
       },
-      "owner": "Unconfirmed; supplied in the local workspace, but mark authorship and generation rights are not yet recorded.",
-      "permission": "pending",
-      "license": "Unconfirmed",
+      "owner": "Carlos Carpio; sole creator claim recorded 2026-07-25.",
+      "permission": "owned",
+      "license": "Owner-declared original media; no separate SPDX media license file is recorded.",
       "captionIntent": "Candidate personal monogram sheet, not flagship project media.",
       "altTextIntent": "If approved, identify the gold Carlos Alfredo Carpio Meza monogram and wordmark variants.",
       "optimizationNeeds": [
-        "Confirm mark ownership and whether the full legal name should be public.",
+        "Confirm whether the full legal name should appear on the live site.",
         "Rebuild an accessible SVG or transparent raster master before Web use."
       ],
       "routing": "Task 2.14 personal-brand review."
@@ -310,16 +310,16 @@
         "height": 4344,
         "bytes": 2471295
       },
-      "owner": "Unconfirmed; the filename may indicate generated media, but no provider, input, or terms record is available.",
-      "permission": "pending",
-      "license": "Unconfirmed",
+      "owner": "Carlos Carpio; sole creator claim recorded 2026-07-25.",
+      "permission": "owned",
+      "license": "Owner-declared original media; no separate SPDX media license file is recorded.",
       "captionIntent": "Candidate personal monogram reference, not flagship project media.",
       "altTextIntent": "If approved, identify the gold monogram and full-name wordmark on a dark background.",
       "optimizationNeeds": [
-        "Recover generation provenance, input rights, and the applicable terms snapshot.",
-        "Downscale, remove metadata, and replace with a clean master only after approval."
+        "Confirm public-display on the live site.",
+        "Downscale, remove metadata, and publish a clean master only after display approval."
       ],
-      "routing": "Task 2.14 personal-brand and generated-asset rights review."
+      "routing": "Task 2.14 personal-brand review."
     },
     {
       "id": "local-rotating-monogram-video",
@@ -335,13 +335,13 @@
         "videoCodec": "h264",
         "audioCodec": "aac"
       },
-      "owner": "Unconfirmed; supplied in the local workspace, but animation authorship, source assets, audio rights, and generation history are not recorded.",
-      "permission": "pending",
-      "license": "Unconfirmed",
+      "owner": "Carlos Carpio; sole creator claim recorded 2026-07-25.",
+      "permission": "owned",
+      "license": "Owner-declared original media; no separate SPDX media license file is recorded.",
       "captionIntent": "Candidate personal-brand animation only; not flagship project media and not approved for autoplay.",
       "altTextIntent": "If approved as informative media, provide a concise description or transcript; if decorative, mute it, provide a still fallback, and remove it from the accessibility tree.",
       "optimizationNeeds": [
-        "Confirm animation, logo, and AAC audio rights.",
+        "Confirm public playback and whether embedded AAC audio should ship or be muted.",
         "Create a poster, muted/no-audio Web export, and reduced-motion static alternative.",
         "Do not autoplay audible media."
       ],

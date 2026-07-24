@@ -346,7 +346,7 @@ if (!assetLicensingRegisterResult.success) {
   );
   if (!localMediaGroup || localMediaGroup.decision !== "exclude") {
     failures.push(
-      "assetLicensingRegister.local-observatory-monogram-media: pending local media must stay excluded",
+      "assetLicensingRegister.local-observatory-monogram-media: local media must stay excluded until runtime clearance is complete",
     );
   }
 
@@ -389,9 +389,12 @@ if (!localMediaClearanceRegisterResult.success) {
 } else {
   localMediaClearanceCount = localMediaClearanceRegisterResult.data.assets.length;
 
-  if (localMediaClearanceRegisterResult.data.assets.some((asset) => asset.decision !== "exclude")) {
+  if (
+    localMediaClearanceRegisterResult.data.status !== "runtime-approved" &&
+    localMediaClearanceRegisterResult.data.assets.some((asset) => asset.decision !== "exclude")
+  ) {
     failures.push(
-      "localMediaClearanceRegister.assets: every pending local-media file must remain excluded",
+      "localMediaClearanceRegister.assets: every local-media file must remain excluded while runtime clearance is held",
     );
   }
 
@@ -693,13 +696,18 @@ if (assetLicensingRegisterResult.success) {
     passed: !assetLicensingRegisterSchema.safeParse({
       ...assetLicensingRegisterResult.data,
       releaseDecision: "ready",
+      assets: assetLicensingRegisterResult.data.assets.map((asset) =>
+        asset.id === "runtime-observatory-poster"
+          ? { ...asset, decision: "hold", launchCritical: true }
+          : asset,
+      ),
     }).success,
   });
 }
 
 if (localMediaClearanceRegisterResult.success) {
   negativeContracts.push({
-    name: "a pending local-media asset marked for inclusion",
+    name: "a held local-media asset marked for inclusion before runtime approval",
     passed: !localMediaClearanceRegisterSchema.safeParse({
       ...localMediaClearanceRegisterResult.data,
       assets: localMediaClearanceRegisterResult.data.assets.map((asset, index) =>
@@ -724,8 +732,10 @@ if (unresolvedContentBlockerLedgerResult.success) {
     name: "a production blocker treated as a deferred enhancement",
     passed: !unresolvedContentBlockerLedgerSchema.safeParse({
       ...unresolvedContentBlockerLedgerResult.data,
-      blockers: unresolvedContentBlockerLedgerResult.data.blockers.map((blocker, index) =>
-        index === 0 ? { ...blocker, status: "deferred-with-fallback" } : blocker,
+      blockers: unresolvedContentBlockerLedgerResult.data.blockers.map((blocker) =>
+        blocker.priority === "production-blocker"
+          ? { ...blocker, status: "deferred-with-fallback" }
+          : blocker,
       ),
     }).success,
   });
@@ -765,7 +775,7 @@ if (failures.length > 0) {
   process.exitCode = 1;
 } else {
   console.log(
-    `Content valid: ${approvedDisplayRecordCount} approved display records, ${heldFlagshipSummaryCount} held flagship summary drafts, ${auditedProjectLinkCount} audited project links, ${reusableProjectMediaCount} reusable project media, ${blockedProjectMediaCandidateCount} blocked project-media candidates, ${deferredNonProjectAssetCount} deferred local reference assets, ${voiceStatusLabelCount} voice/status labels, ${assetLicensingDecisionCount} asset-license decisions with ${heldLaunchAssetCount} launch hold, ${localMediaClearanceCount} hash-pinned pending local-media records, ${unresolvedContentBlockerCount} unresolved content blockers with ${productionContentBlockerCount} production blockers, ${publicKnowledgeRecordCount} public CC AI records with ${publicKnowledgeExclusionCount} explicit exclusions, ${ccAiEvaluationCaseCount} specified CC AI evaluation cases, and ${inventoryEntryCount} inventory entries.`,
+    `Content valid: ${approvedDisplayRecordCount} approved display records, ${heldFlagshipSummaryCount} held flagship summary drafts, ${auditedProjectLinkCount} audited project links, ${reusableProjectMediaCount} reusable project media, ${blockedProjectMediaCandidateCount} blocked project-media candidates, ${deferredNonProjectAssetCount} deferred local reference assets, ${voiceStatusLabelCount} voice/status labels, ${assetLicensingDecisionCount} asset-license decisions with ${heldLaunchAssetCount} launch hold, ${localMediaClearanceCount} hash-pinned ownership-recorded local-media records, ${unresolvedContentBlockerCount} unresolved content blockers with ${productionContentBlockerCount} production blockers, ${publicKnowledgeRecordCount} public CC AI records with ${publicKnowledgeExclusionCount} explicit exclusions, ${ccAiEvaluationCaseCount} specified CC AI evaluation cases, and ${inventoryEntryCount} inventory entries.`,
   );
   console.log(`Negative contract checks passed: ${negativeContracts.length}.`);
 }

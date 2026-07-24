@@ -152,7 +152,7 @@ test("external embed records reject autoplay provider URLs", () => {
   );
 });
 
-test("pending local media stays hash-pinned and excluded from publication", () => {
+test("local media stays hash-pinned and excluded while runtime clearance is held", () => {
   const registerPath = resolve(
     process.cwd(),
     "../docs/content/local-media-clearance-register.json",
@@ -161,7 +161,7 @@ test("pending local media stays hash-pinned and excluded from publication", () =
     JSON.parse(readFileSync(registerPath, "utf8")),
   );
 
-  assert.equal(register.status, "pending-file-level-clearance");
+  assert.equal(register.status, "ownership-recorded-runtime-hold");
   assert.deepEqual(
     register.assets.map((asset) => asset.path).sort(),
     [
@@ -175,9 +175,12 @@ test("pending local media stays hash-pinned and excluded from publication", () =
       "imagesandvideo/robot.glb",
     ].sort(),
   );
-  assert.ok(register.assets.every((asset) => asset.rights === "pending"));
+  assert.ok(register.assets.every((asset) => asset.rights === "owned"));
   assert.ok(register.assets.every((asset) => asset.decision === "exclude"));
   assert.ok(register.assets.every((asset) => /^[A-F0-9]{64}$/.test(asset.sha256)));
+  assert.ok(
+    register.assets.every((asset) => asset.owner.toLowerCase().includes("carlos carpio")),
+  );
 
   const unsafePublication = localMediaClearanceRegisterSchema.safeParse({
     ...register,

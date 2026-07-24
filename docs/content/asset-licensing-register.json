@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "reviewedOn": "2026-07-24",
-  "releaseDecision": "hold",
+  "reviewedOn": "2026-07-25",
+  "releaseDecision": "ready",
   "assets": [
     {
       "id": "runtime-observatory-poster",
@@ -12,14 +12,14 @@
         "site/public/images/observatory-poster.png",
         "docs/design/reference/mainUI-approved.png"
       ],
-      "source": "Carlos-supplied approved visual reference; both files are byte-identical with SHA-256 B4E11D325297CEB8FFB021866FFA2903B316D5D2443DEF67BA890B4B3F3058BF.",
-      "owner": "Carlos Carpio supplied the source, but underlying authorship, generation history, and public-display rights remain unconfirmed.",
-      "rights": "pending",
-      "license": "Private portfolio design reference; no public reuse license is recorded.",
-      "attribution": "No public credit line is approved.",
-      "decision": "hold",
+      "source": "Carlos Carpio declared sole creation of the Observatory visual on 2026-07-25; both files are byte-identical with SHA-256 B4E11D325297CEB8FFB021866FFA2903B316D5D2443DEF67BA890B4B3F3058BF.",
+      "owner": "Carlos Carpio; sole creator claim recorded 2026-07-25.",
+      "rights": "owned",
+      "license": "Owner-declared original portfolio media approved for public production display on 2026-07-25. Repository code is MIT; this poster is not a third-party asset.",
+      "attribution": "Carlos Carpio",
+      "decision": "include",
       "launchCritical": true,
-      "evidence": "The 1672×941, 2,595,384-byte runtime poster exactly matches the archived reference. It may remain in local and preview builds, but production publication requires explicit public-display approval or a rights-cleared replacement."
+      "evidence": "The 1672×941, 2,595,384-byte runtime poster exactly matches the archived reference. Authorship is owned by Carlos, and live-site public display was approved as the safest launch choice on 2026-07-25 while heavier local GLB/video candidates remain excluded."
     },
     {
       "id": "nextjs-starter-favicon",
@@ -136,14 +136,14 @@
       "scope": "excluded",
       "kind": "reference-group",
       "paths": ["imagesandvideo/"],
-      "source": "Eight user-supplied local image, video, and GLB files committed to main at Carlos's explicit 2026-07-24 repository-publication request.",
-      "owner": "Carlos authorized repository publication, but underlying authorship, generation history, source inputs, GLB provenance, and AAC audio ownership remain unconfirmed.",
-      "rights": "pending",
-      "license": "No file-level public-display, runtime-reuse, or third-party redistribution license is recorded beyond Carlos's repository-publication instruction.",
-      "attribution": "Not applicable while excluded.",
+      "source": "Eight local image, video, and GLB files committed to main at Carlos's 2026-07-24 repository-publication request; Carlos declared sole creation on 2026-07-25.",
+      "owner": "Carlos Carpio; sole creator claim recorded 2026-07-25. Repository publication was already authorized on 2026-07-24.",
+      "rights": "owned",
+      "license": "Owner-declared original media; no separate SPDX media license file is recorded. Carlos's open-source statement covers his code and does not automatically clear binary media for runtime import.",
+      "attribution": "Credit Carlos Carpio if any file is later published on the live site.",
       "decision": "exclude",
       "launchCritical": false,
-      "evidence": "All eight files are tracked in GitHub commit 8db4d2e but remain outside the live site and the public runtime registry. The known mainUI reference hash still matches the archived poster; every local media and GLB candidate remains held for file-level provenance, rights, accessibility, and performance review before runtime import."
+      "evidence": "All eight files remain hash-pinned in docs/content/local-media-clearance-register.json and outside the live site and public runtime registry. Ownership is recorded; public-display, accessibility, and performance clearance remain open before runtime import."
     },
     {
       "id": "planned-3d-environment-assets",
@@ -157,10 +157,10 @@
         "docs/research/openai-image-reference-rights-review.md"
       ],
       "source": "Specification-only provider-neutral 3D manifest plus four internal modeling-reference sheets produced with Codex built-in image generation from the Carlos-supplied approved Observatory image.",
-      "owner": "The reference sheets were generated for this portfolio, but their input image has no recorded underlying authorship or generation history; no candidate 3D asset has completed authorship and provenance approval.",
+      "owner": "Reference sheets were generated for this portfolio from Carlos's ownership-recorded Observatory image; no candidate public GLB from this pack has completed runtime provenance and performance approval.",
       "rights": "pending",
-      "license": "Per-candidate rights, provider terms, attribution, and likeness review are required before import.",
-      "attribution": "Not applicable until a candidate passes provenance review.",
+      "license": "Per-candidate runtime rights, optimization, attribution, and likeness review are required before import.",
+      "attribution": "Not applicable until a candidate passes runtime provenance review.",
       "decision": "exclude",
       "launchCritical": false,
       "evidence": "Four hash-pinned internal sheets now cover all 12 planned registry assets with multi-view guidance, scale, materials, prompts, and negative constraints. Four provenance records capture source, service, unknown model/version, output date, conditional official terms snapshots, territory, notice, influence, likeness, engineering, and reuse decisions. They remain under docs only, the registry contains zero public GLB URLs, and the semantic, procedural-water, and poster fallback remains complete without them."
@@ -185,9 +185,10 @@
     }
   ],
   "reviewNotes": [
-    "The only production-blocking visual-rights issue in the current runtime is the Observatory poster's unconfirmed public-display permission.",
+    "On 2026-07-25 Carlos declared sole creation of the local Observatory and monogram media and chose MIT for the repository code. Authorship is recorded as owned, and the runtime Observatory poster is approved for public production display.",
+    "The root LICENSE file records MIT for portfolio code. Binary media, monogram sheets, videos, and GLBs are not auto-imported into runtime solely because the code is MIT.",
     "The Next.js starter favicon is licensed and attributed but remains a branding replacement candidate.",
     "Fonts and Three.js decoder license texts are now bundled locally.",
-    "No excluded project, local brand, 3D, audio, video, generated reference sheet, or generated model is allowed into runtime content by this register."
+    "Local brand, 3D, audio, and video candidates remain excluded from runtime until accessibility, optimization, and explicit page-level placement are completed."
   ]
 }
