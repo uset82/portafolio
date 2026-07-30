@@ -9,7 +9,7 @@ export type CcAiRoutingKind = "free-router" | "specific-free-model" | "named-mod
 export type CcAiProviderPolicy = {
   allowFallbacks: true;
   dataCollection: "deny";
-  zdr: true;
+  zdr: boolean;
 };
 
 export type CcAiModelPolicy = {
@@ -117,8 +117,15 @@ export function createCcAiModelPolicy(environment: CcAiModelEnvironment): CcAiMo
     variableSelection: primaryModel === "openrouter/free",
     provider: {
       allowFallbacks: true,
+      // Never let a provider retain prompts for training, in either mode.
       dataCollection: "deny",
-      zdr: true,
+      /* Zero data retention is required of the paid production fleet. Requiring
+       * it of the free prototype router matches zero endpoints much of the time
+       * ("No endpoints found matching your data policy"), so prototype keeps the
+       * no-training guarantee without the stricter retention filter. The panel's
+       * privacy note already tells visitors their question is processed under
+       * the selected provider's terms. */
+      zdr: mode === "production",
     },
   };
 }

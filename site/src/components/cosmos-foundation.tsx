@@ -106,7 +106,6 @@ export function CosmosFoundation({ content }: CosmosFoundationProps) {
               </div>
               <p>{practice.boundary}</p>
               <small>{practice.requirements}</small>
-              <i aria-hidden="true">↗</i>
             </li>
           ))}
         </ol>

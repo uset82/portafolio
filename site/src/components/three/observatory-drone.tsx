@@ -21,81 +21,124 @@ import {
   useObservatorySceneStore,
 } from "./observatory-scene-provider";
 
+type DroneCycleClockState = {
+  startedAtMs: number | null;
+  pausedAtMs: number | null;
+};
+
+type DroneRuntimeTimingState = {
+  appliedPoseCount: number;
+  activePoseCount: number;
+  restPoseCount: number;
+  lastAppliedAtMs: number | null;
+  minimumActiveApplyIntervalMs: number | null;
+  lastActiveAppliedAtMs: number | null;
+};
+
+function readDroneCycleClock(clock: DroneCycleClockState, nowMs = performance.now()) {
+  if (clock.startedAtMs === null) {
+    return { elapsedSeconds: 0, cycleCount: 0 };
+  }
+
+  const sampledAtMs = clock.pausedAtMs ?? nowMs;
+  const totalElapsedSeconds = Math.max(0, sampledAtMs - clock.startedAtMs) / 1_000;
+  const cycleSeconds = OBSERVATORY_DRONE_TECHNICAL_ART.motion.cycleSeconds;
+  return {
+    elapsedSeconds: totalElapsedSeconds % cycleSeconds,
+    cycleCount: Math.floor(totalElapsedSeconds / cycleSeconds),
+  };
+}
+
 function useSparseDroneInvalidation(animated: boolean) {
   const invalidate = useThree((state) => state.invalidate);
-  const cycleStartedAtRef = useRef(0);
+  const clockRef = useRef<DroneCycleClockState>({
+    startedAtMs: null,
+    pausedAtMs: null,
+  });
 
   useEffect(() => {
     if (!animated) {
+      if (clockRef.current.startedAtMs !== null && clockRef.current.pausedAtMs === null) {
+        clockRef.current.pausedAtMs = performance.now();
+      }
       invalidate();
       return;
     }
 
-    let intervalId: number | null = null;
-    let activeTimeoutId: number | null = null;
-    let restTimeoutId: number | null = null;
-    let cancelled = false;
+    const resumedAtMs = performance.now();
+    if (clockRef.current.startedAtMs === null) {
+      clockRef.current.startedAtMs = resumedAtMs;
+    } else if (clockRef.current.pausedAtMs !== null) {
+      clockRef.current.startedAtMs += resumedAtMs - clockRef.current.pausedAtMs;
+    }
+    clockRef.current.pausedAtMs = null;
 
-    const beginCycle = () => {
+    let intervalId: number | null = null;
+    let phaseTimeoutId: number | null = null;
+    let cancelled = false;
+    const frameIntervalMs = 1_000 / OBSERVATORY_DRONE_TECHNICAL_ART.maximumAnimatedFps;
+
+    const scheduleCurrentPhase = () => {
       if (cancelled) return;
-      cycleStartedAtRef.current = performance.now();
+      if (intervalId !== null) window.clearInterval(intervalId);
+      if (phaseTimeoutId !== null) window.clearTimeout(phaseTimeoutId);
+      intervalId = null;
+      phaseTimeoutId = null;
+
+      const { elapsedSeconds } = readDroneCycleClock(clockRef.current);
+      const { activeSeconds, cycleSeconds } = OBSERVATORY_DRONE_TECHNICAL_ART.motion;
       invalidate();
-      intervalId = window.setInterval(
-        invalidate,
-        1_000 / OBSERVATORY_DRONE_TECHNICAL_ART.maximumAnimatedFps,
-      );
-      activeTimeoutId = window.setTimeout(() => {
-        if (intervalId !== null) window.clearInterval(intervalId);
-        intervalId = null;
-        invalidate();
-        restTimeoutId = window.setTimeout(
-          beginCycle,
-          OBSERVATORY_DRONE_TECHNICAL_ART.motion.restSeconds * 1_000,
+
+      if (elapsedSeconds < activeSeconds) {
+        intervalId = window.setInterval(invalidate, frameIntervalMs);
+        phaseTimeoutId = window.setTimeout(
+          scheduleCurrentPhase,
+          Math.max(1, (activeSeconds - elapsedSeconds) * 1_000),
         );
-      }, OBSERVATORY_DRONE_TECHNICAL_ART.motion.activeSeconds * 1_000);
+        return;
+      }
+
+      phaseTimeoutId = window.setTimeout(
+        scheduleCurrentPhase,
+        Math.max(1, (cycleSeconds - elapsedSeconds) * 1_000),
+      );
     };
 
-    beginCycle();
+    scheduleCurrentPhase();
     return () => {
       cancelled = true;
       if (intervalId !== null) window.clearInterval(intervalId);
-      if (activeTimeoutId !== null) window.clearTimeout(activeTimeoutId);
-      if (restTimeoutId !== null) window.clearTimeout(restTimeoutId);
+      if (phaseTimeoutId !== null) window.clearTimeout(phaseTimeoutId);
     };
   }, [animated, invalidate]);
 
-  return cycleStartedAtRef;
+  return clockRef;
 }
 
 function DroneModel({
   tier,
   animated,
   settleImmediately,
-  elapsedSecondsRef,
+  clockRef,
   poseRef,
+  timingRef,
 }: {
   tier: "full" | "reduced";
   animated: boolean;
   settleImmediately: boolean;
-  elapsedSecondsRef: MutableRefObject<number>;
+  clockRef: MutableRefObject<DroneCycleClockState>;
   poseRef: MutableRefObject<DroneAmbientPose>;
+  timingRef: MutableRefObject<DroneRuntimeTimingState>;
 }) {
   const model = useMemo(() => createObservatoryDroneModel(tier), [tier]);
   const hoverRef = useRef<Group>(null);
   const rotorPivotsRef = useRef(model.rotorPivots);
   const cameraGimbalRef = useRef(model.cameraGimbal);
-  const cycleStartedAtRef = useSparseDroneInvalidation(animated);
+  const appliedPhaseRef = useRef<"active" | "rest" | null>(null);
+  const appliedCycleRef = useRef(-1);
 
   const applyPose = useCallback(
-    (pose: DroneAmbientPose, elapsedSeconds: number) => {
-      elapsedSecondsRef.current = elapsedSeconds;
-      poseRef.current = {
-        offsetMeters: [...pose.offsetMeters],
-        rotationRadians: [...pose.rotationRadians],
-        rotorRotationRadians: pose.rotorRotationRadians,
-        active: pose.active,
-      };
-
+    (pose: DroneAmbientPose, appliedAtMs: number) => {
       const hover = hoverRef.current;
       if (!hover) return;
       hover.position.set(...pose.offsetMeters);
@@ -104,8 +147,31 @@ function DroneModel({
         rotor.rotation.y = pose.rotorRotationRadians * (index % 2 === 0 ? 1 : -1);
       });
       cameraGimbalRef.current.rotation.x = pose.rotationRadians[0] * -0.45;
+
+      poseRef.current = {
+        offsetMeters: [...pose.offsetMeters],
+        rotationRadians: [...pose.rotationRadians],
+        rotorRotationRadians: pose.rotorRotationRadians,
+        active: pose.active,
+      };
+      const timing = timingRef.current;
+      timing.appliedPoseCount += 1;
+      timing.lastAppliedAtMs = appliedAtMs;
+      if (pose.active) {
+        timing.activePoseCount += 1;
+        if (timing.lastActiveAppliedAtMs !== null) {
+          const intervalMs = appliedAtMs - timing.lastActiveAppliedAtMs;
+          timing.minimumActiveApplyIntervalMs =
+            timing.minimumActiveApplyIntervalMs === null
+              ? intervalMs
+              : Math.min(timing.minimumActiveApplyIntervalMs, intervalMs);
+        }
+        timing.lastActiveAppliedAtMs = appliedAtMs;
+      } else {
+        timing.restPoseCount += 1;
+      }
     },
-    [elapsedSecondsRef, poseRef],
+    [poseRef, timingRef],
   );
 
   useEffect(() => {
@@ -115,16 +181,36 @@ function DroneModel({
   }, [model]);
 
   useEffect(() => {
-    if (settleImmediately) applyPose(resolveDroneAmbientPose(0), 0);
-  }, [applyPose, settleImmediately]);
+    if (settleImmediately) {
+      applyPose(resolveDroneAmbientPose(0), performance.now());
+      appliedPhaseRef.current = "rest";
+      appliedCycleRef.current = readDroneCycleClock(clockRef.current).cycleCount;
+    }
+  }, [applyPose, clockRef, settleImmediately]);
 
   useFrame(() => {
     if (!animated) return;
-    const elapsedSeconds = Math.min(
-      (performance.now() - cycleStartedAtRef.current) / 1_000,
-      OBSERVATORY_DRONE_TECHNICAL_ART.motion.activeSeconds,
-    );
-    applyPose(resolveDroneAmbientPose(elapsedSeconds), elapsedSeconds);
+    const nowMs = performance.now();
+    const { elapsedSeconds, cycleCount } = readDroneCycleClock(clockRef.current, nowMs);
+    const { activeSeconds } = OBSERVATORY_DRONE_TECHNICAL_ART.motion;
+    const minimumIntervalMs = 1_000 / OBSERVATORY_DRONE_TECHNICAL_ART.maximumAnimatedFps;
+
+    if (elapsedSeconds >= activeSeconds) {
+      if (appliedPhaseRef.current !== "rest" || appliedCycleRef.current !== cycleCount) {
+        applyPose(resolveDroneAmbientPose(activeSeconds), nowMs);
+        appliedPhaseRef.current = "rest";
+        appliedCycleRef.current = cycleCount;
+      }
+      return;
+    }
+
+    if (activeSeconds - elapsedSeconds < minimumIntervalMs / 1_000) return;
+    const lastAppliedAtMs = timingRef.current.lastAppliedAtMs;
+    if (lastAppliedAtMs !== null && nowMs - lastAppliedAtMs < minimumIntervalMs) return;
+
+    applyPose(resolveDroneAmbientPose(elapsedSeconds), nowMs);
+    appliedPhaseRef.current = "active";
+    appliedCycleRef.current = cycleCount;
   });
 
   return (
@@ -142,12 +228,25 @@ export function ObservatoryDrone({ onDiagnosticsReady }: ObservatoryDroneProps =
   const scene = useObservatorySceneSnapshot();
   const store = useObservatorySceneStore();
   const motionMode = resolveSceneMotionMode(scene);
+  const droneMotionMode = scene.motion.preference === "reduce" ? "reduced" : motionMode;
   const compactViewport =
     scene.capabilities.viewport.width > 0 && scene.capabilities.viewport.width < 768;
-  const presentation = resolveDronePresentation(scene.quality.tier, motionMode, compactViewport);
+  const presentation = resolveDronePresentation(
+    scene.quality.tier,
+    droneMotionMode,
+    compactViewport,
+  );
   const presentationRef = useRef<DronePresentation>(presentation);
-  const elapsedSecondsRef = useRef(0);
   const poseRef = useRef<DroneAmbientPose>(resolveDroneAmbientPose(0));
+  const timingRef = useRef<DroneRuntimeTimingState>({
+    appliedPoseCount: 0,
+    activePoseCount: 0,
+    restPoseCount: 0,
+    lastAppliedAtMs: null,
+    minimumActiveApplyIntervalMs: null,
+    lastActiveAppliedAtMs: null,
+  });
+  const clockRef = useSparseDroneInvalidation(presentation.animated);
   const selected = scene.selection.artifactId === "drone";
 
   useEffect(() => {
@@ -160,13 +259,21 @@ export function ObservatoryDrone({ onDiagnosticsReady }: ObservatoryDroneProps =
       capture: () =>
         captureDroneDiagnostics({
           presentation: presentationRef.current,
-          elapsedSeconds: elapsedSecondsRef.current,
+          elapsedSeconds: readDroneCycleClock(clockRef.current).elapsedSeconds,
           pose: poseRef.current,
+          timing: {
+            appliedPoseCount: timingRef.current.appliedPoseCount,
+            activePoseCount: timingRef.current.activePoseCount,
+            restPoseCount: timingRef.current.restPoseCount,
+            cycleCount: readDroneCycleClock(clockRef.current).cycleCount,
+            lastAppliedAtMs: timingRef.current.lastAppliedAtMs,
+            minimumActiveApplyIntervalMs: timingRef.current.minimumActiveApplyIntervalMs,
+          },
         }),
     };
     onDiagnosticsReady(diagnostics);
     return () => onDiagnosticsReady(null);
-  }, [onDiagnosticsReady]);
+  }, [clockRef, onDiagnosticsReady]);
 
   if (presentation.tier === "poster") return null;
 
@@ -182,6 +289,7 @@ export function ObservatoryDrone({ onDiagnosticsReady }: ObservatoryDroneProps =
       rotation={[...OBSERVATORY_DRONE_TECHNICAL_ART.rotationRadians]}
       onClick={selectDrone}
       userData={{
+        interactionNodeName: OBSERVATORY_DRONE_TECHNICAL_ART.interactionNodeName,
         interactionTargetId: OBSERVATORY_DRONE_TECHNICAL_ART.interactionTargetId,
         accessibleLabel: OBSERVATORY_DRONE_TECHNICAL_ART.accessibleLabel,
         href: OBSERVATORY_DRONE_TECHNICAL_ART.href,
@@ -192,12 +300,24 @@ export function ObservatoryDrone({ onDiagnosticsReady }: ObservatoryDroneProps =
         visibilityPauseOwner: "ObservatoryCapabilityController",
       }}
     >
+      <mesh
+        name={OBSERVATORY_DRONE_TECHNICAL_ART.interactionNodeName}
+        visible={false}
+        userData={{
+          interactionTargetId: OBSERVATORY_DRONE_TECHNICAL_ART.interactionTargetId,
+          accessibleLabel: OBSERVATORY_DRONE_TECHNICAL_ART.accessibleLabel,
+          dimensionsMeters: [...OBSERVATORY_DRONE_TECHNICAL_ART.interactionDimensionsMeters],
+        }}
+      >
+        <boxGeometry args={[...OBSERVATORY_DRONE_TECHNICAL_ART.interactionDimensionsMeters]} />
+      </mesh>
       <DroneModel
         tier={presentation.tier}
         animated={presentation.animated}
         settleImmediately={presentation.settleImmediately}
-        elapsedSecondsRef={elapsedSecondsRef}
+        clockRef={clockRef}
         poseRef={poseRef}
+        timingRef={timingRef}
       />
     </group>
   );

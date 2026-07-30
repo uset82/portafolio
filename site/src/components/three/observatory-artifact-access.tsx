@@ -57,6 +57,9 @@ export function ObservatoryArtifactAccess({
           className="observatory-artifact-access__focus"
           type="button"
           aria-pressed={selected}
+          aria-label={
+            selected ? `Return ${artifact.title} to overview` : `Focus ${artifact.title} instrument`
+          }
           aria-describedby={descriptionId}
           onClick={() =>
             store.dispatch(

@@ -1,5 +1,7 @@
 import { Box3, Vector3, type AnimationClip, type Object3D } from "three";
 
+import { naturalPalette } from "@/styles/palette";
+
 import { getObservatoryAsset } from "./asset-registry";
 import type { SceneQualityTier } from "./scene-config";
 import type { SceneMotionMode } from "./scene-state";
@@ -12,7 +14,7 @@ const yAxis = new Vector3(0, 1, 0);
 export const OBSERVATORY_ROBOT_TECHNICAL_ART = {
   visualThesis:
     "An off-white ceramic mechanical guide kneels at the basin as the calm focal bridge between human curiosity and the Observatory systems.",
-  assetStrategy: "rights-cleared-imported-gltf-required",
+  assetStrategy: "runtime-authored-procedural-rights-safe",
   worldBasis: {
     handedness: "right-handed",
     units: "meters",
@@ -41,6 +43,77 @@ export const OBSERVATORY_ROBOT_TECHNICAL_ART = {
     maximumGlbMb: 2.5,
     shadowCasters: 0,
     postPasses: 0,
+  },
+  /**
+   * Rights-safe runtime-authored focal guide. Task 1.27 rejected Hunyuan for
+   * worldwide portfolio use, so this follows the same approved provider-neutral
+   * procedural route as every other Observatory artifact. It satisfies the
+   * identical node/clip/bounds runtime contract as an imported model. Carlos
+   * approved activating it as the U.17 rights-safe fallback on 2026-07-26; a
+   * future sculpted rights-cleared GLB can replace it through the still-tested
+   * model loading path without contract changes.
+   */
+  proceduralCandidate: {
+    assetStrategy: "runtime-authored-procedural-reference-informed-candidate",
+    fidelityClaim: "stylized-approximation-only",
+    interactionTargetId: robotAsset.interaction!.targetId,
+    accessibleLabel: robotAsset.interaction!.accessibleLabel,
+    interactionAnchorMeters: [0, 0.92, -0.18] as Vector3Tuple,
+    motion: {
+      idleCycleSeconds: 12,
+      headAcknowledgementSeconds: 1.6,
+      waterContactSeconds: 2.6,
+      maximumHeadYawRadians: (18 * Math.PI) / 180,
+      maximumHeadPitchRadians: (10 * Math.PI) / 180,
+      maximumIdleCorrectionRadians: (1.5 * Math.PI) / 180,
+      maximumBreathScaleRatio: 0.008,
+    },
+    colors: {
+      ceramic: naturalPalette.offWhite,
+      ceramicShadow: naturalPalette.stone,
+      armature: naturalPalette.deepWood,
+      detail: naturalPalette.walnut,
+    },
+    tiers: {
+      full: {
+        maximumTriangles: robotAsset.lods[0]!.maxTriangles,
+        maximumDrawCalls: 34,
+        materials: 4,
+        textures: 0,
+        renderTargets: 0,
+        postPasses: 0,
+        shadowCasters: 0,
+        shellSegments: 24,
+        limbSegments: 12,
+        contactFingers: 4,
+        fasteners: 8,
+      },
+      reduced: {
+        maximumTriangles: robotAsset.lods[2]!.maxTriangles,
+        maximumDrawCalls: 32,
+        materials: 4,
+        textures: 0,
+        renderTargets: 0,
+        postPasses: 0,
+        shadowCasters: 0,
+        shellSegments: 14,
+        limbSegments: 8,
+        contactFingers: 3,
+        fasteners: 4,
+      },
+    },
+    prohibitedDetails: [
+      "human-skin",
+      "projected-face",
+      "weapon",
+      "wings",
+      "extra-limbs",
+      "aggressive-military-silhouette",
+      "glossy-consumer-electronics-finish",
+      "purposeless-exposed-cables",
+      "blue-emission",
+      "neon-trails",
+    ],
   },
 } as const;
 

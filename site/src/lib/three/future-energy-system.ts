@@ -125,6 +125,7 @@ export const OBSERVATORY_FUTURE_ENERGY_TECHNICAL_ART = {
   dimensionsMeters: futureEnergyAsset.scaleMeters,
   positionMeters: [0.2, 0.02, -2.8] as Vector3Tuple,
   rotationRadians: [0, -0.04, 0] as Vector3Tuple,
+  interactionNodeName: "FutureEnergyInteraction",
   interactionTargetId: futureEnergyAsset.interaction!.targetId,
   accessibleLabel: futureEnergyAsset.interaction!.accessibleLabel,
   href: futureEnergyAsset.interaction!.href!,

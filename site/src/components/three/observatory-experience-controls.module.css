@@ -273,6 +273,7 @@
     z-index: var(--z-content);
     top: auto;
     right: auto;
+    align-self: start;
     order: 2;
     width: 100%;
     padding: 0 var(--page-gutter) 1rem;

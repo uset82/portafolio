@@ -79,6 +79,7 @@ export const OBSERVATORY_ELECTRONICS_AI_TECHNICAL_ART = {
   dimensionsMeters: electronicsAsset.scaleMeters,
   positionMeters: [-3.6, 0.02, -0.8] as Vector3Tuple,
   rotationRadians: [0, 0.08, 0] as Vector3Tuple,
+  interactionNodeName: "ElectronicsInteraction",
   interactionTargetId: electronicsAsset.interaction!.targetId,
   accessibleLabel: electronicsAsset.interaction!.accessibleLabel,
   href: electronicsAsset.interaction!.href!,

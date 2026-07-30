@@ -43,6 +43,14 @@ test("Future Energy declares two independent closed circuits within its natural-
   assert.equal(asset.kind, "procedural");
   assert.equal(asset.status, "specified");
   assert.deepEqual(OBSERVATORY_FUTURE_ENERGY_TECHNICAL_ART.dimensionsMeters, asset.scaleMeters);
+  assert.equal(
+    OBSERVATORY_FUTURE_ENERGY_TECHNICAL_ART.interactionNodeName,
+    "FutureEnergyInteraction",
+  );
+  assert.equal(
+    asset.nodes.includes(OBSERVATORY_FUTURE_ENERGY_TECHNICAL_ART.interactionNodeName),
+    true,
+  );
   assert.equal(circuits.count, 2);
   assert.equal(circuits.independent, true);
   assert.equal(circuits.sharedStackSeparatePorts, true);
@@ -57,9 +65,16 @@ test("Future Energy declares two independent closed circuits within its natural-
   assert.equal(new Set(FLOW_BATTERY_CIRCUITS.map((circuit) => circuit.reservoirNode)).size, 2);
   assert.equal(new Set(FLOW_BATTERY_CIRCUITS.map((circuit) => circuit.pumpNode)).size, 2);
   assert.equal(new Set(FLOW_BATTERY_CIRCUITS.map((circuit) => circuit.stackPortNode)).size, 2);
+  for (const circuit of FLOW_BATTERY_CIRCUITS) {
+    assert.equal(asset.nodes.includes(circuit.reservoirNode), true);
+    assert.equal(asset.nodes.includes(circuit.pumpNode), true);
+    assert.equal(asset.nodes.includes(circuit.stackPortNode), true);
+  }
   assert.equal(tiers.full.maximumTriangles <= asset.lods[0]!.maxTriangles, true);
   assert.equal(tiers.reduced.maximumTriangles <= asset.lods[1]!.maxTriangles, true);
   assert.equal(tiers.full.maximumDrawCalls <= 22, true);
+  assert.equal(tiers.reduced.maximumDrawCalls, 17);
+  assert.equal(OBSERVATORY_FUTURE_ENERGY_TECHNICAL_ART.maximumAnimatedFps <= 24, true);
   assert.equal(tiers.full.materials, 5);
   assert.equal(tiers.full.textures, 0);
   assert.equal(tiers.full.renderTargets, 0);
@@ -203,6 +218,14 @@ test("Electronics and AI remains a protected non-functioning concept with a non-
   assert.equal(asset.kind, "procedural");
   assert.equal(asset.status, "specified");
   assert.deepEqual(OBSERVATORY_ELECTRONICS_AI_TECHNICAL_ART.dimensionsMeters, asset.scaleMeters);
+  assert.equal(
+    OBSERVATORY_ELECTRONICS_AI_TECHNICAL_ART.interactionNodeName,
+    "ElectronicsInteraction",
+  );
+  assert.equal(
+    asset.nodes.includes(OBSERVATORY_ELECTRONICS_AI_TECHNICAL_ART.interactionNodeName),
+    true,
+  );
   assert.equal(ELECTRONICS_AI_MODULE_CONTRACT.functioningHardwareClaim, false);
   assert.equal(ELECTRONICS_AI_MODULE_CONTRACT.aiInferenceClaim, false);
   assert.equal(ELECTRONICS_AI_MODULE_CONTRACT.liveDataClaim, false);
@@ -217,6 +240,8 @@ test("Electronics and AI remains a protected non-functioning concept with a non-
   assert.equal(tiers.full.maximumTriangles <= asset.lods[0]!.maxTriangles, true);
   assert.equal(tiers.reduced.maximumTriangles <= asset.lods[1]!.maxTriangles, true);
   assert.equal(tiers.full.maximumDrawCalls <= 20, true);
+  assert.equal(tiers.reduced.maximumDrawCalls <= 15, true);
+  assert.equal(OBSERVATORY_ELECTRONICS_AI_TECHNICAL_ART.maximumAnimatedFps <= 24, true);
   assert.equal(tiers.full.materials, 5);
   assert.equal(tiers.full.textures, 0);
   assert.deepEqual(resolveElectronicsAiPresentation("full", "full", true), {
@@ -361,13 +386,14 @@ test("both Laboratory artifacts retain truthful links and complete DOM equivalen
   assert.match(markup, /data-artifact-id="future-energy"/);
   assert.match(markup, /href="\/work\/future-energy"/);
   assert.match(markup, /Open Future Energy — Adaptive flow systems/);
+  assert.match(markup, /aria-label="Focus Future Energy instrument"/);
   assert.match(markup, /Two independent closed liquid circuits/);
   assert.match(markup, /data-artifact-id="electronics-ai"/);
   assert.match(markup, /data-artifact-id="electronics-ai" data-selected="true"/);
   assert.match(markup, /href="\/laboratory"/);
   assert.match(markup, /Open Electronics \/ AI — Protected modular concept/);
   assert.match(markup, /no functioning AI hardware is claimed/);
-  assert.match(markup, /Return to overview/);
+  assert.match(markup, /aria-label="Return Electronics \/ AI to overview"/);
 });
 
 test("the scene owns one bounded procedural instance of each Laboratory artifact", () => {
@@ -382,14 +408,33 @@ test("the scene owns one bounded procedural instance of each Laboratory artifact
   assert.match(futureSource, /InstancedMesh/);
   assert.match(futureSource, /FutureEnergySageReservoir/);
   assert.match(futureSource, /FutureEnergyTeaReservoir/);
+  assert.match(futureSource, /name=\{circuit\.stackPortNode\}/);
+  assert.match(futureSource, /includesStackPortInstances: true/);
+  assert.match(futureSource, /FutureEnergySagePumpCue/);
+  assert.match(futureSource, /FutureEnergyTeaPumpCue/);
   assert.match(futureSource, /useFrame/);
   assert.match(futureSource, /window\.setInterval/);
   assert.match(futureSource, /window\.setTimeout/);
+  assert.match(futureSource, /settleTransition/);
+  assert.match(futureSource, /progressRef\.current = targetProgressRef\.current/);
   assert.match(futureSource, /onClick=\{selectFutureEnergy\}/);
+  assert.match(
+    futureSource,
+    /name=\{OBSERVATORY_FUTURE_ENERGY_TECHNICAL_ART\.interactionNodeName\}[\s\S]*visible=\{false\}[\s\S]*<boxGeometry args=\{\[2\.7, 2\.5, 1\.8\]\}/,
+  );
+  assert.doesNotMatch(futureSource, /const initialPose/);
   assert.match(electronicsSource, /InstancedMesh/);
   assert.match(electronicsSource, /ElectronicsProtectiveGrille/);
+  assert.match(electronicsSource, /name="ElectronicsIndicators"/);
   assert.match(electronicsSource, /ElectronicsBlankStatusWindow/);
+  assert.match(electronicsSource, /settleTransition/);
+  assert.match(electronicsSource, /progressRef\.current = targetProgressRef\.current/);
   assert.match(electronicsSource, /onClick=\{selectElectronicsAi\}/);
+  assert.match(
+    electronicsSource,
+    /name=\{OBSERVATORY_ELECTRONICS_AI_TECHNICAL_ART\.interactionNodeName\}[\s\S]*visible=\{false\}[\s\S]*<boxGeometry args=\{\[2\.4, 1\.4, 1\.5\]\}/,
+  );
+  assert.doesNotMatch(electronicsSource, /const initialPose/);
   assert.doesNotMatch(
     futureSource + electronicsSource,
     /useState|TextGeometry|troika|CanvasTexture|VideoTexture|shaderMaterial|emissive=/,
@@ -398,8 +443,12 @@ test("the scene owns one bounded procedural instance of each Laboratory artifact
   assert.equal((shellSource.match(/<ObservatoryElectronicsAi/g) ?? []).length, 1);
   assert.match(shellSource, /onFutureEnergyDiagnosticsReady/);
   assert.match(shellSource, /onElectronicsAiDiagnosticsReady/);
-  assert.match(pageSource, /artifactId: "electronics-ai"/);
-  assert.match(pageSource, /projectArtifacts\[2\]!/);
+  assert.match(pageSource, /siteContent\.laboratoryConcepts/);
+  assert.match(pageSource, /artifactId: concept\.artifactId/);
+  assert.doesNotMatch(
+    pageSource,
+    /artifactId: "electronics-ai"[\s\S]{0,300}status: projectArtifacts\[2\]!\.status/,
+  );
   assert.match(
     styles,
     /\.observatory-artifact-access\[data-artifact-id="future-energy"\][\s\S]*top:/,
@@ -407,6 +456,18 @@ test("the scene owns one bounded procedural instance of each Laboratory artifact
   assert.match(
     styles,
     /\.observatory-artifact-access\[data-artifact-id="electronics-ai"\][\s\S]*top:/,
+  );
+  assert.match(
+    styles,
+    /\.observatory-artifact-access\[data-artifact-id="future-energy"\]\[data-selected="true"\][\s\S]*left:\s*clamp/,
+  );
+  assert.match(
+    styles,
+    /\.observatory-artifact-access\[data-artifact-id="electronics-ai"\]\[data-selected="true"\][\s\S]*right:\s*clamp/,
+  );
+  assert.match(
+    styles,
+    /observatory-canvas-layer\[aria-hidden="false"\][\s\S]*data-selected="false"[\s\S]*visibility:\s*hidden/,
   );
   assert.match(
     styles,

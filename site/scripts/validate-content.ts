@@ -77,6 +77,8 @@ const localMediaClearanceRegisterPath = resolve(
 const localMediaClearanceRegisterInput: unknown = JSON.parse(
   readFileSync(localMediaClearanceRegisterPath, "utf8"),
 );
+const thirdPartyNoticesPath = resolve(process.cwd(), "THIRD_PARTY_NOTICES.md");
+const thirdPartyNoticesInput = readFileSync(thirdPartyNoticesPath, "utf8");
 const unresolvedContentBlockerLedgerPath = resolve(
   process.cwd(),
   "../docs/content/unresolved-content-blockers.json",
@@ -316,12 +318,13 @@ if (!assetLicensingRegisterResult.success) {
   const assetIds = new Set(assetLicensingRegisterResult.data.assets.map((asset) => asset.id));
   const requiredAssetIds = [
     "runtime-observatory-poster",
-    "nextjs-starter-favicon",
+    "runtime-brand-mark",
+    "runtime-robot-sequence",
+    "brand-favicon",
     "cormorant-garamond-font",
     "manrope-font",
     "threejs-decoder-bundle",
     "repository-authored-visual-runtime",
-    "repository-authored-cc-mark",
   ];
   requiredAssetIds.forEach((assetId) => {
     if (!assetIds.has(assetId)) {
@@ -332,7 +335,12 @@ if (!assetLicensingRegisterResult.success) {
   const recordedPaths = assetLicensingRegisterResult.data.assets.flatMap((asset) => asset.paths);
   const requiredRuntimePaths = [
     "site/public/images/observatory-poster.png",
+    "site/public/images/brand/ca2m-mark.png",
+    "site/public/images/robot-water-poster.jpg",
+    "site/public/videos/robot-water-sequence.mp4",
     "site/src/app/favicon.ico",
+    "site/src/app/icon.png",
+    "site/src/app/apple-icon.png",
     "site/public/three/decoders/",
   ];
   requiredRuntimePaths.forEach((runtimePath) => {
@@ -369,8 +377,20 @@ const sha256 = (path: string) =>
 const posterPath = resolve(process.cwd(), "public/images/observatory-poster.png");
 const posterReferencePath = resolve(process.cwd(), "../docs/design/reference/mainUI-approved.png");
 const faviconPath = resolve(process.cwd(), "src/app/favicon.ico");
+const iconPath = resolve(process.cwd(), "src/app/icon.png");
+const appleIconPath = resolve(process.cwd(), "src/app/apple-icon.png");
+const brandMarkPath = resolve(process.cwd(), "public/images/brand/ca2m-mark.png");
+const robotSequencePath = resolve(process.cwd(), "public/videos/robot-water-sequence.mp4");
+const robotSequencePosterPath = resolve(process.cwd(), "public/images/robot-water-poster.jpg");
 const expectedPosterHash = "B4E11D325297CEB8FFB021866FFA2903B316D5D2443DEF67BA890B4B3F3058BF";
-const expectedFaviconHash = "2B8AD2D33455A8F736FC3A8EBF8F0BDEA8848AD4C0DB48A2833BD0F9CD775932";
+const expectedFaviconHash = "18EF4F7EBAED6AA17C20B60FC50741B4D5B3A0192751C7A45F44EE8050A7DFEB";
+const expectedIconHash = "9EDFDC54D45F7A04E192B5C9D7617A240B47E135C3D7D0606E6F03E09BD6CE39";
+const expectedAppleIconHash = "5A97A32A60279091209CC0BD521C2F5565CA719CDA56B9600A41A96554308D3B";
+const expectedBrandMarkHash = "EAB3D2852173332C19AF8F76B6F9EBF0DD9B3D1416D17C9DB6C67623EA9553C2";
+const expectedRobotSequenceHash =
+  "6FD6C308C0C49F67C8822E4E1D2D5F23A7F9AF06E55667238CC402585454BAB2";
+const expectedRobotSequencePosterHash =
+  "79C1EDCF3A5CD3B28802501BFF6C17CA5E616806D65FBE081A64636A1118E005";
 
 if (
   sha256(posterPath) !== expectedPosterHash ||
@@ -379,7 +399,19 @@ if (
   failures.push("assetLicensingRegister.runtime-observatory-poster: hash mismatch");
 }
 if (sha256(faviconPath) !== expectedFaviconHash) {
-  failures.push("assetLicensingRegister.nextjs-starter-favicon: hash mismatch");
+  failures.push("assetLicensingRegister.brand-favicon: hash mismatch");
+}
+if (sha256(iconPath) !== expectedIconHash || sha256(appleIconPath) !== expectedAppleIconHash) {
+  failures.push("assetLicensingRegister.brand-app-icons: hash mismatch");
+}
+if (sha256(brandMarkPath) !== expectedBrandMarkHash) {
+  failures.push("assetLicensingRegister.runtime-brand-mark: hash mismatch");
+}
+if (
+  sha256(robotSequencePath) !== expectedRobotSequenceHash ||
+  sha256(robotSequencePosterPath) !== expectedRobotSequencePosterHash
+) {
+  failures.push("assetLicensingRegister.runtime-robot-sequence: hash mismatch");
 }
 
 if (!localMediaClearanceRegisterResult.success) {
@@ -445,6 +477,18 @@ const requiredLicensePaths = [
 requiredLicensePaths.forEach((licensePath) => {
   if (!existsSync(resolve(process.cwd(), licensePath))) {
     failures.push(`assetLicensingRegister.licenses: missing site/${licensePath}`);
+  }
+});
+
+const requiredNoticeStatements = [
+  "approved for public production display on 2026-07-25",
+  "approved for public display on 2026-07-27",
+  "approved for silent looping homepage playback on 2026-07-27",
+  "No project screenshots, launch music, external embeds, raw local GLB, HDR environment, or other unapproved local media is included in the runtime.",
+];
+requiredNoticeStatements.forEach((statement) => {
+  if (!thirdPartyNoticesInput.includes(statement)) {
+    failures.push(`assetLicensingRegister.notices: missing current launch boundary "${statement}"`);
   }
 });
 
@@ -703,6 +747,19 @@ if (assetLicensingRegisterResult.success) {
       ),
     }).success,
   });
+
+  negativeContracts.push({
+    name: "a noncritical launch asset left on hold in a ready register",
+    passed: !assetLicensingRegisterSchema.safeParse({
+      ...assetLicensingRegisterResult.data,
+      releaseDecision: "ready",
+      assets: assetLicensingRegisterResult.data.assets.map((asset) =>
+        asset.id === "runtime-brand-mark"
+          ? { ...asset, decision: "hold", launchCritical: false }
+          : asset,
+      ),
+    }).success,
+  });
 }
 
 if (localMediaClearanceRegisterResult.success) {
@@ -710,6 +767,7 @@ if (localMediaClearanceRegisterResult.success) {
     name: "a held local-media asset marked for inclusion before runtime approval",
     passed: !localMediaClearanceRegisterSchema.safeParse({
       ...localMediaClearanceRegisterResult.data,
+      status: "ownership-recorded-runtime-hold",
       assets: localMediaClearanceRegisterResult.data.assets.map((asset, index) =>
         index === 0 ? { ...asset, decision: "include" } : asset,
       ),

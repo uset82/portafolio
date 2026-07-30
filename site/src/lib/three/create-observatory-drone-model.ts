@@ -17,7 +17,10 @@ import {
   type Material,
 } from "three";
 
-import { OBSERVATORY_DRONE_TECHNICAL_ART } from "./drone-system";
+import {
+  OBSERVATORY_DRONE_COLLISION_SPHERES,
+  OBSERVATORY_DRONE_TECHNICAL_ART,
+} from "./drone-system";
 
 type DroneModelTier = "full" | "reduced";
 
@@ -260,7 +263,7 @@ export function createObservatoryDroneModel(tier: DroneModelTier): ObservatoryDr
   geometries.add(socketGeometry);
 
   const guardGeometry = new TorusGeometry(
-    0.235,
+    0.232,
     0.018,
     reduced ? 6 : 8,
     technicalTier.guardSegments,
@@ -297,7 +300,7 @@ export function createObservatoryDroneModel(tier: DroneModelTier): ObservatoryDr
       animationRole: "rotor",
       axis: [0, 1, 0],
       socketId: `rotor-motor-${index + 1}`,
-      guardRadiusMeters: 0.235,
+      guardRadiusMeters: 0.25,
     };
     const paddles = new Mesh(rotorGeometry, joint);
     paddles.name = `DroneProtectedRotorPaddles${index + 1}`;
@@ -309,7 +312,7 @@ export function createObservatoryDroneModel(tier: DroneModelTier): ObservatoryDr
 
   const gimbalPivot = new Group();
   gimbalPivot.name = "DroneCameraGimbal";
-  gimbalPivot.position.set(0, -0.17, -0.22);
+  gimbalPivot.position.set(0, -0.129, -0.22);
   gimbalPivot.userData = {
     animationRole: "camera-gimbal",
     axis: [1, 0, 0],
@@ -350,25 +353,20 @@ export function createObservatoryDroneModel(tier: DroneModelTier): ObservatoryDr
 
   const collisionProxy = new Object3D();
   collisionProxy.name = "DroneCollisionProxy";
+  const [bodySphere, ...rotorSpheres] = OBSERVATORY_DRONE_COLLISION_SPHERES;
   collisionProxy.userData = {
     colliderType: "compound-spheres",
-    bodySphere: { center: [0, -0.01, 0], radius: 0.38 },
-    rotorSpheres: ROTOR_POSITIONS.map(([x, , z]) => ({
-      center: [x, 0.03, z],
-      radius: 0.245,
+    bodySphere: {
+      center: [...bodySphere.center],
+      radius: bodySphere.radiusMeters,
+    },
+    rotorSpheres: rotorSpheres.map((sphere) => ({
+      center: [...sphere.center],
+      radius: sphere.radiusMeters,
     })),
     isTrigger: false,
   };
   root.add(collisionProxy);
-
-  const interaction = new Object3D();
-  interaction.name = "DroneInteraction";
-  interaction.userData = {
-    interactionTargetId: OBSERVATORY_DRONE_TECHNICAL_ART.interactionTargetId,
-    accessibleLabel: OBSERVATORY_DRONE_TECHNICAL_ART.accessibleLabel,
-    href: OBSERVATORY_DRONE_TECHNICAL_ART.href,
-  };
-  root.add(interaction);
 
   root.userData = {
     actionReady: true,

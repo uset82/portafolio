@@ -1,6 +1,19 @@
 import type { SDKOptions } from "@openrouter/sdk";
 
-export const OPENROUTER_APP_TITLE = "Carlos Carpio — CC AI";
+/* Sent verbatim as OpenRouter's X-Title HTTP header. HTTP header values are
+ * ByteStrings, so any character above U+00FF makes the request throw before it
+ * is sent — an em dash here failed every CC AI call as "provider unavailable".
+ * Keep this ASCII; `assertHeaderSafe` enforces it. */
+export const OPENROUTER_APP_TITLE = "Carlos Carpio - CC AI";
+
+const assertHeaderSafe = (value: string, variableName: string) => {
+  if (!/^[ -~]*$/.test(value)) {
+    throw new OpenRouterConfigurationError(
+      `${variableName} must contain only printable ASCII; HTTP header values cannot carry it otherwise.`,
+    );
+  }
+  return value;
+};
 
 export type OpenRouterEnvironment = {
   OPENROUTER_API_KEY?: string;
@@ -43,10 +56,9 @@ export function buildOpenRouterOptions(environment: OpenRouterEnvironment): SDKO
   }
 
   const httpReferer = getPublicOrigin(environment.NEXT_PUBLIC_SITE_URL);
+  const appTitle = assertHeaderSafe(OPENROUTER_APP_TITLE, "OPENROUTER_APP_TITLE");
 
-  return httpReferer
-    ? { apiKey, appTitle: OPENROUTER_APP_TITLE, httpReferer }
-    : { apiKey, appTitle: OPENROUTER_APP_TITLE };
+  return httpReferer ? { apiKey, appTitle, httpReferer } : { apiKey, appTitle };
 }
 
 export function instantiateOpenRouterClient<TClient>(

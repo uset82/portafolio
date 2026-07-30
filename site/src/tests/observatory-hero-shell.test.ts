@@ -29,7 +29,7 @@ test("the homepage owns one complete semantic Observatory layer stack", () => {
     layerOrder,
     [...layerOrder].sort((left, right) => left - right),
   );
-  assert.equal((home.match(/\/images\/observatory-poster\.png/g) ?? []).length, 1);
+  assert.equal((home.match(/\/images\/robot-water-poster\.jpg/g) ?? []).length, 1);
   assert.match(home, /<h1 id="hero-title">\{metadata\.headline\}<\/h1>/);
   assert.equal((home.match(/<ActionLink/g) ?? []).length >= 2, true);
   assert.match(home, /selectedSystems\.map/);

@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useThree } from "@react-three/fiber";
 import type { GLTF } from "three/addons/loaders/GLTFLoader.js";
 
+import { getObservatoryAsset } from "@/lib/three/asset-registry";
 import type { ObservatoryAssetId } from "@/lib/three/asset-registry-schema";
 import type { AstraeaDiagnostics } from "@/lib/three/astraea-system";
+import { createObservatoryRobotGltfAsset } from "@/lib/three/create-observatory-robot-model";
 import type { CameraTransitionDiagnostics } from "@/lib/three/camera-transition";
 import type { DroneDiagnostics } from "@/lib/three/drone-system";
 import type { ElectronicsAiDiagnostics } from "@/lib/three/electronics-ai-system";
@@ -27,7 +29,10 @@ import { assertRobotAssetContract, type RobotDiagnostics } from "@/lib/three/rob
 import type { SoundLabDiagnostics } from "@/lib/three/sound-lab-system";
 import type { WaterSurfaceDiagnostics } from "@/lib/three/water-system";
 
-import { useObservatorySceneStore } from "./observatory-scene-provider";
+import {
+  useObservatorySceneSnapshot,
+  useObservatorySceneStore,
+} from "./observatory-scene-provider";
 import { ObservatorySceneShell } from "./observatory-scene-shell";
 
 type IdleWindow = Window &
@@ -65,10 +70,36 @@ export function ObservatoryLiveScene({
 }: ObservatoryLiveSceneProps) {
   const renderer = useThree((state) => state.gl);
   const store = useObservatorySceneStore();
+  const scene = useObservatorySceneSnapshot();
   const loadedAssetsByUrl = useRef(new Map<string, GLTF>());
   const [presentedAssets, setPresentedAssets] = useState<ReadonlyMap<ObservatoryAssetId, GLTF>>(
     () => new Map(),
   );
+  const proceduralRobotTier = scene.quality.tier === "full" ? "full" : "reduced";
+
+  // The approved rights-safe guide is authored at runtime, so it joins the
+  // presented-asset map at render time; the model loading path remains
+  // available for a future sculpted rights-cleared GLB without contract
+  // changes, and a loaded model asset always takes precedence.
+  const proceduralRobot = useMemo(
+    () =>
+      getObservatoryAsset("robot-guide").kind === "procedural"
+        ? createObservatoryRobotGltfAsset(proceduralRobotTier)
+        : null,
+    [proceduralRobotTier],
+  );
+
+  useEffect(() => {
+    if (!proceduralRobot) return;
+    return () => proceduralRobot.dispose();
+  }, [proceduralRobot]);
+
+  const combinedAssets = useMemo(() => {
+    if (!proceduralRobot || presentedAssets.has("robot-guide")) return presentedAssets;
+    const next = new Map(presentedAssets);
+    next.set("robot-guide", proceduralRobot.gltf);
+    return next;
+  }, [presentedAssets, proceduralRobot]);
 
   useEffect(() => {
     const attempts = new Set<GltfLoadingAttempt>();
@@ -197,7 +228,7 @@ export function ObservatoryLiveScene({
 
   return (
     <ObservatorySceneShell
-      loadedAssets={presentedAssets}
+      loadedAssets={combinedAssets}
       {...(onAstraeaDiagnosticsReady ? { onAstraeaDiagnosticsReady } : {})}
       {...(onCameraDiagnosticsReady ? { onCameraDiagnosticsReady } : {})}
       {...(onDroneDiagnosticsReady ? { onDroneDiagnosticsReady } : {})}

@@ -82,7 +82,7 @@ export const CAMERA_VIEWS = {
   },
   astraea: {
     id: "astraea",
-    position: [8.8, 4.2, 6.8],
+    position: [5.2, 4.2, 6],
     target: [6.1, 2.1, -1.2],
     fov: 36,
     near: 0.1,
@@ -91,8 +91,8 @@ export const CAMERA_VIEWS = {
   },
   pinaculo: {
     id: "pinaculo",
-    position: [2.8, 2.2, 7.2],
-    target: [0.8, 0.55, 1.8],
+    position: [5.1, 2.2, 7.1],
+    target: [3.1, 0.55, 1.7],
     fov: 38,
     near: 0.1,
     far: 48,
@@ -118,9 +118,9 @@ export const CAMERA_VIEWS = {
   },
   "electronics-ai": {
     id: "electronics-ai",
-    position: [-4.8, 3.1, 7.4],
-    target: [-3.6, 1.5, -0.8],
-    fov: 36,
+    position: [-1, 2.3, 3.2],
+    target: [-3.6, 0.7, -0.6],
+    fov: 30,
     near: 0.1,
     far: 48,
     durationMs: 700,

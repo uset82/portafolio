@@ -17,9 +17,28 @@ function getFutureEnergyProject(): Extract<Project, { status: "concept" | "prepa
 export const metadata: Metadata = {
   title: "Laboratory",
   description:
-    "A concept-safe register for Carlos Carpio's Future Energy and Electronics / AI Observatory mechanisms, without claims of functioning hardware or live systems.",
+    "A concept-safe register for Carlos Carpio's Future Energy, Electronics / AI, and Aerial systems Observatory mechanisms, without claims of functioning hardware, live systems, or flight performance.",
 };
 
 export default function LaboratoryPage() {
-  return <LaboratoryIndex futureEnergy={getFutureEnergyProject()} />;
+  const electronicsConcept = siteContent.laboratoryConcepts.find(
+    (candidate) => candidate.artifactId === "electronics-ai",
+  );
+  if (!electronicsConcept) {
+    throw new Error("The approved Electronics / AI concept record is required.");
+  }
+  const droneConcept = siteContent.laboratoryConcepts.find(
+    (candidate) => candidate.artifactId === "drone",
+  );
+  if (!droneConcept) {
+    throw new Error("The approved Aerial systems concept record is required.");
+  }
+
+  return (
+    <LaboratoryIndex
+      futureEnergy={getFutureEnergyProject()}
+      electronicsConcept={electronicsConcept}
+      droneConcept={droneConcept}
+    />
+  );
 }

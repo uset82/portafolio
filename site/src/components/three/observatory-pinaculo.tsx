@@ -64,11 +64,16 @@ function usePinaculoMaterials() {
 
 type PinaculoMaterials = ReturnType<typeof usePinaculoMaterials>;
 
-function useBoundedPinaculoInvalidation(animated: boolean, selected: boolean) {
+function useBoundedPinaculoInvalidation(
+  animated: boolean,
+  selected: boolean,
+  shouldTransition: () => boolean,
+  settleTransition: () => void,
+) {
   const invalidate = useThree((state) => state.invalidate);
 
   useEffect(() => {
-    if (!animated) {
+    if (!animated || !shouldTransition()) {
       invalidate();
       return;
     }
@@ -78,15 +83,16 @@ function useBoundedPinaculoInvalidation(animated: boolean, selected: boolean) {
       invalidate,
       1_000 / OBSERVATORY_PINACULO_TECHNICAL_ART.maximumAnimatedFps,
     );
-    const timeoutId = window.setTimeout(
-      () => window.clearInterval(intervalId),
-      OBSERVATORY_PINACULO_TECHNICAL_ART.focusDurationMs,
-    );
+    const timeoutId = window.setTimeout(() => {
+      window.clearInterval(intervalId);
+      settleTransition();
+      invalidate();
+    }, OBSERVATORY_PINACULO_TECHNICAL_ART.focusDurationMs);
     return () => {
       window.clearInterval(intervalId);
       window.clearTimeout(timeoutId);
     };
-  }, [animated, invalidate, selected]);
+  }, [animated, invalidate, selected, settleTransition, shouldTransition]);
 }
 
 function PinaculoMarkerInstances({
@@ -159,10 +165,10 @@ function PinaculoMarkerInstances({
         ref={grooveRef}
         name="PinaculoMasterPatternGrooves"
         args={[undefined, undefined, PINACULO_MASTER_GROOVE_COUNT]}
-        material={materials.espresso}
+        material={materials.buff}
         castShadow={false}
       >
-        <boxGeometry args={[0.05, 0.01, 0.012]} />
+        <boxGeometry args={[0.012, 0.01, 0.05]} />
       </instancedMesh>
     </>
   );
@@ -188,7 +194,6 @@ function PinaculoMechanism({
   const materials = usePinaculoMaterials();
   const carrierRef = useRef<Group>(null);
   const latchRef = useRef<Group>(null);
-  const initialPose = resolvePinaculoMechanismPose(selected ? 1 : 0);
   const tier = reduced
     ? OBSERVATORY_PINACULO_TECHNICAL_ART.tiers.reduced
     : OBSERVATORY_PINACULO_TECHNICAL_ART.tiers.full;
@@ -203,7 +208,16 @@ function PinaculoMechanism({
     [poseRef],
   );
 
-  useBoundedPinaculoInvalidation(animated, selected);
+  const settleTransition = useCallback(() => {
+    progressRef.current = targetProgressRef.current;
+    applyPose(progressRef.current);
+  }, [applyPose, progressRef, targetProgressRef]);
+  const shouldTransition = useCallback(
+    () => progressRef.current !== (selected ? 1 : 0),
+    [progressRef, selected],
+  );
+
+  useBoundedPinaculoInvalidation(animated, selected, shouldTransition, settleTransition);
 
   useEffect(() => {
     targetProgressRef.current = selected ? 1 : 0;
@@ -239,7 +253,15 @@ function PinaculoMechanism({
         </mesh>
       </group>
 
-      <group ref={carrierRef} name="PinaculoRing" rotation={[0, initialPose.carrierRotation, 0]}>
+      <group
+        ref={(carrier) => {
+          carrierRef.current = carrier;
+          if (carrier) {
+            carrier.rotation.y = resolvePinaculoMechanismPose(progressRef.current).carrierRotation;
+          }
+        }}
+        name="PinaculoRing"
+      >
         {Array.from({ length: tier.constructionRingCount }, (_, index) => (
           <mesh
             key={`construction-ring-${index}`}
@@ -262,9 +284,13 @@ function PinaculoMechanism({
       </mesh>
 
       <group
-        ref={latchRef}
+        ref={(latch) => {
+          latchRef.current = latch;
+          if (latch) {
+            latch.position.y = 0.43 + resolvePinaculoMechanismPose(progressRef.current).latchLift;
+          }
+        }}
         name="PinaculoSelectionLatch"
-        position={[0, 0.43 + initialPose.latchLift, 0]}
       >
         <mesh material={materials.clay} position={[0, 0, 0.69]} castShadow={false}>
           <boxGeometry args={[0.11, 0.06, 0.72]} />
@@ -338,6 +364,7 @@ export function ObservatoryPinaculo({ onDiagnosticsReady }: ObservatoryPinaculoP
       rotation={[...OBSERVATORY_PINACULO_TECHNICAL_ART.rotationRadians]}
       onClick={selectPinaculo}
       userData={{
+        interactionNodeName: OBSERVATORY_PINACULO_TECHNICAL_ART.interactionNodeName,
         interactionTargetId: OBSERVATORY_PINACULO_TECHNICAL_ART.interactionTargetId,
         accessibleLabel: OBSERVATORY_PINACULO_TECHNICAL_ART.accessibleLabel,
         href: OBSERVATORY_PINACULO_TECHNICAL_ART.href,
@@ -347,6 +374,17 @@ export function ObservatoryPinaculo({ onDiagnosticsReady }: ObservatoryPinaculoP
         masterReferences: PINACULO_MASTER_PATTERN_STATIONS.map((station) => station.reference),
       }}
     >
+      <mesh
+        name={OBSERVATORY_PINACULO_TECHNICAL_ART.interactionNodeName}
+        position={[0, 0.325, 0]}
+        visible={false}
+        userData={{
+          interactionTargetId: OBSERVATORY_PINACULO_TECHNICAL_ART.interactionTargetId,
+          accessibleLabel: OBSERVATORY_PINACULO_TECHNICAL_ART.accessibleLabel,
+        }}
+      >
+        <boxGeometry args={[2.7, 0.65, 2.7]} />
+      </mesh>
       <PinaculoMechanism
         reduced={presentation.tier === "reduced"}
         selected={selected}

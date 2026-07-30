@@ -14,6 +14,8 @@ import {
 import {
   buildProgressiveLoadPlan,
   describeProgressiveSceneStatus,
+  OBSERVATORY_LIVE_CANVAS_PRESENTATION,
+  type ObservatoryLiveCanvasPresentation,
 } from "@/lib/three/progressive-loading";
 import type { CameraTransitionDiagnostics } from "@/lib/three/camera-transition";
 import type { DroneDiagnostics } from "@/lib/three/drone-system";
@@ -51,6 +53,7 @@ export type ObservatoryProgressiveExperienceProps = {
 export type ObservatoryProgressiveExperienceContentProps = ObservatoryProgressiveExperienceProps & {
   assets?: readonly ObservatoryAsset[];
   createLoadingAttempt?: GltfLoadingAttemptFactory;
+  liveCanvasPresentation?: ObservatoryLiveCanvasPresentation;
   onDiagnosticsReady?: (diagnostics: ThreeRendererDiagnostics | null) => void;
   onObservatoryDiagnosticsReady?: (diagnostics: ObservatoryDiagnostics | null) => void;
   onAstraeaDiagnosticsReady?: (diagnostics: AstraeaDiagnostics | null) => void;
@@ -69,6 +72,7 @@ export function ObservatoryProgressiveExperienceContent({
   poster,
   assets = observatoryAssetRegistry.assets,
   createLoadingAttempt,
+  liveCanvasPresentation,
   onDiagnosticsReady,
   onObservatoryDiagnosticsReady,
   onAstraeaDiagnosticsReady,
@@ -83,11 +87,15 @@ export function ObservatoryProgressiveExperienceContent({
 }: ObservatoryProgressiveExperienceContentProps) {
   const scene = useObservatorySceneSnapshot();
   const plan = useMemo(
-    () => buildProgressiveLoadPlan(assets, scene.quality.tier),
-    [assets, scene.quality.tier],
+    () => buildProgressiveLoadPlan(assets, scene.quality.tier, liveCanvasPresentation),
+    [assets, scene.quality.tier, liveCanvasPresentation],
   );
   const status = describeProgressiveSceneStatus(scene, plan);
   const canvasIsReady = plan.canMountCanvas && scene.loading.lifecycle === "ready";
+  /* While U.20 holds the Canvas poster-authoritative there is no scene
+   * lifecycle to report, so the floating status chip stays unmounted. */
+  const liveCanvasHeld =
+    (liveCanvasPresentation ?? OBSERVATORY_LIVE_CANVAS_PRESENTATION) === "poster-authoritative";
   const focusedArtifact = scene.selection.artifactId
     ? artifacts.find((artifact) => artifact.artifactId === scene.selection.artifactId)
     : null;
@@ -257,13 +265,20 @@ export function ObservatoryProgressiveExperienceContent({
             </LazyThreeCanvas>
           </div>
         ) : null}
-        {artifacts.map((artifact) => (
-          <ObservatoryArtifactAccess
-            key={artifact.artifactId}
-            artifact={artifact}
-            interactive={canvasIsReady}
-          />
-        ))}
+        {/* The artifact overlays are the accessible DOM equivalents of the live
+         * scene's selectable instruments. While U.20 holds the Canvas they
+         * would only be labels stacked over a flat visual, so they stay
+         * unmounted; global navigation and Selected Systems already reach every
+         * destination they expose. */}
+        {liveCanvasHeld
+          ? null
+          : artifacts.map((artifact) => (
+              <ObservatoryArtifactAccess
+                key={artifact.artifactId}
+                artifact={artifact}
+                interactive={canvasIsReady}
+              />
+            ))}
         <span
           className="visually-hidden"
           data-scene-layer="navigation-status"
@@ -276,14 +291,16 @@ export function ObservatoryProgressiveExperienceContent({
               ? `${focusedArtifact.title} requested. The complete poster and destination link remain available while the interactive scene is unavailable.`
               : "Observatory overview."}
         </span>
-        <div
-          className="scene-status"
-          data-scene-layer="status"
-          aria-label="Observatory scene status"
-          aria-live="polite"
-        >
-          <span aria-hidden="true">●</span> {status}
-        </div>
+        {liveCanvasHeld ? null : (
+          <div
+            className="scene-status"
+            data-scene-layer="status"
+            aria-label="Observatory scene status"
+            aria-live="polite"
+          >
+            <span aria-hidden="true">●</span> {status}
+          </div>
+        )}
       </figure>
     </>
   );

@@ -2,9 +2,11 @@ import { CcAiPanel } from "@/components/cc-ai-panel";
 import { HeroReveal, HeroRevealItem, SceneReveal } from "@/components/hero-reveal";
 import { MediaTeaser } from "@/components/media-teaser";
 import { PersonalTeaser } from "@/components/personal-teaser";
+import { ObservatoryHeroVideo } from "@/components/observatory-hero-video";
 import { ProfileTeaser } from "@/components/profile-teaser";
 import { ObservatoryExperienceControls } from "@/components/three/observatory-experience-controls";
 import { ObservatoryProgressiveExperienceContent } from "@/components/three/observatory-progressive-experience";
+import { OBSERVATORY_LIVE_CANVAS_PRESENTATION } from "@/lib/three/progressive-loading";
 import { ObservatorySceneRuntimeProvider } from "@/components/three/observatory-scene-runtime-provider";
 import { ActionLink, EditorialLinkItem, ImageFrame } from "@/components/ui";
 import { selectedSystems, siteContent } from "@/content/site";
@@ -15,6 +17,10 @@ const OBSERVATORY_ARTIFACT_DESCRIPTIONS = {
     "A 24-position ring uses paired one-, two-, and three-groove markers as restrained references to 11, 22, and 33.",
   "future-energy":
     "Two independent closed liquid circuits meet separate sides of one central stack; the focus response is a conceptual diagram, not a performance claim.",
+  "electronics-ai":
+    "Protected modular boards, tactile controls, cable sockets, and a blank mechanical status window identify a concept only; no functioning AI hardware or live inference is claimed.",
+  drone:
+    "A compact protected-rotor camera drone uses one sparse bounded stabilization cycle; it is a visual concept, not a flight-performance or autonomous-operation claim.",
 } as const;
 
 export default function Home() {
@@ -43,24 +49,14 @@ export default function Home() {
         "A central harmonic dial and tactile controls respond to focus; playback remains unavailable until its sources, credits, duration, rights, and notes are approved.",
     },
     projectArtifacts[2]!,
-    {
-      artifactId: "electronics-ai" as const,
-      href: "/laboratory",
-      title: "Electronics / AI",
-      descriptor: "Protected modular concept",
-      status: projectArtifacts[2]!.status,
-      mechanismDescription:
-        "Protected modular boards, tactile controls, cable sockets, and a blank mechanical status window identify a concept only; no functioning AI hardware or live inference is claimed.",
-    },
-    {
-      artifactId: "drone" as const,
-      href: "/laboratory",
-      title: "Aerial systems",
-      descriptor: "Guarded camera-drone concept",
-      status: projectArtifacts[2]!.status,
-      mechanismDescription:
-        "A compact protected-rotor camera drone uses one sparse bounded stabilization cycle; it is a visual concept, not a flight-performance or autonomous-operation claim.",
-    },
+    ...siteContent.laboratoryConcepts.map((concept) => ({
+      artifactId: concept.artifactId,
+      href: concept.href,
+      title: concept.title,
+      descriptor: concept.descriptor,
+      status: concept.status,
+      mechanismDescription: OBSERVATORY_ARTIFACT_DESCRIPTIONS[concept.artifactId],
+    })),
   ];
 
   return (
@@ -72,22 +68,31 @@ export default function Home() {
               artifacts={observatoryArtifacts}
               poster={
                 <>
+                  {/* The hero still is the clip's own first frame, not the
+                   * design mock-up: that mock-up has a chat panel painted into
+                   * the artwork, which read as a second, stale CC AI box behind
+                   * the real one whenever the clip had not taken over yet. */}
                   <ImageFrame
                     className="observatory-media-frame"
                     imageClassName="observatory-poster"
-                    src="/images/observatory-poster.png"
+                    src="/images/robot-water-poster.jpg"
                     alt="A warm sunlit observatory with a ceramic robot touching a sage-colored water basin among instruments for sound, celestial patterns, numerology, electronics, and energy."
                     fill
                     priority
                     sizes="100vw"
                     bleed
                   />
+                  <ObservatoryHeroVideo />
                   <div className="poster-bottom-cover" aria-hidden="true" />
                 </>
               }
             />
           </SceneReveal>
-          <ObservatoryExperienceControls />
+          {/* U.20 holds the live Canvas, so the scene controls stay unmounted
+           * until a composed-hero framing direction is approved. */}
+          {OBSERVATORY_LIVE_CANVAS_PRESENTATION === "approved" ? (
+            <ObservatoryExperienceControls />
+          ) : null}
         </ObservatorySceneRuntimeProvider>
 
         <div className="editorial-field">

@@ -193,11 +193,18 @@ test("CC AI shell and source contracts preserve disclosure, focus, motion, and m
   assert.match(component, /document\.body\.style\.overflow = "hidden"/);
   assert.match(component, /"summary",[\s\S]*"\[tabindex\]:not/);
   assert.doesNotMatch(component, /dangerouslySetInnerHTML/);
-  assert.match(styles, /\.cc-ai-panel[^}]*max-height:\s*68vh/);
+  // Roomy on desktop but still bounded by the viewport so the panel can never
+  // outgrow the screen it floats over.
+  assert.match(styles, /\.cc-ai-panel[^}]*width:\s*min\(40rem,/);
+  assert.match(styles, /\.cc-ai-panel[^}]*max-height:\s*min\(calc\(100svh - 9\.5rem\), 42rem\)/);
   assert.match(
     styles,
-    /@media \(max-width: 47\.99rem\)[\s\S]*?\.cc-ai-panel[^}]*height:\s*min\(78svh, 43rem\)/,
+    /@media \(max-width: 47\.99rem\)[\s\S]*?\.cc-ai-panel[^}]*height:\s*min\(86svh, 48rem\)/,
   );
+  // The assistant carries Carlos's approved monogram, not a typographic stand-in.
+  assert.match(component, /<BrandMark compact \/>/);
+  assert.doesNotMatch(component, /CcMark/);
+  assert.match(styles, /\.brand-mark--compact\s*\{[^}]*width:\s*2\.4rem/);
   assert.match(
     styles,
     /@media \(max-width: 47\.99rem\)[\s\S]*?\.observatory-hero \.cc-ai-trigger\s*\{[^}]*bottom:\s*calc\(var\(--page-gutter\) \+ var\(--control-height\) \+ 1rem\)/,

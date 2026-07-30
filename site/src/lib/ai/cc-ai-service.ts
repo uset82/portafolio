@@ -77,6 +77,30 @@ const publicErrorMessages: Record<CcAiServiceError["code"], string> = {
 
 export const getCcAiPublicErrorMessage = (code: CcAiErrorCode) => publicErrorMessages[code];
 
+const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+/* The system prompt asks for `[source-id]` citations so the model stays anchored
+ * to approved records, but those markers are provenance plumbing, not prose —
+ * and models improvise the delimiters (`[x]`, `【source-id:x】`, `(source: x)`).
+ * Only bracketed groups whose contents resolve to real approved source IDs are
+ * removed, so ordinary brackets in an answer survive untouched. The response
+ * still reports every source separately in `knowledge.sourceIds`. */
+export function stripSourceCitations(text: string, sourceIds: readonly string[]) {
+  if (sourceIds.length === 0) return text;
+
+  const ids = sourceIds.map(escapeRegExp).join("|");
+  const label = `(?:sources?(?:[-_ ]?ids?)?\\s*[:=]?\\s*)?`;
+  const list = `${label}(?:${ids})(?:\\s*[,;、]\\s*${label}(?:${ids}))*`;
+  const citation = new RegExp(`\\s*[[(【〔]\\s*${list}\\s*[\\])】〕]`, "gi");
+
+  return text
+    .replace(citation, "")
+    .replace(/[ \t]{2,}/g, " ")
+    .replace(/[ \t]+([.,;:!?])/g, "$1")
+    .replace(/[ \t]+$/gm, "")
+    .trim();
+}
+
 export async function runCcAiCompletion(
   request: CcAiRequest,
   {
@@ -115,7 +139,12 @@ export async function runCcAiCompletion(
       maxOutputTokens,
       signal: controller.signal,
     });
-    const text = result.text.trim();
+    const sourceIds = knowledgeContext.sources.map((source) => source.id);
+    /* Models cite whichever identifier is nearest in the context, so record IDs
+     * such as `profile-carlos-carpio` appear as often as the source IDs. Both
+     * are plumbing and both get stripped from the prose. */
+    const citableIds = [...new Set([...sourceIds, ...knowledgeContext.entries.map((e) => e.id)])];
+    const text = stripSourceCitations(result.text.trim(), citableIds);
 
     if (!text || !result.model.trim()) {
       throw new CcAiServiceError("invalid_response", publicErrorMessages.invalid_response, true);
@@ -137,7 +166,7 @@ export async function runCcAiCompletion(
       },
       knowledge: {
         records: knowledgeContext.entries.length,
-        sourceIds: knowledgeContext.sources.map((source) => source.id),
+        sourceIds,
         truncated: knowledgeContext.truncated,
       },
     };

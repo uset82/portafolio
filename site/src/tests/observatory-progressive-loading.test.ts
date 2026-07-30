@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
 
-import { observatoryAssetRegistry } from "@/lib/three/asset-registry";
+import { getObservatoryAsset, observatoryAssetRegistry } from "@/lib/three/asset-registry";
 import type { ObservatoryAsset } from "@/lib/three/asset-registry-schema";
 import {
   INITIAL_BROWSER_CAPABILITY_SNAPSHOT,
@@ -13,6 +13,7 @@ import {
   buildProgressiveLoadPlan,
   describeProgressiveSceneStatus,
   findOnDemandEntry,
+  OBSERVATORY_LIVE_CANVAS_PRESENTATION,
 } from "@/lib/three/progressive-loading";
 import { createObservatorySceneStore } from "@/lib/three/scene-state";
 
@@ -23,13 +24,26 @@ function readSource(relativePath: string) {
 }
 
 function loadableAssets() {
-  return observatoryAssetRegistry.assets.map((asset) => ({
-    ...asset,
-    lods: asset.lods.map((lod) => ({
-      ...lod,
-      url: asset.kind === "model" ? `/three/models/${asset.id}-lod-${lod.level}.glb` : null,
-    })),
-  })) as ObservatoryAsset[];
+  // Keeps the imported-model LOD path covered: the robot returns to model kind
+  // with URLs here, exactly as a future sculpted rights-cleared GLB would.
+  return observatoryAssetRegistry.assets.map((asset) => {
+    const kind = asset.id === "robot-guide" ? "model" : asset.kind;
+    return {
+      ...asset,
+      kind,
+      lods: asset.lods.map((lod) => ({
+        ...lod,
+        url: kind === "model" ? `/three/models/${asset.id}-lod-${lod.level}.glb` : null,
+      })),
+    };
+  }) as ObservatoryAsset[];
+}
+
+function rightsGatedAssets() {
+  // A model-kind hero asset with no approved URL must still hold the poster.
+  return observatoryAssetRegistry.assets.map((asset) =>
+    asset.id === "robot-guide" ? { ...asset, kind: "model" } : asset,
+  ) as ObservatoryAsset[];
 }
 
 function supportedStore() {
@@ -52,20 +66,43 @@ function supportedStore() {
   return store;
 }
 
-test("the procedural environment leaves only the rights-gated robot blocking Canvas mounting", () => {
-  const plan = buildProgressiveLoadPlan(observatoryAssetRegistry.assets, "full");
+test("the approved procedural robot unblocks Canvas mounting without any public model URL", () => {
+  const plan = buildProgressiveLoadPlan(observatoryAssetRegistry.assets, "full", "approved");
 
-  assert.equal(plan.canMountCanvas, false);
-  assert.deepEqual(plan.missingHeroCritical, ["robot-guide"]);
+  assert.equal(getObservatoryAsset("robot-guide").kind, "procedural");
+  assert.equal(plan.canMountCanvas, true);
+  assert.deepEqual(plan.missingHeroCritical, []);
   assert.deepEqual(plan.heroCritical, []);
   assert.deepEqual(plan.deferred, []);
   assert.deepEqual(plan.onDemand, []);
+
+  const staticPlan = buildProgressiveLoadPlan(
+    observatoryAssetRegistry.assets,
+    "static",
+    "approved",
+  );
+  assert.equal(staticPlan.canMountCanvas, false);
+});
+
+test("the U.20 poster-authoritative decision holds the public Canvas despite ready assets", () => {
+  assert.equal(OBSERVATORY_LIVE_CANVAS_PRESENTATION, "poster-authoritative");
+
+  const defaultPlan = buildProgressiveLoadPlan(observatoryAssetRegistry.assets, "full");
+  assert.deepEqual(defaultPlan.missingHeroCritical, []);
+  assert.equal(defaultPlan.canMountCanvas, false);
+
+  const heldPlan = buildProgressiveLoadPlan(
+    observatoryAssetRegistry.assets,
+    "full",
+    "poster-authoritative",
+  );
+  assert.equal(heldPlan.canMountCanvas, false);
 });
 
 test("full and reduced plans choose deterministic LODs in priority order", () => {
   const assets = loadableAssets();
-  const full = buildProgressiveLoadPlan(assets, "full");
-  const reduced = buildProgressiveLoadPlan(assets, "reduced");
+  const full = buildProgressiveLoadPlan(assets, "full", "approved");
+  const reduced = buildProgressiveLoadPlan(assets, "reduced", "approved");
 
   assert.equal(full.canMountCanvas, true);
   assert.equal(
@@ -102,10 +139,16 @@ test("scene status remains truthful from capability check through loading and fa
   );
 
   const store = supportedStore();
-  const missingPlan = buildProgressiveLoadPlan(observatoryAssetRegistry.assets, "full");
+  const missingPlan = buildProgressiveLoadPlan(rightsGatedAssets(), "full");
   assert.equal(
     describeProgressiveSceneStatus(store.getSnapshot(), missingPlan),
     "Poster mode · immersive assets awaiting approval",
+  );
+
+  const approvedPlan = buildProgressiveLoadPlan(observatoryAssetRegistry.assets, "full");
+  assert.equal(
+    describeProgressiveSceneStatus(store.getSnapshot(), approvedPlan),
+    "Poster mode · immersive scene ready to prepare",
   );
 
   const loadablePlan = buildProgressiveLoadPlan(loadableAssets(), "full");

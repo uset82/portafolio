@@ -54,3 +54,14 @@ test("OpenRouter client construction accepts a deterministic test factory", () =
   assert.equal(client, fakeClient);
   assert.equal(receivedOptions, options);
 });
+
+test("the OpenRouter app title stays HTTP-header safe", () => {
+  // X-Title is sent as an HTTP header; any character above U+00FF throws
+  // "Cannot convert argument to a ByteString" before the request leaves the
+  // process, which surfaced to visitors as a provider outage.
+  assert.match(OPENROUTER_APP_TITLE, /^[ -~]*$/);
+
+  const options = buildOpenRouterOptions({ OPENROUTER_API_KEY: "test-key" });
+  assert.equal(options.appTitle, OPENROUTER_APP_TITLE);
+  assert.doesNotThrow(() => new Headers({ "X-Title": String(options.appTitle) }));
+});

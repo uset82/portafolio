@@ -32,8 +32,8 @@ const workspaceRoot = process.cwd();
 
 test("the Observatory registry double is schema-valid and enables deterministic full/reduced plans", () => {
   const registry = createObservatoryTestRegistry();
-  const full = buildProgressiveLoadPlan(registry.assets, "full");
-  const reduced = buildProgressiveLoadPlan(registry.assets, "reduced");
+  const full = buildProgressiveLoadPlan(registry.assets, "full", "approved");
+  const reduced = buildProgressiveLoadPlan(registry.assets, "reduced", "approved");
 
   assert.equal(full.canMountCanvas, true);
   assert.equal(reduced.canMountCanvas, true);
@@ -135,6 +135,7 @@ test("the poster-first component accepts test assets and a loader double without
     poster: createElement("span", null, "Deterministic poster"),
     assets: registry.assets,
     createLoadingAttempt: loader.createLoadingAttempt,
+    liveCanvasPresentation: "approved",
   });
 
   const html = renderToStaticMarkup(

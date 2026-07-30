@@ -92,6 +92,7 @@ export const OBSERVATORY_ASTRAEA_TECHNICAL_ART = {
   positionMeters: [6.1, 0, -1.2] as Vector3Tuple,
   rotationRadians: [0.04, 0.32, -0.04] as Vector3Tuple,
   chartCenterMeters: [0, 1.63, 0] as Vector3Tuple,
+  interactionNodeName: "AstraeaInteraction",
   interactionTargetId: astraeaAsset.interaction!.targetId,
   accessibleLabel: astraeaAsset.interaction!.accessibleLabel,
   href: astraeaAsset.interaction!.href!,

@@ -41,8 +41,11 @@ test("Story keeps a cardless responsive composition with touch and reduced-motio
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
 
   assert.match(page, /<StoryProfile/);
-  assert.match(styles, /\.story-profile__hero:focus-within \.story-profile__portrait/);
-  assert.match(styles, /\.story-profile__hero:hover \.story-profile__portrait/);
+  // The hero and practice list are not interactive, so they must not wear
+  // hover affordances: the design-QA pass removed the portrait lift and the
+  // row-indent shift as fake interactivity signals.
+  assert.doesNotMatch(styles, /\.story-profile__hero:hover \.story-profile__portrait/);
+  assert.doesNotMatch(styles, /\.story-profile__practice:hover li/);
   assert.match(styles, /\.story-profile__practice li\s*\{[\s\S]*?min-height:\s*6\.25rem/);
   assert.match(styles, /@media \(max-width: 47\.99rem\)[\s\S]*?\.story-profile__hero/);
   assert.match(styles, /\.story-profile__actions \.ui-action\s*\{[\s\S]*?width:\s*100%/);

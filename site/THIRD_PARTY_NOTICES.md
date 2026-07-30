@@ -33,18 +33,14 @@ Cormorant Garamond and Manrope are loaded through Next.js font optimization and 
 - Manrope source: <https://github.com/google/fonts/tree/main/ofl/manrope>
 - Bundled license and copyright notices: `LICENSES/FONTS-OFL-1.1.txt`
 
-## Next.js starter favicon
+## Favicon and app icons
 
-`src/app/favicon.ico` is the unmodified favicon from the official Next.js `app-tw/ts` starter template. Its SHA-256 matches the current canonical template file reviewed on 2026-07-20.
-
-- Project: <https://github.com/vercel/next.js>
-- Source: <https://github.com/vercel/next.js/blob/canary/packages/create-next-app/templates/app-tw/ts/app/favicon.ico>
-- License: MIT
-- Bundled license: `LICENSES/NEXTJS-MIT.txt`
-- Product decision: legally permitted but visually temporary; replace it with an approved Carlos mark during the personal-brand task.
+`src/app/favicon.ico`, `src/app/icon.png`, and `src/app/apple-icon.png` are owner-created media: derivatives of Carlos Carpio's CA²M monogram, approved for public display on 2026-07-27. They replaced the MIT-licensed Next.js starter favicon that shipped until that date, so no third-party icon asset remains in the build.
 
 ## Launch asset boundary
 
-- The runtime Observatory poster is byte-identical to Carlos's approved private design reference. It is permitted for the current local/preview implementation only; production publication remains on hold until Carlos confirms public-display rights or approves a rights-cleared replacement.
-- No project screenshots, audio, video, repository hero art, local monogram media, HDR environment, or GLB model is approved for production publication.
-- Current water, scene fallback geometry, and the CC mark are repository-authored code/CSS/SVG output rather than imported third-party media.
+- The runtime Observatory poster is byte-identical to Carlos's ownership-recorded design reference and was approved for public production display on 2026-07-25.
+- The CA²M header/CC AI mark, favicon, and app icons are controlled derivatives of Carlos's owned monogram and were approved for public display on 2026-07-27.
+- The muted robot-water hero clip and its poster are controlled, hash-pinned derivatives of Carlos's owned video and were approved for silent looping homepage playback on 2026-07-27.
+- No project screenshots, launch music, external embeds, raw local GLB, HDR environment, or other unapproved local media is included in the runtime.
+- Current water, scene fallback geometry, procedural 3D assets, CSS materials, and lighting are repository-authored code output rather than imported third-party media.

@@ -5,9 +5,10 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import type { NavigationItem } from "@/content/site";
+import { OBSERVATORY_LIVE_CANVAS_PRESENTATION } from "@/lib/three/progressive-loading";
 
 import { AnimatedButton } from "./animate-ui/button";
-import { CcMark } from "./cc-mark";
+import { BrandMark } from "./brand-mark";
 
 export function SiteHeader({ navigation }: { navigation: NavigationItem[] }) {
   const pathname = usePathname();
@@ -30,7 +31,7 @@ export function SiteHeader({ navigation }: { navigation: NavigationItem[] }) {
     <header className="site-header">
       <div className="site-header__inner">
         <Link className="identity" href="/" aria-label="Carlos Carpio — home">
-          <CcMark />
+          <BrandMark />
           <span>Carlos Carpio</span>
         </Link>
 
@@ -45,12 +46,18 @@ export function SiteHeader({ navigation }: { navigation: NavigationItem[] }) {
           })}
         </nav>
 
-        <div className="site-header__status" aria-label="Experience settings">
-          <Link className="quiet-control" href="/#observatory-experience-settings">
-            <span aria-hidden="true">◌</span>
-            <span>Experience</span>
-          </Link>
-        </div>
+        {/* The Experience settings anchor only exists while the live Canvas is
+         * approved (U.20 currently holds it poster-authoritative). */}
+        {OBSERVATORY_LIVE_CANVAS_PRESENTATION === "approved" ? (
+          <div className="site-header__status" aria-label="Experience settings">
+            <Link className="quiet-control" href="/#observatory-experience-settings">
+              <span aria-hidden="true">◌</span>
+              <span>Experience</span>
+            </Link>
+          </div>
+        ) : (
+          <div className="site-header__status" aria-hidden="true" />
+        )}
 
         <AnimatedButton
           className="menu-button"

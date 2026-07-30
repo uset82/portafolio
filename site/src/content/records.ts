@@ -275,6 +275,40 @@ export const rawSiteContent = {
       },
     },
   ],
+  laboratoryConcepts: [
+    {
+      id: "laboratory-electronics-ai",
+      artifactId: "electronics-ai",
+      title: "Electronics / AI",
+      descriptor: "Protected modular concept",
+      status: "concept",
+      statusLabel: "Concept only",
+      href: "/laboratory",
+      summary:
+        "A visual and navigational Laboratory concept for modular electronics and AI work—not a functioning computer, proprietary board, trained model, or live system.",
+      boundary:
+        "No hardware performance, AI inference, live data, product availability, or ownership of a manufactured device is claimed.",
+      verification: "reference-approved",
+      rights: "not-applicable",
+      sourceIds: ["approved-main-ui", "approved-design-copy"],
+    },
+    {
+      id: "laboratory-aerial-systems",
+      artifactId: "drone",
+      title: "Aerial systems",
+      descriptor: "Guarded camera-drone concept",
+      status: "concept",
+      statusLabel: "Concept only",
+      href: "/laboratory",
+      summary:
+        "A visual and navigational Laboratory concept for a protected-rotor camera drone with a sparse bounded stabilization cycle—not a functioning aircraft or autonomous system.",
+      boundary:
+        "No flight performance, autonomous operation, working flight controller, camera capability, production readiness, or ownership of manufactured drone hardware is claimed.",
+      verification: "reference-approved",
+      rights: "not-applicable",
+      sourceIds: ["approved-main-ui", "approved-design-copy"],
+    },
+  ],
   mediaWorks: [],
   experiences: [],
   education: [],

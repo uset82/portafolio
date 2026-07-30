@@ -10,7 +10,9 @@ import {
   useReducer,
   useRef,
   useState,
+  useSyncExternalStore,
 } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import type { CcAiRequest, CcAiResponse } from "@/lib/ai/cc-ai-contract";
@@ -25,7 +27,7 @@ import {
 } from "@/lib/ai/cc-ai-ui-state";
 
 import { AnimatedButton } from "./animate-ui/button";
-import { CcMark } from "./cc-mark";
+import { BrandMark } from "./brand-mark";
 
 const prompts = [
   "Which projects best show Carlos’s AI work?",
@@ -41,6 +43,12 @@ type CcAiTransport = (request: CcAiRequest, signal: AbortSignal) => Promise<CcAi
 type CcAiPanelProps = {
   transport?: CcAiTransport;
 };
+
+/* Hydration-safe mount flag: document.body only exists on the client, and the
+ * panel is rendered there through a portal. */
+const subscribeToHydration = () => () => undefined;
+const getClientHydrationSnapshot = () => true;
+const getServerHydrationSnapshot = () => false;
 
 const focusableSelector = [
   "a[href]",
@@ -76,6 +84,11 @@ const getStatusAnnouncement = (status: CcAiUiStatus) => {
 
 export function CcAiPanel({ transport = requestCcAi }: CcAiPanelProps) {
   const [open, setOpen] = useState(false);
+  const mounted = useSyncExternalStore(
+    subscribeToHydration,
+    getClientHydrationSnapshot,
+    getServerHydrationSnapshot,
+  );
   const [question, setQuestion] = useState("");
   const [mobileSheet, setMobileSheet] = useState(false);
   const [state, dispatch] = useReducer(ccAiUiReducer, initialCcAiUiState);
@@ -277,222 +290,250 @@ export function CcAiPanel({ transport = requestCcAi }: CcAiPanelProps) {
       : "Enter sends. Shift plus Enter adds a new line.";
 
   return (
-    <AnimatePresence initial={false}>
-      {!open ? (
-        <AnimatedButton
-          ref={triggerRef}
-          key="cc-ai-trigger"
-          className="cc-ai-trigger"
-          type="button"
-          aria-controls={panelId}
-          aria-expanded="false"
-          initial={{ opacity: 0, y: reducedMotion ? 0 : 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: reducedMotion ? 0 : 8 }}
-          onClick={() => setOpen(true)}
-        >
-          <CcMark compact />
-          <span>
-            <strong>Ask CC AI</strong>
-            <small>Public portfolio guide</small>
-          </span>
-          <span className="cc-ai-trigger__preview">
-            Explore Carlos’s verified public work, experiments, sound, and story.
-          </span>
-          <span className="cc-ai-trigger__prompt">Open the portfolio guide →</span>
-        </AnimatedButton>
-      ) : (
-        <>
-          <motion.div
-            key="cc-ai-backdrop"
-            className="cc-ai-backdrop"
-            aria-hidden="true"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={closePanel}
-          />
-          <motion.section
-            ref={panelRef}
-            key="cc-ai-panel"
-            id={panelId}
-            className="cc-ai-panel"
-            role="dialog"
-            aria-modal={mobileSheet || undefined}
-            aria-labelledby={titleId}
-            aria-describedby={descriptionId}
-            initial={{ opacity: 0, y: reducedMotion ? 0 : 14, scale: reducedMotion ? 1 : 0.985 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: reducedMotion ? 0 : 14, scale: reducedMotion ? 1 : 0.985 }}
+    <>
+      <AnimatePresence initial={false}>
+        {!open ? (
+          <AnimatedButton
+            ref={triggerRef}
+            key="cc-ai-trigger"
+            className="cc-ai-trigger"
+            type="button"
+            aria-controls={panelId}
+            aria-expanded="false"
+            initial={{ opacity: 0, y: reducedMotion ? 0 : 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: reducedMotion ? 0 : 8 }}
+            onClick={() => setOpen(true)}
           >
-            <span className="cc-ai-sheet-handle" aria-hidden="true" />
-            <header>
-              <span className="cc-ai-panel__title">
-                <CcMark compact />
-                <span>
-                  <h2 id={titleId}>CC AI</h2>
-                  <small id={descriptionId}>AI answers from Carlos’s public portfolio.</small>
-                </span>
-              </span>
-              <button type="button" className="icon-control" onClick={closePanel}>
-                Close
-              </button>
-            </header>
-
-            <div
-              ref={transcriptRef}
-              className="cc-ai-transcript"
-              role="log"
-              aria-live="off"
-              aria-busy={active}
-              aria-label="Conversation with CC AI"
-            >
-              {state.messages.length === 0 ? (
-                <div className="cc-ai-welcome">
-                  <p>
-                    I can help you explore Carlos’s verified public work, experiments, sound, and
-                    story. What would you like to find?
-                  </p>
-                  <div className="suggested-prompts" aria-label="Suggested questions">
-                    {prompts.map((prompt) => (
-                      <button
-                        key={prompt}
-                        type="button"
-                        disabled={active}
-                        onClick={() => void sendQuestion(prompt)}
-                      >
-                        {prompt}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : null}
-
-              {state.messages.map((message) => (
-                <article
-                  key={message.id}
-                  className="cc-ai-message"
-                  data-role={message.role}
-                  data-state={message.state}
-                >
-                  <span className="cc-ai-message__label">
-                    {message.role === "assistant" ? "CC AI" : "You"}
-                  </span>
-                  <p>
-                    {message.content}
-                    {message.state === "presenting" ? (
-                      <span className="cc-ai-response-cursor" aria-hidden="true" />
-                    ) : null}
-                  </p>
-                  {message.state === "stopped" ? (
-                    <small className="cc-ai-message__state">Answer stopped</small>
-                  ) : null}
-                </article>
-              ))}
-
-              {state.status === "connecting" ? (
-                <div className="cc-ai-connecting" aria-hidden="true">
-                  <span />
-                  <span />
-                  <span />
-                  <p>Connecting…</p>
-                </div>
-              ) : null}
-
-              {state.error ? (
-                <div
-                  className="cc-ai-error"
-                  data-code={state.error.code}
-                  role={state.status === "rate-limited" ? "status" : "alert"}
-                >
-                  <strong>
-                    {state.status === "rate-limited" ? "Please try again later" : "CC AI paused"}
-                  </strong>
-                  <p>{state.error.message}</p>
-                  {state.error.code === "disabled" ? (
-                    <p className="cc-ai-error__routes">
-                      Continue with <Link href="/work">selected work</Link> or{" "}
-                      <Link href="/story">Carlos’s story</Link>.
-                    </p>
-                  ) : null}
-                </div>
-              ) : null}
-            </div>
-
-            <span className="visually-hidden" role="status" aria-live="polite" aria-atomic="true">
-              {statusAnnouncement}
+            <BrandMark compact />
+            <span>
+              <strong>Ask CC AI</strong>
+              <small>Public portfolio guide</small>
             </span>
-
-            <div className="cc-ai-response-controls">
-              {active ? (
-                <button type="button" onClick={stopRequest}>
-                  Stop
-                </button>
-              ) : null}
-              {!active && state.error?.retryable && state.lastQuestion ? (
-                <button
-                  type="button"
-                  disabled={state.status === "rate-limited"}
-                  onClick={() => void sendQuestion(state.lastQuestion, false)}
-                >
-                  Retry
-                </button>
-              ) : null}
-              {state.messages.length > 0 && !active ? (
-                <button type="button" onClick={clearConversation}>
-                  Clear conversation
-                </button>
-              ) : null}
-            </div>
-
-            <form className="cc-ai-form" onSubmit={submit}>
-              <label htmlFor={inputId}>Ask about Carlos’s public portfolio</label>
-              <div className="cc-ai-form__row">
-                <textarea
-                  ref={inputRef}
-                  id={inputId}
-                  value={question}
-                  maxLength={CC_AI_MAX_MESSAGE_LENGTH}
-                  rows={2}
-                  aria-describedby={inputHelpId}
-                  placeholder="Ask about work, AI systems, sound, or Carlos’s story"
-                  onChange={(event) => setQuestion(event.target.value)}
-                  onKeyDown={handleInputKeyDown}
+            <span className="cc-ai-trigger__preview">
+              Explore Carlos’s verified public work, experiments, sound, and story.
+            </span>
+            <span className="cc-ai-trigger__prompt">Open the portfolio guide →</span>
+          </AnimatedButton>
+        ) : null}
+      </AnimatePresence>
+      {/* The open panel is rendered into <body>. The trigger belongs to the
+       * hero's composition, but the panel is a viewport overlay: left inside
+       * the hero it inherits that section's stacking context, so later
+       * sections paint straight over it once the page scrolls. The portal
+       * wraps AnimatePresence rather than sitting inside it, because
+       * AnimatePresence cannot track a portal as a child and renders nothing.
+       * This component stays put in the page, so the focus order is
+       * unchanged. */}
+      {mounted &&
+        createPortal(
+          <AnimatePresence initial={false}>
+            {open ? (
+              <>
+                <motion.div
+                  key="cc-ai-backdrop"
+                  className="cc-ai-backdrop"
+                  aria-hidden="true"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={closePanel}
                 />
-                <button
-                  type="submit"
-                  disabled={active || state.status === "rate-limited" || !question.trim()}
+                <motion.section
+                  ref={panelRef}
+                  key="cc-ai-panel"
+                  id={panelId}
+                  className="cc-ai-panel"
+                  role="dialog"
+                  aria-modal={mobileSheet || undefined}
+                  aria-labelledby={titleId}
+                  aria-describedby={descriptionId}
+                  initial={{
+                    opacity: 0,
+                    y: reducedMotion ? 0 : 14,
+                    scale: reducedMotion ? 1 : 0.985,
+                  }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: reducedMotion ? 0 : 14, scale: reducedMotion ? 1 : 0.985 }}
                 >
-                  Send
-                </button>
-              </div>
-              <small id={inputHelpId}>{characterGuidance}</small>
-            </form>
+                  <span className="cc-ai-sheet-handle" aria-hidden="true" />
+                  <header>
+                    <span className="cc-ai-panel__title">
+                      <BrandMark compact />
+                      <span>
+                        <h2 id={titleId}>CC AI</h2>
+                        <small id={descriptionId}>AI answers from Carlos’s public portfolio.</small>
+                      </span>
+                    </span>
+                    <button type="button" className="icon-control" onClick={closePanel}>
+                      Close
+                    </button>
+                  </header>
 
-            <details className="cc-ai-disclosure">
-              <summary>About this AI and privacy</summary>
-              <p>{privacyNote}</p>
-              {state.response ? (
-                <div className="cc-ai-model-disclosure">
-                  <p>
-                    {state.response.model.variable
-                      ? "Model selected automatically for availability and cost."
-                      : "A configured model answered this question."}{" "}
-                    Response model: <code>{state.response.model.responded}</code>.
-                  </p>
-                  <p>
-                    The answer used {state.response.knowledge.records} approved public portfolio{" "}
-                    {state.response.knowledge.records === 1 ? "record" : "records"}.
-                    {state.response.truncated || state.response.knowledge.truncated
-                      ? " Some context or output was shortened to stay within safety limits."
-                      : ""}
-                  </p>
-                </div>
-              ) : null}
-            </details>
-          </motion.section>
-        </>
-      )}
-    </AnimatePresence>
+                  <div
+                    ref={transcriptRef}
+                    className="cc-ai-transcript"
+                    role="log"
+                    aria-live="off"
+                    aria-busy={active}
+                    aria-label="Conversation with CC AI"
+                  >
+                    {state.messages.length === 0 ? (
+                      <div className="cc-ai-welcome">
+                        <p>
+                          I can help you explore Carlos’s verified public work, experiments, sound,
+                          and story. What would you like to find?
+                        </p>
+                        <div className="suggested-prompts" aria-label="Suggested questions">
+                          {prompts.map((prompt) => (
+                            <button
+                              key={prompt}
+                              type="button"
+                              disabled={active}
+                              onClick={() => void sendQuestion(prompt)}
+                            >
+                              {prompt}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    ) : null}
+
+                    {state.messages.map((message) => (
+                      <article
+                        key={message.id}
+                        className="cc-ai-message"
+                        data-role={message.role}
+                        data-state={message.state}
+                      >
+                        <span className="cc-ai-message__label">
+                          {message.role === "assistant" ? "CC AI" : "You"}
+                        </span>
+                        <p>
+                          {message.content}
+                          {message.state === "presenting" ? (
+                            <span className="cc-ai-response-cursor" aria-hidden="true" />
+                          ) : null}
+                        </p>
+                        {message.state === "stopped" ? (
+                          <small className="cc-ai-message__state">Answer stopped</small>
+                        ) : null}
+                      </article>
+                    ))}
+
+                    {state.status === "connecting" ? (
+                      <div className="cc-ai-connecting" aria-hidden="true">
+                        <span />
+                        <span />
+                        <span />
+                        <p>Connecting…</p>
+                      </div>
+                    ) : null}
+
+                    {state.error ? (
+                      <div
+                        className="cc-ai-error"
+                        data-code={state.error.code}
+                        role={state.status === "rate-limited" ? "status" : "alert"}
+                      >
+                        <strong>
+                          {state.status === "rate-limited"
+                            ? "Please try again later"
+                            : "CC AI paused"}
+                        </strong>
+                        <p>{state.error.message}</p>
+                        {state.error.code === "disabled" ? (
+                          <p className="cc-ai-error__routes">
+                            Continue with <Link href="/work">selected work</Link> or{" "}
+                            <Link href="/story">Carlos’s story</Link>.
+                          </p>
+                        ) : null}
+                      </div>
+                    ) : null}
+                  </div>
+
+                  <span
+                    className="visually-hidden"
+                    role="status"
+                    aria-live="polite"
+                    aria-atomic="true"
+                  >
+                    {statusAnnouncement}
+                  </span>
+
+                  <div className="cc-ai-response-controls">
+                    {active ? (
+                      <button type="button" onClick={stopRequest}>
+                        Stop
+                      </button>
+                    ) : null}
+                    {!active && state.error?.retryable && state.lastQuestion ? (
+                      <button
+                        type="button"
+                        disabled={state.status === "rate-limited"}
+                        onClick={() => void sendQuestion(state.lastQuestion, false)}
+                      >
+                        Retry
+                      </button>
+                    ) : null}
+                    {state.messages.length > 0 && !active ? (
+                      <button type="button" onClick={clearConversation}>
+                        Clear conversation
+                      </button>
+                    ) : null}
+                  </div>
+
+                  <form className="cc-ai-form" onSubmit={submit}>
+                    <label htmlFor={inputId}>Ask about Carlos’s public portfolio</label>
+                    <div className="cc-ai-form__row">
+                      <textarea
+                        ref={inputRef}
+                        id={inputId}
+                        value={question}
+                        maxLength={CC_AI_MAX_MESSAGE_LENGTH}
+                        rows={2}
+                        aria-describedby={inputHelpId}
+                        placeholder="Ask about work, AI systems, sound, or Carlos’s story"
+                        onChange={(event) => setQuestion(event.target.value)}
+                        onKeyDown={handleInputKeyDown}
+                      />
+                      <button
+                        type="submit"
+                        disabled={active || state.status === "rate-limited" || !question.trim()}
+                      >
+                        Send
+                      </button>
+                    </div>
+                    <small id={inputHelpId}>{characterGuidance}</small>
+                  </form>
+
+                  <details className="cc-ai-disclosure">
+                    <summary>About this AI and privacy</summary>
+                    <p>{privacyNote}</p>
+                    {state.response ? (
+                      <div className="cc-ai-model-disclosure">
+                        <p>
+                          {state.response.model.variable
+                            ? "Model selected automatically for availability and cost."
+                            : "A configured model answered this question."}{" "}
+                          Response model: <code>{state.response.model.responded}</code>.
+                        </p>
+                        <p>
+                          The answer used {state.response.knowledge.records} approved public
+                          portfolio {state.response.knowledge.records === 1 ? "record" : "records"}.
+                          {state.response.truncated || state.response.knowledge.truncated
+                            ? " Some context or output was shortened to stay within safety limits."
+                            : ""}
+                        </p>
+                      </div>
+                    ) : null}
+                  </details>
+                </motion.section>
+              </>
+            ) : null}
+          </AnimatePresence>,
+          document.body,
+        )}
+    </>
   );
 }

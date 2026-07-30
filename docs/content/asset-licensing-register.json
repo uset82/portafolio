@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "reviewedOn": "2026-07-25",
+  "reviewedOn": "2026-07-27",
   "releaseDecision": "ready",
   "assets": [
     {
@@ -22,19 +22,23 @@
       "evidence": "The 1672×941, 2,595,384-byte runtime poster exactly matches the archived reference. Authorship is owned by Carlos, and live-site public display was approved as the safest launch choice on 2026-07-25 while heavier local GLB/video candidates remain excluded."
     },
     {
-      "id": "nextjs-starter-favicon",
-      "label": "Temporary Next.js starter favicon",
+      "id": "brand-favicon",
+      "label": "CA²M monogram favicon and app icons",
       "scope": "launch",
       "kind": "icon",
-      "paths": ["site/src/app/favicon.ico"],
-      "source": "Unmodified official Next.js app-tw/ts starter favicon; local and canonical files share SHA-256 2B8AD2D33455A8F736FC3A8EBF8F0BDEA8848AD4C0DB48A2833BD0F9CD775932.",
-      "owner": "Vercel, Inc. / Next.js project",
-      "rights": "permissive-license",
-      "license": "MIT; bundled at site/LICENSES/NEXTJS-MIT.txt.",
-      "attribution": "Recorded in site/THIRD_PARTY_NOTICES.md.",
-      "decision": "replace",
+      "paths": [
+        "site/src/app/favicon.ico",
+        "site/src/app/icon.png",
+        "site/src/app/apple-icon.png"
+      ],
+      "source": "Derived 2026-07-27 from Carlos's owned imagesandvideo/logo.png monogram: the extracted gold mark composited on the locked-palette espresso ground. Replaces the MIT Next.js starter favicon exactly as this register's replace decision planned.",
+      "owner": "Carlos Carpio; sole creator claim recorded 2026-07-25; integration approved 2026-07-27.",
+      "rights": "owned",
+      "license": "Owner-declared original portfolio media approved for public production display on 2026-07-27.",
+      "attribution": "Carlos Carpio",
+      "decision": "include",
       "launchCritical": false,
-      "evidence": "The file is legally reusable under MIT but is visually generic. Replace it with an approved Carlos mark during task 2.14 without treating that branding change as a license emergency."
+      "evidence": "favicon.ico is 15,086 bytes with SHA-256 18EF4F7EBAED6AA17C20B60FC50741B4D5B3A0192751C7A45F44EE8050A7DFEB (16/32/48 sizes); icon.png 34,731 bytes SHA-256 9EDFDC54D45F7A04E192B5C9D7617A240B47E135C3D7D0606E6F03E09BD6CE39; apple-icon.png 20,472 bytes SHA-256 5A97A32A60279091209CC0BD521C2F5565CA719CDA56B9600A41A96554308D3B. The retired starter favicon note in THIRD_PARTY_NOTICES.md may be removed once no starter asset ships."
     },
     {
       "id": "cormorant-garamond-font",
@@ -101,21 +105,6 @@
       "evidence": "The current runtime uses authored geometry, materials, and bounded shaders. The public 3D registry exposes zero GLB URLs while model provenance is pending."
     },
     {
-      "id": "repository-authored-cc-mark",
-      "label": "Geometric CC interface mark",
-      "scope": "launch",
-      "kind": "procedural-visual",
-      "paths": ["site/src/components/cc-mark.tsx"],
-      "source": "Repository-authored semantic component derived from the approved circular CC design direction without importing the local gold monogram files.",
-      "owner": "Portfolio implementation",
-      "rights": "not-applicable",
-      "license": "Code-authored interface geometry; no external image file is embedded.",
-      "attribution": "No public visual-asset attribution required.",
-      "decision": "include",
-      "launchCritical": true,
-      "evidence": "The component remains the privacy-safe fallback while the separate personal monogram files await task 2.14 approval."
-    },
-    {
       "id": "flagship-project-media-groups",
       "label": "Repository screenshots, generated media, product imagery, and private project assets",
       "scope": "excluded",
@@ -143,7 +132,7 @@
       "attribution": "Credit Carlos Carpio if any file is later published on the live site.",
       "decision": "exclude",
       "launchCritical": false,
-      "evidence": "All eight files remain hash-pinned in docs/content/local-media-clearance-register.json and outside the live site and public runtime registry. Ownership is recorded; public-display, accessibility, and performance clearance remain open before runtime import."
+      "evidence": "All eight files remain hash-pinned in docs/content/local-media-clearance-register.json and outside the public runtime registry. On 2026-07-27 Carlos approved mark-only publication of the gold monogram: the runtime uses hash-pinned derivatives under site/public/images/brand/ and site/src/app/ (see runtime-brand-mark and brand-favicon) while these raw source files stay excluded from runtime imports."
     },
     {
       "id": "planned-3d-environment-assets",
@@ -167,7 +156,7 @@
     },
     {
       "id": "unapproved-audio-video",
-      "label": "Music, Sound Lab audio, portfolio video, and external embeds",
+      "label": "Music, Sound Lab audio, and external embeds still awaiting approval",
       "scope": "excluded",
       "kind": "audio-video",
       "paths": [
@@ -181,14 +170,53 @@
       "attribution": "Not applicable while excluded.",
       "decision": "exclude",
       "launchCritical": false,
-      "evidence": "Sound and video routes retain explicit preparation or unavailable states and do not autoplay or hotlink unapproved media."
+      "evidence": "Sound routes retain explicit preparation or unavailable states and do not autoplay or hotlink unapproved media. The only approved motion asset is the separately recorded runtime-robot-sequence homepage derivative; no launch music, Sound Lab audio, or external embed set exists yet."
+    },
+    {
+      "id": "runtime-brand-mark",
+      "label": "CA²M monogram header mark",
+      "scope": "launch",
+      "kind": "image",
+      "paths": [
+        "site/public/images/brand/ca2m-mark.png",
+        "site/src/components/brand-mark.tsx"
+      ],
+      "source": "Derived 2026-07-27 from Carlos's owned imagesandvideo/logo.png: near-black ground removed by screen-on-black unmultiply, main monogram cropped, exported as a 256×256 palette-quantized transparent PNG.",
+      "owner": "Carlos Carpio; sole creator claim recorded 2026-07-25; integration approved 2026-07-27.",
+      "rights": "owned",
+      "license": "Owner-declared original portfolio media approved for public production display on 2026-07-27.",
+      "attribution": "Carlos Carpio",
+      "decision": "include",
+      "launchCritical": false,
+      "evidence": "19,076-byte transparent mark with SHA-256 EAB3D2852173332C19AF8F76B6F9EBF0DD9B3D1416D17C9DB6C67623EA9553C2, rendered decoratively inside the header identity link on the espresso chip at 3.2rem/2.5rem. The full legal-name lockup from the source sheet remains unpublished because the approved public identity copy is \"Carlos Carpio\". On 2026-07-27 Carlos asked for the monogram inside the CC AI assistant too, so one shared BrandMark component now renders it in the site header, the assistant trigger, and the assistant dialog header; the earlier code-authored typographic CC mark was retired and deleted."
+    },
+    {
+      "id": "runtime-robot-sequence",
+      "label": "Observatory robot water hero clip",
+      "scope": "launch",
+      "kind": "audio-video",
+      "paths": [
+        "site/public/videos/robot-water-sequence.mp4",
+        "site/public/images/robot-water-poster.jpg"
+      ],
+      "source": "Derived 2026-07-27 from Carlos's owned imagesandvideo/Robot_kneeling_in_reflective_water_202607192339.mp4: audio track removed, scaled to 1440×810, re-encoded at 24 fps with a 24-frame GOP, CRF 28, and +faststart for efficient silent loop playback, with a 0.2 s poster frame.",
+      "owner": "Carlos Carpio; sole creator claim recorded 2026-07-25; homepage sequence approved 2026-07-27.",
+      "rights": "owned",
+      "license": "Owner-declared original portfolio media approved for public production display on 2026-07-27.",
+      "attribution": "Carlos Carpio",
+      "decision": "include",
+      "launchCritical": false,
+      "evidence": "robot-water-sequence.mp4 is 4,052,812 bytes with SHA-256 6FD6C308C0C49F67C8822E4E1D2D5F23A7F9AF06E55667238CC402585454BAB2; robot-water-poster.jpg is 204,322 bytes with SHA-256 79C1EDCF3A5CD3B28802501BFF6C17CA5E616806D65FBE081A64636A1118E005. The muted clip is the hero’s moving visual: it plays silently on a loop over the retained server-rendered poster, is suspended offscreen and on hidden tabs, exposes no controls or accessible name, and is not rendered at all under reduced-motion, save-data, or no-JavaScript conditions."
     }
   ],
   "reviewNotes": [
     "On 2026-07-25 Carlos declared sole creation of the local Observatory and monogram media and chose MIT for the repository code. Authorship is recorded as owned, and the runtime Observatory poster is approved for public production display.",
     "The root LICENSE file records MIT for portfolio code. Binary media, monogram sheets, videos, and GLBs are not auto-imported into runtime solely because the code is MIT.",
-    "The Next.js starter favicon is licensed and attributed but remains a branding replacement candidate.",
+    "The Next.js starter favicon was replaced on 2026-07-27 by Carlos's owned CA²M derivatives; no starter icon remains in the runtime build.",
     "Fonts and Three.js decoder license texts are now bundled locally.",
-    "Local brand, 3D, audio, and video candidates remain excluded from runtime until accessibility, optimization, and explicit page-level placement are completed."
+    "All unapproved raw brand, 3D, audio, and video candidates remain excluded from runtime; only the controlled poster, CA²M derivatives, and silent robot-water derivative have completed accessibility, optimization, rights, and page-placement review.",
+    "On 2026-07-27 Carlos supplied his gold CA²M monogram and asked for portfolio integration. The header's typographic CC mark, the CC AI code-authored mark, and the starter favicon were replaced by hash-pinned owned derivatives (runtime-brand-mark, brand-favicon); raw imagesandvideo sources stay outside runtime imports, and the full legal-name lockup stays unpublished under the approved \"Carlos Carpio\" identity.",
+    "On 2026-07-27 Carlos approved the robot water video as the homepage hero’s moving visual. The runtime derivative is silent and hash-pinned (runtime-robot-sequence); the raw source video keeps its local-media exclusion from runtime imports.",
+    "The code-authored typographic CC mark (repository-authored-cc-mark) was retired on 2026-07-27 when Carlos approved the CA²M monogram for the CC AI assistant; its component was deleted and every mark surface now renders the owned brand derivative."
   ]
 }

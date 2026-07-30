@@ -26,7 +26,11 @@
       "owner": "Carlos Carpio",
       "source": "Runtime-authored procedural geometry using guidance at docs/assets/reference-packs/reference-pack-manifest.json#observatory-shell",
       "status": "specified",
-      "scaleMeters": [18, 7, 14],
+      "scaleMeters": [
+        18,
+        7,
+        14
+      ],
       "animation": "None; lighting/atmosphere handled by runtime",
       "materials": [
         "parchment plaster",
@@ -53,9 +57,16 @@
       "owner": "Carlos Carpio",
       "source": "Runtime-authored plane with provider-neutral visual guidance at docs/assets/reference-packs/reference-pack-manifest.json#water-basin",
       "status": "planned",
-      "scaleMeters": [9, 0.25, 7],
+      "scaleMeters": [
+        9,
+        0.25,
+        7
+      ],
       "animation": "Procedural bounded ripples; static reduced-motion material",
-      "materials": ["slate-sage water", "silver reflection"],
+      "materials": [
+        "slate-sage water",
+        "silver reflection"
+      ],
       "lods": 1,
       "budget": {
         "triangles": 4096,
@@ -68,10 +79,14 @@
     {
       "id": "robot-guide",
       "owner": "Carlos Carpio",
-      "source": "Provider-neutral original model guidance at docs/assets/reference-packs/reference-pack-manifest.json#robot-guide",
-      "status": "planned-rights-review-required",
-      "scaleMeters": [1.2, 1.7, 1.1],
-      "animation": "Authored idle, head acknowledgement, finger/water contact; procedural limits documented",
+      "source": "Runtime-authored kneeling ceramic guide built entirely in repository code (site/src/lib/three/create-observatory-robot-model.ts) from the approved reference pack; stylized approximation only, approved as the U.17 rights-safe fallback",
+      "status": "specified",
+      "scaleMeters": [
+        1.2,
+        1.7,
+        1.1
+      ],
+      "animation": "Procedural idle, head acknowledgement, finger/water contact clips authored in code within the approved motion bounds",
       "materials": [
         "off-white ceramic",
         "linen stone",
@@ -83,7 +98,7 @@
         "triangles": 45000,
         "materials": 5,
         "textureMaxPx": 2048,
-        "glbMb": 2.5
+        "glbMb": 0
       },
       "fallback": "robot-focused poster crop"
     },
@@ -92,7 +107,11 @@
       "owner": "Carlos Carpio",
       "source": "Runtime-authored guarded camera-drone geometry informed by docs/assets/reference-packs/reference-pack-manifest.json#drone; stylized approximation only",
       "status": "specified",
-      "scaleMeters": [1.4, 0.45, 1.4],
+      "scaleMeters": [
+        1.4,
+        0.45,
+        1.4
+      ],
       "animation": "Sparse four-second stabilization and rotor cycle followed by eight seconds at rest; paused while the document is hidden; frozen reduced-motion pose",
       "materials": [
         "off-white ceramic",
@@ -115,9 +134,18 @@
       "owner": "Carlos Carpio",
       "source": "Runtime-authored procedural geometry from docs/assets/reference-packs/reference-pack-manifest.json#astraea",
       "status": "specified",
-      "scaleMeters": [2.6, 2.8, 1.1],
+      "scaleMeters": [
+        2.6,
+        2.8,
+        1.1
+      ],
       "animation": "Selection-only 760ms ring alignment; no idle loop; immediate reduced-motion state",
-      "materials": ["parchment", "pewter", "walnut", "muted sage"],
+      "materials": [
+        "parchment",
+        "pewter",
+        "walnut",
+        "muted sage"
+      ],
       "lods": 3,
       "budget": {
         "triangles": 5000,
@@ -132,9 +160,18 @@
       "owner": "Carlos Carpio",
       "source": "Runtime-authored procedural geometry from docs/assets/reference-packs/reference-pack-manifest.json#pinaculo",
       "status": "specified",
-      "scaleMeters": [2.7, 0.65, 2.7],
+      "scaleMeters": [
+        2.7,
+        0.65,
+        2.7
+      ],
       "animation": "Selection-only one-position carrier advance and latch lift; no idle loop; immediate reduced-motion state",
-      "materials": ["walnut", "clay taupe", "buff", "espresso engraving"],
+      "materials": [
+        "walnut",
+        "clay taupe",
+        "buff",
+        "espresso engraving"
+      ],
       "lods": 3,
       "budget": {
         "triangles": 5600,
@@ -149,9 +186,19 @@
       "owner": "Carlos Carpio",
       "source": "Runtime-authored procedural geometry using provider-neutral guidance at docs/assets/reference-packs/reference-pack-manifest.json#sound-lab",
       "status": "specified-audio-review-required",
-      "scaleMeters": [2.5, 0.75, 1.7],
+      "scaleMeters": [
+        2.5,
+        0.75,
+        1.7
+      ],
       "animation": "One bounded focus response; amplitude response only while approved audio plays",
-      "materials": ["walnut", "buff", "graphite", "pewter", "sage"],
+      "materials": [
+        "walnut",
+        "buff",
+        "graphite",
+        "pewter",
+        "sage"
+      ],
       "lods": 3,
       "budget": {
         "triangles": 6500,
@@ -166,7 +213,11 @@
       "owner": "Carlos Carpio",
       "source": "Runtime-authored procedural geometry from docs/assets/reference-packs/reference-pack-manifest.json#future-energy",
       "status": "specified",
-      "scaleMeters": [2.5, 2.4, 1.6],
+      "scaleMeters": [
+        2.5,
+        2.4,
+        1.6
+      ],
       "animation": "One bounded focus cue rotates separate pump faces, tilts both liquid surfaces, and lifts a service latch; no idle flow simulation",
       "materials": [
         "walnut",
@@ -189,7 +240,11 @@
       "owner": "Carlos Carpio",
       "source": "Runtime-authored procedural geometry from docs/assets/reference-packs/reference-pack-manifest.json#electronics-ai-module",
       "status": "specified",
-      "scaleMeters": [2.2, 1.3, 1.3],
+      "scaleMeters": [
+        2.2,
+        1.3,
+        1.3
+      ],
       "animation": "One bounded focus cue rotates a tactile control and lifts the service lid and non-emissive mechanical indicator; no flashing or idle loop",
       "materials": [
         "walnut",
@@ -212,9 +267,18 @@
       "owner": "Carlos Carpio",
       "source": "Provider-neutral kit guidance at docs/assets/reference-packs/reference-pack-manifest.json#props-and-plants; final assets still require compatible commercial-display terms",
       "status": "planned-rights-review-required",
-      "scaleMeters": [8, 4, 5],
+      "scaleMeters": [
+        8,
+        4,
+        5
+      ],
       "animation": "None",
-      "materials": ["sage foliage", "oak", "linen ceramic", "paper"],
+      "materials": [
+        "sage foliage",
+        "oak",
+        "linen ceramic",
+        "paper"
+      ],
       "lods": 2,
       "budget": {
         "triangles": 10000,
@@ -229,9 +293,16 @@
       "owner": "Carlos Carpio",
       "source": "Runtime-authored local lighting guidance at docs/assets/reference-packs/reference-pack-manifest.json#lighting-environment; no HDR or external environment texture is used",
       "status": "specified",
-      "scaleMeters": [18, 7, 14],
+      "scaleMeters": [
+        18,
+        7,
+        14
+      ],
       "animation": "None",
-      "materials": ["warm daylight", "neutral reflections"],
+      "materials": [
+        "warm daylight",
+        "neutral reflections"
+      ],
       "lods": 1,
       "budget": {
         "triangles": 0,
@@ -246,7 +317,11 @@
       "owner": "Carlos Carpio",
       "source": "Runtime-authored from docs/assets/reference-packs/reference-pack-manifest.json#camera-rig and the approved storyboard",
       "status": "specified",
-      "scaleMeters": [0, 0, 0],
+      "scaleMeters": [
+        0,
+        0,
+        0
+      ],
       "animation": "Cancellable home and artifact-focus transitions",
       "materials": [],
       "lods": 1,

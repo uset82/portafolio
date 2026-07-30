@@ -1,4 +1,5 @@
 import { naturalPalette } from "@/styles/palette";
+import { Euler, Vector3 } from "three";
 
 import { getObservatoryAsset } from "./asset-registry";
 import type { SceneQualityTier } from "./scene-config";
@@ -40,6 +41,18 @@ export type DroneSafetyDiagnostics = Readonly<{
   robotDistanceMeters: number;
   robotClearanceMeters: number;
   attitudeMarginRadians: number;
+  collisionProxyCount: number;
+  closestRobotProxyId: string;
+}>;
+
+export type DroneTimingDiagnostics = Readonly<{
+  maximumAnimatedFps: number;
+  appliedPoseCount: number;
+  activePoseCount: number;
+  restPoseCount: number;
+  cycleCount: number;
+  lastAppliedAtMs: number | null;
+  minimumActiveApplyIntervalMs: number | null;
 }>;
 
 export type DroneDiagnosticsSnapshot = Readonly<{
@@ -50,6 +63,7 @@ export type DroneDiagnosticsSnapshot = Readonly<{
   pose: DroneAmbientPose | null;
   worldPositionMeters: Vector3Tuple | null;
   safety: DroneSafetyDiagnostics | null;
+  timing: DroneTimingDiagnostics | null;
 }>;
 
 export type DroneDiagnostics = Readonly<{
@@ -57,6 +71,34 @@ export type DroneDiagnostics = Readonly<{
 }>;
 
 const droneAsset = getObservatoryAsset("drone");
+
+export const OBSERVATORY_DRONE_COLLISION_SPHERES = [
+  {
+    id: "body",
+    center: [0, -0.01, 0] as Vector3Tuple,
+    radiusMeters: 0.4,
+  },
+  {
+    id: "rotor-1",
+    center: [-0.45, 0.025, -0.45] as Vector3Tuple,
+    radiusMeters: 0.251,
+  },
+  {
+    id: "rotor-2",
+    center: [0.45, 0.025, -0.45] as Vector3Tuple,
+    radiusMeters: 0.251,
+  },
+  {
+    id: "rotor-3",
+    center: [0.45, 0.025, 0.45] as Vector3Tuple,
+    radiusMeters: 0.251,
+  },
+  {
+    id: "rotor-4",
+    center: [-0.45, 0.025, 0.45] as Vector3Tuple,
+    radiusMeters: 0.251,
+  },
+] as const;
 
 export const OBSERVATORY_DRONE_TECHNICAL_ART = {
   visualThesis:
@@ -75,9 +117,16 @@ export const OBSERVATORY_DRONE_TECHNICAL_ART = {
     forward: "-Z",
   },
   dimensionsMeters: droneAsset.scaleMeters,
+  modelBoundsMeters: {
+    min: [-0.7, -0.2274, -0.7] as Vector3Tuple,
+    max: [0.7, 0.2225, 0.7] as Vector3Tuple,
+  },
   positionMeters: [4.6, 4.24, -0.35] as Vector3Tuple,
   rotationRadians: [0, -0.28, 0] as Vector3Tuple,
-  screenAnchorNormalized: [0.72, 0.18] as const,
+  compositionReferenceAnchorNormalized: [0.72, 0.18] as const,
+  authoredHomeAnchorNormalized: [0.65, 0.27] as const,
+  interactionNodeName: "DroneInteraction",
+  interactionDimensionsMeters: [1.5, 0.7, 1.5] as Vector3Tuple,
   interactionTargetId: droneAsset.interaction!.targetId,
   accessibleLabel: droneAsset.interaction!.accessibleLabel,
   href: droneAsset.interaction!.href!,
@@ -96,11 +145,11 @@ export const OBSERVATORY_DRONE_TECHNICAL_ART = {
   safety: {
     roomRoofMeters: 5.04,
     minimumRoofClearanceMeters: 0.25,
-    modelHalfHeightMeters: droneAsset.scaleMeters[1] / 2,
     hoverCorridor: {
       min: [4.54, 4.16, -0.4] as Vector3Tuple,
       max: [4.66, 4.32, -0.3] as Vector3Tuple,
     },
+    collisionSpheres: OBSERVATORY_DRONE_COLLISION_SPHERES,
     robotExclusionSphere: {
       center: [1.4, 1.05, 0] as Vector3Tuple,
       radiusMeters: 2.4,
@@ -186,9 +235,33 @@ function distanceBetween(a: Vector3Tuple, b: Vector3Tuple) {
 }
 
 export function resolveDroneWorldPosition(pose: DroneAmbientPose): Vector3Tuple {
-  return OBSERVATORY_DRONE_TECHNICAL_ART.positionMeters.map(
-    (value, index) => value + pose.offsetMeters[index]!,
+  const technicalArt = OBSERVATORY_DRONE_TECHNICAL_ART;
+  const rootRotation = new Euler(...technicalArt.rotationRadians, "XYZ");
+  const worldOffset = new Vector3(...pose.offsetMeters).applyEuler(rootRotation);
+  return technicalArt.positionMeters.map(
+    (value, index) => value + worldOffset.getComponent(index),
   ) as unknown as Vector3Tuple;
+}
+
+export function resolveDroneCollisionSpheres(pose: DroneAmbientPose) {
+  const technicalArt = OBSERVATORY_DRONE_TECHNICAL_ART;
+  const hoverRotation = new Euler(...pose.rotationRadians, "XYZ");
+  const rootRotation = new Euler(...technicalArt.rotationRadians, "XYZ");
+  const rootPosition = new Vector3(...technicalArt.positionMeters);
+  const hoverOffset = new Vector3(...pose.offsetMeters);
+
+  return technicalArt.safety.collisionSpheres.map((sphere) => {
+    const center = new Vector3(...sphere.center)
+      .applyEuler(hoverRotation)
+      .add(hoverOffset)
+      .applyEuler(rootRotation)
+      .add(rootPosition);
+    return {
+      id: sphere.id,
+      center: center.toArray() as unknown as Vector3Tuple,
+      radiusMeters: sphere.radiusMeters,
+    };
+  });
 }
 
 export function resolveDroneAmbientPose(elapsedSeconds: number): DroneAmbientPose {
@@ -227,18 +300,21 @@ export function resolveDroneAmbientPose(elapsedSeconds: number): DroneAmbientPos
 export function inspectDronePoseSafety(pose: DroneAmbientPose): DroneSafetyInspection {
   const technicalArt = OBSERVATORY_DRONE_TECHNICAL_ART;
   const worldPosition = resolveDroneWorldPosition(pose);
+  const collisionSpheres = resolveDroneCollisionSpheres(pose);
   const { min, max } = technicalArt.safety.hoverCorridor;
   const withinHoverCorridor = worldPosition.every(
     (value, index) => value >= min[index]! - 1e-9 && value <= max[index]! + 1e-9,
   );
-  const withinRoofClearance =
-    worldPosition[1] +
-      technicalArt.safety.modelHalfHeightMeters +
-      technicalArt.safety.minimumRoofClearanceMeters <=
-    technicalArt.safety.roomRoofMeters;
-  const clearOfRobotSilhouette =
-    distanceBetween(worldPosition, technicalArt.safety.robotExclusionSphere.center) >=
-    technicalArt.safety.robotExclusionSphere.radiusMeters;
+  const withinRoofClearance = collisionSpheres.every(
+    (sphere) =>
+      sphere.center[1] + sphere.radiusMeters + technicalArt.safety.minimumRoofClearanceMeters <=
+      technicalArt.safety.roomRoofMeters,
+  );
+  const clearOfRobotSilhouette = collisionSpheres.every(
+    (sphere) =>
+      distanceBetween(sphere.center, technicalArt.safety.robotExclusionSphere.center) >=
+      technicalArt.safety.robotExclusionSphere.radiusMeters + sphere.radiusMeters,
+  );
   const withinAttitudeLimits =
     Math.abs(pose.rotationRadians[0]) <= technicalArt.motion.maximumPitchRadians + 1e-9 &&
     Math.abs(pose.rotationRadians[1]) <= technicalArt.motion.maximumYawRadians + 1e-9 &&
@@ -258,10 +334,12 @@ export function captureDroneDiagnostics({
   presentation,
   elapsedSeconds,
   pose,
+  timing,
 }: {
   presentation: DronePresentation;
   elapsedSeconds: number;
   pose: DroneAmbientPose | null;
+  timing?: Omit<DroneTimingDiagnostics, "maximumAnimatedFps">;
 }): DroneDiagnosticsSnapshot {
   if (presentation.tier === "poster") {
     return {
@@ -272,6 +350,7 @@ export function captureDroneDiagnostics({
       pose: null,
       worldPositionMeters: null,
       safety: null,
+      timing: null,
     };
   }
 
@@ -287,10 +366,14 @@ export function captureDroneDiagnostics({
   const safeElapsedSeconds =
     presentation.tier === "reduced" || !Number.isFinite(elapsedSeconds)
       ? 0
-      : Math.max(0, elapsedSeconds);
+      : positiveModulo(
+          Math.max(0, elapsedSeconds),
+          OBSERVATORY_DRONE_TECHNICAL_ART.motion.cycleSeconds,
+        );
   const worldPositionMeters = resolveDroneWorldPosition(resolvedPose);
+  const collisionSpheres = resolveDroneCollisionSpheres(resolvedPose);
   const inspection = inspectDronePoseSafety(resolvedPose);
-  const { hoverCorridor, roomRoofMeters, modelHalfHeightMeters, robotExclusionSphere } =
+  const { hoverCorridor, roomRoofMeters, robotExclusionSphere } =
     OBSERVATORY_DRONE_TECHNICAL_ART.safety;
   const corridorMarginMeters = Math.min(
     ...worldPositionMeters.flatMap((value, index) => [
@@ -298,8 +381,20 @@ export function captureDroneDiagnostics({
       hoverCorridor.max[index]! - value,
     ]),
   );
-  const roofClearanceMeters = roomRoofMeters - (worldPositionMeters[1] + modelHalfHeightMeters);
-  const robotDistanceMeters = distanceBetween(worldPositionMeters, robotExclusionSphere.center);
+  const roofClearanceMeters = Math.min(
+    ...collisionSpheres.map((sphere) => roomRoofMeters - (sphere.center[1] + sphere.radiusMeters)),
+  );
+  const robotCandidates = collisionSpheres.map((sphere) => {
+    const distanceMeters = distanceBetween(sphere.center, robotExclusionSphere.center);
+    return {
+      id: sphere.id,
+      distanceMeters,
+      clearanceMeters: distanceMeters - robotExclusionSphere.radiusMeters - sphere.radiusMeters,
+    };
+  });
+  const closestRobotProxy = robotCandidates.reduce((closest, candidate) =>
+    candidate.clearanceMeters < closest.clearanceMeters ? candidate : closest,
+  );
   const attitudeMarginRadians = Math.min(
     OBSERVATORY_DRONE_TECHNICAL_ART.motion.maximumPitchRadians -
       Math.abs(resolvedPose.rotationRadians[0]),
@@ -330,9 +425,20 @@ export function captureDroneDiagnostics({
       roofClearanceMeters,
       minimumRequiredRoofClearanceMeters:
         OBSERVATORY_DRONE_TECHNICAL_ART.safety.minimumRoofClearanceMeters,
-      robotDistanceMeters,
-      robotClearanceMeters: robotDistanceMeters - robotExclusionSphere.radiusMeters,
+      robotDistanceMeters: closestRobotProxy.distanceMeters,
+      robotClearanceMeters: closestRobotProxy.clearanceMeters,
       attitudeMarginRadians,
+      collisionProxyCount: collisionSpheres.length,
+      closestRobotProxyId: closestRobotProxy.id,
+    },
+    timing: {
+      maximumAnimatedFps: OBSERVATORY_DRONE_TECHNICAL_ART.maximumAnimatedFps,
+      appliedPoseCount: timing?.appliedPoseCount ?? 0,
+      activePoseCount: timing?.activePoseCount ?? 0,
+      restPoseCount: timing?.restPoseCount ?? 0,
+      cycleCount: timing?.cycleCount ?? 0,
+      lastAppliedAtMs: timing?.lastAppliedAtMs ?? null,
+      minimumActiveApplyIntervalMs: timing?.minimumActiveApplyIntervalMs ?? null,
     },
   };
 }

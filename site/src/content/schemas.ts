@@ -265,6 +265,36 @@ const conceptProjectSchema = z
   })
   .strict();
 
+const laboratoryConceptCommonShape = {
+  id: idSchema,
+  descriptor: z.string().min(8),
+  status: z.literal("concept"),
+  statusLabel: z.string().min(4),
+  href: z.literal("/laboratory"),
+  summary: z.string().min(40),
+  boundary: z.string().min(40),
+  verification: z.literal("reference-approved"),
+  rights: z.literal("not-applicable"),
+  sourceIds: z.array(idSchema).min(1),
+};
+
+export const laboratoryConceptSchema = z.discriminatedUnion("artifactId", [
+  z
+    .object({
+      ...laboratoryConceptCommonShape,
+      artifactId: z.literal("electronics-ai"),
+      title: z.literal("Electronics / AI"),
+    })
+    .strict(),
+  z
+    .object({
+      ...laboratoryConceptCommonShape,
+      artifactId: z.literal("drone"),
+      title: z.literal("Aerial systems"),
+    })
+    .strict(),
+]);
+
 const evidenceProjectSchema = z
   .object({
     ...projectCommonShape,
@@ -849,6 +879,14 @@ export const assetLicensingEntrySchema = z
   })
   .strict()
   .superRefine((asset, context) => {
+    if (asset.scope === "launch" && !["include", "replace"].includes(asset.decision)) {
+      context.addIssue({
+        code: "custom",
+        path: ["decision"],
+        message: "Every launch asset must be included with resolved rights or explicitly replaced",
+      });
+    }
+
     if (asset.decision === "include" && ["pending", "rejected"].includes(asset.rights)) {
       context.addIssue({
         code: "custom",
@@ -1561,6 +1599,19 @@ export const siteContentSchema = z
     metadata: siteMetadataSchema,
     navigation: z.array(linkSchema).min(1),
     projects: z.array(projectSchema),
+    laboratoryConcepts: z
+      .array(laboratoryConceptSchema)
+      .length(2)
+      .superRefine((concepts, context) => {
+        (["electronics-ai", "drone"] as const).forEach((artifactId) => {
+          if (concepts.filter((concept) => concept.artifactId === artifactId).length !== 1) {
+            context.addIssue({
+              code: "custom",
+              message: `Laboratory concepts must contain exactly one ${artifactId} record`,
+            });
+          }
+        });
+      }),
     mediaWorks: z.array(mediaWorkSchema).default([]),
     experiences: z.array(experienceSchema).default([]),
     education: z.array(educationSchema).default([]),
@@ -1626,6 +1677,7 @@ export const siteContentSchema = z
 
     const collections = [
       content.projects,
+      content.laboratoryConcepts,
       content.mediaWorks,
       content.experiences,
       content.education,
@@ -1709,6 +1761,7 @@ export type SourceReference = z.infer<typeof sourceReferenceSchema>;
 export type LinkRecord = z.infer<typeof linkSchema>;
 export type MediaAsset = z.infer<typeof mediaAssetSchema>;
 export type Project = z.infer<typeof projectSchema>;
+export type LaboratoryConcept = z.infer<typeof laboratoryConceptSchema>;
 export type FlagshipProjectSummary = z.infer<typeof flagshipProjectSummarySchema>;
 export type FlagshipProjectSummaryLedger = z.infer<typeof flagshipProjectSummaryLedgerSchema>;
 export type AuditedProjectLink = z.infer<typeof auditedProjectLinkSchema>;

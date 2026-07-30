@@ -88,7 +88,9 @@ export function ProjectRegister({ projects }: ProjectRegisterProps) {
                     <StatusTag tone={statusTone[project.status]}>
                       {formatLabel(project.status)}
                     </StatusTag>
-                    <p>{project.summary}</p>
+                    <p>
+                      {"conceptStatement" in project ? project.conceptStatement : project.summary}
+                    </p>
                   </div>
 
                   <Link

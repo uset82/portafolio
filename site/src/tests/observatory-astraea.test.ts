@@ -46,6 +46,8 @@ test("ASTRAEA is a runtime-authored natural-palette mechanism inside its declare
   assert.equal(tiers.full.postPasses, 0);
   assert.equal(tiers.full.shadowCasters, 0);
   assert.equal(OBSERVATORY_ASTRAEA_TECHNICAL_ART.maximumAnimatedFps <= 24, true);
+  assert.equal(OBSERVATORY_ASTRAEA_TECHNICAL_ART.interactionNodeName, "AstraeaInteraction");
+  assert.equal(asset.nodes.includes(OBSERVATORY_ASTRAEA_TECHNICAL_ART.interactionNodeName), true);
   for (const color of Object.values(colors)) assert.equal(palette.has(color), true);
   assert.deepEqual(OBSERVATORY_ASTRAEA_TECHNICAL_ART.prohibitedDetails, [
     "letters-or-numerals",
@@ -203,6 +205,7 @@ test("the ASTRAEA DOM equivalent uses verified project content and the external 
   assert.match(markup, /Open ASTRAEA — Celestial intelligence/);
   assert.match(markup, /concept/);
   assert.match(markup, /aria-pressed="true"/);
+  assert.match(markup, /aria-label="Return ASTRAEA to overview"/);
   assert.match(markup, /Return to overview/);
 });
 
@@ -220,8 +223,12 @@ test("the scene owns one bounded ASTRAEA interaction path with no text mesh or p
   assert.match(astraeaSource, /window\.setInterval/);
   assert.match(astraeaSource, /window\.setTimeout/);
   assert.match(astraeaSource, /focusDurationMs/);
+  assert.match(astraeaSource, /resolveAstraeaRingPose\(progressRef\.current\)/);
+  assert.match(astraeaSource, /settleTransition\(\);[\s\S]*invalidate\(\);/);
   assert.match(astraeaSource, /onClick=\{selectAstraea\}/);
   assert.match(astraeaSource, /artifact\/select/);
+  assert.match(astraeaSource, /name=\{OBSERVATORY_ASTRAEA_TECHNICAL_ART\.interactionNodeName\}/);
+  assert.match(astraeaSource, /visible=\{false\}/);
   assert.match(astraeaSource, /AstraeaRing/);
   assert.match(astraeaSource, /AstraeaFocusPointer/);
   assert.match(astraeaSource, /captureAstraeaDiagnostics/);
@@ -238,5 +245,6 @@ test("the scene owns one bounded ASTRAEA interaction path with no text mesh or p
     styles,
     /@media \(max-width: 47\.99rem\)[\s\S]*\.observatory-artifact-access__focus/,
   );
+  assert.match(styles, /\.observatory-artifact-access\s*\{[\s\S]*rgb\(254 244 234 \/ 96%\)/);
   assert.match(styles, /@media \(prefers-reduced-motion: reduce\)/);
 });

@@ -21,6 +21,15 @@ export type ProgressiveLoadPlan = {
   canMountCanvas: boolean;
 };
 
+/* U.20 decision (2026-07-27): Carlos chose the poster-authoritative hero after
+ * the live-scene review, so the fully implemented and contract-tested Canvas
+ * must not mount on the public route until a composed-hero framing direction
+ * is approved. Flipping this to "approved" is that later approval's one-line
+ * activation path. */
+export type ObservatoryLiveCanvasPresentation = "approved" | "poster-authoritative";
+export const OBSERVATORY_LIVE_CANVAS_PRESENTATION: ObservatoryLiveCanvasPresentation =
+  "poster-authoritative";
+
 function findGroupId(assetId: ObservatoryAssetId): SceneGroupId {
   const group = Object.values(SCENE_GROUPS).find((candidate) =>
     (candidate.assetIds as readonly ObservatoryAssetId[]).includes(assetId),
@@ -38,6 +47,7 @@ function selectLod(asset: ObservatoryAsset, quality: SceneQualityTier) {
 export function buildProgressiveLoadPlan(
   assets: readonly ObservatoryAsset[],
   quality: SceneQualityTier,
+  presentation: ObservatoryLiveCanvasPresentation = OBSERVATORY_LIVE_CANVAS_PRESENTATION,
 ): ProgressiveLoadPlan {
   const entries: ProgressiveAssetEntry[] = [];
   const missingHeroCritical: ObservatoryAssetId[] = [];
@@ -67,7 +77,8 @@ export function buildProgressiveLoadPlan(
     deferred: entries.filter((entry) => entry.priority === "deferred"),
     onDemand: entries.filter((entry) => entry.priority === "on-demand"),
     missingHeroCritical,
-    canMountCanvas: quality !== "static" && missingHeroCritical.length === 0,
+    canMountCanvas:
+      presentation === "approved" && quality !== "static" && missingHeroCritical.length === 0,
   };
 }
 

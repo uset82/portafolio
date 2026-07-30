@@ -5,3 +5,4 @@ out
 public/images
 public/three/decoders
 pnpm-lock.yaml
+.next-*

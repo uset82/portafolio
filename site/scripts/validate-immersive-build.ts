@@ -3,6 +3,7 @@ import path from "node:path";
 
 import { observatoryAssetRegistry } from "../src/lib/three/asset-registry";
 import { observatoryAssetRegistrySchema } from "../src/lib/three/asset-registry-schema";
+import { OBSERVATORY_LIVE_CANVAS_PRESENTATION } from "../src/lib/three/progressive-loading";
 import { inspectPublishedRegistryAssets } from "./three/asset-pipeline";
 
 type ManifestAsset = {
@@ -185,12 +186,18 @@ async function validateClientChunks() {
 async function validateFallbackRender() {
   const homepagePath = path.join(buildRoot, "server/app/index.html");
   const homepage = await readFile(homepagePath, "utf8");
+  const liveCanvasHeld = OBSERVATORY_LIVE_CANVAS_PRESENTATION === "poster-authoritative";
   const required = [
     '<main id="main-content"',
     "I turn hidden patterns into working systems.",
-    "observatory-poster.png",
+    // The clip's own first frame, not the design mock-up: the mock-up has a CC
+    // AI panel painted into the artwork and would duplicate the real one.
+    "robot-water-poster.jpg",
     "A warm sunlit observatory with a ceramic robot touching a sage-colored water basin",
-    "Poster mode · checking device support",
+    // While U.20 holds the Canvas poster-authoritative there is no scene
+    // lifecycle, so the floating status chip must stay unmounted; when the
+    // live Canvas is approved again the initial capability status returns.
+    ...(liveCanvasHeld ? [] : ["Poster mode · checking device support"]),
     "<noscript>",
     ".scene-reveal",
     "opacity: 1 !important",
@@ -204,11 +211,37 @@ async function validateFallbackRender() {
     !homepage.includes("observatory-canvas-layer"),
     "The rights-gated prerender must not mount the Canvas layer.",
   );
-  invariant(
-    homepage.indexOf("observatory-poster.png") <
-      homepage.indexOf("Poster mode · checking device support"),
-    "The poster must precede the scene status in the prerendered fallback.",
-  );
+  if (liveCanvasHeld) {
+    invariant(
+      !homepage.includes('data-scene-layer="status"'),
+      "The held presentation must not render the floating scene-status chip.",
+    );
+    invariant(
+      !homepage.includes("observatory-experience-settings"),
+      "The held presentation must not render the Experience settings control.",
+    );
+    invariant(
+      !homepage.includes('data-scene-layer="artifact-access"'),
+      "The held presentation must not stack artifact overlay labels on the hero visual.",
+    );
+    // The hero clip is client-only, so the prerendered hero stays a still poster.
+    invariant(
+      !/<video\b/i.test(homepage),
+      "The prerendered hero must remain the still poster, not a video element.",
+    );
+    ["/work/astraea", "/work/pinaculo", "/work/future-energy", "/laboratory"].forEach((href) =>
+      invariant(
+        homepage.includes(`href="${href}"`),
+        `The homepage must still reach ${href} without the artifact overlays.`,
+      ),
+    );
+  } else {
+    invariant(
+      homepage.indexOf("robot-water-poster.jpg") <
+        homepage.indexOf("Poster mode · checking device support"),
+      "The poster must precede the scene status in the prerendered fallback.",
+    );
+  }
 }
 
 async function validateStaticRouteSemantics() {

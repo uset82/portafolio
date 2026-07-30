@@ -12,12 +12,16 @@ import type { GltfLoadingSnapshot } from "@/lib/three/gltf-loading-state";
 export const OBSERVATORY_TEST_ASSET_ROOT = "/three/test";
 
 export function createObservatoryTestRegistry(): ObservatoryAssetRegistry {
+  // The production robot is runtime-authored, but the imported-model loading
+  // path must stay covered for a future sculpted rights-cleared GLB, so the
+  // test registry deliberately keeps the robot as a URL-loaded model double.
   return observatoryAssetRegistrySchema.parse({
     ...observatoryAssetRegistry,
     assets: observatoryAssetRegistry.assets.map((asset) =>
-      asset.kind === "model"
+      asset.kind === "model" || asset.id === "robot-guide"
         ? {
             ...asset,
+            kind: "model",
             status: "specified",
             lods: asset.lods.map((lod) => ({
               ...lod,

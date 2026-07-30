@@ -5,18 +5,23 @@ import test from "node:test";
 
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
+import { Box3, InstancedMesh, Matrix4, Vector3 } from "three";
 
 import { ObservatoryArtifactAccess } from "@/components/three/observatory-artifact-access";
 import {
   ObservatorySceneProvider,
   type ObservatorySceneProviderProps,
 } from "@/components/three/observatory-scene-provider";
+import { rawSiteContent } from "@/content/records";
+import { siteContentSchema } from "@/content/schemas";
 import { createObservatoryDroneModel } from "@/lib/three/create-observatory-drone-model";
 import {
+  OBSERVATORY_DRONE_COLLISION_SPHERES,
   OBSERVATORY_DRONE_TECHNICAL_ART,
   captureDroneDiagnostics,
   inspectDronePoseSafety,
   resolveDroneAmbientPose,
+  resolveDroneCollisionSpheres,
   resolveDronePresentation,
 } from "@/lib/three/drone-system";
 import { getObservatoryAsset } from "@/lib/three/asset-registry";
@@ -45,6 +50,10 @@ test("the procedural drone is action-ready, natural-palette-only, and within bot
     assert.equal(full.root.getObjectByName("DroneCollisionProxy") !== undefined, true);
     assert.equal(full.root.getObjectByName("DroneCameraGimbal") !== undefined, true);
     assert.equal(full.diagnostics.actionReady, true);
+    assert.equal(full.diagnostics.triangles, 6_076);
+    assert.equal(full.diagnostics.drawCalls, 15);
+    assert.equal(reduced.diagnostics.triangles, 2_472);
+    assert.equal(reduced.diagnostics.drawCalls, 15);
     assert.equal(full.diagnostics.triangles <= asset.lods[0]!.maxTriangles, true);
     assert.equal(reduced.diagnostics.triangles <= asset.lods[1]!.maxTriangles, true);
     assert.equal(
@@ -52,7 +61,58 @@ test("the procedural drone is action-ready, natural-palette-only, and within bot
       true,
     );
     assert.equal(full.diagnostics.materialCount, 5);
+    assert.equal(reduced.diagnostics.materialCount, 5);
     assert.equal(full.diagnostics.textureCount, 0);
+    assert.equal(reduced.diagnostics.textureCount, 0);
+    for (const model of [full, reduced]) {
+      model.root.updateMatrixWorld(true);
+      const bounds = new Box3().setFromObject(model.root);
+      const size = bounds.getSize(new Vector3());
+      asset.scaleMeters.forEach((maximum, index) => {
+        assert.equal(
+          size.getComponent(index) <= maximum + 1e-6,
+          true,
+          `${model.diagnostics.tier} axis ${index} exceeds declared bounds`,
+        );
+      });
+      OBSERVATORY_DRONE_TECHNICAL_ART.modelBoundsMeters.min.forEach((minimum, index) => {
+        assert.equal(
+          bounds.min.getComponent(index) >= minimum - 1e-6,
+          true,
+          `${model.diagnostics.tier} minimum axis ${index} escapes the declared model bounds`,
+        );
+      });
+      OBSERVATORY_DRONE_TECHNICAL_ART.modelBoundsMeters.max.forEach((maximum, index) => {
+        assert.equal(
+          bounds.max.getComponent(index) <= maximum + 1e-6,
+          true,
+          `${model.diagnostics.tier} maximum axis ${index} escapes the declared model bounds`,
+        );
+      });
+
+      const guards = model.root.getObjectByName("DroneRotorGuards");
+      assert.equal(guards instanceof InstancedMesh, true);
+      if (!(guards instanceof InstancedMesh)) continue;
+      const guardPositions = guards.geometry.getAttribute("position");
+      const instanceMatrix = new Matrix4();
+      const vertex = new Vector3();
+      OBSERVATORY_DRONE_COLLISION_SPHERES.slice(1).forEach((sphere, index) => {
+        const sphereCenter = new Vector3(...sphere.center);
+        guards.getMatrixAt(index, instanceMatrix);
+        for (let vertexIndex = 0; vertexIndex < guardPositions.count; vertexIndex += 1) {
+          vertex.fromBufferAttribute(guardPositions, vertexIndex).applyMatrix4(instanceMatrix);
+          assert.equal(
+            vertex.distanceTo(sphereCenter) <= sphere.radiusMeters + 1e-9,
+            true,
+            `${model.diagnostics.tier} rotor ${index + 1} guard escapes its collision sphere`,
+          );
+        }
+      });
+    }
+    const collisionProxy = full.root.getObjectByName("DroneCollisionProxy");
+    assert.equal(collisionProxy?.userData.colliderType, "compound-spheres");
+    assert.equal(collisionProxy?.userData.rotorSpheres.length, 4);
+    assert.equal(OBSERVATORY_DRONE_COLLISION_SPHERES.length, 5);
     for (const color of Object.values(OBSERVATORY_DRONE_TECHNICAL_ART.colors)) {
       assert.equal(palette.has(color), true);
     }
@@ -69,6 +129,9 @@ test("the stabilization path rests for two thirds of each cycle and stays inside
   const restNearEnd = resolveDroneAmbientPose(motion.cycleSeconds - 0.001);
   let activeSamples = 0;
   let restSamples = 0;
+  let minimumCorridorMargin = Number.POSITIVE_INFINITY;
+  let minimumRoofClearance = Number.POSITIVE_INFINITY;
+  let minimumRobotClearance = Number.POSITIVE_INFINITY;
 
   assert.deepEqual(restAtStart, restAtBoundary);
   assert.equal(restNearEnd.active, false);
@@ -77,16 +140,40 @@ test("the stabilization path rests for two thirds of each cycle and stays inside
     const elapsed = (motion.cycleSeconds * index) / 1_200;
     const pose = resolveDroneAmbientPose(elapsed);
     const safety = inspectDronePoseSafety(pose);
+    const diagnostics = captureDroneDiagnostics({
+      presentation: resolveDronePresentation("full", "full", false),
+      elapsedSeconds: elapsed,
+      pose,
+    });
     if (pose.active) activeSamples += 1;
     else restSamples += 1;
     assert.equal(safety.safe, true, `unsafe drone pose at ${elapsed.toFixed(3)} seconds`);
     assert.equal(Math.abs(pose.offsetMeters[1]) <= motion.maximumVerticalOffsetMeters + 1e-9, true);
     assert.equal(Math.abs(pose.rotationRadians[2]) <= motion.maximumRollRadians + 1e-9, true);
+    assert.equal(resolveDroneCollisionSpheres(pose).length, 5);
+    minimumCorridorMargin = Math.min(
+      minimumCorridorMargin,
+      diagnostics.safety?.corridorMarginMeters ?? Number.NEGATIVE_INFINITY,
+    );
+    minimumRoofClearance = Math.min(
+      minimumRoofClearance,
+      diagnostics.safety?.roofClearanceMeters ?? Number.NEGATIVE_INFINITY,
+    );
+    minimumRobotClearance = Math.min(
+      minimumRobotClearance,
+      diagnostics.safety?.robotClearanceMeters ?? Number.NEGATIVE_INFINITY,
+    );
   }
 
   assert.equal(activeSamples > 0, true);
   assert.equal(restSamples > activeSamples, true);
   assert.equal(motion.activeSeconds + motion.restSeconds, motion.cycleSeconds);
+  assert.equal(minimumCorridorMargin >= -1e-9, true);
+  assert.equal(
+    minimumRoofClearance >= OBSERVATORY_DRONE_TECHNICAL_ART.safety.minimumRoofClearanceMeters,
+    true,
+  );
+  assert.equal(minimumRobotClearance >= 0, true);
 });
 
 test("reduced, compact, static, and hidden-document paths stop ambient animation", () => {
@@ -123,6 +210,14 @@ test("drone diagnostics expose phase, pose, and measurable safety clearances", (
     presentation: resolveDronePresentation("full", "full", false),
     elapsedSeconds: 1,
     pose: activePose,
+    timing: {
+      appliedPoseCount: 12,
+      activePoseCount: 11,
+      restPoseCount: 1,
+      cycleCount: 0,
+      lastAppliedAtMs: 1_000,
+      minimumActiveApplyIntervalMs: 1_000 / 12,
+    },
   });
 
   assert.equal(active.version, 1);
@@ -138,6 +233,11 @@ test("drone diagnostics expose phase, pose, and measurable safety clearances", (
   );
   assert.equal((active.safety?.robotClearanceMeters ?? -1) >= 0, true);
   assert.equal((active.safety?.attitudeMarginRadians ?? -1) >= -1e-9, true);
+  assert.equal(active.safety?.collisionProxyCount, 5);
+  assert.equal(typeof active.safety?.closestRobotProxyId, "string");
+  assert.equal(active.timing?.maximumAnimatedFps, 12);
+  assert.equal(active.timing?.appliedPoseCount, 12);
+  assert.equal((active.timing?.minimumActiveApplyIntervalMs ?? 0) >= 1_000 / 12, true);
 
   const paused = captureDroneDiagnostics({
     presentation: resolveDronePresentation("full", "paused", false),
@@ -173,10 +273,15 @@ test("drone diagnostics expose phase, pose, and measurable safety clearances", (
   assert.equal(poster.pose, null);
   assert.equal(poster.worldPositionMeters, null);
   assert.equal(poster.safety, null);
+  assert.equal(poster.timing, null);
 });
 
 test("Aerial systems has an accurate DOM route independent of the Canvas", () => {
   const store = createObservatorySceneStore();
+  const concept = siteContentSchema
+    .parse(rawSiteContent)
+    .laboratoryConcepts.find((candidate) => candidate.artifactId === "drone");
+  assert.ok(concept);
   store.dispatch({ type: "artifact/select", artifactId: "drone" });
   const markup = renderToStaticMarkup(
     createElement(
@@ -184,11 +289,11 @@ test("Aerial systems has an accurate DOM route independent of the Canvas", () =>
       { store } as ObservatorySceneProviderProps,
       createElement(ObservatoryArtifactAccess, {
         artifact: {
-          artifactId: "drone",
-          href: "/laboratory",
-          title: "Aerial systems",
-          descriptor: "Guarded camera-drone concept",
-          status: "concept",
+          artifactId: concept.artifactId,
+          href: concept.href,
+          title: concept.title,
+          descriptor: concept.descriptor,
+          status: concept.status,
           mechanismDescription:
             "A protected-rotor camera-drone concept uses a sparse stabilization cycle; no flight-performance or autonomous-operation claim is made.",
         },
@@ -215,14 +320,23 @@ test("one sparse drone owner is wired with visibility pause, DOM fallback, and n
   );
   const capabilitySource = readSource("src/components/three/observatory-capability-controller.tsx");
   const pageSource = readSource("src/app/page.tsx");
+  const recordsSource = readSource("src/content/records.ts");
   const styles = readSource("src/app/globals.css");
   const manifest = readSource("../docs/assets/observatory-3d-manifest.json");
 
   assert.match(droneSource, /window\.setInterval/);
   assert.match(droneSource, /window\.setTimeout/);
-  assert.match(droneSource, /motion\.restSeconds/);
+  assert.match(droneSource, /cycleSeconds - elapsedSeconds/);
   assert.match(droneSource, /useFrame/);
+  assert.match(droneSource, /nowMs - lastAppliedAtMs < minimumIntervalMs/);
+  assert.match(droneSource, /appliedPhaseRef\.current !== "rest"/);
+  assert.match(droneSource, /startedAtMs \+= resumedAtMs - clockRef\.current\.pausedAtMs/);
+  assert.match(droneSource, /scene\.motion\.preference === "reduce" \? "reduced" : motionMode/);
   assert.match(droneSource, /onClick=\{selectDrone\}/);
+  assert.match(
+    droneSource,
+    /name=\{OBSERVATORY_DRONE_TECHNICAL_ART\.interactionNodeName\}[\s\S]*visible=\{false\}[\s\S]*interactionDimensionsMeters/,
+  );
   assert.match(droneSource, /captureDroneDiagnostics/);
   assert.match(droneSource, /onDiagnosticsReady/);
   assert.doesNotMatch(
@@ -235,11 +349,13 @@ test("one sparse drone owner is wired with visibility pause, DOM fallback, and n
   assert.match(progressiveSource, /onDroneDiagnosticsReady/);
   assert.match(capabilitySource, /visibilitychange/);
   assert.match(capabilitySource, /motion\/visibility/);
-  assert.match(pageSource, /artifactId: "drone"/);
+  assert.match(recordsSource, /artifactId: "drone"/);
   assert.match(pageSource, /stylized|visual concept|flight-performance/);
+  assert.match(pageSource, /siteContent\.laboratoryConcepts\.map/);
+  assert.doesNotMatch(pageSource, /status:\s*projectArtifacts\[2\]!\.status/);
   assert.match(
     styles,
-    /\.observatory-artifact-access\[data-artifact-id="drone"\][\s\S]*top:\s*17%/,
+    /\.observatory-artifact-access\[data-artifact-id="drone"\][\s\S]*top:\s*17%[\s\S]*right:\s*clamp\(1rem,\s*3vw,\s*3rem\)/,
   );
   assert.match(
     styles,

@@ -61,7 +61,10 @@ a {
 
 :focus-visible {
   border-radius: 0.25rem;
-  outline: none;
+  /* Transparent outline stays invisible normally but becomes a visible
+     system-color ring in forced-colors mode, where box-shadow is suppressed. */
+  outline: 2px solid transparent;
+  outline-offset: 2px;
   box-shadow: var(--shadow-focus);
 }
 
@@ -345,41 +348,28 @@ a {
   white-space: nowrap;
 }
 
-.cc-mark {
-  position: relative;
+.brand-mark {
   display: inline-grid;
   width: 3.2rem;
   aspect-ratio: 1;
   flex: none;
   place-items: center;
-  border: 1px solid var(--color-espresso);
+  overflow: hidden;
+  /* Approved CA²M monogram: warm espresso ground keeps the gold legible on parchment. */
+  background: var(--color-espresso);
   border-radius: 50%;
-  font-family: var(--font-display);
-  font-size: 1.35rem;
-  line-height: 1;
 }
 
-.cc-mark::before,
-.cc-mark::after {
-  position: absolute;
-  width: 118%;
-  height: 64%;
-  border: 1px solid rgb(46 36 23 / 48%);
-  border-radius: 50%;
-  content: "";
+.brand-mark img {
+  width: 78%;
+  height: 78%;
+  object-fit: contain;
 }
 
-.cc-mark::before {
-  transform: rotate(45deg);
-}
-
-.cc-mark::after {
-  transform: rotate(-45deg);
-}
-
-.cc-mark--compact {
-  width: 1.75rem;
-  font-size: 0.75rem;
+/* Assistant scale: large enough for the monogram's inner Taurus glyph to stay
+   legible in the CC AI trigger and dialog header. */
+.brand-mark--compact {
+  width: 2.4rem;
 }
 
 .desktop-navigation {
@@ -438,6 +428,14 @@ a {
   background: transparent;
   color: currentColor;
   opacity: 0.85;
+  transition:
+    opacity var(--duration-fast) var(--ease-standard),
+    color var(--duration-fast) var(--ease-standard);
+}
+
+.quiet-control:hover:not(:disabled) {
+  opacity: 1;
+  color: var(--color-sage-dark);
 }
 
 .menu-button {
@@ -452,12 +450,23 @@ a {
 
 .mobile-navigation-shell {
   display: none;
+  animation: mobile-nav-enter var(--duration-base) var(--ease-emphasized) both;
+}
+
+@keyframes mobile-nav-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
 }
 
 .observatory-hero {
   position: relative;
   min-height: max(52rem, 100svh);
-  overflow: hidden;
+  /* Deliberately not `overflow: hidden`: that clipped the viewport-fixed CC AI
+     panel, which lives inside this section to keep its place in the focus
+     order. The bleeding poster and canvas are already clipped by
+     `.scene-reveal`, so the media never escapes. */
   background: var(--color-canvas-soft);
   isolation: isolate;
 }
@@ -534,6 +543,61 @@ a {
   background: var(--color-canvas-soft);
 }
 
+/* The hero's moving visual sits directly over the approved still poster and
+ * fades in once real frames are playing, so the first paint never flashes. */
+.observatory-hero-video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 44%;
+  opacity: 0;
+  transition: opacity var(--duration-reveal) var(--ease-emphasized);
+}
+
+.observatory-hero-video[data-visible="true"] {
+  opacity: 1;
+}
+
+/* Shown only while the clip is not running — a blocked autoplay, a paused tab,
+   or a reduced-motion visitor opting in. It disappears once playback starts. */
+.observatory-hero-video__play {
+  position: absolute;
+  z-index: var(--z-content);
+  bottom: var(--page-gutter);
+  left: var(--page-gutter);
+  display: inline-flex;
+  min-height: var(--control-height);
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.95rem;
+  border: 1px solid rgb(254 244 234 / 60%);
+  border-radius: var(--radius-control);
+  background: rgb(95 75 53 / 88%);
+  color: var(--color-text-on-dark);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(10px);
+  touch-action: manipulation;
+  transition:
+    background-color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
+}
+
+.observatory-hero-video__play:hover,
+.observatory-hero-video__play:focus-visible {
+  border-color: rgb(254 244 234 / 90%);
+  background: rgb(95 75 53 / 96%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .observatory-hero-video {
+    display: none;
+  }
+}
+
 .editorial-field {
   position: absolute;
   z-index: var(--z-content);
@@ -545,7 +609,7 @@ a {
   align-items: center;
   padding: calc(var(--header-height) + 3rem) clamp(2rem, 3vw, 3.5rem) 3rem var(--page-gutter);
   background: var(--color-canvas-soft);
-  box-shadow: 4rem 0 5rem 2rem rgb(254 244 234 / 88%);
+  box-shadow: 2rem 0 3rem 0.5rem rgb(254 244 234 / 72%);
 }
 
 .hero-copy {
@@ -698,7 +762,7 @@ a {
   padding: 0.4rem 0.75rem;
   border: 1px solid rgb(254 244 234 / 55%);
   border-radius: var(--radius-control);
-  background: rgb(95 75 53 / 70%);
+  background: rgb(95 75 53 / 88%);
   color: var(--color-text-on-dark);
   font-size: 0.7rem;
   backdrop-filter: blur(10px);
@@ -709,9 +773,12 @@ a {
   z-index: var(--z-content);
   display: grid;
   width: min(14rem, 24vw);
-  padding: 0.7rem 0;
+  padding: 0.7rem 0.6rem;
   border-block: 1px solid rgb(95 75 53 / 42%);
+  /* Warm-ivory scrim keeps label text at AA contrast over live scene pixels. */
+  background: rgb(254 244 234 / 96%);
   color: var(--color-deep-espresso);
+  backdrop-filter: blur(8px);
 }
 
 .observatory-artifact-access[data-artifact-id="astraea"] {
@@ -721,7 +788,8 @@ a {
 
 .observatory-artifact-access[data-artifact-id="pinaculo"] {
   bottom: 9.4rem;
-  left: 57%;
+  /* Centered under the relocated carrier and clear of the Sound Lab card. */
+  left: 62.5%;
   width: min(13rem, 22vw);
   transform: translateX(-50%);
 }
@@ -746,14 +814,48 @@ a {
 
 .observatory-artifact-access[data-artifact-id="drone"] {
   top: 17%;
-  right: 19%;
+  right: clamp(1rem, 3vw, 3rem);
   width: min(12rem, 17vw);
+}
+
+/* A focused camera view has one content job. Keep unrelated cards from
+ * obscuring the selected mechanism; overview navigation restores every card. */
+.observatory-progressive-experience:has(.observatory-canvas-layer[aria-hidden="false"]):has(
+    .observatory-artifact-access[data-selected="true"]
+  )
+  .observatory-artifact-access[data-selected="false"] {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.observatory-artifact-access[data-artifact-id="electronics-ai"][data-selected="true"] {
+  top: 22%;
+  right: clamp(1rem, 3vw, 3rem);
+  left: auto;
+  width: min(13rem, 20vw);
+}
+
+.observatory-artifact-access[data-artifact-id="future-energy"][data-selected="true"] {
+  top: 22%;
+  right: auto;
+  left: clamp(1rem, 3vw, 3rem);
+  width: min(13rem, 20vw);
+}
+
+/* The Sound Lab and PINÁCULO cards share the lower scene band. Keep the
+ * incomplete audio label out of the intermediate-width composition until the
+ * two fixed-width cards have measurable horizontal clearance. Sound remains
+ * available through the persistent media navigation and teaser. */
+@media (min-width: 64.01rem) and (max-width: 88.75rem) {
+  .observatory-artifact-access[data-artifact-id="sound-lab"] {
+    display: none;
+  }
 }
 
 .observatory-artifact-access__status {
   margin-bottom: 0.35rem;
   color: var(--color-text-secondary);
-  font-size: 0.58rem;
+  font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -816,12 +918,22 @@ a {
   text-decoration-color: currentcolor;
 }
 
-.cc-ai-trigger,
-.cc-ai-panel {
+.cc-ai-trigger {
   position: absolute;
   z-index: var(--z-chat);
-  right: 0;
+  right: var(--page-gutter);
   bottom: 9.15rem;
+}
+
+/* The open panel is pinned to the viewport, not to the hero. Anchored inside a
+   hero taller than the screen, it drifted off the top as soon as the page
+   scrolled — and opening it scrolls the page, so its own title could end up
+   behind the sticky header. Mobile already used this pattern. */
+.cc-ai-panel {
+  position: fixed;
+  z-index: var(--z-chat);
+  right: var(--page-gutter);
+  bottom: 2rem;
 }
 
 .cc-ai-trigger {
@@ -829,14 +941,13 @@ a {
   grid-template-columns: auto 1fr;
   grid-template-rows: auto 1fr auto;
   width: min(25rem, calc(100vw - 2 * var(--page-gutter)));
-  min-height: 17rem;
   align-items: center;
   gap: 0.8rem;
   align-content: start;
   padding: 0.9rem;
   border: 1px solid rgb(254 244 234 / 60%);
   border-radius: var(--radius-panel);
-  background: rgb(95 75 53 / 74%);
+  background: rgb(95 75 53 / 88%);
   color: var(--color-text-on-dark);
   box-shadow: var(--shadow-soft);
   text-align: left;
@@ -858,6 +969,18 @@ a {
   line-height: 1.65;
 }
 
+/* Compact rest state: one dominant hero CTA. The preview and prompt return on
+   hover or keyboard focus without moving the anchored bottom-right corner. */
+.cc-ai-trigger:not(:hover, :focus-visible) .cc-ai-trigger__preview,
+.cc-ai-trigger:not(:hover, :focus-visible) .cc-ai-trigger__prompt {
+  display: none;
+}
+
+.cc-ai-trigger:not(:hover, :focus-visible) {
+  width: auto;
+  min-height: var(--control-height);
+}
+
 .cc-ai-trigger__prompt {
   align-self: end;
   min-height: var(--control-height);
@@ -876,21 +999,26 @@ a {
 .cc-ai-trigger strong,
 .cc-ai-panel__title h2 {
   margin: 0;
-  font-size: 0.86rem;
+  font-size: 0.95rem;
   font-weight: 600;
 }
 
 .cc-ai-trigger small,
 .cc-ai-panel small {
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   opacity: 0.78;
 }
 
 .cc-ai-panel {
   display: grid;
-  grid-template-rows: auto minmax(7rem, 1fr) auto auto auto;
-  width: min(25rem, calc(100vw - 2 * var(--page-gutter)));
-  max-height: 68vh;
+  /* The transcript row must be allowed to collapse (`minmax(0, …)`). With a
+     fixed minimum the grid outgrows its own max-height, and because the panel
+     is anchored from the bottom it overflows upward under the sticky header —
+     clipping its title and colliding the footer into the last answer. */
+  grid-template-rows: auto minmax(0, 1fr) auto auto auto;
+  width: min(40rem, calc(100vw - 2 * var(--page-gutter)));
+  /* Clears the sticky header above and the 2rem anchor below at any height. */
+  max-height: min(calc(100svh - 9.5rem), 42rem);
   border: 1px solid rgb(254 244 234 / 65%);
   border-radius: var(--radius-panel);
   background: rgb(95 75 53 / 86%);
@@ -928,10 +1056,18 @@ a {
   background: transparent;
   color: currentColor;
   font-size: 0.68rem;
+  transition:
+    opacity var(--duration-fast) var(--ease-standard),
+    color var(--duration-fast) var(--ease-standard);
+}
+
+.icon-control:hover:not(:disabled) {
+  color: var(--color-sage-dark);
 }
 
 .cc-ai-transcript {
-  min-height: 7rem;
+  /* Scrolls inside its grid row instead of forcing the panel taller. */
+  min-height: 0;
   padding: 1rem;
   overflow: auto;
   overscroll-behavior: contain;
@@ -940,8 +1076,8 @@ a {
 
 .cc-ai-welcome > p {
   margin: 0;
-  font-size: 0.8rem;
-  line-height: 1.6;
+  font-size: 0.86rem;
+  line-height: 1.65;
 }
 
 .suggested-prompts {
@@ -957,7 +1093,7 @@ a {
   border-radius: var(--radius-control);
   background: rgb(254 244 234 / 8%);
   color: currentColor;
-  font-size: 0.7rem;
+  font-size: 0.78rem;
   text-align: left;
   touch-action: manipulation;
   transition:
@@ -972,7 +1108,7 @@ a {
 }
 
 .cc-ai-message {
-  width: min(92%, 20rem);
+  width: min(92%, 24rem);
   margin: 0;
 }
 
@@ -992,7 +1128,7 @@ a {
   margin-bottom: 0.25rem;
   color: rgb(254 244 234 / 68%);
   font-size: 0.58rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -1007,8 +1143,8 @@ a {
   border: 1px solid rgb(254 244 234 / 20%);
   border-radius: 0 var(--radius-control) var(--radius-control) var(--radius-control);
   background: rgb(254 244 234 / 8%);
-  font-size: 0.76rem;
-  line-height: 1.6;
+  font-size: 0.84rem;
+  line-height: 1.65;
   white-space: pre-wrap;
 }
 
@@ -1146,7 +1282,7 @@ a {
 
 .cc-ai-form > label {
   font-size: 0.62rem;
-  font-weight: 650;
+  font-weight: 600;
 }
 
 .cc-ai-form__row {
@@ -1631,6 +1767,14 @@ a {
   border-bottom: 1px solid var(--color-taupe);
   font-size: 0.82rem;
   font-weight: 600;
+  transition:
+    border-color var(--duration-fast) var(--ease-standard),
+    color var(--duration-fast) var(--ease-standard);
+}
+
+.text-link:hover {
+  border-bottom-color: var(--color-sage-dark);
+  color: var(--color-sage-dark);
 }
 
 .laboratory-section {
@@ -1739,7 +1883,7 @@ a {
   color: var(--color-text-muted);
   font-size: 0.62rem;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -1818,9 +1962,9 @@ a {
   align-items: center;
   gap: 0.65rem;
   margin: 1.35rem 0 0;
-  color: var(--color-text-secondary);
+  color: var(--color-text-secondary-on-tint);
   font-size: 0.72rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -1847,7 +1991,7 @@ a {
 .media-teaser__description {
   max-width: 37rem;
   margin: 2rem 0 0;
-  color: var(--color-text-secondary);
+  color: var(--color-text-secondary-on-tint);
   font-size: clamp(1rem, 1.15vw, 1.12rem);
   line-height: 1.7;
 }
@@ -1880,7 +2024,7 @@ a {
   color: var(--color-text-muted);
   font-family: var(--font-body);
   font-size: 0.65rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.08em;
 }
 
@@ -1914,7 +2058,7 @@ a {
   margin: 1.35rem 0 0;
   color: var(--color-text-secondary);
   font-size: 0.72rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -1941,7 +2085,7 @@ a {
 .personal-teaser__description {
   max-width: 39rem;
   margin: 2rem 0 0;
-  color: var(--color-text-secondary);
+  color: var(--color-text-secondary-on-tint);
   font-size: clamp(1rem, 1.15vw, 1.12rem);
   line-height: 1.7;
 }
@@ -1986,7 +2130,7 @@ a {
   color: var(--color-text-muted);
   font-family: var(--font-body);
   font-size: 0.62rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.08em;
 }
 
@@ -2018,7 +2162,7 @@ a {
   color: var(--color-text-muted);
   font-size: 0.62rem;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -2111,7 +2255,7 @@ a {
   grid-template-columns: repeat(3, 1fr);
   color: var(--color-text-muted);
   font-size: 0.58rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.1em;
   text-align: center;
   text-transform: uppercase;
@@ -2321,7 +2465,7 @@ a {
   max-width: 11ch;
   margin-top: 1.75rem;
   font-size: clamp(3.5rem, 6.8vw, 7.5rem);
-  line-height: 0.88;
+  line-height: var(--leading-display);
 }
 
 .site-footer .section-label {
@@ -2335,7 +2479,7 @@ a {
   margin: 1.25rem 0 0;
   color: rgb(254 244 234 / 72%);
   font-size: 0.68rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -2403,7 +2547,7 @@ a {
   color: rgb(254 244 234 / 62%);
   font-size: 0.6rem;
   font-style: normal;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.13em;
   text-transform: uppercase;
 }
@@ -2459,7 +2603,7 @@ a {
   padding-top: 1.2rem;
   color: rgb(254 244 234 / 62%);
   font-size: 0.65rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.13em;
   text-transform: uppercase;
 }
@@ -2493,7 +2637,7 @@ a {
   color: rgb(254 244 234 / 52%);
   font-family: var(--font-body);
   font-size: 0.58rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.08em;
 }
 
@@ -2585,7 +2729,7 @@ a {
   margin: 0 0 1.2rem;
   color: var(--color-text-secondary);
   font-size: 0.68rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.13em;
   text-transform: uppercase;
 }
@@ -2597,7 +2741,7 @@ a {
   font-size: clamp(5rem, 9.4vw, 10rem);
   font-weight: 500;
   letter-spacing: -0.07em;
-  line-height: 0.78;
+  line-height: var(--leading-display);
   text-wrap: balance;
 }
 
@@ -2624,11 +2768,6 @@ a {
   background: var(--color-sage-pale);
   box-shadow: inset 0 0 0 0.75rem color-mix(in srgb, var(--color-canvas-soft) 38%, transparent);
   transition: transform var(--duration-base) var(--ease-emphasized);
-}
-
-.story-profile__hero:focus-within .story-profile__portrait,
-.story-profile__hero:hover .story-profile__portrait {
-  transform: translateY(-0.35rem);
 }
 
 .story-profile__portrait::before,
@@ -2666,7 +2805,7 @@ a {
 .story-profile__portrait small {
   font-size: 0.62rem;
   font-style: normal;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -2763,17 +2902,12 @@ a {
   border-bottom: 1px solid var(--color-border-soft);
 }
 
-.story-profile__practice:focus-within li,
-.story-profile__practice:hover li {
-  padding-inline: 0.5rem;
-}
-
 .story-profile__practice li span,
 .story-profile__practice li i {
   color: var(--color-text-muted);
   font-size: 0.62rem;
   font-style: normal;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.1em;
 }
 
@@ -2833,7 +2967,7 @@ a {
 
 .story-profile__record dt {
   font-size: 0.63rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -2884,6 +3018,11 @@ a {
   border-bottom-color: rgb(254 244 234 / 44%);
 }
 
+.story-profile__record .ui-action--text:hover:not(:disabled) {
+  color: var(--color-buff);
+  border-bottom-color: var(--color-buff);
+}
+
 @media (min-width: 48rem) and (max-width: 70rem) {
   .story-profile__hero,
   .story-profile__narrative,
@@ -2892,9 +3031,15 @@ a {
   }
 
   .story-profile__portrait {
-    grid-column: 1;
+    grid-column: 2;
     grid-row: 2;
+    justify-self: start;
+    width: min(100%, 22rem);
     align-self: end;
+  }
+
+  .story-profile__portrait strong {
+    font-size: clamp(5rem, 10vw, 8rem);
   }
 
   .story-profile__identity {
@@ -2967,11 +3112,6 @@ a {
 
   .story-profile__practice li {
     min-height: 5.25rem;
-  }
-
-  .story-profile__practice:focus-within li,
-  .story-profile__practice:hover li {
-    padding-inline: 0;
   }
 
   .story-profile__record-copy dl > div {
@@ -3075,7 +3215,7 @@ a {
   z-index: 2;
   color: rgb(254 244 234 / 64%);
   font-size: 0.6rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.13em;
   text-transform: uppercase;
 }
@@ -3162,7 +3302,7 @@ a {
 .contact-path__continuation > p {
   max-width: 42rem;
   margin: 0;
-  color: var(--color-text-secondary);
+  color: var(--color-text-secondary-on-tint);
   font-size: clamp(1rem, 1.2vw, 1.15rem);
   line-height: 1.75;
 }
@@ -3187,7 +3327,7 @@ a {
 .contact-path__github small {
   font-family: var(--font-body);
   font-size: 0.62rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -3219,16 +3359,11 @@ a {
     padding-inline var(--duration-fast) var(--ease-standard);
 }
 
-.contact-path__privacy:focus-within dl > div,
-.contact-path__privacy:hover dl > div {
-  padding-inline: 0.5rem;
-}
-
 .contact-path__privacy dt {
   display: grid;
   grid-template-columns: 2.5rem 1fr;
   font-size: 0.7rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -3287,6 +3422,11 @@ a {
   .contact-path__continuation nav {
     grid-column: 2;
   }
+
+  .contact-path__channel,
+  .contact-path__privacy {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 47.99rem) {
@@ -3341,11 +3481,6 @@ a {
   .contact-path__privacy dl > div {
     grid-template-columns: 1fr;
     gap: 0.5rem;
-  }
-
-  .contact-path__privacy:focus-within dl > div,
-  .contact-path__privacy:hover dl > div {
-    padding-inline: 0;
   }
 
   .contact-path__continuation nav {
@@ -3471,6 +3606,7 @@ a {
 }
 
 .project-register__row {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(8rem, 0.34fr) minmax(17rem, 0.82fr) minmax(20rem, 1.2fr) minmax(
       9rem,
@@ -3619,6 +3755,14 @@ a {
     transform var(--duration-fast) var(--ease-standard);
 }
 
+/* The whole register row signals clickability, so its one link covers it:
+   tab order and the visible focus box on the link are unchanged. */
+.project-register__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
 .project-register__link:hover {
   border-color: var(--color-sage-dark);
   color: var(--color-sage-dark);
@@ -3639,7 +3783,7 @@ a {
   }
 
   .project-register__row {
-    grid-template-columns: minmax(7rem, 0.3fr) minmax(16rem, 0.75fr) minmax(19rem, 1fr);
+    grid-template-columns: minmax(6rem, 0.3fr) minmax(12rem, 0.75fr) minmax(0, 1fr);
   }
 
   .project-register__link {
@@ -3750,7 +3894,7 @@ a {
 
 .case-study__tagline {
   margin: 0;
-  color: var(--color-sage-dark);
+  color: var(--color-walnut);
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -3760,7 +3904,7 @@ a {
 .case-study__title-block h1 {
   max-width: 12ch;
   font-size: clamp(4rem, 9.8vw, 10.5rem);
-  line-height: 0.78;
+  line-height: var(--leading-display);
 }
 
 .case-study__summary {
@@ -3931,7 +4075,7 @@ a {
 .case-study__unavailable > p:last-child {
   max-width: 38rem;
   margin: 2rem 0 0;
-  color: var(--color-text-secondary);
+  color: var(--color-text-secondary-on-tint);
   font-size: clamp(1rem, 1.2vw, 1.15rem);
   line-height: 1.7;
 }
@@ -4033,7 +4177,7 @@ a {
   gap: 0.6rem;
   color: var(--color-text-muted);
   font-size: 0.68rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -4151,7 +4295,7 @@ a {
   margin: 0 0 1.2rem;
   color: var(--color-text-secondary);
   font-size: 0.68rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.13em;
   text-transform: uppercase;
 }
@@ -4217,7 +4361,7 @@ a {
   z-index: 4;
   color: var(--color-text-muted);
   font-size: 0.62rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -4363,7 +4507,7 @@ a {
 .laboratory-index__continuation-copy > p {
   max-width: 42rem;
   margin: 0;
-  color: var(--color-text-secondary);
+  color: var(--color-text-secondary-on-tint);
   font-size: clamp(1rem, 1.2vw, 1.15rem);
   line-height: 1.75;
 }
@@ -4393,7 +4537,7 @@ a {
 .laboratory-index__entry > span {
   color: var(--color-text-muted);
   font-size: 0.62rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.1em;
 }
 
@@ -4409,7 +4553,7 @@ a {
   margin: 0;
   color: var(--color-text-muted);
   font-size: 0.62rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -4465,7 +4609,7 @@ a {
   padding-block: 0.75rem;
   color: var(--color-text-muted);
   font-size: 0.72rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -4586,16 +4730,11 @@ a {
   transition: padding-inline var(--duration-fast) var(--ease-standard);
 }
 
-.laboratory-index__scope:focus-within dl > div,
-.laboratory-index__scope:hover dl > div {
-  padding-inline: 0.5rem;
-}
-
 .laboratory-index__scope dt {
   display: grid;
   grid-template-columns: 2.5rem 1fr;
   font-size: 0.7rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -4673,7 +4812,7 @@ a {
 .laboratory-index__continuation-mark > small {
   color: rgb(254 244 234 / 68%);
   font-size: 0.62rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.13em;
   text-transform: uppercase;
 }
@@ -4759,6 +4898,11 @@ a {
   .laboratory-index__entry > .ui-action,
   .laboratory-index__no-link {
     grid-column: 2;
+  }
+
+  .laboratory-index__register,
+  .laboratory-index__scope {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -4852,11 +4996,6 @@ a {
     gap: 0.65rem;
   }
 
-  .laboratory-index__scope:focus-within dl > div,
-  .laboratory-index__scope:hover dl > div {
-    padding-inline: 0;
-  }
-
   .laboratory-index__continuation-mark {
     width: min(88vw, 22rem);
   }
@@ -4911,7 +5050,7 @@ a {
   margin: 0 0 1.2rem;
   color: var(--color-text-secondary);
   font-size: 0.68rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.13em;
   text-transform: uppercase;
 }
@@ -4936,7 +5075,7 @@ a {
 .cosmos-foundation__identity > strong {
   max-width: 32rem;
   margin-top: 2rem;
-  color: var(--color-text-secondary);
+  color: var(--color-text-secondary-on-tint);
   font-family: var(--font-display);
   font-size: clamp(1.35rem, 2vw, 2rem);
   font-weight: 500;
@@ -4946,7 +5085,7 @@ a {
 .cosmos-foundation__identity > small {
   max-width: 38rem;
   margin-top: 1.25rem;
-  color: var(--color-text-secondary);
+  color: var(--color-text-secondary-on-tint);
   font-size: clamp(0.9rem, 1vw, 1rem);
   line-height: 1.7;
 }
@@ -4977,7 +5116,7 @@ a {
   z-index: 4;
   color: var(--color-text-muted);
   font-size: 0.62rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -5111,7 +5250,7 @@ a {
 .cosmos-foundation__boundary-copy > p {
   max-width: 42rem;
   margin: 0;
-  color: var(--color-text-secondary);
+  color: var(--color-text-secondary-on-tint);
   font-size: clamp(1rem, 1.2vw, 1.15rem);
   line-height: 1.75;
 }
@@ -5139,17 +5278,12 @@ a {
   border-bottom: 1px solid var(--color-border-soft);
 }
 
-.cosmos-foundation__practices:focus-within li,
-.cosmos-foundation__practices:hover li {
-  padding-inline: 0.5rem;
-}
-
 .cosmos-foundation__practices li > span,
 .cosmos-foundation__practices li > i {
   color: var(--color-text-muted);
   font-size: 0.62rem;
   font-style: normal;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.1em;
 }
 
@@ -5167,7 +5301,7 @@ a {
 .cosmos-foundation__practices li > div p {
   color: var(--color-text-muted);
   font-size: 0.62rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -5215,16 +5349,11 @@ a {
   transition: padding-inline var(--duration-fast) var(--ease-standard);
 }
 
-.cosmos-foundation__privacy:focus-within dl > div,
-.cosmos-foundation__privacy:hover dl > div {
-  padding-inline: 0.5rem;
-}
-
 .cosmos-foundation__privacy dt {
   display: grid;
   grid-template-columns: 2.5rem 1fr;
   font-size: 0.7rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -5301,7 +5430,7 @@ a {
 .cosmos-foundation__boundary-mark > small {
   color: rgb(254 244 234 / 68%);
   font-size: 0.62rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.13em;
   text-transform: uppercase;
 }
@@ -5387,6 +5516,11 @@ a {
   .cosmos-foundation__practices li > small {
     grid-column: 2 / -1;
   }
+
+  .cosmos-foundation__practices,
+  .cosmos-foundation__privacy {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 47.99rem) {
@@ -5454,13 +5588,6 @@ a {
     grid-column: 2 / -1;
   }
 
-  .cosmos-foundation__practices:focus-within li,
-  .cosmos-foundation__practices:hover li,
-  .cosmos-foundation__privacy:focus-within dl > div,
-  .cosmos-foundation__privacy:hover dl > div {
-    padding-inline: 0;
-  }
-
   .cosmos-foundation__privacy dl > div {
     grid-template-columns: 1fr;
     gap: 0.65rem;
@@ -5519,7 +5646,7 @@ a {
   margin: 0 0 1.2rem;
   color: var(--color-text-secondary);
   font-size: 0.68rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.13em;
   text-transform: uppercase;
 }
@@ -5584,7 +5711,7 @@ a {
   position: relative;
   z-index: 2;
   font-size: 0.62rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -5721,17 +5848,12 @@ a {
   border-bottom: 1px solid var(--color-border-soft);
 }
 
-.sound-foundation__formats:focus-within li,
-.sound-foundation__formats:hover li {
-  padding-inline: 0.5rem;
-}
-
 .sound-foundation__formats li > span,
 .sound-foundation__formats li > i {
   color: var(--color-text-muted);
   font-size: 0.62rem;
   font-style: normal;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.1em;
 }
 
@@ -5749,7 +5871,7 @@ a {
 .sound-foundation__formats li > div p {
   color: var(--color-text-muted);
   font-size: 0.62rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -5797,16 +5919,11 @@ a {
   transition: padding-inline var(--duration-fast) var(--ease-standard);
 }
 
-.sound-foundation__gate:focus-within dl > div,
-.sound-foundation__gate:hover dl > div {
-  padding-inline: 0.5rem;
-}
-
 .sound-foundation__gate dt {
   display: grid;
   grid-template-columns: 2.5rem 1fr;
   font-size: 0.7rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -5883,7 +6000,7 @@ a {
 .sound-foundation__boundary-mark > small {
   color: rgb(254 244 234 / 64%);
   font-size: 0.62rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: 0.13em;
   text-transform: uppercase;
 }
@@ -5968,6 +6085,11 @@ a {
   .sound-foundation__formats li > small {
     grid-column: 2 / -1;
   }
+
+  .sound-foundation__formats,
+  .sound-foundation__gate {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 47.99rem) {
@@ -6033,13 +6155,6 @@ a {
   .sound-foundation__formats li > p,
   .sound-foundation__formats li > small {
     grid-column: 2 / -1;
-  }
-
-  .sound-foundation__formats:focus-within li,
-  .sound-foundation__formats:hover li,
-  .sound-foundation__gate:focus-within dl > div,
-  .sound-foundation__gate:hover dl > div {
-    padding-inline: 0;
   }
 
   .sound-foundation__gate dl > div {
@@ -6522,8 +6637,10 @@ a {
     display: none;
   }
 
-  .cc-ai-trigger,
-  .cc-ai-panel {
+  /* Trigger only: it is anchored inside the hero and clears the taller
+     Selected Systems band at this width. The panel is viewport-fixed and keeps
+     its own offset, or this pushes it off the top of short windows. */
+  .cc-ai-trigger {
     bottom: 11rem;
   }
 
@@ -6573,14 +6690,12 @@ a {
     font-size: 1.3rem;
   }
 
-  .cc-mark {
+  .brand-mark {
     width: 2.5rem;
-    font-size: 1rem;
   }
 
-  .cc-mark--compact {
-    width: 1.65rem;
-    font-size: 0.7rem;
+  .brand-mark--compact {
+    width: 2.15rem;
   }
 
   .mobile-navigation-shell {
@@ -6664,7 +6779,9 @@ a {
     position: relative;
     inset: auto;
     order: 2;
-    min-height: 13.25rem;
+    /* Tall enough for the hero clip to read as the dominant visual on a phone
+     * while the identity copy above it stays in the first viewport. */
+    min-height: min(24rem, 46svh);
     background: var(--color-sage-pale);
   }
 
@@ -6757,8 +6874,8 @@ a {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: min(78svh, 43rem);
-    max-height: 78svh;
+    height: min(86svh, 48rem);
+    max-height: 86svh;
     border-radius: var(--radius-panel) var(--radius-panel) 0 0;
     padding-bottom: env(safe-area-inset-bottom);
   }
@@ -7032,7 +7149,7 @@ a {
   .case-study__title-block h1 {
     max-width: 100%;
     font-size: clamp(3.7rem, 19vw, 6.2rem);
-    line-height: 0.82;
+    line-height: var(--leading-display);
     overflow-wrap: anywhere;
   }
 
@@ -7155,13 +7272,27 @@ a {
   *,
   *::before,
   *::after {
+    animation-delay: 0ms !important;
     animation-duration: 1ms !important;
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
+    transition-delay: 0ms !important;
     transition-duration: 1ms !important;
   }
 
   .route-transition-shell {
     animation: none;
+  }
+}
+
+/* "Enter the Observatory" acknowledgement: the target strip answers even when
+   it is already visible in the hero viewport. */
+.selected-systems:target {
+  animation: selected-systems-acknowledge 1.2s var(--ease-emphasized);
+}
+
+@keyframes selected-systems-acknowledge {
+  from {
+    background: var(--color-linen);
   }
 }

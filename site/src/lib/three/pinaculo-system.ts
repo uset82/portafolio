@@ -85,8 +85,12 @@ export const OBSERVATORY_PINACULO_TECHNICAL_ART = {
     forward: "-Z",
   },
   dimensionsMeters: pinaculoAsset.scaleMeters,
-  positionMeters: [0.8, 0.02, 1.8] as Vector3Tuple,
+  /* Front-right of the basin: clear of the activated focal guide, whose approved
+   * hand-water contact at [0.42, -0.035, 0.92] previously fell inside this
+   * instrument's 2.7 m marker ring. */
+  positionMeters: [3.1, 0.02, 1.7] as Vector3Tuple,
   rotationRadians: [0, -0.08, 0] as Vector3Tuple,
+  interactionNodeName: "PinaculoInteraction",
   interactionTargetId: pinaculoAsset.interaction!.targetId,
   accessibleLabel: pinaculoAsset.interaction!.accessibleLabel,
   href: pinaculoAsset.interaction!.href!,

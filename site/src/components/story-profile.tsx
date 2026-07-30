@@ -47,7 +47,6 @@ export function StoryProfile({ name, content }: StoryProfileProps) {
             <li key={thread}>
               <span>{String(index + 1).padStart(2, "0")}</span>
               <strong>{thread}</strong>
-              <i aria-hidden="true">↗</i>
             </li>
           ))}
         </ol>

@@ -152,7 +152,7 @@ test("external embed records reject autoplay provider URLs", () => {
   );
 });
 
-test("local media stays hash-pinned and excluded while runtime clearance is held", () => {
+test("local media stays hash-pinned with only the two approved derivation sources included", () => {
   const registerPath = resolve(
     process.cwd(),
     "../docs/content/local-media-clearance-register.json",
@@ -161,7 +161,10 @@ test("local media stays hash-pinned and excluded while runtime clearance is held
     JSON.parse(readFileSync(registerPath, "utf8")),
   );
 
-  assert.equal(register.status, "ownership-recorded-runtime-hold");
+  // Carlos approved the monogram mark (2026-07-27) and the robot water video
+  // (the same day, as the homepage's silent looping visual); every other local
+  // file keeps its exclude decision.
+  assert.equal(register.status, "runtime-approved");
   assert.deepEqual(
     register.assets.map((asset) => asset.path).sort(),
     [
@@ -176,14 +179,22 @@ test("local media stays hash-pinned and excluded while runtime clearance is held
     ].sort(),
   );
   assert.ok(register.assets.every((asset) => asset.rights === "owned"));
-  assert.ok(register.assets.every((asset) => asset.decision === "exclude"));
-  assert.ok(register.assets.every((asset) => /^[A-F0-9]{64}$/.test(asset.sha256)));
-  assert.ok(
-    register.assets.every((asset) => asset.owner.toLowerCase().includes("carlos carpio")),
+  assert.deepEqual(
+    register.assets
+      .filter((asset) => asset.decision === "include")
+      .map((asset) => asset.path)
+      .sort(),
+    [
+      "imagesandvideo/Robot_kneeling_in_reflective_water_202607192339.mp4",
+      "imagesandvideo/logo.png",
+    ].sort(),
   );
+  assert.ok(register.assets.every((asset) => /^[A-F0-9]{64}$/.test(asset.sha256)));
+  assert.ok(register.assets.every((asset) => asset.owner.toLowerCase().includes("carlos carpio")));
 
   const unsafePublication = localMediaClearanceRegisterSchema.safeParse({
     ...register,
+    status: "ownership-recorded-runtime-hold",
     assets: register.assets.map((asset, index) =>
       index === 0 ? { ...asset, decision: "include" } : asset,
     ),

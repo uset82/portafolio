@@ -15,6 +15,7 @@ import {
   Matrix4,
   MeshPhysicalMaterial,
   MeshStandardMaterial,
+  Quaternion,
   Vector3,
   type Group,
 } from "three";
@@ -52,6 +53,11 @@ const RESERVOIR_CAP_POSITIONS = [
   [-0.72, 1.94, 0.08],
   [0.72, 0.61, 0.08],
   [0.72, 1.94, 0.08],
+] as const;
+
+const STACK_PORT_POSITIONS = [
+  [-0.2, 1.17, 0.38],
+  [0.2, 1.17, 0.38],
 ] as const;
 
 function useFutureEnergyMaterials() {
@@ -101,11 +107,16 @@ function useFutureEnergyMaterials() {
 
 type FutureEnergyMaterials = ReturnType<typeof useFutureEnergyMaterials>;
 
-function useBoundedFutureEnergyInvalidation(animated: boolean, selected: boolean) {
+function useBoundedFutureEnergyInvalidation(
+  animated: boolean,
+  selected: boolean,
+  shouldTransition: () => boolean,
+  settleTransition: () => void,
+) {
   const invalidate = useThree((state) => state.invalidate);
 
   useEffect(() => {
-    if (!animated) {
+    if (!animated || !shouldTransition()) {
       invalidate();
       return;
     }
@@ -115,15 +126,16 @@ function useBoundedFutureEnergyInvalidation(animated: boolean, selected: boolean
       invalidate,
       1_000 / OBSERVATORY_FUTURE_ENERGY_TECHNICAL_ART.maximumAnimatedFps,
     );
-    const timeoutId = window.setTimeout(
-      () => window.clearInterval(intervalId),
-      OBSERVATORY_FUTURE_ENERGY_TECHNICAL_ART.focusDurationMs,
-    );
+    const timeoutId = window.setTimeout(() => {
+      window.clearInterval(intervalId);
+      settleTransition();
+      invalidate();
+    }, OBSERVATORY_FUTURE_ENERGY_TECHNICAL_ART.focusDurationMs);
     return () => {
       window.clearInterval(intervalId);
       window.clearTimeout(timeoutId);
     };
-  }, [animated, invalidate, selected]);
+  }, [animated, invalidate, selected, settleTransition, shouldTransition]);
 }
 
 function FutureEnergyRepeatedHardware({
@@ -164,6 +176,12 @@ function FutureEnergyRepeatedHardware({
       matrix.makeTranslation(x, y, z);
       caps.setMatrixAt(index, matrix);
     });
+    const portRotation = new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), Math.PI / 2);
+    const portScale = new Vector3(0.22, 1.45, 0.22);
+    STACK_PORT_POSITIONS.forEach(([x, y, z], index) => {
+      matrix.compose(new Vector3(x, y, z), portRotation, portScale);
+      caps.setMatrixAt(RESERVOIR_CAP_POSITIONS.length + index, matrix);
+    });
     for (let index = 0; index < tier.stackPlates; index += 1) {
       const y = 0.79 + (0.78 * index) / Math.max(tier.stackPlates - 1, 1);
       matrix.makeTranslation(0, y, 0.29);
@@ -193,9 +211,13 @@ function FutureEnergyRepeatedHardware({
       <instancedMesh
         ref={capRef}
         name="FutureEnergyReservoirCaps"
-        args={[undefined, undefined, RESERVOIR_CAP_POSITIONS.length]}
+        args={[undefined, undefined, RESERVOIR_CAP_POSITIONS.length + STACK_PORT_POSITIONS.length]}
         material={materials.pewter}
         castShadow={false}
+        userData={{
+          includesStackPortInstances: true,
+          stackPortInstanceCount: STACK_PORT_POSITIONS.length,
+        }}
       >
         <cylinderGeometry args={[0.37, 0.37, 0.09, reduced ? 16 : 28]} />
       </instancedMesh>
@@ -279,7 +301,6 @@ function FutureEnergyMechanism({
   const sageSurfaceRef = useRef<Group>(null);
   const teaSurfaceRef = useRef<Group>(null);
   const latchRef = useRef<Group>(null);
-  const initialPose = resolveFutureEnergyMechanismPose(selected ? 1 : 0);
 
   const applyPose = useCallback(
     (focusProgress: number) => {
@@ -294,12 +315,23 @@ function FutureEnergyMechanism({
     [poseRef],
   );
 
-  useBoundedFutureEnergyInvalidation(animated, selected);
+  const settleTransition = useCallback(() => {
+    progressRef.current = targetProgressRef.current;
+    applyPose(progressRef.current);
+  }, [applyPose, progressRef, targetProgressRef]);
+  const shouldTransition = useCallback(
+    () => progressRef.current !== (selected ? 1 : 0),
+    [progressRef, selected],
+  );
+
+  useBoundedFutureEnergyInvalidation(animated, selected, shouldTransition, settleTransition);
 
   useEffect(() => {
     targetProgressRef.current = selected ? 1 : 0;
-    if (settleImmediately) progressRef.current = targetProgressRef.current;
-    applyPose(progressRef.current);
+    if (settleImmediately) {
+      progressRef.current = targetProgressRef.current;
+      applyPose(progressRef.current);
+    }
   }, [applyPose, progressRef, selected, settleImmediately, targetProgressRef]);
 
   useFrame((_state, delta) => {
@@ -354,24 +386,40 @@ function FutureEnergyMechanism({
           <cylinderGeometry args={[0.3, 0.3, 0.72, reduced ? 18 : 32]} />
         </mesh>
         <group
-          ref={sageSurfaceRef}
+          ref={(node) => {
+            sageSurfaceRef.current = node;
+            if (node) {
+              node.rotation.z = resolveFutureEnergyMechanismPose(
+                progressRef.current,
+              ).sageSurfaceTilt;
+            }
+          }}
           name="FutureEnergySageSurfaceCue"
           position={[-0.72, 1.5, 0.08]}
-          rotation={[0, 0, initialPose.sageSurfaceTilt]}
         >
-          <mesh material={materials.sageLiquid} castShadow={false}>
-            <cylinderGeometry args={[0.302, 0.302, 0.018, reduced ? 18 : 32]} />
-          </mesh>
+          {!reduced ? (
+            <mesh material={materials.sageLiquid} castShadow={false}>
+              <cylinderGeometry args={[0.302, 0.302, 0.018, 32]} />
+            </mesh>
+          ) : null}
         </group>
         <group
-          ref={teaSurfaceRef}
+          ref={(node) => {
+            teaSurfaceRef.current = node;
+            if (node) {
+              node.rotation.z = resolveFutureEnergyMechanismPose(
+                progressRef.current,
+              ).teaSurfaceTilt;
+            }
+          }}
           name="FutureEnergyTeaSurfaceCue"
           position={[0.72, 1.38, 0.08]}
-          rotation={[0, 0, initialPose.teaSurfaceTilt]}
         >
-          <mesh material={materials.teaLiquid} castShadow={false}>
-            <cylinderGeometry args={[0.302, 0.302, 0.018, reduced ? 18 : 32]} />
-          </mesh>
+          {!reduced ? (
+            <mesh material={materials.teaLiquid} castShadow={false}>
+              <cylinderGeometry args={[0.302, 0.302, 0.018, 32]} />
+            </mesh>
+          ) : null}
         </group>
       </group>
 
@@ -387,20 +435,27 @@ function FutureEnergyMechanism({
               <cylinderGeometry args={[0.16, 0.16, 0.18, reduced ? 12 : 20]} />
             </mesh>
             <group
-              ref={index === 0 ? sagePumpRef : teaPumpRef}
+              ref={(node) => {
+                const pose = resolveFutureEnergyMechanismPose(progressRef.current);
+                if (index === 0) {
+                  sagePumpRef.current = node;
+                  if (node) node.rotation.z = pose.sagePumpRotation;
+                } else {
+                  teaPumpRef.current = node;
+                  if (node) node.rotation.z = pose.teaPumpRotation;
+                }
+              }}
+              name={index === 0 ? "FutureEnergySagePumpCue" : "FutureEnergyTeaPumpCue"}
               position={[0, 0, 0.1]}
-              rotation={[
-                0,
-                0,
-                index === 0 ? initialPose.sagePumpRotation : initialPose.teaPumpRotation,
-              ]}
             >
               <mesh material={materials.walnut} castShadow={false}>
                 <boxGeometry args={[0.2, 0.035, 0.035]} />
               </mesh>
-              <mesh material={materials.walnut} rotation={[0, 0, Math.PI / 2]} castShadow={false}>
-                <boxGeometry args={[0.2, 0.035, 0.035]} />
-              </mesh>
+              {!reduced ? (
+                <mesh material={materials.walnut} rotation={[0, 0, Math.PI / 2]} castShadow={false}>
+                  <boxGeometry args={[0.2, 0.035, 0.035]} />
+                </mesh>
+              ) : null}
             </group>
           </group>
         ))}
@@ -410,17 +465,40 @@ function FutureEnergyMechanism({
         <mesh material={materials.walnut} position={[0, 1.18, -0.04]} castShadow={false}>
           <boxGeometry args={[0.58, 1.02, 0.56]} />
         </mesh>
-        <mesh material={materials.pewter} position={[0, 1.18, 0.255]} castShadow={false}>
-          <boxGeometry args={[0.46, 0.74, 0.04]} />
-        </mesh>
-        <group
-          ref={latchRef}
-          name="FutureEnergyServiceLatch"
-          position={[0, 1.23 + initialPose.serviceLatchLift, 0.3]}
-        >
-          <mesh material={materials.walnut} castShadow={false}>
-            <boxGeometry args={[0.18, 0.07, 0.055]} />
+        {!reduced ? (
+          <mesh material={materials.pewter} position={[0, 1.18, 0.255]} castShadow={false}>
+            <boxGeometry args={[0.46, 0.74, 0.04]} />
           </mesh>
+        ) : null}
+        <group position={[0, 0, 0.3]}>
+          <group
+            ref={(node) => {
+              latchRef.current = node;
+              if (node) {
+                node.position.y =
+                  1.23 + resolveFutureEnergyMechanismPose(progressRef.current).serviceLatchLift;
+              }
+            }}
+            name="FutureEnergyServiceLatch"
+          >
+            <mesh material={materials.walnut} castShadow={false}>
+              <boxGeometry args={[0.18, 0.07, 0.055]} />
+            </mesh>
+          </group>
+        </group>
+        <group name="FutureEnergyStackPorts">
+          {FLOW_BATTERY_CIRCUITS.map((circuit, index) => (
+            <group
+              key={circuit.id}
+              name={circuit.stackPortNode}
+              position={[...STACK_PORT_POSITIONS[index]!]}
+              userData={{
+                circuitId: circuit.id,
+                visibleInstanceNode: "FutureEnergyReservoirCaps",
+                visibleInstanceIndex: RESERVOIR_CAP_POSITIONS.length + index,
+              }}
+            />
+          ))}
         </group>
       </group>
     </>
@@ -489,6 +567,7 @@ export function ObservatoryFutureEnergy({ onDiagnosticsReady }: ObservatoryFutur
       rotation={[...OBSERVATORY_FUTURE_ENERGY_TECHNICAL_ART.rotationRadians]}
       onClick={selectFutureEnergy}
       userData={{
+        interactionNodeName: OBSERVATORY_FUTURE_ENERGY_TECHNICAL_ART.interactionNodeName,
         interactionTargetId: OBSERVATORY_FUTURE_ENERGY_TECHNICAL_ART.interactionTargetId,
         accessibleLabel: OBSERVATORY_FUTURE_ENERGY_TECHNICAL_ART.accessibleLabel,
         href: OBSERVATORY_FUTURE_ENERGY_TECHNICAL_ART.href,
@@ -499,6 +578,17 @@ export function ObservatoryFutureEnergy({ onDiagnosticsReady }: ObservatoryFutur
         independentCircuits: true,
       }}
     >
+      <mesh
+        name={OBSERVATORY_FUTURE_ENERGY_TECHNICAL_ART.interactionNodeName}
+        position={[0, 1.25, 0]}
+        visible={false}
+        userData={{
+          interactionTargetId: OBSERVATORY_FUTURE_ENERGY_TECHNICAL_ART.interactionTargetId,
+          accessibleLabel: OBSERVATORY_FUTURE_ENERGY_TECHNICAL_ART.accessibleLabel,
+        }}
+      >
+        <boxGeometry args={[2.7, 2.5, 1.8]} />
+      </mesh>
       <FutureEnergyMechanism
         reduced={presentation.tier === "reduced"}
         selected={selected}

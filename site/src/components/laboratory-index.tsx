@@ -1,21 +1,15 @@
 import { ActionLink, StatusTag } from "@/components/ui";
-import type { Project } from "@/content/schemas";
+import type { LaboratoryConcept, Project } from "@/content/schemas";
 
 type ConceptProject = Extract<Project, { status: "concept" | "preparation" }>;
+type ElectronicsConcept = Extract<LaboratoryConcept, { artifactId: "electronics-ai" }>;
+type DroneConcept = Extract<LaboratoryConcept, { artifactId: "drone" }>;
 
 type LaboratoryIndexProps = {
   futureEnergy: ConceptProject;
+  electronicsConcept: ElectronicsConcept;
+  droneConcept: DroneConcept;
 };
-
-const electronicsConcept = {
-  title: "Electronics / AI",
-  descriptor: "Protected modular systems",
-  status: "Concept only",
-  summary:
-    "A visual and navigational Laboratory concept for modular electronics and AI work—not a functioning computer, proprietary board, trained model, or live system.",
-  boundary:
-    "No hardware performance, AI inference, live data, product availability, or ownership of a manufactured device is claimed.",
-} as const;
 
 const publicationBoundaries = [
   {
@@ -28,7 +22,7 @@ const publicationBoundaries = [
     label: "Hardware state",
     value: "Not represented as built",
     detail:
-      "No working battery, electronics unit, chemistry, pressure rating, or physical prototype is claimed.",
+      "No working battery, electronics unit, chemistry, pressure rating, aircraft, flight controller, or physical prototype is claimed.",
   },
   {
     label: "Software and data",
@@ -44,7 +38,11 @@ const publicationBoundaries = [
   },
 ] as const;
 
-export function LaboratoryIndex({ futureEnergy }: LaboratoryIndexProps) {
+export function LaboratoryIndex({
+  futureEnergy,
+  electronicsConcept,
+  droneConcept,
+}: LaboratoryIndexProps) {
   return (
     <main id="main-content" className="laboratory-index">
       <section className="laboratory-index__hero" aria-labelledby="laboratory-index-title">
@@ -54,10 +52,11 @@ export function LaboratoryIndex({ futureEnergy }: LaboratoryIndexProps) {
         </div>
 
         <div className="laboratory-index__identity">
-          <p>Software, energy, and electronics</p>
+          <p>Software, energy, electronics, and aerial systems</p>
           <h1 id="laboratory-index-title">Experiments where software meets matter.</h1>
           <strong>
-            A working index for future energy and electronics / AI concepts in the Observatory.
+            A working index for future energy, electronics / AI, and aerial systems concepts in the
+            Observatory.
           </strong>
           <small>
             This page separates designed mechanisms from evidence-backed projects. Nothing here
@@ -78,19 +77,19 @@ export function LaboratoryIndex({ futureEnergy }: LaboratoryIndexProps) {
             <i />
             <b />
           </div>
-          <strong>02</strong>
-          <small>Concept mechanisms · no live data</small>
+          <strong>03</strong>
+          <small>Concept mechanisms · no live data or flight claim</small>
         </div>
       </section>
 
       <section className="laboratory-index__register" aria-labelledby="laboratory-register-title">
         <header>
           <p className="section-label">Current register / 01</p>
-          <h2 id="laboratory-register-title">Two mechanisms, each with a visible limit.</h2>
+          <h2 id="laboratory-register-title">Three mechanisms, each with a visible limit.</h2>
           <p>
-            Both entries are part of the approved Observatory composition. Only Future Energy has a
-            held case-study route; Electronics / AI remains an in-scene concept without a separate
-            project claim.
+            All three entries are part of the approved Observatory composition. Only Future Energy
+            has a held case-study route; Electronics / AI and Aerial systems remain in-scene
+            concepts without separate project claims.
           </p>
         </header>
 
@@ -121,7 +120,7 @@ export function LaboratoryIndex({ futureEnergy }: LaboratoryIndexProps) {
             <div className="laboratory-index__entry-title">
               <p>{electronicsConcept.descriptor}</p>
               <h3>{electronicsConcept.title}</h3>
-              <StatusTag tone="hold">{electronicsConcept.status}</StatusTag>
+              <StatusTag tone="hold">{electronicsConcept.statusLabel}</StatusTag>
             </div>
             <div className="laboratory-index__entry-copy">
               <p>{electronicsConcept.summary}</p>
@@ -134,6 +133,20 @@ export function LaboratoryIndex({ futureEnergy }: LaboratoryIndexProps) {
               <i />
               <b />
             </div>
+          </li>
+
+          <li className="laboratory-index__entry laboratory-index__entry--aerial">
+            <span>03</span>
+            <div className="laboratory-index__entry-title">
+              <p>{droneConcept.descriptor}</p>
+              <h3>{droneConcept.title}</h3>
+              <StatusTag tone="hold">{droneConcept.statusLabel}</StatusTag>
+            </div>
+            <div className="laboratory-index__entry-copy">
+              <p>{droneConcept.summary}</p>
+              <small>{droneConcept.boundary}</small>
+            </div>
+            <p className="laboratory-index__no-link">No separate public project route</p>
           </li>
         </ol>
       </section>

@@ -49,11 +49,16 @@ function useAstraeaMaterials() {
   return materials;
 }
 
-function useBoundedAstraeaInvalidation(animated: boolean, selected: boolean) {
+function useBoundedAstraeaInvalidation(
+  animated: boolean,
+  selected: boolean,
+  shouldTransition: () => boolean,
+  settleTransition: () => void,
+) {
   const invalidate = useThree((state) => state.invalidate);
 
   useEffect(() => {
-    if (!animated) {
+    if (!animated || !shouldTransition()) {
       invalidate();
       return;
     }
@@ -63,15 +68,16 @@ function useBoundedAstraeaInvalidation(animated: boolean, selected: boolean) {
       invalidate,
       1_000 / OBSERVATORY_ASTRAEA_TECHNICAL_ART.maximumAnimatedFps,
     );
-    const timeoutId = window.setTimeout(
-      () => window.clearInterval(intervalId),
-      OBSERVATORY_ASTRAEA_TECHNICAL_ART.focusDurationMs,
-    );
+    const timeoutId = window.setTimeout(() => {
+      window.clearInterval(intervalId);
+      settleTransition();
+      invalidate();
+    }, OBSERVATORY_ASTRAEA_TECHNICAL_ART.focusDurationMs);
     return () => {
       window.clearInterval(intervalId);
       window.clearTimeout(timeoutId);
     };
-  }, [animated, invalidate, selected]);
+  }, [animated, invalidate, selected, settleTransition, shouldTransition]);
 }
 
 function AstraeaMechanism({
@@ -95,8 +101,6 @@ function AstraeaMechanism({
   const ringRefs = useRef<Array<Group | null>>([]);
   const pointerRef = useRef<Group>(null);
   const ringRadii = reduced ? REDUCED_RING_RADII : FULL_RING_RADII;
-  const initialPose = resolveAstraeaRingPose(selected ? 1 : 0);
-  const initialRotations = [initialPose.outer, initialPose.middle, initialPose.inner];
   const tier = reduced
     ? OBSERVATORY_ASTRAEA_TECHNICAL_ART.tiers.reduced
     : OBSERVATORY_ASTRAEA_TECHNICAL_ART.tiers.full;
@@ -114,7 +118,16 @@ function AstraeaMechanism({
     [poseRef],
   );
 
-  useBoundedAstraeaInvalidation(animated, selected);
+  const settleTransition = useCallback(() => {
+    progressRef.current = targetProgressRef.current;
+    applyPose(progressRef.current);
+  }, [applyPose, progressRef, targetProgressRef]);
+  const shouldTransition = useCallback(
+    () => progressRef.current !== (selected ? 1 : 0),
+    [progressRef, selected],
+  );
+
+  useBoundedAstraeaInvalidation(animated, selected, shouldTransition, settleTransition);
 
   useEffect(() => {
     targetProgressRef.current = selected ? 1 : 0;
@@ -164,6 +177,17 @@ function AstraeaMechanism({
         name="AstraeaChart"
         position={[...OBSERVATORY_ASTRAEA_TECHNICAL_ART.chartCenterMeters]}
       >
+        <mesh
+          name={OBSERVATORY_ASTRAEA_TECHNICAL_ART.interactionNodeName}
+          position={[0, 0, 0.2]}
+          visible={false}
+          userData={{
+            interactionTargetId: OBSERVATORY_ASTRAEA_TECHNICAL_ART.interactionTargetId,
+            accessibleLabel: OBSERVATORY_ASTRAEA_TECHNICAL_ART.accessibleLabel,
+          }}
+        >
+          <planeGeometry args={[2.55, 2.55]} />
+        </mesh>
         <mesh material={materials.parchment} rotation={[Math.PI / 2, 0, 0]} castShadow={false}>
           <cylinderGeometry args={[0.76, 0.76, 0.08, reduced ? 24 : 32]} />
         </mesh>
@@ -187,10 +211,14 @@ function AstraeaMechanism({
               key={radius}
               ref={(ring) => {
                 ringRefs.current[index] = ring;
+                if (ring) {
+                  const pose = resolveAstraeaRingPose(progressRef.current);
+                  const rotations = [pose.outer, pose.middle, pose.inner];
+                  ring.rotation.z = rotations[index] ?? pose.middle;
+                }
               }}
               name={`AstraeaRing${index + 1}`}
               position={[0, 0, 0.11 + index * 0.035]}
-              rotation={[0, 0, initialRotations[index] ?? initialPose.middle]}
             >
               <mesh material={materials.pewter} castShadow={false}>
                 <torusGeometry
@@ -289,6 +317,7 @@ export function ObservatoryAstraea({ onDiagnosticsReady }: ObservatoryAstraeaPro
       rotation={[...OBSERVATORY_ASTRAEA_TECHNICAL_ART.rotationRadians]}
       onClick={selectAstraea}
       userData={{
+        interactionNodeName: OBSERVATORY_ASTRAEA_TECHNICAL_ART.interactionNodeName,
         interactionTargetId: OBSERVATORY_ASTRAEA_TECHNICAL_ART.interactionTargetId,
         accessibleLabel: OBSERVATORY_ASTRAEA_TECHNICAL_ART.accessibleLabel,
         href: OBSERVATORY_ASTRAEA_TECHNICAL_ART.href,

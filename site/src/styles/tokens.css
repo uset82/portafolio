@@ -49,12 +49,25 @@
   --color-silver: #c8c7be;
   --color-text-primary: #2a1d16;
   --color-text-secondary: #6e5b4d;
+  /* Muted tier resolves to secondary: #6e5b4d holds 4.9:1 on parchment and
+     5.9:1 on ivory, so the micro-label sizes keep WCAG AA. */
+  --color-text-muted: var(--color-text-secondary);
+  /* Secondary copy on the sanctioned tinted surfaces (sage-pale, buff, linen)
+     needs a darker ink: walnut measures 4.98:1 on sage-pale and higher on
+     buff/linen. */
+  --color-text-secondary-on-tint: var(--color-walnut);
   --color-text-on-dark: var(--swatch-warm-ivory);
   --color-border-soft: #cdb69e;
+  --color-border-strong: var(--color-oak);
+  --color-ivory-warm: var(--swatch-sand);
   --color-focus: var(--swatch-sage-dark);
 
   --font-display: var(--font-cormorant), Georgia, "Times New Roman", serif;
   --font-body: var(--font-manrope), Inter, "Segoe UI", sans-serif;
+  /* Display leading for headings that can wrap; the tighter mark leading is
+     reserved for single-line monograms and numerals. */
+  --leading-display: 0.9;
+  --leading-mark: 0.75;
   --page-gutter: clamp(1rem, 3vw, 3.5rem);
   --page-max: 112rem;
   --reading-max: 42rem;

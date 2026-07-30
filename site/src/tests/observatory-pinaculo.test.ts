@@ -31,6 +31,21 @@ function readSource(relativePath: string) {
   return readFileSync(path.join(workspaceRoot, relativePath), "utf8");
 }
 
+function relativeLuminance(hex: string) {
+  const channels = hex
+    .slice(1)
+    .match(/.{2}/g)!
+    .map((channel) => Number.parseInt(channel, 16) / 255)
+    .map((channel) => (channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4));
+  return channels[0]! * 0.2126 + channels[1]! * 0.7152 + channels[2]! * 0.0722;
+}
+
+function contrastRatio(foreground: string, background: string) {
+  const light = Math.max(relativeLuminance(foreground), relativeLuminance(background));
+  const dark = Math.min(relativeLuminance(foreground), relativeLuminance(background));
+  return (light + 0.05) / (dark + 0.05);
+}
+
 test("PINÁCULO preserves 24 positions and restrained 11/22/33 pattern stations", () => {
   const asset = getObservatoryAsset("pinaculo");
   const { tiers, colors } = OBSERVATORY_PINACULO_TECHNICAL_ART;
@@ -67,6 +82,10 @@ test("PINÁCULO preserves 24 positions and restrained 11/22/33 pattern stations"
   assert.equal(tiers.full.renderTargets, 0);
   assert.equal(tiers.full.postPasses, 0);
   assert.equal(tiers.full.shadowCasters, 0);
+  assert.equal(OBSERVATORY_PINACULO_TECHNICAL_ART.maximumAnimatedFps <= 24, true);
+  assert.equal(OBSERVATORY_PINACULO_TECHNICAL_ART.interactionNodeName, "PinaculoInteraction");
+  assert.equal(asset.nodes.includes(OBSERVATORY_PINACULO_TECHNICAL_ART.interactionNodeName), true);
+  assert.equal(contrastRatio(colors.buff, colors.walnut) >= 3, true);
   for (const color of Object.values(colors)) assert.equal(palette.has(color), true);
 });
 
@@ -221,6 +240,7 @@ test("the PINÁCULO DOM equivalent exposes verified concept identity and mechani
   assert.match(markup, /24-position ring/);
   assert.match(markup, /11, 22, and 33/);
   assert.match(markup, /aria-pressed="true"/);
+  assert.match(markup, /aria-label="Return PINÁCULO to overview"/);
   assert.match(markup, /Return to overview/);
 });
 
@@ -236,11 +256,21 @@ test("the scene owns one instanced, bounded PINÁCULO path without numeric or gl
   assert.match(pinaculoSource, /setMatrixAt/);
   assert.match(pinaculoSource, /PINACULO_POSITION_COUNT/);
   assert.match(pinaculoSource, /PINACULO_MASTER_PATTERN_STATIONS/);
+  assert.match(
+    pinaculoSource,
+    /name="PinaculoMasterPatternGrooves"[\s\S]*material=\{materials\.buff\}[\s\S]*<boxGeometry args=\{\[0\.012, 0\.01, 0\.05\]\}/,
+  );
   assert.match(pinaculoSource, /useFrame/);
   assert.match(pinaculoSource, /window\.setInterval/);
   assert.match(pinaculoSource, /window\.setTimeout/);
+  assert.match(pinaculoSource, /focusDurationMs/);
+  assert.match(pinaculoSource, /resolvePinaculoMechanismPose\(\s*progressRef\.current/);
+  assert.match(pinaculoSource, /settleTransition\(\);[\s\S]*invalidate\(\);/);
   assert.match(pinaculoSource, /onClick=\{selectPinaculo\}/);
   assert.match(pinaculoSource, /artifact\/select/);
+  assert.match(pinaculoSource, /name=\{OBSERVATORY_PINACULO_TECHNICAL_ART\.interactionNodeName\}/);
+  assert.match(pinaculoSource, /visible=\{false\}/);
+  assert.match(pinaculoSource, /<boxGeometry args=\{\[2\.7, 0\.65, 2\.7\]\}/);
   assert.match(pinaculoSource, /capturePinaculoDiagnostics/);
   assert.match(pinaculoSource, /onDiagnosticsReady\(null\)/);
   assert.doesNotMatch(
@@ -259,6 +289,14 @@ test("the scene owns one instanced, bounded PINÁCULO path without numeric or gl
   assert.match(
     styles,
     /@media \(max-width: 47\.99rem\)[\s\S]*data-artifact-id="pinaculo"[\s\S]*display:\s*none/,
+  );
+  assert.match(
+    styles,
+    /@media \(min-width: 64\.01rem\) and \(max-width: 88\.75rem\)[\s\S]*data-artifact-id="sound-lab"[\s\S]*display:\s*none/,
+  );
+  assert.match(
+    styles,
+    /observatory-progressive-experience:has\([\s\S]*data-selected="true"[\s\S]*data-selected="false"[\s\S]*visibility:\s*hidden/,
   );
   assert.match(pageSource, /selectedSystems\.map/);
 });

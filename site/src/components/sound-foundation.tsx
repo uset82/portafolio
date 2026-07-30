@@ -101,7 +101,6 @@ export function SoundFoundation({ content }: SoundFoundationProps) {
               </div>
               <p>{format.description}</p>
               <small>{format.accessibility}</small>
-              <i aria-hidden="true">↗</i>
             </li>
           ))}
         </ol>

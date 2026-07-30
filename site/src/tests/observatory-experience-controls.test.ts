@@ -162,7 +162,7 @@ test("the mounted control source is semantic, discoverable, and keeps every fall
   assert.match(controlStyles, /min-height: var\(--control-height\)/);
   assert.match(
     controlStyles,
-    /@media \(max-width: 47\.99rem\)[\s\S]*?\.root\s*\{[^}]*position: relative/,
+    /@media \(max-width: 47\.99rem\)[\s\S]*?\.root\s*\{[^}]*position: relative[^}]*align-self: start/,
   );
   assert.match(controlStyles, /@media \(prefers-reduced-motion: reduce\)/);
 });

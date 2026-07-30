@@ -57,11 +57,16 @@ function useElectronicsAiMaterials() {
 
 type ElectronicsAiMaterials = ReturnType<typeof useElectronicsAiMaterials>;
 
-function useBoundedElectronicsAiInvalidation(animated: boolean, selected: boolean) {
+function useBoundedElectronicsAiInvalidation(
+  animated: boolean,
+  selected: boolean,
+  shouldTransition: () => boolean,
+  settleTransition: () => void,
+) {
   const invalidate = useThree((state) => state.invalidate);
 
   useEffect(() => {
-    if (!animated) {
+    if (!animated || !shouldTransition()) {
       invalidate();
       return;
     }
@@ -71,15 +76,16 @@ function useBoundedElectronicsAiInvalidation(animated: boolean, selected: boolea
       invalidate,
       1_000 / OBSERVATORY_ELECTRONICS_AI_TECHNICAL_ART.maximumAnimatedFps,
     );
-    const timeoutId = window.setTimeout(
-      () => window.clearInterval(intervalId),
-      OBSERVATORY_ELECTRONICS_AI_TECHNICAL_ART.focusDurationMs,
-    );
+    const timeoutId = window.setTimeout(() => {
+      window.clearInterval(intervalId);
+      settleTransition();
+      invalidate();
+    }, OBSERVATORY_ELECTRONICS_AI_TECHNICAL_ART.focusDurationMs);
     return () => {
       window.clearInterval(intervalId);
       window.clearTimeout(timeoutId);
     };
-  }, [animated, invalidate, selected]);
+  }, [animated, invalidate, selected, settleTransition, shouldTransition]);
 }
 
 function ElectronicsAiRepeatedHardware({
@@ -203,7 +209,6 @@ function ElectronicsAiMechanism({
   const controlRef = useRef<Group>(null);
   const servicePanelRef = useRef<Group>(null);
   const indicatorRef = useRef<Group>(null);
-  const initialPose = resolveElectronicsAiMechanismPose(selected ? 1 : 0);
 
   const applyPose = useCallback(
     (focusProgress: number) => {
@@ -218,12 +223,23 @@ function ElectronicsAiMechanism({
     [poseRef],
   );
 
-  useBoundedElectronicsAiInvalidation(animated, selected);
+  const settleTransition = useCallback(() => {
+    progressRef.current = targetProgressRef.current;
+    applyPose(progressRef.current);
+  }, [applyPose, progressRef, targetProgressRef]);
+  const shouldTransition = useCallback(
+    () => progressRef.current !== (selected ? 1 : 0),
+    [progressRef, selected],
+  );
+
+  useBoundedElectronicsAiInvalidation(animated, selected, shouldTransition, settleTransition);
 
   useEffect(() => {
     targetProgressRef.current = selected ? 1 : 0;
-    if (settleImmediately) progressRef.current = targetProgressRef.current;
-    applyPose(progressRef.current);
+    if (settleImmediately) {
+      progressRef.current = targetProgressRef.current;
+      applyPose(progressRef.current);
+    }
   }, [applyPose, progressRef, selected, settleImmediately, targetProgressRef]);
 
   useFrame((_state, delta) => {
@@ -254,49 +270,70 @@ function ElectronicsAiMechanism({
 
       <ElectronicsAiRepeatedHardware reduced={reduced} materials={materials} />
 
-      <group
-        ref={servicePanelRef}
-        name="ElectronicsServicePanel"
-        position={[0, 1.025 + initialPose.servicePanelLift, -0.02]}
-      >
-        <mesh material={materials.walnut} castShadow={false}>
-          <boxGeometry args={[1.82, 0.075, 0.94]} />
-        </mesh>
-        <mesh material={materials.pewter} position={[0, 0.047, 0]} castShadow={false}>
-          <boxGeometry args={[1.62, 0.02, 0.76]} />
-        </mesh>
+      <group position={[0, 0, -0.02]}>
+        <group
+          ref={(node) => {
+            servicePanelRef.current = node;
+            if (node) {
+              node.position.y =
+                1.025 + resolveElectronicsAiMechanismPose(progressRef.current).servicePanelLift;
+            }
+          }}
+          name="ElectronicsServicePanel"
+        >
+          <mesh material={materials.walnut} castShadow={false}>
+            <boxGeometry args={[1.82, 0.075, 0.94]} />
+          </mesh>
+          <mesh material={materials.pewter} position={[0, 0.047, 0]} castShadow={false}>
+            <boxGeometry args={[1.62, 0.02, 0.76]} />
+          </mesh>
+        </group>
       </group>
 
-      <group
-        ref={controlRef}
-        name="ElectronicsTactileControl"
-        position={[0.82, 0.39, 0.64]}
-        rotation={[0, 0, initialPose.controlRotation]}
-      >
-        <mesh material={materials.pewter} rotation={[Math.PI / 2, 0, 0]} castShadow={false}>
-          <cylinderGeometry args={[0.14, 0.14, 0.08, reduced ? 14 : 24]} />
-        </mesh>
-        <mesh material={materials.graphite} position={[0, 0.075, 0.05]} castShadow={false}>
-          <boxGeometry args={[0.035, 0.15, 0.035]} />
-        </mesh>
+      <group position={[0.82, 0.39, 0.64]}>
+        <group
+          ref={(node) => {
+            controlRef.current = node;
+            if (node) {
+              node.rotation.z = resolveElectronicsAiMechanismPose(
+                progressRef.current,
+              ).controlRotation;
+            }
+          }}
+          name="ElectronicsTactileControl"
+        >
+          <mesh material={materials.pewter} rotation={[Math.PI / 2, 0, 0]} castShadow={false}>
+            <cylinderGeometry args={[0.14, 0.14, 0.08, reduced ? 14 : 24]} />
+          </mesh>
+          <mesh material={materials.graphite} position={[0, 0.075, 0.05]} castShadow={false}>
+            <boxGeometry args={[0.035, 0.15, 0.035]} />
+          </mesh>
+        </group>
       </group>
 
-      <group
-        ref={indicatorRef}
-        name="ElectronicsBlankStatusWindow"
-        position={[0.8, 0.82 + initialPose.indicatorLift, 0.635]}
-        userData={{
-          statusWindow: ELECTRONICS_AI_MODULE_CONTRACT.statusWindow,
-          emissive: false,
-          liveData: false,
-        }}
-      >
-        <mesh material={materials.pewter} castShadow={false}>
-          <boxGeometry args={[0.3, 0.23, 0.035]} />
-        </mesh>
-        <mesh material={materials.indicator} position={[0, 0, 0.022]} castShadow={false}>
-          <boxGeometry args={[0.2, 0.13, 0.025]} />
-        </mesh>
+      <group name="ElectronicsIndicators" position={[0.8, 0, 0.635]}>
+        <group
+          ref={(node) => {
+            indicatorRef.current = node;
+            if (node) {
+              node.position.y =
+                0.82 + resolveElectronicsAiMechanismPose(progressRef.current).indicatorLift;
+            }
+          }}
+          name="ElectronicsBlankStatusWindow"
+          userData={{
+            statusWindow: ELECTRONICS_AI_MODULE_CONTRACT.statusWindow,
+            emissive: false,
+            liveData: false,
+          }}
+        >
+          <mesh material={materials.pewter} castShadow={false}>
+            <boxGeometry args={[0.3, 0.23, 0.035]} />
+          </mesh>
+          <mesh material={materials.indicator} position={[0, 0, 0.022]} castShadow={false}>
+            <boxGeometry args={[0.2, 0.13, 0.025]} />
+          </mesh>
+        </group>
       </group>
     </>
   );
@@ -366,6 +403,7 @@ export function ObservatoryElectronicsAi({
       rotation={[...OBSERVATORY_ELECTRONICS_AI_TECHNICAL_ART.rotationRadians]}
       onClick={selectElectronicsAi}
       userData={{
+        interactionNodeName: OBSERVATORY_ELECTRONICS_AI_TECHNICAL_ART.interactionNodeName,
         interactionTargetId: OBSERVATORY_ELECTRONICS_AI_TECHNICAL_ART.interactionTargetId,
         accessibleLabel: OBSERVATORY_ELECTRONICS_AI_TECHNICAL_ART.accessibleLabel,
         href: OBSERVATORY_ELECTRONICS_AI_TECHNICAL_ART.href,
@@ -375,6 +413,17 @@ export function ObservatoryElectronicsAi({
         ...ELECTRONICS_AI_MODULE_CONTRACT,
       }}
     >
+      <mesh
+        name={OBSERVATORY_ELECTRONICS_AI_TECHNICAL_ART.interactionNodeName}
+        position={[0, 0.7, 0]}
+        visible={false}
+        userData={{
+          interactionTargetId: OBSERVATORY_ELECTRONICS_AI_TECHNICAL_ART.interactionTargetId,
+          accessibleLabel: OBSERVATORY_ELECTRONICS_AI_TECHNICAL_ART.accessibleLabel,
+        }}
+      >
+        <boxGeometry args={[2.4, 1.4, 1.5]} />
+      </mesh>
       <ElectronicsAiMechanism
         reduced={presentation.tier === "reduced"}
         selected={selected}

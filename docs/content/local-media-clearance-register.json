@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "reviewedOn": "2026-07-25",
-  "status": "ownership-recorded-runtime-hold",
+  "reviewedOn": "2026-07-27",
+  "status": "runtime-approved",
   "assets": [
     {
       "id": "local-firefly-jpg",
@@ -74,14 +74,14 @@
       "rights": "owned",
       "license": "Owner-declared original media; no separate SPDX media license file is recorded yet. Carlos's open-source statement covers his code, not an automatic media redistribution license.",
       "attribution": "Credit Carlos Carpio if this mark is ever published; no third-party credit is recorded.",
-      "decision": "exclude",
+      "decision": "include",
       "requiredClearance": [
-        "Approve public display and whether the full legal-name treatment may appear on the live site.",
-        "Approve accessible naming and a web-ready SVG or transparent raster master."
+        "Mark-only public display approved: on 2026-07-27 Carlos supplied this logo and asked for it to be integrated into the portfolio, which clears the monogram mark for the live site. The full legal-name lockup row remains excluded because the approved public identity copy is \"Carlos Carpio\".",
+        "Web-ready master approved: a transparent mark-only raster is derived by removing the near-black ground (screen-on-black unmultiply) and cropping the main monogram; the derivative ships from site/public/images/brand/ rather than referencing this source file at runtime."
       ],
-      "accessibilityPlan": "Decide whether the mark is decorative or provide an approved accessible name and alt treatment.",
-      "technicalReview": "No SVG/raster master, transparent export, metadata-safety review, or responsive budget has been approved.",
-      "evidence": "Tracked local file with the recorded byte length and SHA-256; the typographic CC fallback remains authoritative."
+      "accessibilityPlan": "The mark is decorative in the header: it sits inside an aria-hidden span with empty alt while the adjacent \"Carlos Carpio\" text and the link's aria-label carry the accessible name.",
+      "technicalReview": "Derived 2026-07-27: 256×256 palette-quantized transparent PNG at 19,076 bytes (SHA-256 EAB3D2852173332C19AF8F76B6F9EBF0DD9B3D1416D17C9DB6C67623EA9553C2) for the header, plus favicon.ico/icon.png/apple-icon.png icon derivatives on the palette espresso ground; rendered at 3.2rem/2.5rem with explicit dimensions.",
+      "evidence": "Tracked local file with the recorded byte length and SHA-256; Carlos's 2026-07-27 integration request is the public-display approval, and the derived runtime assets are hash-pinned by the site content gate."
     },
     {
       "id": "local-main-ui-png",
@@ -114,14 +114,14 @@
       "rights": "owned",
       "license": "Owner-declared original media; no separate SPDX media license file is recorded yet. Carlos's open-source statement covers his code, not an automatic media redistribution license.",
       "attribution": "Credit Carlos Carpio if this video is ever published; no third-party credit is recorded.",
-      "decision": "exclude",
+      "decision": "include",
       "requiredClearance": [
-        "Approve public playback and confirm any embedded audio is also owner-created or intentionally silent.",
-        "Approve captions or transcript, poster frame, reduced-motion fallback, and delivery budget."
+        "Public sequence approved: on 2026-07-27 Carlos asked for this video to replace the static hero composition, which clears the clip for silent looping hero playback. The derivative has its AAC audio track removed, so no embedded-audio rights question remains open.",
+        "Delivery approved: a 1440×810 keyframe-dense (1 s GOP) muted H.264 derivative at 4,052,812 bytes with +faststart ships from site/public/videos/, plays silently on a loop over the retained poster, and is suspended whenever the hero is offscreen or the tab is hidden."
       ],
-      "accessibilityPlan": "Provide approved captions or transcript, an informative description, a poster, and a reduced-motion fallback before publication.",
-      "technicalReview": "No codec inspection, audio audit, poster, streaming strategy, or mobile performance budget has been approved.",
-      "evidence": "Tracked local file with the recorded byte length and SHA-256; no player, source element, or runtime reference is permitted."
+      "accessibilityPlan": "The sequence is decorative and silent with no speech, so no captions are required; it is marked aria-hidden with no controls and is never keyboard-reachable, the approved poster and its alt text remain the hero’s server-rendered visual, and reduced-motion or save-data preferences render no video element at all.",
+      "technicalReview": "Inspected 2026-07-27 with ffprobe: source is 1920×1080 H.264 + AAC, 10.0 s, 240 frames. Derivative robot-water-sequence.mp4 (SHA-256 6FD6C308C0C49F67C8822E4E1D2D5F23A7F9AF06E55667238CC402585454BAB2) strips audio, scales to 1440×810, uses CRF 28 with a 24-frame GOP and +faststart for efficient silent loop playback, and stays under the 5 MB hero-video budget; poster robot-water-poster.jpg (204,322 bytes, SHA-256 79C1EDCF3A5CD3B28802501BFF6C17CA5E616806D65FBE081A64636A1118E005) is its 0.2 s frame.",
+      "evidence": "Tracked local file with the recorded byte length and SHA-256; Carlos's 2026-07-27 homepage request is the publication approval, and the muted derivative plus poster are hash-pinned by the site content gate."
     },
     {
       "id": "local-robot-glb",
@@ -168,6 +168,8 @@
     "On 2026-07-25 Carlos stated that he created all of this material and chose MIT for the repository code. Authorship of the eight local media files is therefore recorded as owned.",
     "The safest launch path approved the ownership-recorded Observatory poster for public production display while keeping monogram sheets, videos, and multi-ten-megabyte GLBs excluded from runtime until accessibility and optimization work is complete.",
     "MIT covers portfolio code; it does not auto-import binary media into the live site. Every imagesandvideo path remains excluded from runtime source imports.",
-    "The site-level content gate compares this register to the actual imagesandvideo directory, byte lengths, and SHA-256 hashes so later additions or substitutions cannot silently bypass review."
+    "The site-level content gate compares this register to the actual imagesandvideo directory, byte lengths, and SHA-256 hashes so later additions or substitutions cannot silently bypass review.",
+    "On 2026-07-27 Carlos supplied the gold CA²M monogram and asked for it to be integrated into the portfolio. That request grants mark-only runtime clearance: the register status moves to runtime-approved, imagesandvideo/logo.png moves to include as the derivation source, and every other local file keeps its exclude decision. The full legal-name lockup stays unpublished because the approved public identity remains \"Carlos Carpio\".",
+    "On 2026-07-27 Carlos also approved the robot water video as the homepage hero’s moving visual. Its runtime derivative is muted (audio track removed), scaled to 1440×810, keyframe-dense, and hash-pinned with its poster; the raw MP4 stays outside runtime imports like every other imagesandvideo source."
   ]
 }

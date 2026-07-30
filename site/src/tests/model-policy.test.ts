@@ -31,7 +31,7 @@ test("model policy defaults to the variable free prototype router", () => {
     provider: {
       allowFallbacks: true,
       dataCollection: "deny",
-      zdr: true,
+      zdr: false,
     },
   });
 });
@@ -65,7 +65,7 @@ test("ordered model fallbacks and strict provider constraints reach the OpenRout
     provider: {
       allowFallbacks: true,
       dataCollection: "deny",
-      zdr: true,
+      zdr: false,
     },
     maxCompletionTokens: 120,
     stream: false,
@@ -96,6 +96,11 @@ test("production mode uses only its configured paid model sequence", () => {
 
   assert.equal(policy.mode, "production");
   assert.equal(policy.routingKind, "named-model");
+  assert.deepEqual(policy.provider, {
+    allowFallbacks: true,
+    dataCollection: "deny",
+    zdr: true,
+  });
   assert.deepEqual(policy.requestedModels, [
     "anthropic/claude-sonnet-4",
     "openai/gpt-5-mini",
@@ -129,4 +134,24 @@ test("model policy rejects malformed IDs and excessive fallback sequences", () =
     () => createCcAiModelPolicy(environment({ OPENROUTER_FALLBACK_MODELS: "a/1,b/2,c/3,d/4,e/5" })),
     /at most 4 unique models/,
   );
+});
+
+test("provider policy always denies training and scopes zero-retention to production", () => {
+  // Requiring zero data retention of the free prototype router matches zero
+  // endpoints much of the time ("No endpoints found matching your data
+  // policy"), which made every CC AI request fail. Paid production routing
+  // keeps the stricter requirement.
+  const prototype = createCcAiModelPolicy(environment({ CC_AI_MODE: "prototype" }));
+  assert.equal(prototype.provider.dataCollection, "deny");
+  assert.equal(prototype.provider.allowFallbacks, true);
+  assert.equal(prototype.provider.zdr, false);
+
+  const production = createCcAiModelPolicy(
+    environment({
+      CC_AI_MODE: "production",
+      OPENROUTER_PRODUCTION_MODEL: "anthropic/claude-sonnet-4",
+    }),
+  );
+  assert.equal(production.provider.dataCollection, "deny");
+  assert.equal(production.provider.zdr, true);
 });

@@ -25,6 +25,17 @@ const abuseGuard = createCcAiAbuseGuardFromEnvironment({
 });
 const knowledgeContext = buildCcAiKnowledgeContext(siteContent);
 
+/* `openrouter/free` routes to whichever free model is currently available, and
+ * those endpoints queue: a 12 s budget times out on answers that arrive fine a
+ * few seconds later. The paid production fleet keeps the tighter budget.
+ * CC_AI_TIMEOUT_MS overrides both. */
+const DEFAULT_TIMEOUT_MS = modelPolicy.mode === "production" ? 12_000 : 30_000;
+const configuredTimeoutMs = Number.parseInt(process.env.CC_AI_TIMEOUT_MS ?? "", 10);
+const timeoutMs =
+  Number.isFinite(configuredTimeoutMs) && configuredTimeoutMs > 0
+    ? Math.min(configuredTimeoutMs, 60_000)
+    : DEFAULT_TIMEOUT_MS;
+
 export const POST = createCcAiPostHandler({
   enabled: process.env.CC_AI_ENABLED === "true",
   abuseGuard,
@@ -32,5 +43,6 @@ export const POST = createCcAiPostHandler({
     provider: createOpenRouterChatProvider(),
     modelPolicy,
     knowledgeContext,
+    timeoutMs,
   },
 });
