@@ -1,0 +1,14 @@
+*
+!Dockerfile
+!site/
+!site/**
+
+site/node_modules/
+site/.next/
+site/.next-*/
+site/coverage/
+site/out/
+site/build/
+site/.env*
+!site/.env.example
+site/*.log

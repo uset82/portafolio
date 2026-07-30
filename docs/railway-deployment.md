@@ -1,30 +1,38 @@
 # Railway deployment
 
-Railway is the user-selected target for the current hosted preview. The deployable workspace is `site/`; the repository root contains project-management and source-material files and is not an application root.
+Railway is the user-selected target for the current hosted preview. The Next.js application remains under `site/`, while the Railway service intentionally builds from the repository root through the root `Dockerfile`.
 
-## Required service setting
+## Required source state
 
-In the Railway service, open **Settings > Source** and set:
+Commit and push these files to the branch connected to Railway:
 
-```text
-Root Directory: /site
-```
+- `Dockerfile`;
+- `.dockerignore`;
+- `railway.json`;
+- the current `site/` application.
 
-This setting is required. Without it, Railpack scans the repository root, cannot see `site/package.json`, and reports that it cannot determine how to build the app. Do not add a root `start.sh` or wrapper `package.json` to work around the incorrect build context.
+Use **Deploy Latest Commit** after pushing. Redeploying failed deployment `c59b0098` only rebuilds its old source archive, which contains neither the root Dockerfile nor `railway.json`.
 
-After the root directory is saved, redeploy the service. Railpack will detect the Node 22/pnpm Next.js application from `site/package.json` and `site/pnpm-lock.yaml`. The versioned `site/railway.json` then provides these deployment settings:
+## Service settings
 
-- builder: Railpack;
-- build command: `pnpm build`;
-- start command: `pnpm exec next start --hostname 0.0.0.0 --port $PORT`;
-- health check: `/`, with a 300-second startup window;
-- restart policy: on failure, up to three retries.
+Keep **Root Directory** empty or `/`. The Dockerfile is at the repository root and copies only the `site/` application into the image. If a custom **Config File** path is present, set it to `/railway.json`.
+
+Railway should report that it detected the Dockerfile instead of asking Railpack to infer a root language. The versioned configuration provides:
+
+- Dockerfile builder with `Dockerfile` at the source root;
+- Node 22 and exact pnpm 10.13.1 inside the image;
+- frozen-lockfile install and Next.js production build from `site/`;
+- `$PORT`-aware Next.js startup through the image command;
+- `/` health check with a 300-second startup window;
+- restart on failure, up to three retries.
+
+The root `.dockerignore` limits the image context to `Dockerfile` and `site/`, while explicitly excluding local dependencies, build output, coverage, logs, and environment files.
 
 ## Environment
 
 Set `NEXT_PUBLIC_SITE_URL` to the assigned HTTPS preview origin before the hosted acceptance review. Keep `CC_AI_ENABLED=false` until the public knowledge, privacy, abuse-control, provider-policy, and live evaluation gates are approved. The current semantic portfolio and video hero do not require `OPENROUTER_API_KEY`; if CC AI is enabled later, store that key only in Railway's secret-variable store.
 
-The homepage video and poster are under `site/public/videos/robot-water-sequence.mp4` and `site/public/images/robot-water-poster.jpg`, so both remain inside the `/site` deployment context.
+The homepage video and poster are under `site/public/videos/robot-water-sequence.mp4` and `site/public/images/robot-water-poster.jpg`, so both are copied into the production image.
 
 ## Preview and rollback
 
