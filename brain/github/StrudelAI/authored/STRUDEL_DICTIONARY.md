@@ -1,12 +1,12 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/StrudelAI/blob/main/STRUDEL_DICTIONARY.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# ?? STRUDEL QUICK REFERENCE DICTIONARY
+# 📖 STRUDEL QUICK REFERENCE DICTIONARY
 
 *Fast lookup guide for sounds, effects, synths, and patterns*
 
 ---
 
-## ?? SYNTHS & WAVEFORMS
+## 🎹 SYNTHS & WAVEFORMS
 
 ### Basic Waveforms
 Use with `.s()` or `.sound()`:
@@ -61,7 +61,7 @@ s("crackle*4").density(0.2)
 
 ---
 
-## ?? NOTE SYSTEMS
+## 🎵 NOTE SYSTEMS
 
 ### Letter Notation
 ```javascript
@@ -86,7 +86,7 @@ note(m("c3 e3 g3")) // Preferred way - cleaner syntax
 
 ---
 
-## ??? MINI-NOTATION OPERATORS
+## 🎛️ MINI-NOTATION OPERATORS
 
 ### Speed & Rhythm
 
@@ -131,7 +131,7 @@ note("[c3,e3,g3,b3]")
 
 ---
 
-## ?? EFFECTS REFERENCE
+## 🔊 EFFECTS REFERENCE
 
 ### Filters
 
@@ -240,7 +240,7 @@ note("c3").s("sawtooth")
 
 ---
 
-## ?? COMMON PATTERNS
+## 🎼 COMMON PATTERNS
 
 ### Drum Patterns
 
@@ -286,7 +286,7 @@ note(m("<c4 e4 g4 c5>")).s("sine")
 
 ---
 
-## ??? TEMPO & TIMING
+## 🎚️ TEMPO & TIMING
 
 ### Set Tempo
 ```javascript
@@ -308,7 +308,7 @@ setcpm(120/4) // 120 BPM in 4/4 time
 
 ---
 
-## ?? EFFECT PRESETS (Copy-Paste Ready)
+## 🎨 EFFECT PRESETS (Copy-Paste Ready)
 
 ### Robot Voice
 ```javascript
@@ -352,7 +352,7 @@ note(m("c4 e4 g4 b4")).s("square").coarse(1).crush(8).delay(0.25).room(0.3).lpf(
 
 ---
 
-## ?? PATTERN TRANSFORMATIONS
+## 🔁 PATTERN TRANSFORMATIONS
 
 ### Time-based
 
@@ -375,7 +375,7 @@ note(m("c4 e4 g4 b4")).s("square").coarse(1).crush(8).delay(0.25).room(0.3).lpf(
 
 ---
 
-## ?? PRO TIPS
+## 💡 PRO TIPS
 
 ### 1. Stack Multiple Patterns
 ```javascript
@@ -415,7 +415,7 @@ note(m("c3? e3? g3?"))         // Random note removal
 
 ---
 
-## ?? QUICK GENRE TEMPLATES
+## 🎯 QUICK GENRE TEMPLATES
 
 ### Techno
 ```javascript
@@ -457,7 +457,7 @@ stack(
 
 ---
 
-## ?? FREQUENTLY USED COMBINATIONS
+## 📚 FREQUENTLY USED COMBINATIONS
 
 ### Clean Kick
 ```javascript
@@ -490,4 +490,4 @@ note(m("c5 e5 g5 b5")).s("sawtooth").lpf(3000).delay(0.25).room(0.3)
 **Version:** 1.0  
 **For:** AETHER Sonic Interface / Strudel Live Coding
 
-*Keep this handy while coding! ??*
+*Keep this handy while coding! 🎵*

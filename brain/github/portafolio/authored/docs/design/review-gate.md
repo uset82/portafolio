@@ -45,15 +45,15 @@ Result: approved for initial application scaffolding and poster-first implementa
 
 ## Phase 3 acceptance map
 
-- 3.1?3.3: invoked workflows, visual thesis, and provenance audit ? `DESIGN.md`
-- 3.4?3.6: natural color, typography, grid/spacing/shape/elevation ? `DESIGN.md`
-- 3.7?3.18: global shell, route templates, responsive/state/motion/reduced-motion contracts ? `DESIGN.md`
-- 3.19: desktop/mobile and launch-route wireframes ? `wireframes.md`
-- 3.20?3.22: implementation artifact, editorial gate, and reference audit ? `DESIGN.md` and this review
-- 3.23?3.28: layered scene, camera, artifact map, water, robot, and Sound Lab ? `immersive-scene-spec.md`
-- 3.29: chat ? `cc-ai-spec.md`
-- 3.30?3.31: fallbacks and cross-system animation ownership ? `DESIGN.md` and `immersive-scene-spec.md`
-- 3.32: immersive gate ? this review
+- 3.1–3.3: invoked workflows, visual thesis, and provenance audit — `DESIGN.md`
+- 3.4–3.6: natural color, typography, grid/spacing/shape/elevation — `DESIGN.md`
+- 3.7–3.18: global shell, route templates, responsive/state/motion/reduced-motion contracts — `DESIGN.md`
+- 3.19: desktop/mobile and launch-route wireframes — `wireframes.md`
+- 3.20–3.22: implementation artifact, editorial gate, and reference audit — `DESIGN.md` and this review
+- 3.23–3.28: layered scene, camera, artifact map, water, robot, and Sound Lab — `immersive-scene-spec.md`
+- 3.29: chat — `cc-ai-spec.md`
+- 3.30–3.31: fallbacks and cross-system animation ownership — `DESIGN.md` and `immersive-scene-spec.md`
+- 3.32: immersive gate — this review
 
 ## Implementation constraints carried forward
 

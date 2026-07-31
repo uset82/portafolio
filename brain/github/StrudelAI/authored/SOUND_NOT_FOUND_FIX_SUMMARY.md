@@ -27,10 +27,10 @@ generate patterns using `s("bd")`, Strudel tries to load a sample file named
 
 **Changed the system prompt to:**
 
-- ? Instruct AI to use NOTE NAMES (c1-c7) instead of sample names (bd, sn, hh)
-- ? Explain that samples are NOT available
-- ? Provide correct pattern examples using notes
-- ? Remove references to `sound()`, `.bank()`, and sample loading
+- ✅ Instruct AI to use NOTE NAMES (c1-c7) instead of sample names (bd, sn, hh)
+- ✅ Explain that samples are NOT available
+- ✅ Provide correct pattern examples using notes
+- ✅ Remove references to `sound()`, `.bank()`, and sample loading
 
 **Before:**
 
@@ -58,9 +58,9 @@ DO NOT USE:
 
 **Updated system prompt similarly:**
 
-- ? Use note names instead of sample names
-- ? Provide correct mini-notation examples
-- ? Explain automatic conversion to synthetic sounds
+- ✅ Use note names instead of sample names
+- ✅ Provide correct mini-notation examples
+- ✅ Explain automatic conversion to synthetic sounds
 
 **Before:**
 
@@ -150,7 +150,7 @@ note(m("c3 ~ c3 ~")).s("square")
 note(m("c3 ~ c3 ~")).s("square").decay(0.05)
 ```
 
-**Result:** ? Plays kick drum using square wave synth
+**Result:** ✅ Plays kick drum using square wave synth
 
 ### User Types Strudel Code
 
@@ -158,7 +158,7 @@ note(m("c3 ~ c3 ~")).s("square").decay(0.05)
 
 **Passed through as-is:**
 
-**Result:** ? Plays exactly as written
+**Result:** ✅ Plays exactly as written
 
 ### User Types Sample Code (Wrong)
 
@@ -166,7 +166,7 @@ note(m("c3 ~ c3 ~")).s("square").decay(0.05)
 
 **Passed through as-is:**
 
-**Result:** ? Error: "sound bd not found!"
+**Result:** ❌ Error: "sound bd not found!"
 
 **Solution:** User should use `note(m("c3")).s("square")` instead
 
@@ -177,7 +177,7 @@ note(m("c3 ~ c3 ~")).s("square").decay(0.05)
 AI might generate:
 
 ```javascript
-s("bd sd hh")  // ? Tries to load samples
+s("bd sd hh")  // ❌ Tries to load samples
 ```
 
 ### After Fix
@@ -185,13 +185,13 @@ s("bd sd hh")  // ? Tries to load samples
 AI now generates:
 
 ```javascript
-c3 ~ c4 ~  // ? Uses note names, auto-converted to synths
+c3 ~ c4 ~  // ✅ Uses note names, auto-converted to synths
 ```
 
 Or:
 
 ```javascript
-expr:note(m("c3 ~ c3 ~")).s("square")  // ? Explicit synth usage
+expr:note(m("c3 ~ c3 ~")).s("square")  // ✅ Explicit synth usage
 ```
 
 ## Testing the Fix
@@ -226,7 +226,7 @@ note(m("c3 ~ c3 ~")).s("square").decay(0.05)
 
 **Expected:**
 
-- ? Plays kick drum pattern
+- ✅ Plays kick drum pattern
 - No errors
 
 ### Test 4: Direct Code (Wrong - for testing)
@@ -239,25 +239,25 @@ s("bd")
 
 **Expected:**
 
-- ? Error: "sound bd not found!"
+- ❌ Error: "sound bd not found!"
 - This is expected - user should use note() instead
 
 ## Files Modified
 
-1. ? `src/server/googleHandler.ts` - Updated AI system prompt
-2. ? `src/server/aiHandler.ts` - Updated AI system prompt
-3. ? `src/components/SonicInterface.tsx` - Updated input placeholder
-4. ? `src/components/StrudelCodeView.tsx` - Updated textarea placeholder
+1. ✅ `src/server/googleHandler.ts` - Updated AI system prompt
+2. ✅ `src/server/aiHandler.ts` - Updated AI system prompt
+3. ✅ `src/components/SonicInterface.tsx` - Updated input placeholder
+4. ✅ `src/components/StrudelCodeView.tsx` - Updated textarea placeholder
 
 ## Files Already Correct
 
-1. ? `src/lib/strudel/engine.ts` - Pattern conversion logic (user updated)
-2. ? `src/lib/agent/context-manager.ts` - Already has correct examples
-3. ? `src/server/mockAiHandler.ts` - Already uses note names
+1. ✅ `src/lib/strudel/engine.ts` - Pattern conversion logic (user updated)
+2. ✅ `src/lib/agent/context-manager.ts` - Already has correct examples
+3. ✅ `src/server/mockAiHandler.ts` - Already uses note names
 
 ## Quick Reference for Users
 
-### ? DO Use These Patterns
+### ✅ DO Use These Patterns
 
 ```javascript
 // Drums
@@ -277,13 +277,13 @@ c2 g1 c2 g1
 c4 e4 g4 b4
 ```
 
-### ? DON'T Use These
+### ❌ DON'T Use These
 
 ```javascript
-s("bd")              // ? Tries to load sample
-s("bd sd hh")        // ? Tries to load samples
-s("bd").bank("...")  // ? Sample banks not available
-sound("bd")          // ? Function doesn't exist
+s("bd")              // ❌ Tries to load sample
+s("bd sd hh")        // ❌ Tries to load samples
+s("bd").bank("...")  // ❌ Sample banks not available
+sound("bd")          // ❌ Function doesn't exist
 ```
 
 ## Available Synth Waveforms
@@ -300,18 +300,18 @@ Use with `.s("waveform")`:
 ### Before All Fixes
 
 ```text
-? AI generates: s("bd sd hh")
-? Error: "sound bd not found!"
-? No music plays
+❌ AI generates: s("bd sd hh")
+❌ Error: "sound bd not found!"
+❌ No music plays
 ```
 
 ### After All Fixes
 
 ```text
-? AI generates: c3 ~ c4 ~
-? Auto-converts to: note(m("c3 ~ c4 ~")).s("square")
-? Music plays successfully
-? No errors
+✅ AI generates: c3 ~ c4 ~
+✅ Auto-converts to: note(m("c3 ~ c4 ~")).s("square")
+✅ Music plays successfully
+✅ No errors
 ```
 
 ## Verification Checklist
@@ -351,10 +351,10 @@ If you still see "sound bd not found" errors:
 
 The "sound bd not found" error has been comprehensively addressed by:
 
-1. ? Updating AI prompts to generate note-based patterns
-2. ? Updating UI to show correct examples
-3. ? Leveraging existing pattern conversion logic
-4. ? Creating comprehensive documentation
+1. ✅ Updating AI prompts to generate note-based patterns
+2. ✅ Updating UI to show correct examples
+3. ✅ Leveraging existing pattern conversion logic
+4. ✅ Creating comprehensive documentation
 
 Users and AI should now consistently use synthetic sounds, eliminating sample
 loading errors entirely.

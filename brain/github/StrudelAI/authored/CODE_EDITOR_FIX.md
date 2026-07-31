@@ -107,22 +107,22 @@ placeholder="// Type Strudel code here...
 
 ### Before
 ```
-???????????????????????????????
-?                             ?  ? Invisible, hard to find
-?  (transparent background)   ?
-?                             ?
-???????????????????????????????
+┌─────────────────────────────┐
+│                             │  ← Invisible, hard to find
+│  (transparent background)   │
+│                             │
+└─────────────────────────────┘
 ```
 
 ### After
 ```
-???????????????????????????????
-? // Type Strudel code here...?  ? Visible background
-? // Example: note(m("c3...   ?  ? Clear border
-?                             ?  ? Text cursor visible
-? [Cursor blinks here]        ?
-???????????????????????????????
-     ? Cyan border (visible)
+┌─────────────────────────────┐
+│ // Type Strudel code here...│  ← Visible background
+│ // Example: note(m("c3...   │  ← Clear border
+│                             │  ← Text cursor visible
+│ [Cursor blinks here]        │
+└─────────────────────────────┘
+     ↑ Cyan border (visible)
 ```
 
 ## How to Use
@@ -151,11 +151,11 @@ After 500ms of no typing, the code automatically:
 ### Step 4: Edit Anytime
 
 You can:
-- ? Click anywhere in the editor
-- ? Type new code
-- ? Delete code
-- ? Copy/paste code
-- ? Use keyboard shortcuts (Ctrl+A, Ctrl+C, Ctrl+V)
+- ✅ Click anywhere in the editor
+- ✅ Type new code
+- ✅ Delete code
+- ✅ Copy/paste code
+- ✅ Use keyboard shortcuts (Ctrl+A, Ctrl+C, Ctrl+V)
 
 ## Testing
 
@@ -169,7 +169,7 @@ You can:
 ### Test 2: Edit Existing Code
 
 1. **Click** in the middle of existing code
-2. **Change** a note (e.g., `c3` ? `c4`)
+2. **Change** a note (e.g., `c3` → `c4`)
 3. **Wait** 500ms
 4. **Expected:** Music changes
 
@@ -248,7 +248,7 @@ When interacting with the editor, you'll see:
 
 ## Files Modified
 
-1. ? `src/components/StrudelCodeView.tsx` - Lines 141-176: Enhanced textarea
+1. ✅ `src/components/StrudelCodeView.tsx` - Lines 141-176: Enhanced textarea
 
 ## Verification Checklist
 
@@ -266,10 +266,10 @@ When interacting with the editor, you'll see:
 
 ## Summary
 
-? **Fixed:** Code editor now clearly visible and editable
-? **Added:** Visual feedback (border, background, focus state)
-? **Added:** Better interaction (cursor, pointer events, z-index)
-? **Added:** Keyboard event logging for debugging
-? **Improved:** Placeholder with helpful examples
+✅ **Fixed:** Code editor now clearly visible and editable
+✅ **Added:** Visual feedback (border, background, focus state)
+✅ **Added:** Better interaction (cursor, pointer events, z-index)
+✅ **Added:** Keyboard event logging for debugging
+✅ **Improved:** Placeholder with helpful examples
 
 **The code editor is now fully functional and easy to use!** Users can click, type, edit, and see their code execute in real-time.

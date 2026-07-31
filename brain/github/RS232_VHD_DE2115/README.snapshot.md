@@ -8,7 +8,7 @@ A complete RS-232 communication system implementation on the Altera/Intel DE2-11
 
 ---
 
-## ?? Overview
+## 📋 Overview
 
 This project implements a full RS-232 communication system following the RS-232 protocol standard. RS-232 is a standard for point-to-point communication over relatively short distances at low to medium data rates. The system enables two DE2-115 boards to communicate with each other, where one board acts as a transmitter (sender) and the other as a receiver.
 
@@ -22,12 +22,12 @@ This project implements a full RS-232 communication system following the RS-232 
 
 ---
 
-## ? Features
+## ✨ Features
 
 ### Hardware Features
-- ? **8 Selectable Baud Rates**: 4,800, 9,600, 19,200, 34,800, 57,600, 74,880, 115,200, and 1,000,000 baud
-- ? **Dual Data Sources**: Fixed pattern (0xA5) or user switches (SW[7:0])
-- ? **Real-time Display**: 
+- ✅ **8 Selectable Baud Rates**: 4,800, 9,600, 19,200, 34,800, 57,600, 74,880, 115,200, and 1,000,000 baud
+- ✅ **Dual Data Sources**: Fixed pattern (0xA5) or user switches (SW[7:0])
+- ✅ **Real-time Display**: 
   - HEX0-HEX2: Decimal representation of received data (0-255)
   - HEX4-HEX5: Hexadecimal representation of received data
   - HEX6-HEX7: Hexadecimal representation of transmitted data
@@ -35,55 +35,55 @@ This project implements a full RS-232 communication system following the RS-232 
   - LEDR[7:0]: Binary representation of received data
   - LEDG[5]: TX ready indicator (Sender mode)
   - LEDG[6]: RX data valid indicator (Receiver mode)
-- ? **Mode Selection**: SW[17] switches between Sender (0) and Receiver (1) modes
-- ? **Synchronous Reset**: Hardware reset via KEY[0]
+- ✅ **Mode Selection**: SW[17] switches between Sender (0) and Receiver (1) modes
+- ✅ **Synchronous Reset**: Hardware reset via KEY[0]
 
 ### Software/Simulation Features
-- ? **Standalone Simulations**: Individual testbenches for TX, RX, and loopback
-- ? **ModelSim/Questa Compatible**: Pre-configured simulation scripts
-- ? **SignalTap II Support**: Hardware waveform capture for debugging
-- ? **Complete Documentation**: Project report, guides, and references
+- ✅ **Standalone Simulations**: Individual testbenches for TX, RX, and loopback
+- ✅ **ModelSim/Questa Compatible**: Pre-configured simulation scripts
+- ✅ **SignalTap II Support**: Hardware waveform capture for debugging
+- ✅ **Complete Documentation**: Project report, guides, and references
 
 ---
 
-## ??? Project Structure
+## 🏗️ Project Structure
 
 ```
 RS232_CCM/
-??? src/                          # VHDL source files
-?   ??? rs232_top.vhd            # Top-level module
-?   ??? sender.vhd               # RS-232 transmitter
-?   ??? mottaker.vhd             # RS-232 receiver
-?   ??? baud_rate_selector.vhd   # Baud rate generator
-?   ??? data_source_mux.vhd      # Data source multiplexer
-?   ??? data_display.vhd         # Display and LED drivers
-?   ??? bin2bcd_8bit.vhd         # Binary to BCD converter
-?   ??? ROM_7_seg.vhd            # 7-segment decoder ROM
-?   ??? reset_sync.vhd           # Synchronized reset generator
-?
-??? sim/                         # Standalone simulation setups
-?   ??? sender/                  # Transmitter simulation
-?   ??? mottaker/                # Receiver simulation
-?   ??? loopback/                # Full system loopback test
-?
-??? simulation/questa/           # Quartus-generated simulation files
-?
-??? output_files/                # Compiled FPGA bitstreams
-?   ??? RS232_Communication.sof # FPGA programming file
-?   ??? RS232_Communication.pin # Pin assignment file
-?
-??? image/PROJECT_REPORT/        # Project report figures
-?
-??? PROJECT_REPORT.md            # Complete project documentation
-??? QUICK_REFERENCE.md           # Quick usage guide
-??? SIGNALTAP_GUIDE.md           # SignalTap II setup guide
-??? TROUBLESHOOTING_GUIDE.md     # Common issues and solutions
-??? README.md                    # This file
+├── src/                          # VHDL source files
+│   ├── rs232_top.vhd            # Top-level module
+│   ├── sender.vhd               # RS-232 transmitter
+│   ├── mottaker.vhd             # RS-232 receiver
+│   ├── baud_rate_selector.vhd   # Baud rate generator
+│   ├── data_source_mux.vhd      # Data source multiplexer
+│   ├── data_display.vhd         # Display and LED drivers
+│   ├── bin2bcd_8bit.vhd         # Binary to BCD converter
+│   ├── ROM_7_seg.vhd            # 7-segment decoder ROM
+│   └── reset_sync.vhd           # Synchronized reset generator
+│
+├── sim/                         # Standalone simulation setups
+│   ├── sender/                  # Transmitter simulation
+│   ├── mottaker/                # Receiver simulation
+│   └── loopback/                # Full system loopback test
+│
+├── simulation/questa/           # Quartus-generated simulation files
+│
+├── output_files/                # Compiled FPGA bitstreams
+│   ├── RS232_Communication.sof # FPGA programming file
+│   └── RS232_Communication.pin # Pin assignment file
+│
+├── image/PROJECT_REPORT/        # Project report figures
+│
+├── PROJECT_REPORT.md            # Complete project documentation
+├── QUICK_REFERENCE.md           # Quick usage guide
+├── SIGNALTAP_GUIDE.md           # SignalTap II setup guide
+├── TROUBLESHOOTING_GUIDE.md     # Common issues and solutions
+└── README.md                    # This file
 ```
 
 ---
 
-## ?? Hardware Requirements
+## 🔧 Hardware Requirements
 
 - **FPGA Board**: Altera/Intel DE2-115 (Cyclone IV E: EP4CE115F29C7)
 - **Quartus Prime**: Version 23.1 or later (tested with 24.1 Lite Edition)
@@ -93,18 +93,18 @@ RS232_CCM/
 
 ---
 
-## ?? Getting Started
+## 🚀 Getting Started
 
 ### 1. Compile the Project
 
 1. Open Quartus Prime and load the project:
    ```
-   File ? Open Project ? RS232_Communication.qpf
+   File → Open Project → RS232_Communication.qpf
    ```
 
 2. Compile the design:
    ```
-   Processing ? Start Compilation
+   Processing → Start Compilation
    ```
    Or use the provided script:
    ```powershell
@@ -116,7 +116,7 @@ RS232_CCM/
 ### 2. Program the FPGA
 
 1. Connect the DE2-115 board via USB Blaster
-2. In Quartus, go to: `Tools ? Programmer`
+2. In Quartus, go to: `Tools → Programmer`
 3. Select `RS232_Communication.sof` from `output_files/`
 4. Click **Start** to program the FPGA
 
@@ -155,7 +155,7 @@ RS-232 is designed for point-to-point communication between two devices using a 
 
 ---
 
-## ?? Running Simulations
+## 🧪 Running Simulations
 
 ### Standalone Simulations
 
@@ -177,7 +177,7 @@ See `sim/README.md` for detailed instructions on each simulation.
 
 ---
 
-## ?? Display Mapping
+## 📊 Display Mapping
 
 | Display | Content | Format |
 |---------|---------|--------|
@@ -192,7 +192,7 @@ See `sim/README.md` for detailed instructions on each simulation.
 
 ---
 
-## ?? Documentation
+## 📚 Documentation
 
 - **[PROJECT_REPORT.md](PROJECT_REPORT.md)**: Complete project documentation including:
   - System architecture and block diagrams
@@ -209,7 +209,7 @@ See `sim/README.md` for detailed instructions on each simulation.
 
 ---
 
-## ?? Technical Details
+## 🔬 Technical Details
 
 ### RS-232 Protocol and Frame Format
 
@@ -244,12 +244,12 @@ The system implements RS-232 without parity bits, using one stop bit, as specifi
 
 ---
 
-## ?? Credits
+## 👥 Credits
 
 This project was developed as part of the **ELE111** course at HVL (Western Norway University of Applied Sciences).
 
 ### Educational Resources
-Code examples, diagrams, and educational materials were provided by **Eivind V?gslid Skj?veland** during the course lectures.
+Code examples, diagrams, and educational materials were provided by **Eivind Vågslid Skjæveland** during the course lectures.
 
 ### Development Tools
 - **VSCode Copilot**: Code suggestions and error detection
@@ -257,19 +257,19 @@ Code examples, diagrams, and educational materials were provided by **Eivind V?g
 
 ---
 
-## ?? License
+## 📄 License
 
 This project is developed for educational purposes as part of the ELE111 course assignment.
 
 ---
 
-## ?? Contributing
+## 🤝 Contributing
 
 This is a course project. For questions or issues, please refer to the documentation files or contact the course instructor.
 
 ---
 
-## ?? Version History
+## 📝 Version History
 
 - **v1.0** (2025): Initial release
   - Complete RS-232 TX/RX implementation

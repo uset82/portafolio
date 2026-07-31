@@ -20,12 +20,12 @@ pnpm run validate:vsix
 pnpm run smoke:vsix
 ```
 
-The Webview smoke opens the built local Webview in a temporary Edge profile with GPU disabled and verifies that the avatar panel, stage, initial `welcome` state, and ?Ready to build.? message render. The VSIX smoke extracts the exact package artifact into a temporary directory, activates it with a VS Code API mock, exercises Webview messages and commands, and disposes the extension.
+The Webview smoke opens the built local Webview in a temporary Edge profile with GPU disabled and verifies that the avatar panel, stage, initial `welcome` state, and “Ready to build.” message render. The VSIX smoke extracts the exact package artifact into a temporary directory, activates it with a VS Code API mock, exercises Webview messages and commands, and disposes the extension.
 
 ## Manual sequence
 
 1. Open the assistant and observe the original SVG/Pixi orb in `welcome`.
-2. Run `Codex Avatar: Set State` ? `thinking`, then `speaking`, then `success`.
+2. Run `Codex Avatar: Set State` → `thinking`, then `speaking`, then `success`.
 3. Run `Codex Avatar: Trigger Blink` and `Codex Avatar: Trigger Celebrate`.
 4. Save a file, start a task, and finish it to observe IDE-event state changes.
 5. Enable reduced motion or `noAnimation`, then reload the avatar.

@@ -1,6 +1,6 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/webdesigner/blob/main/Blender/docs/ARCHITECTURE.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# Architecture ? Codex Avatar Studio
+# Architecture — Codex Avatar Studio
 
 Codex Avatar Studio is a pnpm TypeScript workspace that separates IDE integration, the React Webview, shared avatar contracts, and optional renderers. The MVP is local-first: SVG is always available, while PixiJS is the required rich runtime and is loaded lazily.
 
@@ -59,7 +59,7 @@ See [SECURITY_PRIVACY.md](SECURITY_PRIVACY.md) and [AVATAR_PACKAGE_SPEC.md](AVAT
 
 ## Performance boundaries
 
-The default animation cap is 30 FPS; 60 FPS is opt-in. The Pixi runtime bounds canvas dimensions to 2048?2048 logical pixels at a maximum 2? resolution, limits its texture cache to 8 entries and 32 MiB estimated RGBA memory, pauses while hidden, and fails initialization after the Webview's 8-second timeout. See [PERFORMANCE.md](PERFORMANCE.md).
+The default animation cap is 30 FPS; 60 FPS is opt-in. The Pixi runtime bounds canvas dimensions to 2048×2048 logical pixels at a maximum 2× resolution, limits its texture cache to 8 entries and 32 MiB estimated RGBA memory, pauses while hidden, and fails initialization after the Webview's 8-second timeout. See [PERFORMANCE.md](PERFORMANCE.md).
 
 ## Extension and Webview responsibilities
 

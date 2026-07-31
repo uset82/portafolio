@@ -8,7 +8,7 @@ This repository hosts the static landing page framework for the **[OpenNemoClaw]
 
 OpenNemoClaw is a powerful personal agent framework allowing you to easily create, test, configure, and manage intelligent AI agents in a local sandbox environment. It offers flexible model configurations, first-class native integration with **OpenRouter**, straightforward agent blueprinting, and complete sandboxing by leveraging Docker.
 
-?? **[Visit the main OpenNemoClaw repository for the source code, installation, and CLI usage.](https://github.com/uset82/opennemoclaw)**
+👉 **[Visit the main OpenNemoClaw repository for the source code, installation, and CLI usage.](https://github.com/uset82/opennemoclaw)**
 
 ## About this UI Repository
 

@@ -1,6 +1,6 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/Automatic-Watering-Elephant/blob/main/README.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# ?? Automatic Watering Elephant
+# 🐘 Automatic Watering Elephant
 
 [![Made with Arduino](https://img.shields.io/badge/Made%20with-Arduino-00979D?logo=arduino)](https://www.arduino.cc/)
 [![PlatformIO](https://img.shields.io/badge/Built%20with-PlatformIO-orange)](https://platformio.org/)
@@ -14,37 +14,37 @@
 
 ---
 
-## ?? Overview
+## 📋 Overview
 
 The **Automatic Watering Elephant** is an IoT plant care system that autonomously waters two avocado plants using a rotating table mechanism. It features a decorative elephant figurine with a detachable "hat" that houses the sensor electronics.
 
-### ? Features
+### ✨ Features
 
-- ?? **Rotating table** with 3D-printed gear mechanism
-- ??? **Environmental monitoring** (temperature, humidity, soil moisture)
-- ?? **OLED display** for real-time status
-- ?? **Position learning** - set plant positions with buttons
-- ?? **Automatic watering** with pump control
-- ?? **Web-based serial plotter** for signal visualization
-
----
-
-## ??? Architecture
-
-```
-???????????????????????     GPIO Signals      ???????????????????????
-?   RP2350-Zero       ????????????????????????    Arduino Uno      ?
-?   "The Brain"       ?   TABLE_READY        ?    "The Muscle"     ?
-?                     ?   WATER_DONE         ?                     ?
-?  ? DHT11 Sensor     ?                      ?  ? Stepper Motor    ?
-?  ? Soil Moisture    ?                      ?  ? Pump Relay       ?
-?  ? OLED Display     ?                      ?  ? Button Controls  ?
-???????????????????????                      ???????????????????????
-```
+- 🔄 **Rotating table** with 3D-printed gear mechanism
+- 🌡️ **Environmental monitoring** (temperature, humidity, soil moisture)
+- 📺 **OLED display** for real-time status
+- 🎮 **Position learning** - set plant positions with buttons
+- 💧 **Automatic watering** with pump control
+- 📊 **Web-based serial plotter** for signal visualization
 
 ---
 
-## ??? Hardware Requirements
+## 🏗️ Architecture
+
+```
+┌─────────────────────┐     GPIO Signals      ┌─────────────────────┐
+│   RP2350-Zero       │◄────────────────────►│    Arduino Uno      │
+│   "The Brain"       │   TABLE_READY        │    "The Muscle"     │
+│                     │   WATER_DONE         │                     │
+│  • DHT11 Sensor     │                      │  • Stepper Motor    │
+│  • Soil Moisture    │                      │  • Pump Relay       │
+│  • OLED Display     │                      │  • Button Controls  │
+└─────────────────────┘                      └─────────────────────┘
+```
+
+---
+
+## 🛠️ Hardware Requirements
 
 | Component | Quantity | Purpose |
 |-----------|----------|---------|
@@ -61,30 +61,30 @@ The **Automatic Watering Elephant** is an IoT plant care system that autonomousl
 
 ---
 
-## ?? Project Structure
+## 📁 Project Structure
 
 ```
 mesarota/
-??? rotatingTable/          # Arduino Uno firmware
-?   ??? src/main.cpp        # Motor, buttons, pump control
-?   ??? platformio.ini      # PlatformIO config
-?
-??? elefante/               # RP2350-Zero firmware  
-?   ??? src/main.cpp        # Sensors, OLED, communication
-?   ??? platformio.ini      # PlatformIO config
-?
-??? PLOTTER ELEFANTE/       # Web-based serial plotter
-?   ??? src/main.js         # Dual-port serial connection
-?   ??? index.html          # UI layout
-?   ??? package.json        # Node dependencies
-?
-??? WIRING_GUIDE.md         # Detailed wiring instructions
-??? README.md               # This file
+├── rotatingTable/          # Arduino Uno firmware
+│   ├── src/main.cpp        # Motor, buttons, pump control
+│   └── platformio.ini      # PlatformIO config
+│
+├── elefante/               # RP2350-Zero firmware  
+│   ├── src/main.cpp        # Sensors, OLED, communication
+│   └── platformio.ini      # PlatformIO config
+│
+├── PLOTTER ELEFANTE/       # Web-based serial plotter
+│   ├── src/main.js         # Dual-port serial connection
+│   ├── index.html          # UI layout
+│   └── package.json        # Node dependencies
+│
+├── WIRING_GUIDE.md         # Detailed wiring instructions
+└── README.md               # This file
 ```
 
 ---
 
-## ?? Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -120,21 +120,21 @@ mesarota/
 
 ---
 
-## ?? Usage
+## 🎮 Usage
 
 ### Position Learning Mode
 
 1. **Power on** both controllers
-2. **Hold Button A** ? Rotate table clockwise
-3. **Click Button A** ? Save Position A (LED blinks 2x)
-4. **Hold Button B** ? Rotate table counter-clockwise
-5. **Click Button B** ? Save Position B (LED blinks 3x)
+2. **Hold Button A** → Rotate table clockwise
+3. **Click Button A** → Save Position A (LED blinks 2x)
+4. **Hold Button B** → Rotate table counter-clockwise
+5. **Click Button B** → Save Position B (LED blinks 3x)
 
 ### Automatic Watering Cycle
 
 After both positions are saved:
-1. Table moves to **Position A** ? Waters for 3 seconds
-2. Table moves to **Position B** ? Waters for 3 seconds
+1. Table moves to **Position A** → Waters for 3 seconds
+2. Table moves to **Position B** → Waters for 3 seconds
 3. System enters **Sleep Mode**
 
 ### Reset
@@ -143,11 +143,11 @@ Press the **Reset Button** anytime to restart position learning.
 
 ---
 
-## ?? Serial Plotter
+## 📊 Serial Plotter
 
 The web-based plotter displays real-time sensor data:
 
-- **Temperature** (?C)
+- **Temperature** (°C)
 - **Humidity** (%)
 - **Soil Moisture** (ADC)
 - **Motor Position** (degrees)
@@ -157,19 +157,19 @@ Access at `http://localhost:5173` after running `npm run dev`.
 
 ---
 
-## ?? Gallery
+## 📷 Gallery
 
 *Add images of your project here!*
 
 ---
 
-## ?? License
+## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-## ?? Acknowledgments
+## 🙏 Acknowledgments
 
 - **Professor Frikk Fossdal** - Course instructor & [Read Serial Plot tool](https://experiment.frikkfossdal.com/)
 - **Western Norway University of Applied Sciences** - ADA525 Course
@@ -177,4 +177,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-*Made with ?? for ADA525 HW/SW System Design*
+*Made with ❤️ for ADA525 HW/SW System Design*

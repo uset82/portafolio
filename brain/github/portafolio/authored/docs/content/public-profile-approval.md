@@ -4,9 +4,9 @@
 
 Status: approved by Carlos on 2026-07-19.
 
-Approval record: Carlos approved the name Carlos Carpio, role ?Engineer ? Inventor ? Creative Technologist,? privacy-safe omission of location, both biographies below, `/contact` only with no published address, GitHub `uset82`, and no additional social links.
+Approval record: Carlos approved the name Carlos Carpio, role “Engineer · Inventor · Creative Technologist,” privacy-safe omission of location, both biographies below, `/contact` only with no published address, GitHub `uset82`, and no additional social links.
 
-Approval scope: Carlos Carpio; Engineer ? Inventor ? Creative Technologist; no public location; approved short and long biographies; contact through `/contact` only; GitHub `uset82` only.
+Approval scope: Carlos Carpio; Engineer · Inventor · Creative Technologist; no public location; approved short and long biographies; contact through `/contact` only; GitHub `uset82` only.
 
 Checked on: 2026-07-19
 
@@ -32,7 +32,7 @@ Carlos approved this privacy-safe publication set on 2026-07-19. Approval record
 | Field              | Approved value or safe default                                                                                                                                                                                                                                                       | Current evidence state                                                                  | Recorded decision                                                                         |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | Public name        | Carlos Carpio                                                                                                                                                                                                                                                                        | Approved in the visual/design reference; absent from the public GitHub profile.         | Approved for public use.                                                                  |
-| Role/title         | Engineer ? Inventor ? Creative Technologist                                                                                                                                                                                                                                          | Approved as homepage and biography wording, not independently verified as a credential. | Approved for public use with no stronger credential claim.                                |
+| Role/title         | Engineer · Inventor · Creative Technologist                                                                                                                                                                                                                                          | Approved as homepage and biography wording, not independently verified as a credential. | Approved for public use with no stronger credential claim.                                |
 | Location           | Not public                                                                                                                                                                                                                                                                           | No public source found; local timezone is deliberately ignored.                         | Approved omission.                                                                        |
 | Short bio          | Engineer, inventor, and creative technologist exploring AI, electronics, resilient energy, music, astrology, and numerology through practical systems and experimental interfaces.                                                                                                   | Drafted from the approved homepage themes.                                              | Approved for public use.                                                                  |
 | Long bio           | Carlos works across artificial intelligence, electronics, resilient energy, music, astrology, and numerology. His portfolio connects engineering practice with creative experimentation, presenting verified work separately from prototypes, personal studies, and future concepts. | Conservative copy; contains no employer, education, client, metric, or ownership claim. | Approved for public use.                                                                  |
@@ -42,7 +42,7 @@ Carlos approved this privacy-safe publication set on 2026-07-19. Approval record
 
 ## Recorded approval and remaining contact detail
 
-Carlos approved the seven publication fields above. The separate contact-content gate still needs the final visitor action?GitHub only, a public email, or a later form?and an explicit availability-wording decision. Optional omissions remain valid; privacy-safe absence is preferable to an unsupported or unwanted claim.
+Carlos approved the seven publication fields above. The separate contact-content gate still needs the final visitor action—GitHub only, a public email, or a later form—and an explicit availability-wording decision. Optional omissions remain valid; privacy-safe absence is preferable to an unsupported or unwanted claim.
 
 ## Publication rule
 

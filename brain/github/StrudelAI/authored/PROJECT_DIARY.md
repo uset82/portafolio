@@ -1,13 +1,13 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/StrudelAI/blob/main/PROJECT_DIARY.md; checkedOn: 2026-07-31; redactions: 2 -->
 
-# ?? AETHER SONIC INTERFACE - Project Diary
+# 🎵 AETHER SONIC INTERFACE - Project Diary
 
 **Live Coding Music Platform for Festivals**  
 *AI-Powered Strudel Code Generation with Real-Time Audio Analysis*
 
 ---
 
-## ?? Project Overview
+## 📋 Project Overview
 
 **AETHER** is a cutting-edge live-coding music application designed for festival performances. It combines the power of AI (specifically x-ai/grok-4.1-fast) with Strudel (a JavaScript port of TidalCycles) to enable real-time, voice-controlled music generation with professional-grade audio analysis and layering capabilities.
 
@@ -18,7 +18,7 @@
 
 ---
 
-## ??? Technology Stack
+## 🛠️ Technology Stack
 
 ### Frontend Framework
 - **Next.js 16.0.3 (Turbopack)**: React-based framework for server-side rendering and API routes
@@ -53,7 +53,7 @@
   - Onset detection for drum pattern extraction
   - Pitch tracking for melody extraction
 - **yt-dlp**: YouTube audio downloader
-- **FFmpeg**: Audio format conversion (webm ? wav)
+- **FFmpeg**: Audio format conversion (webm → wav)
 
 ### Real-Time Communication
 - **Socket.IO**: WebSocket-based bidirectional communication
@@ -83,7 +83,7 @@
 
 ---
 
-## ?? Key Features
+## 🎯 Key Features
 
 ### 1. AI-Powered Music Generation
 - **Natural Language Input**: "Make a techno beat", "Add a bassline"
@@ -93,11 +93,11 @@
 
 ### 2. Ableton-Style Track Layering
 - **5 Track System**:
-  - ?? **Drums**: Percussive elements (kicks, snares, hi-hats)
-  - ?? **Bass**: Sub-bass and basslines
-  - ?? **Melody**: Lead synths, arpeggios, chords
-  - ?? **Voice**: Vocal synthesis, speech, choir effects
-  - ? **FX**: Atmospheric sounds, risers, impacts
+  - 🥁 **Drums**: Percussive elements (kicks, snares, hi-hats)
+  - 🎸 **Bass**: Sub-bass and basslines
+  - 🎹 **Melody**: Lead synths, arpeggios, chords
+  - 🎤 **Voice**: Vocal synthesis, speech, choir effects
+  - ✨ **FX**: Atmospheric sounds, risers, impacts
 - **Non-Destructive Layering**: New patterns add to existing ones rather than replacing
 - **Mute/Solo**: Independent control over each track
 - **Volume Control**: Per-track gain staging
@@ -151,56 +151,56 @@
 
 ---
 
-## ?? Project Structure
+## 📁 Project Structure
 
 ```
 musicAPP/
-??? src/
-?   ??? app/
-?   ?   ??? api/
-?   ?   ?   ??? agent/
-?   ?   ?   ?   ??? route.ts          # Main AI music generation + YouTube integration
-?   ?   ?   ??? complete/
-?   ?   ?   ?   ??? route.ts          # Code completion endpoint
-?   ?   ?   ??? socket/
-?   ?   ?       ??? route.ts          # WebSocket server (if used)
-?   ?   ??? page.tsx                  # Main app page
-?   ?   ??? layout.tsx                # Root layout
-?   ??? components/
-?   ?   ??? SonicInterface.tsx        # Main UI component
-?   ?   ??? SpectrumAnalyzer.tsx      # Frequency visualization
-?   ?   ??? ArrangementView.tsx       # Ableton-style timeline view
-?   ?   ??? TrackStrip.tsx            # Individual track controls
-?   ?   ??? StrudelCodeView.tsx       # Code editor component
-?   ??? hooks/
-?   ?   ??? useSonicSocket.ts         # WebSocket & state management hook
-?   ??? lib/
-?   ?   ??? ai/
-?   ?   ?   ??? client.ts             # OpenRouter/OpenAI client config
-?   ?   ??? agent/
-?   ?   ?   ??? runtime.ts            # Agent message processing
-?   ?   ?   ??? tool-bridge.ts        # Tool execution bridge
-?   ?   ?   ??? context-manager.ts    # Conversation context
-?   ?   ??? musicgen/
-?   ?   ?   ??? client.ts             # MusicGen API client
-?   ?   ??? strudel/
-?   ?       ??? engine.ts             # Strudel audio engine wrapper
-?   ??? types/
-?       ??? sonic.ts                  # TypeScript type definitions
-??? tools/                             # Python utilities
-?   ??? youtube_to_strudel.py         # YouTube audio analyzer + Strudel generator
-?   ??? musicgen_server.py            # MusicGen AI audio server
-?   ??? musicgen_batch.py             # Batch audio generation
-?   ??? musicgen_trainer.py           # Model fine-tuning (experimental)
-??? knowledge.md                       # Strudel syntax reference for AI
-??? package.json
-??? tsconfig.json
-??? .env.local                        # API keys (not in repo)
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── agent/
+│   │   │   │   └── route.ts          # Main AI music generation + YouTube integration
+│   │   │   ├── complete/
+│   │   │   │   └── route.ts          # Code completion endpoint
+│   │   │   └── socket/
+│   │   │       └── route.ts          # WebSocket server (if used)
+│   │   ├── page.tsx                  # Main app page
+│   │   └── layout.tsx                # Root layout
+│   ├── components/
+│   │   ├── SonicInterface.tsx        # Main UI component
+│   │   ├── SpectrumAnalyzer.tsx      # Frequency visualization
+│   │   ├── ArrangementView.tsx       # Ableton-style timeline view
+│   │   ├── TrackStrip.tsx            # Individual track controls
+│   │   └── StrudelCodeView.tsx       # Code editor component
+│   ├── hooks/
+│   │   └── useSonicSocket.ts         # WebSocket & state management hook
+│   ├── lib/
+│   │   ├── ai/
+│   │   │   └── client.ts             # OpenRouter/OpenAI client config
+│   │   ├── agent/
+│   │   │   ├── runtime.ts            # Agent message processing
+│   │   │   ├── tool-bridge.ts        # Tool execution bridge
+│   │   │   └── context-manager.ts    # Conversation context
+│   │   ├── musicgen/
+│   │   │   └── client.ts             # MusicGen API client
+│   │   └── strudel/
+│   │       └── engine.ts             # Strudel audio engine wrapper
+│   └── types/
+│       └── sonic.ts                  # TypeScript type definitions
+├── tools/                             # Python utilities
+│   ├── youtube_to_strudel.py         # YouTube audio analyzer + Strudel generator
+│   ├── musicgen_server.py            # MusicGen AI audio server
+│   ├── musicgen_batch.py             # Batch audio generation
+│   └── musicgen_trainer.py           # Model fine-tuning (experimental)
+├── knowledge.md                       # Strudel syntax reference for AI
+├── package.json
+├── tsconfig.json
+└── .env.local                        # API keys (not in repo)
 ```
 
 ---
 
-## ?? Core Algorithms & Logic
+## 🔧 Core Algorithms & Logic
 
 ### 1. Code Sanitization Pipeline
 **Purpose**: Clean AI-generated code to prevent runtime errors
@@ -208,7 +208,7 @@ musicAPP/
 **Steps**:
 1. Remove markdown bullets/list markers
 2. Strip forbidden methods (`.analyze()`, `cpm()`, `.bank()`, `.slider()`)
-3. Replace aliases (`.lpf()` ? `.lowpass()`)
+3. Replace aliases (`.lpf()` → `.lowpass()`)
 4. Clean dangling commas
 5. Coerce loose lines into `stack()` if needed
 6. Detect and truncate run-on code hallucinations
@@ -222,7 +222,7 @@ musicAPP/
 **Flow**:
 ```
 User: "Add drums"
-  ?
+  ↓
 AI Agent: Generates structured JSON
   {
     "type": "update_tracks",
@@ -233,11 +233,11 @@ AI Agent: Generates structured JSON
       "fx": null
     }
   }
-  ?
+  ↓
 Client: Merges with existing state
   - Only updates non-null tracks
   - Preserves patterns on other tracks
-  ?
+  ↓
 Strudel Engine: Rebuilds stack
   stack(
     drums_pattern,
@@ -255,10 +255,10 @@ Strudel Engine: Rebuilds stack
 **Purpose**: Provide real-time spectral data to AI for musical decisions
 
 **Metrics Computed**:
-- **RMS**: `sqrt(?(sample?) / N)` - Overall loudness
+- **RMS**: `sqrt(Σ(sample²) / N)` - Overall loudness
 - **Peak Frequency**: Frequency bin with highest magnitude
-- **Spectral Centroid**: `?(freq ? magnitude) / ?(magnitude)` - "Center of mass" of spectrum
-- **Energy Bands**: Low (0-?), Mid (?-?), High (?-1) frequency ranges
+- **Spectral Centroid**: `Σ(freq × magnitude) / Σ(magnitude)` - "Center of mass" of spectrum
+- **Energy Bands**: Low (0-⅓), Mid (⅓-⅔), High (⅔-1) frequency ranges
 
 **Update Rate**: 500ms (throttled to reduce overhead)
 
@@ -269,7 +269,7 @@ Strudel Engine: Rebuilds stack
 1. **Role Definition**: "You are a virtuoso live-coding music assistant"
 2. **Context**: "Live Coding Festival - Build layer by layer"
 3. **Critical Rules**: Preserve existing code, match key, avoid frequency clashing
-4. **Workflow**: Analyze ? Plan ? Draft ? Output
+4. **Workflow**: Analyze → Plan → Draft → Output
 5. **Command Detection**: Chat vs. Meta vs. Music generation
 6. **Output Format**: JSON with track updates
 7. **Allowed/Forbidden Methods**: Explicit lists
@@ -283,72 +283,72 @@ Strudel Engine: Rebuilds stack
 
 ---
 
-## ?? Development Milestones
+## 🚀 Development Milestones
 
 ### Phase 1: Foundation (Early Development)
-- ? Next.js project setup
-- ? Strudel integration
-- ? Basic audio playback
-- ? WebSocket communication
+- ✅ Next.js project setup
+- ✅ Strudel integration
+- ✅ Basic audio playback
+- ✅ WebSocket communication
 
 ### Phase 2: AI Integration (November 2024)
-- ? OpenRouter API integration
-- ? Gemini 2.0 Flash initial testing
-- ? Migration to Grok-4.1-fast
-- ? Code completion endpoint
-- ? System prompt optimization
+- ✅ OpenRouter API integration
+- ✅ Gemini 2.0 Flash initial testing
+- ✅ Migration to Grok-4.1-fast
+- ✅ Code completion endpoint
+- ✅ System prompt optimization
 
 ### Phase 3: Musical Intelligence (Recent)
-- ? Frequency analysis system
-- ? AI context augmentation (send frequency data to AI)
-- ? Key matching logic
-- ? Frequency space awareness
+- ✅ Frequency analysis system
+- ✅ AI context augmentation (send frequency data to AI)
+- ✅ Key matching logic
+- ✅ Frequency space awareness
 
 ### Phase 4: Layering System (Latest - Nov 23-24, 2024)
-- ? Track-based architecture (Drums/Bass/Melody/FX)
-- ? Structured AI responses (`update_tracks` type)
-- ? Non-destructive layering
-- ? State management for individual tracks
-- ? Ableton-style UI grid
+- ✅ Track-based architecture (Drums/Bass/Melody/FX)
+- ✅ Structured AI responses (`update_tracks` type)
+- ✅ Non-destructive layering
+- ✅ State management for individual tracks
+- ✅ Ableton-style UI grid
 
 ### Phase 5: Refinement (Ongoing)
-- ? Code sanitization improvements
-- ? Run-on code detection
-- ? Auto-fix for syntax errors
-- ? Knowledge base expansion (knowledge.md)
+- ✅ Code sanitization improvements
+- ✅ Run-on code detection
+- ✅ Auto-fix for syntax errors
+- ✅ Knowledge base expansion (knowledge.md)
 
 ---
 
-## ?? Known Issues & Solutions
+## 🐛 Known Issues & Solutions
 
 ### Issue 1: AI Deleting Previous Code
 **Problem**: Grok would replace entire patterns instead of layering  
 **Solution**: Implemented structured `update_tracks` response type  
-**Status**: ? Resolved
+**Status**: ✅ Resolved
 
 ### Issue 2: Run-On Code Hallucinations
 **Problem**: AI would output `stack(...))stack(...)` - valid code followed by garbage  
 **Solution**: Regex detection and truncation at first run-on pattern  
-**Status**: ? Resolved
+**Status**: ✅ Resolved
 
 ### Issue 3: Frequency Clashing
 **Problem**: Multiple sub-bass layers causing muddy mix  
 **Solution**: Send real-time frequency analysis to AI, instruct it to check low energy before adding bass  
-**Status**: ? Resolved
+**Status**: ✅ Resolved
 
 ### Issue 4: Forbidden Methods Breaking Execution
 **Problem**: AI using `.scale()`, `cpm()`, `.analyze()` which aren't available  
 **Solution**: Multi-layer sanitization (system prompt + code stripping)  
-**Status**: ? Resolved
+**Status**: ✅ Resolved
 
 ### Issue 5: Tempo Desync
 **Problem**: Patterns running at different speeds  
 **Solution**: Centralized `cpm()` in buildStrudelCode, all patterns share one BPM  
-**Status**: ? Resolved
+**Status**: ✅ Resolved
 
 ---
 
-## ?? Performance Characteristics
+## 📊 Performance Characteristics
 
 ### Audio Metrics
 - **Latency**: ~10-30ms (Web Audio API scheduling)
@@ -368,7 +368,7 @@ Strudel Engine: Rebuilds stack
 
 ---
 
-## ?? Strudel Syntax Primer
+## 🎓 Strudel Syntax Primer
 
 ### Mini-Notation Basics
 ```javascript
@@ -398,7 +398,7 @@ Strudel Engine: Rebuilds stack
 
 ---
 
-## ?? Environment Variables
+## 🔐 Environment Variables
 
 ```env
 # Required
@@ -412,7 +412,7 @@ GOOGLE_API_KEY=[REDACTED credential-like value]  # For Gemini fallback
 
 ---
 
-## ?? Future Roadmap
+## 🎯 Future Roadmap
 
 ### Short-Term (Next Sprint)
 - [ ] Visual track timeline (Ableton-style arrangement view)
@@ -435,7 +435,7 @@ GOOGLE_API_KEY=[REDACTED credential-like value]  # For Gemini fallback
 
 ---
 
-## ?? Development Team
+## 👥 Development Team
 
 **Project Type**: Solo development with AI assistance (Gemini/Claude)  
 **Target Audience**: Live coders, electronic music producers, festival performers  
@@ -443,7 +443,7 @@ GOOGLE_API_KEY=[REDACTED credential-like value]  # For Gemini fallback
 
 ---
 
-## ?? References & Inspiration
+## 📚 References & Inspiration
 
 ### Technologies
 - [Strudel Documentation](https://strudel.cc/)
@@ -458,7 +458,7 @@ GOOGLE_API_KEY=[REDACTED credential-like value]  # For Gemini fallback
 
 ---
 
-## ?? Development Log
+## 📝 Development Log
 
 ### 2025-12-15
 - **DJ Controller MVP**: Controller-style mixer + performance workflow
@@ -476,7 +476,7 @@ GOOGLE_API_KEY=[REDACTED credential-like value]  # For Gemini fallback
   - Debugged "Unexpected token ','" syntax errors in generated code
   - Fixed Python generator to output synthesized sounds instead of sample-based sounds
   - Updated code sanitizer to handle `$:` prefix and replace `s("bd")`, `s("sd")`, `s("hh")` patterns
-  - Added debug logging to trace raw code ? parsed tracks ? sanitized tracks
+  - Added debug logging to trace raw code → parsed tracks → sanitized tracks
 
 ### 2025-11-30
 - **Full Day**: YouTube-to-Strudel Feature Development
@@ -528,7 +528,7 @@ GOOGLE_API_KEY=[REDACTED credential-like value]  # For Gemini fallback
 
 ---
 
-## ?? New Features (December 2025)
+## 🆕 New Features (December 2025)
 
 ### YouTube-to-Strudel Converter
 **Purpose**: Paste a YouTube link and the AI generates Strudel code that approximates the song's rhythm, bass, and melody.
@@ -543,7 +543,7 @@ GOOGLE_API_KEY=[REDACTED credential-like value]  # For Gemini fallback
 
 **Technical Stack**:
 - **yt-dlp**: YouTube downloader
-- **FFmpeg**: Audio conversion (webm ? wav)
+- **FFmpeg**: Audio conversion (webm → wav)
 - **librosa**: Audio analysis (tempo, chroma, onset detection)
 - **Flask**: HTTP server for the converter
 
@@ -579,20 +579,20 @@ note("e4 g4 a4 b4").s("triangle").decay(0.3).sustain(0.4).delay(0.2).gain(0.5)
 
 ---
 
-## ?? Key Achievements
+## 🎉 Key Achievements
 
-1. **? Zero Sample Dependencies**: All sounds generated via synthesis (robust, no loading issues)
-2. **? Musical Intelligence**: AI understands harmony, rhythm, and frequency space
-3. **? Live Performance Ready**: Designed for festival use with voice control
-4. **? Non-Destructive Workflow**: Layer-based editing preserves existing work
-5. **? Real-Time Analysis**: 500ms update loop provides instant feedback
-6. **? Fault Tolerance**: Auto-fix errors, sanitize code, graceful degradation
-7. **? YouTube Integration**: Paste a link, get playable Strudel code
-8. **? MusicGen Support**: AI-generated real audio stems (when GPU available)
-9. **? DJ Controller Mode**: Two decks + mixer + performance pads (Tempo Sync, Hot Cue/Pitch Play, Bounce Loop, Slicer)
+1. **✅ Zero Sample Dependencies**: All sounds generated via synthesis (robust, no loading issues)
+2. **✅ Musical Intelligence**: AI understands harmony, rhythm, and frequency space
+3. **✅ Live Performance Ready**: Designed for festival use with voice control
+4. **✅ Non-Destructive Workflow**: Layer-based editing preserves existing work
+5. **✅ Real-Time Analysis**: 500ms update loop provides instant feedback
+6. **✅ Fault Tolerance**: Auto-fix errors, sanitize code, graceful degradation
+7. **✅ YouTube Integration**: Paste a link, get playable Strudel code
+8. **✅ MusicGen Support**: AI-generated real audio stems (when GPU available)
+9. **✅ DJ Controller Mode**: Two decks + mixer + performance pads (Tempo Sync, Hot Cue/Pitch Play, Bounce Loop, Slicer)
 
 ---
 
 **Last Updated**: 2025-12-15  
 **Version**: 0.6.0-alpha (Pre-release)  
-**Status**: ?? Active Development
+**Status**: 🟢 Active Development

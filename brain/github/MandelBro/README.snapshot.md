@@ -94,31 +94,31 @@ To use the complete server-based version with all features, you'll need:
    - Follow the deployment instructions in `/docs/deployment.md`
 
 ## Security Note
-?? **IMPORTANT**: Never commit your API keys to version control or share them publicly. The `.env` file is included in `.gitignore` to prevent accidental commits. If you fork or clone this repository, you will need to obtain your own API keys.
+⚠️ **IMPORTANT**: Never commit your API keys to version control or share them publicly. The `.env` file is included in `.gitignore` to prevent accidental commits. If you fork or clone this repository, you will need to obtain your own API keys.
 
 ## Project Structure
 ```
 MandelBro/
-??? docs/                  # Documentation
-?   ??? user_guide.md      # User guide
-?   ??? developer_guide.md # Developer documentation
-?   ??? deployment.md      # Deployment instructions
-??? public/                # Public assets for server version
-?   ??? css/               # Stylesheets
-?   ??? js/                # Client-side JavaScript
-?   ??? assets/            # Images and other assets
-??? server/                # Server-side code
-?   ??? utils/             # Utility functions
-?   ??? WorldManager.js    # World management logic
-??? simplified/            # Standalone browser version
-?   ??? index.html         # Complete game in a single file
-??? src/                   # Source code
-?   ??? client/            # Client-side code
-?   ??? server/            # Server-side code
-?   ??? mandelbrot.py      # Mandelbrot generation logic
-??? .env.example           # Example environment variables
-??? package.json           # Node.js dependencies
-??? README.md              # This file
+├── docs/                  # Documentation
+│   ├── user_guide.md      # User guide
+│   ├── developer_guide.md # Developer documentation
+│   └── deployment.md      # Deployment instructions
+├── public/                # Public assets for server version
+│   ├── css/               # Stylesheets
+│   ├── js/                # Client-side JavaScript
+│   └── assets/            # Images and other assets
+├── server/                # Server-side code
+│   ├── utils/             # Utility functions
+│   └── WorldManager.js    # World management logic
+├── simplified/            # Standalone browser version
+│   └── index.html         # Complete game in a single file
+├── src/                   # Source code
+│   ├── client/            # Client-side code
+│   ├── server/            # Server-side code
+│   └── mandelbrot.py      # Mandelbrot generation logic
+├── .env.example           # Example environment variables
+├── package.json           # Node.js dependencies
+└── README.md              # This file
 ```
 
 ## Versions

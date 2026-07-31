@@ -127,7 +127,7 @@ The weather data integration uses OpenWeatherMap's One Call API 3.0:
 
 1. **Weather Data Retrieval**
    - Current temperature, conditions, and forecast for Bergen, Norway
-   - Default coordinates: 60.3913?N, 5.3221?E
+   - Default coordinates: 60.3913°N, 5.3221°E
    - Metric units (temperature in Celsius)
    - Updates cached every 10 minutes to reduce API calls
 
@@ -294,7 +294,7 @@ The FPGA should be programmed with firmware that:
    - Launch the web application
    - The application will attempt to auto-detect FPGA devices using common identifiers
    - If auto-detection fails, enter the port name manually in the web interface
-   - Expected format: Example responses: "Temperature: 24.50 ?C", "Current Time: 13:45:22", "Current Date: 23/03/2025 (Sunday)"
+   - Expected format: Example responses: "Temperature: 24.50 °C", "Current Time: 13:45:22", "Current Date: 23/03/2025 (Sunday)"
 
 ## Usage
 

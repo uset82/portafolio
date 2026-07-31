@@ -24,13 +24,13 @@ The surface is procedural and uses no generated or imported asset, texture, envi
 
 | Tier           | Geometry                          | Motion                                                 | Structural surface cost                                                                       |
 | -------------- | --------------------------------- | ------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
-| Full shader    | 72 ? 48 segments, 6,912 triangles | Demand-render invalidation capped at 30 updates/second | 1 draw, 1 geometry, 1 material, 0 textures, 0 render targets, 0 post passes, 0 shadow casters |
-| Reduced/simple | 1 ? 1 segment, 2 triangles        | None                                                   | 1 draw, 1 geometry, 1 material, 0 textures, 0 render targets, 0 post passes, 0 shadow casters |
+| Full shader    | 72 × 48 segments, 6,912 triangles | Demand-render invalidation capped at 30 updates/second | 1 draw, 1 geometry, 1 material, 0 textures, 0 render targets, 0 post passes, 0 shadow casters |
+| Reduced/simple | 1 × 1 segment, 2 triangles        | None                                                   | 1 draw, 1 geometry, 1 material, 0 textures, 0 render targets, 0 post passes, 0 shadow casters |
 | Static/poster  | No WebGL surface                  | None                                                   | Zero WebGL work                                                                               |
 
 The full vertex shader combines two low-amplitude directional waves with a fixed five-slot ripple loop. Slot zero repeats every 1.2 seconds at the robot-hand contact derived from the shared robot spatial contract. Four transient slots accept primary pointer/touch presses, decay within 1.2 seconds, enforce a 140ms cooldown, and reject the feathered edge. One world-to-water transform boundary maps both authored and real hit positions; a rotating fixed-slot policy prevents allocation or unbounded impulse growth.
 
-The vertex shader derives a displaced normal from two neighboring height samples. The fragment shader uses that normal for a bounded Fresnel mix, analytic directional-light reflection, and a `refract`-derived depth tint, then applies the renderer's tone mapping and color-space chunks. It does not sample the scene, a cubemap, or a texture, so ?reflection? and ?refraction? describe stylized lighting/depth cues rather than mirrored or transmitted scene geometry.
+The vertex shader derives a displaced normal from two neighboring height samples. The fragment shader uses that normal for a bounded Fresnel mix, analytic directional-light reflection, and a `refract`-derived depth tint, then applies the renderer's tone mapping and color-space chunks. It does not sample the scene, a cubemap, or a texture, so “reflection” and “refraction” describe stylized lighting/depth cues rather than mirrored or transmitted scene geometry.
 
 Desktop WebGL QA on 2026-07-23 exposed that `active` is reserved by the target GLSL compiler. The ripple envelope now uses `rippleActive`, and the deterministic shader contract rejects a future `float active` declaration.
 
@@ -58,9 +58,9 @@ The later MVP assessor now also rejects water evidence unless Full quality uses 
 
 ## Browser evidence and remaining approval gates
 
-Explicitly approved desktop-only QA at 1440?900 compiled the production Full shader through a repository-only in-memory GLTF harness. After the reserved-identifier correction, a fresh browser tab rendered the 1425?900 DPR-1 Canvas without a page or shader error; Reduced retained its still surface, and exact critical-load failure retained the complete poster with the Canvas layer hidden. The temporary harness was removed before the final build. The only browser warning was the already tracked upstream `THREE.Clock` deprecation in task 8.25.
+Explicitly approved desktop-only QA at 1440×900 compiled the production Full shader through a repository-only in-memory GLTF harness. After the reserved-identifier correction, a fresh browser tab rendered the 1425×900 DPR-1 Canvas without a page or shader error; Reduced retained its still surface, and exact critical-load failure retained the complete poster with the Canvas layer hidden. The temporary harness was removed before the final build. The only browser warning was the already tracked upstream `THREE.Clock` deprecation in task 8.25.
 
-Separately approved mobile QA at 390?844 rendered the still Reduced tier in a 375?212 DPR-1 Canvas, removed Canvas in Poster mode, and retained the exposed poster over a hidden Canvas on exact critical failure. The compact scene intentionally omits the focus control and moving water input, so this pass does not claim a real touch ripple.
+Separately approved mobile QA at 390×844 rendered the still Reduced tier in a 375×212 DPR-1 Canvas, removed Canvas in Poster mode, and retained the exposed poster over a hidden Canvas on exact critical failure. The compact scene intentionally omits the focus control and moving water input, so this pass does not claim a real touch ripple.
 
 Task 5.26 remains unchecked until the remaining acceptance scopes are observed:
 

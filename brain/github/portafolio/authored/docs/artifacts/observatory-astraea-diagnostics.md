@@ -24,7 +24,7 @@ Full and Reduced settled evidence permits at most `0.001` progress error, `0.001
 
 ## Unified MVP behavior
 
-The unified Observatory source order is now renderer, camera, robot, ASTRAEA, PIN?CULO, Sound Lab, Future Energy, Electronics / AI, drone, and water. Missing ASTRAEA ownership yields `astraea-unavailable` and makes interactive evidence ineligible.
+The unified Observatory source order is now renderer, camera, robot, ASTRAEA, PINÁCULO, Sound Lab, Future Energy, Electronics / AI, drone, and water. Missing ASTRAEA ownership yields `astraea-unavailable` and makes interactive evidence ineligible.
 
 The MVP assessor additionally rejects:
 

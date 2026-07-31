@@ -49,10 +49,10 @@ npm run build
 
 ```
 src/
-??? lib/
-?   ??? components/    # Reusable components
-?   ??? styles/        # Global styles and variables
-?   ??? utils/         # Utility functions
-??? routes/            # Page components
-??? app.html           # HTML template
+├── lib/
+│   ├── components/    # Reusable components
+│   ├── styles/        # Global styles and variables
+│   └── utils/         # Utility functions
+├── routes/            # Page components
+└── app.html           # HTML template
 ```

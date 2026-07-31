@@ -2,7 +2,7 @@
 
 # Token Cost Analysis
 
-The numbers below are engineering estimates, not a measured benchmark. They are order-of-magnitude figures anchored to one reference build (a rounded-bevel loot chest: gradient enamel, gold corner brackets, an emissive emblem, resolved in about six render-review cycles). Actual cost varies with the model tier, image resolution, object complexity, and ? above all ? how many review cycles a subject needs. Treat them as a cost model, not a guarantee.
+The numbers below are engineering estimates, not a measured benchmark. They are order-of-magnitude figures anchored to one reference build (a rounded-bevel loot chest: gradient enamel, gold corner brackets, an emissive emblem, resolved in about six render-review cycles). Actual cost varies with the model tier, image resolution, object complexity, and — above all — how many review cycles a subject needs. Treat them as a cost model, not a guarantee.
 
 A measured benchmark, based on empirical data across real reconstructions, is planned for v1.5. See [ROADMAP.md](../ROADMAP.md) for details.
 
@@ -35,5 +35,5 @@ Characters cost more (more review cycles plus landmark and projection checks): r
 
 - Deterministic scripts contribute close to zero model tokens, so validation, gating, detail counting, sheet packaging, and pipeline state never eat context.
 - Model tokens are spent only on vision (reading one sheet per pass), authoring the spec, and writing code.
-- The gates are the savings mechanism: strict-quality blocks codegen on an underspecified spec, and the detail-inventory gate blocks it on missing detail ? each avoided bad render saves roughly one full cycle (~10k-20k tokens).
+- The gates are the savings mechanism: strict-quality blocks codegen on an underspecified spec, and the detail-inventory gate blocks it on missing detail — each avoided bad render saves roughly one full cycle (~10k-20k tokens).
 - The single biggest lever on cost is the review-cycle count. A well-formed spec up front is worth more tokens than any micro-optimization downstream.

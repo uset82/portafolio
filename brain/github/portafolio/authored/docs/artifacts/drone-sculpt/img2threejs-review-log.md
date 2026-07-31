@@ -2,10 +2,10 @@
 
 # Observatory drone image-to-Three.js review log
 
-## 2026-07-23 ? Intake
+## 2026-07-23 — Intake
 
 - Source: `docs/assets/reference-packs/robot-drone-reference.png`
-- Image probe: pass, 1672 ? 941 PNG.
+- Image probe: pass, 1672 × 941 PNG.
 - Reference evidence: four drone views in one approved internal reference sheet.
 - Reference-derived PBR evidence: pass at 0.93 extraction confidence.
 - Scope decision: the runtime implementation is a stylized, reference-informed procedural concept. It does not claim aerodynamic accuracy, manufacturing accuracy, flight performance, or reference fidelity.
@@ -21,6 +21,6 @@ Current pipeline state:
 - Gate result: blocked pending authorized rendered comparison
 - Runtime fallback: bounded procedural Three.js concept under the Observatory technical-art and interaction contracts
 
-## 2026-07-23 ? Runtime diagnostic preparation
+## 2026-07-23 — Runtime diagnostic preparation
 
 The procedural fallback now exposes an opt-in serializable capture of its active/rest/paused/reduced/poster phase, last-applied pose, world position, hover-corridor margin, roof clearance, robot-exclusion clearance, and attitude margin. This seam observes the runtime without a production global, debug UI, forced invalidation, or additional loop. It prepares measured evidence for a future authorized browser comparison but does not satisfy or bypass the locked screenshot, fidelity-scoring, or `action=continue` gate above.

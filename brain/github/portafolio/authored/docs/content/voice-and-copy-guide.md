@@ -27,18 +27,18 @@ Avoid hype, startup slogans, vague futurism, forced cleverness, sales pressure, 
 
 Use a deliberate hybrid voice:
 
-- **First person** for Carlos's approved identity statement, hero promise, current focus, contact invitation, and reflections he has explicitly approved. Example: ?I turn hidden patterns into working systems.?
-- **Third person** for biography facts, project summaries, contribution boundaries, source-derived outcomes, and editorial context. Example: ?Carlos maintains the public StrudelAI repository and is a documented contributor.?
-- **Direct interface voice** for controls, guidance, errors, and privacy notes. Address the visitor as ?you? only when it helps them act. Example: ?Open the repository instead.?
+- **First person** for Carlos's approved identity statement, hero promise, current focus, contact invitation, and reflections he has explicitly approved. Example: “I turn hidden patterns into working systems.”
+- **Third person** for biography facts, project summaries, contribution boundaries, source-derived outcomes, and editorial context. Example: “Carlos maintains the public StrudelAI repository and is a documented contributor.”
+- **Direct interface voice** for controls, guidance, errors, and privacy notes. Address the visitor as “you” only when it helps them act. Example: “Open the repository instead.”
 
-Do not use ?I? for a learning inferred by the portfolio team. Label it as an editorial learning until Carlos approves it as a personal reflection. Do not use ?we? unless a named, verified collaboration is being described. Never convert repository ownership into first-person sole-authorship language.
+Do not use “I” for a learning inferred by the portfolio team. Label it as an editorial learning until Carlos approves it as a personal reflection. Do not use “we” unless a named, verified collaboration is being described. Never convert repository ownership into first-person sole-authorship language.
 
 ## Capitalization and titles
 
 - Use sentence case for page titles, section headings, field labels, status explanations, buttons, and new calls to action.
 - Preserve the already approved labels `Enter the Observatory` and `Explore Selected Work` exactly until a deliberate copy revision is approved.
 - Use title case for the six primary navigation labels: Work, Laboratory, Sound, Cosmos, Story, and Contact.
-- Preserve official project and product casing: StrudelAI, Codex Avatar Studio, iFoundYou / Dommedag, OpenNemoClaw, WebDesigner, CC AI, ASTRAEA, and PIN?CULO.
+- Preserve official project and product casing: StrudelAI, Codex Avatar Studio, iFoundYou / Dommedag, OpenNemoClaw, WebDesigner, CC AI, ASTRAEA, and PINÁCULO.
 - All caps are limited to official all-cap names, short technical abbreviations, and visually rendered metadata whose accessible name uses normal reading order.
 - Do not capitalize generic categories such as prototype, experiment, project, repository, case study, or live demo inside sentences.
 
@@ -51,7 +51,7 @@ Do not use ?I? for a learning inferred by the portfolio team. Label it as an edi
 - Use a middle dot only in the approved role line or compact metadata where the separation is also understandable to assistive technology.
 - Hyphenate compound modifiers where they improve clarity: AI-assisted, browser-based, privacy-safe, text-and-links, real-time, and poster-first.
 - Use numerals for versions, counts, dimensions, durations, and technical limits. Use ISO dates in internal ledgers and a readable month-year form in public prose.
-- Write units consistently: `1280?720`, `8.0 seconds`, `24 fps`, `1.8 MB`, and `v0.1.0`.
+- Write units consistently: `1280×720`, `8.0 seconds`, `24 fps`, `1.8 MB`, and `v0.1.0`.
 - Avoid ampersands in prose unless they are part of an official name.
 
 ## Technology and product names
@@ -60,7 +60,7 @@ Use canonical names on first and subsequent mention. Expand a term only when the
 
 | Use                                   | Avoid                                                   | Notes                                                                                              |
 | ------------------------------------- | ------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| artificial intelligence (AI), then AI | A.I., artificial-intelligence                           | ?AI? is acceptable without expansion in compact interface copy.                                    |
+| artificial intelligence (AI), then AI | A.I., artificial-intelligence                           | “AI” is acceptable without expansion in compact interface copy.                                    |
 | CC AI                                 | CCAI, CC-AI                                             | This is the portfolio assistant name, not a model name.                                            |
 | OpenRouter                            | Open Router, openrouter                                 | Use `@openrouter/sdk` only in code or package references.                                          |
 | Next.js                               | NextJS, Next JS                                         | Add a version only when it was verified and materially relevant.                                   |
@@ -100,7 +100,7 @@ Use the least ambitious accurate status. Internal values stay lowercase; public 
 | `hold`         | On hold        | Verification, contribution, privacy, rights, or release gates prevent publication.                       |
 | `private`      | Private        | The source or asset is intentionally not public. Do not create a public action to it.                    |
 
-?Released? is not a substitute for ?shipped.? Use it only with a verified release record, such as the Codex Avatar Studio `v0.1.0` release, and retain the broader prototype label where reliability or marketplace status is not established. Use ?live? only for a URL checked recently, and state what was actually observed.
+“Released” is not a substitute for “shipped.” Use it only with a verified release record, such as the Codex Avatar Studio `v0.1.0` release, and retain the broader prototype label where reliability or marketplace status is not established. Use “live” only for a URL checked recently, and state what was actually observed.
 
 ## Evidence and contribution language
 
@@ -108,14 +108,14 @@ Order project copy as: value and status, problem, Carlos's verified contribution
 
 Preferred evidence phrases include:
 
-- ?The repository contains??
-- ?The reviewed source supports??
-- ?The deployment returned HTTP 200 on 20 July 2026.?
-- ?The verified result is??
-- ?No adoption or reliability metric is available.?
-- ?This is an editorial inference from the audited constraints, not a user quote.?
+- “The repository contains…”
+- “The reviewed source supports…”
+- “The deployment returned HTTP 200 on 20 July 2026.”
+- “The verified result is…”
+- “No adoption or reliability metric is available.”
+- “This is an editorial inference from the audited constraints, not a user quote.”
 
-Contribution language must name what is known and the limit of that knowledge. ?Published from Carlos's GitHub account? does not mean ?built entirely by Carlos.? A commit count is provenance evidence, not a complete measure of design, research, authorship, or collaboration.
+Contribution language must name what is known and the limit of that knowledge. “Published from Carlos's GitHub account” does not mean “built entirely by Carlos.” A commit count is provenance evidence, not a complete measure of design, research, authorship, or collaboration.
 
 ## Prohibited unsupported claims
 
@@ -131,13 +131,13 @@ Do not publish any of the following without the named evidence:
 - automatic accessibility, security, deployment, design quality, or productivity from WebDesigner or any AI-assisted workflow;
 - guaranteed free model access, stable provider behavior, private prompts, or zero data retention from OpenRouter or another provider;
 - user counts, revenue, conversion, performance gains, uptime, awards, clients, testimonials, or professional adoption without a primary source and approval;
-- employer, education, credential, date, location, contact, collaborator, or role details beyond the approved profile and normalized r?sum? boundary;
+- employer, education, credential, date, location, contact, collaborator, or role details beyond the approved profile and normalized résumé boundary;
 - astrology or numerology as scientific, medical, financial, diagnostic, or predictive authority; frame them as creative or personal practice;
 - generated imagery as a real product screenshot, shipped asset, human-authored illustration, or documented outcome;
 - public reuse rights inferred from repository visibility, a generated filename, account ownership, or possession of a local file;
 - WCAG conformance, accessibility certification, security certification, or performance-budget success without the corresponding completed audit.
 
-When a claim cannot pass, remove it or replace it with the verified present state. Do not soften unsupported language with ?aims to? and leave the same misleading implication in place.
+When a claim cannot pass, remove it or replace it with the verified present state. Do not soften unsupported language with “aims to” and leave the same misleading implication in place.
 
 ## Page and component patterns
 
@@ -151,7 +151,7 @@ Use a one-sentence value statement followed by the status and contribution bound
 
 ### Story and CV
 
-Use the approved third-person biography for factual narrative. First-person reflection requires Carlos's approval. Do not expose location, private contact details, self-rated skill percentages, ambiguous credentials, or the private source r?sum?. A r?sum? download stays absent until a separately redacted file is approved.
+Use the approved third-person biography for factual narrative. First-person reflection requires Carlos's approval. Do not expose location, private contact details, self-rated skill percentages, ambiguous credentials, or the private source résumé. A résumé download stays absent until a separately redacted file is approved.
 
 ### Sound, video, and personal practice
 
@@ -163,14 +163,14 @@ Use a quiet invitation without urgency or implied availability. Until a public m
 
 ### CC AI
 
-CC AI is a bounded portfolio guide, not Carlos, a general assistant, or an authoritative source. It cites approved public records, preserves project status, and says: ?I don't have verified information about that yet? when evidence is insufficient. It never claims access to private files, memories, credentials, dashboards, or unpublished work.
+CC AI is a bounded portfolio guide, not Carlos, a general assistant, or an authoritative source. It cites approved public records, preserves project status, and says: “I don't have verified information about that yet” when evidence is insufficient. It never claims access to private files, memories, credentials, dashboards, or unpublished work.
 
 ## UI, error, and accessibility copy
 
 - Tell the visitor what happened, whether their action completed, and what they can do next.
 - Avoid blame, jokes during failure, raw provider errors, stack traces, and false reassurance.
 - Prefer `This prototype is temporarily unavailable. Open the repository instead.` over `Something went wrong!`
-- Use `Loading project details?`, `Retry`, `Close`, `Stop response`, and `Open repository` as concise action labels.
+- Use `Loading project details…`, `Retry`, `Close`, `Stop response`, and `Open repository` as concise action labels.
 - Announce dynamic status in plain language and do not use color, motion, or sound as the only signal.
 - Alt text describes visible evidence and purpose, not every decorative detail. Decorative images use empty alt text.
 - Captions add context or provenance instead of repeating alt text.

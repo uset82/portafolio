@@ -25,14 +25,14 @@ This directory contains the day-by-day breakdown of the LLM Applications course.
 
 ## Directory Structure
 daily/
-??? template.md          # Template for daily content
-??? todo.md             # Development checklist
-??? week1/             # Week 1 content
-?   ??? day1.md        # Monday
-?   ??? day2.md        # Tuesday
-?   ??? ...
-??? week2/             # Week 2 content
-??? ...
+├── template.md          # Template for daily content
+├── todo.md             # Development checklist
+├── week1/             # Week 1 content
+│   ├── day1.md        # Monday
+│   ├── day2.md        # Tuesday
+│   └── ...
+├── week2/             # Week 2 content
+└── ...
 
 ## Content Guidelines
 1. Each day follows the template structure

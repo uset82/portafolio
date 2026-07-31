@@ -17,9 +17,9 @@ The records cover only Carlos's approved public name, role wording, privacy-safe
 
 ## Excluded knowledge
 
-Nine explicit groups keep private contact/location, the private r?sum? and unapproved career/education claims, held flagship projects, unsupported metrics and contribution claims, unapproved media and personal stories, unresolved Observatory concept claims, unapproved 3D/provider claims, and hidden operational data out of retrieval.
+Nine explicit groups keep private contact/location, the private résumé and unapproved career/education claims, held flagship projects, unsupported metrics and contribution claims, unapproved media and personal stories, unresolved Observatory concept claims, unapproved 3D/provider claims, and hidden operational data out of retrieval.
 
-An exclusion is not transformed into a negative fact except where Carlos explicitly approved the absence?for example, no public location or additional social link. Unsupported questions receive the exact honest-unknown response defined by the CC AI system contract.
+An exclusion is not transformed into a negative fact except where Carlos explicitly approved the absence—for example, no public location or additional social link. Unsupported questions receive the exact honest-unknown response defined by the CC AI system contract.
 
 ## Runtime rules
 

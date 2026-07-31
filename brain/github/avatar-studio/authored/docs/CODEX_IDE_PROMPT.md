@@ -40,8 +40,8 @@ Next unchecked task:
 
 Skill routing for the active plan:
 
-- Phases 1?2: `$vscode-extension-architect` and `$webview-avatar-designer`
-- Phases 3?4: `$svg-vector-pipeline` plus the extension/Webview skills
+- Phases 1–2: `$vscode-extension-architect` and `$webview-avatar-designer`
+- Phases 3–4: `$svg-vector-pipeline` plus the extension/Webview skills
 - Phase 5: `$webview-avatar-designer`
-- Phases 6?8: `$blender-technical-artist` plus the extension/Webview skills
+- Phases 6–8: `$blender-technical-artist` plus the extension/Webview skills
 - Phase 9: `$qa-release-engineer`

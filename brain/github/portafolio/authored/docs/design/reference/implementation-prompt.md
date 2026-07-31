@@ -9,15 +9,15 @@ Build Carlos Carpio's portfolio as a multi-page editorial experience whose homep
 
 ## Visual source of truth
 
-Use `mainUI-approved.png` (1672?941; SHA-256 `B4E11D325297CEB8FFB021866FFA2903B316D5D2443DEF67BA890B4B3F3058BF`) as the approved composition, exposure, material, and atmosphere reference. Recreate it as real semantic UI plus an optional interactive 3D enhancement. Never ship the screenshot as the final full-page background.
+Use `mainUI-approved.png` (1672×941; SHA-256 `B4E11D325297CEB8FFB021866FFA2903B316D5D2443DEF67BA890B4B3F3058BF`) as the approved composition, exposure, material, and atmosphere reference. Recreate it as real semantic UI plus an optional interactive 3D enhancement. Never ship the screenshot as the final full-page background.
 
 ## Visual thesis
 
-A bright, calm, natural-futurist observatory: warm paper and limestone, pale ceramic machinery, sage water, aged oak and walnut, quiet pewter, editorial serif display type, restrained sans-serif utility text, and one contemplative mechanical focal figure. It must feel like Carlos's workshop of software, AI, music, electronics, future energy, astrology, and numerology?not dark steampunk, cyberpunk, generic beige SaaS, or a dashboard-card grid.
+A bright, calm, natural-futurist observatory: warm paper and limestone, pale ceramic machinery, sage water, aged oak and walnut, quiet pewter, editorial serif display type, restrained sans-serif utility text, and one contemplative mechanical focal figure. It must feel like Carlos's workshop of software, AI, music, electronics, future energy, astrology, and numerology—not dark steampunk, cyberpunk, generic beige SaaS, or a dashboard-card grid.
 
 ## Composition
 
-Keep the first viewport poster-like and legible: CC mark and Carlos Carpio identity; Work, Laboratory, Sound, Cosmos, Story, and Contact navigation; one short role line; one 2?3 line headline; one concise supporting statement; a focused CTA pair; one dominant Observatory scene; unobtrusive sound/motion controls; a lower-right CC AI entry; and a narrow Selected Systems transition. Preserve calm text-safe space on the left. On mobile, prioritize identity, headline, CTAs, project paths, and a strong static/cropped visual before loading heavy 3D.
+Keep the first viewport poster-like and legible: CC mark and Carlos Carpio identity; Work, Laboratory, Sound, Cosmos, Story, and Contact navigation; one short role line; one 2–3 line headline; one concise supporting statement; a focused CTA pair; one dominant Observatory scene; unobtrusive sound/motion controls; a lower-right CC AI entry; and a narrow Selected Systems transition. Preserve calm text-safe space on the left. On mobile, prioritize identity, headline, CTAs, project paths, and a strong static/cropped visual before loading heavy 3D.
 
 ## Color contract
 
@@ -35,11 +35,11 @@ Use a provider-neutral, rights-cleared asset pipeline. Hunyuan Studio or Hunyuan
 
 ## Motion
 
-Use 2?3 purposeful motifs: a reading-order hero entrance, a restrained scene/depth transition, and one clear hover/focus/touch response. Selected Animate UI source components plus Motion may own DOM animation; R3F owns scene animation; CSS owns simple state transitions. Assign each property to one owner. Configure `MotionConfig reducedMotion="user"`, stop parallax/camera loops for reduced motion, provide a pause/static control for nonessential continuous motion, and avoid scroll hijacking or animation noise.
+Use 2–3 purposeful motifs: a reading-order hero entrance, a restrained scene/depth transition, and one clear hover/focus/touch response. Selected Animate UI source components plus Motion may own DOM animation; R3F owns scene animation; CSS owns simple state transitions. Assign each property to one owner. Configure `MotionConfig reducedMotion="user"`, stop parallax/camera loops for reduced motion, provide a pause/static control for nonessential continuous motion, and avoid scroll hijacking or animation noise.
 
 ## CC AI
 
-Use `@openrouter/sdk` only behind a server route. Treat `openrouter/free` as a low-volume prototype route with changing model selection, availability, and limits?not a production SLA. Keep the key out of client bundles; disclose the actual responding model; restrict providers by approved data/training policy; ground answers only in approved public records; make uncertainty explicit; bound messages, concurrency, retries, retention, and logs; and design stop, retry, timeout, 402/429, provider-failure, privacy, and unavailable-chat states. The portfolio works without chat.
+Use `@openrouter/sdk` only behind a server route. Treat `openrouter/free` as a low-volume prototype route with changing model selection, availability, and limits—not a production SLA. Keep the key out of client bundles; disclose the actual responding model; restrict providers by approved data/training policy; ground answers only in approved public records; make uncertainty explicit; bound messages, concurrency, retries, retention, and logs; and design stop, retry, timeout, 402/429, provider-failure, privacy, and unavailable-chat states. The portfolio works without chat.
 
 ## Animate UI and Refero
 

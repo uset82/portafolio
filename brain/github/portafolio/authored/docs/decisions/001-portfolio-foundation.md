@@ -1,6 +1,6 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/portafolio/blob/main/docs/decisions/001-portfolio-foundation.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# Decision 001 ? Portfolio foundation
+# Decision 001 — Portfolio foundation
 
 Date: 2026-07-19  
 Status: Accepted for local implementation  
@@ -49,7 +49,7 @@ The approved visual source is `mainUI.png`. The dark blue file `1061ef42-3385-45
 | `/laboratory` | AI, electronics, future-energy, and interactive experiments |
 | `/sound` | Approved music and video |
 | `/cosmos` | Curated astrology, numerology, travel, and reflective personal material, labeled responsibly |
-| `/story` | About, web CV, skills, education, and optional r?sum? |
+| `/story` | About, web CV, skills, education, and optional résumé |
 | `/contact` | Approved contact and social paths |
 | not found | Useful recovery state |
 
@@ -112,9 +112,9 @@ Observed toolchain before scaffolding: Node `22.22.0`, npm `11.5.2`, pnpm `10.13
 
 ### Semantic application
 
-- LCP ? 2.5s, INP ? 200ms, CLS ? 0.10 at the agreed representative test profile.
-- Homepage initial route JavaScript ? 200 KiB compressed, excluding deferred 3D and opt-in media chunks.
-- Initial poster ? 350 KiB in an appropriate modern responsive format; fonts ? 180 KiB total for the first view.
+- LCP ≤ 2.5s, INP ≤ 200ms, CLS ≤ 0.10 at the agreed representative test profile.
+- Homepage initial route JavaScript ≤ 200 KiB compressed, excluding deferred 3D and opt-in media chunks.
+- Initial poster ≤ 350 KiB in an appropriate modern responsive format; fonts ≤ 180 KiB total for the first view.
 - No OpenRouter, media provider, analytics, or 3D generation request during first paint.
 - Explicit media dimensions, no blank first viewport, and noncritical media lazy-loaded.
 
@@ -122,8 +122,8 @@ Observed toolchain before scaffolding: Node `22.22.0`, npm `11.5.2`, pnpm `10.13
 
 | Tier | Scene transfer | Geometry | Textures | Draw calls | DPR / target |
 | --- | ---: | ---: | ---: | ---: | --- |
-| Full desktop | ? 15 MiB total, ? 5 MiB before first interaction | ? 350k visible triangles | 2K maximum per map unless justified | ? 120 | DPR ? 1.5; target 50?60 fps |
-| Reduced/mobile | ? 6 MiB total, ? 2 MiB before first interaction | ? 150k visible triangles | 1K maximum | ? 60 | DPR ? 1.25; target ? 30 fps |
+| Full desktop | ≤ 15 MiB total, ≤ 5 MiB before first interaction | ≤ 350k visible triangles | 2K maximum per map unless justified | ≤ 120 | DPR ≤ 1.5; target 50–60 fps |
+| Reduced/mobile | ≤ 6 MiB total, ≤ 2 MiB before first interaction | ≤ 150k visible triangles | 1K maximum | ≤ 60 | DPR ≤ 1.25; target ≥ 30 fps |
 | Static | poster budget only | none | responsive poster | none | complete semantic journey |
 
 If the scene is not interactive within 10 seconds on the target profile, retain the poster and offer a retry/static choice. Pause expensive work when hidden or offscreen.

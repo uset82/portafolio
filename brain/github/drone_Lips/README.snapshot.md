@@ -2,7 +2,7 @@
 
 <div align="center">
 
-# ?? Drone Lips
+# 🚁 Drone Lips
 
 ### *Fly a drone with just your mouth*
 
@@ -21,7 +21,7 @@
 **A mobile-first 3D drone flying game with a unique Mouth-Only Accessibility Mode**
 *Control everything using just your mouth movements via webcam + AI face tracking*
 
-[Play Now](#-getting-started) ? [How It Works](#-how-it-works) ? [Game Levels](#-game-levels)
+[Play Now](#-getting-started) · [How It Works](#-how-it-works) · [Game Levels](#-game-levels)
 
 </div>
 
@@ -29,26 +29,26 @@
 
 ---
 
-## ? Features
+## ✨ Features
 
 <table>
 <tr>
 <td width="50%">
 
-### ?? Mouth-Only Controls
+### 🎯 Mouth-Only Controls
 Control the drone using facial movements tracked by MediaPipe Face Landmarker. No hands required!
 
-### ?? Mobile-First Design
+### 📱 Mobile-First Design
 Optimized for iPhone Safari with 60 FPS target performance.
 
 </td>
 <td width="50%">
 
-### ?? 10 Progressive Worlds
+### 🌍 10 Progressive Worlds
 Journey from NYC Park tutorial to an epic Space War boss battle.
 
-### ? Accessibility-First
-Designed for players who can primarily move their mouth ? gaming for everyone.
+### ♿ Accessibility-First
+Designed for players who can primarily move their mouth — gaming for everyone.
 
 </td>
 </tr>
@@ -56,13 +56,13 @@ Designed for players who can primarily move their mouth ? gaming for everyone.
 
 ---
 
-## ?? How It Works
+## 🎮 How It Works
 
 <table>
 <tr>
 <td width="50%">
 
-### ?? Mouth-Only Mode *(Primary)*
+### 👄 Mouth-Only Mode *(Primary)*
 
 | Action | Control |
 |:------:|:-------:|
@@ -74,11 +74,11 @@ Designed for players who can primarily move their mouth ? gaming for everyone.
 </td>
 <td width="50%">
 
-### ?? Keyboard Mode *(Fallback)*
+### ⌨️ Keyboard Mode *(Fallback)*
 
 | Action | Control |
 |:------:|:-------:|
-| **Move** | `WASD` or `????` |
+| **Move** | `WASD` or `↑↓←→` |
 | **Fire** | `Space` |
 | **Missile** | `M` |
 | **Hover** | `X` |
@@ -89,7 +89,7 @@ Designed for players who can primarily move their mouth ? gaming for everyone.
 
 ---
 
-## ??? Tech Stack
+## 🛠️ Tech Stack
 
 <div align="center">
 
@@ -101,7 +101,7 @@ Designed for players who can primarily move their mouth ? gaming for everyone.
 
 ---
 
-## ?? Powered by Augment Code
+## 🤖 Powered by Augment Code
 
 This project uses the [**Augment Code SDK**](https://docs.augmentcode.com/cli/sdk) for AI-assisted development features. Augment provides an intelligent coding assistant that helped build and iterate on this game.
 
@@ -115,7 +115,7 @@ npm run dev:ui
 
 ---
 
-## ?? Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -137,10 +137,10 @@ npm install
 npm run dev
 ```
 
-?? Open **http://localhost:4321** in your browser
+🌐 Open **http://localhost:4321** in your browser
 
 <details>
-<summary>?? <strong>Testing on iPhone / Mobile</strong></summary>
+<summary>📱 <strong>Testing on iPhone / Mobile</strong></summary>
 
 <br/>
 
@@ -163,73 +163,73 @@ npm run dev:host
 
 ---
 
-## ?? Game Levels
+## 🎯 Game Levels
 
 <div align="center">
 
-| Level | ?? World | Description |
+| Level | 🌍 World | Description |
 |:-----:|:--------:|:------------|
-| 1 | **NYC Park** | ?? Tutorial ? Learn movement, boost, hover |
-| 2 | **Park Slalom** | ?? Precision flying through trees |
-| 3 | **City Flight** | ??? Navigate urban canyons |
-| 4 | **Coast Wind** | ?? Deal with wind drift |
-| 5 | **Desert Canyon** | ??? High-speed corridors |
-| 6 | **Military Base** | ??? Combat introduction |
-| 7 | **Upper Atmosphere** | ?? Transition to space |
-| 8 | **Orbit Debris** | ?? Asteroid dodging |
-| 9 | **Alien Zone** | ?? UFO enemy patterns |
-| 10 | **Space War** | ?? Boss battle finale |
+| 1 | **NYC Park** | 🌳 Tutorial — Learn movement, boost, hover |
+| 2 | **Park Slalom** | 🌲 Precision flying through trees |
+| 3 | **City Flight** | 🏙️ Navigate urban canyons |
+| 4 | **Coast Wind** | 🌊 Deal with wind drift |
+| 5 | **Desert Canyon** | 🏜️ High-speed corridors |
+| 6 | **Military Base** | 🎖️ Combat introduction |
+| 7 | **Upper Atmosphere** | ☁️ Transition to space |
+| 8 | **Orbit Debris** | 🛸 Asteroid dodging |
+| 9 | **Alien Zone** | 👽 UFO enemy patterns |
+| 10 | **Space War** | 💥 Boss battle finale |
 
 </div>
 
 ---
 
-## ?? Project Structure
+## 📁 Project Structure
 
 ```
 drone-lips/
-??? ?? src/
-?   ??? ?? components/       # React components
-?   ?   ??? DroneGame.tsx    # Main game component
-?   ??? ?? game/             # Game engine
-?   ?   ??? Game.ts          # Main loop & rendering
-?   ?   ??? Drone.ts         # Player drone model
-?   ?   ??? Enemy.ts         # Enemy logic & AI
-?   ?   ??? FaceTracker.ts   # MediaPipe face tracking
-?   ?   ??? VoiceHandler.ts  # Voice command support
-?   ?   ??? InputRouter.ts   # Input handling
-?   ??? ?? pages/            # Astro pages
-?   ??? ?? lib/              # Utilities
-??? ?? public/               # Static assets
-??? ?? scripts/              # Dev & build scripts
+├── 📂 src/
+│   ├── 📂 components/       # React components
+│   │   └── DroneGame.tsx    # Main game component
+│   ├── 📂 game/             # Game engine
+│   │   ├── Game.ts          # Main loop & rendering
+│   │   ├── Drone.ts         # Player drone model
+│   │   ├── Enemy.ts         # Enemy logic & AI
+│   │   ├── FaceTracker.ts   # MediaPipe face tracking
+│   │   ├── VoiceHandler.ts  # Voice command support
+│   │   └── InputRouter.ts   # Input handling
+│   ├── 📂 pages/            # Astro pages
+│   └── 📂 lib/              # Utilities
+├── 📂 public/               # Static assets
+└── 📂 scripts/              # Dev & build scripts
 ```
 
 ---
 
-## ?? Scripts
+## 🔧 Scripts
 
 | Command | Description |
 |:--------|:------------|
-| `npm run dev` | ?? Start dev server |
-| `npm run dev:host` | ?? Start with LAN access (for mobile) |
-| `npm run build` | ?? Build for production |
-| `npm run preview` | ?? Preview production build |
-| `npm run test` | ?? Run tests |
-| `npm run lint` | ?? Lint code |
-| `npm run typecheck` | ? TypeScript checking |
+| `npm run dev` | 🚀 Start dev server |
+| `npm run dev:host` | 📱 Start with LAN access (for mobile) |
+| `npm run build` | 📦 Build for production |
+| `npm run preview` | 👀 Preview production build |
+| `npm run test` | 🧪 Run tests |
+| `npm run lint` | 🔍 Lint code |
+| `npm run typecheck` | ✅ TypeScript checking |
 
 ---
 
-## ? Accessibility
+## ♿ Accessibility
 
 <div align="center">
 
 | Feature | Description |
 |:-------:|:------------|
-| ?? **No Hands Required** | Full gameplay with mouth movements only |
-| ?? **Webcam Controls** | Works with any standard webcam |
-| ?? **Calibration** | Adapts to each player's neutral position |
-| ??? **Visual Feedback** | Clear UI for all game states |
+| 🙌 **No Hands Required** | Full gameplay with mouth movements only |
+| 📷 **Webcam Controls** | Works with any standard webcam |
+| 🎯 **Calibration** | Adapts to each player's neutral position |
+| 👁️ **Visual Feedback** | Clear UI for all game states |
 
 </div>
 
@@ -237,24 +237,24 @@ drone-lips/
 
 ---
 
-## ?? Privacy
+## 🔒 Privacy
 
-- ?? Camera feed is used **only** for real-time face tracking
-- ?? **No video is recorded or uploaded**
-- ?? All processing happens locally in your browser
+- 📹 Camera feed is used **only** for real-time face tracking
+- 🚫 **No video is recorded or uploaded**
+- 🔐 All processing happens locally in your browser
 
 ---
 
 <div align="center">
 
-## ?? License
+## 📄 License
 
 This project is currently private.
 
 ---
 
-Made with ?? for accessible gaming
+Made with ❤️ for accessible gaming
 
-**[? Back to Top](#-drone-lips)**
+**[⬆ Back to Top](#-drone-lips)**
 
 </div>

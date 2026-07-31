@@ -1,24 +1,24 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/gimmemycake/blob/main/README.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# ?? Gimme My Cake
+# 🎂 Gimme My Cake
 
 A tiny 3D web game built with Three.js + Vite where you grab cakes with your hand (pinch gesture) and feed a crying baby. If camera access is unavailable, the game falls back to mouse/touch controls.
 
 ## Demo / Concept
 - Goal: feed the baby by throwing cakes into the mouth while it opens and closes.
 - Each successful feed increases score and reduces the cry meter.
-- Misses increase the cry meter. When the cry meter reaches 100%, it?s game over.
+- Misses increase the cry meter. When the cry meter reaches 100%, it’s game over.
 
 ## How To Play
 
-### Option A ? Hand Tracking (recommended)
-1. Click **?? Play Game**.
+### Option A — Hand Tracking (recommended)
+1. Click **🎮 Play Game**.
 2. Allow camera permission when prompted.
 3. Use **pinch** (thumb + index finger together) to grab a cake.
 4. Move your hand to position the cake.
-5. **Release** the pinch to throw the cake toward the baby?s mouth.
+5. **Release** the pinch to throw the cake toward the baby’s mouth.
 
-### Option B ? Mouse / Touch fallback
+### Option B — Mouse / Touch fallback
 - Click/tap to grab a cake near the pointer.
 - Drag to move the cake.
 - Release to throw.
@@ -28,7 +28,7 @@ A tiny 3D web game built with Three.js + Vite where you grab cakes with your han
 ### 1) Mouth target detection
 The game determines a world-space mouth position via `getMouthPosition()`:
 - If the loaded baby model has a named mouth/jaw/head node, it uses that.
-- Otherwise it estimates a reasonable mouth point using the baby?s bounding box.
+- Otherwise it estimates a reasonable mouth point using the baby’s bounding box.
 
 ### 2) Cake lifecycle
 Cakes are `Group` meshes added to the scene and tracked in `this.cakes`.
@@ -39,12 +39,12 @@ Cakes are `Group` meshes added to the scene and tracked in `this.cakes`.
 
 ### 3) Hit detection
 Thrown cakes are checked against:
-- **Mouth hit** (when mouth is open): triggers a ?feed? success.
+- **Mouth hit** (when mouth is open): triggers a “feed” success.
 - **Body/face hit**: triggers a messy splat.
 - **Fall out of bounds**: counts as a miss if the cake was thrown.
 
 ### 4) Success animation and effects
-On a successful mouth hit, the game runs a cute ?combo?:
+On a successful mouth hit, the game runs a cute “combo”:
 - Screen shake
 - Golden flash
 - Floating emojis (3)
@@ -60,14 +60,14 @@ On a successful mouth hit, the game runs a cute ?combo?:
 - **Three.js**: 3D rendering
 - **GLTFLoader**: loads the baby model
 - **@mediapipe/tasks-vision**: hand landmark detection
-- **Howler**: sound playback (optional; if files aren?t present the game still runs)
+- **Howler**: sound playback (optional; if files aren’t present the game still runs)
 
 ## Project Structure
 Key files:
-- `src/main.ts` ? entry point
-- `src/game/NeedleGame.ts` ? main game loop + scene + gameplay
-- `src/scripts/HandTrackingService.ts` ? MediaPipe webcam hand tracking + touch fallback
-- `public/baby.glb` ? the baby model loaded at runtime
+- `src/main.ts` — entry point
+- `src/game/NeedleGame.ts` — main game loop + scene + gameplay
+- `src/scripts/HandTrackingService.ts` — MediaPipe webcam hand tracking + touch fallback
+- `public/baby.glb` — the baby model loaded at runtime
 
 ## Local Development
 
@@ -83,7 +83,7 @@ npm run dev
 
 Vite will print a local URL (usually `https://localhost:300x/`). Open it in your browser.
 
-> Note: Camera access usually requires **HTTPS** or `localhost`. This project uses Vite?s HTTPS dev server.
+> Note: Camera access usually requires **HTTPS** or `localhost`. This project uses Vite’s HTTPS dev server.
 
 ### Build for production
 ```bash
@@ -99,7 +99,7 @@ npm run preview
 
 ### Quick deploy steps
 1. Push this repo to GitHub.
-2. In Netlify: **Add new site ? Import an existing project**.
+2. In Netlify: **Add new site → Import an existing project**.
 3. Choose your GitHub repo.
 4. Set:
    - **Build command:** `npm run build`
@@ -113,16 +113,16 @@ Hand tracking requires camera access. Netlify serves your site over HTTPS by def
 This project is a single page app, so no special redirects are typically needed.
 
 ## Controls / Tips
-- If hand tracking feels ?off?, try better lighting and keep your hand in view.
+- If hand tracking feels “off”, try better lighting and keep your hand in view.
 - If you deny camera access, the game automatically switches to touch mode.
-- Cakes spawn on the table so they?re easy to grab.
+- Cakes spawn on the table so they’re easy to grab.
 
 ## Assets
-- Baby model: `public/baby.glb` (you can replace it with your own GLB as long as it?s accessible at `/baby.glb`).
+- Baby model: `public/baby.glb` (you can replace it with your own GLB as long as it’s accessible at `/baby.glb`).
 
 ## Troubleshooting
 
-### ?Camera access denied?
+### “Camera access denied”
 - Allow camera permission in the browser.
 - Ensure the site is served over HTTPS (Netlify is fine; Vite dev server is HTTPS here).
 

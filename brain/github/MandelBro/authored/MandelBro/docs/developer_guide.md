@@ -24,23 +24,23 @@ MandelBro follows a client-server architecture with the following main component
 
 ```
 MandelBro/
-??? src/
-?   ??? client/
-?   ?   ??? assets/         # Images, sounds, and other static assets
-?   ?   ??? css/            # Stylesheets
-?   ?   ??? js/             # Client-side JavaScript
-?   ?   ??? index.html      # Main HTML file
-?   ??? server/             # Server-side code
-?   ?   ??? utils/          # Utility functions
-?   ?   ??? WorldManager.js # World management
-?   ?   ??? PlayerManager.js # Player management
-?   ?   ??? server.js       # Main server file
-?   ??? mandelbrot.py       # Mandelbrot set generator
-??? docs/                   # Documentation
-??? tests/                  # Test files
-??? dist/                   # Production build (generated)
-??? package.json            # Project dependencies
-??? webpack.config.js       # Build configuration
+├── src/
+│   ├── client/
+│   │   ├── assets/         # Images, sounds, and other static assets
+│   │   ├── css/            # Stylesheets
+│   │   ├── js/             # Client-side JavaScript
+│   │   └── index.html      # Main HTML file
+│   ├── server/             # Server-side code
+│   │   ├── utils/          # Utility functions
+│   │   ├── WorldManager.js # World management
+│   │   ├── PlayerManager.js # Player management
+│   │   └── server.js       # Main server file
+│   └── mandelbrot.py       # Mandelbrot set generator
+├── docs/                   # Documentation
+├── tests/                  # Test files
+├── dist/                   # Production build (generated)
+├── package.json            # Project dependencies
+└── webpack.config.js       # Build configuration
 ```
 
 ## Client-Side Components

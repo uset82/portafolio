@@ -1,6 +1,6 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/avatar-studio/blob/main/packages/asset-pipeline/AGENTS.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# packages/asset-pipeline/AGENTS.md ? Asset Pipeline Rules
+# packages/asset-pipeline/AGENTS.md — Asset Pipeline Rules
 
 - Keep all processing local.
 - Validate input file types.

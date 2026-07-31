@@ -15,7 +15,7 @@ The Observatory needs measured renderer evidence for each approved scenario rath
 An opted-in Canvas consumer receives three operations:
 
 - `capture()` records CSS and drawing-buffer dimensions, DPR, the most recently completed renderer frame, draw calls, triangles, points, lines, GPU geometry/texture/program counts, and unique visible scene geometry/material counts;
-- `sampleActivity(duration)` compares the renderer frame counter across a bounded 250?5,000ms window without calling `invalidate()` or forcing a frame.
+- `sampleActivity(duration)` compares the renderer frame counter across a bounded 250–5,000ms window without calling `invalidate()` or forcing a frame.
 - `reportScenario(scenario, duration)` combines both results with the required build mode, browser, device class, route, viewport/DPR, Full or Reduced quality, motion state, selected artifact, and browser console counts.
 
 The default activity window is 1,000ms. The result states `forcedFrames: false` so a settled demand-rendered scene can truthfully report zero observed frames.

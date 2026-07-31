@@ -1,6 +1,6 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/avatar-studio/blob/main/apps/webview/AGENTS.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# apps/webview/AGENTS.md ? Webview UI Rules
+# apps/webview/AGENTS.md — Webview UI Rules
 
 - Use TypeScript and typed bridge messages.
 - Respect VS Code theme variables.

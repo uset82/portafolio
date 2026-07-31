@@ -2,7 +2,7 @@
 
 # Avatar Event Protocol
 
-> Phase 2 protocol ? version 1
+> Phase 2 protocol — version 1
 
 The extension host and Webview communicate only through serializable, versioned messages. The shared schemas live in `packages/avatar-core/src/protocol.ts` and are used at both runtime boundaries.
 
@@ -20,7 +20,7 @@ Every message has a numeric `protocolVersion` field. The current value is `1`.
 
 Unknown message types, missing fields, wrong protocol versions, invalid state/trigger values, out-of-range pose values, and non-JSON payloads are rejected by Zod parsing. Rejection is logged and contained; it must not crash the extension or Webview.
 
-## Extension ? Webview messages
+## Extension → Webview messages
 
 | Type | Payload |
 | --- | --- |
@@ -33,7 +33,7 @@ Unknown message types, missing fields, wrong protocol versions, invalid state/tr
 | `assets:manifestLoaded` | Full validated `AvatarManifest` |
 | `debug:event` | Non-empty event name and optional JSON payload |
 
-## Webview ? Extension messages
+## Webview → Extension messages
 
 | Type | Payload |
 | --- | --- |

@@ -8,7 +8,7 @@ Tool path: Codex built-in image generation
 Input reference: `docs/design/reference/mainUI-approved.png`  
 Input SHA-256: `B4E11D325297CEB8FFB021866FFA2903B316D5D2443DEF67BA890B4B3F3058BF`
 
-The built-in tool did not expose a model version, seed, sampling parameters, or deterministic replay control. ?Reproducible? therefore means that the exact input hash, complete prompt chain, accepted output hash, dimensions, review corrections, and intended use are recorded. It does not promise a byte-identical rerender.
+The built-in tool did not expose a model version, seed, sampling parameters, or deterministic replay control. “Reproducible” therefore means that the exact input hash, complete prompt chain, accepted output hash, dimensions, review corrections, and intended use are recorded. It does not promise a byte-identical rerender.
 
 These prompts create 2D provider-neutral modeling references. They are not Hunyuan-specific inputs, do not authorize any generated GLB, and do not replace the task 2.25 provenance, rights, likeness, and public-runtime review.
 
@@ -25,7 +25,7 @@ Scene/backdrop: uniform warm parchment studio background; every panel isolated a
 Style/medium: polished realistic 3D concept render with physically plausible materials and consistent scale.
 Composition/framing: 3 by 2 grid with equal gutters. Top row: wide interior perspective, front elevation-like view, overhead plan-like view. Bottom row: water-basin detail, props-and-plants kit, lighting and camera mood study. No panel borders or labels.
 Lighting/mood: soft warm daylight through the oculus, gentle neutral shadows, calm editorial atmosphere.
-Color palette: natural Observatory palette only?parchment, linen, warm oak, walnut, taupe, pewter, muted sage, slate-sage water, espresso details.
+Color palette: natural Observatory palette only—parchment, linen, warm oak, walnut, taupe, pewter, muted sage, slate-sage water, espresso details.
 Materials/textures: linen plaster, pale carved stone, oak and walnut, aged pewter, clear shallow water, restrained sage foliage.
 Constraints: preserve one coherent architecture across all views; practical buildable geometry; visible full silhouettes; generous margins; no people, robot, drone, project devices, UI, text, letters, numbers, logos, trademarks, watermark, blue neon, violet, cyan glow, black sci-fi void, excessive glass, fantasy ornament, or photobashed clutter.
 ```
@@ -67,15 +67,15 @@ Accepted only as the base for `artifact-systems-remove-writing`; the base image 
 ```text
 Use case: stylized-concept
 Asset type: provider-neutral 3D artifact modeling reference sheet
-Primary request: create a clean nine-panel concept sheet for three original Observatory artifacts from Image 1: ASTRAEA celestial chart engine, PIN?CULO numerological pattern engine, and Sound Lab harmonic instrument. This is modeling reference art, not a website screenshot.
+Primary request: create a clean nine-panel concept sheet for three original Observatory artifacts from Image 1: ASTRAEA celestial chart engine, PINÁCULO numerological pattern engine, and Sound Lab harmonic instrument. This is modeling reference art, not a website screenshot.
 Input images: Image 1 is the approved style, palette, material, and object-language reference; ignore all baked UI text and nameplates.
 Scene/backdrop: uniform warm parchment studio background with equal gutters.
 Style/medium: polished realistic 3D product-design render with practical, buildable geometry and consistent scale.
-Composition/framing: 3 columns by 3 rows, no labels. Top row shows the same ASTRAEA artifact from front, side, and three-quarter views. Middle row shows the same PIN?CULO artifact from front, top, and three-quarter views. Bottom row shows the same Sound Lab artifact from front, top, and three-quarter views. Keep each artifact identical across its three views and fully visible.
+Composition/framing: 3 columns by 3 rows, no labels. Top row shows the same ASTRAEA artifact from front, side, and three-quarter views. Middle row shows the same PINÁCULO artifact from front, top, and three-quarter views. Bottom row shows the same Sound Lab artifact from front, top, and three-quarter views. Keep each artifact identical across its three views and fully visible.
 Lighting/mood: soft neutral studio light revealing engravings, controls, silhouette, and material changes.
 Color palette: parchment, walnut, oak, taupe clay, buff, aged pewter, muted sage, espresso engraving; natural Observatory palette only.
-Materials/textures: ASTRAEA is a tilted mechanical astrolabe with layered engraved rings in parchment/pewter on a walnut stand; PIN?CULO is a low circular walnut-and-clay tabletop mechanism with one outer dial and a restrained ring of movable wooden markers; Sound Lab is a low rectangular walnut instrument with one central circular harmonic dial, a few physical knobs and sliders, aged-metal hardware, and no keyboard.
-Constraints: original designs; clear silhouette and plausible mechanical assembly; ASTRAEA approximately 2.8 m high, PIN?CULO approximately 2.7 m wide, Sound Lab approximately 2.5 m wide. No numerals, alphabet letters, words, glyph-like writing, nameplates, UI, screens, people, robot, drone, architecture, water, excessive parts, text, labels, logos, trademarks, watermark, blue neon, violet, cyan glow, black sci-fi void, fantasy magic effects, zodiac trademarks, or illegible pseudo-writing.
+Materials/textures: ASTRAEA is a tilted mechanical astrolabe with layered engraved rings in parchment/pewter on a walnut stand; PINÁCULO is a low circular walnut-and-clay tabletop mechanism with one outer dial and a restrained ring of movable wooden markers; Sound Lab is a low rectangular walnut instrument with one central circular harmonic dial, a few physical knobs and sliders, aged-metal hardware, and no keyboard.
+Constraints: original designs; clear silhouette and plausible mechanical assembly; ASTRAEA approximately 2.8 m high, PINÁCULO approximately 2.7 m wide, Sound Lab approximately 2.5 m wide. No numerals, alphabet letters, words, glyph-like writing, nameplates, UI, screens, people, robot, drone, architecture, water, excessive parts, text, labels, logos, trademarks, watermark, blue neon, violet, cyan glow, black sci-fi void, fantasy magic effects, zodiac trademarks, or illegible pseudo-writing.
 ```
 
 ## artifact-systems-remove-writing
@@ -86,7 +86,7 @@ Accepted output: `artifact-systems-reference.png`.
 Use case: precise-object-edit
 Asset type: corrected provider-neutral 3D artifact reference sheet
 Input images: Image 1 is the edit target.
-Primary request: remove every alphabet-like character, numeral-like character, pseudo-letter, pseudo-word, glyph, rune, zodiac symbol, and illegible written mark from the three ASTRAEA panels, the three PIN?CULO panels, and the three Sound Lab panels. Replace them only with clean unlabeled material surfaces and simple neutral geometric construction marks: concentric circles, straight radial lines, dots, small round fasteners, and shallow grooves.
+Primary request: remove every alphabet-like character, numeral-like character, pseudo-letter, pseudo-word, glyph, rune, zodiac symbol, and illegible written mark from the three ASTRAEA panels, the three PINÁCULO panels, and the three Sound Lab panels. Replace them only with clean unlabeled material surfaces and simple neutral geometric construction marks: concentric circles, straight radial lines, dots, small round fasteners, and shallow grooves.
 Constraints: preserve the exact 3 by 3 sheet composition, the three object designs, silhouettes, viewpoints, proportions, wood/metal/ceramic materials, natural palette, lighting, blank nameplates, knobs, markers, and resolution. Change only written or symbol-like surface marks. Add no text, labels, letters, numbers, glyphs, logos, trademarks, or watermark.
 ```
 

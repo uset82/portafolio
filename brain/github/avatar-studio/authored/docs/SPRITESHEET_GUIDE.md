@@ -6,7 +6,7 @@ The PixiJS runtime consumes a local raster or SVG atlas plus a JSON metadata fil
 
 ## Atlas layout
 
-Use a regular grid. For example, a 4?4 atlas with 64?64 frames is 256?256 pixels. Frame `0` is the first cell, then frames advance left-to-right and top-to-bottom:
+Use a regular grid. For example, a 4×4 atlas with 64×64 frames is 256×256 pixels. Frame `0` is the first cell, then frames advance left-to-right and top-to-bottom:
 
 ```text
  0  1  2  3

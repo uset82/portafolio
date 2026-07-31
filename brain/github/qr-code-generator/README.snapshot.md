@@ -1,12 +1,12 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/qr-code-generator/blob/main/README.md; checkedOn: 2026-07-31; redactions: 3 -->
 
-# QR Code Generator for M?llebakken Art Project
+# QR Code Generator for Møllebakken Art Project
 
 An interactive web application for teachers to manage student artwork and generate QR codes that link to student portfolios or individual artwork pieces. This project is designed specifically for educational institutions to showcase student work through modern web technology.
 
 ![QR Code Generator](https://via.placeholder.com/800x400?text=QR+Code+Generator+Screenshot)
 
-## ?? Features
+## 🌟 Features
 
 ### QR Code Generation System
 - **Dynamic QR Codes** - Generate QR codes for both student portfolios and individual artworks
@@ -35,7 +35,7 @@ An interactive web application for teachers to manage student artwork and genera
 - **Dark Theme** - Modern dark theme with accent colors
 - **Intuitive Interface** - User-friendly design for teachers and students
 
-## ?? Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 - Node.js (v14 or higher)
@@ -72,7 +72,7 @@ An interactive web application for teachers to manage student artwork and genera
 
 5. Open your browser and navigate to `http://localhost:5173`
 
-## ?? Deployment
+## 🌐 Deployment
 
 ### Build for Production
 
@@ -133,7 +133,7 @@ Without this setting, QR codes will use the browser's current URL, which won't w
    yarn deploy
    ```
 
-## ??? Database Setup
+## 🗄️ Database Setup
 
 This project uses Supabase for backend services. Here's how to set up your database:
 
@@ -150,25 +150,25 @@ This project uses Supabase for backend services. Here's how to set up your datab
 
 4. Set up Row Level Security (RLS) policies to secure your data
 
-## ?? Project Structure
+## 🧩 Project Structure
 
 ```
 /
-??? public/              # Static assets
-??? src/
-?   ??? components/      # Reusable UI components
-?   ??? lib/             # Utility functions and hooks
-?   ??? pages/           # Page components
-?   ??? App.jsx          # Main application component
-?   ??? main.jsx         # Entry point
-?   ??? TraeTheme.css    # Global styles
-??? .env                 # Environment variables (create this)
-??? index.html           # HTML template
-??? package.json         # Project dependencies
-??? vite.config.js       # Vite configuration
+├── public/              # Static assets
+├── src/
+│   ├── components/      # Reusable UI components
+│   ├── lib/             # Utility functions and hooks
+│   ├── pages/           # Page components
+│   ├── App.jsx          # Main application component
+│   ├── main.jsx         # Entry point
+│   └── TraeTheme.css    # Global styles
+├── .env                 # Environment variables (create this)
+├── index.html           # HTML template
+├── package.json         # Project dependencies
+└── vite.config.js       # Vite configuration
 ```
 
-## ?? Customization
+## 🔧 Customization
 
 ### Styling
 The project uses a custom CSS theme defined in `src/TraeTheme.css`. You can modify this file to change colors, spacing, and other design elements.
@@ -184,7 +184,7 @@ VITE_SUPABASE_ANON_KEY=[REDACTED credential-like value]
 VITE_APP_URL=https://mollebakkenqr.netlify.app
 ```
 
-## ?? Using the Application
+## 📱 Using the Application
 
 ### For Teachers
 1. Log in to access the Teacher Portal
@@ -200,7 +200,7 @@ VITE_APP_URL=https://mollebakkenqr.netlify.app
 3. Navigate between different media types
 4. Works offline if previously cached
 
-## ?? Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
@@ -210,11 +210,11 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## ?? License
+## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## ?? Acknowledgements
+## 🙏 Acknowledgements
 
 - [React](https://reactjs.org/)
 - [Vite](https://vitejs.dev/)
@@ -224,4 +224,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-Developed with ?? for M?llebakken Art Project
+Developed with ❤️ for Møllebakken Art Project

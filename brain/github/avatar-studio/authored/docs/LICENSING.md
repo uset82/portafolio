@@ -2,7 +2,7 @@
 
 # Licensing and Provenance Policy
 
-> Re-audited from installed workspace manifests ? 2026-07-14
+> Re-audited from installed workspace manifests — 2026-07-14
 
 This file records the implementation license gate for Codex Avatar Studio. It is an engineering compliance record, not legal advice.
 

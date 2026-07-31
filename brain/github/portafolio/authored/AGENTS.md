@@ -11,7 +11,7 @@ Build Carlos Carpio's portfolio as a polished, editorial, media-aware experience
 1. Follow the current user request.
 2. Follow this `AGENTS.md` for durable repository behavior.
 3. Use `maintaskplan.md` for **v1 launch** task order, dependencies, completion state, and evidence.
-4. Use `updates/TASKBOARD.md` for **post-v1 work** ? the current round of fixes and upgrades.
+4. Use `updates/TASKBOARD.md` for **post-v1 work** — the current round of fixes and upgrades.
    It is the single page showing where the project is, all tasks, and which agent owns each.
 5. Apply `rules.md`, `skills.md`, and the executable rules in `.codex/rules/portfolio.rules`.
 6. Treat the research report as recommendations, not immutable requirements.
@@ -43,7 +43,7 @@ Do not spawn subagents unless the user explicitly asks for delegation or paralle
 ## Task-plan discipline
 
 - Use `$portfolio-delivery` for implementation work driven by `maintaskplan.md`.
-- Change `[ ] ?` to `[x] ?` only after the task's acceptance condition is satisfied and verified.
+- Change `[ ] ☐` to `[x] ☑` only after the task's acceptance condition is satisfied and verified.
 - Add a dated evidence entry to the completion log whenever a checkbox is marked.
 - Leave partial, failed, blocked, or unverified work unchecked; add a concise status note beneath it.
 - Add newly discovered work as a new unchecked task with a unique ID. Do not silently widen an existing task.
@@ -102,13 +102,13 @@ Until the stack is selected, document intended commands in the plan rather than 
 
 ## Key files
 
-- `updates/TASKBOARD.md` ? **post-v1 work: current position, every task, and its owner.**
+- `updates/TASKBOARD.md` — **post-v1 work: current position, every task, and its owner.**
   Start here for anything in the current round. Supporting detail lives beside it in `updates/`:
   `05-runbook.md` (ordered steps and agent kickoff text), `tasks/*-TASKS.md` (per-agent plans),
   `00-master-plan.md` (reasoning), `02-github-inventory.md` (all 61 repos, numbered).
-- `maintaskplan.md` ? v1 launch checkbox plan and completion evidence.
-- `deep-research-report (8).md` ? research, alternatives, and initial roadmap.
-- `rules.md` ? human-readable project rules.
-- `skills.md` ? skill routing and invocation guide.
-- `.agents/skills/` ? repo-scoped reusable workflows.
-- `.codex/rules/portfolio.rules` ? executable command approval policy.
+- `maintaskplan.md` — v1 launch checkbox plan and completion evidence.
+- `deep-research-report (8).md` — research, alternatives, and initial roadmap.
+- `rules.md` — human-readable project rules.
+- `skills.md` — skill routing and invocation guide.
+- `.agents/skills/` — repo-scoped reusable workflows.
+- `.codex/rules/portfolio.rules` — executable command approval policy.

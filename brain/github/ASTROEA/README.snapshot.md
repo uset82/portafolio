@@ -6,7 +6,7 @@ A modern astrology web application that generates accurate natal charts and prov
 
 ## Features
 
-? **Accurate Chart Calculations** - Powered by Immanuel (Swiss Ephemeris)
+✨ **Accurate Chart Calculations** - Powered by Immanuel (Swiss Ephemeris)
 - Natal / Radix charts
 - Transit charts
 - Synastry charts
@@ -14,13 +14,13 @@ A modern astrology web application that generates accurate natal charts and prov
 - Solar Return
 - Secondary Progressions
 
-?? **Beautiful Visualization**
+🎨 **Beautiful Visualization**
 - SVG chart wheel with European-style rendering
 - Zodiac signs with element colors
 - House cusps and planetary positions
 - Aspect lines
 
-?? **AI Interpretation**
+🤖 **AI Interpretation**
 - Grounded interpretations based on actual chart data
 - Multiple focus areas (personality, career, relationships, etc.)
 - Multi-language support (EN/ES/NO)
@@ -70,26 +70,26 @@ docker-compose up
 
 ```
 ASTRO/
-??? backend/                 # Python FastAPI backend
-?   ??? main.py             # Application entry point
-?   ??? routers/
-?   ?   ??? charts.py       # Chart calculation endpoints
-?   ?   ??? interpret.py    # AI interpretation endpoints
-?   ??? services/
-?       ??? chart_service.py # Immanuel wrapper
-?       ??? ai_service.py    # OpenRouter integration
-?
-??? frontend/                # React + TypeScript frontend
-?   ??? src/
-?   ?   ??? App.tsx         # Main application
-?   ?   ??? components/
-?   ?       ??? BirthDataForm.tsx
-?   ?       ??? ChartWheel.tsx
-?   ?       ??? ChartTables.tsx
-?   ?       ??? Interpretation.tsx
-?   ??? index.html
-?
-??? docker-compose.yml       # Multi-service configuration
+├── backend/                 # Python FastAPI backend
+│   ├── main.py             # Application entry point
+│   ├── routers/
+│   │   ├── charts.py       # Chart calculation endpoints
+│   │   └── interpret.py    # AI interpretation endpoints
+│   └── services/
+│       ├── chart_service.py # Immanuel wrapper
+│       └── ai_service.py    # OpenRouter integration
+│
+├── frontend/                # React + TypeScript frontend
+│   ├── src/
+│   │   ├── App.tsx         # Main application
+│   │   └── components/
+│   │       ├── BirthDataForm.tsx
+│   │       ├── ChartWheel.tsx
+│   │       ├── ChartTables.tsx
+│   │       └── Interpretation.tsx
+│   └── index.html
+│
+└── docker-compose.yml       # Multi-service configuration
 ```
 
 ## API Endpoints

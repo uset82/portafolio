@@ -1,6 +1,6 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/portafolio/blob/main/docs/content/avatar-studio-source-pack.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# Codex Avatar Studio ? case-study source pack
+# Codex Avatar Studio — case-study source pack
 
 Reviewed 2026-07-19 from the public repository, its architecture/security documents, GitHub release metadata, commit identities, repository tree, and the downloadable VSIX. This is an evidence pack, not final case-study copy.
 
@@ -20,7 +20,7 @@ The release artifact proves a downloadable package exists. It does not prove mar
 
 The repository is published under Carlos's confirmed GitHub account, `uset82`. All 30 visible commits are linked to a different GitHub identity, `g57436746-coder`; GitHub did not expose that account profile during review.
 
-Safe wording: **?Codex Avatar Studio is published from Carlos Carpio's GitHub account as a public prototype.?**
+Safe wording: **“Codex Avatar Studio is published from Carlos Carpio's GitHub account as a public prototype.”**
 
 Do not attribute architecture, implementation, design, Blender work, testing, or the release to Carlos until he separately confirms his contribution and any collaborator or agent attribution that should appear.
 
@@ -64,7 +64,7 @@ Picture tracing is not automatic rigging or production 3D conversion. Blender, W
 
 GitHub exposes a non-draft, non-prerelease `v0.1.0` release dated 2026-07-14 with one downloadable VSIX asset. The asset returned HTTP 200 and reported a size of 1,860,568 bytes on the review date.
 
-This supports ?downloadable prototype release.? There are no verified installation counts, users, marketplace reviews, reliability results, performance outcomes, or accessibility audit results.
+This supports “downloadable prototype release.” There are no verified installation counts, users, marketplace reviews, reliability results, performance outcomes, or accessibility audit results.
 
 ## Artwork and workspace exclusion boundary
 

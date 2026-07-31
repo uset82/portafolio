@@ -57,48 +57,48 @@ flowchart TB
 
 ```
 src/
-??? app/
-?   ??? page.tsx                    # Landing/home page
-?   ??? onboarding/
-?   ?   ??? page.tsx                # Onboarding flow
-?   ??? scan/
-?   ?   ??? fridge/page.tsx         # Fridge photo capture
-?   ?   ??? pantry/page.tsx         # Pantry photo capture
-?   ??? ingredients/
-?   ?   ??? page.tsx                # Ingredient review/edit
-?   ??? meals/
-?   ?   ??? page.tsx                # Meal suggestions list
-?   ?   ??? [id]/page.tsx           # Meal detail view
-?   ??? shopping/
-?       ??? page.tsx                # Shopping list
-??? components/
-?   ??? ui/                         # Reusable UI components
-?   ??? onboarding/                 # Onboarding step components
-?   ??? camera/                     # Camera capture component
-?   ??? ingredients/                # Ingredient list components
-?   ??? meals/                      # Meal card components
-?   ??? shopping/                   # Shopping list components
-??? lib/
-?   ??? api.ts                      # API client functions
-?   ??? storage.ts                  # Local storage utilities
-?   ??? types.ts                    # TypeScript type definitions
-?   ??? validation.ts               # Data validation functions
-??? hooks/
-    ??? usePreferences.ts           # User preferences hook
-    ??? useIngredients.ts           # Ingredient state hook
-    ??? useMeals.ts                 # Meal suggestions hook
+├── app/
+│   ├── page.tsx                    # Landing/home page
+│   ├── onboarding/
+│   │   └── page.tsx                # Onboarding flow
+│   ├── scan/
+│   │   ├── fridge/page.tsx         # Fridge photo capture
+│   │   └── pantry/page.tsx         # Pantry photo capture
+│   ├── ingredients/
+│   │   └── page.tsx                # Ingredient review/edit
+│   ├── meals/
+│   │   ├── page.tsx                # Meal suggestions list
+│   │   └── [id]/page.tsx           # Meal detail view
+│   └── shopping/
+│       └── page.tsx                # Shopping list
+├── components/
+│   ├── ui/                         # Reusable UI components
+│   ├── onboarding/                 # Onboarding step components
+│   ├── camera/                     # Camera capture component
+│   ├── ingredients/                # Ingredient list components
+│   ├── meals/                      # Meal card components
+│   └── shopping/                   # Shopping list components
+├── lib/
+│   ├── api.ts                      # API client functions
+│   ├── storage.ts                  # Local storage utilities
+│   ├── types.ts                    # TypeScript type definitions
+│   └── validation.ts               # Data validation functions
+└── hooks/
+    ├── usePreferences.ts           # User preferences hook
+    ├── useIngredients.ts           # Ingredient state hook
+    └── useMeals.ts                 # Meal suggestions hook
 ```
 
 ### API Routes
 
 ```
 src/app/api/
-??? extract/
-?   ??? route.ts                    # POST: Extract ingredients from images
-??? meals/
-?   ??? route.ts                    # POST: Generate meal suggestions
-??? health/
-    ??? route.ts                    # GET: Health check endpoint
+├── extract/
+│   └── route.ts                    # POST: Extract ingredients from images
+├── meals/
+│   └── route.ts                    # POST: Generate meal suggestions
+└── health/
+    └── route.ts                    # GET: Health check endpoint
 ```
 
 ### Core Interfaces
@@ -425,16 +425,16 @@ test('deduplication removes all duplicate ingredient names', () => {
 
 ```
 src/
-??? lib/
-?   ??? validation.ts
-?   ??? validation.test.ts          # Unit tests
-?   ??? validation.property.test.ts # Property tests
-??? components/
-?   ??? MealCard.tsx
-?   ??? MealCard.test.tsx           # Component tests
-??? app/api/
-    ??? extract/route.ts
-    ??? extract/route.test.ts       # API route tests
+├── lib/
+│   ├── validation.ts
+│   ├── validation.test.ts          # Unit tests
+│   └── validation.property.test.ts # Property tests
+├── components/
+│   ├── MealCard.tsx
+│   └── MealCard.test.tsx           # Component tests
+└── app/api/
+    ├── extract/route.ts
+    └── extract/route.test.ts       # API route tests
 ```
 
 ### Test Data Generators (fast-check Arbitraries)

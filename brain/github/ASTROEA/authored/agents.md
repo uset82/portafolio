@@ -1,6 +1,6 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/ASTROEA/blob/main/agents.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# ASTRAEA ? Astrology Systems Agent
+# ASTRAEA – Astrology Systems Agent
 
 ## Agent Name
 
@@ -71,7 +71,7 @@ Build an astrology web application that:
 - https://www.astro.com/astro-databank/?nhor=1
 - https://www.astro.com/astrowiki/en/?nhor=1
 
-?? These are **references only**. Do NOT scrape or copy content.
+⚠️ These are **references only**. Do NOT scrape or copy content.
 
 ---
 

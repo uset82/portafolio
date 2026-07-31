@@ -34,7 +34,7 @@ Settled evidence permits at most `0.001` progress error, `0.001` radians for the
 
 ## Unified MVP behavior
 
-The unified source order is renderer, camera, robot, ASTRAEA, PIN?CULO, Sound Lab, Future Energy, Electronics / AI, drone, and water. Missing owners yield `future-energy-unavailable` or `electronics-ai-unavailable` and make interactive evidence ineligible.
+The unified source order is renderer, camera, robot, ASTRAEA, PINÁCULO, Sound Lab, Future Energy, Electronics / AI, drone, and water. Missing owners yield `future-energy-unavailable` or `electronics-ai-unavailable` and make interactive evidence ineligible.
 
 The MVP assessor additionally rejects:
 

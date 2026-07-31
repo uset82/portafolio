@@ -8,7 +8,7 @@ Status: runtime implementation and automatic diagnostics complete; representativ
 
 ## Runtime contract
 
-One external scene store owns monotonic camera requests and the `requested ? transitioning ? settled` lifecycle. One React Three Fiber camera owner applies position, look target, FOV, near plane, and far plane. Full and Reduced use bounded demand invalidation; frame deltas are capped at 50ms. Hidden documents pause an active transition, while reduced motion, static quality, and the global pause settle immediately. A new request begins from the current pose and supersedes the previous request ID.
+One external scene store owns monotonic camera requests and the `requested → transitioning → settled` lifecycle. One React Three Fiber camera owner applies position, look target, FOV, near plane, and far plane. Full and Reduced use bounded demand invalidation; frame deltas are capped at 50ms. Hidden documents pause an active transition, while reduced motion, static quality, and the global pause settle immediately. A new request begins from the current pose and supersedes the previous request ID.
 
 Artifact focus remains separate from navigation links. A native semantic focus control selects or returns to the overview, Escape clears selection outside editable controls, and a validated `focus` query parameter uses native history so Back/Forward and shareable deep links can restore state. Primary site destinations remain ordinary Next.js links.
 

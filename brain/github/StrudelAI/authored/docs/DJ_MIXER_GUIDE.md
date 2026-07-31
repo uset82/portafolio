@@ -1,12 +1,12 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/StrudelAI/blob/main/docs/DJ_MIXER_GUIDE.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# ?? DJ Mixer User Guide
+# 🎧 DJ Mixer User Guide
 
 A complete guide to using the DJ Mixer in StrudelAI. Learn to mix like a pro!
 
 ---
 
-## ?? Table of Contents
+## 📋 Table of Contents
 1. [Overview](#overview)
 2. [Interface Layout](#interface-layout)
 3. [Getting Started](#getting-started)
@@ -32,20 +32,20 @@ The DJ Mixer provides a realistic dual-deck mixing experience with:
 ## Interface Layout
 
 ```
-???????????????????????????????????????????????????????????????????
-?                                                                 ?
-?   ???????????????     ???????????????     ???????????????      ?
-?   ?   DECK A    ?     ?   MIXER     ?     ?   DECK B    ?      ?
-?   ?  (Cyan)     ?     ?   PANEL     ?     ?  (Magenta)  ?      ?
-?   ?             ?     ?             ?     ?             ?      ?
-?   ?  [PLATTER]  ?     ?  EQ Knobs   ?     ?  [PLATTER]  ?      ?
-?   ?             ?     ?  Faders     ?     ?             ?      ?
-?   ?  [PADS]     ?     ?  Crossfader ?     ?  [PADS]     ?      ?
-?   ?  Tempo      ?     ?  Browse     ?     ?  Tempo      ?      ?
-?   ?  Sync/Cue   ?     ?             ?     ?  Sync/Cue   ?      ?
-?   ???????????????     ???????????????     ???????????????      ?
-?                                                                 ?
-???????????????????????????????????????????????????????????????????
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│   ┌─────────────┐     ┌─────────────┐     ┌─────────────┐      │
+│   │   DECK A    │     │   MIXER     │     │   DECK B    │      │
+│   │  (Cyan)     │     │   PANEL     │     │  (Magenta)  │      │
+│   │             │     │             │     │             │      │
+│   │  [PLATTER]  │     │  EQ Knobs   │     │  [PLATTER]  │      │
+│   │             │     │  Faders     │     │             │      │
+│   │  [PADS]     │     │  Crossfader │     │  [PADS]     │      │
+│   │  Tempo      │     │  Browse     │     │  Tempo      │      │
+│   │  Sync/Cue   │     │             │     │  Sync/Cue   │      │
+│   └─────────────┘     └─────────────┘     └─────────────┘      │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -70,7 +70,7 @@ The DJ Mixer provides a realistic dual-deck mixing experience with:
 
 ## Step-by-Step Tutorials
 
-### ?? Tutorial 1: Basic Crossfade Mix
+### 🎓 Tutorial 1: Basic Crossfade Mix
 
 Learn to smoothly transition between two tracks.
 
@@ -86,7 +86,7 @@ Learn to smoothly transition between two tracks.
 
 ---
 
-### ?? Tutorial 2: Using the EQ
+### 🎓 Tutorial 2: Using the EQ
 
 Shape the sound by boosting or cutting frequencies.
 
@@ -105,7 +105,7 @@ Shape the sound by boosting or cutting frequencies.
 
 ---
 
-### ?? Tutorial 3: Filter Sweeps
+### 🎓 Tutorial 3: Filter Sweeps
 
 Create dramatic sweep effects with the filter knob.
 
@@ -122,7 +122,7 @@ Create dramatic sweep effects with the filter knob.
 
 ---
 
-### ?? Tutorial 4: Tempo Matching (Beat Matching)
+### 🎓 Tutorial 4: Tempo Matching (Beat Matching)
 
 Essential skill for seamless mixing.
 
@@ -137,7 +137,7 @@ Essential skill for seamless mixing.
 
 ---
 
-### ?? Tutorial 5: Using Drum Pads
+### 🎓 Tutorial 5: Using Drum Pads
 
 Trigger one-shot sounds for live performance.
 
@@ -157,7 +157,7 @@ Each deck has 4 pads:
 
 ---
 
-### ?? Tutorial 6: Loading Different Tracks
+### 🎓 Tutorial 6: Loading Different Tracks
 
 Browse and load different patterns.
 
@@ -176,7 +176,7 @@ Browse and load different patterns.
 
 ---
 
-### ?? Tutorial 7: Cue Preview
+### 🎓 Tutorial 7: Cue Preview
 
 Listen to one deck in headphones while the other plays.
 
@@ -204,9 +204,9 @@ Listen to one deck in headphones while the other plays.
 |---------|----------|
 | **Trim** | Input gain per channel |
 | **HI/MID/LO** | 3-band EQ |
-| **Filter** | Low-pass ? High-pass |
+| **Filter** | Low-pass ↔ High-pass |
 | **Channel Fader** | Volume per channel |
-| **Crossfader** | Balance A ? B |
+| **Crossfader** | Balance A ↔ B |
 | **Master** | Main output volume |
 | **Browse** | Select track number |
 | **Load A/B** | Load selected track |
@@ -215,7 +215,7 @@ Listen to one deck in headphones while the other plays.
 
 ## Tips & Tricks
 
-### ?? Pro Tips
+### 🔥 Pro Tips
 
 1. **Use EQ instead of crossfader** for cleaner transitions
 2. **Cut the bass first** when mixing in a new track
@@ -223,7 +223,7 @@ Listen to one deck in headphones while the other plays.
 4. **Practice with simple patterns** before complex mixes
 5. **Listen to the beat** - tap along to feel the rhythm
 
-### ? Keyboard Shortcuts
+### ⚡ Keyboard Shortcuts
 (If supported by your browser)
 - Click platters to **Play/Pause**
 - Use mousewheel on knobs for fine control
@@ -241,4 +241,4 @@ Listen to one deck in headphones while the other plays.
 
 ---
 
-Happy Mixing! ?????
+Happy Mixing! 🎛️🎵

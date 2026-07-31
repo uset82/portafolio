@@ -4,7 +4,7 @@
 
 ## The assistant panel is empty
 
-Run `Codex Avatar: Open Assistant`, then `Codex Avatar: Reload Avatar`. Check that the workspace is trusted and that the extension is enabled. In a development host, open **Help ? Toggle Developer Tools** and inspect the console for a CSP or missing-resource error.
+Run `Codex Avatar: Open Assistant`, then `Codex Avatar: Reload Avatar`. Check that the workspace is trusted and that the extension is enabled. In a development host, open **Help → Toggle Developer Tools** and inspect the console for a CSP or missing-resource error.
 
 ## Pixi fails or the avatar returns to SVG
 
@@ -26,7 +26,7 @@ Open the manifest as JSON, fix the reported path, and import again. Remove a bro
 
 Export is available only for a non-built-in package that currently shows **Ready** in a trusted workspace. Select **Validate**, repair any manifest, checksum, SVG, path, or size errors, and try again. Choose a writable ZIP destination outside `.codex-avatar/avatars/<id>/`.
 
-If the rights dialog offers **Export Local Backup**, the manifest contains a restricted or unclear statement such as ?no redistribution,? ?rights not asserted,? ?all rights reserved,? or `UNLICENSED`. The archive can still be created for backup, but do not publish or redistribute it unless you own the artwork or have permission. Recipients must unzip the archive before selecting **Import Avatar**.
+If the rights dialog offers **Export Local Backup**, the manifest contains a restricted or unclear statement such as “no redistribution,” “rights not asserted,” “all rights reserved,” or `UNLICENSED`. The archive can still be created for backup, but do not publish or redistribute it unless you own the artwork or have permission. Recipients must unzip the archive before selecting **Import Avatar**.
 
 ## Generated SVG is missing or looks too complex
 
@@ -44,7 +44,7 @@ The workspace must be trusted and the source must be a regular `.blend` file ins
 
 Use Node 22.22.0 and pnpm 11.7.0, run `pnpm install --frozen-lockfile`, and retry `pnpm run ci`. `pnpm smoke:webview` needs Microsoft Edge; `pnpm smoke:vsix` is a clean extraction/runtime smoke and does not install an extension into the active editor.
 
-For a real isolated install, run `pnpm run smoke:clean-profile` after packaging. That script uses the VS Code **CLI shim** (`?/bin/code.cmd` on Windows, or `code` on PATH) with temporary `--extensions-dir` and `--user-data-dir` folders.
+For a real isolated install, run `pnpm run smoke:clean-profile` after packaging. That script uses the VS Code **CLI shim** (`…/bin/code.cmd` on Windows, or `code` on PATH) with temporary `--extensions-dir` and `--user-data-dir` folders.
 
 Do **not** invoke `Code.exe` directly for `--install-extension`. The GUI binary can leave the shell hung for minutes while VS Code stays open. If a command is stuck after using `Code.exe`, cancel the shell job; leave your normal VS Code session alone (it uses `%APPDATA%\Code`, not the temp profile dirs).
 

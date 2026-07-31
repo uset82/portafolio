@@ -35,7 +35,7 @@ The diagnostics do not make playback possible. A fabricated playing/unmuted ampl
 
 ## Unified MVP behavior
 
-The unified source order is renderer, camera, robot, ASTRAEA, PIN?CULO, Sound Lab, Future Energy, Electronics / AI, drone, and water. Missing Sound Lab ownership yields `sound-lab-unavailable` and makes interactive evidence ineligible.
+The unified source order is renderer, camera, robot, ASTRAEA, PINÁCULO, Sound Lab, Future Energy, Electronics / AI, drone, and water. Missing Sound Lab ownership yields `sound-lab-unavailable` and makes interactive evidence ineligible.
 
 The MVP assessor additionally rejects:
 

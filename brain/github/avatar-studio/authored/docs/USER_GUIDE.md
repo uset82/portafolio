@@ -7,7 +7,7 @@ Codex Avatar Studio is a local VS Code extension. The built-in SVG avatar works 
 ## Install and open the assistant
 
 1. Install VS Code 1.96 or newer.
-2. Install the packaged `codex-avatar-studio-<version>.vsix` from **Extensions ? ? ? Install from VSIX**.
+2. Install the packaged `codex-avatar-studio-<version>.vsix` from **Extensions → … → Install from VSIX**.
 3. Open a trusted workspace.
 4. Run `Codex Avatar: Open Assistant`, or open the Codex Avatar view from the Activity Bar.
 5. If the panel is not visible, run `Codex Avatar: Toggle Assistant` and then `Codex Avatar: Reload Avatar`.
@@ -51,7 +51,7 @@ Avatar-library file actions require an open, trusted workspace. When one is unav
 
 1. Select a non-built-in avatar in **Avatar library** and confirm it shows **Ready**. Use **Validate** first if it needs repair.
 2. Select **Export Avatar**.
-3. Review the displayed author and license/rights statement. Statements such as ?no redistribution,? ?rights not asserted,? ?all rights reserved,? or `UNLICENSED` produce a stronger local-backup warning; the extension does not grant redistribution rights.
+3. Review the displayed author and license/rights statement. Statements such as “no redistribution,” “rights not asserted,” “all rights reserved,” or `UNLICENSED` produce a stronger local-backup warning; the extension does not grant redistribution rights.
 4. Choose a destination for the suggested `<id>-<version>.codex-avatar.zip` file. The extension revalidates the installed package, writes the archive locally, and reveals the completed ZIP.
 5. To use the ZIP in another workspace or share it with another Codex Avatar Studio user, unzip it first. Select **Import Avatar** in the destination workspace and choose the extracted package folder or its `avatar.manifest.json`.
 
@@ -68,7 +68,7 @@ For an ordinary website or app, `svg/avatar.svg` is the portable static asset. T
 
 A bad saved executable is reported separately while auto-detection continues, so a broken preference can be repaired without hiding another valid installation. A tool that merely exits successfully is not accepted: its version output must identify Blender. The current supported minimum is Blender 3.6, with no fixed maximum-version ceiling.
 
-Select **Export Scene** in Blender Tools or run `Codex Avatar: Export Blender Scene`. Choose any explicit local `.blend`; the source is never overwritten and output always stays in the trusted workspace. The exporter prefers an `Export` collection, falls back to `Avatar`, and excludes `Guides` and `Ignore`. SVG, GLB, and PNG modes complete independently and show partial success. Each result is structurally validated before collision-safe publication, and each portable report is named `<scene>.<mode>.export-report.json`. Cancel and timeout stop the Blender process tree. Configure the per-process limit with `codexAvatar.blenderTimeoutSeconds` (10?600 seconds, default 120).
+Select **Export Scene** in Blender Tools or run `Codex Avatar: Export Blender Scene`. Choose any explicit local `.blend`; the source is never overwritten and output always stays in the trusted workspace. The exporter prefers an `Export` collection, falls back to `Avatar`, and excludes `Guides` and `Ignore`. SVG, GLB, and PNG modes complete independently and show partial success. Each result is structurally validated before collision-safe publication, and each portable report is named `<scene>.<mode>.export-report.json`. Cancel and timeout stop the Blender process tree. Configure the per-process limit with `codexAvatar.blenderTimeoutSeconds` (10–600 seconds, default 120).
 
 Blender is not an image vectorizer and is not required for the Create from Picture workflow. SVG line-art export depends on authored Grease Pencil content. After a valid SVG export, enter the avatar details and select **Use SVG as Avatar** to validate, install, activate, and reload it. When the same export also contains a validated GLB, the action becomes **Use 3D Avatar**: WebGL is preferred, while the package SVG and then the built-in coder orb remain the recovery chain.
 

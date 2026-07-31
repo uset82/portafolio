@@ -4,7 +4,7 @@
 
 ## Overview
 
-StillasCalculator is a responsive web application and installable PWA that estimates scaffolding (stillas) material needs around a building or a selected facade. The user searches for an address, confirms the building on an open-source map, selects or draws the building perimeter, configures a scaffold system and working parameters, and receives a deterministic estimate of bays, levels, and a material list that can be exported to PDF and CSV. An in-app AI Assistant helps the user fill in missing data and trigger calculations, but it performs no arithmetic itself ? every quantity originates from deterministic internal functions invoked through tool calls.
+StillasCalculator is a responsive web application and installable PWA that estimates scaffolding (stillas) material needs around a building or a selected facade. The user searches for an address, confirms the building on an open-source map, selects or draws the building perimeter, configures a scaffold system and working parameters, and receives a deterministic estimate of bays, levels, and a material list that can be exported to PDF and CSV. An in-app AI Assistant helps the user fill in missing data and trigger calculations, but it performs no arithmetic itself — every quantity originates from deterministic internal functions invoked through tool calls.
 
 The design follows one architectural rule that the rest of the system is organized around:
 
@@ -18,14 +18,14 @@ This separation makes the trustworthy parts of the system (geometry measurement 
 - Keep all third-party secrets and rate-limited services server-side (Req 3.9, 4.7, 12.6).
 - Maintain a single `Project_State` as the source of truth shared by every view (Req 17).
 - Work fluidly from a 320px phone to a 1920px desktop, and install as a PWA (Req 1, 16).
-- Never present a quantity the model invented ? only values returned by the deterministic engine (Req 13.1, 13.6).
+- Never present a quantity the model invented — only values returned by the deterministic engine (Req 13.1, 13.6).
 - Label every output as a planning estimate requiring professional verification (Req 15).
 
 ### Research Summary
 
 The following findings from `mainidea.md` and `deep-research-report.md` directly shape the design:
 
-- **No single free provider covers geocoding + footprints + tiles.** The practical approach is to compose specialized open services: OpenFreeMap (zero-key basemap tiles), Photon (geocoding) with Nominatim as a fallback, and Overpass (live OSM building footprints). OpenFreeMap explicitly provides only tiles ? no geocoding, routing, or footprints ? which is why those concerns are separate modules.
+- **No single free provider covers geocoding + footprints + tiles.** The practical approach is to compose specialized open services: OpenFreeMap (zero-key basemap tiles), Photon (geocoding) with Nominatim as a fallback, and Overpass (live OSM building footprints). OpenFreeMap explicitly provides only tiles — no geocoding, routing, or footprints — which is why those concerns are separate modules.
 - **Public Nominatim and Overpass have strict usage policies** (Nominatim max 1 req/sec, no client-side autocomplete; Overpass is not intended as a consumer-app backend). This drives the decision to proxy and rate-limit all geocoding/Overpass traffic through server-side Next.js API routes (Req 3.8, 3.9, 4.7) rather than calling them from the browser.
 - **Address points and ML/OSM footprints are approximate.** Footprints can be missing, conflated, or wrong, so a mandatory user-correction step (select / draw / edit polygon) is required rather than optional (Req 5).
 - **OpenAI function calling + Structured Outputs** are purpose-built to connect a model to deterministic internal functions and to force schema-conformant JSON. This is the mechanism that lets the AI Assistant orchestrate calculations without performing them (Req 13).
@@ -107,11 +107,11 @@ flowchart TD
 
 The system is organized into five layers with strict dependency direction (UI depends on engines and services; engines depend on nothing app-specific):
 
-1. **Presentation layer** ? React components, Tailwind layout, responsive/PWA behavior. Reads from and dispatches updates to `Project_State`. Contains no business arithmetic.
-2. **State layer** ? a single `Project_State` store (the source of truth) plus a state controller that validates and applies updates and notifies subscribers.
-3. **Deterministic engine layer** ? `Geometry_Engine`, `Scaffold_Calculator`, `materialRules`, and the export serializers. Pure functions: same input ? same output, no I/O, no clock, no randomness.
-4. **Service adapter layer** ? client-side wrappers (`lib/geocoding`, `lib/osm`, `lib/ai`) that call the server API routes and normalize responses/errors.
-5. **Server route layer** ? Next.js API routes that hold secrets, enforce rate limits, perform fallback logic, and proxy to external services.
+1. **Presentation layer** — React components, Tailwind layout, responsive/PWA behavior. Reads from and dispatches updates to `Project_State`. Contains no business arithmetic.
+2. **State layer** — a single `Project_State` store (the source of truth) plus a state controller that validates and applies updates and notifies subscribers.
+3. **Deterministic engine layer** — `Geometry_Engine`, `Scaffold_Calculator`, `materialRules`, and the export serializers. Pure functions: same input → same output, no I/O, no clock, no randomness.
+4. **Service adapter layer** — client-side wrappers (`lib/geocoding`, `lib/osm`, `lib/ai`) that call the server API routes and normalize responses/errors.
+5. **Server route layer** — Next.js API routes that hold secrets, enforce rate limits, perform fallback logic, and proxy to external services.
 
 ### Why the Engines Are Pure and Client-Capable
 
@@ -159,22 +159,22 @@ This section defines the major components and the TypeScript interfaces at their
 
 ### Presentation Components
 
-- `components/layout/AppShell.tsx` ? top-level responsive shell. Renders a single-column mobile arrangement with a bottom sheet for secondary panels below 768px, and a multi-pane arrangement at ?768px (Req 1.2, 1.3). It observes viewport width and switches arrangements while preserving `Project_State` (Req 1.4).
-- `components/layout/MobileBottomSheet.tsx` ? openable/dismissable bottom sheet hosting secondary panels on mobile (Req 1.2).
-- `components/map/MapView.tsx` ? wraps MapLibre GL JS with the OpenFreeMap style, zoom/pan controls, marker management, building-polygon layers, full-screen toggle on mobile, and a tile-load error/retry indicator (Req 2).
-- `components/map/AddressSearch.tsx` ? debounced search input, suggestion list (?5), selection handling (Req 3).
-- `components/map/BuildingFootprintLayer.tsx` ? renders nearby footprints and the distinct selected-building style (Req 4.3, 4.8).
-- `components/map/PolygonEditor.tsx` ? draw/edit/reset perimeter with touch support; enforces ?3 vertices and non-self-intersection before committing to state (Req 5).
-- `components/map/MeasurementPanel.tsx` ? live perimeter/area/side lengths, decimal-places control, waste-factor control, facade-subset selection (Req 6).
-- `components/scaffold/ScaffoldSystemSelector.tsx` ? system list, placeholder notices, editable dimensions (Req 7).
-- `components/scaffold/ScaffoldCalculatorForm.tsx` ? working height and dimension inputs with validation messages (Req 8).
-- `components/scaffold/MaterialList.tsx` ? table on desktop, cards on mobile, editable quantities, calculation summary, inline disclaimer (Req 11, 15.1).
-- `components/scaffold/ExportButtons.tsx` ? triggers PDF/CSV export (Req 14).
-- `components/ai/AiChatPanel.tsx`, `AiMessageList.tsx`, `AiInputBox.tsx`, `AiCalculationCard.tsx` ? chat UI, in-flight progress/disable, rendering of tool-call results (Req 12).
+- `components/layout/AppShell.tsx` — top-level responsive shell. Renders a single-column mobile arrangement with a bottom sheet for secondary panels below 768px, and a multi-pane arrangement at ≥768px (Req 1.2, 1.3). It observes viewport width and switches arrangements while preserving `Project_State` (Req 1.4).
+- `components/layout/MobileBottomSheet.tsx` — openable/dismissable bottom sheet hosting secondary panels on mobile (Req 1.2).
+- `components/map/MapView.tsx` — wraps MapLibre GL JS with the OpenFreeMap style, zoom/pan controls, marker management, building-polygon layers, full-screen toggle on mobile, and a tile-load error/retry indicator (Req 2).
+- `components/map/AddressSearch.tsx` — debounced search input, suggestion list (≤5), selection handling (Req 3).
+- `components/map/BuildingFootprintLayer.tsx` — renders nearby footprints and the distinct selected-building style (Req 4.3, 4.8).
+- `components/map/PolygonEditor.tsx` — draw/edit/reset perimeter with touch support; enforces ≥3 vertices and non-self-intersection before committing to state (Req 5).
+- `components/map/MeasurementPanel.tsx` — live perimeter/area/side lengths, decimal-places control, waste-factor control, facade-subset selection (Req 6).
+- `components/scaffold/ScaffoldSystemSelector.tsx` — system list, placeholder notices, editable dimensions (Req 7).
+- `components/scaffold/ScaffoldCalculatorForm.tsx` — working height and dimension inputs with validation messages (Req 8).
+- `components/scaffold/MaterialList.tsx` — table on desktop, cards on mobile, editable quantities, calculation summary, inline disclaimer (Req 11, 15.1).
+- `components/scaffold/ExportButtons.tsx` — triggers PDF/CSV export (Req 14).
+- `components/ai/AiChatPanel.tsx`, `AiMessageList.tsx`, `AiInputBox.tsx`, `AiCalculationCard.tsx` — chat UI, in-flight progress/disable, rendering of tool-call results (Req 12).
 
 ### State Controller
 
-`lib/state/projectStateController.ts` owns the single `Project_State` and exposes a typed update API. All mutations go through it so that validation (Req 6.11, 7.6, 8.3, 11.6) and propagation (Req 17.2?17.4) are centralized.
+`lib/state/projectStateController.ts` owns the single `Project_State` and exposes a typed update API. All mutations go through it so that validation (Req 6.11, 7.6, 8.3, 11.6) and propagation (Req 17.2–17.4) are centralized.
 
 ```typescript
 interface ProjectStateController {
@@ -204,7 +204,7 @@ interface UpdateResult {
 
 ### Geometry Engine
 
-`lib/geometry/turfMeasurements.ts` ? pure functions over GeoJSON polygons using Turf.js.
+`lib/geometry/turfMeasurements.ts` — pure functions over GeoJSON polygons using Turf.js.
 
 ```typescript
 interface PolygonMeasurements {
@@ -232,7 +232,7 @@ function computeScaffoldLength(
 
 ### Scaffold Calculator and Material Rules
 
-`lib/scaffold/scaffoldCalculator.ts` and `lib/scaffold/materialRules.ts` ? the deterministic estimate engine.
+`lib/scaffold/scaffoldCalculator.ts` and `lib/scaffold/materialRules.ts` — the deterministic estimate engine.
 
 ```typescript
 interface ScaffoldCalculationInput {
@@ -289,7 +289,7 @@ verticalLines    = numberOfBays + 1
 
 Validity precondition for a successful calculation (else `InvalidInputError`, Req 9.3, 9.7): `scaffoldLengthMeters > 0`, `bayLengthMeters > 0`, `liftHeightMeters > 0`, `workingHeightMeters > 0`, and all four present.
 
-#### Material Rules (Req 10.1?10.4)
+#### Material Rules (Req 10.1–10.4)
 
 Each rule is a deterministic function of `numberOfBays` (B), `numberOfLevels` (L), and `verticalLines` (V = B + 1). Quantities are non-negative integers. These are quote-grade planning rules, not engineering signoff.
 
@@ -306,7 +306,7 @@ Each rule is a deterministic function of `numberOfBays` (B), `numberOfLevels` (L
 | Ladders / access | pcs | `L` |
 | Wall ties / anchors | pcs | `0`, with note: *"Verify manually"* (Req 10.3) |
 
-Every line item is always present in the output, even when a quantity rule lacks an input ? in that case the item is included with the derivable quantity (or 0) and a corresponding warning is added (Req 10.5, 10.6). The wall ties/anchors item is always present with its manual-verification note (Req 10.3).
+Every line item is always present in the output, even when a quantity rule lacks an input — in that case the item is included with the derivable quantity (or 0) and a corresponding warning is added (Req 10.5, 10.6). The wall ties/anchors item is always present with its manual-verification note (Req 10.3).
 
 ### Scaffold Library
 
@@ -424,9 +424,9 @@ interface GeoJsonPolygon {
 | `bayLengthMeters` (input) | numeric 0.01..5 | 8.2 |
 | `liftHeightMeters` (input) | numeric 0.01..5 | 8.2 |
 | `scaffoldWidthMeters` (input) | numeric 0.01..5 | 8.2 |
-| dimensions (system editor) | > 0 and ? 100 | 7.3 |
+| dimensions (system editor) | > 0 and ≤ 100 | 7.3 |
 | material quantity (manual) | integer 0..999999 | 11.3 |
-| perimeter polygon | closed ring, ?3 distinct vertices, no self-intersection | 5.5, 5.7, 5.8 |
+| perimeter polygon | closed ring, ≥3 distinct vertices, no self-intersection | 5.5, 5.7, 5.8 |
 
 On any invalid value, the controller rejects the change, retains the last valid value, and surfaces a validation message identifying the field and its permitted range (Req 6.11, 7.6, 8.3, 11.6, 17.5).
 
@@ -436,7 +436,7 @@ A fixed string asserting that the output is an estimated planning report requiri
 
 ## Correctness Properties
 
-*A property is a characteristic or behavior that should hold true across all valid executions of a system ? essentially, a formal statement about what the system should do. Properties serve as the bridge between human-readable specifications and machine-verifiable correctness guarantees.*
+*A property is a characteristic or behavior that should hold true across all valid executions of a system — essentially, a formal statement about what the system should do. Properties serve as the bridge between human-readable specifications and machine-verifiable correctness guarantees.*
 
 These properties apply to the deterministic, pure parts of StillasCalculator: the Geometry Engine, the Scaffold Calculator, the material rules, the field-validation/state layer, the export serializers, and the AI trust boundary (the rule that the assistant only ever surfaces engine-computed quantities). Map rendering, tile loading, MapLibre/Overpass/OpenAI integration, PWA installability, exact timing budgets, and visual layout are covered by example, integration, and smoke tests instead (see Testing Strategy).
 
@@ -522,7 +522,7 @@ The properties below were derived from the prework analysis, with redundant crit
 
 ### Property 14: Field validation is total and atomic
 
-*For any* field with a defined range (waste factor 0?100; working height 0.01?100; bay/lift/width input 0.01?5; system dimensions >0 and ?100; manual quantity integer 0?999999) and *for any* candidate value, the controller accepts the value if and only if it is numeric and within range (and integer where required); on rejection it retains the last valid value, leaves the rest of the Project_State unchanged, and reports a validation error identifying the field. This rule applies identically whether the value originates from a manual control or an AI tool call.
+*For any* field with a defined range (waste factor 0–100; working height 0.01–100; bay/lift/width input 0.01–5; system dimensions >0 and ≤100; manual quantity integer 0–999999) and *for any* candidate value, the controller accepts the value if and only if it is numeric and within range (and integer where required); on rejection it retains the last valid value, leaves the rest of the Project_State unchanged, and reports a validation error identifying the field. This rule applies identically whether the value originates from a manual control or an AI tool call.
 
 **Validates: Requirements 6.11, 7.3, 7.6, 8.1, 8.2, 8.3, 11.3, 11.6, 12.5, 17.5**
 
@@ -588,7 +588,7 @@ The properties below were derived from the prework analysis, with redundant crit
 
 ### Property 25: AI presents only engine-computed quantities
 
-*For any* calculation input, every scaffold quantity surfaced by the AI Assistant is exactly equal ? with no rounding, scaling, or other transformation ? to the value returned by `calculateScaffoldMaterials` for that input, and no quantity is presented that did not originate from a tool-call result.
+*For any* calculation input, every scaffold quantity surfaced by the AI Assistant is exactly equal — with no rounding, scaling, or other transformation — to the value returned by `calculateScaffoldMaterials` for that input, and no quantity is presented that did not originate from a tool-call result.
 
 **Validates: Requirements 13.1, 13.6**
 
@@ -687,20 +687,20 @@ StillasCalculator uses a dual testing approach: property-based tests for the det
   `// Feature: stillas-calculator, Property {number}: {property_text}`.
 - **One test per property**: Each of the 33 correctness properties is implemented by a single property-based test.
 - **Generators**:
-  - Valid simple polygons (random convex/star-shaped rings and known shapes such as axis-aligned rectangles where perimeter/area are analytically checkable), plus deliberately invalid rings (degenerate, <3 vertices, self-intersecting) for Properties 1?4.
-  - Calculation inputs spanning valid ranges and boundary/invalid values (0, negative, non-numeric, range extremes) for Properties 6?11, 14, 16.
-  - Bay/level pairs for the material-rule property (Property 13) and material lists for export properties (Properties 27?31).
+  - Valid simple polygons (random convex/star-shaped rings and known shapes such as axis-aligned rectangles where perimeter/area are analytically checkable), plus deliberately invalid rings (degenerate, <3 vertices, self-intersecting) for Properties 1–4.
+  - Calculation inputs spanning valid ranges and boundary/invalid values (0, negative, non-numeric, range extremes) for Properties 6–11, 14, 16.
+  - Bay/level pairs for the material-rule property (Property 13) and material lists for export properties (Properties 27–31).
   - OSM element fixtures (ways and relations, with and without tags/attributes) for Property 19.
   - Event sequences with timestamps for the rate-limit and ordering properties (Properties 23, 24).
 - **Engine reuse**: Because the AI server route calls the same engine functions, Property 25 (AI presents only engine-computed quantities) compares assistant-surfaced values directly against `calculateScaffoldMaterials` output.
 
 ### Unit and Example Tests
 
-Used for specific behaviors and edge cases that are not universal: marker singleton behavior (Req 2.3, 3.5), debounce timing (Req 3.1), Nominatim fallback count (Req 3.6), error/empty branches (Req 3.7, 4.5, 4.6), placeholder notices (Req 7.4), missing-dimension messaging (Req 7.5), warning generation (Req 10.5), in-flight chat disabling (Req 12.3), tool-call state update (Req 12.4), AI degradation/timeout (Req 12.7, 12.8), tool-missing-data prompting (Req 13.5), and export failure (Req 14.7). Unit tests are kept focused ? the property tests carry the burden of broad input coverage.
+Used for specific behaviors and edge cases that are not universal: marker singleton behavior (Req 2.3, 3.5), debounce timing (Req 3.1), Nominatim fallback count (Req 3.6), error/empty branches (Req 3.7, 4.5, 4.6), placeholder notices (Req 7.4), missing-dimension messaging (Req 7.5), warning generation (Req 10.5), in-flight chat disabling (Req 12.3), tool-call state update (Req 12.4), AI degradation/timeout (Req 12.7, 12.8), tool-missing-data prompting (Req 13.5), and export failure (Req 14.7). Unit tests are kept focused — the property tests carry the burden of broad input coverage.
 
 ### Integration Tests
 
-Used for external-service wiring where behavior does not vary meaningfully with input: MapLibre + OpenFreeMap initialization (Req 2.1), Overpass query construction and round-trip with 1?3 representative responses (Req 4.1), and the OpenAI Responses API call path (Req 12.2). These run with mocked or recorded responses to keep them cheap and deterministic.
+Used for external-service wiring where behavior does not vary meaningfully with input: MapLibre + OpenFreeMap initialization (Req 2.1), Overpass query construction and round-trip with 1–3 representative responses (Req 4.1), and the OpenAI Responses API call path (Req 12.2). These run with mocked or recorded responses to keep them cheap and deterministic.
 
 ### Smoke and Configuration Tests
 
@@ -708,4 +708,4 @@ Single-execution checks for one-time setup: stack/build configuration (Req 1.6),
 
 ### Responsive, Accessibility, and PWA Tests
 
-Component/snapshot tests at representative breakpoints (320, 375, 768, 1920) for layout rules (Req 1.1?1.5, 11.2, 16.3), touch-target sizing ? 44?44 CSS px (Req 16.4), PWA installability via a Lighthouse/installability check over HTTPS (Req 16.2), and graceful degradation when PWA install is unsupported (Req 16.5). Full WCAG validation additionally requires manual testing with assistive technologies and expert accessibility review, which is out of scope for automated tests.
+Component/snapshot tests at representative breakpoints (320, 375, 768, 1920) for layout rules (Req 1.1–1.5, 11.2, 16.3), touch-target sizing ≥ 44×44 CSS px (Req 16.4), PWA installability via a Lighthouse/installability check over HTTPS (Req 16.2), and graceful degradation when PWA install is unsupported (Req 16.5). Full WCAG validation additionally requires manual testing with assistive technologies and expert accessibility review, which is out of scope for automated tests.

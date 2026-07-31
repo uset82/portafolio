@@ -1,6 +1,6 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/webdesigner/blob/main/Blender/agents.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# AGENTS.md ? Codex Avatar Studio
+# AGENTS.md — Codex Avatar Studio
 
 ## Source of truth
 

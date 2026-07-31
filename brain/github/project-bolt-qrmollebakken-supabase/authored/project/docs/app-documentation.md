@@ -1,9 +1,9 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/project-bolt-qrmollebakken-supabase/blob/main/project/docs/app-documentation.md; checkedOn: 2026-07-31; redactions: 1 -->
 
-# QR M?llebakken Art Gallery - Documentation
+# QR Møllebakken Art Gallery - Documentation
 
 ## Overview
-QR M?llebakken Art Gallery is a digital platform designed for M?llebakken school that bridges the gap between classroom art activities and parent engagement. The application enables teachers to upload student artwork and allows parents to view their children's creations through secure QR code access.
+QR Møllebakken Art Gallery is a digital platform designed for Møllebakken school that bridges the gap between classroom art activities and parent engagement. The application enables teachers to upload student artwork and allows parents to view their children's creations through secure QR code access.
 
 ## Core Features
 
@@ -93,14 +93,14 @@ QR M?llebakken Art Gallery is a digital platform designed for M?llebakken school
 ### 4. Storage Structure
 ```
 students/
-  ??? [student-name]/
-  ?   ??? images/
-  ?   ?   ??? [timestamp]-[uuid].jpg
-  ?   ?   ??? [timestamp]-[uuid].png
-  ?   ??? videos/
-  ?   ?   ??? [timestamp]-[uuid].mp4
-  ?   ??? audio/
-  ?       ??? [timestamp]-[uuid].mp3
+  ├── [student-name]/
+  │   ├── images/
+  │   │   ├── [timestamp]-[uuid].jpg
+  │   │   ├── [timestamp]-[uuid].png
+  │   ├── videos/
+  │   │   └── [timestamp]-[uuid].mp4
+  │   └── audio/
+  │       └── [timestamp]-[uuid].mp3
 ```
 
 ## Student Management

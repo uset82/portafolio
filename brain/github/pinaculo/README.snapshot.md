@@ -1,68 +1,68 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/pinaculo/blob/main/README.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# ?? NUMEROLOGO - Sistema Avanzado de Numerolog?a del Pin?culo
+# 📿 NUMEROLOGO - Sistema Avanzado de Numerología del Pináculo
 
-Una aplicaci?n web moderna de numerolog?a que implementa el **Sistema Completo del Pin?culo** con 24 posiciones numerol?gicas, c?lculos precisos y an?lisis detallados en espa?ol.
+Una aplicación web moderna de numerología que implementa el **Sistema Completo del Pináculo** con 24 posiciones numerológicas, cálculos precisos y análisis detallados en español.
 
-## ?? Demo en Vivo
+## 🌟 Demo en Vivo
 
-**?? Aplicaci?n Desplegada**: https://pinaculo.netlify.app/
+**🚀 Aplicación Desplegada**: https://pinaculo.netlify.app/
 
-## ? Caracter?sticas Principales
+## ✨ Características Principales
 
-- ?? **Sistema del Pin?culo Completo (24 posiciones)** - Implementaci?n exacta con todas las reglas especiales
-- ???? **Interfaz en Espa?ol** - Dise?ado espec?ficamente para la comunidad hispanohablante
-- ?? **C?lculos Precisos con Reglas Especiales**:
-  - Regla de conversi?n 11?2, 22?4, 33?6 para negativos
-  - Verificaci?n especial para D y H
+- 🎯 **Sistema del Pináculo Completo (24 posiciones)** - Implementación exacta con todas las reglas especiales
+- 🇪🇸 **Interfaz en Español** - Diseñado específicamente para la comunidad hispanohablante
+- 🔢 **Cálculos Precisos con Reglas Especiales**:
+  - Regla de conversión 11→2, 22→4, 33→6 para negativos
+  - Verificación especial para D y H
   - Triplicidad calculada solo de K,L,M,N,O,P,Q,R,S
-  - C?lculo de n?meros ausentes (T)
-- ?? **Dise?o Moderno** - Interfaz responsive con Tailwind CSS
+  - Cálculo de números ausentes (T)
+- 🎨 **Diseño Moderno** - Interfaz responsive con Tailwind CSS
 
 
-## ?? Las 24 Posiciones del Pin?culo
+## 📊 Las 24 Posiciones del Pináculo
 
-### ?? N?meros Base:
+### 🔷 Números Base:
 - **A - TAREA NO APRENDIDA** (Mes)
-- **B - MI ESENCIA** (D?a)
-- **C - MI VIDA PASADA** (A?o)
-- **D - MI M?SCARA** (con regla especial)
+- **B - MI ESENCIA** (Día)
+- **C - MI VIDA PASADA** (Año)
+- **D - MI MÁSCARA** (con regla especial)
 
-### ?? N?meros Superiores:
-- **X - REACCI?N**
-- **Y - MISI?N**
+### 🔷 Números Superiores:
+- **X - REACCIÓN**
+- **Y - MISIÓN**
 - **Z - REGALO DIVINO**
 
-### ?? Ciclos de Vida:
-- **E - 1ERA ETAPA** (Implantaci?n del Programa)
+### 🔷 Ciclos de Vida:
+- **E - 1ERA ETAPA** (Implantación del Programa)
 - **F - 2DA ETAPA** (Encuentro con tu Maestro)
-- **G - 3RA ETAPA** (Re-identificaci?n con tu Yo)
+- **G - 3RA ETAPA** (Re-identificación con tu Yo)
 - **H - 4TA ETAPA** (Tu Destino)
 
-### ?? Aspectos Ocultos:
+### 🔷 Aspectos Ocultos:
 - **I - INCONSCIENTE POSITIVO**
 - **J - MI ESPEJO**
 
-### ?? Aspectos Negativos:
+### 🔷 Aspectos Negativos:
 - **K - ADOLESCENCIA** | **L - JUVENTUD**
 - **M - ADULTEZ** | **N - ADULTO MAYOR**
 - **O - INCONSCIENTE NEGATIVO**
 - **P - MI SOMBRA**
 - **Q, R, S - SERES INFERIORES 1, 2, 3**
 
-### ?? Aspectos Especiales:
-- **W - TRIPLICIDAD** (n?meros que aparecen 3 veces)
-- **T - AUSENTES** (n?meros que no aparecen)
+### 🔷 Aspectos Especiales:
+- **W - TRIPLICIDAD** (números que aparecen 3 veces)
+- **T - AUSENTES** (números que no aparecen)
 
-##  Tecnolog?as
+##  Tecnologías
 
 - **Framework**: Next.js 15 con TypeScript
 - **Estilo**: Tailwind CSS
 - **Testing**: Jest
 
-- **Deploy**: Netlify con exportaci?n est?tica
+- **Deploy**: Netlify con exportación estática
 
-##  Instalaci?n y Uso
+##  Instalación y Uso
 
 ```bash
 # Clonar el repositorio
@@ -75,7 +75,7 @@ npm install
 # Ejecutar en desarrollo
 npm run dev
 
-# Construir para producci?n
+# Construir para producción
 npm run build
 ```
 
@@ -83,33 +83,33 @@ npm run build
 
 ```text
 NUMEROLOGO/
-  MCP/                       # Aplicaci?n Next.js principal
+  MCP/                       # Aplicación Next.js principal
     src/
       app/                  # App Router de Next.js
       components/           # Componentes React
-    package.json            # Dependencias de la aplicaci?n
-    next.config.js          # Configuraci?n de Next.js
-  netlify.toml              # Configuraci?n de Netlify (base=MCP, publish=out)
+    package.json            # Dependencias de la aplicación
+    next.config.js          # Configuración de Next.js
+  netlify.toml              # Configuración de Netlify (base=MCP, publish=out)
   README.md                 # Este archivo
 ```
 
-## ?? Reglas Especiales del Sistema
+## 📏 Reglas Especiales del Sistema
 
-El sistema implementa las reglas exactas del Pin?culo profesional:
+El sistema implementa las reglas exactas del Pináculo profesional:
 
-### ?? Reglas Cr?ticas:
-1. **Conversi?n para Negativos**: Si A, B o C = 11, 22 o 33, se convierten a 2, 4 o 6 SOLO para calcular K, L, N
-2. **Verificaci?n D y H**: Cuando resultan 2, 11, 4 o 22, se aplica regla especial de comprobaci?n
-3. **Triplicidad (W)**: Solo cuenta n?meros de K,L,M,N,O,P,Q,R,S que aparezcan exactamente 3 veces
-4. **Ausentes (T)**: N?meros del 1-9 que no aparecen en ninguna posici?n
+### 🔴 Reglas Críticas:
+1. **Conversión para Negativos**: Si A, B o C = 11, 22 o 33, se convierten a 2, 4 o 6 SOLO para calcular K, L, N
+2. **Verificación D y H**: Cuando resultan 2, 11, 4 o 22, se aplica regla especial de comprobación
+3. **Triplicidad (W)**: Solo cuenta números de K,L,M,N,O,P,Q,R,S que aparezcan exactamente 3 veces
+4. **Ausentes (T)**: Números del 1-9 que no aparecen en ninguna posición
 
-<!-- Secci?n eliminada: mapeos de letras no forman parte de los PDFs de referencia -->
+<!-- Sección eliminada: mapeos de letras no forman parte de los PDFs de referencia -->
 
-### ?? Caracter?sticas:
-- **N?meros Maestros**: 11, 22 y 33 se preservan sin reducir
+### 🟢 Características:
+- **Números Maestros**: 11, 22 y 33 se preservan sin reducir
 - **Valores Absolutos**: K, L, N siempre positivos
-- **C?lculo de M**: Si K?L ? M=|K-L|, Si K=L ? M=K+L
-- **Orden de C?lculo**: Importante para dependencias entre valores
+- **Cálculo de M**: Si K≠L → M=|K-L|, Si K=L → M=K+L
+- **Orden de Cálculo**: Importante para dependencias entre valores
 
 ##  Desarrollo
 
@@ -117,9 +117,9 @@ El sistema implementa las reglas exactas del Pin?culo profesional:
 
 ```bash
 npm run dev          # Servidor de desarrollo
-npm run build        # Construcci?n para producci?n
-npm run start        # Servidor de producci?n
-npm run lint         # Linting del c?digo
+npm run build        # Construcción para producción
+npm run start        # Servidor de producción
+npm run lint         # Linting del código
 npm run test         # Ejecutar tests
 ```
 
@@ -127,19 +127,19 @@ npm run test         # Ejecutar tests
 
 Ingresa tu nombre completo y fecha de nacimiento para obtener:
 
-1. **An?lisis Completo del Pin?culo** (23 n?meros diferentes)
-2. **Interpretaciones Detalladas** en espa?ol
+1. **Análisis Completo del Pináculo** (23 números diferentes)
+2. **Interpretaciones Detalladas** en español
 3. **Ciclos de Vida** personalizados
-4. **N?meros Ausentes** y su significado
+4. **Números Ausentes** y su significado
 
 ##  Contribuciones
 
-Este proyecto implementa el sistema de numerolog?a del Pin?culo con precisi?n profesional. Las contribuciones son bienvenidas.
+Este proyecto implementa el sistema de numerología del Pináculo con precisión profesional. Las contribuciones son bienvenidas.
 
 ##  Licencia
 
-Proyecto de c?digo abierto para la comunidad de numerolog?a en espa?ol.
+Proyecto de código abierto para la comunidad de numerología en español.
 
 ---
 
-**Desarrollado con  para la comunidad hispanohablante de numerolog?a**
+**Desarrollado con  para la comunidad hispanohablante de numerología**

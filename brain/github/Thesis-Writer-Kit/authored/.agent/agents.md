@@ -23,12 +23,12 @@ This is the master workflow containing:
 ## Document Hierarchy
 
 ```
-writing_workflow.md          ? MASTER WORKFLOW (follow this)
-    ?
-    ??? thesis_master.md     ? Data + claims per section
-    ??? sources.md           ? Verified references (APA7)
-    ??? thesis_writing_strategy.md  ? Style rules & Stealth
-    ??? Papers for presentation/   ? Academic sources
+writing_workflow.md          ← MASTER WORKFLOW (follow this)
+    │
+    ├── thesis_master.md     ← Data + claims per section
+    ├── sources.md           ← Verified references (APA7)
+    ├── thesis_writing_strategy.md  ← Style rules & Stealth
+    └── Papers for presentation/   ← Academic sources
 ```
 
 ---
@@ -37,13 +37,13 @@ writing_workflow.md          ? MASTER WORKFLOW (follow this)
 
 | File | Purpose | Priority |
 |------|---------|----------|
-| `.agent/writing_workflow.md` | **PRIMARY** - Complete workflow | ?? MUST FOLLOW |
-| `thesis_master.md` | Section data + claims | ?? Reference |
-| `sources.md` | APA7 citations | ?? Reference |
-| `.agent/thesis_writing_strategy.md` | Writing style & Stealth rules | ?? Reference |
-| `.agent/skills/harper/SKILL.md` | **Grammar checker** | ?? Phase 3 |
-| `.agent/opendraft/` | **Research Engine (Python)** | ?? Backend |
-| `Papers/` | Academic sources | ?? Source material |
+| `.agent/writing_workflow.md` | **PRIMARY** - Complete workflow | 🔴 MUST FOLLOW |
+| `thesis_master.md` | Section data + claims | 🟡 Reference |
+| `sources.md` | APA7 citations | 🟡 Reference |
+| `.agent/thesis_writing_strategy.md` | Writing style & Stealth rules | 🟡 Reference |
+| `.agent/skills/harper/SKILL.md` | **Grammar checker** | 🟡 Phase 3 |
+| `.agent/opendraft/` | **Research Engine (Python)** | 🔵 Backend |
+| `Papers/` | Academic sources | 🟢 Source material |
 
 ---
 

@@ -4,13 +4,13 @@
 
 Status: selected for portfolio development on 2026-07-19.
 
-This is an editorial order, not verification of every repository claim. Tasks 2.6?2.10 must still establish Carlos's contribution, current status, constraints, evidence, rights, and safe media before any project is presented as a finished case study.
+This is an editorial order, not verification of every repository claim. Tasks 2.6–2.10 must still establish Carlos's contribution, current status, constraints, evidence, rights, and safe media before any project is presented as a finished case study.
 
 | Order | Project | Editorial role | Current source boundary |
 | --- | --- | --- | --- |
-| 1 | StrudelAI | Lead with the clearest intersection of music, interaction design, and AI?the portfolio's central cross-disciplinary theme. | The public repository identifies an interactive music/AI system and documents a demo, but availability and claims require task 2.6 verification. |
+| 1 | StrudelAI | Lead with the clearest intersection of music, interaction design, and AI—the portfolio's central cross-disciplinary theme. | The public repository identifies an interactive music/AI system and documents a demo, but availability and claims require task 2.6 verification. |
 | 2 | avatar-studio | Show creative tooling, accessible interaction states, and optional 3D without depending on private likeness assets. | The public repository describes a Codex/VS Code extension and explicitly excludes private Cholita materials; task 2.7 must audit the distributable boundary. |
-| 3 | iFoundYou | Add human-centred product and privacy/security depth. | The repository currently titles itself ?Dommedag? and discusses location and emergency features; task 2.8 must reconcile naming, safety, consent, and live status before publication. |
+| 3 | iFoundYou | Add human-centred product and privacy/security depth. | The repository currently titles itself “Dommedag” and discusses location and emergency features; task 2.8 must reconcile naming, safety, consent, and live status before publication. |
 | 4 | OpenNemoClaw | Demonstrate developer infrastructure, deployment, and sandboxing concerns. | The public repository describes a multi-provider deployment tool; task 2.9 must verify implementation, attribution, security language, and supported status. |
 | 5 | WebDesigner | Close with the design/agent system that explains how Carlos structures creative engineering workflows. | The public repository documents a Codex plugin; task 2.10 must verify Carlos's contribution, installation claims, release status, and project-safe visuals. |
 

@@ -46,7 +46,7 @@ The extension works without an account, cloud upload, Blender, or a dedicated GP
 1. Download `codex-avatar-studio-<version>.vsix` from the [GitHub Releases page](https://github.com/uset82/avatar-studio/releases).
 2. Open VS Code or Cursor.
 3. Open **Extensions**.
-4. Select the Extensions `?` menu and choose **Install from VSIX?**.
+4. Select the Extensions `…` menu and choose **Install from VSIX…**.
 5. Select the downloaded file and reload the IDE if prompted.
 
 VS Code users can also install from a terminal:
@@ -104,17 +104,17 @@ If the panel is not visible, run **Codex Avatar: Toggle Assistant**, followed by
 
 ```text
 IDE commands and activity
-          ?
-          ?
+          │
+          ▼
 VS Code extension host
   validates settings, events, paths, and avatar packages
-          ?
-          ?
+          │
+          ▼
 Secure local Webview
-          ?
-          ??? SVG renderer and built-in fallback
-          ??? PixiJS renderer for compatible packages
-          ??? Lazy Three.js WebGL renderer for validated GLB packages
+          │
+          ├── SVG renderer and built-in fallback
+          ├── PixiJS renderer for compatible packages
+          └── Lazy Three.js WebGL renderer for validated GLB packages
 ```
 
 The extension host owns filesystem access, native file pickers, Blender processes, workspace trust checks, and safe Webview URIs. The Webview only receives validated messages and local assets that belong to the active package.
@@ -164,7 +164,7 @@ Recipients should extract the ZIP and import its package folder. Exporting a pac
 
 ## Optional Blender workflow
 
-End users do not need Blender MCP. The extension?s **Blender Tools** panel can discover Blender, test the executable, and run local exports directly.
+End users do not need Blender MCP. The extension’s **Blender Tools** panel can discover Blender, test the executable, and run local exports directly.
 
 1. Install Blender 3.6 or newer.
 2. Open **Blender Tools** in the assistant.
@@ -199,14 +199,14 @@ Then restart Blender and begin a new Codex task before the first MCP smoke test.
 
 The assistant panel separates everyday behavior from advanced settings:
 
-- **Enabled** ? show or pause the assistant.
-- **Focus mode** ? stop continuous motion while concentrating.
-- **Intensity** ? low, medium, or high motion.
-- **Speech bubble** ? show contextual assistant messages.
-- **Reduced motion** ? respect the operating-system preference.
-- **Runtime** ? SVG, PixiJS, or WebGL.
-- **Frame rate** ? 30 or 60 FPS.
-- **Effects and diagnostics** ? particles, debug overlay, and runtime reporting.
+- **Enabled** — show or pause the assistant.
+- **Focus mode** — stop continuous motion while concentrating.
+- **Intensity** — low, medium, or high motion.
+- **Speech bubble** — show contextual assistant messages.
+- **Reduced motion** — respect the operating-system preference.
+- **Runtime** — SVG, PixiJS, or WebGL.
+- **Frame rate** — 30 or 60 FPS.
+- **Effects and diagnostics** — particles, debug overlay, and runtime reporting.
 
 Avatar and runtime selection are workspace-scoped when a workspace is open. General behavior preferences remain global.
 
@@ -216,18 +216,18 @@ Generated and imported content stays inside the active workspace:
 
 ```text
 .codex-avatar/
-??? avatar-registry.json
-??? avatars/<avatar-id>/
-?   ??? avatar.manifest.json
-?   ??? svg/avatar.svg
-?   ??? webgl/avatar.glb       # optional
-?   ??? preview.png            # optional
-??? cache/
-??? exports/
-??? previews/
+├── avatar-registry.json
+├── avatars/<avatar-id>/
+│   ├── avatar.manifest.json
+│   ├── svg/avatar.svg
+│   ├── webgl/avatar.glb       # optional
+│   └── preview.png            # optional
+├── cache/
+├── exports/
+└── previews/
 ```
 
-`.codex-avatar` content is workspace data and is ignored by this repository. Review an avatar?s author and license before sharing it.
+`.codex-avatar` content is workspace data and is ignored by this repository. Review an avatar’s author and license before sharing it.
 
 ## Privacy and security
 
@@ -249,7 +249,7 @@ See [Security and Privacy](docs/SECURITY_PRIVACY.md) for the full threat model.
 | Avatar is blank or stuck | Run **Codex Avatar: Reload Avatar**. |
 | Import, create, or export is disabled | Open a folder and confirm that the workspace is trusted. |
 | Picture conversion fails | Try a smaller PNG/JPG/JPEG/WebP and review the reported validation message. |
-| Blender is not found | Use **Blender Tools ? Browse** or **Auto-detect**. |
+| Blender is not found | Use **Blender Tools → Browse** or **Auto-detect**. |
 | A GLB cannot load | Validate the package and its SVG fallback; the stage should remain usable in SVG mode. |
 | Motion is too distracting | Enable **Focus mode**, lower intensity, or enable reduced motion. |
 

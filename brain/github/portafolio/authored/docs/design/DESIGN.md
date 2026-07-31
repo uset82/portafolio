@@ -1,6 +1,6 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/portafolio/blob/main/docs/design/DESIGN.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# Submerged Earth Observatory ? implementation design contract
+# Submerged Earth Observatory — implementation design contract
 
 Status: approved for initial implementation  
 Baseline: `docs/design/reference/mainUI-approved.png`  
@@ -10,7 +10,7 @@ Decision record: `docs/decisions/001-portfolio-foundation.md`
 
 Carlos's portfolio is a sunlit instrument-maker's observatory: warm editorial typography and natural materials frame a precise world of AI, electronics, sound, energy, and symbolic systems, with a contemplative ceramic robot as the unmistakable visual signature.
 
-Nightglass contributes its discipline?hierarchy, semantic states, quiet controls, accessibility, and restrained motion?but its dark palette is replaced by Carlos's locked natural palette. Refero is studied for systems thinking only; no brand, component, layout, or copy is cloned.
+Nightglass contributes its discipline—hierarchy, semantic states, quiet controls, accessibility, and restrained motion—but its dark palette is replaced by Carlos's locked natural palette. Refero is studied for systems thinking only; no brand, component, layout, or copy is cloned.
 
 ## Content plan
 
@@ -104,8 +104,8 @@ Color distribution targets: 30% off-white/parchment/linen, 20% buff/sand/pale ta
 - **Display and editorial:** Cormorant Garamond Variable, SIL Open Font License, self-hosted as WOFF2. Fallback: Georgia, `Times New Roman`, serif.
 - **Body and interface:** Manrope Variable, SIL Open Font License, self-hosted as WOFF2. Fallback: Inter, `Segoe UI`, sans-serif.
 - **Technical metadata:** the body stack with tabular numbers; no third family in v1.
-- Display weight 500; body 400; labels/navigation 500?600. Avoid faux bold.
-- Hero: `clamp(3rem, 5.7vw, 6.4rem)` at 0.93 line-height, 2?3 desktop lines; `clamp(2.65rem, 12vw, 4.25rem)` on mobile.
+- Display weight 500; body 400; labels/navigation 500–600. Avoid faux bold.
+- Hero: `clamp(3rem, 5.7vw, 6.4rem)` at 0.93 line-height, 2–3 desktop lines; `clamp(2.65rem, 12vw, 4.25rem)` on mobile.
 - Section title: `clamp(2.2rem, 4vw, 4.5rem)`. Body: `clamp(1rem, 1.1vw, 1.125rem)` at 1.6.
 - Reading width 42rem; hero support copy 35rem; navigation does not wrap on desktop.
 - Fonts preload only required weights/subsets; `font-display: swap`; fallback metrics are tuned to minimize layout shift.
@@ -114,8 +114,8 @@ Color distribution targets: 30% off-white/parchment/linen, 20% buff/sand/pale ta
 
 - Base spacing unit: 4px. Named steps: 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96, 128px.
 - Page gutter: 16px small mobile, 24px large mobile/tablet, 40px laptop, 56px wide desktop.
-- Editorial grid: 12 columns desktop, 8 tablet, 4 mobile. Hero copy spans 4/12; scene spans columns 4?12 with overlap behind the calm field.
-- Header height: 84px desktop, 68px mobile. Interactive targets are at least 44?44px.
+- Editorial grid: 12 columns desktop, 8 tablet, 4 mobile. Hero copy spans 4/12; scene spans columns 4–12 with overlap behind the calm field.
+- Header height: 84px desktop, 68px mobile. Interactive targets are at least 44×44px.
 - Borders: 1px `--color-border-soft`, with engraved 1px inset detail only for artifact metadata.
 - Radii: 2px labels/dividers, 8px controls, 16px chat/large media. Full pills only for actual status.
 - Elevation: prefer occlusion, media crop, and a single soft shadow (`0 20px 55px rgb(46 36 23 / .16)`) over stacked shadows.
@@ -132,7 +132,7 @@ Color distribution targets: 30% off-white/parchment/linen, 20% buff/sand/pale ta
 
 ### Footer
 
-- A quiet two-column close: one contact sentence and verified email/action on the left; routes, copyright, privacy, and optional r?sum? on the right.
+- A quiet two-column close: one contact sentence and verified email/action on the left; routes, copyright, privacy, and optional résumé on the right.
 - On mobile it becomes one reading-order column. No social links appear until verified.
 
 ## Page and route composition
@@ -150,7 +150,7 @@ The first viewport is a poster: identity and promise on the left; observatory vi
 
 ### Case study
 
-Order: title/status ? role/contribution ? concise overview ? problem and constraints ? approach ? visual/demo evidence ? outcome (verified only) ? learning ? stack ? source/demo links ? related work. Unavailable demos and preparation states are explicit. The layout alternates wide media with a 42rem reading column rather than stacking cards.
+Order: title/status → role/contribution → concise overview → problem and constraints → approach → visual/demo evidence → outcome (verified only) → learning → stack → source/demo links → related work. Unavailable demos and preparation states are explicit. The layout alternates wide media with a 42rem reading column rather than stacking cards.
 
 ### Laboratory and media
 
@@ -160,13 +160,13 @@ Order: title/status ? role/contribution ? concise overview ? problem and constra
 
 ### Story and Cosmos
 
-- Story presents biography, experience, skills, education, and r?sum? action in an editorial timeline. On mobile, dates precede entries in reading order; no alternating timeline.
+- Story presents biography, experience, skills, education, and résumé action in an editorial timeline. On mobile, dates precede entries in reading order; no alternating timeline.
 - Cosmos and personal-practice material is curated into short essays/objects. Astrology and numerology are personal/creative exploration, not scientific or medical claims. Trips never expose precise private location or dates.
 
 ### Contact and error states
 
 - V1 defaults to a verified mail link; a server form is added only after recipient, privacy, spam, and retention decisions are approved.
-- 404 uses ?This instrument is not in the observatory? plus Work and Home actions.
+- 404 uses “This instrument is not in the observatory” plus Work and Home actions.
 - Missing case study, unavailable demo, failed embed, offline request, and AI error each explain what happened and provide a next action. A toast is never the sole error location.
 
 ## Component and interaction states
@@ -177,19 +177,19 @@ All interactive elements specify default, hover, focus-visible, active/pressed, 
 
 | Viewport  | Hero                                               | Scene crop                                                           | Navigation                      | Chat                                 | Selected systems               |
 | --------- | -------------------------------------------------- | -------------------------------------------------------------------- | ------------------------------- | ------------------------------------ | ------------------------------ |
-| 320?389   | Single column; copy first; poster below            | Robot hand/water and one artifact; no text baked into essential area | Menu sheet                      | Collapsed button; opens bottom sheet | Vertical editorial list        |
-| 390?639   | Copy occupies top 52?58svh; visual continues below | Robot, water, ASTRAEA edge                                           | Menu sheet                      | Bottom sheet, max 78svh              | Two-up only if labels fit      |
-| 640?1023  | 8-column overlap                                   | Robot centered; Sound Lab/PIN?CULO foreground                        | Compact link row or menu by fit | Right sheet                          | Two columns                    |
-| 1024?1439 | 4/12 copy, 8/12 scene                              | Matches approved image anchors                                       | Full navigation                 | 360?400px panel                      | Three editorial columns        |
+| 320–389   | Single column; copy first; poster below            | Robot hand/water and one artifact; no text baked into essential area | Menu sheet                      | Collapsed button; opens bottom sheet | Vertical editorial list        |
+| 390–639   | Copy occupies top 52–58svh; visual continues below | Robot, water, ASTRAEA edge                                           | Menu sheet                      | Bottom sheet, max 78svh              | Two-up only if labels fit      |
+| 640–1023  | 8-column overlap                                   | Robot centered; Sound Lab/PINÁCULO foreground                        | Compact link row or menu by fit | Right sheet                          | Two columns                    |
+| 1024–1439 | 4/12 copy, 8/12 scene                              | Matches approved image anchors                                       | Full navigation                 | 360–400px panel                      | Three editorial columns        |
 | 1440+     | Copy capped at 580px; scene can bleed              | Approved wide framing; no extra decorative objects                   | Full navigation                 | 400px panel                          | Three columns with wider media |
 
-No horizontal page scroll. At 200% zoom, desktop navigation may switch to the mobile sheet. Touch targets remain 44px. Cropping protects the robot face/hand, ASTRAEA label zone, and the headline calm zone; Sound Lab and PIN?CULO may fall below the fold on narrow screens.
+No horizontal page scroll. At 200% zoom, desktop navigation may switch to the mobile sheet. Touch targets remain 44px. Cropping protects the robot face/hand, ASTRAEA label zone, and the headline calm zone; Sound Lab and PINÁCULO may fall below the fold on narrow screens.
 
 ## Motion system
 
-1. **Assemble:** logo, eyebrow, headline, copy, and actions reveal in reading order over 520ms with ?60ms stagger. The poster/scene resolves from 0.985 scale and 0 opacity over 650ms.
-2. **Focus:** an artifact selection triggers a 600?900ms interruptible camera transition while its DOM label expands over 220ms. Only one system owns camera movement.
-3. **Trace:** project/media links draw a 160ms underline and figures reveal once by ?16px over 420ms. No ambient DOM loop.
+1. **Assemble:** logo, eyebrow, headline, copy, and actions reveal in reading order over 520ms with ≤60ms stagger. The poster/scene resolves from 0.985 scale and 0 opacity over 650ms.
+2. **Focus:** an artifact selection triggers a 600–900ms interruptible camera transition while its DOM label expands over 220ms. Only one system owns camera movement.
+3. **Trace:** project/media links draw a 160ms underline and figures reveal once by ≤16px over 420ms. No ambient DOM loop.
 
 Easing: emphasized `cubic-bezier(.16, 1, .3, 1)` for entrances/camera endpoints; standard `cubic-bezier(.2, .8, .2, 1)` for controls. Reduced motion removes parallax, camera travel, stagger, auto-rotation, water ripples, drone hover, robot tracking, and smooth scrolling. Content appears immediately; artifact selection changes framing via an immediate cut and the same DOM label/focus update.
 
@@ -197,13 +197,13 @@ Easing: emphasized `cubic-bezier(.16, 1, .3, 1)` for entrances/camera endpoints;
 
 | Transition             | Owner                                 | Trigger                  |      Duration | Cancellation               | Reduced motion       | Cost   |
 | ---------------------- | ------------------------------------- | ------------------------ | ------------: | -------------------------- | -------------------- | ------ |
-| Header/hero assemble   | Motion / Animate UI open-code pattern | First render             |     520?650ms | Route change               | Immediate            | Low    |
+| Header/hero assemble   | Motion / Animate UI open-code pattern | First render             |     520–650ms | Route change               | Immediate            | Low    |
 | Button/link feedback   | CSS                                   | Pointer/focus/press      |         160ms | Input ends                 | Immediate            | Low    |
 | Mobile menu/chat sheet | Motion                                | Activate                 |         220ms | Escape/reverse             | Immediate            | Low    |
 | Section/figure reveal  | Motion                                | First intersection       |         420ms | Unmount                    | Immediate            | Low    |
-| Scene camera focus     | R3F                                   | Artifact action          |     600?900ms | New input cancels          | Camera cut           | Medium |
+| Scene camera focus     | R3F                                   | Artifact action          |     600–900ms | New input cancels          | Camera cut           | Medium |
 | Robot/drone idle       | R3F animation mixer/procedural        | Scene ready + visible    |     Slow loop | Pause/hidden/input         | Frozen authored pose | Medium |
-| Water ripples          | R3F shader                            | Pointer/touch/robot hand |   ?1.2s decay | New impulse/quality change | Static normal map    | High   |
+| Water ripples          | R3F shader                            | Pointer/touch/robot hand |   ≤1.2s decay | New impulse/quality change | Static normal map    | High   |
 | Chat streaming cursor  | CSS                                   | Server stream            | 480ms cadence | Complete/stop              | Static progress text | Low    |
 
 ## Accessibility and fallback rules
@@ -223,4 +223,4 @@ Easing: emphasized `cubic-bezier(.16, 1, .3, 1)` for entrances/camera endpoints;
 - Verify keyboard-only completion, visible focus, menu/chat focus return, 44px targets, heading order, accessible names, and 200% zoom.
 - Verify normal and reduced motion, muted audio, Save-Data/static fallback, no-JavaScript content, WebGL failure, image failure, chat error/rate limit, and unavailable demo states.
 - Check contrast over both solid and translucent scene surfaces. Check no blue/cyan/violet palette drift.
-- Performance targets: poster ?350KB desktop / ?180KB mobile, initial JS ?180KB gzip excluding optional 3D, total initial transfer ?1.2MB, LCP ?2.5s on representative mobile, CLS ?0.1, INP ?200ms; full 3D lazy-loads after semantic UI.
+- Performance targets: poster ≤350KB desktop / ≤180KB mobile, initial JS ≤180KB gzip excluding optional 3D, total initial transfer ≤1.2MB, LCP ≤2.5s on representative mobile, CLS ≤0.1, INP ≤200ms; full 3D lazy-loads after semantic UI.

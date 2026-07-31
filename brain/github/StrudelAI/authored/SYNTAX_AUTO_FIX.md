@@ -104,12 +104,12 @@ The user re-enabled `.scale()` in the system prompt, so we removed it from the f
 
 **Before:**
 ```typescript
-.replace(/\.scale\([^)]*\)/g, '')  // ? Was removing .scale()
+.replace(/\.scale\([^)]*\)/g, '')  // ❌ Was removing .scale()
 ```
 
 **After:**
 ```typescript
-// .scale() is now allowed! ?
+// .scale() is now allowed! ✅
 ```
 
 **Added cleaning for:**
@@ -136,7 +136,7 @@ stack(
 }
 ```
 
-**Result:** ? Code evaluates successfully
+**Result:** ✅ Code evaluates successfully
 
 ### Example 2: Trailing Comma
 
@@ -156,7 +156,7 @@ stack(
 )
 ```
 
-**Result:** ? Code evaluates successfully
+**Result:** ✅ Code evaluates successfully
 
 ### Example 3: Malformed Mini-Notation
 
@@ -170,7 +170,7 @@ note(m("c3 ~ c3 ~]")).s("square")
 note(m("c3 ~ c3 ~")).s("square")
 ```
 
-**Result:** ? Code evaluates successfully
+**Result:** ✅ Code evaluates successfully
 
 ## Console Logs
 
@@ -203,15 +203,15 @@ note(m("c3 ~ c3 ~")).s("square")
 
 ```
 User Code
-    ?
+    ↓
 buildEvalCode()
-    ?
-fixCommonSyntaxIssues() ? Auto-fix
-    ?
-validateSyntax() ? Check if valid
-    ?
-    ?? Valid ? evalStrudelCode() ? Music plays ?
-    ?? Invalid ? Show error message ?
+    ↓
+fixCommonSyntaxIssues() ← Auto-fix
+    ↓
+validateSyntax() ← Check if valid
+    ↓
+    ├─ Valid → evalStrudelCode() → Music plays ✅
+    └─ Invalid → Show error message ❌
 ```
 
 ## Benefits
@@ -241,9 +241,9 @@ stack(note(m("c3 ~ c3 ~")).s("square"))}}
 ```
 
 **Expected:**
-- ? Auto-fixed to single `}`
-- ? Code evaluates
-- ? Music plays
+- ✅ Auto-fixed to single `}`
+- ✅ Code evaluates
+- ✅ Music plays
 
 ### Test 2: Trailing Comma
 
@@ -255,9 +255,9 @@ stack(
 ```
 
 **Expected:**
-- ? Comma removed
-- ? Code evaluates
-- ? Music plays
+- ✅ Comma removed
+- ✅ Code evaluates
+- ✅ Music plays
 
 ### Test 3: Malformed Mini-Notation
 
@@ -267,24 +267,24 @@ note(m("c3 ~ c3 ~]")).s("square")
 ```
 
 **Expected:**
-- ? Extra `]` removed
-- ? Code evaluates
-- ? Music plays
+- ✅ Extra `]` removed
+- ✅ Code evaluates
+- ✅ Music plays
 
 ## Limitations
 
 ### What It CAN Fix
 
-? Duplicate closing brackets (`}}`, `))`, `]]`)
-? Trailing commas (`,)`, `,]`)
-? Extra `]` in mini-notation strings
+✅ Duplicate closing brackets (`}}`, `))`, `]]`)
+✅ Trailing commas (`,)`, `,]`)
+✅ Extra `]` in mini-notation strings
 
 ### What It CANNOT Fix
 
-? Missing opening brackets
-? Mismatched bracket types (`(]`, `{)`)
-? Invalid JavaScript syntax
-? Strudel-specific errors (invalid methods, etc.)
+❌ Missing opening brackets
+❌ Mismatched bracket types (`(]`, `{)`)
+❌ Invalid JavaScript syntax
+❌ Strudel-specific errors (invalid methods, etc.)
 
 ## Future Improvements
 
@@ -314,9 +314,9 @@ fixed = fixed.replace(/s\("sn"\)/g, 'note(m("c4")).s("square")');
 
 ## Files Modified
 
-1. ? `src/components/StrudelCodeView.tsx` - Lines 71-88: fixCommonSyntaxIssues
-2. ? `src/components/StrudelCodeView.tsx` - Lines 126-144: Apply fixes
-3. ? `src/app/api/agent/route.ts` - Lines 202-218: Updated cleaning
+1. ✅ `src/components/StrudelCodeView.tsx` - Lines 71-88: fixCommonSyntaxIssues
+2. ✅ `src/components/StrudelCodeView.tsx` - Lines 126-144: Apply fixes
+3. ✅ `src/app/api/agent/route.ts` - Lines 202-218: Updated cleaning
 
 ## Verification Checklist
 
@@ -329,9 +329,9 @@ fixed = fixed.replace(/s\("sn"\)/g, 'note(m("c4")).s("square")');
 
 ## Summary
 
-? **Added:** Automatic syntax error fixing
-? **Fixed:** Duplicate brackets, trailing commas, malformed mini-notation
-? **Improved:** Error handling and logging
-? **Updated:** Allowed methods (.scale() now supported)
+✅ **Added:** Automatic syntax error fixing
+✅ **Fixed:** Duplicate brackets, trailing commas, malformed mini-notation
+✅ **Improved:** Error handling and logging
+✅ **Updated:** Allowed methods (.scale() now supported)
 
 The code editor now automatically fixes common syntax errors before evaluation, making it more forgiving and user-friendly!

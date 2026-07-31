@@ -22,7 +22,7 @@ export interface AvatarRuntimeAdapter {
 }
 ```
 
-`initialize` owns renderer setup and local asset loading. It must reject on unsupported hardware or invalid assets, and it must leave no live canvas after `dispose`. `setVisible(false)` must pause continuous work. `resize` must clamp dimensions and device pixel ratio. `setSpeechLevel` accepts a normalized 0?1 signal. Adapter methods should be safe before initialization and after disposal.
+`initialize` owns renderer setup and local asset loading. It must reject on unsupported hardware or invalid assets, and it must leave no live canvas after `dispose`. `setVisible(false)` must pause continuous work. `resize` must clamp dimensions and device pixel ratio. `setSpeechLevel` accepts a normalized 0–1 signal. Adapter methods should be safe before initialization and after disposal.
 
 ## Minimal adapter skeleton
 

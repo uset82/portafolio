@@ -1,6 +1,6 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/avatar-studio/blob/main/docs/GITHUB_PROJECT_SETUP.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# GitHub Project Setup ? Codex Avatar Studio
+# GitHub Project Setup — Codex Avatar Studio
 
 ## Purpose
 
@@ -9,7 +9,7 @@ Create a GitHub Project that lets Codex and the user implement the assistant pha
 ## Recommended project
 
 ```txt
-Title: Codex Avatar Studio ? IDE VTuber-lite Assistant
+Title: Codex Avatar Studio — IDE VTuber-lite Assistant
 Owner: @me or repository owner
 Repository: OWNER/REPO
 ```
@@ -41,13 +41,13 @@ Use `scripts/github/github-labels.json` as source of truth.
 
 ## Milestones
 
-- [ ] M0 ? GitHub + Codex operating system
-- [ ] M1 ? MVP IDE extension shell
-- [ ] M2 ? SVG fallback + Rive runtime
-- [ ] M3 ? Asset conversion pipeline
-- [ ] M4 ? Blender + WebGL/WebGPU pipeline
-- [ ] M5 ? Live2D optional VTuber-lite adapter
-- [ ] M6 ? Settings, QA, packaging
+- [ ] M0 — GitHub + Codex operating system
+- [ ] M1 — MVP IDE extension shell
+- [ ] M2 — SVG fallback + Rive runtime
+- [ ] M3 — Asset conversion pipeline
+- [ ] M4 — Blender + WebGL/WebGPU pipeline
+- [ ] M5 — Live2D optional VTuber-lite adapter
+- [ ] M6 — Settings, QA, packaging
 
 ## Initial issues
 
@@ -58,7 +58,7 @@ Use `scripts/github/github-issues.json` as source of truth.
 ```bash
 export OWNER="uset82"
 export REPO="your-repo-name"
-export PROJECT_TITLE="Codex Avatar Studio ? IDE VTuber-lite Assistant"
+export PROJECT_TITLE="Codex Avatar Studio — IDE VTuber-lite Assistant"
 
 bash scripts/github/create-codex-avatar-project.sh
 ```

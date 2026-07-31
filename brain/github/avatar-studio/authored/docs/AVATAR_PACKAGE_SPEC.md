@@ -21,9 +21,9 @@ All entrypoints, assets, preview images, and checksum keys must be local relativ
 
 ```text
 my-orb/
-??? avatar.manifest.json
-??? svg/avatar.svg
-??? pixi/avatar-spritesheet.json
+├── avatar.manifest.json
+├── svg/avatar.svg
+└── pixi/avatar-spritesheet.json
 ```
 
 ```json

@@ -1,14 +1,14 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/portafolio/blob/main/docs/artifacts/observatory-pinaculo-diagnostics.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# Observatory PIN?CULO diagnostics
+# Observatory PINÁCULO diagnostics
 
 Date: 2026-07-24  
-Tasks: 5.28 PIN?CULO artifact and 5.35 immersive homepage MVP gate  
+Tasks: 5.28 PINÁCULO artifact and 5.35 immersive homepage MVP gate  
 Status: opt-in runtime mechanism contract complete; rendered browser evidence pending
 
 ## Purpose
 
-PIN?CULO already owns one bounded carrier-and-latch response, but the unified Observatory report could not prove that the carrier retained 24 positions, advanced exactly one position, or settled its latch. The optional facade now reads the same progress and pose refs used by the real `applyPose()` owner.
+PINÁCULO already owns one bounded carrier-and-latch response, but the unified Observatory report could not prove that the carrier retained 24 positions, advanced exactly one position, or settled its latch. The optional facade now reads the same progress and pose refs used by the real `applyPose()` owner.
 
 ## Snapshot contract
 
@@ -16,7 +16,7 @@ PIN?CULO already owns one bounded carrier-and-latch response, but the unified Ob
 
 - Full, Reduced, or Poster presentation and settled, animating, paused, reduced, or poster phase;
 - current selection, normalized progress, and the mechanism's actual zero-or-one target;
-- the 24-position contract and exact `2? / 24` one-position angle;
+- the 24-position contract and exact `2π / 24` one-position angle;
 - current and target position offsets;
 - last-applied and target carrier rotation plus latch lift;
 - progress, carrier-angle, and latch-height errors with an explicit settled verdict.
@@ -25,13 +25,13 @@ Full and Reduced settled evidence permits at most `0.001` progress error, `0.001
 
 ## Unified MVP behavior
 
-The unified Observatory source order is now renderer, camera, robot, ASTRAEA, PIN?CULO, Sound Lab, Future Energy, Electronics / AI, drone, and water. Missing PIN?CULO ownership yields `pinaculo-unavailable` and makes interactive evidence ineligible.
+The unified Observatory source order is now renderer, camera, robot, ASTRAEA, PINÁCULO, Sound Lab, Future Energy, Electronics / AI, drone, and water. Missing PINÁCULO ownership yields `pinaculo-unavailable` and makes interactive evidence ineligible.
 
 The MVP assessor additionally rejects:
 
 - the wrong Full/Reduced tier, animation state, or phase for the scenario;
 - selection, target progress, or target position that disagrees with the captured scenario;
-- a position count other than 24 or a one-position angle other than `2? / 24`;
+- a position count other than 24 or a one-position angle other than `2π / 24`;
 - missing/non-finite applied pose or a current position offset that has not reached its target;
 - missing, unsettled, or out-of-tolerance carrier/latch alignment.
 
@@ -47,6 +47,6 @@ The final scenario snapshot is expected to be settled after the reversible focus
 
 ## Verification
 
-Two PIN?CULO diagnostics contracts cover exact rest/one-position settlement and transition, pause, Reduced, Poster, and malformed states. Strengthened unified and MVP-gate contracts require PIN?CULO and reject invalid evidence. `pnpm verify` passes formatting, zero-warning lint, strict TypeScript, all 216 tests, content/palette/server/asset gates, the 13-route production build, and the immersive scan over 12 manifest assets, zero public GLBs, 26 client files, and one semantic poster fallback.
+Two PINÁCULO diagnostics contracts cover exact rest/one-position settlement and transition, pause, Reduced, Poster, and malformed states. Strengthened unified and MVP-gate contracts require PINÁCULO and reject invalid evidence. `pnpm verify` passes formatting, zero-warning lint, strict TypeScript, all 216 tests, content/palette/server/asset gates, the 13-route production build, and the immersive scan over 12 manifest assets, zero public GLBs, 26 client files, and one semantic poster fallback.
 
 Task 5.28 remains unchecked because live desktop/mobile appearance, selection, framing, and overlap still require separately authorized rendered inspection. Task 5.35 still requires real scenario evidence plus a rights-cleared production robot.

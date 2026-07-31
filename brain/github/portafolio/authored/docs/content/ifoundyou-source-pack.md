@@ -1,6 +1,6 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/portafolio/blob/main/docs/content/ifoundyou-source-pack.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# iFoundYou / Dommedag ? case-study source pack
+# iFoundYou / Dommedag — case-study source pack
 
 Reviewed 2026-07-19 from the public repository, current source tree, Supabase schema and policies, Web/Native implementations, continuity ledger, deployment configuration, commit metadata, and media paths. This pack intentionally separates implemented prototype code from safety claims and future intent.
 
@@ -8,20 +8,20 @@ Reviewed 2026-07-19 from the public repository, current source tree, Supabase sc
 
 - **Canonical repository:** <https://github.com/uset82/iFoundYou>
 - **Repository name:** iFoundYou
-- **README and Web title:** Dommedag / Dommedag ? Mesh Guardian
-- **PWA manifest name:** iFoundYou ? Mesh Guardian
+- **README and Web title:** Dommedag / Dommedag — Mesh Guardian
+- **PWA manifest name:** iFoundYou — Mesh Guardian
 - **Portfolio status:** experimental location/community and off-grid communication prototype
 - **Public release:** none
 - **Canonical live demo:** none recorded in repository metadata or current documentation
 - **License:** none present or detected
 
-The product name is unresolved. Use **?iFoundYou / Dommedag prototype?** until Carlos approves one public name.
+The product name is unresolved. Use **“iFoundYou / Dommedag prototype”** until Carlos approves one public name.
 
 ## Contribution evidence
 
 The public repository belongs to Carlos's confirmed GitHub account, `uset82`, and all 47 visible commits are linked to that account.
 
-Safe wording: **?Carlos maintains the public iFoundYou repository and is the documented GitHub contributor to the current prototype.?**
+Safe wording: **“Carlos maintains the public iFoundYou repository and is the documented GitHub contributor to the current prototype.”**
 
 This evidence does not establish sole authorship, production ownership, or the provenance of research documents and media.
 
@@ -49,7 +49,7 @@ The source contains meaningful privacy controls:
 - the UI exposes a discovery toggle and a stop-sharing action;
 - location and alert writes require an authenticated user.
 
-However, the current implementation does **not** support a strong ?explicit opt-in location sharing? claim:
+However, the current implementation does **not** support a strong “explicit opt-in location sharing” claim:
 
 - after a user session exists, the Web app automatically calls the sharing flow unless permission was denied;
 - when browser permission is already granted, exact coordinates can resume without a separate in-app confirmation;
@@ -70,9 +70,9 @@ These are experimental communication features. Do not imply affiliation with eme
 
 The repository contains real Web Meshtastic transport code and a React Native scaffold with iOS Multipeer and Android Wi-Fi Direct modules. The native Home screen simultaneously labels BLE discovery and a store-and-forward queue as the **next milestone**.
 
-Safe status: **?The prototype explores Web Meshtastic and native peer-to-peer transport paths.?**
+Safe status: **“The prototype explores Web Meshtastic and native peer-to-peer transport paths.”**
 
-Blocked wording: ?works without internet,? ?catastrophe-ready,? ?reliable mesh,? ?offline emergency calling,? or any claim of field-tested delivery.
+Blocked wording: “works without internet,” “catastrophe-ready,” “reliable mesh,” “offline emergency calling,” or any claim of field-tested delivery.
 
 ## Privileged Wi-Fi companion boundary
 
@@ -98,7 +98,7 @@ Treat this as a high-risk local experiment. Do not advertise, demo, deploy, or r
 - The continuity ledger records past local build/deployment experiments and unresolved UI/backend issues, but no canonical live URL is currently documented.
 - No verified users, installations, field tests, uptime, delivery, accessibility, privacy, security, or emergency-response outcomes are available.
 
-The defensible outcome is a broad public prototype and research/code exploration?not a shipped safety product.
+The defensible outcome is a broad public prototype and research/code exploration—not a shipped safety product.
 
 ## Visuals and rights
 

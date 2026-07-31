@@ -65,10 +65,10 @@ The build configuration lives in `platformio.ini`. Key include paths (`./Inc`) a
 
 ## Project Structure
 
-- `Src/main.c` ? Core application logic, piano scan loop, recorder, and playback
-- `Inc/main.h` ? HAL includes and board pin definitions
-- `Drivers/` ? STM32 HAL and CMSIS dependencies provided by STM32CubeMX
-- `STM32CubeIDE/` ? Original CubeIDE project files (reference only; PlatformIO build uses the root sources)
+- `Src/main.c` – Core application logic, piano scan loop, recorder, and playback
+- `Inc/main.h` – HAL includes and board pin definitions
+- `Drivers/` – STM32 HAL and CMSIS dependencies provided by STM32CubeMX
+- `STM32CubeIDE/` – Original CubeIDE project files (reference only; PlatformIO build uses the root sources)
 
 ## Testing and Future Work
 

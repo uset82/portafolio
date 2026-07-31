@@ -25,7 +25,7 @@ The screenshot is a composition target and poster fallback, not the finished pag
 - Identity and editorial copy occupy the calm left third.
 - The observatory visual plane begins behind the middle third and owns the right side.
 - The robot is the dominant subject, centered slightly right and touching the water.
-- ASTRAEA anchors the far right; Sound Lab and PIN?CULO anchor the lower foreground.
+- ASTRAEA anchors the far right; Sound Lab and PINÁCULO anchor the lower foreground.
 - The energy and electronics modules sit behind the robot without obscuring its silhouette.
 - CC AI occupies the lower-right safe zone and must cover, not duplicate, the poster's reference panel.
 - Selected Systems forms the transition out of the first viewport.

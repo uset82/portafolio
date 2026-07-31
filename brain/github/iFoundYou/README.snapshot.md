@@ -14,7 +14,7 @@ community alerts (water, food, medical, shelter, lost person).
 - Proximity alerts + notification feed.
 - Emergency broadcast to people nearby (community alerts).
 - **PWA (Progressive Web App)** support for offline caching and native app installation.
-- Supabase Auth (email/password + Google OAuth) ? unified into a single login flow.
+- Supabase Auth (email/password + Google OAuth) — unified into a single login flow.
 - WiFi scanner and connection tool (via local companion server).
 - MAC address spoofing and connected device discovery (for emergency/privacy use).
 

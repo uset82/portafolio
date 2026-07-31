@@ -55,7 +55,7 @@ For GLB/WebGL work:
 
 Select **Export Scene** in Blender Tools (or run `Codex Avatar: Export Blender Scene`), choose a local `.blend`, and choose SVG line art, GLB, or PNG preview. The extension checks Blender identity before starting and shows a readable error when it is unavailable.
 
-Every process uses an argument array with `shell: false`, `--disable-autoexec`, bounded prefixed stdout/stderr, a configurable 10?600 second timeout, cancellation, and process-tree cleanup. Only one Blender export job runs at a time. Input scenes and packaged Python scripts are checked as regular local files and may not escape their trusted roots through symlinks.
+Every process uses an argument array with `shell: false`, `--disable-autoexec`, bounded prefixed stdout/stderr, a configurable 10–600 second timeout, cancellation, and process-tree cleanup. Only one Blender export job runs at a time. Input scenes and packaged Python scripts are checked as regular local files and may not escape their trusted roots through symlinks.
 
 Each job writes first to `.codex-avatar/cache/jobs/blender-<job-id>/`. Every mode is run, validated, and published independently, so a valid GLB or PNG is retained if SVG is unavailable. SVG is sanitized and optimized through the shared local pipeline; GLB headers/version/chunks/size, PNG signature/dimensions/size, and portable report fields are validated before collision-safe publication. Failure, cancellation, timeout, validation error, or a late filename collision removes that mode's staged files and never overwrites the source scene.
 

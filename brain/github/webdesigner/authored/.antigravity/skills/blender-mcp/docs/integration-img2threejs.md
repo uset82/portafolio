@@ -4,7 +4,7 @@
 
 This document describes the handoff patterns between Blender MCP scene creation and the img2threejs procedural Three.js pipeline.
 
-For the Codex / GPT product narrative (describe ? build ? screenshot ? fix ? export), see [codex-gpt-blender-mcp.md](./codex-gpt-blender-mcp.md).
+For the Codex / GPT product narrative (describe → build → screenshot → fix → export), see [codex-gpt-blender-mcp.md](./codex-gpt-blender-mcp.md).
 
 ## Overview
 
@@ -20,7 +20,7 @@ Blender MCP and img2threejs serve complementary roles:
 
 ## Integration Patterns
 
-### Pattern 1: Blender Render ? img2threejs Reference
+### Pattern 1: Blender Render → img2threejs Reference
 
 Use Blender MCP to create a high-quality reference render, then feed it to img2threejs for procedural code generation.
 
@@ -43,7 +43,7 @@ Use Blender MCP to create a high-quality reference render, then feed it to img2t
 }
 ```
 
-### Pattern 2: Blender GLB ? Three.js Wrapper
+### Pattern 2: Blender GLB → Three.js Wrapper
 
 Export GLB from Blender, then generate a Three.js loader wrapper with img2threejs-style runtime hooks.
 
@@ -75,10 +75,10 @@ Use Blender MCP for hero objects and img2threejs for procedural details.
 ### Blender MCP Outputs
 ```
 .codex-avatar/exports/blender/
-??? scene.render.png          # Reference for img2threejs
-??? scene.webgl.glb           # For direct Three.js loading
-??? scene.preview.png         # Thumbnail
-??? scene.export-report.json  # Metadata
+├── scene.render.png          # Reference for img2threejs
+├── scene.webgl.glb           # For direct Three.js loading
+├── scene.preview.png         # Thumbnail
+└── scene.export-report.json  # Metadata
 ```
 
 ### img2threejs Inputs

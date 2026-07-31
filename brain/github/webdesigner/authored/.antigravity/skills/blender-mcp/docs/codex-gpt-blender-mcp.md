@@ -17,7 +17,7 @@ In this project that path is not a one-off chat trick. It is the `blender-mcp` s
 - Bound to a restricted Blender MCP server on `localhost:9876`
 - Expected to emit `blender-scene-spec`, `blender-render`, `blender-review-log`, and optional `exported-asset` entries into the `ArtifactManifest`
 
-WebDesigner stays capability-first: roles are not hard-bound to a single vendor forever. For this skill, GPT-class models with strong coding, vision, and tool use are the practical default ? the same class of agent already used for long-running IDE work under Codex.
+WebDesigner stays capability-first: roles are not hard-bound to a single vendor forever. For this skill, GPT-class models with strong coding, vision, and tool use are the practical default — the same class of agent already used for long-running IDE work under Codex.
 
 For most people, the wall in front of 3D was never imagination. It was Blender itself: the shortcuts, node graphs, modifiers, coordinate systems and several hundred controls standing between a clear idea in your head and an object that does not look like it was assembled during an evacuation.
 
@@ -27,9 +27,9 @@ Codex does not remove the craft of 3D work, but it changes when that craft becom
 
 ## What the bridge actually does
 
-Blender MCP is built from two main pieces: an addon running inside Blender and an MCP server that passes the model?s tool calls into the application through a socket connection.
+Blender MCP is built from two main pieces: an addon running inside Blender and an MCP server that passes the model’s tool calls into the application through a socket connection.
 
-WebDesigner?s configuration is deliberately narrower than a free-for-all creative plugin:
+WebDesigner’s configuration is deliberately narrower than a free-for-all creative plugin:
 
 | Piece | Project default |
 |-------|-----------------|
@@ -38,10 +38,10 @@ WebDesigner?s configuration is deliberately narrower than a free-for-all creativ
 | Transport | `stdio` via `uvx blender-mcp` (pinned addon / setup under `Blender/scripts/`) |
 | Inspection tools | `get_scene_info`, `get_object_info`, `get_screenshot` (no approval) |
 | Mutation tool | `execute_blender_code` (**requires approval**) |
-| Remote asset / gen | Poly Haven, Sketchfab, Hyper3D, Hunyuan, telemetry ? **disabled** |
+| Remote asset / gen | Poly Haven, Sketchfab, Hyper3D, Hunyuan, telemetry — **disabled** |
 | Exports | `.codex-avatar/exports/blender/` or the generated workspace asset directory |
 
-Once connected, Codex can create, modify and delete objects, inspect the scene, apply materials, move cameras and lights, and run Python against Blender?s `bpy` API ? but only through that allowlist.
+Once connected, Codex can create, modify and delete objects, inspect the scene, apply materials, move cameras and lights, and run Python against Blender’s `bpy` API — but only through that allowlist.
 
 The important capability is not object creation by itself.
 
@@ -49,7 +49,7 @@ The important capability is that Blender MCP can return **screenshots of the vie
 
 That feedback loop is what separates this from asking Codex to write a Blender script.
 
-A script can create technically valid geometry while producing an awful image. It can place a camera inside the product, point the lights at the wall and finish successfully because the code ran without errors. Once Codex can see the render, the success condition changes from ?the command executed? to ?the result resembles what the user described.?
+A script can create technically valid geometry while producing an awful image. It can place a camera inside the product, point the lights at the wall and finish successfully because the code ran without errors. Once Codex can see the render, the success condition changes from “the command executed” to “the result resembles what the user described.”
 
 The workflow becomes simple enough to explain in one sentence:
 
@@ -65,7 +65,7 @@ Game characters dominate demos because they are immediately recognizable. For We
 
 Describe a speaker, perfume bottle, watch or fictional device. Ask Codex to create the main geometry, apply materials, build a studio-lighting setup and frame several camera angles. After the first capture, request targeted revisions: more transparent casing, less edge distortion, reflection moved off the logo, darker grade for a website header.
 
-Those are ordinary client revisions ? except Codex edits the **existing** Blender scene instead of regenerating a completely different image and hoping the product remains recognizable.
+Those are ordinary client revisions — except Codex edits the **existing** Blender scene instead of regenerating a completely different image and hoping the product remains recognizable.
 
 ### Interior concepts
 
@@ -73,11 +73,11 @@ Block out a room, place furniture, establish materials, choose an initial sun an
 
 ### Motion design
 
-Procedural forms, extruded typography, animated arrays, abstract tunnels, geometric loops, floating chrome for a landing page that needs to look over-budget. These scenes are often systems of parameters rather than hand-sculpted objects ? a good fit for an agent that writes Python, drives modifiers and inspects frames.
+Procedural forms, extruded typography, animated arrays, abstract tunnels, geometric loops, floating chrome for a landing page that needs to look over-budget. These scenes are often systems of parameters rather than hand-sculpted objects — a good fit for an agent that writes Python, drives modifiers and inspects frames.
 
 ### Simple functional objects
 
-A phone stand, enclosure, clip or mounting bracket from dimensions becomes an editable mesh quickly. This is also where ?looks correct? and ?is correct? diverge. A convincing render is not proof that the holes line up.
+A phone stand, enclosure, clip or mounting bracket from dimensions becomes an editable mesh quickly. This is also where “looks correct” and “is correct” diverge. A convincing render is not proof that the holes line up.
 
 ### WebDesigner end-to-end
 
@@ -85,15 +85,15 @@ The happy path is often:
 
 ```text
 User brief
-  ? plan / stack (requiresBlenderMCP or integrations: blender-mcp)
-  ? design + build via blender-mcp skill
-  ? build ? screenshot ? inspect ? fix loop
-  ? export GLB / PNG
-  ? generated SPA or Next.js workspace
-  ? optional img2threejs handoff for interactive Three.js code
+  → plan / stack (requiresBlenderMCP or integrations: blender-mcp)
+  → design + build via blender-mcp skill
+  → build → screenshot → inspect → fix loop
+  → export GLB / PNG
+  → generated SPA or Next.js workspace
+  → optional img2threejs handoff for interactive Three.js code
 ```
 
-The control plane stays separate from the deployable app. Blender is an optional production tool ? not a hard dependency of the scaffolded site or the Codex Avatar Studio extension fallbacks.
+The control plane stays separate from the deployable app. Blender is an optional production tool — not a hard dependency of the scaffolded site or the Codex Avatar Studio extension fallbacks.
 
 Related: [Blender MCP + img2threejs Integration](./integration-img2threejs.md).
 
@@ -105,14 +105,14 @@ The worst way to use Codex inside Blender is to request a complete cinematic com
 
 That usually produces an enormous first attempt, which is not quite the same thing.
 
-A better session follows the skill?s staged process:
+A better session follows the skill’s staged process:
 
-1. **Connection** ? `get_scene_info` must succeed
-2. **Composition** ? main objects, camera, basic layout
-3. **Materials** ? initial Principled-style assignments
-4. **Lighting** ? studio or environment rig
-5. **Refinement** ? screenshot-driven corrections (cap iterations)
-6. **Export** ? GLB / PNG (+ optional `.blend` copy), never overwrite the user?s only source scene
+1. **Connection** — `get_scene_info` must succeed
+2. **Composition** — main objects, camera, basic layout
+3. **Materials** — initial Principled-style assignments
+4. **Lighting** — studio or environment rig
+5. **Refinement** — screenshot-driven corrections (cap iterations)
+6. **Export** — GLB / PNG (+ optional `.blend` copy), never overwrite the user’s only source scene
 
 Example brief (matches the project scenario):
 
@@ -120,7 +120,7 @@ Example brief (matches the project scenario):
 
 Codex can create the basic body, screen, controls and internal pieces, assign initial materials, position the camera and establish a lighting rig. It then captures the viewport and evaluates what is visible.
 
-Under the prompt, Codex is mostly writing Python against Blender?s API:
+Under the prompt, Codex is mostly writing Python against Blender’s API:
 
 ```python
 import bpy
@@ -134,11 +134,11 @@ bpy.context.scene.camera = bpy.context.object
 
 The script itself is basic. The useful part begins after `get_screenshot`, when the model inspects the image, adjusts camera, lighting or materials, and runs again.
 
-**Build ? render ? inspect ? fix.**
+**Build → render → inspect → fix.**
 
 The first result might be recognizably correct while still having several obvious problems: transparent casing hiding internals, wide lens making the console look thick, a hot reflection across the screen.
 
-Those become specific scene changes ? transmission and roughness, separated lighting for shell vs internals, longer focal length, camera backed off, softened key light ? then another capture.
+Those become specific scene changes — transmission and roughness, separated lighting for shell vs internals, longer focal length, camera backed off, softened key light — then another capture.
 
 This is the same maker-and-checker pattern that made coding agents more useful than one-shot generators, except the feedback is visual rather than a test suite. WebDesigner records the loop as artifacts so a later Builder or Reviewer stage can continue without guessing what happened in Blender.
 
@@ -157,7 +157,7 @@ The model does not need the perfect scene on the first attempt. It needs access 
 
 ---
 
-## What ?fixes itself? actually means
+## What “fixes itself” actually means
 
 The headline makes self-correction sound more magical than it is.
 
@@ -165,18 +165,18 @@ Codex is not developing artistic taste while staring at the render. It is identi
 
 This works reasonably well when the mistake points toward a concrete action:
 
-- Object outside the frame ? move or reframe the camera
-- Intersecting geometry ? change position or scale
-- Clipped highlights ? reduce light energy or change angle
-- Missing material ? verify assignment and slots
+- Object outside the frame → move or reframe the camera
+- Intersecting geometry → change position or scale
+- Clipped highlights → reduce light energy or change angle
+- Missing material → verify assignment and slots
 
-It becomes much less reliable when the problem is subjective. A composition can feel weak, an animation can lack weight, a product can look cheap, and a technically polished render can still be completely forgettable. Codex may propose a longer lens, softer shadows or a different background ? but Blender has no `make_this_less_generic` operator.
+It becomes much less reliable when the problem is subjective. A composition can feel weak, an animation can lack weight, a product can look cheap, and a technically polished render can still be completely forgettable. Codex may propose a longer lens, softer shadows or a different background — but Blender has no `make_this_less_generic` operator.
 
 The feedback loop is good at reducing visible mistakes.
 
 It is less effective at rescuing a boring idea.
 
-That distinction matters because the last part of professional creative work is rarely about whether the object exists. It is about whether the proportions feel intentional, whether the motion has rhythm, whether the lighting communicates anything, and whether the scene looks different from the other five hundred renders generated with the same vague request for something ?premium.?
+That distinction matters because the last part of professional creative work is rarely about whether the object exists. It is about whether the proportions feel intentional, whether the motion has rhythm, whether the lighting communicates anything, and whether the scene looks different from the other five hundred renders generated with the same vague request for something “premium.”
 
 ---
 
@@ -194,7 +194,7 @@ So the honest version is not that Codex replaces the 3D artist.
 
 It moves the starting point.
 
-An experienced artist begins with something visible and spends hours on topology, composition, materials and motion instead of blank-viewport setup. A beginner gets past the interface wall. A small studio ? or a WebDesigner pipeline generating a marketing site ? tests more directions before committing production time.
+An experienced artist begins with something visible and spends hours on topology, composition, materials and motion instead of blank-viewport setup. A beginner gets past the interface wall. A small studio — or a WebDesigner pipeline generating a marketing site — tests more directions before committing production time.
 
 The final stretch still belongs to whoever can tell the difference between technically finished and actually good.
 
@@ -202,9 +202,9 @@ The final stretch still belongs to whoever can tell the difference between techn
 
 ## The security problem nobody puts in the demo
 
-Blender MCP can execute arbitrary Python inside Blender. That is why the agent can control so much of the application ? and why this setup deserves more caution than a normal creative plugin.
+Blender MCP can execute arbitrary Python inside Blender. That is why the agent can control so much of the application — and why this setup deserves more caution than a normal creative plugin.
 
-WebDesigner?s restricted path is intentional:
+WebDesigner’s restricted path is intentional:
 
 - Local host only
 - Four-tool allowlist
@@ -215,7 +215,7 @@ WebDesigner?s restricted path is intentional:
 
 That does not make the project magically safe. It makes the blast radius understandable.
 
-An agent with access to Blender?s Python environment has meaningful execution capabilities on the machine running it. Save work. Do not experiment inside the only copy of a client project. Treat unfamiliar configurations as software with real permissions, not a harmless chat extension.
+An agent with access to Blender’s Python environment has meaningful execution capabilities on the machine running it. Save work. Do not experiment inside the only copy of a client project. Treat unfamiliar configurations as software with real permissions, not a harmless chat extension.
 
 The model may only be building a glass perfume bottle.
 
@@ -229,7 +229,7 @@ It is still holding power tools.
 |-------|------------------------|
 | `plan` | Normalize brief into `TaskIntent`; set `requiresBlenderMCP` / stack integration |
 | `design` | Scene thesis, content plan, camera/mood; optional Stitch UI around the 3D hero |
-| `build` | MCP loop: compose ? material ? light ? refine ? export into generated workspace |
+| `build` | MCP loop: compose → material → light → refine → export into generated workspace |
 | `security` | Treat `execute_blender_code` as local code execution; keep approvals and allowlists |
 | `review` | Vision check of renders vs brief; desktop/mobile page composition if assets land in UI |
 | `deploy` | Ship the **app** workspace; Blender remains offline production tooling |
@@ -251,17 +251,17 @@ Restart Blender, start a new Codex task, confirm the MCP panel is listening on `
 
 The important shift is not that Codex GPT can generate another 3D object.
 
-The important shift is that a general-purpose coding agent ? routed through WebDesigner?s capability-first stack ? can enter professional creative software, manipulate the real project, inspect the visible result and continue working from what it sees ? then export assets into a generated product workspace instead of leaving a one-off `.blend` orphaned on disk.
+The important shift is that a general-purpose coding agent — routed through WebDesigner’s capability-first stack — can enter professional creative software, manipulate the real project, inspect the visible result and continue working from what it sees — then export assets into a generated product workspace instead of leaving a one-off `.blend` orphaned on disk.
 
 Blender remains complicated, but more of that complication can sit behind the conversation and the skill contract. You do not need the exact modifier, material node or Python function before the first version exists on screen. You describe the outcome and direct corrections once something is visible.
 
 That changes where human value begins.
 
-Less time translating ideas into interface operations. More time judging proportion, accuracy, movement, and whether the object deserves to exist ? and whether it is good enough for a Next.js product page, a React SPA hero, or a WebGL avatar path.
+Less time translating ideas into interface operations. More time judging proportion, accuracy, movement, and whether the object deserves to exist — and whether it is good enough for a Next.js product page, a React SPA hero, or a WebGL avatar path.
 
 Start with something deliberately unremarkable: a bottle under studio lighting, a chair in an empty room, a logo with real depth, or a product rotating on a dark surface. Let Codex build the first version, let it inspect the capture and correct the obvious problems, then take control where precision and taste matter more than tool access.
 
-**Codex can operate Blender now ? through WebDesigner?s `blender-mcp` path.**
+**Codex can operate Blender now — through WebDesigner’s `blender-mcp` path.**
 
 Someone still has to tell it when the result looks stupid.
 

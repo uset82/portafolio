@@ -23,7 +23,7 @@ The `s()` function in Strudel tries to load audio sample files. This app doesn't
 
 **Use synthetic sounds instead of samples!**
 
-### ? Wrong (Causes Error)
+### ❌ Wrong (Causes Error)
 
 ```javascript
 s("bd")                    // Error: sound bd not found
@@ -31,7 +31,7 @@ s("bd sd hh")              // Error: sound bd not found
 s("bd").bank("RolandTR909") // Error: sound bd not found
 ```
 
-### ? Correct (Works!)
+### ✅ Correct (Works!)
 
 ```javascript
 // Use note() with synthetic waveforms
@@ -197,13 +197,13 @@ CRITICAL: Use synthetic sounds ONLY.
 
 ## Summary
 
-? **DO:**
+✅ **DO:**
 - Use `note(m("pattern")).s("synth")`
 - Use synthetic waveforms: square, triangle, sawtooth, sine
 - Use low notes (c1-c5) for drums and bass
 - Use higher notes (c4-c7) for melody
 
-? **DON'T:**
+❌ **DON'T:**
 - Use `s("bd")` or any sample names
 - Use `.bank()` to load sample banks
 - Expect samples to be available

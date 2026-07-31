@@ -1,6 +1,6 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/bankAI/blob/main/README.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# AI Bank ? Demo for DNB Contest
+# AI Bank — Demo for DNB Contest
 
 Live demo: https://mybankai.netlify.app/
 
@@ -8,11 +8,11 @@ This is a conversational banking demo showcasing:
 - Realtime voice (OpenAI Realtime, WebRTC)
 - Text chat with streaming fallback
 - Mock accounts and transactions (`public/mock/accounts.json`)
-- Optional multi?month ledger for analysis (`public/mock/ledger.json`)
+- Optional multi‑month ledger for analysis (`public/mock/ledger.json`)
 
 Tech stack:
 - Vite + React + TypeScript
-- Zustand, SWR, shadcn?ui, Tailwind CSS
+- Zustand, SWR, shadcn‑ui, Tailwind CSS
 - Node/Express bridge for OpenAI (chat/tts/transcribe/realtime)
 
 Local development

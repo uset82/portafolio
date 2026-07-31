@@ -1,6 +1,6 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/portafolio/blob/main/docs/content/webdesigner-source-pack.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# WebDesigner ? case-study source pack
+# WebDesigner — case-study source pack
 
 Reviewed 2026-07-20 from the public repository, plugin and marketplace manifests, Nightglass skill, orchestration source, bundled MCP server, third-party notices, installed plugin state, contributor metadata, and live package/MCP verification. This pack describes the plugin's evidenced scope without treating generated output as product proof.
 
@@ -20,7 +20,7 @@ The plugin can be installed directly from its repository marketplace without a G
 
 The plugin manifest names Carlos Carpio as author and developer and links to the confirmed `uset82` account. The repository is owned by that account. GitHub attributes one visible commit to `uset82` and two to `g57436746-coder`.
 
-Safe wording: **?Carlos publishes WebDesigner 1.1.0 under his GitHub account and is named as the plugin author/developer; the public commit record also includes another identity.?**
+Safe wording: **“Carlos publishes WebDesigner 1.1.0 under his GitHub account and is named as the plugin author/developer; the public commit record also includes another identity.”**
 
 Do not claim sole implementation, sole authorship of every bundled skill, or original ownership of third-party Blender specialists. Their provenance must remain tied to `THIRD_PARTY_NOTICES.md`.
 
@@ -43,12 +43,12 @@ Installation registers the plugin; the plugin does not automatically rewrite a u
 
 The repository defines six lifecycle stages:
 
-1. **Plan** ? normalize intent and select a supported stack.
-2. **Design** ? establish visual thesis, content structure, tokens, and interaction approach.
-3. **Build** ? produce framework-idiomatic implementation artifacts.
-4. **Security** ? record findings and reviewable remediation.
-5. **Review** ? inspect behavior, accessibility, design coherence, and handoff.
-6. **Deploy** ? prepare deployment guidance for the chosen stack.
+1. **Plan** — normalize intent and select a supported stack.
+2. **Design** — establish visual thesis, content structure, tokens, and interaction approach.
+3. **Build** — produce framework-idiomatic implementation artifacts.
+4. **Security** — record findings and reviewable remediation.
+5. **Review** — inspect behavior, accessibility, design coherence, and handoff.
+6. **Deploy** — prepare deployment guidance for the chosen stack.
 
 These stages are routing and workflow contracts, not proof that every provider, framework, generated site, security finding, or deployment is automatically correct.
 

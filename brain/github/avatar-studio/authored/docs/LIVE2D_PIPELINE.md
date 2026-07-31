@@ -8,19 +8,19 @@ Live2D is an optional VTuber-lite runtime. The app must compile and run without 
 
 ```txt
 avatars/live2d/<avatar-id>/
-??? model.model3.json
-??? model.moc3
-??? textures/
-?   ??? texture_00.png
-??? motions/
-?   ??? Idle.motion3.json
-?   ??? Talk.motion3.json
-?   ??? Success.motion3.json
-??? expressions/
-?   ??? neutral.exp3.json
-?   ??? happy.exp3.json
-?   ??? concerned.exp3.json
-??? physics3.json
+├── model.model3.json
+├── model.moc3
+├── textures/
+│   └── texture_00.png
+├── motions/
+│   ├── Idle.motion3.json
+│   ├── Talk.motion3.json
+│   └── Success.motion3.json
+├── expressions/
+│   ├── neutral.exp3.json
+│   ├── happy.exp3.json
+│   └── concerned.exp3.json
+└── physics3.json
 ```
 
 `model.model3.json` should reference the `.moc3`, texture, motion, expression, and physics files with paths relative to the model folder. Keep file names ASCII and stable; manifests may be loaded inside a VS Code webview where URL rewriting is strict.

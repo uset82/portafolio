@@ -1,9 +1,9 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/project-bolt-qrmollebakken-supabase/blob/main/README.md; checkedOn: 2026-07-31; redactions: 1 -->
 
 
-# QR M?llebakken Art Project
+# QR Møllebakken Art Project
 
-A digital art gallery platform for M?llebakken school, allowing teachers to upload student artwork and parents to view their children's creations through QR codes.
+A digital art gallery platform for Møllebakken school, allowing teachers to upload student artwork and parents to view their children's creations through QR codes.
 
 ## Features
 
@@ -50,15 +50,15 @@ npm run dev
 
 ```
 src/
-  ??? components/        # Reusable UI components
-  ?   ??? artwork/      # Artwork-specific components
-  ?   ??? ui/           # Generic UI components
-  ??? lib/              # Core functionality
-  ?   ??? api/          # API integration layer
-  ?   ??? supabase/     # Supabase client and queries
-  ?   ??? utils/        # Utility functions
-  ??? pages/            # Application pages
-  ??? types/            # TypeScript type definitions
+  ├── components/        # Reusable UI components
+  │   ├── artwork/      # Artwork-specific components
+  │   └── ui/           # Generic UI components
+  ├── lib/              # Core functionality
+  │   ├── api/          # API integration layer
+  │   ├── supabase/     # Supabase client and queries
+  │   └── utils/        # Utility functions
+  ├── pages/            # Application pages
+  └── types/            # TypeScript type definitions
 ```
 
 ## Storage Quotas
@@ -102,10 +102,10 @@ create table students (
 1. Create an `artworks` bucket with the following structure:
 ```
 artworks/
-  ??? [student-id]/
-  ?   ??? images/
-  ?   ??? videos/
-  ?   ??? audio/
+  ├── [student-id]/
+  │   ├── images/
+  │   ├── videos/
+  │   └── audio/
 ```
 
 2. Configure storage policies to allow public read access and authenticated write access.

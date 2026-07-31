@@ -2,7 +2,7 @@
 
 # Mesh Guardian Task Checklist
 
-> **Companion file:** [`mesh-guardian-plan.md`](./mesh-guardian-plan.md) ? architecture, iOS three-tier strategy, file structure, and decisions. Read that once. Track work here.
+> **Companion file:** [`mesh-guardian-plan.md`](./mesh-guardian-plan.md) — architecture, iOS three-tier strategy, file structure, and decisions. Read that once. Track work here.
 
 This checklist tracks the Dommedag evolution into a survival messenger that works online first and can later bridge to Meshtastic LoRa, with a dedicated path so iPhone users get a real experience too.
 
@@ -15,7 +15,7 @@ This checklist tracks the Dommedag evolution into a survival messenger that work
 
 ---
 
-## Current Sprint ? Discover Chat
+## Current Sprint — Discover Chat
 
 - [x] Confirm Netlify, Supabase, and GitHub plugin/tool namespaces are available in this Codex session
 - [x] Inspect the current Discover feature and existing chat components
@@ -31,9 +31,9 @@ This checklist tracks the Dommedag evolution into a survival messenger that work
 
 ---
 
-## Phase 0 ? Discover Chat Polish
+## Phase 0 — Discover Chat Polish
 
-- [x] **0.1** Verify current Discover chat works end-to-end (peer list ? click Chat ? ChatWindow ? send/receive)
+- [x] **0.1** Verify current Discover chat works end-to-end (peer list → click Chat → ChatWindow → send/receive)
 - [x] **0.2** Add unread message badge per peer in the Discover list using Supabase Realtime subscription
 - [x] **0.3** Show online/offline indicator next to each peer based on `last_locations.updated_at` (< 2 min = online)
 - [x] **0.4** Persist chat scroll position when switching peers
@@ -43,7 +43,7 @@ This checklist tracks the Dommedag evolution into a survival messenger that work
 
 ---
 
-## Phase 1 ? Real-time Internet Chat (Supabase Realtime)
+## Phase 1 — Real-time Internet Chat (Supabase Realtime)
 
 - [x] React + TypeScript web app baseline
 - [x] Supabase client wiring
@@ -52,9 +52,9 @@ This checklist tracks the Dommedag evolution into a survival messenger that work
 - [x] Private message component backed by Supabase `messages`
 - [x] **1.1** Add columns to `messages` table: `delivered_at`, `read_at`, `transport` (text)
 - [x] **1.2** Confirm RLS policies on `profiles`, `friendships`, `messages`, `last_locations`, `location_updates`
-- [x] **1.3** Create `web/src/lib/chat/realtimeChat.ts` ? Supabase Realtime subscription + send helper
+- [x] **1.3** Create `web/src/lib/chat/realtimeChat.ts` — Supabase Realtime subscription + send helper
 - [x] **1.4** Update `ChatWindow` to use the new realtimeChat service instead of the in-memory store
-- [x] **1.5** Add message status states: `pending` ? `sent` ? `delivered` ? `read`
+- [x] **1.5** Add message status states: `pending` → `sent` → `delivered` → `read`
 - [x] **1.6** Add browser notifications when a message arrives and the chat isn't focused
 - [x] **1.7** Add group chat: `chat_rooms` + `chat_room_members` tables, subscription to a room channel
 - [x] **1.8** Add a "New group" button in Discover/Friends to create a room and invite friends
@@ -66,15 +66,15 @@ This checklist tracks the Dommedag evolution into a survival messenger that work
 
 ---
 
-## Phase 2 ? Offline-First System (IndexedDB)
+## Phase 2 — Offline-First System (IndexedDB)
 
 - [x] **2.5** Add `useNetworkStatus` hook that listens to `online` / `offline` events + heartbeat ping
 - [x] **2.6** Add `NetworkStatusBar` component pill: **Online** | **Offline** | **Emergency Mode**
-- [x] **2.1** Create `web/src/lib/chat/messageStore.ts` ? IndexedDB wrapper using `idb` package
+- [x] **2.1** Create `web/src/lib/chat/messageStore.ts` — IndexedDB wrapper using `idb` package
 - [x] **2.2** Define schema: `messages` store, `outbox` store (queued messages), `metadata` store (sync state)
 - [x] **2.3** Cache every incoming Supabase message into IndexedDB on receive
 - [x] **2.4** When the user sends a message, write to IndexedDB first, then to Supabase
-- [x] **2.7** Queue outgoing messages when offline; flag them with `pending` status and a ?? icon
+- [x] **2.7** Queue outgoing messages when offline; flag them with `pending` status and a 🕓 icon
 - [x] **2.8** Auto-sync the outbox when the connection returns; emit visual feedback per synced message
 - [x] **2.9** Handle dedupe on resync (server-side `id` is the source of truth; reconcile client-generated UUIDs)
 
@@ -82,14 +82,14 @@ This checklist tracks the Dommedag evolution into a survival messenger that work
 
 ---
 
-## Phase 3 ? Emergency Message Protocol
+## Phase 3 — Emergency Message Protocol
 
 - [x] **3.1** Define `EmergencyMessage` type with fields: `category`, `priority`, `text`, `lat`, `lon`, `ts`, `channel`
-- [x] **3.2** Create `web/src/components/MeshGuardian/QuickButtons.tsx` ? large tappable buttons for SAFE / HELP / WATER / FOOD / MEDICAL / DANGER
+- [x] **3.2** Create `web/src/components/MeshGuardian/QuickButtons.tsx` — large tappable buttons for SAFE / HELP / WATER / FOOD / MEDICAL / DANGER
 - [x] **3.3** Add character limit (200 chars) with visible counter in the emergency input
 - [x] **3.4** Add priority selector (normal / urgent / critical) with color coding
 - [x] **3.5** Add channel selector (Family / Neighborhood / Medical / Security / Broadcast)
-- [x] **3.6** Add message compression helper (shorten common phrases: "we are" ? "WE", "need" ? "NEED+", etc.)
+- [x] **3.6** Add message compression helper (shorten common phrases: "we are" → "WE", "need" → "NEED+", etc.)
 - [x] **3.7** Add timestamp + optional location attachment from current GPS
 - [x] **3.8** Auto-switch the chat input UI to "Emergency Mode" when offline or when user toggles it
 - [x] **3.9** Render emergency messages with a distinct style (red border for critical, etc.)
@@ -98,7 +98,7 @@ This checklist tracks the Dommedag evolution into a survival messenger that work
 
 ---
 
-## Phase 4 ? Meshtastic Web Bluetooth Transport
+## Phase 4 — Meshtastic Web Bluetooth Transport
 
 - [x] Confirm Meshtastic has official JavaScript/web packages for core, Web Bluetooth, Web Serial, HTTP, and protobufs
 - [x] **4.1** Install `@meshtastic/core` and `@meshtastic/transport-web-bluetooth` from npm
@@ -118,20 +118,20 @@ This checklist tracks the Dommedag evolution into a survival messenger that work
 
 ---
 
-## Phase 5 ? Meshtastic HTTP Mode (ESP32 over Wi-Fi)
+## Phase 5 — Meshtastic HTTP Mode (ESP32 over Wi-Fi)
 
 - [x] **5.1** Create `HttpMeshTransport.ts` using `@meshtastic/transport-http`
 - [x] **5.2** Add an "ESP32 Node IP" text input in the Mesh settings (e.g. `192.168.4.1`)
 - [x] **5.3** Connect over `http://<ip>/api/v1/toradio` and `http://<ip>/api/v1/fromradio`
 - [x] **5.4** Add a self-signed cert warning + setup instructions modal for users
 - [ ] **5.5** Test end-to-end on Android, iOS Safari, desktop
-- [x] **5.6** Document fallback path: if Bluetooth unavailable ? suggest HTTP mode
+- [x] **5.6** Document fallback path: if Bluetooth unavailable → suggest HTTP mode
 
 **Goal:** provide the best first web path for iPhone users through ESP32 node HTTP/Wi-Fi mode.
 
 ---
 
-## Phase 6 ? Transport Switching Engine
+## Phase 6 — Transport Switching Engine
 
 - [x] **6.1** Create `web/src/lib/chat/TransportManager.ts` with the unified `ChatTransport` interface
 - [x] **6.2** Implement `InternetTransport` wrapping the Supabase Realtime chat from Phase 1
@@ -140,7 +140,7 @@ This checklist tracks the Dommedag evolution into a survival messenger that work
 - [x] **6.5** Add transport priority list: `internet > bluetooth > http > multipeer > none`
 - [x] **6.6** Send normal messages via the highest-priority available transport
 - [x] **6.7** Auto-fail-over: if internet drops mid-conversation, try the next transport
-- [x] **6.8** Add a transport indicator in the chat header (?? Internet / ?? Mesh-BT / ?? Mesh-WiFi / ?? Multipeer)
+- [x] **6.8** Add a transport indicator in the chat header (🌐 Internet / 📡 Mesh-BT / 📡 Mesh-WiFi / 📲 Multipeer)
 - [x] **6.9** Add a manual "Force Emergency Mode" toggle in settings
 - [x] **6.10** Retry queue for failed messages with manual "Retry" button per failed message
 
@@ -148,7 +148,7 @@ This checklist tracks the Dommedag evolution into a survival messenger that work
 
 ---
 
-## Phase 7 ? Bridge Mode
+## Phase 7 — Bridge Mode
 
 - [x] **7.1** Add a `is_gateway` flag on user profile (Supabase column)
 - [x] **7.2** Gateway users with both internet + a connected Meshtastic node relay messages between sources
@@ -159,10 +159,10 @@ This checklist tracks the Dommedag evolution into a survival messenger that work
 
 ---
 
-## Phase 8 ? Groups & Emergency Channels
+## Phase 8 — Groups & Emergency Channels
 
 - [x] **8.1** Create channel types: `family`, `neighborhood`, `medical`, `security`, `broadcast`
-- [x] **8.2** Add channel keys (PSK) for private mesh channels ? generate via `crypto.subtle`
+- [x] **8.2** Add channel keys (PSK) for private mesh channels — generate via `crypto.subtle`
 - [x] **8.3** Build "Channel" management UI with create / join / leave actions
 - [x] **8.4** Generate QR-code invitation links containing channel key + name
 - [x] **8.5** Add a QR scanner using `@yudiel/react-qr-scanner` to join via QR
@@ -173,19 +173,19 @@ This checklist tracks the Dommedag evolution into a survival messenger that work
 
 ---
 
-## Phase 9 ? PWA & Mobile Polish
+## Phase 9 — PWA & Mobile Polish
 
 - [x] **9.1** Add a Web App Manifest (`manifest.webmanifest`) with app icons + theme colors
 - [x] **9.2** Add a service worker via `vite-plugin-pwa` for offline asset caching
 - [x] **9.3** Cache the app shell + last 7 days of chat data
 - [x] **9.4** Add "Install App" prompt on Android Chrome
-- [x] **9.5** Add iOS Safari "Add to Home Screen" instructions (component built ? wire it in)
+- [x] **9.5** Add iOS Safari "Add to Home Screen" instructions (component built — wire it in)
 - [x] **9.6** Test offline behavior end-to-end (kill network, send messages, restore)
 - [x] **9.7** Mobile-responsive Discover chat (full-screen chat view on small screens, swipe-back to peer list)
 
 ---
 
-## Phase 10 ? MVP Acceptance
+## Phase 10 — MVP Acceptance
 
 - [ ] **10.1** User can register (existing Supabase Auth)
 - [ ] **10.2** User can chat 1-on-1 with a connected app user via internet
@@ -200,7 +200,7 @@ This checklist tracks the Dommedag evolution into a survival messenger that work
 
 ---
 
-## Phase 11 ? iOS Safari PWA
+## Phase 11 — iOS Safari PWA
 
 iOS Safari supports PWAs, IndexedDB, Service Workers, Push, and Web Geolocation, but does NOT support Web Bluetooth or Web Serial. Internet chat, offline mode, and ESP32 Wi-Fi mesh modes still all work.
 
@@ -208,7 +208,7 @@ iOS Safari supports PWAs, IndexedDB, Service Workers, Push, and Web Geolocation,
 - [x] **11.6** Create platform detection (`web/src/lib/chat/platform.ts`) for iOS Safari standalone mode
 - [x] **11.7** Use `env(safe-area-inset-*)` CSS variables for notch + home-indicator on iPhone X+
 - [x] **11.11** Handle iOS Safari quirks: `100vh` issue (use `100dvh`), audio autoplay restrictions, file input limitations
-- [ ] **11.2** Add Apple touch icons (180?180, 152?152, 167?167) to `web/public/`
+- [ ] **11.2** Add Apple touch icons (180×180, 152×152, 167×167) to `web/public/`
 - [ ] **11.3** Add iOS splash screens for iPhone + iPad sizes (use `pwa-asset-generator`)
 - [ ] **11.4** Configure `vite-plugin-pwa` with `registerType: 'autoUpdate'` and an iOS-friendly Workbox runtime caching strategy
 - [ ] **11.5** Wire the `IosInstallTutorial` component into the app shell to show on first iOS Safari visit
@@ -222,18 +222,18 @@ iOS Safari supports PWAs, IndexedDB, Service Workers, Push, and Web Geolocation,
 
 ---
 
-## Phase 12 ? iOS Native App
+## Phase 12 — iOS Native App
 
 The repo already has a React Native scaffold at `mobile/` with `react-native-ble-plx` and Supabase wired up.
 
 - [ ] **12.1** Audit existing `mobile/` workspace and remove obsolete starter code
 - [ ] **12.2** Add `react-native-webview` and embed the Vite-built web bundle as the primary UI
-- [ ] **12.3** Create a JS?Native bridge with `postMessage` for: BLE scan, BLE connect, BLE write, GPS, push notifications, mesh transport availability
-- [ ] **12.4** Implement the BLE bridge using `react-native-ble-plx` ? exposes the same `MeshTransport` interface as the web BLE
+- [ ] **12.3** Create a JS↔Native bridge with `postMessage` for: BLE scan, BLE connect, BLE write, GPS, push notifications, mesh transport availability
+- [ ] **12.4** Implement the BLE bridge using `react-native-ble-plx` — exposes the same `MeshTransport` interface as the web BLE
 - [ ] **12.5** Wire the Meshtastic protobuf encode/decode (use `@meshtastic/core` from the JS bundle, just route the bytes through the native bridge)
 - [ ] **12.6** Add background location and push using `react-native-permissions` + `@react-native-firebase/messaging` (or APNs directly)
 - [ ] **12.7** Configure `Info.plist` permission strings: `NSBluetoothAlwaysUsageDescription`, `NSLocationAlwaysAndWhenInUseUsageDescription`, `NSLocalNetworkUsageDescription`, `NSBonjourServices`
-- [ ] **12.8** Build with EAS (`eas build --platform ios --profile preview`) ? config already exists in `mobile/eas.json`
+- [ ] **12.8** Build with EAS (`eas build --platform ios --profile preview`) — config already exists in `mobile/eas.json`
 - [ ] **12.9** TestFlight distribution to internal testers
 - [ ] **12.10** App Store submission: screenshots, privacy nutrition label, App Privacy questionnaire, mesh/emergency-use disclaimer
 - [ ] **12.11** Add deep-link handler `Dommedag://channel/<id>?key=[REDACTED credential-like value] so QR-scanned channel invites open the app
@@ -242,9 +242,9 @@ The repo already has a React Native scaffold at `mobile/` with `react-native-ble
 
 ---
 
-## Phase 13 ? iOS Multipeer Connectivity
+## Phase 13 — iOS Multipeer Connectivity
 
-iPhones cannot pair with Meshtastic LoRa hardware in Safari. To get true off-grid messaging on iOS WITHOUT extra hardware, use Apple's **Multipeer Connectivity** framework (Wi-Fi Direct + Bluetooth between Apple devices, range ~30?100 m).
+iPhones cannot pair with Meshtastic LoRa hardware in Safari. To get true off-grid messaging on iOS WITHOUT extra hardware, use Apple's **Multipeer Connectivity** framework (Wi-Fi Direct + Bluetooth between Apple devices, range ~30–100 m).
 
 The repo already has a `MultipeerManager` stub in `web/src/lib/mesh/multipeer.ts` and an `EmergencyChat` view that detects `window.webkit.messageHandlers.multipeer`.
 
@@ -257,14 +257,14 @@ The repo already has a `MultipeerManager` stub in `web/src/lib/mesh/multipeer.ts
 - [ ] **13.7** Show "iPhone Mesh" status pill when active and indicate the number of nearby Apple peers
 - [ ] **13.8** Auto-start advertising when the app loses internet, stop when reconnected (battery saver)
 - [ ] **13.9** Encrypt Multipeer payloads end-to-end using AES-GCM with the channel PSK from Phase 8
-- [ ] **13.10** Test cross-platform: iPhone ? iPhone, iPhone via Multipeer + Android via LoRa using a third device as bridge
+- [ ] **13.10** Test cross-platform: iPhone ↔ iPhone, iPhone via Multipeer + Android via LoRa using a third device as bridge
 - [ ] **13.11** Document range expectations + battery impact in onboarding
 
 **Goal:** two iPhones can chat off-grid without buying any hardware.
 
 ---
 
-## Phase 14 ? iOS MVP Acceptance
+## Phase 14 — iOS MVP Acceptance
 
 - [ ] **14.1** iOS Safari user can install the PWA to home screen
 - [ ] **14.2** iOS Safari user can chat 1-on-1 with a friend via internet
@@ -273,7 +273,7 @@ The repo already has a `MultipeerManager` stub in `web/src/lib/mesh/multipeer.ts
 - [ ] **14.5** iOS native app builds and runs on a real iPhone via TestFlight
 - [ ] **14.6** iOS native app connects to a Meshtastic LoRa device via real Bluetooth (not Web Bluetooth)
 - [ ] **14.7** Two iPhones with the native app can chat off-grid via Multipeer Connectivity (no internet, no LoRa hardware)
-- [ ] **14.8** Mixed-device test: iPhone (Multipeer) ? iPhone gateway (LoRa+Multipeer) ? Android (LoRa)
+- [ ] **14.8** Mixed-device test: iPhone (Multipeer) → iPhone gateway (LoRa+Multipeer) → Android (LoRa)
 - [ ] **14.9** App Store review approval
 
 ---
@@ -293,4 +293,4 @@ The repo already has a `MultipeerManager` stub in `web/src/lib/mesh/multipeer.ts
 
 ## Progress Snapshot
 
-Overall: **83 / ~163 tasks complete** (~51%). **Phases 0?6: complete** (Phase 5 has one hardware-test task pending real ESP32 hardware). Next: Phase 7 ? Bridge Mode.
+Overall: **83 / ~163 tasks complete** (~51%). **Phases 0–6: complete** (Phase 5 has one hardware-test task pending real ESP32 hardware). Next: Phase 7 — Bridge Mode.

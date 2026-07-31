@@ -21,7 +21,7 @@ The application remains on exact React and React DOM `19.2.4`, inside Fiber's su
 - `LazyThreeCanvas` is the only application-facing Canvas export. It is a Client Component and dynamically imports the internal Canvas with `ssr: false`.
 - Server route files may import the project boundary later, but may not import `three`, Fiber, or Drei directly.
 - The semantic poster remains outside this boundary and visible until a later scene shell proves required assets are ready. Dynamic loading therefore renders no blank replacement.
-- The internal Canvas owns the renderer and uses a `1?1.5` DPR range, demand rendering, transparent antialiased output, no preserved drawing buffer, no default shadows, a useful accessible label, and an explicit unsupported-WebGL fallback supplied by its caller.
+- The internal Canvas owns the renderer and uses a `1–1.5` DPR range, demand rendering, transparent antialiased output, no preserved drawing buffer, no default shadows, a useful accessible label, and an explicit unsupported-WebGL fallback supplied by its caller.
 - DOM headings, navigation, project actions, chat, loading/error messages, and alternate descriptions remain outside WebGL.
 
 ## Drei and tree-shaking policy

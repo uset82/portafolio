@@ -1,6 +1,6 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/portafolio/blob/main/docs/content/strudelai-source-pack.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# StrudelAI ? case-study source pack
+# StrudelAI — case-study source pack
 
 Reviewed 2026-07-19 from the public repository, current GitHub metadata, and both README-listed deployments. This pack verifies what the portfolio may say; it is not yet publishable case-study copy.
 
@@ -19,9 +19,9 @@ Do not describe StrudelAI as a production service, a released product, or fully 
 
 Carlos's confirmed GitHub account, `uset82`, owns the public repository and appears in GitHub's contributor data. The visible commit history also includes `g57436746-coder` and an unlinked `Grok Build Agent` identity.
 
-Safe wording: **?Carlos maintains the public StrudelAI repository and is a documented contributor to the prototype.?**
+Safe wording: **“Carlos maintains the public StrudelAI repository and is a documented contributor to the prototype.”**
 
-Do not say ?built entirely by Carlos,? ?sole creator,? or assign specific features to Carlos until he approves a more detailed contribution account.
+Do not say “built entirely by Carlos,” “sole creator,” or assign specific features to Carlos until he approves a more detailed contribution account.
 
 ## Product and implemented surface
 
@@ -80,7 +80,7 @@ The defensible outcome is a substantial public prototype with two reachable depl
 | --- | --- | --- |
 | `image/README/1765671236142.png` | Repository image; authorship and reuse permission not documented | Exclude |
 | `src/components/image/SonicInterface/*.png` | Three UI images; provenance and reuse permission not documented | Exclude pending review |
-| `Gemini_Generated_Image_?png` | Filename indicates generated media, but no model/terms snapshot or public-display approval is recorded | Exclude |
+| `Gemini_Generated_Image_…png` | Filename indicates generated media, but no model/terms snapshot or public-display approval is recorded | Exclude |
 | `images/hercules.png` and `images/PioneerDJ.jpg` | Product/brand imagery with no rights record | Exclude |
 | `Synplant User Guide.pdf` | Third-party reference document, not portfolio media | Never republish |
 | Framework SVGs under `public/` | Default framework marks, not meaningful case-study evidence | Do not use |

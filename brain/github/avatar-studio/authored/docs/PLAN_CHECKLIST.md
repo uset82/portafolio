@@ -1,12 +1,12 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/avatar-studio/blob/main/docs/PLAN_CHECKLIST.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# Codex Avatar Studio ? Final Implementation Plan
+# Codex Avatar Studio — Final Implementation Plan
 
 > This is the only authoritative implementation plan for the repository. It supersedes the three former root plans and the legacy checklist. Their history remains available in Git.
 
 **Updated:** 2026-07-14
 
-**Current state:** Phases 0?11 and their release gates are complete. Phase 12 is now the active required phase: add the restricted project Blender MCP workflow, productize the optional WebGL runtime, and create the local-only professional 3D Cholita package without redistributing its assets.
+**Current state:** Phases 0–11 and their release gates are complete. Phase 12 is now the active required phase: add the restricted project Blender MCP workflow, productize the optional WebGL runtime, and create the local-only professional 3D Cholita package without redistributing its assets.
 
 **Next required phase:** Phase 12. Do not start another deferred runtime until its checklist and evidence are complete.
 
@@ -16,11 +16,11 @@ Codex Avatar Studio must let a user choose a local picture, convert it to a safe
 
 The required user journeys are:
 
-1. **Picture ? SVG avatar:** choose a picture, preview it, vectorize it locally, save it as an avatar, activate it, and keep it active after reload.
-2. **Blender ? avatar assets:** detect or configure Blender, export a `.blend` scene, validate the results, package supported output, and optionally activate it.
+1. **Picture → SVG avatar:** choose a picture, preview it, vectorize it locally, save it as an avatar, activate it, and keep it active after reload.
+2. **Blender → avatar assets:** detect or configure Blender, export a `.blend` scene, validate the results, package supported output, and optionally activate it.
 3. **Manage avatars:** import, select, validate, reload, reveal, export, and remove local avatar packages from the Webview without relying on hidden commands.
 
-?Upload? means choosing a local file. No picture, model, SVG, or Blender file is sent to a server.
+“Upload” means choosing a local file. No picture, model, SVG, or Blender file is sent to a server.
 
 ## 2. Decisions that are now locked
 
@@ -41,11 +41,11 @@ The required user journeys are:
 | --- | --- | --- |
 | IDE assistant | Extension activation, React Webview, state changes, settings, built-in SVG/Pixi assets | The panel is settings-heavy, actions are duplicated, and unsupported choices are exposed |
 | SVG rendering | A built-in animated orb is always available | `SvgAvatarRenderer` hardcodes the orb and ignores the active manifest SVG |
-| Vectorization | PNG/JPG/JPEG/WebP contract, local Jimp/ImageTracer tracing, SVGO optimization, sanitization, limits, and tests | The ?preview? is XML text; save creates export files and a conversion record, not an active `AvatarManifest` package |
+| Vectorization | PNG/JPG/JPEG/WebP contract, local Jimp/ImageTracer tracing, SVGO optimization, sanitization, limits, and tests | The “preview” is XML text; save creates export files and a conversion record, not an active `AvatarManifest` package |
 | Avatar packages | Secure import, validation, registry, activation, and fallback code exist | The Webview lacks Import/Activate controls, generated SVGs never enter the registry, and the free-text Avatar field is not registry activation |
 | Blender | Setting, runner, output channel, dry-run tests, and SVG/GLB/PNG Python scripts exist | Detection misses the installed Blender, exports are existence-checked only, and no result is packaged, activated, or rendered |
 | Optional renderers | Rive, Live2D, and WebGL source prototypes exist | `AvatarStage` currently routes only Pixi or the hardcoded orb; the prototypes are not product capabilities |
-| QA | Unit, smoke, package, and clean-profile scripts exist | There is no end-to-end picture ? package ? visible avatar test or real Blender host acceptance test |
+| QA | Unit, smoke, package, and clean-profile scripts exist | There is no end-to-end picture → package → visible avatar test or real Blender host acceptance test |
 
 Important audit findings:
 
@@ -71,7 +71,7 @@ flowchart LR
   I --> B
 ```
 
-Blender is not required to turn a picture into SVG. The primary path is picture ? SVG ? active avatar. Blender is a separate optional path for authored scenes, line art, 3D assets, and previews.
+Blender is not required to turn a picture into SVG. The primary path is picture → SVG → active avatar. Blender is a separate optional path for authored scenes, line art, 3D assets, and previews.
 
 ### 4.1 Webview layout
 
@@ -89,18 +89,18 @@ Remove duplicate top/asset-manager actions. Do not show raw `vscode-resource` UR
 
 ```text
 .codex-avatar/
-??? avatar-registry.json
-??? avatars/
-?   ??? <avatar-id>/
-?       ??? avatar.manifest.json
-?       ??? svg/avatar.svg
-?       ??? preview.png              # optional
-?       ??? webgl/avatar.glb         # optional
-??? cache/
-?   ??? jobs/<job-id>/               # disposable previews/staging
-??? exports/
-    ??? svg/                          # retained raw/optimized exports
-    ??? blender/                      # retained Blender exports/reports
+├── avatar-registry.json
+├── avatars/
+│   └── <avatar-id>/
+│       ├── avatar.manifest.json
+│       ├── svg/avatar.svg
+│       ├── preview.png              # optional
+│       └── webgl/avatar.glb         # optional
+├── cache/
+│   └── jobs/<job-id>/               # disposable previews/staging
+└── exports/
+    ├── svg/                          # retained raw/optimized exports
+    └── blender/                      # retained Blender exports/reports
 ```
 
 Only `avatars/<avatar-id>/avatar.manifest.json` is an installable avatar manifest. Conversion and Blender reports must be named `conversion-report.json` or `export-report.json` so they cannot be mistaken for packages.
@@ -121,7 +121,7 @@ Every message must pass runtime schema validation. The Webview must never receiv
 
 ## 5. Ordered implementation phases
 
-### Phase 0 ? Consolidate truth and preserve the live baseline ? complete
+### Phase 0 — Consolidate truth and preserve the live baseline · complete
 
 - [x] Compare the three former plans against the current repository.
 - [x] Treat the existing live extension as the starting point.
@@ -131,16 +131,16 @@ Every message must pass runtime schema validation. The Webview must never receiv
 
 **Acceptance:** there is one canonical plan, its next task is unambiguous, and it does not ask Codex to recreate completed foundation work.
 
-**Evidence ? 2026-07-12:** `pnpm validate:docs` passed for 25 Markdown files; `git diff --check` passed; and all three former root plans plus `docs/PLAN_CHECKLIST_LEGACY.md` are absent from the working tree.
+**Evidence — 2026-07-12:** `pnpm validate:docs` passed for 25 Markdown files; `git diff --check` passed; and all three former root plans plus `docs/PLAN_CHECKLIST_LEGACY.md` are absent from the working tree.
 
-### Phase 1 ? Render the active package SVG ? complete
+### Phase 1 — Render the active package SVG · complete
 
 **Goal:** make an imported or generated SVG capable of replacing the built-in orb.
 
 - [x] Pass the resolved manifest SVG URI into the SVG renderer.
 - [x] Render `entrypoints.svg` (or the compatibility `assets.svg`) without executing SVG scripts or remote content.
 - [x] Keep the built-in orb as the load-error and missing-asset fallback.
-- [x] Apply whole-avatar state effects?idle, thinking, speaking, success, warning, error, and sleeping?to any static SVG.
+- [x] Apply whole-avatar state effects—idle, thinking, speaking, success, warning, error, and sleeping—to any static SVG.
 - [x] Treat named eye/mouth/body layers as optional enhancement data, not a basic-rendering requirement.
 - [x] Add cache busting or a version key so Reload and re-export visibly refresh the asset.
 - [x] Hide runtime options that are not actually routed through `AvatarStage`.
@@ -148,7 +148,7 @@ Every message must pass runtime schema validation. The Webview must never receiv
 
 **Done when:** activating a minimal valid SVG package changes the visible avatar immediately, remains selected after reload, responds with whole-avatar state effects, and returns safely to the orb on failure.
 
-**Evidence ? 2026-07-12:**
+**Evidence — 2026-07-12:**
 
 - `SvgAvatarRenderer` uses a local `<img>` resolved from `entrypoints.svg` with `assets.svg` compatibility, keeps the inline orb while loading/after error, and never injects SVG markup. `AvatarStage` routes the manifest URI and falls directly to SVG when Pixi has no asset.
 - `AvatarWebviewProvider` appends an incrementing `codexAvatarAssetRevision` to mapped asset URIs. Provider tests verify an active custom package maps to a Webview URI, reload changes the revision, registry failure restores the built-in manifest, and registry tests verify the active package survives recreation.
@@ -156,7 +156,7 @@ Every message must pass runtime schema validation. The Webview must never receiv
 - `pnpm smoke:webview` exercised a real Edge render: a custom SVG replaced the orb, thinking motion applied, missing/corrupt SVGs returned to the orb, and a revised valid URI retried successfully.
 - `pnpm run ci` passed formatting, lint, typecheck, all 98 workspace tests, and builds. `pnpm package:vsix`, `pnpm validate:vsix`, `pnpm smoke:vsix`, and `pnpm smoke:clean-profile` passed with a 27-file VSIX.
 
-### Phase 2 ? Build the Create from Picture Studio flow ? complete
+### Phase 2 — Build the Create from Picture Studio flow · complete
 
 **Goal:** replace the vague Vectorize button with an obvious local picture workflow.
 
@@ -172,7 +172,7 @@ Every message must pass runtime schema validation. The Webview must never receiv
 
 **Done when:** a user can choose and visually preview a local picture from the panel, cancel without writing a package/export, and understand every failure without opening developer tools.
 
-**Evidence ? 2026-07-12:**
+**Evidence — 2026-07-12:**
 
 - The extension contributes **Codex Avatar: Create Avatar from Picture**, opens a native PNG/JPG/JPEG picker, requires a trusted workspace, validates image metadata and a 32 MiB limit, and copies only the selected source into a UUID-scoped `.codex-avatar/cache/jobs/` preview directory.
 - The versioned bridge now carries selecting/validating/copying progress, source metadata, cancellation reasons, and structured recoverable errors. The Webview shows a visual preview, safe filename, dimensions, size, format, transparency/background status, Continue, Back, choose-again, retry, and Cancel states without exposing the source path.
@@ -180,11 +180,11 @@ Every message must pass runtime schema validation. The Webview must never receiv
 - `pnpm smoke:webview` passed in real headless Edge for picture progress, preview loading, metadata, Continue/Back, structured error, and cancellation. The smoke now waits for the initial assistant render instead of racing React effects.
 - `pnpm run ci` passed formatting, lint, typecheck, all 106 workspace tests, and production builds. `pnpm package:vsix`, `pnpm validate:vsix`, `pnpm smoke:vsix`, and `pnpm smoke:clean-profile` passed with the 27-file VSIX; documentation and third-party notice validation also passed.
 
-### Phase 3 ? Produce and preview a useful SVG ? complete
+### Phase 3 — Produce and preview a useful SVG · complete
 
 **Goal:** connect the existing local tracer to a visual, adjustable preview.
 
-- [x] Reuse the existing validate ? preprocess ? trace ? optimize ? sanitize ? complexity-check pipeline.
+- [x] Reuse the existing validate → preprocess → trace → optimize → sanitize → complexity-check pipeline.
 - [x] Show source and optimized SVG side by side in the Webview instead of opening raw XML as the primary preview.
 - [x] Add simple presets: Color Illustration, Clean Icon, and High-Contrast Silhouette.
 - [x] Expose bounded controls for color count, grayscale, threshold, near-white background removal, noise cleanup, and detail/path count.
@@ -196,20 +196,20 @@ Every message must pass runtime schema validation. The Webview must never receiv
 
 **Done when:** a selected picture becomes a visual, safe SVG preview locally; Cancel writes no committed result; the source is unchanged; limits and sanitization remain enforced; and no network request occurs.
 
-**Evidence ? 2026-07-12:**
+**Evidence — 2026-07-12:**
 
 - Picture Studio now sends bounded preset/options through the versioned bridge and displays source plus optimized SVG through local `<img>` URIs. It shows raw/optimized byte size, path/group counts, optional named-layer guidance, warnings, progress, retry, Back, conversion Cancel, and overall Cancel without injecting SVG markup.
 - The existing local pipeline now defaults to a bounded 16-color trace, separates cleanup from low/balanced/high path detail, reports validation metrics, enforces regular-file/32-MiB/raster/SVG/path limits, and sanitizes executable elements, CSS, event handlers, doctypes/entities, external protocols, and non-fragment references.
-- CPU-bound tracing runs in a separately packaged worker. A visible Cancel aborts the active controller, terminates the worker during its tracing stage, removes the job?s vector cache, and prevents a late preview or committed export. The legacy Vectorize command now opens this same Studio flow instead of an XML editor.
+- CPU-bound tracing runs in a separately packaged worker. A visible Cancel aborts the active controller, terminates the worker during its tracing stage, removes the job’s vector cache, and prevents a late preview or committed export. The legacy Vectorize command now opens this same Studio flow instead of an XML editor.
 - Pipeline and provider tests cover saturated color, transparency, baseline JPEG, honest WebP rejection, oversized headers/files, forced path explosion, appended malicious content, source hashes, worker termination, stale/late result prevention, cache cleanup, and collision-safe exclusive export names.
-- `pnpm run ci` passed formatting, lint, typecheck, all 114 workspace tests, and production builds. Real Edge smoke passed the source ? controls ? SVG preview ? metrics ? cancellation/error journey. The 28-file VSIX packaged the worker; validation, a real installed-worker decode/trace, activation smoke, and clean-profile installation all passed with documentation/notices validation.
+- `pnpm run ci` passed formatting, lint, typecheck, all 114 workspace tests, and production builds. Real Edge smoke passed the source → controls → SVG preview → metrics → cancellation/error journey. The 28-file VSIX packaged the worker; validation, a real installed-worker decode/trace, activation smoke, and clean-profile installation all passed with documentation/notices validation.
 
-### Phase 4 ? Save, package, activate, and persist ? complete
+### Phase 4 — Save, package, activate, and persist · complete
 
 **Goal:** make **Save & Use** finish the journey instead of leaving an orphan export.
 
 - [x] Collect/confirm avatar name, safe id, author, version, and license. Never invent a redistribution license for user artwork.
-- [x] Generate the repository?s full schema-v1 `avatar.manifest.json`, not an `AssetManifestEntry` conversion record.
+- [x] Generate the repository’s full schema-v1 `avatar.manifest.json`, not an `AssetManifestEntry` conversion record.
 - [x] Create a staged package containing `svg/avatar.svg`, preview metadata, state mappings, capabilities, and SHA-256 checksums.
 - [x] Validate the staged package through the same package validator used for imports.
 - [x] Atomically install/register it at `.codex-avatar/avatars/<id>/`.
@@ -217,19 +217,19 @@ Every message must pass runtime schema validation. The Webview must never receiv
 - [x] Activate the package, update the selected character and runtime to SVG, call `reloadAssets()`, and return a typed completion message.
 - [x] Roll back files and registry changes together when validation, installation, activation, or reload fails.
 - [x] Provide **Save & Use**, **Open Folder**, and **Copy Path** on the completed generated package; the former orphan-export workflow is no longer the primary Studio path.
-- [x] Add an integration test for choose ? preview ? save ? validate ? register ? activate ? manifest message.
+- [x] Add an integration test for choose → preview → save → validate → register → activate → manifest message.
 
-**Done when:** picture ? SVG ? **Save & Use** visibly replaces the orb without manual commands, updates `avatar-registry.json`, survives an IDE reload, and never registers a partial or invalid package.
+**Done when:** picture → SVG → **Save & Use** visibly replaces the orb without manual commands, updates `avatar-registry.json`, survives an IDE reload, and never registers a partial or invalid package.
 
-**Evidence ? 2026-07-12:**
+**Evidence — 2026-07-12:**
 
 - The Studio requires name, safe lowercase id, author, semantic version, and an explicit license/rights statement; author and license start blank. Save & Use produces `svg/avatar.svg`, checksummed `metadata/source.json`, and a full schema-v1 `avatar.manifest.json` with SVG runtime/state mappings and no source-raster copy.
 - Generated staging runs through the same package/tree/path/SVG/checksum validator as imports. The registry installs from workspace-local staging with exclusive transaction directories and recoverable registry writes, selects the new package, sets character/runtime to the generated id/SVG, and posts the cache-revised active manifest immediately.
 - Existing ids return typed Replace, Create Copy, and Cancel choices. Successful completion exposes Open Folder and Copy Path without sending raw paths to the Webview. A generated package remains active when a new registry instance simulates IDE reload.
 - Transaction tests cover new install, deterministic copy id, replacement commit, replacement rollback, source preservation, and cleanup. A simulated active-manifest reload failure restores the former package files, registry, character, and runtime and never sends a false success.
-- `pnpm run ci` passed formatting, lint, typecheck, all 120 workspace tests, and builds. Real Edge smoke passed package progress, collision, failure, and success UI. The 28-file VSIX passed validation, clean-profile install, and a real installed choose ? worker trace ? Save & Use ? active manifest journey.
+- `pnpm run ci` passed formatting, lint, typecheck, all 120 workspace tests, and builds. Real Edge smoke passed package progress, collision, failure, and success UI. The 28-file VSIX passed validation, clean-profile install, and a real installed choose → worker trace → Save & Use → active manifest journey.
 
-### Phase 5 ? Make the Studio panel calm and useful ? complete
+### Phase 5 — Make the Studio panel calm and useful · complete
 
 **Goal:** fix the long, technical layout shown in the current screenshots.
 
@@ -247,16 +247,16 @@ Every message must pass runtime schema validation. The Webview must never receiv
 
 **Done when:** a new user can identify how to create, select, and manage an avatar without scrolling through technical settings or reading raw paths.
 
-**Evidence ? 2026-07-12:**
+**Evidence — 2026-07-12:**
 
-- The visible panel now keeps the stage and exactly three primary actions?Create from Picture, Import Avatar, and Blender Tools?before the real avatar library. Behavior stays compact; runtime, timing, effects, and diagnostics are inside a collapsed, keyboard-accessible Advanced behavior section. The free-text avatar id, raw asset URIs, timestamp-only validation, and duplicate Toggle/Vectorize/action rows are gone.
+- The visible panel now keeps the stage and exactly three primary actions—Create from Picture, Import Avatar, and Blender Tools—before the real avatar library. Behavior stays compact; runtime, timing, effects, and diagnostics are inside a collapsed, keyboard-accessible Advanced behavior section. The free-text avatar id, raw asset URIs, timestamp-only validation, and duplicate Toggle/Vectorize/action rows are gone.
 - The versioned bridge now carries bounded library refresh/status/validation data and typed import, activate, validate, reload, reveal, remove, and workspace-setup requests. The extension host performs real package/manifest/SVG/checksum validation, redacts known local paths, refuses registered-root/symlink escapes, falls back to the built-in SVG in untrusted workspaces, and rolls settings, registry state, files, and active rendering back on failed activation/removal. Windows package moves use bounded retry without weakening transactional rollback.
 - The library exposes readable metadata and Active, Ready, Needs repair, built-in, and partial-success note badges; structured error/warning lists; loading, empty, working, success, and failure feedback; two-step destructive confirmation; and disabled-action reasons with Open Folder or Manage Trust setup actions.
 - `pnpm run ci` passed formatting, lint, strict typecheck, builds, and all 128 tests: avatar core 19, asset pipeline 21, Pixi runtime 24, extension Node 18, extension Vitest 20, Webview Vitest 21, and Webview Node 5. Three concurrent provider stress runs also passed after exercising Windows removal transactions.
-- Real Edge smoke passed the renderer, picture Studio, package states, avatar selector, structured validation, and raw-URI privacy checks. Six inspected screenshots were captured under `.codex-avatar/previews/phase5/` at 340?900 and 760?900 in dark, light, and high-contrast themes; the stage, main actions, and library remained identifiable above technical settings in every variant.
+- Real Edge smoke passed the renderer, picture Studio, package states, avatar selector, structured validation, and raw-URI privacy checks. Six inspected screenshots were captured under `.codex-avatar/previews/phase5/` at 340×900 and 760×900 in dark, light, and high-contrast themes; the stage, main actions, and library remained identifiable above technical settings in every variant.
 - The 28-file, 1.48 MB VSIX passed package validation, third-party notice validation, installed-package activation/Webview smoke, and a clean-profile VS Code installation.
 
-### Phase 6 ? Establish a real Blender connection ? complete
+### Phase 6 — Establish a real Blender connection · complete
 
 **Goal:** make Blender detection and setup trustworthy while keeping it optional.
 
@@ -273,16 +273,16 @@ Every message must pass runtime schema validation. The Webview must never receiv
 
 **Done when:** this Windows machine auto-detects its installed Blender 4.5.3, a bad path produces a repairable status, cancellation stops the process, and a machine without Blender still runs the avatar normally.
 
-**Evidence ? 2026-07-12:**
+**Evidence — 2026-07-12:**
 
 - The typed probe checks the restricted `codexAvatar.blenderPath` setting, `BLENDER_PATH`, system `PATH`, and dynamically enumerated Windows/macOS/Linux install locations. It requires anchored Blender identity output, supports Blender 3.6+ without a maximum-version ceiling, retains a separate invalid-preference result while continuing fallback discovery, and reports version, source, support, attempts, and SVG/GLB/PNG production capabilities.
 - A real host probe found `C:\Program Files\Blender Foundation\Blender 4.5\blender.exe` as a platform installation and parsed Blender 4.5.3 as supported. A second real probe used Node as the configured executable, rejected its successful `v22` output as non-Blender, preserved that repairable preference error, and still found Blender 4.5.3.
 - The collapsible Blender Tools panel now exposes Browse, Auto-detect, Test Connection, Cancel, Open Log, and Open Output Folder through the versioned bridge. It shows friendly missing/invalid/unsupported/working/success/failure states, version, executable, discovery source, support, and capability badges while explaining that picture-to-SVG does not require Blender. Narrow dark, wide light, and narrow high-contrast browser captures under `.codex-avatar/previews/phase6/` were inspected successfully.
-- Blender processes use `shell: false`, `--disable-autoexec`, trusted regular-file/real-path checks, one active job, bounded prefixed stdout/stderr, a configurable 10?600 second timeout, abort propagation, and Windows/POSIX process-tree termination. Jobs stage under `.codex-avatar/cache/jobs/blender-<uuid>/`; only nonempty artifacts with valid JSON reports publish collision-safely, and failure/cancel/timeout/collision removes staging without changing the source scene or existing output.
+- Blender processes use `shell: false`, `--disable-autoexec`, trusted regular-file/real-path checks, one active job, bounded prefixed stdout/stderr, a configurable 10–600 second timeout, abort propagation, and Windows/POSIX process-tree termination. Jobs stage under `.codex-avatar/cache/jobs/blender-<uuid>/`; only nonempty artifacts with valid JSON reports publish collision-safely, and failure/cancel/timeout/collision removes staging without changing the source scene or existing output.
 - `pnpm run ci` passed formatting, lint, strict typecheck, all builds, and all 156 tests: avatar core 19, asset pipeline 21, Pixi runtime 24, extension Node 38, extension Vitest 22, Webview Vitest 27, and Webview Node 5. Tests cover identity/fake tools, invalid fallback, cross-platform discovery, missing/unsupported Blender, probe cancellation, command timeout/cancellation and process-tree cleanup, logging bounds, path escapes, staging, validation, late collision, and single-flight release.
 - Real Edge smoke passed the connected Blender Tools states and cancellation UI. The 28-file, 1.49 MB VSIX included the Blender safety strings and UI controls, passed installed activation/Webview smoke and third-party validation, and installed successfully in a clean VS Code profile.
 
-### Phase 7 ? Export Blender assets and connect supported output ? P1
+### Phase 7 — Export Blender assets and connect supported output · P1
 
 **Goal:** turn a Blender job into validated assets and a usable avatar package.
 
@@ -292,7 +292,7 @@ Every message must pass runtime schema validation. The Webview must never receiv
 - [x] Export selected SVG line art, GLB, and PNG preview modes independently and report partial success per mode.
 - [x] Treat SVG as capability-dependent line art. Do not claim that Blender automatically vectorizes arbitrary pictures or meshes.
 - [x] Optimize and sanitize Blender SVG through the same SVG safety pipeline used by picture tracing.
-- [x] Validate nonempty SVG, GLB structure/size, PNG signature/dimensions, and portable relative report paths?not file existence alone.
+- [x] Validate nonempty SVG, GLB structure/size, PNG signature/dimensions, and portable relative report paths—not file existence alone.
 - [x] Rename per-mode metadata to `export-report.json` and keep it separate from `avatar.manifest.json`.
 - [x] Build a valid avatar package with a package-local SVG fallback, optional GLB, and optional PNG preview.
 - [x] Validate, register, optionally activate, and reload the package through the same atomic path as Phase 4.
@@ -309,11 +309,11 @@ Every message must pass runtime schema validation. The Webview must never receiv
 - Blender scripts prefer `Export`, fall back to `Avatar`, recursively exclude `Guides`/`Ignore`, never save the source scene, and describe SVG accurately as authored Grease Pencil line art rather than automatic vectorization.
 - `blenderAvatarPackage.ts` creates a validated SVG-first package with optional GLB/PNG, an SVG-only entrypoint/runtime priority, checksums, and source metadata. The provider installs, activates, reloads, commits, or rolls back through the existing transaction path. Re-export plus same-id replace refreshes the visible avatar.
 - Typed protocol/Webview states expose per-mode success/failure, package metadata, collision choices, and **Use SVG as Avatar**. GLB is visibly labelled export-only and cannot be selected as the active runtime.
-- `pnpm smoke:blender` passed against Blender 4.5.3 LTS using a disposable external `.blend`: one `Export` object produced validated GLB and 1024?1024 PNG output while the `Ignore` object was excluded and portable reports recorded `collection: "Export"`, `objectCount: 1`. The source and temporary workspaces were removed afterward.
+- `pnpm smoke:blender` passed against Blender 4.5.3 LTS using a disposable external `.blend`: one `Export` object produced validated GLB and 1024×1024 PNG output while the `Ignore` object was excluded and portable reports recorded `collection: "Export"`, `objectCount: 1`. The source and temporary workspaces were removed afterward.
 - `pnpm run ci` passed formatting, lint, strict typecheck, all builds, and all 162 tests: avatar core 19, asset pipeline 21, Pixi runtime 24, extension Node 40, extension Vitest 25, Webview Vitest 28, and Webview Node 5. Focused coverage includes external-source safety, partial success, structural artifact rejection, path privacy, SVG-first package validation, and typed UI results.
 - Real Edge Webview smoke passed Blender connection, partial results, export-only GLB guidance, and avatar-save success; the inspected Phase 7 screenshot is under `.codex-avatar/previews/phase7/`. Documentation/notices validation passed. The 28-file, 1.50 MB VSIX passed content validation, installed activation/Webview smoke, and a clean-profile install.
 
-### Phase 8 ? Optional SVG-to-Blender handoff ? P2
+### Phase 8 — Optional SVG-to-Blender handoff · P2
 
 **Goal:** provide a clear bridge for users who want to refine a vectorized result in Blender.
 
@@ -334,11 +334,11 @@ Every message must pass runtime schema validation. The Webview must never receiv
 - The real Blender 4.5.3 host smoke imported a sanitized SVG as curve geometry, produced a valid working `.blend` with `Export` conventions, and successfully sent that scene back through the normal validated GLB export flow.
 - `pnpm run ci` passed formatting, lint, strict typecheck, all builds, and all 165 tests. Real Edge Webview smoke passed the handoff working/success states and return actions; the Phase 8 screenshot is under `.codex-avatar/previews/phase8/`.
 
-### Phase 9 ? End-to-end quality, documentation, and release ? required
+### Phase 9 — End-to-end quality, documentation, and release · required
 
 **Goal:** prove the actual user journeys in the packaged extension.
 
-- [x] Add Webview tests proving a manifest SVG URI?not the hardcoded orb?is rendered.
+- [x] Add Webview tests proving a manifest SVG URI—not the hardcoded orb—is rendered.
 - [x] Add mocked VS Code integration tests for picture selection, job progress/cancel, package installation, activation, reload, and rollback.
 - [x] Add package tests for id collisions, checksums, malicious SVG, source outside the workspace, atomic failure, and cache cleanup.
 - [x] Replace the Node-as-Blender version test with a controlled fake that emits Blender-shaped output.
@@ -357,12 +357,12 @@ Every message must pass runtime schema validation. The Webview must never receiv
 - Mocked provider/registry tests cover external picture copying, typed progress, worker cancellation, local vector preview, package collisions/copies, validation, checksums, malicious SVG and path rejection, atomic install/activation/reload, persisted selection, rollback, removal rollback, and cache cleanup.
 - Blender tests use a controlled runner that emits anchored Blender-shaped identity output and cover fake-tool rejection, discovery, timeout, cancellation/process-tree cleanup, staging, source preservation, external selection, structural validation, late collisions, partial success, SVG-first package registration/reload, and SVG handoff safety.
 - `pnpm smoke:blender` is opt-in on hosts without Blender and passed here with Blender 4.5.3 LTS for real GLB, PNG, SVG curve handoff, and handoff-scene re-export.
-- Real Edge smoke passed dark, light, high-contrast, 360 px narrow layout, system reduced motion, no-animation mode, keyboard Tab/Enter traversal, manifest asset load/failure/reload, picture/vector/package flows, Blender partial results, and SVG handoff. Phase 5?8 screenshots remain under `.codex-avatar/previews/`.
+- Real Edge smoke passed dark, light, high-contrast, 360 px narrow layout, system reduced motion, no-animation mode, keyboard Tab/Enter traversal, manifest asset load/failure/reload, picture/vector/package flows, Blender partial results, and SVG handoff. Phase 5–8 screenshots remain under `.codex-avatar/previews/`.
 - User, pipeline, package, Blender, troubleshooting, architecture, privacy, QA, performance, README, and changelog documentation describe the implemented local-only behavior and its non-rigging/non-vectorization boundaries.
 - Final release matrix passed: `pnpm run ci` (165 tests and all builds), `pnpm smoke:webview`, `pnpm smoke:blender`, `pnpm package:vsix`, `pnpm validate:vsix`, `pnpm smoke:vsix`, `pnpm smoke:clean-profile`, `pnpm validate:docs`, and `pnpm validate:notices`.
 - The 29-file, 1.50 MB VSIX contains the Webview, SVG/Pixi fallback assets, four production Blender scripts including `import_svg_scene.py`, typed Blender safety/UI strings, and no prohibited remote runtime. Installed activation/Webview smoke and clean-profile installation passed.
 
-### Phase 10 ? Layered animated mascot prototype ? complete
+### Phase 10 — Layered animated mascot prototype · complete
 
 **Goal:** use the supplied Skjermbilde illustration as the visual reference for a responsive local website-ready mascot, rather than stopping at the static picture trace.
 
@@ -386,7 +386,7 @@ Every message must pass runtime schema validation. The Webview must never receiv
 - The 30-file, 1.61 MB VSIX passed content validation, installed activation/Webview smoke, third-party notice validation, documentation validation, and clean-profile installation. Computer Use reloaded the installed VSIX in the live Blender workspace and visibly confirmed the repaired local package as **Active**, **Ready**, and rendered by the layered mascot.
 - [LAYERED_MASCOT_PROTOTYPE.md](LAYERED_MASCOT_PROTOTYPE.md) documents the authored-2D boundary, component props, normalized pointer and mouth inputs, React/Vite reuse, and plain SVG fallback. No remote service, microphone permission, WebGL, or WebGPU is required.
 
-### Phase 11 ? Portable avatar package export ? complete
+### Phase 11 — Portable avatar package export · complete
 
 **Goal:** let a user create a shareable local artifact from a ready avatar without manually locating and copying its installed package files.
 
@@ -409,7 +409,7 @@ Every message must pass runtime schema validation. The Webview must never receiv
 - `pnpm run ci` passed formatting, lint, strict typecheck, all builds, and all 177 tests. `pnpm smoke:webview` passed in real headless Edge and verified the export action in the rendered library. `pnpm validate:docs` and `pnpm validate:notices` passed.
 - `pnpm package:vsix` produced a validated 30-file, 1.61 MB VSIX. `pnpm smoke:vsix` passed activation, command, Webview, and worker checks from an isolated temporary workspace, and `pnpm smoke:clean-profile` installed the VSIX successfully without reading or changing the user's active avatar workspace.
 
-### Phase 12 ? Blender MCP and professional 3D avatar ? required
+### Phase 12 — Blender MCP and professional 3D avatar · required
 
 **Goal:** connect Codex to local Blender through a restricted project MCP, author a professional local-only 3D Cholita, and make validated GLB packages usable through the optional WebGL runtime while preserving SVG/orb fallback.
 
@@ -417,8 +417,8 @@ Every message must pass runtime schema validation. The Webview must never receiv
 - [x] Install the seven audited Blender modeling/material/animation/export/rigging/inspection skills at fixed commits and record their licenses and source pins.
 - [x] Add `webgl` to settings, typed bridge validation, library reporting, workspace-scoped avatar activation, and Blender package generation without changing manifest schema version 1.
 - [x] Lazy-load Three.js and GLTFLoader, play mapped glTF actions through AnimationMixer, drive morph-based blink/mouth plus gaze, and dispose all GPU resources.
-- [x] Preserve reduced motion, page-visibility pause, strict CSP, local paths, WebGL context-loss recovery, and the GLB ? package SVG ? built-in orb fallback chain.
-- [x] Create `.codex-avatar/avatars/cholita-3d/source/cholita.blend` as a stylized authored model with ?60k triangles, ?50 deform bones, four influences per vertex, required facial shape keys, and the complete state/trigger clip set.
+- [x] Preserve reduced motion, page-visibility pause, strict CSP, local paths, WebGL context-loss recovery, and the GLB → package SVG → built-in orb fallback chain.
+- [x] Create `.codex-avatar/avatars/cholita-3d/source/cholita.blend` as a stylized authored model with ≤60k triangles, ≤50 deform bones, four influences per vertex, required facial shape keys, and the complete state/trigger clip set.
 - [x] Export and validate the local-only GLB, SVG fallback, preview, contact sheet/turntable, manifest, and rig/export report; activate `cholita-3d` only in this workspace and retain the Phase 10 package.
 - [ ] Run focused MCP, package, renderer, Blender, performance, privacy, installed-extension, fallback, CI, VSIX, and visual acceptance checks; prove Cholita assets are absent from Git and the VSIX.
 
@@ -481,7 +481,7 @@ These are intentionally outside the active delivery path:
 
 ## 8. Execution rules
 
-- Work in phase order. Phase 8 may be deferred, but Phases 1?7 and 9 are the requested delivery path.
+- Work in phase order. Phase 8 may be deferred, but Phases 1–7 and 9 are the requested delivery path.
 - Before editing a work area, read its scoped `AGENTS.md` and use the matching repository skill.
 - Preserve unrelated user changes and local assets. Never clean or overwrite a dirty worktree to make a phase easier.
 - Keep each phase reviewable and update this checklist only after implementation plus verification.

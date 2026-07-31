@@ -4,7 +4,7 @@
 
 ## Overview
 
-This feature **hardens and guarantees** AI-agent capabilities that already exist in StillasCalculator, adds the one genuinely missing capability (`retrieveBuildingFootprints`), and retires a dormant legacy path. It is not a greenfield build. The architecture described here is the architecture already realized by the implementation plan `codex_tools_+_cad_4d25af51.plan.md` (whose Phase 1?3 todos are marked completed) and verified against the current sources; this document promotes that plan into a proper design anchored to the 12 hardening requirements in `requirements.md`.
+This feature **hardens and guarantees** AI-agent capabilities that already exist in StillasCalculator, adds the one genuinely missing capability (`retrieveBuildingFootprints`), and retires a dormant legacy path. It is not a greenfield build. The architecture described here is the architecture already realized by the implementation plan `codex_tools_+_cad_4d25af51.plan.md` (whose Phase 1–3 todos are marked completed) and verified against the current sources; this document promotes that plan into a proper design anchored to the 12 hardening requirements in `requirements.md`.
 
 The architectural rule inherited from the stillas-calculator spec still governs everything:
 
@@ -15,17 +15,17 @@ What that rule now has to hold for is *two* AI provider backends, not one. The c
 ### What this feature does
 
 - **(a) Make tool access non-optional and provider-agnostic.** Both providers build their tool surface from the same `getToolDefinitions()`/`createToolDispatch()` and execute through the same deterministic engine functions, so a tool call returns the same `ToolResult` regardless of which backend ran (Req 1, 2).
-- **(b) Hold the trust boundary and field validation identically on both backends.** Every stateful write goes through a validated `Plan_Updater` ? `createControllerPlanContext` ? `scaffoldPlanController` on the OpenAI path, `createFilePlanContext` on the MCP path ? with identical numeric ranges (Req 3).
+- **(b) Hold the trust boundary and field validation identically on both backends.** Every stateful write goes through a validated `Plan_Updater` — `createControllerPlanContext` → `scaffoldPlanController` on the OpenAI path, `createFilePlanContext` on the MCP path — with identical numeric ranges (Req 3).
 - **(c) Keep AI-produced geometry flowing through the deterministic engine and user-correctable.** The AI only ever supplies *candidate* geometry; the `Geometry_Engine` computes every perimeter, area, side length, and `Scaffold_Length`, and every AI-produced perimeter is stored through the same `setPerimeter` updater used for manual drawing (Req 6, 7, 8, 12).
-- **(d) Keep the Codex sandbox enforced** ? read-only filesystem, no automatic command approval, no direct model network access, disabled web search (Req 9).
+- **(d) Keep the Codex sandbox enforced** — read-only filesystem, no automatic command approval, no direct model network access, disabled web search (Req 9).
 - **(e) Make deadline, state preservation, and availability handling uniform** across both providers (Req 10, 11).
-- **Add `retrieveBuildingFootprints`** ? the net-new Geometry_Tool that resolves an address (or coordinate) to candidate building footprints server-side, so the assistant can "draw the house from the address provided" end to end (Req 5).
+- **Add `retrieveBuildingFootprints`** — the net-new Geometry_Tool that resolves an address (or coordinate) to candidate building footprints server-side, so the assistant can "draw the house from the address provided" end to end (Req 5).
 - **Retire the legacy tool-less `runCodexSdkChat`** in `lib/ai/codexSdkAdapter.ts`, leaving a single tool-enabled Codex path while keeping `getCodexCliAuthStatus`/`startCodexChatGptSignIn` (Req 2.7).
 
 ### Goals
 
 - Identical, trustworthy tool behavior regardless of which AI backend is configured (Req 1, 2).
-- A single trust boundary and identical field validation on both providers ? the model can never corrupt the project (Req 3, 8, 9).
+- A single trust boundary and identical field validation on both providers — the model can never corrupt the project (Req 3, 8, 9).
 - Every measurement and quantity originates from the deterministic engine; nothing the model "computes" is ever presented (Req 4, 7, 8).
 - An end-to-end "draw the house at this address" flow built only from existing server-side open services (Req 5, 6).
 - Bounded, safe failure on every backend within a uniform 45-second deadline (Req 10, 11).
@@ -37,7 +37,7 @@ The design is grounded in the current sources rather than external research; the
 
 - **The Codex path is already tool-enabled.** `runCodexAgentWithTools` starts a Codex thread configured with `mcp_servers.stillas` pointing at `scripts/stillas-mcp-server.ts`, streams the turn with `runStreamed()`, and collects `mcp_tool_call` completion events into `toolResults`. The legacy `runCodexSdkChat` (a single tool-less `thread.run()` embedding a JSON snapshot) is no longer wired into the chat route and is the path being retired (Req 2.7).
 - **One shared executor serves both providers.** `lib/ai/toolExecutor.ts` defines `AI_TOOLS` and `createToolDispatch`. The OpenAI loop attaches `getToolDefinitions()` as function tools and calls `executeTool` directly; the MCP server lists the same definitions and calls the same `executeTool`. This is the structural basis for provider-agnostic equivalence (Req 1).
-- **The single source of truth is a `ScaffoldPlan`.** `scaffoldPlanController` (the `projectStateController` singleton, aliased) owns the in-memory plan with `drawing{}` and `cad{}` slots. The MCP path carries the same `ScaffoldPlan` shape through a synced temp plan file and mutates it via `createFilePlanContext`, which re-implements the controller's validation ranges exactly (`0.01?100` working height, `0.01?5` calculator dimensions, ring validation via `isValidPerimeter`).
+- **The single source of truth is a `ScaffoldPlan`.** `scaffoldPlanController` (the `projectStateController` singleton, aliased) owns the in-memory plan with `drawing{}` and `cad{}` slots. The MCP path carries the same `ScaffoldPlan` shape through a synced temp plan file and mutates it via `createFilePlanContext`, which re-implements the controller's validation ranges exactly (`0.01–100` working height, `0.01–5` calculator dimensions, ring validation via `isValidPerimeter`).
 - **The footprint/geocoding services already exist server-side.** `/api/overpass/buildings` (60 m radius, 25 s overall deadline, mirror failover, `empty`/`error` fallback signals) and `/api/geocoding/photon` (Photon with one Nominatim fallback, `noMatch` signal). `retrieveBuildingFootprints` composes these two existing routes server-side rather than introducing any new network stack.
 - **The CAD pipeline is deterministic, not LLM-generated.** `lib/cad/scaffoldOpenScadTemplate.ts` template-generates OpenSCAD from `ScaffoldPlan` parameters; `lib/cad/cadExportService.ts` writes `.scad` always and shells out to the `openscad` CLI for `.stl`/`.dxf`. Per the plan, the browser-side `openscad-wasm` preview path is GPL and must stay client-side with a license notice; the server uses the CLI when present.
 
@@ -46,8 +46,8 @@ The design is grounded in the current sources rather than external research; the
 | Concern | Technology | Notes |
 | --- | --- | --- |
 | Framework / SSR / API routes | Next.js (App Router), React, TypeScript | unchanged |
-| AI ? OpenAI path | OpenAI Responses API (function calling + Structured Outputs) | `runOpenAiAgentWithTools`, server-side key |
-| AI ? Codex path | `@openai/codex-sdk` + `@modelcontextprotocol/sdk` (stdio) | `runCodexAgentWithTools` + `scripts/stillas-mcp-server.ts`, local `codex login` |
+| AI — OpenAI path | OpenAI Responses API (function calling + Structured Outputs) | `runOpenAiAgentWithTools`, server-side key |
+| AI — Codex path | `@openai/codex-sdk` + `@modelcontextprotocol/sdk` (stdio) | `runCodexAgentWithTools` + `scripts/stillas-mcp-server.ts`, local `codex login` |
 | Geometry math | Turf.js (`lib/geometry/turfMeasurements.ts`) | deterministic engine |
 | Geocoding | Photon (primary), Nominatim (fallback) | `/api/geocoding/photon`, server-side |
 | Building footprints | Overpass API (mirror failover) | `/api/overpass/buildings`, server-side |
@@ -58,8 +58,8 @@ The design is grounded in the current sources rather than external research; the
 
 The plan's later phases are **explicitly out of scope** for this feature because `requirements.md` does not cover them:
 
-- **Phase 4 ? Cesium 3D Tiles** (geospatial 3D viewer / `renderGeospatialPreview`). Deferred. No requirement constrains it.
-- **Phase 5 ? Pascal architectural editor** (BIM-style walls/floors). Deferred. No requirement constrains it.
+- **Phase 4 — Cesium 3D Tiles** (geospatial 3D viewer / `renderGeospatialPreview`). Deferred. No requirement constrains it.
+- **Phase 5 — Pascal architectural editor** (BIM-style walls/floors). Deferred. No requirement constrains it.
 
 When either is taken up it should get its own spec. Nothing in this design adds, declares, or stubs those tools.
 
@@ -135,7 +135,7 @@ flowchart TB
 **OpenAI_Provider path** (`runOpenAiAgentWithTools`):
 
 1. The route constructs `OpenAI` with the server-side key and calls the agent loop with the conversation, a `sessionId`, and an abort signal bound to `REQUEST_TIMEOUT_MS` (45 s).
-2. The loop builds `createControllerPlanContext(scaffoldPlanController, sessionId)` ? `createToolDispatch(context)`, and attaches `getToolDefinitions()` as strict function tools.
+2. The loop builds `createControllerPlanContext(scaffoldPlanController, sessionId)` → `createToolDispatch(context)`, and attaches `getToolDefinitions()` as strict function tools.
 3. It runs the Responses API in a bounded loop of at most `MAX_TOOL_ITERATIONS = 8` round-trips. For each `function_call` it parses arguments, calls `executeTool`, validates any Structured_Output candidate, appends a `function_call_output`, and re-invokes the model.
 4. It returns `{ reply, toolResults, structuredOutput? }`. The route attaches the live `scaffoldPlanController.getScaffoldPlan()` as `scaffoldPlan`.
 
@@ -146,13 +146,13 @@ flowchart TB
 3. It calls `runStreamed()` and consumes `ThreadEvent`s: each completed `mcp_tool_call` is parsed into a `CodexToolResult`; the `agent_message` becomes the reply; a `turn.failed` becomes an error result. The abort timer enforces `DEFAULT_CODEX_TIMEOUT_MS` (45 s, overridable by `STILLAS_CODEX_TIMEOUT_MS`).
 4. After the turn it reads the (MCP-mutated) plan file back into a `ScaffoldPlan` and returns `{ reply, toolResults, scaffoldPlan }`. The route applies that plan to `scaffoldPlanController` so the UI syncs.
 
-Inside the MCP server, every `CallToolRequest` loads the plan file, builds `createFilePlanContext` over it, runs the same `executeTool`, and writes the mutated plan back ? the identical dispatch and validation the OpenAI path uses in-process.
+Inside the MCP server, every `CallToolRequest` loads the plan file, builds `createFilePlanContext` over it, runs the same `executeTool`, and writes the mutated plan back — the identical dispatch and validation the OpenAI path uses in-process.
 
 ### Provider selection and the mandatory-tool guard
 
 The route selects a provider from `getAiProviderPreference()` and credential availability (`getOpenAiApiKey()`, Codex login status):
 
-- `off` ? return `{ unavailable: true }`.
+- `off` → return `{ unavailable: true }`.
 - Prefer OpenAI when `preference !== 'codex-cli'` and a key exists; otherwise take the Codex path (unless `preference === 'openai-api'` without a key, which is unavailable).
 - For each request the route computes `requiresTools = messageRequiresTools(latestUserMessage)` (a keyword test for action intent: calculate/draw/export/cad/scaffold/material/facade/perimeter/estimate/bom/report).
 - **Mandatory-tool retry guard (Codex path):** if `requiresTools` but the Codex turn executed zero tools, the route issues exactly one retry that injects an explicit "you must call the Stillas MCP tools" instruction. If the retry still executed zero tools, the route returns a `502` error rather than letting the model answer with un-tooled prose.
@@ -172,7 +172,7 @@ This guard is what operationalizes "tool access is non-optional" (Req 2) at the 
 
 This section documents the components as built and the interface changes this feature introduces (the new tool, the retirement, and the system-prompt note for `retrieveBuildingFootprints`).
 
-### Shared tool layer ? `lib/ai/toolExecutor.ts`
+### Shared tool layer — `lib/ai/toolExecutor.ts`
 
 The single execution path for every tool from any provider. Unchanged in shape except for adding `retrieveBuildingFootprints` to `ToolName`, `AI_TOOLS`, and `createToolDispatch`.
 
@@ -199,7 +199,7 @@ export type ToolResult =
   | { ok: true; data: unknown }
   | { ok: false; error: string };
 
-// getToolDefinitions() returns AI_TOOLS verbatim ? the same list both providers consume.
+// getToolDefinitions() returns AI_TOOLS verbatim — the same list both providers consume.
 export function createToolDispatch(context: PlanToolContext): Record<ToolName, ToolExecutorFn>;
 export function executeTool(
   dispatch: Record<ToolName, ToolExecutorFn>,
@@ -210,32 +210,32 @@ export function executeTool(
 ```
 
 Notes grounded in the current code:
-- Synchronous tools return `ToolResult` directly from `createToolDispatch`. `exportCadFormat` (and the new `retrieveBuildingFootprints`) require async I/O and are handled in `executeTool` rather than the synchronous dispatch table ? the dispatch entry returns a guard error instructing callers to use `executeTool`.
+- Synchronous tools return `ToolResult` directly from `createToolDispatch`. `exportCadFormat` (and the new `retrieveBuildingFootprints`) require async I/O and are handled in `executeTool` rather than the synchronous dispatch table — the dispatch entry returns a guard error instructing callers to use `executeTool`.
 - An unknown tool name yields `{ ok: false, error: 'Unknown tool "..."' }` and executes nothing (Req 1.4).
 
-### Plan tool context ? `lib/ai/planToolContext.ts`
+### Plan tool context — `lib/ai/planToolContext.ts`
 
 `PlanToolContext` is the validated mutation surface (`Plan_Updater`). Two implementations exist and must stay behaviorally identical:
 
-- `createControllerPlanContext(controller, cadSessionId)` ? delegates every updater to `scaffoldPlanController` (OpenAI / in-process path).
-- `createFilePlanContext(getPlan, setPlan, cadSessionId)` ? mutates a plain `ScaffoldPlan` object (MCP / file path), re-implementing the same validation ranges inline:
-  - working height `0.01?100` m,
-  - calculator dimensions `0.01?5` m,
+- `createControllerPlanContext(controller, cadSessionId)` — delegates every updater to `scaffoldPlanController` (OpenAI / in-process path).
+- `createFilePlanContext(getPlan, setPlan, cadSessionId)` — mutates a plain `ScaffoldPlan` object (MCP / file path), re-implementing the same validation ranges inline:
+  - working height `0.01–100` m,
+  - calculator dimensions `0.01–5` m,
   - perimeter via `isValidPerimeter` then `measurePolygon` + `computeScaffoldLength`,
   - unknown scaffold system rejected,
   - every accepted mutation bumps `version`.
 
 Both expose `getCadSessionId()` and `getCadExportDir()` for CAD export paths. This duality is the subject of Property C and Property I (the two contexts must agree).
 
-### MCP server ? `scripts/stillas-mcp-server.ts`
+### MCP server — `scripts/stillas-mcp-server.ts`
 
 A stdio MCP server that exposes the deterministic tools to Codex:
 
-- `ListTools` ? `getToolDefinitions().map(def => ({ name, description, inputSchema: def.parameters }))` ? the identical tool set, so the Codex surface cannot drift from the OpenAI surface (Req 2.1).
-- `CallTool` ? load the plan file, `executeTool(dispatch, context, name, args)`, save the plan file; success returns the JSON `data` as a text block, failure returns `{ error }` with `isError: true`.
+- `ListTools` → `getToolDefinitions().map(def => ({ name, description, inputSchema: def.parameters }))` — the identical tool set, so the Codex surface cannot drift from the OpenAI surface (Req 2.1).
+- `CallTool` → load the plan file, `executeTool(dispatch, context, name, args)`, save the plan file; success returns the JSON `data` as a text block, failure returns `{ error }` with `isError: true`.
 - Env contract: `STILLAS_PLAN_FILE` (required), `STILLAS_SESSION_ID` (optional, default `mcp-default`).
 
-### Codex runner ? `lib/ai/codexAgentRunner.ts`
+### Codex runner — `lib/ai/codexAgentRunner.ts`
 
 ```typescript
 export async function runCodexAgentWithTools(
@@ -249,7 +249,7 @@ export function messageRequiresTools(content: string): boolean;
 
 Responsibilities: auth check (`getCodexCliAuthStatus`), temp dir + plan-file write, `Codex` construction with the MCP server config and the four sandbox flags, `runStreamed()` consumption of `mcp_tool_call`/`agent_message`/`turn.failed`, abort-based deadline, plan-file read-back, best-effort temp cleanup.
 
-### OpenAI agent loop ? `lib/ai/openAiAgentLoop.ts`
+### OpenAI agent loop — `lib/ai/openAiAgentLoop.ts`
 
 ```typescript
 export const MAX_TOOL_ITERATIONS = 8;
@@ -259,9 +259,9 @@ export async function runOpenAiAgentWithTools(
 export class StructuredOutputError extends Error { /* schemaName, issues */ }
 ```
 
-Responsibilities: build the controller-backed context + dispatch, attach strict function tools, loop ? 8 round-trips, execute tools, validate Structured_Output via `buildStructuredOutput` (throws `StructuredOutputError` on nonconformance), thread the abort signal everywhere.
+Responsibilities: build the controller-backed context + dispatch, attach strict function tools, loop ≤ 8 round-trips, execute tools, validate Structured_Output via `buildStructuredOutput` (throws `StructuredOutputError` on nonconformance), thread the abort signal everywhere.
 
-### Unified chat route ? `app/api/ai/chat/route.ts`
+### Unified chat route — `app/api/ai/chat/route.ts`
 
 ```typescript
 const REQUEST_TIMEOUT_MS = 45_000;
@@ -281,19 +281,19 @@ export interface AiToolResult { tool: string; ok: boolean; data?: unknown; error
 
 The response shape is identical for both providers (Req 1.5, 1.6, 10.4). Status mapping: success `200`; `unavailable` `200` with `{ unavailable: true }`; mandatory-tool violation `502`; provider/structured error `502`; timeout `504`.
 
-### System prompt ? `lib/ai/systemPrompt.ts`
+### System prompt — `lib/ai/systemPrompt.ts`
 
 The mandatory-tool rule is already present. This feature adds one line documenting `retrieveBuildingFootprints` so the model knows to call it for "draw the house at \<address\>" requests and to select a candidate and store it via `setBuildingPerimeter` (Req 5.2, 6.2). No behavioral logic lives in the prompt; the route's `messageRequiresTools` guard remains the enforcement mechanism.
 
-### Client sync ? `lib/ai/chatClient.ts` + `components/StillasCalculatorApp.tsx`
+### Client sync — `lib/ai/chatClient.ts` + `components/StillasCalculatorApp.tsx`
 
-`sendChatRequest` posts the chronological conversation and normalizes the untrusted response into a `ChatOutcome` (`ok` / `rejected` / `unavailable` / `error`, with `scaffoldPlan` carried when present). `StillasCalculatorApp` applies a returned `scaffoldPlan` to the controller so the map, overlay, material list, and CAD preview update without manual refresh. (Note: a stale comment in `chatClient.ts` references a "30 s" timeout; the actual deadline is 45 s ? see Error Handling.)
+`sendChatRequest` posts the chronological conversation and normalizes the untrusted response into a `ChatOutcome` (`ok` / `rejected` / `unavailable` / `error`, with `scaffoldPlan` carried when present). `StillasCalculatorApp` applies a returned `scaffoldPlan` to the controller so the map, overlay, material list, and CAD preview update without manual refresh. (Note: a stale comment in `chatClient.ts` references a "30 s" timeout; the actual deadline is 45 s — see Error Handling.)
 
-### Drawing ? `lib/drawing/scaffoldOverlay.ts` + `components/map/ScaffoldOverlayLayer.tsx`
+### Drawing — `lib/drawing/scaffoldOverlay.ts` + `components/map/ScaffoldOverlayLayer.tsx`
 
-`buildScaffoldOverlay(plan)` is a pure function producing a GeoJSON `FeatureCollection` (facade-run lines, bay ticks, a scaffold-meta polygon) derived only from engine measurements and the calculation ? never from AI numbers. `generateScaffoldDrawing` stores it on `plan.drawing`; `clearScaffoldDrawing` removes it without touching the perimeter, measurements, or facade selection (Req 6.6). `ScaffoldOverlayLayer` subscribes to the controller and renders the overlay on MapLibre.
+`buildScaffoldOverlay(plan)` is a pure function producing a GeoJSON `FeatureCollection` (facade-run lines, bay ticks, a scaffold-meta polygon) derived only from engine measurements and the calculation — never from AI numbers. `generateScaffoldDrawing` stores it on `plan.drawing`; `clearScaffoldDrawing` removes it without touching the perimeter, measurements, or facade selection (Req 6.6). `ScaffoldOverlayLayer` subscribes to the controller and renders the overlay on MapLibre.
 
-### CAD ? template, export service, route, preview
+### CAD — template, export service, route, preview
 
 - `lib/cad/scaffoldOpenScadTemplate.ts`: `extractOpenScadParameters(plan)` returns `null` until calculation and dimensions exist; `buildScaffoldOpenScad(plan)` template-generates deterministic OpenSCAD.
 - `lib/cad/cadExportService.ts`: writes `.scad` always; shells out to the `openscad` CLI for `.stl`/`.dxf`, returning a `downloadUrl` to `/api/cad/export`.
@@ -374,10 +374,10 @@ interface RetrieveFootprintsData {
 
 **Behavior, mapped to Req 5:**
 - Accepts an address or a coordinate; resolves an address to a coordinate via the Geocoding_Service; queries the Overpass_Service within 60 m; both calls server-side (5.1, 5.6).
-- Returns candidate footprints as a `Tool_Result` so the model can confirm one with the user (5.3). The tool does **not** store anything ? selecting a footprint is a separate step.
-- No footprints in 60 m ? `{ ok:true, empty:true, candidates:[] }`; the model informs the user and offers manual drawing/dimensions (5.4).
-- Overpass network error / non-success / 25 s timeout ? `{ ok:false, error:'overpass-failed' }`; Project_State preserved; offer manual drawing (5.5).
-- Geocoding no-match / service error ? `{ ok:false, error:'address-not-found' }`; Project_State preserved; offer manual drawing or prompt for a more specific address/coordinate (5.7).
+- Returns candidate footprints as a `Tool_Result` so the model can confirm one with the user (5.3). The tool does **not** store anything — selecting a footprint is a separate step.
+- No footprints in 60 m → `{ ok:true, empty:true, candidates:[] }`; the model informs the user and offers manual drawing/dimensions (5.4).
+- Overpass network error / non-success / 25 s timeout → `{ ok:false, error:'overpass-failed' }`; Project_State preserved; offer manual drawing (5.5).
+- Geocoding no-match / service error → `{ ok:false, error:'address-not-found' }`; Project_State preserved; offer manual drawing or prompt for a more specific address/coordinate (5.7).
 - Reuses each route's existing deadline/fallback signals (`noMatch`, `empty`, `error: 'overpass-failed'`) rather than inventing new failure semantics.
 
 **Storing a chosen footprint (Req 6.2):** the tool itself never writes the perimeter. When the model (with user confirmation) picks `candidates[i]`, it calls `setBuildingPerimeter` with `candidates[i].polygon`, which validates via the Geometry_Engine and stores through the same `Plan_Updater` as manual drawing, replacing any prior perimeter. This keeps the "candidate vs. committed perimeter" separation that Req 6 requires and means footprint selection inherits all of Req 6/7/8's correctness guarantees for free.
@@ -417,6 +417,6 @@ interface GeoJsonPolygon {
 
 `ProjectState` (address, `perimeterPolygon`, `measurements`, `selectedFacadeSideIndices`, `scaffoldLengthMeters`, scaffold config, `calculation`, `materialListAdjusted`, `aiMessages`, `aiSummary`) is the slice every existing view already reads.
 
-**Plan transport on the MCP path.** `lib/scaffold/scaffoldPlan.ts` provides `createScaffoldPlan`, `parseScaffoldPlan`, and `toProjectState`. `lib/ai/planFileSync.ts` writes/reads the temp `scaffold-plan.json` and resolves the CAD export dir (`.stillas-cad/<sessionId>`). The plan round-trips JSON ? disk ? JSON via `parseScaffoldPlan`, which defaults missing `drawing`/`cad`/`version` so an older plan file still parses (relevant to Property H's serialization round-trip in the geometry case).
+**Plan transport on the MCP path.** `lib/scaffold/scaffoldPlan.ts` provides `createScaffoldPlan`, `parseScaffoldPlan`, and `toProjectState`. `lib/ai/planFileSync.ts` writes/reads the temp `scaffold-plan.json` and resolves the CAD export dir (`.stillas-cad/<sessionId>`). The plan round-trips JSON → disk → JSON via `parseScaffoldPlan`, which defaults missing `drawing`/`cad`/`version` so an older plan file still parses (relevant to Property H's serialization round-trip in the geometry case).
 
 **`retrieveBuildingFootprints` result model.** The `RetrieveFootprintsData` shape above is a transient `Tool_Result` payload, not stored on the plan. Only after `setBuildingPerimeter` does a chosen polygon enter `ScaffoldPlan.perimeterPolygon` (with engine-computed `measurements` and `scaffoldLengthMeters`).

@@ -49,12 +49,12 @@ python -m opendraft.cli "Your research topic" --level master --lang en
 
 ```
 .agent/
-??? agents/           # 5 Specialist Agents
-??? skills/           # 6 Skills
-??? workflows/        # 6 Slash Commands
-??? rules/            # Workspace Rules
-??? opendraft/        # Research Engine (Python)
-??? ARCHITECTURE.md   # Full documentation
+├── agents/           # 5 Specialist Agents
+├── skills/           # 6 Skills
+├── workflows/        # 6 Slash Commands
+├── rules/            # Workspace Rules
+├── opendraft/        # Research Engine (Python)
+└── ARCHITECTURE.md   # Full documentation
 ```
 
 ---
@@ -120,7 +120,7 @@ The agents and skills are automatically available. Use workflows like:
 ### OpenDraft Engine (CLI)
 
 ```bash
-# Quick research expos? (outline + sources)
+# Quick research exposé (outline + sources)
 python -m opendraft.cli "Impact of AI on Education" --expose
 
 # Full thesis draft
@@ -133,12 +133,12 @@ python -m opendraft.cli "Sustainable Energy in Norway" --level master --lang en
 
 | Feature | ChatGPT | Thesis Writer Kit |
 |---------|---------|-------------------|
-| Citation verification | ? Hallucinates | ? Verified against real DBs |
-| Long-form writing | ? Hits limits | ? 20,000+ words |
-| Academic structure | ? Generic | ? Thesis chapters |
-| Source search | ? No | ? 200M+ papers |
-| AI detection bypass | ? No | ? Stealth strategies |
-| Export formats | ? Copy/paste | ? PDF, Word, LaTeX |
+| Citation verification | ❌ Hallucinates | ✅ Verified against real DBs |
+| Long-form writing | ❌ Hits limits | ✅ 20,000+ words |
+| Academic structure | ❌ Generic | ✅ Thesis chapters |
+| Source search | ❌ No | ✅ 200M+ papers |
+| AI detection bypass | ❌ No | ✅ Stealth strategies |
+| Export formats | ❌ Copy/paste | ✅ PDF, Word, LaTeX |
 
 ---
 
@@ -171,7 +171,7 @@ Current thesis configuration (editable in `.agent/config/thesis.yaml`):
 
 ## License
 
-MIT ? 2026
+MIT © 2026
 
 ---
 

@@ -10,38 +10,38 @@ CC AI helps visitors navigate Carlos's public portfolio and ask about verified w
 
 | State | Visible behavior | Accessible behavior |
 | --- | --- | --- |
-| Collapsed | ?Ask CC AI? button at lower right; does not cover primary CTA | Button names panel and expanded state |
+| Collapsed | “Ask CC AI” button at lower right; does not cover primary CTA | Button names panel and expanded state |
 | Welcome | Name, one-sentence boundary, 3 suggested questions, privacy link | Dialog/region title and ordered keyboard entry |
 | Composing | Labeled multiline input, Send, character guidance when needed | Label persists; Enter sends, Shift+Enter newline |
-| Connecting | ?Connecting?? in transcript; input remains understandable | Polite status announcement once |
-| Streaming | Partial response, Stop button, stable layout | Do not announce every token; announce ?Answer ready? at completion |
+| Connecting | “Connecting…” in transcript; input remains understandable | Polite status announcement once |
+| Streaming | Partial response, Stop button, stable layout | Do not announce every token; announce “Answer ready” at completion |
 | Complete | Answer plus public source links when records provide them; Retry/new question | Links name their destination; focus remains predictable |
 | Stopped | Partial answer labeled stopped; Retry available | Status announced once |
 | Error/offline | Plain explanation, Retry, and normal navigation alternatives | Error associated with transcript/input, not toast-only |
 | Rate limited | Honest wait guidance; no fake countdown | `role=status`, Retry disabled until allowed if known |
-| Refusal/unknown | ?I don?t have a verified public source for that.? Suggested safe route | No invented answer or private-data implication |
+| Refusal/unknown | “I don’t have a verified public source for that.” Suggested safe route | No invented answer or private-data implication |
 
 ## First prompts
 
-- ?Which projects best show Carlos's AI work??
-- ?What is the Observatory??
-- ?Where can I explore sound and music??
+- “Which projects best show Carlos's AI work?”
+- “What is the Observatory?”
+- “Where can I explore sound and music?”
 
-Suggested prompts are replaced only with questions that the public knowledge ledger can answer. The first assistant message: ?I can help you explore Carlos's verified public work, experiments, sound, and story. What would you like to find??
+Suggested prompts are replaced only with questions that the public knowledge ledger can answer. The first assistant message: “I can help you explore Carlos's verified public work, experiments, sound, and story. What would you like to find?”
 
 ## Layout and keyboard
 
-- Desktop: 380?420px wide lower-right panel, maximum 68vh, 16px radius, warm translucent taupe/sage surface with an opaque high-contrast fallback. It may cover the same reference-image chat area but not primary content.
+- Desktop: 380–420px wide lower-right panel, maximum 68vh, 16px radius, warm translucent taupe/sage surface with an opaque high-contrast fallback. It may cover the same reference-image chat area but not primary content.
 - Mobile: bottom sheet, maximum 78svh, visible Close button, drag affordance optional but never required. Body scrolling is contained; input remains visible above the software keyboard.
 - Opening moves focus to the panel title or input according to the user's activation context. Tab remains within a modal mobile sheet; desktop nonmodal panel follows document order. Escape closes when appropriate and returns focus to the trigger.
 - Transcript is a log with user/assistant labels. Stop, Retry, source links, privacy, and Close have text labels and 44px targets.
 
 ## Disclosure and privacy copy
 
-Header disclosure: ?AI answers from Carlos's public portfolio.?  
-Privacy note: ?Do not share sensitive information. Questions are sent to a selected model provider to generate an answer and may be subject to that provider's processing terms. Carlos's private files are not available to this assistant.?
+Header disclosure: “AI answers from Carlos's public portfolio.”  
+Privacy note: “Do not share sensitive information. Questions are sent to a selected model provider to generate an answer and may be subject to that provider's processing terms. Carlos's private files are not available to this assistant.”
 
-The production privacy notice must identify actual retention/logging settings and analytics choices. Do not claim zero retention unless the selected provider path and account policy verify it. The interface may disclose ?Model selected automatically for availability and cost? without naming unstable infrastructure in prominent product copy; an About AI link can show the current model/provider at response time.
+The production privacy notice must identify actual retention/logging settings and analytics choices. Do not claim zero retention unless the selected provider path and account policy verify it. The interface may disclose “Model selected automatically for availability and cost” without naming unstable infrastructure in prominent product copy; an About AI link can show the current model/provider at response time.
 
 ## Server contract
 

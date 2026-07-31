@@ -1,6 +1,6 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/webdesigner/blob/main/skills/webdesigner-design-system/references/DESIGN.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# Nightglass ? Project Design System
+# Nightglass — Project Design System
 
 > A precision-built midnight interface: matte near-black surfaces, crisp low-weight typography, hairline structure, and one electric-aqua signal.
 
@@ -47,7 +47,7 @@ Electric aqua is reserved for the primary action, active navigation, focus, or a
 
 ### Product truth over decoration
 
-For ordinary UI, prefer real product surfaces, relevant diagrams, data, or in-context photography over abstract blobs, fake 3D objects, and decorative dashboards. When the user explicitly requests 3D, follow 3D.md and make the authored scene?not ornamental chrome?the visual anchor.
+For ordinary UI, prefer real product surfaces, relevant diagrams, data, or in-context photography over abstract blobs, fake 3D objects, and decorative dashboards. When the user explicitly requests 3D, follow 3D.md and make the authored scene—not ornamental chrome—the visual anchor.
 
 ### Utility copy in product UI
 
@@ -173,7 +173,7 @@ Use fluid layout first and breakpoints only when content requires a structural c
 | --ng-shadow-floating | restrained 24px lift | Dialogs and floating layers |
 | --ng-shadow-focus | 3px aqua ring | Keyboard focus |
 
-Use hairline borders and surface steps before shadows. Do not put a large radius on every container. Pills are for binary filters, compact status, and tags?not for ordinary buttons or navigation.
+Use hairline borders and surface steps before shadows. Do not put a large radius on every container. Pills are for binary filters, compact status, and tags—not for ordinary buttons or navigation.
 
 ### Motion
 
@@ -231,7 +231,7 @@ Use this sequence unless the content demands another narrative:
 ### Supporting sections
 
 - Give every section one responsibility: explain, prove, deepen, or convert.
-- Alternate composition through scale, cropping, and alignment?not through a parade of card grids.
+- Alternate composition through scale, cropping, and alignment—not through a parade of card grids.
 - Use full-width product or media moments between quieter text sections.
 - Keep supporting copy to one short sentence where possible.
 - The final action should repeat the primary promise without repeating the entire hero.
@@ -304,7 +304,7 @@ These are behavior and composition contracts, not production component implement
 
 ### Panels and cards
 
-- Surface hierarchy: canvas ? surface 1 ? surface 2.
+- Surface hierarchy: canvas → surface 1 → surface 2.
 - Default separation: --ng-shadow-hairline or a single border.
 - Default panel radius: --ng-radius-lg.
 - Do not nest more than two visibly boxed surface levels.
@@ -364,7 +364,7 @@ These are behavior and composition contracts, not production component implement
 
 - Use --ng-color-accent for the most important series.
 - Use semantic colors only when the data is semantic.
-- Differentiate series with labels, line patterns, shapes, or direct annotation?not color alone.
+- Differentiate series with labels, line patterns, shapes, or direct annotation—not color alone.
 - Reduce gridline contrast and remove decorative 3D effects.
 
 ## 9. 3D and Immersive Experiences

@@ -1,6 +1,6 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/My-Football-Game/blob/main/README.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# ? My Football Game
+# ⚽ My Football Game
 
 A fun 2D football (soccer) game made for kids learning to code!
 
@@ -10,15 +10,15 @@ A fun 2D football (soccer) game made for kids learning to code!
 
 ---
 
-## ?? How to Play
+## 🎮 How to Play
 
 ### Controls
 | Key | Action |
 |-----|--------|
-| ?? Arrow Up | Move player up |
-| ?? Arrow Down | Move player down |
-| ?? Arrow Left | Move player left |
-| ?? Arrow Right | Move player right |
+| ⬆️ Arrow Up | Move player up |
+| ⬇️ Arrow Down | Move player down |
+| ⬅️ Arrow Left | Move player left |
+| ➡️ Arrow Right | Move player right |
 | **SPACE** | Kick the ball! |
 
 ### Goal
@@ -26,10 +26,10 @@ Score as many goals as possible before the 60-second timer runs out!
 
 ---
 
-## ?? How to Run the Game
+## 🚀 How to Run the Game
 
-### ?? Quick Start (Click to Play!)
-**[?? Launch Game](http://localhost:8080)** ? Click here if the Python server is running!
+### ▶️ Quick Start (Click to Play!)
+**[🎮 Launch Game](http://localhost:8080)** ← Click here if the Python server is running!
 
 ### Option 1: Simple (Double-Click)
 1. Open the folder containing the game files
@@ -55,11 +55,11 @@ Score as many goals as possible before the 60-second timer runs out!
 
 ### Online multiplayer server URL
 - Set env var `WS_URL` to your WebSocket endpoint (e.g., `wss://your-app.onrender.com`).
-- On Netlify: Site settings ? Build & deploy ? Environment ? Environment variables ? add `WS_URL`, then redeploy.
+- On Netlify: Site settings → Build & deploy → Environment → Environment variables → add `WS_URL`, then redeploy.
 - You can also override per-session with a query param: `?ws=wss://your-app.onrender.com`.
 - The page will show a status banner when `WS_URL` is missing or when connection succeeds/fails.
 
-### ?? QR Code Multiplayer (NEW!)
+### 📱 QR Code Multiplayer (NEW!)
 Play with friends on separate devices:
 
 1. **Deploy the server** to Render (free):
@@ -69,51 +69,51 @@ Play with friends on separate devices:
    - Copy your server URL (e.g., `wss://football-game-server.onrender.com`)
 
 2. **Configure Netlify**:
-   - Go to your Netlify site settings ? Environment variables
+   - Go to your Netlify site settings → Environment variables
    - Add `WS_URL` = `wss://your-render-url.onrender.com`
    - Redeploy
 
 3. **Play with a friend**:
-   - Open the game ? tap "?? ONLINE (with Friend)"
-   - Tap "?? CREATE ROOM" ? QR code appears
+   - Open the game → tap "🌐 ONLINE (with Friend)"
+   - Tap "📱 CREATE ROOM" → QR code appears
    - Friend scans QR with their phone camera
    - Game starts automatically when both connected!
 
 ---
 
-## ?? Project Files
+## 📁 Project Files
 
 ```
-?? My Football Game
-??? ?? index.html      ? Main game page
-??? ?? style.css       ? Makes everything look nice
-??? ?? game.js         ? The game code (the fun part!)
-??? ?? README.md       ? This file!
-??? ?? PROJECT_LOG.md  ? Development history
+📂 My Football Game
+├── 📄 index.html      ← Main game page
+├── 🎨 style.css       ← Makes everything look nice
+├── 🎮 game.js         ← The game code (the fun part!)
+├── 📋 README.md       ← This file!
+└── 📝 PROJECT_LOG.md  ← Development history
 ```
 
 ---
 
-## ? Game Features
+## ⚽ Game Features
 
-### Your Team (Blue) ??
+### Your Team (Blue) 🔵
 - **You** - Player #10 with captain armband
 - **5 Teammates** - #3, #5, #7, #9, #11
 
-### Enemy Team (Red) ??
+### Enemy Team (Red) 🔴
 - **Goalkeeper** - #1 in green jersey
 - **5 Defenders** - #2, #4, #6, #8, #14
 
 ### Gameplay
-- ?? 60-second countdown timer
-- ?? Score counter
-- ?? Teammates help pass the ball toward the goal
-- ??? Enemies try to block your shots
-- ?? Goalkeeper tries to save your goals
+- ⏱️ 60-second countdown timer
+- 🎯 Score counter
+- 🤝 Teammates help pass the ball toward the goal
+- 🛡️ Enemies try to block your shots
+- 🧤 Goalkeeper tries to save your goals
 
 ---
 
-## ??? Customize the Game!
+## 🛠️ Customize the Game!
 
 Open `game.js` and try changing these:
 
@@ -139,27 +139,27 @@ var goalWidth = 150;  // Make bigger for easy mode!
 
 ---
 
-## ?? Learning Points
+## 📚 Learning Points
 
 This game teaches:
-- ? HTML structure (`<canvas>`, `<div>`, `<script>`)
-- ? CSS styling (colors, fonts, layout)
-- ? JavaScript basics (variables, functions, loops)
-- ? Game loops and animation
-- ? Keyboard input handling
-- ? Collision detection
-- ? Canvas drawing
+- ✅ HTML structure (`<canvas>`, `<div>`, `<script>`)
+- ✅ CSS styling (colors, fonts, layout)
+- ✅ JavaScript basics (variables, functions, loops)
+- ✅ Game loops and animation
+- ✅ Keyboard input handling
+- ✅ Collision detection
+- ✅ Canvas drawing
 
 ---
 
-## ????? Created By
+## 👨‍💻 Created By
 
-Made with ?? for learning to code!
+Made with ❤️ for learning to code!
 
 **Date:** December 2024
 
 ---
 
-## ?? License
+## 📄 License
 
 Free to use, modify, and share for learning purposes!

@@ -1,6 +1,6 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/portafolio/blob/main/docs/content/opennemoclaw-source-pack.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# OpenNemoClaw ? case-study source pack
+# OpenNemoClaw — case-study source pack
 
 Reviewed 2026-07-19 from the public repository, current packages and tests, Docker provider, policy engine, blueprints, documentation, GitHub metadata, contributor history, installer URLs, and media references. This pack records an implementation prototype, not a security certification or released product.
 
@@ -21,7 +21,7 @@ The README and package manifests say MIT, but the repository contains no `LICENS
 
 The repository is owned by Carlos's confirmed `uset82` account. GitHub attributes one visible commit to `uset82` and three to `renoschubert`.
 
-Safe wording: **?Carlos hosts OpenNemoClaw under his public GitHub account and is a documented contributor alongside another GitHub contributor.?**
+Safe wording: **“Carlos hosts OpenNemoClaw under his public GitHub account and is a documented contributor alongside another GitHub contributor.”**
 
 Do not describe Carlos as sole author, primary architect, or owner of every package, blueprint, document, or visual without a separately approved contribution statement.
 
@@ -33,13 +33,13 @@ The evidenced audience is developers experimenting with local AI-agent runtimes 
 
 The repository contains seven workspace surfaces:
 
-- `packages/cli` ? create, configure, start, stop, inspect, chat, import/export, and lifecycle commands;
-- `packages/api` ? HTTP/control server code and tests;
-- `packages/core` ? runtime, tools, agent lifecycle, channels, memory/stores, workflow/orchestration, voice, plugins, and blueprint resolution;
-- `packages/connectors` ? an OpenRouter connector, generic HTTP connector, and registry;
-- `packages/policies` ? policy loading, validation, request evaluation, and violation records;
-- `packages/sandbox` ? Docker lifecycle and execution integration;
-- `packages/web` ? a Vite/React management interface with component and browser-harness tests.
+- `packages/cli` — create, configure, start, stop, inspect, chat, import/export, and lifecycle commands;
+- `packages/api` — HTTP/control server code and tests;
+- `packages/core` — runtime, tools, agent lifecycle, channels, memory/stores, workflow/orchestration, voice, plugins, and blueprint resolution;
+- `packages/connectors` — an OpenRouter connector, generic HTTP connector, and registry;
+- `packages/policies` — policy loading, validation, request evaluation, and violation records;
+- `packages/sandbox` — Docker lifecycle and execution integration;
+- `packages/web` — a Vite/React management interface with component and browser-harness tests.
 
 The source is materially broader than the short README. Portfolio copy should focus on the package boundaries and verified code rather than reproduce every roadmap claim.
 
@@ -47,8 +47,8 @@ The source is materially broader than the short README. Portfolio copy should fo
 
 Two repository blueprints exist:
 
-1. `basic-agent` ? OpenRouter-based assistant with bounded turns/tokens, a read-only-root sandbox configuration, dropped capabilities, default-deny policy, restricted filesystem paths, and HTTP/HTTPS network allowance.
-2. `web-scraper` ? extends the basic agent with extraction guidance, GET/HEAD network intent, request limits, output parameters, and bounded page counts.
+1. `basic-agent` — OpenRouter-based assistant with bounded turns/tokens, a read-only-root sandbox configuration, dropped capabilities, default-deny policy, restricted filesystem paths, and HTTP/HTTPS network allowance.
+2. `web-scraper` — extends the basic agent with extraction guidance, GET/HEAD network intent, request limits, output parameters, and bounded page counts.
 
 Both YAML files label themselves published and MIT. That is blueprint metadata, not a substitute for a repository license or proof that every rule is enforced end-to-end.
 
@@ -56,7 +56,7 @@ Both YAML files label themselves published and MIT. That is blueprint metadata, 
 
 The Docker provider contains real controls for CPU/memory/PID limits, read-only root filesystems, `no-new-privileges`, capability drop/add lists, privileged mode, network modes, DNS/hosts/port bindings, and read-only/read-write mounts. Tests cover Docker-provider behavior and integration paths. Blueprint defaults request a read-only root, no new privileges, all capabilities dropped, and default-deny policies.
 
-This supports **?Docker sandbox and policy controls are implemented in source.?** It does not support ?completely isolated? or ?secure by default? because:
+This supports **“Docker sandbox and policy controls are implemented in source.”** It does not support “completely isolated” or “secure by default” because:
 
 - isolation strength depends on the selected image, Docker daemon, host platform, network mode, bind mounts, capabilities, and runtime configuration;
 - the configuration types permit privileged mode, capability additions, host/container networking, port exposure, and writable binds;
@@ -68,7 +68,7 @@ Portfolio language must describe controls and design intent, not claim a securit
 
 ## Provider and credential boundary
 
-Current source clearly contains OpenRouter integration and a generic HTTP connector. The README's broad ?provider agnostic? claim is not equivalent to verified first-class support for multiple named providers. Use **?OpenRouter and extensible connector experiments?** until specific provider journeys are tested.
+Current source clearly contains OpenRouter integration and a generic HTTP connector. The README's broad “provider agnostic” claim is not equivalent to verified first-class support for multiple named providers. Use **“OpenRouter and extensible connector experiments”** until specific provider journeys are tested.
 
 Credentials must remain interactive/environment-only and never appear in screenshots, commands with real values, exported workspaces, logs, or repository content.
 

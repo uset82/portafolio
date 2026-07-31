@@ -6,11 +6,11 @@
 
 EFFATA is a next-generation web application designed to help users make safer decisions about any product that could touch their skin, enter their mouth, or be absorbed by their body. The app leverages advanced AI (Gemini 2.5) to instantly scan, analyze, and rate everything from food to cosmetics, creams, oils, toothpaste, and other personal care products.
 
-## ?? Core Mission
+## 🎯 Core Mission
 
-EFFATA acts as a real-time guardian for your health, helping you avoid cancerous, toxic, allergenic, or banned ingredients?before you eat, apply, or buy.
+EFFATA acts as a real-time guardian for your health, helping you avoid cancerous, toxic, allergenic, or banned ingredients—before you eat, apply, or buy.
 
-## ?? What We Scan
+## 🔍 What We Scan
 
 - **Food & Beverages** - Processed foods, additives, E-numbers, preservatives
 - **Makeup & Cosmetics** - INCI-listed ingredients, colorants, fragrances, parabens
@@ -18,34 +18,34 @@ EFFATA acts as a real-time guardian for your health, helping you avoid cancerous
 - **Oral Care** - Toothpaste, mouthwash, whitening products
 - **Any Product** - That can be eaten, applied to skin, or enter the body
 
-## ? Key Features
+## ✨ Key Features
 
-### ?? AI-Powered Analysis
+### 🤖 AI-Powered Analysis
 - **Gemini 2.5 Vision API** for advanced image understanding
 - Real-time ingredient extraction and recognition
 - Cross-reference with global regulatory databases
 
-### ?? Smart Grading System
+### 🏆 Smart Grading System
 - **A-E Grade Scale** with emoji visualization
-- ?? A = Excellent (all ingredients safe)
-- ?? B = Good (mostly safe, minor concerns)
-- ?? C = Average (mixed safety profile)
-- ?? D = Bad (multiple safety concerns)
-- ?? E = Very Bad (dangerous/banned ingredients)
+- 😍 A = Excellent (all ingredients safe)
+- 😊 B = Good (mostly safe, minor concerns)
+- 😐 C = Average (mixed safety profile)
+- 😟 D = Bad (multiple safety concerns)
+- 🤢 E = Very Bad (dangerous/banned ingredients)
 
-### ?? Privacy-First Design
+### 🔒 Privacy-First Design
 - **No photo storage** unless user consents
 - **End-to-end encrypted** communication
 - **GDPR/CCPA compliant** data handling
 - **Local processing** when possible
 
-### ?? Modern UI/UX
+### 🎨 Modern UI/UX
 - **iOS 18 inspired** glassy dark mode design
 - **Responsive** mobile-first interface
 - **Smooth animations** and haptic feedback
 - **Accessibility focused** with high contrast
 
-## ?? Technology Stack
+## 🚀 Technology Stack
 
 ### Frontend
 - **React 18** with TypeScript
@@ -66,7 +66,7 @@ EFFATA acts as a real-time guardian for your health, helping you avoid cancerous
 - **Ingredient label OCR** for text extraction
 - **File upload** for existing photos
 
-## ??? Project Structure
+## 🏗️ Project Structure
 
 ```sh
 # Step 1: Clone the repository using the project's Git URL.

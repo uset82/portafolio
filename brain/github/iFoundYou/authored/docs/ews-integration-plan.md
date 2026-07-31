@@ -1,6 +1,6 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/iFoundYou/blob/main/docs/ews-integration-plan.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# EWS Integration Plan ? Apocalypse Early Warning System in Dommedag
+# EWS Integration Plan — Apocalypse Early Warning System in Dommedag
 
 ## Overview
 
@@ -19,14 +19,14 @@ Integrate the **Apocalypse Early Warning System (EWS)** features from `ews-main`
 
 ### Phase 2: Emergency Level Display Component
 
-- [x] **2.1** Create `web/src/components/EWS/EmergencyDial.tsx` ? a visual alarm dial (1?5 scale) showing the current emergency level with color coding (green ? yellow ? orange ? red ? critical)
-- [x] **2.2** Create `web/src/components/EWS/EmergencyDial.css` ? styling for the dial (animated needle/arc, pulsing glow at level 4?5)
+- [x] **2.1** Create `web/src/components/EWS/EmergencyDial.tsx` — a visual alarm dial (1–5 scale) showing the current emergency level with color coding (green → yellow → orange → red → critical)
+- [x] **2.2** Create `web/src/components/EWS/EmergencyDial.css` — styling for the dial (animated needle/arc, pulsing glow at level 4–5)
 - [x] **2.3** Display the current airborne count, expected count, and sigma deviation below the dial
 - [x] **2.4** Show the last-updated timestamp with human-readable relative time ("5 min ago")
 
 ### Phase 3: Aircraft Map Overlay
 
-- [x] **3.1** Create `web/src/components/EWS/AircraftOverlay.tsx` ? a MapLibre layer that renders aircraft positions from the EWS live snapshot on the existing Dommedag map
+- [x] **3.1** Create `web/src/components/EWS/AircraftOverlay.tsx` — a MapLibre layer that renders aircraft positions from the EWS live snapshot on the existing Dommedag map
 - [x] **3.2** Use aircraft marker icons (SVG plane shape) with rotation based on heading
 - [x] **3.3** Add a toggle button on the map to show/hide the EWS aircraft layer
 - [x] **3.4** Add popup on aircraft marker click showing: hex code, model, altitude, speed, coordinates
@@ -47,7 +47,7 @@ Integrate the **Apocalypse Early Warning System (EWS)** features from `ews-main`
 
 ### Phase 6: Notification & Community Alert Bridge
 
-- [x] **6.1** When EWS emergency level hits 5, auto-create a community alert in Dommedag (category: "other", message: "?? Apocalypse EWS Level 5 ? Unusual aircraft activity detected")
+- [x] **6.1** When EWS emergency level hits 5, auto-create a community alert in Dommedag (category: "other", message: "⚠️ Apocalypse EWS Level 5 — Unusual aircraft activity detected")
 - [x] **6.2** Add an EWS-specific notification type in the notifications feed showing level changes
 - [x] **6.3** Store the last-seen emergency level in localStorage to avoid duplicate notifications on page reload
 
@@ -63,11 +63,11 @@ Integrate the **Apocalypse Early Warning System (EWS)** features from `ews-main`
 
 ## Architecture Notes
 
-- **No backend changes needed for Dommedag** ? EWS data is consumed from the public R2 JSON endpoints (read-only, CORS-enabled)
-- **Shared MapLibre instance** ? Aircraft overlay reuses the existing map in Dommedag rather than creating a second map
-- **Polling model** ? Dashboard JSON is polled every 5 minutes (matching EWS refresh cadence)
-- **TypeScript** ? All new code follows Dommedag's existing TS + React stack
-- **No new dependencies required** ? MapLibre and React are already in the project; charts can be done with inline SVG
+- **No backend changes needed for Dommedag** — EWS data is consumed from the public R2 JSON endpoints (read-only, CORS-enabled)
+- **Shared MapLibre instance** — Aircraft overlay reuses the existing map in Dommedag rather than creating a second map
+- **Polling model** — Dashboard JSON is polled every 5 minutes (matching EWS refresh cadence)
+- **TypeScript** — All new code follows Dommedag's existing TS + React stack
+- **No new dependencies required** — MapLibre and React are already in the project; charts can be done with inline SVG
 
 ---
 
@@ -75,27 +75,27 @@ Integrate the **Apocalypse Early Warning System (EWS)** features from `ews-main`
 
 ```
 web/src/
-??? lib/
-?   ??? ews.ts                          # EWS API service (fetch + parse)
-?   ??? EWSContext.tsx                   # React context provider
-??? components/
-?   ??? EWS/
-?       ??? EmergencyDial.tsx            # Alarm dial component
-?       ??? EmergencyDial.css            # Dial styles
-?       ??? AircraftOverlay.tsx          # Map aircraft layer
-?       ??? EWSPanel.tsx                 # Main EWS alerts panel
-?       ??? EWSPanel.css                 # Panel styles
-?       ??? EWSMiniChart.tsx             # 24h history sparkline
-?       ??? EWSSettings.tsx             # User preferences
-?       ??? CohortSelector.tsx          # Business/Military/Untracked tabs
+├── lib/
+│   ├── ews.ts                          # EWS API service (fetch + parse)
+│   └── EWSContext.tsx                   # React context provider
+├── components/
+│   └── EWS/
+│       ├── EmergencyDial.tsx            # Alarm dial component
+│       ├── EmergencyDial.css            # Dial styles
+│       ├── AircraftOverlay.tsx          # Map aircraft layer
+│       ├── EWSPanel.tsx                 # Main EWS alerts panel
+│       ├── EWSPanel.css                 # Panel styles
+│       ├── EWSMiniChart.tsx             # 24h history sparkline
+│       ├── EWSSettings.tsx             # User preferences
+│       └── CohortSelector.tsx          # Business/Military/Untracked tabs
 ```
 
 ---
 
 ## Success Criteria
 
-1. User can see the current EWS emergency level (1?5) inside Dommedag
+1. User can see the current EWS emergency level (1–5) inside Dommedag
 2. Aircraft positions appear on the shared map with toggle control
-3. Level 4?5 triggers a browser notification and optional community alert
+3. Level 4–5 triggers a browser notification and optional community alert
 4. All three cohorts (business, military, untracked) are viewable
 5. Works offline-gracefully (shows last cached state or "unavailable")

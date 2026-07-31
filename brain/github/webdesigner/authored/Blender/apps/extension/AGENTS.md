@@ -1,6 +1,6 @@
 <!-- generatedBy: brain:sync-github; source: https://github.com/uset82/webdesigner/blob/main/Blender/apps/extension/AGENTS.md; checkedOn: 2026-07-31; redactions: 0 -->
 
-# apps/extension/AGENTS.md ? VS Code Extension Rules
+# apps/extension/AGENTS.md — VS Code Extension Rules
 
 - Register commands in `package.json` and `src/extension.ts`.
 - Keep Webview CSP strict.
