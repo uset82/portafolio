@@ -9,3 +9,9 @@ Thumbs.db
 *.tmp
 /docs/CARLOS CARPIO RESUME.pdf
 *.log
+
+# Local dependency cache at the repository root.
+/.pnpm-store/
+
+# Per-machine agent settings. Shared agent config stays tracked.
+**/.claude/settings.local.json
