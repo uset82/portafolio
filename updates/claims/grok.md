@@ -1,4 +1,4 @@
-# Claims — Grok
+﻿# Claims — Grok
 
 Branch: `feat/arcade` · Tasks: [`../tasks/GROK-TASKS.md`](../tasks/GROK-TASKS.md)
 
@@ -10,4 +10,4 @@ Append one line per claim, newest last. Only Grok writes here.
 
 ## Claims
 
-_None yet._
+- C.1 · started 2026-07-31 · branch feat/arcade · status: in-review
