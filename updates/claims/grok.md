@@ -1,4 +1,4 @@
-﻿# Claims — Grok
+# Claims — Grok
 
 Branch: `feat/arcade` · Tasks: [`../tasks/GROK-TASKS.md`](../tasks/GROK-TASKS.md)
 
