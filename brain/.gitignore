@@ -1,0 +1,8 @@
+index/
+private/
+**/private/
+*.pdf
+*.epub
+*.mobi
+exports/
+conversations.json
