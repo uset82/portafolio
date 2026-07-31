@@ -1,0 +1,266 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "owner": "uset82",
+  "filters": {
+    "visibility": "public",
+    "fork": false,
+    "minimumSizeKb": 50
+  },
+  "repositoryCount": 42,
+  "repositories": [
+    {
+      "name": "3Doodle",
+      "fullName": "uset82/3Doodle",
+      "directory": "3Doodle",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "ASTROEA",
+      "fullName": "uset82/ASTROEA",
+      "directory": "ASTROEA",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "Automatic-Watering-Elephant",
+      "fullName": "uset82/Automatic-Watering-Elephant",
+      "directory": "Automatic-Watering-Elephant",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "avatar-studio",
+      "fullName": "uset82/avatar-studio",
+      "directory": "avatar-studio",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "bankAI",
+      "fullName": "uset82/bankAI",
+      "directory": "bankAI",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "chaclacayo",
+      "fullName": "uset82/chaclacayo",
+      "directory": "chaclacayo",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "cookthis-",
+      "fullName": "uset82/cookthis-",
+      "directory": "cookthis-",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "CRM_SaaS_Educativo",
+      "fullName": "uset82/CRM_SaaS_Educativo",
+      "directory": "CRM_SaaS_Educativo",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "diagramcloner",
+      "fullName": "uset82/diagramcloner",
+      "directory": "diagramcloner",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "drone_Lips",
+      "fullName": "uset82/drone_Lips",
+      "directory": "drone_Lips",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "EFFATA",
+      "fullName": "uset82/EFFATA",
+      "directory": "EFFATA",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "elefante",
+      "fullName": "uset82/elefante",
+      "directory": "elefante",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "gimmemycake",
+      "fullName": "uset82/gimmemycake",
+      "directory": "gimmemycake",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "hvl2025-microcontroller-assignment3",
+      "fullName": "uset82/hvl2025-microcontroller-assignment3",
+      "directory": "hvl2025-microcontroller-assignment3",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "iFoundYou",
+      "fullName": "uset82/iFoundYou",
+      "directory": "iFoundYou",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "LLM-Web-App",
+      "fullName": "uset82/LLM-Web-App",
+      "directory": "LLM-Web-App",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "LyriGenie",
+      "fullName": "uset82/LyriGenie",
+      "directory": "LyriGenie",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "MandelBro",
+      "fullName": "uset82/MandelBro",
+      "directory": "MandelBro",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "MicrocontrollerPiano",
+      "fullName": "uset82/MicrocontrollerPiano",
+      "directory": "MicrocontrollerPiano",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "Monkey-Tug-of-War",
+      "fullName": "uset82/Monkey-Tug-of-War",
+      "directory": "Monkey-Tug-of-War",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "My-Football-Game",
+      "fullName": "uset82/My-Football-Game",
+      "directory": "My-Football-Game",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "opennemoclaw",
+      "fullName": "uset82/opennemoclaw",
+      "directory": "opennemoclaw",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "opennemoclawsite",
+      "fullName": "uset82/opennemoclawsite",
+      "directory": "opennemoclawsite",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "pacha",
+      "fullName": "uset82/pacha",
+      "directory": "pacha",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "piano-",
+      "fullName": "uset82/piano-",
+      "directory": "piano-",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "pinaculo",
+      "fullName": "uset82/pinaculo",
+      "directory": "pinaculo",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "portafolio",
+      "fullName": "uset82/portafolio",
+      "directory": "portafolio",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "project-bolt-qrmollebakken-supabase",
+      "fullName": "uset82/project-bolt-qrmollebakken-supabase",
+      "directory": "project-bolt-qrmollebakken-supabase",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "qr-code-generator",
+      "fullName": "uset82/qr-code-generator",
+      "directory": "qr-code-generator",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "QubeSolve",
+      "fullName": "uset82/QubeSolve",
+      "directory": "QubeSolve",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "REACTIONGAME",
+      "fullName": "uset82/REACTIONGAME",
+      "directory": "REACTIONGAME",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "ReportAIEquinor",
+      "fullName": "uset82/ReportAIEquinor",
+      "directory": "ReportAIEquinor",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "RS232_VHD_DE2115",
+      "fullName": "uset82/RS232_VHD_DE2115",
+      "directory": "RS232_VHD_DE2115",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "smartapply-app",
+      "fullName": "uset82/smartapply-app",
+      "directory": "smartapply-app",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "SmartHomeControl",
+      "fullName": "uset82/SmartHomeControl",
+      "directory": "SmartHomeControl",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "StillasCalculator",
+      "fullName": "uset82/StillasCalculator",
+      "directory": "StillasCalculator",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "StrudelAI",
+      "fullName": "uset82/StrudelAI",
+      "directory": "StrudelAI",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "Suno-UDIO-Helper",
+      "fullName": "uset82/Suno-UDIO-Helper",
+      "directory": "Suno-UDIO-Helper",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "Thesis-Writer-Kit",
+      "fullName": "uset82/Thesis-Writer-Kit",
+      "directory": "Thesis-Writer-Kit",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "TRAFFICLIGHT",
+      "fullName": "uset82/TRAFFICLIGHT",
+      "directory": "TRAFFICLIGHT",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "v0-banana-piano-app",
+      "fullName": "uset82/v0-banana-piano-app",
+      "directory": "v0-banana-piano-app",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "name": "webdesigner",
+      "fullName": "uset82/webdesigner",
+      "directory": "webdesigner",
+      "checkedOn": "2026-07-31"
+    }
+  ],
+  "checkedOn": "2026-07-31"
+}

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/StrudelAI",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 7299,
+    "HTML": 6340,
+    "JavaScript": 46880,
+    "Python": 62929,
+    "TypeScript": 1299801
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2026-06-21T17:56:19Z",
+  "githubUrl": "https://github.com/uset82/StrudelAI",
+  "checkedOn": "2026-07-31"
+}

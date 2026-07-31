@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/SmartHomeControl",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 2749,
+    "HTML": 12534,
+    "JavaScript": 66041,
+    "Nix": 65,
+    "Python": 94292
+  },
+  "licenseSpdx": "MIT",
+  "homepage": null,
+  "defaultBranch": "master",
+  "pushedAt": "2025-03-24T20:31:06Z",
+  "githubUrl": "https://github.com/uset82/SmartHomeControl",
+  "checkedOn": "2026-07-31"
+}

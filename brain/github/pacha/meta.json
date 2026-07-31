@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/pacha",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 2343,
+    "JavaScript": 456,
+    "PLpgSQL": 18748,
+    "TypeScript": 105994
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2026-05-12T20:42:33Z",
+  "githubUrl": "https://github.com/uset82/pacha",
+  "checkedOn": "2026-07-31"
+}

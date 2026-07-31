@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/Suno-UDIO-Helper",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 505,
+    "HTML": 283,
+    "JavaScript": 2421,
+    "Svelte": 14458
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2024-12-30T23:59:12Z",
+  "githubUrl": "https://github.com/uset82/Suno-UDIO-Helper",
+  "checkedOn": "2026-07-31"
+}

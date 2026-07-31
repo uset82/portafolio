@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/REACTIONGAME",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "Assembly": 25891,
+    "C": 4966662,
+    "Linker Script": 10104
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2025-09-21T18:56:32Z",
+  "githubUrl": "https://github.com/uset82/REACTIONGAME",
+  "checkedOn": "2026-07-31"
+}

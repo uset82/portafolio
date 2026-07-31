@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/chaclacayo",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 68458,
+    "HTML": 54645,
+    "JavaScript": 98092,
+    "PLpgSQL": 12172,
+    "TypeScript": 30718
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2026-05-01T18:23:11Z",
+  "githubUrl": "https://github.com/uset82/chaclacayo",
+  "checkedOn": "2026-07-31"
+}

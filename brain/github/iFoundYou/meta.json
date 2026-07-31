@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/iFoundYou",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 80283,
+    "Dockerfile": 153,
+    "HTML": 1294,
+    "JavaScript": 37005,
+    "Kotlin": 6893,
+    "Objective-C": 603,
+    "PLpgSQL": 8940,
+    "Python": 28485,
+    "Ruby": 1435,
+    "Swift": 6354,
+    "TypeScript": 373958
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2026-05-14T21:32:17Z",
+  "githubUrl": "https://github.com/uset82/iFoundYou",
+  "checkedOn": "2026-07-31"
+}

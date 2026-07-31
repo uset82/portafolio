@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/ASTROEA",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 59013,
+    "Dockerfile": 618,
+    "HTML": 840,
+    "JavaScript": 46669,
+    "Python": 64101,
+    "TypeScript": 129169
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2026-05-25T19:12:17Z",
+  "githubUrl": "https://github.com/uset82/ASTROEA",
+  "checkedOn": "2026-07-31"
+}

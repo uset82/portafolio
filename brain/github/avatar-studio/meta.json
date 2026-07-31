@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/avatar-studio",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 45424,
+    "HTML": 306,
+    "JavaScript": 165187,
+    "Python": 33604,
+    "Shell": 4650,
+    "TypeScript": 651891
+  },
+  "licenseSpdx": "NOASSERTION",
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2026-07-14T19:29:30Z",
+  "githubUrl": "https://github.com/uset82/avatar-studio",
+  "checkedOn": "2026-07-31"
+}

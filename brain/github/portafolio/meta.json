@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/portafolio",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 165964,
+    "Dockerfile": 956,
+    "JavaScript": 666,
+    "TypeScript": 1107373
+  },
+  "licenseSpdx": "MIT",
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2026-07-31T20:22:17Z",
+  "githubUrl": "https://github.com/uset82/portafolio",
+  "checkedOn": "2026-07-31"
+}

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/MicrocontrollerPiano",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "Assembly": 25891,
+    "C": 6476416,
+    "Linker Script": 10679
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2025-11-06T14:50:15Z",
+  "githubUrl": "https://github.com/uset82/MicrocontrollerPiano",
+  "checkedOn": "2026-07-31"
+}

@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/hvl2025-microcontroller-assignment3",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "C": 6718,
+    "C++": 13247,
+    "CSS": 7192,
+    "HTML": 3678,
+    "JavaScript": 12298,
+    "Python": 5022
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2025-10-23T13:34:12Z",
+  "githubUrl": "https://github.com/uset82/hvl2025-microcontroller-assignment3",
+  "checkedOn": "2026-07-31"
+}

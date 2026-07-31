@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/LLM-Web-App",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 1725,
+    "Dockerfile": 263,
+    "JavaScript": 26027,
+    "TypeScript": 8929
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2024-12-26T19:16:45Z",
+  "githubUrl": "https://github.com/uset82/LLM-Web-App",
+  "checkedOn": "2026-07-31"
+}

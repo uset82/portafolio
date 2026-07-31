@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/LyriGenie",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 17833,
+    "HTML": 26193,
+    "JavaScript": 50721,
+    "Nix": 284,
+    "Python": 101059
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2025-04-06T08:29:25Z",
+  "githubUrl": "https://github.com/uset82/LyriGenie",
+  "checkedOn": "2026-07-31"
+}

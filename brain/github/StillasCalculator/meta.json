@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/StillasCalculator",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 353,
+    "JavaScript": 6034,
+    "TypeScript": 1186935
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2026-06-01T12:17:12Z",
+  "githubUrl": "https://github.com/uset82/StillasCalculator",
+  "checkedOn": "2026-07-31"
+}

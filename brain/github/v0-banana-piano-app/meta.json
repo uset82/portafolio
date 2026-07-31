@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/v0-banana-piano-app",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 9879,
+    "JavaScript": 372,
+    "TypeScript": 36685
+  },
+  "licenseSpdx": null,
+  "homepage": "https://v0-banana-piano-app.vercel.app",
+  "defaultBranch": "main",
+  "pushedAt": "2025-10-24T07:50:47Z",
+  "githubUrl": "https://github.com/uset82/v0-banana-piano-app",
+  "checkedOn": "2026-07-31"
+}
