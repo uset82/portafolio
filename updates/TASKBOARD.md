@@ -69,14 +69,28 @@ authorization to commit and push
 
 ### Decisions only you can make — these unblock other people
 
-- [ ] ☐ **Q.3** · `CARLOS` · **Hero direction** → blocks `V.1`–`V.3`. (a) video hero *(recommended)* · (b) reframed 3D · (c) editorial
-- [ ] ☐ **Q.5** · `CARLOS` · **Music rights per track** → blocks `M.2`–`M.5`, `C.5`
-- [ ] ☐ **Q.2** · `CARLOS` · **Books approach** → blocks `B.9`, `library/`
-- [ ] ☐ **Q.4** · `CARLOS` · Which 3 games launch first → blocks `C.2`
-- [ ] ☐ **Q.6** · `CARLOS` · Production model + monthly budget → blocks `A.10`, `A.12`
-- [ ] ☐ **Q.7** · `CARLOS` · Which 8–12 projects are flagship → shapes `B.4`
-- [ ] ☐ **Q.8** · `CARLOS` · Licensing — 35 of 42 repos have none
-- [ ] ☐ **Q.9** · `CARLOS` · Fork framing wording for `mentora` / `osiris`
+**All answered 2026-07-31 — full record and consequences in [`06-decisions.md`](06-decisions.md).**
+
+- [x] ☑ **Q.3** · **(a) video hero. 3D is retired, not paused.** → unblocks `V.1`–`V.3`; cancels `C.9`; creates `V.13` (delete ~40 dead 3D files + 1 258 KB of decoders)
+- [x] ☑ **Q.5** · **Music is yours, open to anyone, tips welcome** → `M.2` proceeds; ⚠ `M.11` must confirm the Suno plan tier first — free-tier generations may not be yours to license openly
+- [x] ☑ **Q.4** · **Show ALL games**, hosted on Railway Pro where they move; leave the live Vercel ones alone → `C.2` scope widens from 3 to the full set
+- [x] ☑ **Q.6** · **Zero budget, open source** → ⚠ `model-policy.ts` refuses free routes in production mode, so `A.13` must add named-free-model support; makes `A.9` rate limiting **urgent**
+- [x] ☑ **Q.8** · Answered — **37** repos unlicensed (not 35; my earlier count was wrong). List in `06-decisions.md`. Recommend MIT on all → `Q.12`
+- [x] ☑ **Q.9** · Framing confirmed **and verified**: `uset82` authored **46 of the last 100** `mentora` commits, plus 5 as `carlos`, vs 5 by the upstream owner — ~78 % is yours. "Primary developer on a forked college project" is supported by the record.
+- [~] ⏳ **Q.7** · "idk" → I proposed **10 flagship projects** spanning web, design systems, Rust, Flutter, VHDL, C++, Python. Approve or swap → `Q.11`
+
+### ⛔ The one blocker left
+
+- [ ] ☐ **Q.10** · `CARLOS` · **The books — did you *write* them, or do you *own copies*?**
+      *"the books are mine as well"* has two readings and they lead to opposite work.
+      **(a) You wrote them** → fully citable, index directly, `B.9` gets much simpler.
+      **(b) You own copies you bought** → owning a copy is not owning the copyright; distilled
+      notes go public, raw PDFs stay private and unindexed.
+      I will not guess: under (a) I would discard work that is legitimately yours; under (b) I
+      would index someone else's copyrighted text into a public chatbot.
+
+- [ ] ☐ **Q.11** · `CARLOS` · Approve or swap the 10 flagship projects
+- [ ] ☐ **Q.12** · `CARLOS` · Apply MIT to the 37 unlicensed repos?
 
 ---
 
@@ -122,6 +136,10 @@ authorization to commit and push
 - [ ] ☐ **VER.2** · `CLAUDE` · **Verify Wave 2** — retrieval returns right chunks, boundary records always present, no invented facts
 
 ### Grok
+- [ ] ☐ **V.13** · `CODEX` · **Delete the dead 3D layer** — `lib/three/**`, `components/three/**`, `site/public/three/decoders/**` (1 258 KB), the canvas gate, and the `assets:check` / `immersive:check` gates that test it. *Unblocked by `Q.3`. Removes ~a quarter of the codebase.*
+- [ ] ☐ **A.13** · `CODEX` · Make `model-policy.ts` accept a **named free model** in production mode — zero budget requires it
+- [ ] ☐ **M.10** · `CLAUDE` · "Buy me a coffee" destination and placement
+- [ ] ☐ **M.11** · `GEMINI` · **Confirm the Suno plan tier per track**, then choose the music licence — blocks every music publish
 - [ ] ☐ **V.12** · `GROK` · **Stop shipping the 3.96 MB hero video to mobile** — 98 % of mobile page weight. Options: `<source media>` per breakpoint, poster-only on small screens, or a lighter encode. *Found during `F.5b`, highest-value perf fix available.*
 - [ ] ☐ **C.8** · `GROK` · Optimize the 90 MB / 85 MB GLBs for web delivery
 - [ ] ☐ **P.3** · `GROK` · Preview environments per branch
