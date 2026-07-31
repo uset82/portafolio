@@ -16,10 +16,10 @@ time, with a dated entry in §6.
 
 **You own:** `brain/**` · `scripts/brain-*.ts` · `scripts/chatgpt-*.ts` · `site/src/lib/ai/**` ·
 `site/src/content/generated/**` · `site/src/app/arcade/**` · `site/src/components/arcade/**` ·
-`site/src/styles/**` *(from a delivered `SPEC.*` only)* · `site/src/tests/cc-ai-*.test.ts` ·
+`site/src/styles/**` _(from a delivered `SPEC.*` only)_ · `site/src/tests/cc-ai-*.test.ts` ·
 `site/src/tests/brain-*.test.ts` · `site/src/tests/arcade-*.test.ts`
 
-**You must not edit:** `site/src/app/**` and `components/**` *outside* `arcade/`, `lib/three/**`
+**You must not edit:** `site/src/app/**` and `components/**` _outside_ `arcade/`, `lib/three/**`
 (Claude) · `site/public/images|videos|audio/**` (Gemini) · `site/public/games/**`, build/deploy
 scripts, Railway config (Grok) · `updates/**`, `maintaskplan.md` (Claude) · shared:
 `package.json`, `schemas.ts`, `records.ts`, `Dockerfile`, `railway.json`
@@ -44,13 +44,13 @@ Full specification: [`../01-brain-spec.md`](../01-brain-spec.md).
       **Acceptance:** repo exists, is private, contains `books/`, `chatgpt/`, `courses/`,
       `scratch/`; nothing in it is reachable from the public repo.
 
-- [ ] ☐ **B.1 — Brain skeleton.** `brain/` per spec §3: `README.md`, `.gitignore`,
+- [x] ☑ **B.1 — Brain skeleton.** `brain/` per spec §3: `README.md`, `.gitignore`,
       `private-source-map.json`, `_templates/project/`, `_templates/book/`, and empty
       `projects/`, `github/`, `library/`, `agents/`, `index/`.
       **Acceptance:** matches spec exactly; §8 ignore patterns present; no `.pdf`/`.epub`/export
       committed.
 
-- [ ] ☐ **B.2 — `project.json` schema + `brain:check`.** Zod schema per spec §4, **reusing** the
+- [x] ☑ **B.2 — `project.json` schema + `brain:check`.** Zod schema per spec §4, **reusing** the
       `verification` / `rights` / `publication` / `sourceIds` vocabulary from
       `site/src/content/schemas.ts` — this feeds the existing pipeline, it does not fork it.
       Invariants: `public: true` requires approved rights **and** every `sourceIds` entry
@@ -58,9 +58,9 @@ Full specification: [`../01-brain-spec.md`](../01-brain-spec.md).
       non-empty `NOTES.md` and ≥1 `knowledge/` file; **`status` may never be raised by a
       script**; no `brain-private/` content in any public file.
       **Acceptance:** clear message + non-zero exit on violation; unit tests cover every
-      invariant *including negatives*; ready to join `pnpm test`.
+      invariant _including negatives_; ready to join `pnpm test`.
 
-- [ ] ☐ **B.3 — Seed two project folders by hand.** `ifoundyou` and `opennemoclaw` — source
+- [x] ☑ **B.3 — Seed two project folders by hand.** `ifoundyou` and `opennemoclaw` — source
       packs already exist in `docs/content/`. Prove the schema survives real content before
       scaling. **Do not create 42 empty folders.**
       **Acceptance:** both pass `brain:check`; each has a real `NOTES.md` and ≥1 `knowledge/` file.
@@ -90,7 +90,7 @@ Full specification: [`../01-brain-spec.md`](../01-brain-spec.md).
 **Yes, every repo needs its own skill and agent.** This is the difference between a chatbot that
 recites a README and one that can actually explain how Carlos built something and why.
 
-A synced README tells CC AI *what a repo is*. A `SKILL.md` tells it *how to talk about it* —
+A synced README tells CC AI _what a repo is_. A `SKILL.md` tells it _how to talk about it_ —
 which questions it can answer, which it must refuse, what the honest status is, and what the
 project is genuinely comparable to. Without these, retrieval returns text and the model
 improvises the framing. With them, the framing is Carlos's.
@@ -157,8 +157,8 @@ projects that have the most to say.**
       #4 `project-bolt-qrmollebakken-supabase`.
 
 - [ ] ☐ **B.7.10 — Fork contribution notes (2).** #58 `mentora` and #56 `osiris`.
-      **`mentora` wording is already approved and evidence-backed:** *"Primary developer on a
-      forked college project"* — `uset82` authored 46 of the last 100 commits plus 5 as
+      **`mentora` wording is already approved and evidence-backed:** _"Primary developer on a
+      forked college project"_ — `uset82` authored 46 of the last 100 commits plus 5 as
       `carlos`, versus 5 by the upstream owner. #1 `Tetris` is Carlos's course code but stays
       out of the arcade because it is Java desktop, not because it is not his.
       **Acceptance:** neither claims sole authorship; neither undersells real contribution.
@@ -190,8 +190,8 @@ projects that have the most to say.**
       confidently incorrect. Distillation is Carlos's manual step; that is the control, not a gap.
       **Acceptance:** no raw transcript text reaches any generated file, proven by a test.
 
-- [ ] ☐ **B.10 — `library/` ingestion.** ⛔ *Blocked on `Q.10` — whether Carlos wrote the books
-      or owns copies.* Do not start until answered; the two cases need opposite pipelines.
+- [ ] ☐ **B.10 — `library/` ingestion.** ⛔ _Blocked on `Q.10` — whether Carlos wrote the books
+      or owns copies._ Do not start until answered; the two cases need opposite pipelines.
 
 ---
 
@@ -212,7 +212,7 @@ Today `cc-ai-knowledge.ts` serializes **every** record into one system prompt an
       exclusion/boundary records into every request so refusal rules can never be evicted.
       **No new production dependency.** The corpus is low thousands of chunks; `rules.md`
       requires justifying every dependency and a vector database is not justified at this size.
-      `A.3` revisits this *only* on a measured recall gap. Do not relitigate it.
+      `A.3` revisits this _only_ on a measured recall gap. Do not relitigate it.
       **Acceptance:** tests prove a question about project X retrieves X's chunks, and boundary
       records are present in 100 % of assembled contexts.
 
@@ -267,39 +267,39 @@ Today `cc-ai-knowledge.ts` serializes **every** record into one system prompt an
 
 ## 5. Arcade and design system — implemented from Claude's specs
 
-**Claude designs, you build.** Carlos assigned the arcade *design* to Claude so playing inside
+**Claude designs, you build.** Carlos assigned the arcade _design_ to Claude so playing inside
 the portfolio is a designed experience, not a bare iframe list. Do not start any of these before
 the matching `SPEC.*` lands — building against a guess wastes both our time.
 
-- [ ] ☐ **C.2 — `/arcade` index route.** *(needs `SPEC.3` + Grok's `C.1` measurements)*
+- [ ] ☐ **C.2 — `/arcade` index route.** _(needs `SPEC.3` + Grok's `C.1` measurements)_
       All games ship, not a launch three (`Q.4`). Real posters from Gemini `M.8`, one-line
       descriptions, controls, honest per-item status.
       **Acceptance:** every game in the register renders; no fabricated status; keyboard
       navigable; `Tetris` absent.
 
-- [ ] ☐ **C.3 — Play shell `/arcade/[slug]`.** *(needs `SPEC.3`)* Poster → explicit play button
+- [ ] ☐ **C.3 — Play shell `/arcade/[slug]`.** _(needs `SPEC.3`)_ Poster → explicit play button
       → **sandboxed** iframe. Never autoload. Never autoplay audio. `sandbox` attributes on
       every embed — `rules.md` requires external-embed sanitization. Documented keyboard
       alternative or an honest "requires pointer" state.
 
 - [ ] ☐ **C.4 — Mobile honesty.** Desktop-only games get a clear "desktop recommended" state,
-      not a broken canvas. Designing the *unavailable* case is part of designing mobile.
+      not a broken canvas. Designing the _unavailable_ case is part of designing mobile.
 
 - [ ] ☐ **C.10 — Same-origin game hosting wiring.** Serve Tier-A static builds from
       `site/public/games/<slug>/` (Grok supplies the builds) and proxy Tier-B Railway services
       through Next `rewrites` so everything stays on one domain.
       **Acceptance:** no mixed-content warnings; each game reachable from `/arcade/<slug>`.
 
-- [ ] ☐ **V.4 — Type and layout ramp.** *(needs `SPEC.1`)* Editorial type scale with defined
+- [ ] ☐ **V.4 — Type and layout ramp.** _(needs `SPEC.1`)_ Editorial type scale with defined
       roles (display / headline / subhead / body / caption / label), explicit grid, vertical
       rhythm tokens. **Acceptance:** rendered as a live page, not only a token file.
 
-- [ ] ☐ **V.5 — Three motion motifs.** *(needs `SPEC.1`)* **Reveal**, **Focus pull**, **Passage**.
+- [ ] ☐ **V.5 — Three motion motifs.** _(needs `SPEC.1`)_ **Reveal**, **Focus pull**, **Passage**.
       `rules.md` caps this at three deliberately — do not add a fourth.
-      **Acceptance:** each has a *complete* `prefers-reduced-motion` path, a real alternative
+      **Acceptance:** each has a _complete_ `prefers-reduced-motion` path, a real alternative
       rather than a disabled one.
 
-- [ ] ☐ **V.7 — `/studio` craft page.** *(needs `SPEC.2`)* Built around `webdesigner` (#59) as
+- [ ] ☐ **V.7 — `/studio` craft page.** _(needs `SPEC.2`)_ Built around `webdesigner` (#59) as
       the lead case study, plus the live token page from `V.4`, wireframe → final comparisons,
       and `avatar-studio` (#60) as a second systems exhibit.
 
@@ -333,3 +333,38 @@ the matching `SPEC.*` lands — building against a guess wastes both our time.
 ## 7. Completion log
 
 _Dated entry per checked box: changed files, checks run, test evidence._
+
+### 2026-07-31 — `B.1`, `B.2`, `B.3` merged to main
+
+Merged via PR #9, consolidating #2 (`B.1`), #3 (`B.2`), #5 (`B.3`). `origin/main` at `546fb88`.
+
+**Reviewed and independently verified by Claude** — not accepted on report:
+
+- `brain-check` run by the reviewer: **"Brain valid: 2 projects."**
+- `brain-check.test.ts`: **7/7 pass**, every invariant covered including negatives
+- Dry-run merge in a throwaway clone confirmed Grok's `C1-MEASUREMENTS.md`, the runbook
+  rewrite, and `Q.13` all survive. GitHub's diff showed them as deletions only because the
+  branch predated PRs #1 and #4 — a stale merge base, not a real regression.
+
+**Done well:** `brain-project-schema.ts` _imports_ `publicationStateSchema`, `rightsStateSchema`,
+and `verificationStateSchema` from `site/src/content/schemas.ts` rather than redefining them —
+the single most important `B.2` requirement and the easiest to get wrong. The `project.json`
+template defaults to values that cannot validate (`rights: "pending"`,
+`verification: "needs-user-confirmation"`), so a placeholder can never slip through as a claim.
+And `rights: "not-applicable"` on both seeded projects is correct: the repos are unlicensed, but
+these records describe the projects rather than redistribute their code.
+
+**Noted, not blocking:** the `pinaculo` status guard is slug-specific inside a generic validator.
+Lift it to a `conceptOnlySlugs` list when a second concept project appears.
+
+**Shared-file wiring applied by Claude** — correctly requested rather than done by Codex.
+`site/package.json` gains `"brain:check": "tsx ../scripts/brain-check.ts"`, and `brain:check`
+now runs inside `pnpm test` between `test:unit` and `content:check`.
+
+**Process problem, fixed:** stacked PRs #3 and #5 targeted their parent branches, so both
+reported MERGED without ever reaching `main`. Codex spotted it and opened a second clean stack
+(#6–#8), which would have duplicated the work. Resolved with one consolidating PR (#9); #7 and
+#8 closed as superseded.
+
+**`B.0` remains open.** It was skipped while `gh` was unauthenticated. `gh` is now authenticated
+as `uset82` with `repo` scope, so it is ready to run.
