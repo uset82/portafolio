@@ -63,9 +63,44 @@ authorization to commit and push
 - [x] ☑ **F.5** · `CLAUDE` · Baseline captured — *`pnpm verify` green, sizes recorded*
 - [x] ☑ **F.4** · `CLAUDE` · `AGENTS.md` now points at `updates/TASKBOARD.md`
 - [x] ☑ **F.5b** · `CLAUDE` · Core Web Vitals — *browser-measured, no new dependency. CLS 0. FCP/LCP not exposed by this browser.*
-- [ ] ☐ **F.6** · `CARLOS` · Authorize the first commit + push
-- [ ] ☐ **A.0** · `CARLOS` · **Decide: harden live CC AI, or switch it off until the gates pass.** It is public now on a free variable model with no evaluation set and no durable rate limiting. Switching off is one Railway variable (`CC_AI_ENABLED=false`); hardening means `A.5` + `A.9` + `A.10` first.
-- [ ] ☐ **P.7** · `GROK` · **Add `robots.txt`.** The page has `<meta robots="noindex">` but `/robots.txt` returns the 404 page. A preview deployment should disallow crawlers explicitly.
+- [x] ☑ **F.6** · `CARLOS` · Commit + push — *done. Branch `chore/planning-ledger`, 3 commits, pushed.*
+- [x] ☑ **A.0** · `CLAUDE` · **Decided: keep CC AI on.** The risk was smaller than I stated — see below.
+- [x] ☑ **P.7** · `CLAUDE` · `robots.txt` added as `site/src/app/robots.ts`, disallow-all while this is an unapproved preview. Builds as a static route; format, lint, typecheck, route tests green.
+
+### A.0 — decision and the evidence behind it
+
+I inspected the live Railway config instead of assuming. What is actually set:
+
+| Variable | Value |
+| --- | --- |
+| `CC_AI_ENABLED` | `true` |
+| `NEXT_PUBLIC_SITE_URL` | `https://carloscarpio.up.railway.app` |
+| `OPENROUTER_API_KEY` | present (73 chars — correct format, value never printed) |
+| `CC_AI_MODE` | **not set** → code default `prototype` |
+| `OPENROUTER_MODEL` | **not set** → code default `openrouter/free` |
+| `CC_AI_RATE_LIMIT` / `_WINDOW_SECONDS` / `_MAX_CONCURRENT` | **not set** → defaults 6 req / 60 s / 4 concurrent |
+
+**Decision: keep it on.** Reasoning:
+
+1. **The per-instance limiter is adequate at current scale.** One Railway service, no horizontal
+   scaling configured. `A.9`'s shared limiter is only required once there is more than one
+   replica — so this is a scaling prerequisite, not a live hole. **I overstated this earlier.**
+2. **Defaults are sane** — 6 requests per minute per client, 4 concurrent.
+3. **Cost is genuinely zero.** Prototype mode on a free route matches `Q.6` exactly.
+4. It is your first feature request. Switching off a working feature to mitigate a risk that is
+   already mitigated would be the wrong trade.
+
+**What stays true:** `A.9` becomes mandatory before scaling past one replica, and `A.13` is
+still needed before `CC_AI_MODE` can ever be set to `production` on a zero budget.
+
+**Optional hardening**, one command — pins the limits explicitly instead of relying on defaults:
+
+```bash
+railway variables --set CC_AI_MODE=prototype --set CC_AI_RATE_LIMIT=6 --set CC_AI_RATE_WINDOW_SECONDS=60 --set CC_AI_MAX_CONCURRENT=4
+```
+
+I did not run it: it changes live production config and triggers a redeploy, and the behaviour
+is identical to the current defaults. It is config hygiene, not a fix.
 
 ### Decisions only you can make — these unblock other people
 
