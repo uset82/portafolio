@@ -126,6 +126,12 @@ is identical to the current defaults. It is config hygiene, not a fix.
 
 - [ ] ☐ **Q.11** · `CARLOS` · Approve or swap the 10 flagship projects
 - [ ] ☐ **Q.12** · `CARLOS` · Apply MIT to the 37 unlicensed repos?
+- [ ] ☐ **Q.13** · `CARLOS` · **7 private repos surfaced once `gh` authenticated** — they were
+      invisible to the public API and are **not** in `02-github-inventory.md`:
+      `marcoloco` · `ecco8-circular-luxe` (TS, 5.1 MB) · `rentme` · `ask-bank-ai` ·
+      `masterHVL` · `diagram-pixel-perfect-clone` · `tragatelo-food-facts`.
+      Public, brain-only, or invisible to CC AI? **Default until you say otherwise: invisible** —
+      `B.4` syncs public repos only, so nothing private leaks by accident.
 
 ---
 
