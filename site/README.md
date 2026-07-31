@@ -159,6 +159,6 @@ Test code may import the repository-only helpers from `@/testing`. `createObserv
 
 ## Deployment
 
-Carlos selected Railway for the current hosted preview attempt. The application workspace is `site/`, so the Railway service must use **Root Directory `/site`**; otherwise Railpack scans the repository control plane and cannot detect Node/Next.js. Versioned build, start, health-check, and restart settings live in `railway.json`, with the full setup and rollback notes in [`../docs/railway-deployment.md`](../docs/railway-deployment.md).
+Carlos selected Railway for the current hosted preview attempt. Railway builds from the repository root using [`../Dockerfile`](../Dockerfile), while the application remains isolated under `site/`. Keep the Railway Root Directory empty or `/`; [`../.dockerignore`](../.dockerignore) restricts the image context to the application and excludes environment files, local dependencies, build output, and control-plane material. Versioned builder, health-check, and restart settings live in [`../railway.json`](../railway.json), with the full setup and rollback notes in [`../docs/railway-deployment.md`](../docs/railway-deployment.md).
 
 The deployment-advisor's curated first-choice host for Next.js remains Vercel, so Railway is recorded as a user-directed target rather than a first-class WebDesigner guarantee. No production deployment is authorized. Treat the first successful Railway deployment as a preview and complete the Phase 8 hosted checks before launch.

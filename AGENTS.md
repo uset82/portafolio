@@ -8,9 +8,11 @@ Build Carlos Carpio's portfolio as a polished, editorial, media-aware experience
 
 1. Follow the current user request.
 2. Follow this `AGENTS.md` for durable repository behavior.
-3. Use `maintaskplan.md` for task order, dependencies, completion state, and evidence.
-4. Apply `rules.md`, `skills.md`, and the executable rules in `.codex/rules/portfolio.rules`.
-5. Treat the research report as recommendations, not immutable requirements.
+3. Use `maintaskplan.md` for **v1 launch** task order, dependencies, completion state, and evidence.
+4. Use `updates/TASKBOARD.md` for **post-v1 work** — the current round of fixes and upgrades.
+   It is the single page showing where the project is, all tasks, and which agent owns each.
+5. Apply `rules.md`, `skills.md`, and the executable rules in `.codex/rules/portfolio.rules`.
+6. Treat the research report as recommendations, not immutable requirements.
 
 If two sources conflict, preserve explicit user decisions and record the resolution in `maintaskplan.md`.
 
@@ -98,7 +100,11 @@ Until the stack is selected, document intended commands in the plan rather than 
 
 ## Key files
 
-- `maintaskplan.md` — living checkbox plan and completion evidence.
+- `updates/TASKBOARD.md` — **post-v1 work: current position, every task, and its owner.**
+  Start here for anything in the current round. Supporting detail lives beside it in `updates/`:
+  `05-runbook.md` (ordered steps and agent kickoff text), `tasks/*-TASKS.md` (per-agent plans),
+  `00-master-plan.md` (reasoning), `02-github-inventory.md` (all 61 repos, numbered).
+- `maintaskplan.md` — v1 launch checkbox plan and completion evidence.
 - `deep-research-report (8).md` — research, alternatives, and initial roadmap.
 - `rules.md` — human-readable project rules.
 - `skills.md` — skill routing and invocation guide.
