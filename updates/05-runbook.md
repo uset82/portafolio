@@ -118,6 +118,28 @@ then re-run the block above.
 
 ---
 
+## STEP 3.5 — Pre-launch check (run this before Step 4, every time)
+
+Three things silently break a launch. Verify all three, or agents stall on their first move.
+
+```bash
+cd C:\Users\carlo\PROYECTOS\portafolio-main
+git worktree list
+```
+
+1. **Every worktree must be on the same commit as the plans.** Worktrees created before the
+   plans were committed sit on an older commit and **do not contain `updates/` at all** — the
+   agent cannot read its own task file. Fix, per worktree:
+   `git -C ..\wt-codex merge --ff-only chore/planning-ledger`
+2. **`pnpm install` must have run inside each worktree.** Worktrees do not share
+   `node_modules`. Without it, `pnpm verify` — required before every PR — fails immediately.
+3. **`gh auth status` must show a logged-in account** before Codex reaches `B.0`, which creates
+   a private repo. **This one is yours** — it is a credential action, no agent should do it.
+
+> All three were missing on the first attempt. This step exists because of that.
+
+---
+
 ## STEP 4 — Start the agents (paste one block per environment)
 
 Order does not matter here — these four run in parallel. Give each agent **only its own** block.
@@ -127,27 +149,51 @@ An agent that reads another's plan will start "helpfully" fixing that lane and c
 
 ```
 Read updates/agents/CODEX.md then updates/tasks/CODEX-TASKS.md.
-Work in ../wt-codex on feat/brain-pipeline.
-Start with B.1 and B.2 only. One task per PR.
-Do not edit files outside your ownership list — request them in the PR body instead.
+Work in ../wt-codex on branch feat/brain-pipeline.
+
+Start with B.1, then B.2, then B.3. One task per PR, in that order.
+SKIP B.0 for now — it creates a private GitHub repo and gh is not
+authenticated yet. Carlos will unblock it.
+
+Do not edit files outside your ownership list; request them in the PR
+body instead. pnpm verify must be green before you open a PR.
+```
+
+### → Claude
+
+```
+Read updates/tasks/CLAUDE-TASKS.md.
+Work in ../wt-claude on branch feat/design-system.
+
+Start with SPEC.1 (design system spec) — Codex's V.4 and V.5 are
+blocked until it lands, so it is on the critical path. Then V.1.
+Review any incoming PR before doing your own build work.
 ```
 
 ### → Grok (in Cursor)
 
 ```
 Read updates/agents/GROK.md then updates/tasks/GROK-TASKS.md.
-Work in ../wt-grok on feat/arcade.
-Start with C.1 only: build each arcade candidate and measure its BUILT output size.
-Deliver the table described in C.1. Do not build the /arcade route yet.
+Work in ../wt-grok on branch feat/arcade.
+
+Start with C.1 only: clone each arcade candidate, build it, and record
+its BUILT output size — repo size is not a proxy. Deliver the table in
+C.1 as data in your PR, not as code.
+Do not build the /arcade route — that is Codex's C.2, from Claude's spec.
 ```
 
-### → Gemini
+### → Gemini / Antigravity
 
 ```
 Read updates/agents/GEMINI.md then updates/tasks/GEMINI-TASKS.md.
-Work in ../wt-gemini on chore/media.
-Start with M.1 (track inventory) and M.7 (image audit + poster conversion).
-Do not publish any track — M.2 onward is blocked until rights are confirmed.
+Work in ../wt-gemini on branch chore/media.
+
+Start with M.7 (image audit + convert the 2.5 MB poster to AVIF/WebP)
+— it needs nothing from anyone and is a real performance win.
+
+M.12 and M.13 need Carlos to send the Suno and YouTube links first.
+Do not publish any track: M.2 onward is blocked until M.11 confirms
+which Suno plan tier each track was generated under.
 ```
 
 ### → Claude
