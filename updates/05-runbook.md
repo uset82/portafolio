@@ -52,9 +52,9 @@ another's plan starts "helpfully" fixing that lane, which is the exact conflict 
 Read updates/agents/CODEX.md then updates/tasks/CODEX-TASKS.md.
 Work in ../wt-codex on branch feat/brain-pipeline.
 
-Start with B.1, then B.2, then B.3. One task per PR, in that order.
-SKIP B.0 for now - it creates a private GitHub repo and gh is not
-authenticated yet. Carlos will unblock it.
+Start with B.0, then B.1, B.2, B.3. One task per PR, in that order.
+gh is authenticated as uset82 with repo scope, so B.0 can create the
+private repository now.
 
 Do not edit files outside your ownership list; request them in the PR
 body instead. pnpm verify must be green before you open a PR.
@@ -99,14 +99,17 @@ which Suno plan tier each track was generated under.
 
 > **Checkpoint:** each agent has claimed its task in `claims/<agent>.md`.
 
-### Two things only you can do
+### What you still owe
 
-```bash
-gh auth login
-```
-
-Unblocks Codex's `B.0`. And **send the Suno + YouTube links** whenever — Gemini has `M.7` to work
-on meanwhile, so it is not idle waiting.
+- ☑ ~~`gh auth login`~~ — done 2026-07-31, `uset82`, scopes `gist read:org repo workflow`.
+  `B.0` is unblocked.
+- ⬜ **Send the Suno + YouTube links** → Gemini `M.12`/`M.13`. It has `M.7` meanwhile, so it is
+  not idle.
+- ⬜ **`Q.13`** — 7 **private** repos surfaced once auth landed and were **not** in the 61-repo
+  public inventory: `marcoloco`, `ecco8-circular-luxe`, `rentme`, `ask-bank-ai`, `masterHVL`,
+  `diagram-pixel-perfect-clone`, `tragatelo-food-facts`. Should any of them be public, enter the
+  brain, or stay private and invisible to CC AI?
+- ⬜ `Q.10` books · `Q.11` flagships · `Q.12` MIT licensing
 
 ---
 
