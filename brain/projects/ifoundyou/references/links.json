@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "links": [
+    {
+      "id": "ifoundyou-repository",
+      "label": "iFoundYou public repository",
+      "url": "https://github.com/uset82/iFoundYou",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "id": "ifoundyou-web-application",
+      "label": "Web application source",
+      "url": "https://github.com/uset82/iFoundYou/blob/main/web/src/App.tsx",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "id": "ifoundyou-location-policies",
+      "label": "Supabase row-level policies",
+      "url": "https://github.com/uset82/iFoundYou/blob/main/supabase/rls.sql",
+      "checkedOn": "2026-07-31"
+    }
+  ]
+}

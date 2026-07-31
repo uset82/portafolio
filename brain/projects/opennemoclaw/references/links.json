@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "links": [
+    {
+      "id": "opennemoclaw-repository",
+      "label": "OpenNemoClaw public repository",
+      "url": "https://github.com/uset82/opennemoclaw",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "id": "opennemoclaw-docker-provider",
+      "label": "Docker provider source",
+      "url": "https://github.com/uset82/opennemoclaw/blob/main/packages/sandbox/src/docker-provider.ts",
+      "checkedOn": "2026-07-31"
+    },
+    {
+      "id": "opennemoclaw-policy-engine",
+      "label": "Policy engine source",
+      "url": "https://github.com/uset82/opennemoclaw/blob/main/packages/policies/src/engine.ts",
+      "checkedOn": "2026-07-31"
+    }
+  ]
+}
