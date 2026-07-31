@@ -1,0 +1,19 @@
+{
+  "slug": "opennemoclaw",
+  "title": "OpenNemoClaw",
+  "type": "software",
+  "status": "prototype",
+  "public": true,
+  "publication": "ready",
+  "verification": "verified",
+  "rights": "not-applicable",
+  "summary": "A TypeScript agent-framework prototype exploring local agent management through CLI, API, Web UI, Docker controls, policies, connectors, and blueprints.",
+  "github": {
+    "repo": "uset82/opennemoclaw",
+    "public": true,
+    "checkedOn": "2026-07-31"
+  },
+  "sourceIds": ["github-uset82"],
+  "siteRoute": "/work/opennemoclaw",
+  "tags": ["agents", "docker", "openrouter", "policy-engine", "typescript"]
+}

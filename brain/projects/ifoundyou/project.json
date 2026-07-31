@@ -1,0 +1,19 @@
+{
+  "slug": "ifoundyou",
+  "title": "iFoundYou / Dommedag prototype",
+  "type": "software",
+  "status": "prototype",
+  "public": true,
+  "publication": "ready",
+  "verification": "verified",
+  "rights": "not-applicable",
+  "summary": "An experimental web and native prototype exploring trusted-circle location, community alerts, chat, and off-grid communication paths.",
+  "github": {
+    "repo": "uset82/iFoundYou",
+    "public": true,
+    "checkedOn": "2026-07-31"
+  },
+  "sourceIds": ["github-uset82"],
+  "siteRoute": "/work/ifoundyou",
+  "tags": ["communication", "maps", "meshtastic", "supabase"]
+}
