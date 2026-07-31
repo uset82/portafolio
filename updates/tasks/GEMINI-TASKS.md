@@ -19,7 +19,49 @@ time, with a dated entry in §5.
 
 ---
 
-## 1. Music — your main lane
+## 0. You own the music and video *design*, not just the assets
+
+Carlos assigned the look and feel of `/sound` and the video showcase to you (with Antigravity).
+That is a design brief, not an asset request: **you decide how listening and watching feel on
+this site**, then Claude wires your spec into components — `site/src/**` stays outside your lane.
+
+Two things that make this lane different from images:
+
+- **Sources are external.** Carlos will share **Suno links** for his best tracks and **YouTube
+  links** for his video work. That is good news: YouTube-hosted video means **nothing heavy gets
+  self-hosted**. The current 3.96 MB hero video is already 98 % of mobile page weight (`F.5b`) —
+  do not add to that.
+- **External embeds carry rules.** Suno and YouTube players are third-party. They must use the
+  existing `consent-embed.tsx` pattern: poster first, explicit click to load, no autoplay, no
+  third-party request before the visitor asks. `rules.md` requires embed sanitization and
+  forbids autoplaying audible media.
+
+- [ ] ☐ **M.12 — Collect and verify the Suno links.** One row per track: title, Suno URL,
+      duration, generation date, and the **plan tier active when it was generated** (`M.11`).
+      Verify every link resolves and is publicly playable without a login.
+      **Acceptance:** a table in your PR; every URL checked on the day of the PR.
+
+- [ ] ☐ **M.13 — Collect and verify the YouTube links.** One row per video: title, URL,
+      duration, upload date, whether it is public or unlisted, and whether Carlos is sole
+      creator. **Acceptance:** every URL checked; anything unlisted flagged, since unlisted
+      videos embedded on a public page are effectively public.
+
+- [ ] ☐ **M.14 — Design spec: `/sound`.** How the room feels. Track list, player state,
+      poster-before-load, what a visitor sees before pressing play, and what plays when. Warm
+      natural palette only. Deliver as a written spec plus reference frames — Claude implements.
+      **Acceptance:** covers desktop and mobile deliberately, mute-first, and the no-JS state.
+
+- [ ] ☐ **M.15 — Design spec: video showcase.** Same shape for the YouTube work. Poster grid,
+      click-to-load embeds, captions, and how it sits beside `/sound` without duplicating it.
+
+- [ ] ☐ **M.16 — Embed privacy pass.** YouTube's standard embed sets cookies before playback;
+      the `youtube-nocookie.com` variant does not. Use the privacy variant and document the
+      choice. **Acceptance:** no third-party request fires before the visitor clicks play,
+      verified in the network panel.
+
+---
+
+## 1. Music assets — your main lane
 
 Everything here is **blocked on `Q.5`** until Carlos confirms rights per track. Do the
 inventory work now; publish nothing until he answers.

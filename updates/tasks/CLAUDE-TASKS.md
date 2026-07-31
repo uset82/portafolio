@@ -93,6 +93,35 @@ time, with a dated entry in §5.
 - [ ] ☐ **V.10 — Accessibility re-verification.** WCAG 2.2 AA, keyboard-only, 200 % zoom,
       visible focus, reduced motion. Re-run after **every** visual change, not once at the end.
 
+### The design specs Codex builds from
+
+Codex implements; you decide. Every `V.*` and `C.2`–`C.4` task in `CODEX-TASKS.md` is blocked
+until its spec lands, so these are on the critical path — write them before Codex runs dry.
+
+- [ ] ☐ **SPEC.1 — Design system spec.** Type ramp with named roles, grid, spacing scale, and
+      the three motion motifs with their reduced-motion alternatives. Feeds `V.4` and `V.5`.
+
+- [ ] ☐ **SPEC.2 — `/studio` craft page spec.** Structure for the `webdesigner` (#59) case
+      study, the live token page, wireframe → final comparisons, and `avatar-studio` (#60).
+      Feeds `V.7`.
+
+- [ ] ☐ **SPEC.3 — Arcade design spec.** *(Carlos assigned the arcade look to you.)*
+      **The point is that playing happens *inside* the portfolio, not that a link opens
+      elsewhere.** Specify: how the index reads as an editorial room rather than a card grid;
+      the poster → click → play transition; how the frame is presented so a game feels embedded
+      rather than bolted on; the loading, error, and "desktop recommended" states; how a visitor
+      exits back into the site without losing their place.
+
+      Constraints that are not yours to move: warm natural palette, sandboxed iframes, never
+      autoload, never autoplay audio, and a complete keyboard path or an honest
+      "requires pointer" statement. All games ship (`Q.4`), so the layout must survive a set
+      that is uneven in quality and aspect ratio — that is the real design problem.
+      Feeds `C.2`, `C.3`, `C.4`, `C.10`.
+
+- [ ] ☐ **SPEC.4 — Review Gemini's `/sound` and video specs** (`M.14`, `M.15`) for palette,
+      motion, and accessibility coherence, then hand the merged brief to Codex. Gemini owns how
+      music and video *feel*; you own that they feel like the same site.
+
 ---
 
 ## 3. Architecture decisions

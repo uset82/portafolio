@@ -7,7 +7,7 @@ Everything else is detail you open only when a task needs it.
 `CODEX` the build engine, most of the code · `GROK` hard fixes, builds, platform ·
 `GEMINI` music, video, images
 
-**78 tasks.** Status: `☐` not started · `⏳` in progress · `☑` done · `⛔` blocked
+**90 open tasks** across the four agent plans. Status: `☐` not started · `⏳` in progress · `☑` done · `⛔` blocked
 
 ---
 
@@ -252,14 +252,29 @@ is identical to the current defaults. It is config hygiene, not a fix.
 
 | Owner | Tasks | Role |
 | --- | ---: | --- |
-| **CODEX** | **25** | The build engine. Most of the code: brain pipeline, CC AI retrieval, arcade routes, and the design system from Claude's specs. |
-| **CLAUDE** | 19 | Plans, design direction, architecture decisions, and **verifying every Codex PR before it merges**. Roughly half are `SPEC.*` and `VER.*` — work that exists to keep Codex unblocked and honest. |
-| **GEMINI** | 13 | Music, video, images, atmosphere, rights registers. |
-| **GROK** | 11 | Hard builds, 3D optimization, platform, performance, standing error triage. |
-| **CARLOS** | 10 | Decisions only. Seven are blocking someone right now. |
+| **CODEX** | **41** | The build engine. Brain pipeline, **per-repo skills and agents (the thing that makes CC AI smart)**, retrieval, arcade routes, design system — all from Claude's specs. |
+| **CLAUDE** | 18 | Plans, **design direction including the arcade**, architecture, `SPEC.*` for Codex, and **verifying every Codex PR before it merges**. |
+| **GEMINI** | 18 | **Music and video *design*** (with Antigravity), Suno and YouTube sourcing, images, atmosphere, rights. |
+| **GROK** | 13 | Hard builds, game builds, platform, performance, standing error triage. |
+| **CARLOS** | 12 | Decisions only. |
 
-78 total. Codex has more than twice Grok's load and a third of the whole project — it is the
-engine, and the other three exist to keep it fed, verified, and supplied with assets.
+Codex now carries roughly **40 %** of the project — the engine, as you asked. The other three
+exist to keep it fed with specs, verified, and supplied with assets.
+
+### Per-repo skills and agents — `B.7.1`–`B.7.11`
+
+**Yes, every repo needs its own skill and agent.** That is the difference between a chatbot that
+recites a README and one that explains how you built something and why.
+
+A synced README tells CC AI *what a repo is*. A `SKILL.md` + `ANSWERS.md` tells it *how to talk
+about it* — which questions it can answer, which it must refuse, the honest status, and what the
+project is genuinely comparable to. Without them, retrieval returns text and the model
+improvises the framing. With them, the framing is yours.
+
+Broken into 11 markable tasks: two templates, one generator for all 42 skeletons, then seven
+cluster fills (design → music → games → AI → site systems → electronics → web apps), fork
+contribution notes, and cross-cutting agents. Fill order is richest-documentation-first, so the
+pattern is proven where there is most to say.
 
 ---
 
