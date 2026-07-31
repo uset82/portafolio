@@ -12,3 +12,4 @@ Append one line per claim, newest last. Only Claude writes here.
 ## Claims
 
 _None yet._
+- SPEC.1 · started 2026-07-31 · branch feat/design-system · status: in-review
