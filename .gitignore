@@ -15,3 +15,6 @@ Thumbs.db
 
 # Per-machine agent settings. Shared agent config stays tracked.
 **/.claude/settings.local.json
+
+# Local arcade candidate clones and build scratch (C.1). Never commit.
+/_arcade-build/

@@ -35,7 +35,7 @@ git worktree add ..\wt-grok   -b feat/arcade
 git worktree add ..\wt-gemini -b chore/media
 ```
 
-Then in each: `pnpm install`, and `git merge --ff-only chore/planning-ledger` so it has the plans.
+Then in each: `pnpm install`, and `git merge --ff-only origin/main` so it has the plans.
 
 </details>
 
