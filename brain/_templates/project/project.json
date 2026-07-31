@@ -1,0 +1,14 @@
+{
+  "slug": "project-slug",
+  "title": "Project title",
+  "type": "software",
+  "status": "concept",
+  "public": false,
+  "publication": "draft",
+  "verification": "needs-user-confirmation",
+  "rights": "pending",
+  "summary": "Replace this sentence with a sourced, honest project summary.",
+  "sourceIds": [],
+  "siteRoute": "/work/project-slug",
+  "tags": []
+}
