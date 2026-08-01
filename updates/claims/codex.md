@@ -10,4 +10,5 @@ Append one line per claim, newest last. Only Codex writes here.
 
 ## Claims
 
-_None yet._
+- B.1 B.2 B.3 · 2026-08-01 · branch feat/brain-pipeline-b3-pr · status: merged in #9
+- B.4 · 2026-08-01 · branch feat/brain-sync-github · status: merged in #10

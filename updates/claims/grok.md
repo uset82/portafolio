@@ -11,3 +11,4 @@ Append one line per claim, newest last. Only Grok writes here.
 ## Claims
 
 - C.1 · started 2026-07-31 · branch feat/arcade · status: in-review
+- C.1 · 2026-08-01 · branch feat/arcade · status: merged in #1

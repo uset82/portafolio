@@ -10,12 +10,12 @@ Append one line per claim, newest last:
 - A.1 · 2026-08-02 · status: merged in #14
 ```
 
-| File | Agent |
-| --- | --- |
-| `codex.md` | Codex |
-| `grok.md` | Grok in Cursor |
-| `gemini.md` | Gemini |
-| `claude.md` | Claude |
+| File        | Agent          |
+| ----------- | -------------- |
+| `codex.md`  | Codex          |
+| `grok.md`   | Grok in Cursor |
+| `gemini.md` | Gemini         |
+| `claude.md` | Claude         |
 
 Before starting a task, check the other three files to confirm nobody else claimed it. Only
 ever write to your own.
