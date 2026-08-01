@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/cookthis-",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 9330,
+    "JavaScript": 559,
+    "TypeScript": 210081
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2025-12-13T00:40:04Z",
+  "githubUrl": "https://github.com/uset82/cookthis-",
+  "checkedOn": "2026-07-31"
+}

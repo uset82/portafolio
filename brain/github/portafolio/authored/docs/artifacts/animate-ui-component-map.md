@@ -1,0 +1,9 @@
+<!-- generatedBy: brain:sync-github; source: https://github.com/uset82/portafolio/blob/main/docs/artifacts/animate-ui-component-map.md; checkedOn: 2026-07-31; redactions: 0 -->
+
+# Animate UI component map
+
+| Local component                             | Upstream pattern                       | Portfolio use                                              | Adaptation and ownership                                                                                                                                                                                                                                                                                                                  |
+| ------------------------------------------- | -------------------------------------- | ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `site/src/components/animate-ui/button.tsx` | Animate UI copy-first Button primitive | CC AI collapsed launcher; existing interactive button uses | The MIT source note and upstream URL remain in the file. Styling is entirely local and uses the locked natural-palette tokens. Motion owns only hover/tap scale and the CC AI open/close transform; CSS owns color, border, and focus feedback. `MotionConfig reducedMotion="user"` removes transform motion for visitors who request it. |
+
+No registry package or opaque component dependency was added. The CC AI panel uses the existing adapted primitive plus the already-installed Motion runtime; no unrelated Animate UI components were copied.

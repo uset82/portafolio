@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/CRM_SaaS_Educativo",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "HTML": 38328
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2026-05-18T16:04:03Z",
+  "githubUrl": "https://github.com/uset82/CRM_SaaS_Educativo",
+  "checkedOn": "2026-07-31"
+}

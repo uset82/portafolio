@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/RS232_VHD_DE2115",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "Mathematica": 674,
+    "PowerShell": 4037,
+    "Stata": 1565,
+    "Tcl": 1540,
+    "VHDL": 497254
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2025-11-19T20:30:10Z",
+  "githubUrl": "https://github.com/uset82/RS232_VHD_DE2115",
+  "checkedOn": "2026-07-31"
+}

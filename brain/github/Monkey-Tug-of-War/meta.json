@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/Monkey-Tug-of-War",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "Dart": 125828,
+    "HTML": 3053,
+    "JavaScript": 2683507
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2026-02-12T21:11:40Z",
+  "githubUrl": "https://github.com/uset82/Monkey-Tug-of-War",
+  "checkedOn": "2026-07-31"
+}

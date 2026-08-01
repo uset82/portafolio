@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/gimmemycake",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 6147,
+    "HTML": 1648,
+    "TypeScript": 89814
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2025-12-28T19:19:59Z",
+  "githubUrl": "https://github.com/uset82/gimmemycake",
+  "checkedOn": "2026-07-31"
+}

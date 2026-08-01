@@ -1,0 +1,123 @@
+<!-- generatedBy: brain:sync-github; source: https://github.com/uset82/portafolio/blob/main/docs/design/wireframes.md; checkedOn: 2026-07-31; redactions: 0 -->
+
+# Launch wireframes
+
+The wireframes use the verified design copy in `docs/content/v1-design-content.md`. Bracketed project metadata remains hidden until verified.
+
+## Home — desktop, 1440+
+
+```text
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ [Skip]  (CC) Carlos Carpio   Work  Laboratory  Sound  Cosmos  Story Contact │
+│                                                          Sound  Motion       │
+├────────────────────────────┬─────────────────────────────────────────────────┤
+│ ENGINEER · INVENTOR ·      │ sunlit observatory / poster → WebGL            │
+│ CREATIVE TECHNOLOGIST      │                           drone                 │
+│                            │ energy       ceramic robot       ASTRAEA        │
+│ I turn hidden patterns     │                           ┌──────────────────┐  │
+│ into working systems.      │ water + hand              │ CC AI            │  │
+│                            │                           │ public portfolio │  │
+│ From artificial…           │ Sound Lab    PINÁCULO     │ assistant        │  │
+│ [Enter Observatory] Work → │                           └──────────────────┘  │
+│ • Current focus…           │                                                 │
+├────────────────────────────┴─────────────────────────────────────────────────┤
+│                         S E L E C T E D  S Y S T E M S                       │
+│ ASTRAEA / Celestial intelligence   PINÁCULO / Numerological engine          │
+│ FUTURE ENERGY / Adaptive flow systems                                       │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+## Home — mobile, 390
+
+```text
+┌──────────────────────────┐
+│ (CC) Carlos Carpio  Menu │
+├──────────────────────────┤
+│ ENGINEER · INVENTOR ·    │
+│ CREATIVE TECHNOLOGIST    │
+│                          │
+│ I turn hidden patterns   │
+│ into working systems.    │
+│                          │
+│ From artificial…         │
+│ [Enter Observatory]      │
+│ Explore Selected Work →  │
+│ • Current focus…         │
+├──────────────────────────┤
+│ cropped poster / scene   │
+│ robot face → hand/water  │
+│ [Pause scene]      [CC AI]│
+├──────────────────────────┤
+│ SELECTED SYSTEMS         │
+│ 01  ASTRAEA          →   │
+│ 02  PINÁCULO         →   │
+│ 03  FUTURE ENERGY    →   │
+├──────────────────────────┤
+│ Laboratory editorial     │
+│ Sound editorial          │
+│ Story / Cosmos           │
+│ Contact                  │
+└──────────────────────────┘
+```
+
+## Work index and no-results state
+
+```text
+WORK                                      Selected systems and shipped work
+Category anchors / filters when justified
+───────────────────────────────────────────────────────────────────────────────
+01  [Wide project visual]  Project title / status / contribution / category →
+02  [Wide project visual]  Project title / status / contribution / category →
+03  [Wide project visual]  Project title / status / contribution / category →
+
+No verified matches
+Reset the current filters or browse every selected system. [Reset]
+```
+
+## Case study
+
+```text
+[Back to Work]  PROJECT / VERIFIED STATUS
+Large title and one-sentence contribution
+[Repository] [Live demo or Unavailable]
+──────────────────────────── wide evidence image/video ────────────────────────
+Overview             Role / contribution / stack / date (verified only)
+Problem + constraints
+Approach              wide process/evidence moment
+Outcome               verified evidence, never invented metrics
+Learning
+Related work          plain editorial links
+```
+
+## Laboratory and Sound
+
+```text
+LABORATORY                                Experiments by system and maturity
+01  AI / electronics      Status + one verified summary                 →
+02  resilient energy     Status + one verified summary                 →
+
+SOUND LAB                                 [Muted by default]
+[poster/waveform]  Track title / credits / rights state
+[Play] 00:00 ───────── 00:00 [Mute] [Transcript / notes]
+Loading, unavailable, and external-host fallbacks occupy this same region.
+```
+
+## Story, Cosmos, Contact, and error
+
+```text
+STORY                       Biography; experience timeline; skills; education
+date → role / organization / verified description
+date → role / organization / verified description            [Résumé when ready]
+
+COSMOS                      Curated essays/objects; personal creative framing
+title / short reflection / safe place-time granularity / image rights
+
+CONTACT                     One sentence + verified mail action
+
+404                         This instrument is not in the observatory.
+                             [Return home] [Browse work]
+```
+
+## CC AI states
+
+Desktop uses a compact lower-right panel. Mobile uses a bottom sheet with a visible close label. States represented: collapsed, welcome, user message, streaming, stopped, complete with source links, error/retry, rate limit, offline, and privacy disclosure. Detailed behavior is in `cc-ai-spec.md`.

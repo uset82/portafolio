@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/elefante",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "C++": 34742,
+    "CSS": 6271,
+    "HTML": 9302,
+    "JavaScript": 9839,
+    "Mermaid": 746,
+    "Python": 11249
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2025-10-29T06:29:29Z",
+  "githubUrl": "https://github.com/uset82/elefante",
+  "checkedOn": "2026-07-31"
+}

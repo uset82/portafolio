@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/QubeSolve",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 71587,
+    "HTML": 1806,
+    "JavaScript": 2630,
+    "TypeScript": 255219
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2026-04-05T22:19:22Z",
+  "githubUrl": "https://github.com/uset82/QubeSolve",
+  "checkedOn": "2026-07-31"
+}

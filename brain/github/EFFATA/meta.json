@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/EFFATA",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 5676,
+    "HTML": 1648,
+    "JavaScript": 869,
+    "TypeScript": 245328
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2025-07-24T17:07:13Z",
+  "githubUrl": "https://github.com/uset82/EFFATA",
+  "checkedOn": "2026-07-31"
+}

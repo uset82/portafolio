@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/3Doodle",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 3003,
+    "HTML": 796,
+    "JavaScript": 80,
+    "TypeScript": 247299
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2026-06-07T19:48:58Z",
+  "githubUrl": "https://github.com/uset82/3Doodle",
+  "checkedOn": "2026-07-31"
+}

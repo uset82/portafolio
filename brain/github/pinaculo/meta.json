@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/pinaculo",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 18170,
+    "JavaScript": 3565,
+    "TypeScript": 152451
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2025-08-27T15:56:34Z",
+  "githubUrl": "https://github.com/uset82/pinaculo",
+  "checkedOn": "2026-07-31"
+}

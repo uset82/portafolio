@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/TRAFFICLIGHT",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "Assembly": 25891,
+    "C": 6504740,
+    "Linker Script": 10679
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2025-09-21T18:55:52Z",
+  "githubUrl": "https://github.com/uset82/TRAFFICLIGHT",
+  "checkedOn": "2026-07-31"
+}

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/webdesigner",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 109125,
+    "HTML": 11184,
+    "JavaScript": 4011541,
+    "PowerShell": 9228,
+    "Python": 1403845,
+    "Shell": 10742,
+    "TypeScript": 1453344
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2026-07-24T06:48:01Z",
+  "githubUrl": "https://github.com/uset82/webdesigner",
+  "checkedOn": "2026-07-31"
+}

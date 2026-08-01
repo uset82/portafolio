@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/opennemoclawsite",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 8097,
+    "HTML": 6527,
+    "JavaScript": 1386
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2026-03-18T21:59:51Z",
+  "githubUrl": "https://github.com/uset82/opennemoclawsite",
+  "checkedOn": "2026-07-31"
+}

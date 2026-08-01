@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/MandelBro",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 41995,
+    "HTML": 108032,
+    "JavaScript": 355395,
+    "Procfile": 20,
+    "Python": 54055
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2025-04-06T15:11:20Z",
+  "githubUrl": "https://github.com/uset82/MandelBro",
+  "checkedOn": "2026-07-31"
+}

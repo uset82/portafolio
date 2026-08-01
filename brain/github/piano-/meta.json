@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/piano-",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "Assembly": 25891,
+    "C": 6493102,
+    "CSS": 6017,
+    "HTML": 2003,
+    "JavaScript": 9186,
+    "Linker Script": 10679
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2025-11-05T23:42:45Z",
+  "githubUrl": "https://github.com/uset82/piano-",
+  "checkedOn": "2026-07-31"
+}

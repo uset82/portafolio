@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/bankAI",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 6286,
+    "HTML": 1125,
+    "JavaScript": 869,
+    "Python": 4717,
+    "TypeScript": 237625
+  },
+  "licenseSpdx": null,
+  "homepage": "https://bank-ai-two.vercel.app",
+  "defaultBranch": "main",
+  "pushedAt": "2025-09-06T02:22:46Z",
+  "githubUrl": "https://github.com/uset82/bankAI",
+  "checkedOn": "2026-07-31"
+}

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/drone_Lips",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "Astro": 4083,
+    "JavaScript": 147907,
+    "TypeScript": 145038
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "main",
+  "pushedAt": "2025-12-15T21:43:50Z",
+  "githubUrl": "https://github.com/uset82/drone_Lips",
+  "checkedOn": "2026-07-31"
+}

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "brain:sync-github",
+  "repository": "uset82/smartapply-app",
+  "description": null,
+  "topics": [],
+  "languages": {
+    "CSS": 2110,
+    "HTML": 366,
+    "JavaScript": 999,
+    "TypeScript": 52478
+  },
+  "licenseSpdx": null,
+  "homepage": null,
+  "defaultBranch": "master",
+  "pushedAt": "2025-03-10T00:05:28Z",
+  "githubUrl": "https://github.com/uset82/smartapply-app",
+  "checkedOn": "2026-07-31"
+}
