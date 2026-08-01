@@ -65,7 +65,9 @@ Full specification: [`../01-brain-spec.md`](../01-brain-spec.md).
       scaling. **Do not create 42 empty folders.**
       **Acceptance:** both pass `brain:check`; each has a real `NOTES.md` and ≥1 `knowledge/` file.
 
-- [ ] ☐ **B.4 — GitHub sync.** `brain:sync-github` per `../02-github-inventory.md` §6.
+- [x] ☑ **B.4 — GitHub sync.** _(merged PR #10 — 42 repos, 187 authored docs, 2.0 MB, zero
+      volatile counts, credential redaction working, secret scan clean.)_
+      `brain:sync-github` per `../02-github-inventory.md` §6.
       **Filter to `fork === false` and `size >= 50 KB`** — 42 repos, not 61.
       **Pull authored documents, not just READMEs**: `AGENTS.md`, `agents.md`, `docs/**`,
       `*_DIARY.md`, `*_PLAN.md`, `*_FIX*.md`, `design.md`. `StrudelAI` (#31) alone carries
@@ -76,6 +78,20 @@ Full specification: [`../01-brain-spec.md`](../01-brain-spec.md).
       `public: true` is allowed.
       **Acceptance:** re-running on unchanged upstream produces an empty diff and never rewrites
       a hand-authored file.
+
+- [ ] ☐ **B.4a — Fix the redaction double-replacement bug.** Overlapping matches run the
+      replacement twice and leave a stray fragment:
+      `?token=[REDACTED credential-like value] credential-like value]` at
+      `brain/github/opennemoclaw/authored/docs/http-api.md:41`. Corrupts text CC AI will read.
+      **Acceptance:** a test with an overlapping credential pattern produces exactly one marker.
+
+- [ ] ☐ **B.4b — Decide how retired-3D documentation is treated in the corpus.**
+      `portafolio` contributed 53 files, most `docs/artifacts/observatory-*` — camera navigation,
+      renderer diagnostics, progressive loading, robot candidates. `Q.3` retired the 3D layer and
+      `V.13` deletes it, so once that lands CC AI could confidently describe an Observatory that
+      no longer ships. The sync is correct — those documents are real and Carlos's — this is a
+      _curation_ rule, not a sync bug. Options: exclude the path, or mark the records
+      `status: "retired"` so CC AI frames them in the past tense. Decide with `V.13`.
 
 - [ ] ☐ **B.6 — Build bridge + leak test.** `brain:build` emits **approved public tier only**
       into `site/src/content/generated/`, committed so the Docker build finds it

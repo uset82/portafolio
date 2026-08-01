@@ -167,7 +167,7 @@ is identical to the current defaults. It is config hygiene, not a fix.
 
 ### Codex — the big one
 
-- [ ] ☐ **B.4** · `CODEX` · GitHub sync — 42 repos, forks/empty filtered, pulls authored docs not just READMEs
+- [x] ☑ **B.4** · `CODEX` · GitHub sync — _merged PR #10. 42 repos, 187 authored docs, 2.0 MB, zero volatile counts, credential redaction working, secret scan clean._
 - [ ] ☐ **B.6** · `CODEX` · Build bridge into `site/` + leak test
 - [ ] ☐ **B.7** · `CODEX` · Per-project `agents/SKILL.md`
 - [ ] ☐ **A.1** · `CODEX` · Chunk + index the corpus → `cc-ai-index.json`
