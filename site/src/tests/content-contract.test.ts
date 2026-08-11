@@ -161,9 +161,10 @@ test("local media stays hash-pinned with only the two approved derivation source
     JSON.parse(readFileSync(registerPath, "utf8")),
   );
 
-  // Carlos approved the monogram mark (2026-07-27) and the robot water video
-  // (the same day, as the homepage's silent looping visual); every other local
-  // file keeps its exclude decision.
+  // Carlos approved the monogram mark (2026-07-27) and, on 2026-08-11, the
+  // replacement Observatory sequence as the homepage's silent looping visual.
+  // The 2026-07-19 robot water source it superseded went back to exclude, so
+  // every local file except the monogram and the new sequence stays excluded.
   assert.equal(register.status, "runtime-approved");
   assert.deepEqual(
     register.assets.map((asset) => asset.path).sort(),
@@ -171,6 +172,7 @@ test("local media stays hash-pinned with only the two approved derivation source
       "imagesandvideo/Firefly.jpg",
       "imagesandvideo/Rotating Golden Monogram Emblem Animation.mp4",
       "imagesandvideo/Robot_kneeling_in_reflective_water_202607192339.mp4",
+      "imagesandvideo/Robot_observatory_sequence_202608111745.mp4",
       "imagesandvideo/frontUI.png",
       "imagesandvideo/logo.glb",
       "imagesandvideo/logo.png",
@@ -185,7 +187,7 @@ test("local media stays hash-pinned with only the two approved derivation source
       .map((asset) => asset.path)
       .sort(),
     [
-      "imagesandvideo/Robot_kneeling_in_reflective_water_202607192339.mp4",
+      "imagesandvideo/Robot_observatory_sequence_202608111745.mp4",
       "imagesandvideo/logo.png",
     ].sort(),
   );

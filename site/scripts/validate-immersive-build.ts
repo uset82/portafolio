@@ -193,7 +193,7 @@ async function validateFallbackRender() {
     // The clip's own first frame, not the design mock-up: the mock-up has a CC
     // AI panel painted into the artwork and would duplicate the real one.
     "robot-water-poster.jpg",
-    "A warm sunlit observatory with a ceramic robot touching a sage-colored water basin",
+    "A warm sunlit observatory with a long-haired android kneeling to touch a sage-colored water basin",
     // While U.20 holds the Canvas poster-authoritative there is no scene
     // lifecycle, so the floating status chip must stay unmounted; when the
     // live Canvas is approved again the initial capability status returns.

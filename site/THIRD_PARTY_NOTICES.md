@@ -41,6 +41,6 @@ Cormorant Garamond and Manrope are loaded through Next.js font optimization and 
 
 - The runtime Observatory poster is byte-identical to Carlos's ownership-recorded design reference and was approved for public production display on 2026-07-25.
 - The CA²M header/CC AI mark, favicon, and app icons are controlled derivatives of Carlos's owned monogram and were approved for public display on 2026-07-27.
-- The muted robot-water hero clip and its poster are controlled, hash-pinned derivatives of Carlos's owned video and were approved for silent looping homepage playback on 2026-07-27.
+- The muted robot-water hero clip and its poster are controlled, hash-pinned derivatives of Carlos's owned video and were approved for silent looping homepage playback on 2026-07-27. On 2026-08-11 both were regenerated from a new owned Observatory sequence under the same recipe; the superseded source is no longer served.
 - No project screenshots, launch music, external embeds, raw local GLB, HDR environment, or other unapproved local media is included in the runtime.
 - Current water, scene fallback geometry, procedural 3D assets, CSS materials, and lighting are repository-authored code output rather than imported third-party media.

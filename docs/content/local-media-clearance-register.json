@@ -114,14 +114,34 @@
       "rights": "owned",
       "license": "Owner-declared original media; no separate SPDX media license file is recorded yet. Carlos's open-source statement covers his code, not an automatic media redistribution license.",
       "attribution": "Credit Carlos Carpio if this video is ever published; no third-party credit is recorded.",
+      "decision": "exclude",
+      "requiredClearance": [
+        "Superseded on 2026-08-11: Carlos replaced this clip as the homepage hero with imagesandvideo/Robot_observatory_sequence_202608111745.mp4. No derivative of this file is served any more, so it returns to the excluded local-source set.",
+        "Re-approve public display before any future derivative of this file ships again; the 2026-07-27 hero approval was consumed by the retired derivative and does not carry forward."
+      ],
+      "accessibilityPlan": "No runtime surface derives from this file any more, so no captions, alt text, or reduced-motion path depends on it; the hero's accessibility contract now belongs to the replacement sequence entry.",
+      "technicalReview": "Inspected 2026-07-27 with ffprobe: source is 1920×1080 H.264 + AAC, 10.0 s, 240 frames. Its 1440×810 muted derivative (SHA-256 6FD6C308C0C49F67C8822E4E1D2D5F23A7F9AF06E55667238CC402585454BAB2) was retired on 2026-08-11 and overwritten by the replacement sequence derivative; nothing under site/public traces to this source now.",
+      "evidence": "Tracked local file with the recorded byte length and SHA-256. The hero derivative that once carried its 2026-07-27 approval no longer exists on disk, and the content gate now pins a different hash, so this source is back outside the runtime boundary."
+    },
+    {
+      "id": "local-observatory-sequence-video",
+      "path": "imagesandvideo/Robot_observatory_sequence_202608111745.mp4",
+      "kind": "video",
+      "bytes": 68156057,
+      "sha256": "C5055E9ED622D4907E6972AFAA9D7F9202B214CD17C212D563B0CF4E1952D9E6",
+      "source": "Carlos Carpio declared sole creation of this Observatory sequence and supplied it on 2026-08-11 as the replacement homepage hero video.",
+      "owner": "Carlos Carpio; sole creator claim recorded 2026-07-25 for repository and portfolio media, reaffirmed for this file on 2026-08-11.",
+      "rights": "owned",
+      "license": "Owner-declared original media; no separate SPDX media license file is recorded yet. Carlos's open-source statement covers his code, not an automatic media redistribution license.",
+      "attribution": "Credit Carlos Carpio if this video is ever published; no third-party credit is recorded.",
       "decision": "include",
       "requiredClearance": [
-        "Public sequence approved: on 2026-07-27 Carlos asked for this video to replace the static hero composition, which clears the clip for silent looping hero playback. The derivative has its AAC audio track removed, so no embedded-audio rights question remains open.",
-        "Delivery approved: a 1440×810 keyframe-dense (1 s GOP) muted H.264 derivative at 4,052,812 bytes with +faststart ships from site/public/videos/, plays silently on a loop over the retained poster, and is suspended whenever the hero is offscreen or the tab is hidden."
+        "Public sequence approved: on 2026-08-11 Carlos supplied this clip to replace the previous hero video and chose the full 30 s narrative cut, which clears it for silent looping hero playback. The derivative has its AAC audio track removed, so no embedded-audio rights question remains open.",
+        "Delivery approved: a 1440×810 keyframe-dense (1 s GOP) muted H.264 derivative at 7,718,028 bytes with +faststart ships from site/public/videos/, plays silently on a loop over the regenerated poster, and is suspended whenever the hero is offscreen or the tab is hidden."
       ],
-      "accessibilityPlan": "The sequence is decorative and silent with no speech, so no captions are required; it is marked aria-hidden with no controls and is never keyboard-reachable, the approved poster and its alt text remain the hero’s server-rendered visual, and reduced-motion or save-data preferences render no video element at all.",
-      "technicalReview": "Inspected 2026-07-27 with ffprobe: source is 1920×1080 H.264 + AAC, 10.0 s, 240 frames. Derivative robot-water-sequence.mp4 (SHA-256 6FD6C308C0C49F67C8822E4E1D2D5F23A7F9AF06E55667238CC402585454BAB2) strips audio, scales to 1440×810, uses CRF 28 with a 24-frame GOP and +faststart for efficient silent loop playback, and stays under the 5 MB hero-video budget; poster robot-water-poster.jpg (204,322 bytes, SHA-256 79C1EDCF3A5CD3B28802501BFF6C17CA5E616806D65FBE081A64636A1118E005) is its 0.2 s frame.",
-      "evidence": "Tracked local file with the recorded byte length and SHA-256; Carlos's 2026-07-27 homepage request is the publication approval, and the muted derivative plus poster are hash-pinned by the site content gate."
+      "accessibilityPlan": "The sequence is decorative and silent with no speech, so no captions are required; it is marked aria-hidden with no controls and is never keyboard-reachable, the regenerated poster and its updated alt text remain the hero's server-rendered visual, and reduced-motion or save-data preferences render no video element at all.",
+      "technicalReview": "Inspected 2026-08-11 with ffprobe: source is 3840×2160 H.264 + AAC, 30.0 s, 721 frames. Derivative robot-water-sequence.mp4 (SHA-256 3628E40A3EDB4A3E7671CAEE424CA43DDB99F55DBD9F6AF213C4FC548FA65BFA) strips audio, scales to 1440×810, uses CRF 28 with a 24-frame GOP and +faststart for efficient silent loop playback; poster robot-water-poster.jpg (173,197 bytes, SHA-256 4A934095210D7A1E47A790329DFE40511F57B43F3BDB07E247D8BBFDD9B5DBFE) is its 0.2 s frame. At 7,718,028 bytes the derivative exceeds the 5 MB hero-video budget the retired 10 s clip met, because Carlos chose the full 30 s cut on 2026-08-11; the budget overrun is accepted and recorded rather than silently reset.",
+      "evidence": "Tracked local file with the recorded byte length and SHA-256; Carlos's 2026-08-11 replacement request is the publication approval, and the muted derivative plus poster are hash-pinned by the site content gate."
     },
     {
       "id": "local-robot-glb",

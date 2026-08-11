@@ -199,14 +199,14 @@
         "site/public/videos/robot-water-sequence.mp4",
         "site/public/images/robot-water-poster.jpg"
       ],
-      "source": "Derived 2026-07-27 from Carlos's owned imagesandvideo/Robot_kneeling_in_reflective_water_202607192339.mp4: audio track removed, scaled to 1440×810, re-encoded at 24 fps with a 24-frame GOP, CRF 28, and +faststart for efficient silent loop playback, with a 0.2 s poster frame.",
-      "owner": "Carlos Carpio; sole creator claim recorded 2026-07-25; homepage sequence approved 2026-07-27.",
+      "source": "Derived 2026-08-11 from Carlos's owned imagesandvideo/Robot_observatory_sequence_202608111745.mp4: audio track removed, scaled from 3840×2160 to 1440×810, re-encoded at 24 fps with a 24-frame GOP, CRF 28, and +faststart for efficient silent loop playback, with a 0.2 s poster frame. This replaced the 2026-07-27 derivative of Robot_kneeling_in_reflective_water_202607192339.mp4, which is retired and no longer served.",
+      "owner": "Carlos Carpio; sole creator claim recorded 2026-07-25; homepage sequence approved 2026-07-27 and re-approved for the replacement clip on 2026-08-11.",
       "rights": "owned",
-      "license": "Owner-declared original portfolio media approved for public production display on 2026-07-27.",
+      "license": "Owner-declared original portfolio media approved for public production display on 2026-07-27, extended to the replacement sequence on 2026-08-11.",
       "attribution": "Carlos Carpio",
       "decision": "include",
       "launchCritical": false,
-      "evidence": "robot-water-sequence.mp4 is 4,052,812 bytes with SHA-256 6FD6C308C0C49F67C8822E4E1D2D5F23A7F9AF06E55667238CC402585454BAB2; robot-water-poster.jpg is 204,322 bytes with SHA-256 79C1EDCF3A5CD3B28802501BFF6C17CA5E616806D65FBE081A64636A1118E005. The muted clip is the hero’s moving visual: it plays silently on a loop over the retained server-rendered poster, is suspended offscreen and on hidden tabs, exposes no controls or accessible name, and is not rendered at all under reduced-motion, save-data, or no-JavaScript conditions."
+      "evidence": "robot-water-sequence.mp4 is 7,718,028 bytes with SHA-256 3628E40A3EDB4A3E7671CAEE424CA43DDB99F55DBD9F6AF213C4FC548FA65BFA; robot-water-poster.jpg is 173,197 bytes with SHA-256 4A934095210D7A1E47A790329DFE40511F57B43F3BDB07E247D8BBFDD9B5DBFE. The muted clip is the hero’s moving visual: it plays silently on a loop over the retained server-rendered poster, is suspended offscreen and on hidden tabs, exposes no controls or accessible name, and is not rendered at all under reduced-motion, save-data, or no-JavaScript conditions. The 30 s cut Carlos chose on 2026-08-11 restarts on a hard visual cut rather than a matched frame, and at 7.4 MB it is roughly 1.9× the retired 10 s derivative."
     }
   ],
   "reviewNotes": [
@@ -217,6 +217,7 @@
     "All unapproved raw brand, 3D, audio, and video candidates remain excluded from runtime; only the controlled poster, CA²M derivatives, and silent robot-water derivative have completed accessibility, optimization, rights, and page-placement review.",
     "On 2026-07-27 Carlos supplied his gold CA²M monogram and asked for portfolio integration. The header's typographic CC mark, the CC AI code-authored mark, and the starter favicon were replaced by hash-pinned owned derivatives (runtime-brand-mark, brand-favicon); raw imagesandvideo sources stay outside runtime imports, and the full legal-name lockup stays unpublished under the approved \"Carlos Carpio\" identity.",
     "On 2026-07-27 Carlos approved the robot water video as the homepage hero’s moving visual. The runtime derivative is silent and hash-pinned (runtime-robot-sequence); the raw source video keeps its local-media exclusion from runtime imports.",
+    "On 2026-08-11 Carlos replaced that hero clip with a new owned Observatory sequence and chose the full 30 s narrative cut. The runtime derivative and poster were regenerated from the new 4K source under the same silent, muted, hash-pinned recipe, and the hero's alt text was rewritten because the figure is now a long-haired android rather than the ceramic robot the earlier copy described. The retired source returns to the excluded local-media set.",
     "The code-authored typographic CC mark (repository-authored-cc-mark) was retired on 2026-07-27 when Carlos approved the CA²M monogram for the CC AI assistant; its component was deleted and every mark surface now renders the owned brand derivative."
   ]
 }

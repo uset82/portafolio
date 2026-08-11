@@ -43,7 +43,7 @@ const LazyObservatoryLiveScene = dynamic(
 
 const OBSERVATORY_SCENE_CAPTION_ID = "observatory-scene-caption";
 const OBSERVATORY_SCENE_DESCRIPTION =
-  "A warm sunlit observatory with a ceramic robot, a sage water basin, and instruments for sound, celestial patterns, numerology, electronics, and energy.";
+  "A warm sunlit observatory with a long-haired android, a sage water basin, and instruments for sound, celestial patterns, numerology, electronics, and energy.";
 
 export type ObservatoryProgressiveExperienceProps = {
   artifacts: readonly ObservatoryArtifactAccessContent[];

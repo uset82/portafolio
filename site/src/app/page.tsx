@@ -76,7 +76,7 @@ export default function Home() {
                     className="observatory-media-frame"
                     imageClassName="observatory-poster"
                     src="/images/robot-water-poster.jpg"
-                    alt="A warm sunlit observatory with a ceramic robot touching a sage-colored water basin among instruments for sound, celestial patterns, numerology, electronics, and energy."
+                    alt="A warm sunlit observatory with a long-haired android kneeling to touch a sage-colored water basin among instruments for sound, celestial patterns, numerology, electronics, and energy."
                     fill
                     priority
                     sizes="100vw"
