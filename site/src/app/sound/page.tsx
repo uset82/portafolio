@@ -9,7 +9,7 @@ const siteContent = siteContentSchema.parse(rawSiteContent);
 export const metadata: Metadata = {
   title: "Sound",
   description:
-    "Carlos Carpio's mute-first Sound and moving-image room, with explicit publication, accessibility, rights, and privacy gates.",
+    "Carlos Alfredo Carpio Meza's mute-first Sound and moving-image room, with explicit publication, accessibility, rights, and privacy gates.",
 };
 
 export default function SoundPage() {

@@ -76,10 +76,10 @@
       "attribution": "Credit Carlos Carpio if this mark is ever published; no third-party credit is recorded.",
       "decision": "include",
       "requiredClearance": [
-        "Mark-only public display approved: on 2026-07-27 Carlos supplied this logo and asked for it to be integrated into the portfolio, which clears the monogram mark for the live site. The full legal-name lockup row remains excluded because the approved public identity copy is \"Carlos Carpio\".",
+        "Mark-only public display approved: on 2026-07-27 Carlos supplied this logo and asked for it to be integrated into the portfolio, which clears the monogram mark for the live site. On 2026-08-11 the approved public identity copy became \"Carlos Alfredo Carpio Meza\", but the full legal-name lockup row of this sheet stays excluded: approving the name as text is not approval to publish this raster wordmark, which still needs its own accessibility and web-master review.",
         "Web-ready master approved: a transparent mark-only raster is derived by removing the near-black ground (screen-on-black unmultiply) and cropping the main monogram; the derivative ships from site/public/images/brand/ rather than referencing this source file at runtime."
       ],
-      "accessibilityPlan": "The mark is decorative in the header: it sits inside an aria-hidden span with empty alt while the adjacent \"Carlos Carpio\" text and the link's aria-label carry the accessible name.",
+      "accessibilityPlan": "The mark is decorative in the header: it sits inside an aria-hidden span with empty alt while the adjacent \"Carlos Alfredo Carpio Meza\" text and the link's aria-label carry the accessible name.",
       "technicalReview": "Derived 2026-07-27: 256×256 palette-quantized transparent PNG at 19,076 bytes (SHA-256 EAB3D2852173332C19AF8F76B6F9EBF0DD9B3D1416D17C9DB6C67623EA9553C2) for the header, plus favicon.ico/icon.png/apple-icon.png icon derivatives on the palette espresso ground; rendered at 3.2rem/2.5rem with explicit dimensions.",
       "evidence": "Tracked local file with the recorded byte length and SHA-256; Carlos's 2026-07-27 integration request is the public-display approval, and the derived runtime assets are hash-pinned by the site content gate."
     },
@@ -189,7 +189,7 @@
     "The safest launch path approved the ownership-recorded Observatory poster for public production display while keeping monogram sheets, videos, and multi-ten-megabyte GLBs excluded from runtime until accessibility and optimization work is complete.",
     "MIT covers portfolio code; it does not auto-import binary media into the live site. Every imagesandvideo path remains excluded from runtime source imports.",
     "The site-level content gate compares this register to the actual imagesandvideo directory, byte lengths, and SHA-256 hashes so later additions or substitutions cannot silently bypass review.",
-    "On 2026-07-27 Carlos supplied the gold CA²M monogram and asked for it to be integrated into the portfolio. That request grants mark-only runtime clearance: the register status moves to runtime-approved, imagesandvideo/logo.png moves to include as the derivation source, and every other local file keeps its exclude decision. The full legal-name lockup stays unpublished because the approved public identity remains \"Carlos Carpio\".",
+    "On 2026-07-27 Carlos supplied the gold CA²M monogram and asked for it to be integrated into the portfolio. That request grants mark-only runtime clearance: the register status moves to runtime-approved, imagesandvideo/logo.png moves to include as the derivation source, and every other local file keeps its exclude decision. The full legal-name lockup image stays unpublished. On 2026-08-11 Carlos confirmed his full legal name and approved it as the site's public identity copy, so the runtime identity became \"Carlos Alfredo Carpio Meza\" as text; that decision does not clear the raster wordmark sheet, which still needs its own review.",
     "On 2026-07-27 Carlos also approved the robot water video as the homepage hero’s moving visual. Its runtime derivative is muted (audio track removed), scaled to 1440×810, keyframe-dense, and hash-pinned with its poster; the raw MP4 stays outside runtime imports like every other imagesandvideo source."
   ]
 }

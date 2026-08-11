@@ -9,7 +9,7 @@ const siteContent = siteContentSchema.parse(rawSiteContent);
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Carlos Carpio's privacy-first contact route with one verified public GitHub profile and no unapproved direct contact details.",
+    "Carlos Alfredo Carpio Meza's privacy-first contact route with one verified public GitHub profile and no unapproved direct contact details.",
 };
 
 export default function ContactPage() {

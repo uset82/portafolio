@@ -4,7 +4,7 @@ import type { SDKOptions } from "@openrouter/sdk";
  * ByteStrings, so any character above U+00FF makes the request throw before it
  * is sent — an em dash here failed every CC AI call as "provider unavailable".
  * Keep this ASCII; `assertHeaderSafe` enforces it. */
-export const OPENROUTER_APP_TITLE = "Carlos Carpio - CC AI";
+export const OPENROUTER_APP_TITLE = "Carlos Alfredo Carpio Meza - CC AI";
 
 const assertHeaderSafe = (value: string, variableName: string) => {
   if (!/^[ -~]*$/.test(value)) {

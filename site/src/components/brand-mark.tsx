@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 /* Carlos's approved CA²M monogram. It is decorative everywhere it appears —
- * each host already supplies the accessible name ("Carlos Carpio — home", the
+ * each host already supplies the accessible name ("Carlos Alfredo Carpio Meza — home", the
  * CC AI dialog title), so the mark itself stays out of the accessibility tree. */
 export function BrandMark({ compact = false }: { compact?: boolean }) {
   return (

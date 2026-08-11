@@ -54,7 +54,7 @@ export const rawSiteContent = {
     },
   ],
   metadata: {
-    name: "Carlos Carpio",
+    name: "Carlos Alfredo Carpio Meza",
     locale: "en",
     eyebrow: "Engineer · Inventor · Creative Technologist",
     headline: "I turn hidden patterns into working systems.",

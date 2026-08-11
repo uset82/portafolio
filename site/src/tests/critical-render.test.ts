@@ -72,7 +72,7 @@ test("the Work route exposes every validated project without premature filters",
 test("the Story route never exposes the private résumé as a download", () => {
   const markup = renderToStaticMarkup(createElement(StoryPage));
 
-  assert.match(markup, /<h1 id="story-profile-title">Carlos Carpio<\/h1>/);
+  assert.match(markup, /<h1 id="story-profile-title">Carlos Alfredo Carpio Meza<\/h1>/);
   assert.match(markup, /A web-first CV, released carefully\./);
   assert.match(markup, /Experience, education, and skills remain withheld/);
   assert.doesNotMatch(markup, /<a[^>]+(?:download|\.pdf|resume|résumé)/i);

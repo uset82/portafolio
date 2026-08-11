@@ -47,7 +47,7 @@ export function ProfileTeaser({ content }: ProfileTeaserProps) {
         <strong>CC</strong>
         <i />
         <i />
-        <small>Carlos Carpio</small>
+        <small>Carlos Alfredo Carpio Meza</small>
       </div>
     </section>
   );

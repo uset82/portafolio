@@ -295,7 +295,7 @@
       "captionIntent": "Candidate personal monogram sheet, not flagship project media.",
       "altTextIntent": "If approved, identify the gold Carlos Alfredo Carpio Meza monogram and wordmark variants.",
       "optimizationNeeds": [
-        "Confirm whether the full legal name should appear on the live site.",
+        "Resolved 2026-08-11: Carlos confirmed the full legal name appears on the live site, so the runtime identity copy is now \"Carlos Alfredo Carpio Meza\". Publishing this raster wordmark sheet is still a separate decision.",
         "Rebuild an accessible SVG or transparent raster master before Web use."
       ],
       "routing": "Task 2.14 personal-brand review."

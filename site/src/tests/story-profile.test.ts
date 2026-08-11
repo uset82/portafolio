@@ -20,7 +20,7 @@ test("Story publishes the approved profile and an explicit privacy-safe CV bound
   );
 
   assert.match(markup, /<main id="main-content" class="story-profile">/);
-  assert.match(markup, /<h1 id="story-profile-title">Carlos Carpio<\/h1>/);
+  assert.match(markup, /<h1 id="story-profile-title">Carlos Alfredo Carpio Meza<\/h1>/);
   assert.match(markup, /Engineer · Inventor · Creative Technologist/);
   assert.match(markup, /presenting verified work separately from prototypes/);
   assert.match(markup, /Biography approved/);

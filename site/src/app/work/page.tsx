@@ -9,7 +9,7 @@ const siteContent = siteContentSchema.parse(rawSiteContent);
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "A navigable register of Carlos Carpio's validated Observatory concepts, labeled by their current evidence state.",
+    "A navigable register of Carlos Alfredo Carpio Meza's validated Observatory concepts, labeled by their current evidence state.",
 };
 
 export default function WorkPage() {

@@ -9,7 +9,7 @@ const siteContent = siteContentSchema.parse(rawSiteContent);
 export const metadata: Metadata = {
   title: "Cosmos",
   description:
-    "Carlos Carpio's privacy-first space for future travel notes, astrology studies, and numerology studies, framed as creative and personal practice.",
+    "Carlos Alfredo Carpio Meza's privacy-first space for future travel notes, astrology studies, and numerology studies, framed as creative and personal practice.",
 };
 
 export default function CosmosPage() {

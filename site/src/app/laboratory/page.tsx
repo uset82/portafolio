@@ -17,7 +17,7 @@ function getFutureEnergyProject(): Extract<Project, { status: "concept" | "prepa
 export const metadata: Metadata = {
   title: "Laboratory",
   description:
-    "A concept-safe register for Carlos Carpio's Future Energy, Electronics / AI, and Aerial systems Observatory mechanisms, without claims of functioning hardware, live systems, or flight performance.",
+    "A concept-safe register for Carlos Alfredo Carpio Meza's Future Energy, Electronics / AI, and Aerial systems Observatory mechanisms, without claims of functioning hardware, live systems, or flight performance.",
 };
 
 export default function LaboratoryPage() {

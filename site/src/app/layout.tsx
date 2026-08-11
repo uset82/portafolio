@@ -24,11 +24,11 @@ const bodyFont = Manrope({
 
 export const metadata: Metadata = {
   title: {
-    default: "Carlos Carpio — Engineer, Inventor, Creative Technologist",
-    template: "%s — Carlos Carpio",
+    default: "Carlos Alfredo Carpio Meza — Engineer, Inventor, Creative Technologist",
+    template: "%s — Carlos Alfredo Carpio Meza",
   },
   description:
-    "Carlos Carpio turns hidden patterns across AI, electronics, future energy, music, astrology, and numerology into working systems.",
+    "Carlos Alfredo Carpio Meza turns hidden patterns across AI, electronics, future energy, music, astrology, and numerology into working systems.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

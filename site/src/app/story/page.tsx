@@ -9,7 +9,7 @@ const siteContent = siteContentSchema.parse(rawSiteContent);
 export const metadata: Metadata = {
   title: "Story",
   description:
-    "Carlos Carpio's approved public biography, creative-engineering practice, and privacy-safe CV publication status.",
+    "Carlos Alfredo Carpio Meza's approved public biography, creative-engineering practice, and privacy-safe CV publication status.",
 };
 
 export default function StoryPage() {

@@ -57,8 +57,8 @@ export function SiteFooter({ content, navigation }: SiteFooterProps) {
       </div>
 
       <p className="site-footer__note">
-        © {new Date().getFullYear()} Carlos Carpio. Built as a semantic portfolio with an optional
-        immersive layer.
+        © {new Date().getFullYear()} Carlos Alfredo Carpio Meza. Built as a semantic portfolio with
+        an optional immersive layer.
       </p>
     </footer>
   );

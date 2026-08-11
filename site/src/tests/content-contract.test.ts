@@ -21,7 +21,7 @@ test("approved display records satisfy the site content contract", () => {
 test("homepage identity content stays focused and approval-backed", () => {
   const { metadata } = siteContentSchema.parse(rawSiteContent);
 
-  assert.equal(metadata.name, "Carlos Carpio");
+  assert.equal(metadata.name, "Carlos Alfredo Carpio Meza");
   assert.equal(metadata.eyebrow, "Engineer · Inventor · Creative Technologist");
   assert.match(metadata.headline, /\.$/);
   assert.equal(metadata.headline.split(/[.!?]+/).filter(Boolean).length, 1);

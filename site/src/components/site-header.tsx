@@ -30,9 +30,9 @@ export function SiteHeader({ navigation }: { navigation: NavigationItem[] }) {
   return (
     <header className="site-header">
       <div className="site-header__inner">
-        <Link className="identity" href="/" aria-label="Carlos Carpio — home">
+        <Link className="identity" href="/" aria-label="Carlos Alfredo Carpio Meza — home">
           <BrandMark />
-          <span>Carlos Carpio</span>
+          <span>Carlos Alfredo Carpio Meza</span>
         </Link>
 
         <nav className="desktop-navigation" aria-label="Primary navigation">
