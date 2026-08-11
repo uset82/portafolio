@@ -348,6 +348,12 @@ a {
   white-space: nowrap;
 }
 
+.identity__name {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.08;
+}
+
 .brand-mark {
   display: inline-grid;
   width: 3.2rem;

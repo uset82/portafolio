@@ -30,9 +30,16 @@ export function SiteHeader({ navigation }: { navigation: NavigationItem[] }) {
   return (
     <header className="site-header">
       <div className="site-header__inner">
+        {/* The name is stacked on two lines so the full legal name fits the
+         * header column without shrinking the type. The link's aria-label
+         * still carries the whole name, so the visual split never reaches the
+         * accessibility tree as two fragments. */}
         <Link className="identity" href="/" aria-label="Carlos Alfredo Carpio Meza — home">
           <BrandMark />
-          <span>Carlos Alfredo Carpio Meza</span>
+          <span className="identity__name">
+            <span>Carlos Alfredo</span>
+            <span>Carpio Meza</span>
+          </span>
         </Link>
 
         <nav className="desktop-navigation" aria-label="Primary navigation">
