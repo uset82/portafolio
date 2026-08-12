@@ -6848,8 +6848,12 @@ body:has(.observatory-hero) .site-header {
 }
 
 @media (max-width: 78rem) {
+  /* The status cell is hidden below this width, which used to leave the nav
+     as the last of two columns and pin it to the right edge. Keeping a third
+     flexible column - empty, since the status is display:none - balances the
+     identity column and centres the nav instead. */
   .site-header__inner {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr auto 1fr;
   }
 
   .site-header__status {
