@@ -1511,14 +1511,21 @@ a {
  * where the headline begins. */
 .observatory-scrim--crown {
   bottom: auto;
-  height: 15rem;
+  height: 9.5rem;
+  /* Eight stops across a short run. Over this distance three or four stops
+   * banded visibly — the eye reads a linear ramp between widely spaced stops
+   * as an edge. The extra stops buy a smooth falloff without lengthening the
+   * wash, which has to stay clear of the headline. */
   background: linear-gradient(
     to bottom,
-    rgb(254 244 234 / 97%) 0%,
-    rgb(253 239 231 / 93%) 30%,
-    rgb(244 214 202 / 58%) 50%,
-    rgb(180 132 110 / 20%) 68%,
-    rgb(30 22 14 / 0%) 86%
+    rgb(254 244 234 / 96%) 0%,
+    rgb(254 243 233 / 93%) 20%,
+    rgb(252 237 228 / 84%) 38%,
+    rgb(248 227 217 / 64%) 52%,
+    rgb(238 208 194 / 42%) 65%,
+    rgb(212 172 148 / 24%) 77%,
+    rgb(130 92 68 / 10%) 89%,
+    rgb(30 22 14 / 0%) 100%
   );
 }
 
