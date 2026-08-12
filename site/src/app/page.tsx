@@ -1,6 +1,7 @@
 import { CcAiPanel } from "@/components/cc-ai-panel";
 import { HeroReveal, HeroRevealItem, SceneReveal } from "@/components/hero-reveal";
 import { MediaTeaser } from "@/components/media-teaser";
+import { ObservatoryDial } from "@/components/observatory-dial";
 import { PersonalTeaser } from "@/components/personal-teaser";
 import { ObservatoryHeroVideo } from "@/components/observatory-hero-video";
 import { ProfileTeaser } from "@/components/profile-teaser";
@@ -159,41 +160,22 @@ export default function Home() {
         <div className="selected-systems" id="selected-systems">
           <div className="selected-systems__heading">
             <h2>Selected Systems</h2>
-            {/* Counted from the registers rather than written down, so the
-             * ratio cannot drift out of date as entries are added. */}
             <p className="selected-systems__count">
-              {String(selectedSystems.length).padStart(2, "0")} of{" "}
-              {String(observatoryArtifacts.length).padStart(2, "0")}
+              {String(observatoryArtifacts.length).padStart(2, "0")} systems
             </p>
           </div>
-          <div className="selected-systems__list">
-            {selectedSystems.map((system) => (
-              <a
-                key={system.slug}
-                className="system-card"
-                href={`/work/${system.slug}`}
-                data-slug={system.slug}
-              >
-                <span className="system-card__head">
-                  <span>
-                    <strong>{system.title}</strong>
-                    <small>{system.descriptor}</small>
-                  </span>
-                  <span className="system-index">{system.index}</span>
-                </span>
-                {/* The mechanism line is the card's evidence. It reuses the
-                 * approved artifact description verbatim rather than a shorter
-                 * paraphrase, so no new claim enters the page. */}
-                <span className="system-card__mechanism">
-                  {
-                    OBSERVATORY_ARTIFACT_DESCRIPTIONS[
-                      system.slug as keyof typeof OBSERVATORY_ARTIFACT_DESCRIPTIONS
-                    ]
-                  }
-                </span>
-              </a>
-            ))}
-          </div>
+          {/* Every Observatory system sits on the dial, not just the flagship
+           * three, because a six-position ring divides evenly and the whole
+           * register is what the visitor is choosing between. */}
+          <ObservatoryDial
+            items={observatoryArtifacts.map((artifact) => ({
+              id: artifact.artifactId,
+              href: artifact.href,
+              title: artifact.title,
+              descriptor: artifact.descriptor,
+              status: artifact.status,
+            }))}
+          />
         </div>
       </section>
 

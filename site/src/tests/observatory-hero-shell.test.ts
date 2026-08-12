@@ -32,7 +32,7 @@ test("the homepage owns one complete semantic Observatory layer stack", () => {
   assert.equal((home.match(/\/images\/robot-water-poster\.jpg/g) ?? []).length, 1);
   assert.match(home, /<h1 id="hero-title">\{metadata\.headline\}<\/h1>/);
   assert.equal((home.match(/<ActionLink/g) ?? []).length >= 2, true);
-  assert.match(home, /selectedSystems\.map/);
+  assert.match(home, /observatoryArtifacts\.map/);
 
   assert.equal(layout.indexOf("<SiteHeader") < layout.indexOf("{children}"), true);
   assert.match(progressive, /<figure/);
