@@ -1504,6 +1504,33 @@ a {
   );
 }
 
+/* Cream at the very top, through a blush, out to nothing — so the header no
+ * longer meets the scene as a ruled edge. Its height is bounded rather than
+ * inset:0 on purpose: the headline is cream on dark, so any wash still
+ * present behind it would collapse that contrast. The fade completes above
+ * where the headline begins. */
+.observatory-scrim--crown {
+  bottom: auto;
+  height: 15rem;
+  background: linear-gradient(
+    to bottom,
+    rgb(254 244 234 / 97%) 0%,
+    rgb(253 239 231 / 93%) 30%,
+    rgb(244 214 202 / 58%) 50%,
+    rgb(180 132 110 / 20%) 68%,
+    rgb(30 22 14 / 0%) 86%
+  );
+}
+
+/* Homepage only. Elsewhere the header keeps its cream slab and rule, which it
+ * needs against ordinary page content; over the scene that slab was the hard
+ * separation itself, and the crown scrim now supplies its backing. */
+body:has(.observatory-hero) .site-header {
+  border-bottom: 0;
+  background: none;
+  backdrop-filter: none;
+}
+
 .observatory-hero .editorial-field {
   bottom: 13.5rem;
   width: min(54rem, 62vw);
@@ -1720,6 +1747,57 @@ a {
 
   .selected-systems__list a.system-card {
     padding: 0.9rem 1.1rem;
+  }
+}
+
+/* Direction 1A assumes the scene sits behind the copy. Below 48rem it does
+ * not: the editorial field switches to `position: relative` and flows on the
+ * cream page, with the scene reduced to a band underneath and the rail below
+ * that. Light-on-dark type therefore lands on cream — the headline measured
+ * 1.0 contrast, i.e. invisible — and `bottom: 13.5rem` on the now-relative
+ * field shifted the whole column 216px off the top of the screen. The 1A
+ * treatment is unwound here and the narrow layout keeps its own design. */
+@media (max-width: 47.99rem) {
+  .observatory-hero .editorial-field {
+    bottom: auto;
+    width: auto;
+    padding-bottom: 0;
+    background: var(--color-canvas-soft);
+  }
+
+  .observatory-hero .hero-eyebrow,
+  .observatory-hero .hero-copy h1 {
+    color: inherit;
+    text-shadow: none;
+  }
+
+  .observatory-hero .hero-support,
+  .observatory-hero .current-focus {
+    color: var(--color-text-secondary);
+  }
+
+  .observatory-hero .primary-action {
+    border-color: var(--color-walnut);
+    background: var(--color-walnut);
+    color: var(--color-text-on-dark);
+  }
+
+  .observatory-hero .secondary-action {
+    border: 1px solid transparent;
+    border-radius: var(--radius-control);
+    color: var(--color-text-primary);
+  }
+
+  /* Nothing to sit in front of: the scene is a band here, not a backdrop. */
+  .observatory-scrim {
+    display: none;
+  }
+
+  /* The rail lands below the scene band on cream, so the cards have to carry
+   * their own dark ground for their light type to hold. */
+  .selected-systems__list a.system-card {
+    border-color: rgb(95 75 53 / 30%);
+    background: rgb(42 29 22 / 94%);
   }
 }
 

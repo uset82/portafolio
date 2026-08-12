@@ -94,6 +94,12 @@ export default function Home() {
                     aria-hidden="true"
                   />
                   <div className="observatory-scrim observatory-scrim--base" aria-hidden="true" />
+                  {/* Last of the three, so it paints over the other two. The
+                   * header is an absolute cream slab sitting on top of a dark
+                   * scene, which cut a hard rule across the page. This carries
+                   * that cream down through a blush into the brown instead,
+                   * and is fully transparent before the headline starts. */}
+                  <div className="observatory-scrim observatory-scrim--crown" aria-hidden="true" />
                 </>
               }
             />
