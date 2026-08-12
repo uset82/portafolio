@@ -1579,16 +1579,20 @@ body:has(.observatory-hero) .site-header {
 }
 
 /* CC AI moves from a floating card at the bottom to a labelled affordance in
- * the top chrome. It sits just under the sticky header rather than inside it:
- * the panel must stay in the homepage's focus order, so the component keeps
- * its place in the hero instead of moving into the shared header.
+ * the top chrome, centred on the same line as the primary nav. It stays
+ * mounted in the hero rather than moving into the shared header: the panel
+ * must keep its place in the homepage's focus order. Its z-index is above the
+ * header's, so sitting on that line does not put it behind anything.
  *
  * Desktop only. The narrow layout keeps the existing bottom-anchored trigger,
  * whose `bottom` is set in a later media query — setting `top` here as well
  * would stretch the button between both edges. */
 @media (min-width: 64rem) {
   .observatory-hero .cc-ai-trigger {
-    top: calc(var(--header-height) + 0.65rem);
+    /* Centres the 3.5rem resting pill in the header band, which puts its
+       midline on the nav's. Anchoring by top means the hover expansion grows
+       downward from a fixed edge instead of shifting the button. */
+    top: calc((var(--header-height) - 3.5rem) / 2);
     bottom: auto;
     border-color: rgb(236 223 207 / 30%);
     border-radius: 999px;
@@ -1596,7 +1600,13 @@ body:has(.observatory-hero) .site-header {
     transform-origin: right top;
   }
 
+  /* The three-row template and its 0.8rem gaps survive even when the preview
+     and prompt rows are display:none, which padded the resting pill out to
+     83px — taller than the header itself. Collapsing to a single row at rest
+     brings it to 3.5rem; the full template returns on hover. */
   .observatory-hero .cc-ai-trigger:not(:hover, :focus-visible) {
+    grid-template-rows: auto;
+    row-gap: 0;
     padding: 0.5rem 1.1rem 0.5rem 0.6rem;
   }
 
