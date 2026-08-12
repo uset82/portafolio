@@ -444,28 +444,6 @@ a {
   color: var(--color-sage-dark);
 }
 
-.menu-button {
-  display: none;
-  min-width: 4.5rem;
-  min-height: var(--control-height);
-  border: 1px solid var(--color-border-soft);
-  border-radius: var(--radius-control);
-  background: var(--color-canvas-soft);
-  color: var(--color-text-primary);
-}
-
-.mobile-navigation-shell {
-  display: none;
-  animation: mobile-nav-enter var(--duration-base) var(--ease-emphasized) both;
-}
-
-@keyframes mobile-nav-enter {
-  from {
-    opacity: 0;
-    transform: translateY(-0.5rem);
-  }
-}
-
 .observatory-hero {
   position: relative;
   min-height: max(52rem, 100svh);
@@ -6874,58 +6852,8 @@ body:has(.observatory-hero) .site-header {
     grid-template-columns: 1fr auto;
   }
 
-  .desktop-navigation,
   .site-header__status {
     display: none;
-  }
-
-  .menu-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    justify-self: end;
-  }
-
-  .mobile-navigation-shell {
-    position: absolute;
-    z-index: var(--z-navigation);
-    right: 0;
-    left: 0;
-    display: grid;
-    gap: 2rem;
-    padding: 1.25rem var(--page-gutter) 2rem;
-    border-top: 1px solid var(--color-border-soft);
-    background: var(--color-canvas-soft);
-    box-shadow: var(--shadow-soft);
-  }
-
-  .mobile-navigation-shell nav {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .mobile-navigation-shell nav a {
-    display: grid;
-    min-height: 4rem;
-    align-content: center;
-    padding: 0.65rem;
-    border-right: 1px solid var(--color-border-soft);
-    border-bottom: 1px solid var(--color-border-soft);
-    font-family: var(--font-display);
-    font-size: 1.45rem;
-  }
-
-  .mobile-navigation-shell nav a span {
-    color: var(--color-text-secondary);
-    font-family: var(--font-body);
-    font-size: 0.58rem;
-  }
-
-  .mobile-navigation-shell p {
-    margin: 0;
-    color: var(--color-text-secondary);
-    font-size: 0.68rem;
-    text-transform: uppercase;
   }
 
   .editorial-field {
@@ -7024,7 +6952,11 @@ body:has(.observatory-hero) .site-header {
 
 @media (max-width: 47.99rem) {
   :root {
-    --header-height: 4.25rem;
+    /* Taller than the one-row header elsewhere: with the menu drawer removed,
+       the nav needs its own row here, and every hero offset keys off this
+       variable, so the height has to grow with it rather than be patched
+       per-consumer. */
+    --header-height: 6.75rem;
     --page-gutter: 1rem;
   }
 
@@ -7034,6 +6966,32 @@ body:has(.observatory-hero) .site-header {
 
   .site-header__inner {
     min-height: var(--header-height);
+    grid-template-columns: 1fr;
+    align-content: center;
+    row-gap: 0.15rem;
+  }
+
+  /* Six links will not fit beside the two-line name at this width. They scroll
+     sideways instead of collapsing into a drawer, so every route stays
+     reachable from the header. The negative margin lets the row bleed to the
+     screen edges while keeping the first link aligned to the gutter. */
+  .desktop-navigation {
+    justify-content: flex-start;
+    gap: 1.15rem;
+    margin-inline: calc(var(--page-gutter) * -1);
+    padding-inline: var(--page-gutter);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .desktop-navigation::-webkit-scrollbar {
+    display: none;
+  }
+
+  .desktop-navigation a {
+    min-height: 2.25rem;
+    font-size: 0.82rem;
   }
 
   .identity {
@@ -7047,22 +7005,6 @@ body:has(.observatory-hero) .site-header {
 
   .brand-mark--compact {
     width: 2.15rem;
-  }
-
-  .mobile-navigation-shell {
-    min-height: calc(100svh - var(--header-height));
-    align-content: start;
-  }
-
-  .mobile-navigation-shell nav {
-    grid-template-columns: 1fr;
-  }
-
-  .mobile-navigation-shell nav a {
-    grid-template-columns: 2.2rem 1fr;
-    min-height: 3.6rem;
-    align-items: center;
-    border-right: 0;
   }
 
   .observatory-hero {
