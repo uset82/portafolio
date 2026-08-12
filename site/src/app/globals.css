@@ -1463,6 +1463,263 @@ a {
   transform: translate(2px, -2px);
 }
 
+/* ── Direction 1A ────────────────────────────────────────────────────────────
+ * The hero stops being a split (cream reading panel beside the scene) and
+ * becomes one full-bleed scene with the type overlaid on scrims. Everything
+ * here is scoped under .observatory-hero: .hero-eyebrow, .section-label,
+ * .primary-action and .secondary-action are shared with the other routes, and
+ * the light-on-dark treatment must not leak onto them.
+ *
+ * The clip is untouched by all of this — it keeps playing underneath, and the
+ * scrims sit above it purely as contrast. */
+
+.observatory-scrim {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Darkens the reading column and lets the right side of the scene stay open. */
+.observatory-scrim--reading {
+  background: linear-gradient(
+    100deg,
+    rgb(30 22 14 / 92%) 0%,
+    rgb(30 22 14 / 86%) 42%,
+    rgb(30 22 14 / 34%) 62%,
+    rgb(30 22 14 / 20%) 78%,
+    rgb(30 22 14 / 40%) 100%
+  );
+}
+
+/* Seats the Selected Systems rail and, usefully, sinks the foreground plaques
+ * whose lettering is invented artwork rather than real signage. */
+.observatory-scrim--base {
+  background: linear-gradient(
+    to top,
+    rgb(24 18 12 / 94%) 0%,
+    rgb(24 18 12 / 88%) 24%,
+    rgb(24 18 12 / 46%) 42%,
+    rgb(24 18 12 / 0%) 62%
+  );
+}
+
+.observatory-hero .editorial-field {
+  bottom: 13.5rem;
+  width: min(54rem, 62vw);
+  padding-bottom: 2rem;
+  background: none;
+  box-shadow: none;
+}
+
+.observatory-hero .hero-copy {
+  max-width: 44rem;
+}
+
+.observatory-hero .hero-eyebrow {
+  color: rgb(236 223 207 / 78%);
+  font-size: 0.74rem;
+  letter-spacing: 0.2em;
+}
+
+.observatory-hero .hero-copy h1 {
+  max-width: 40rem;
+  color: var(--color-text-on-dark);
+  letter-spacing: -0.015em;
+  line-height: 0.92;
+  text-shadow: 0 1px 28px rgb(20 14 9 / 45%);
+}
+
+.observatory-hero .hero-support {
+  max-width: 33rem;
+  color: rgb(236 223 207 / 88%);
+}
+
+.observatory-hero .current-focus {
+  color: rgb(236 223 207 / 72%);
+}
+
+.observatory-hero .current-focus > span {
+  background: #cfa18a;
+}
+
+/* Work is 1A's primary action, so it takes the light fill that reads first on
+ * the darkened scene; the Observatory keeps a quiet underline. */
+.observatory-hero .primary-action {
+  border-color: #ecdfcf;
+  background: #ecdfcf;
+  color: #2a1d16;
+}
+
+.observatory-hero .primary-action:hover {
+  background: var(--color-text-on-dark);
+}
+
+.observatory-hero .secondary-action {
+  border-bottom: 1px solid rgb(236 223 207 / 40%);
+  border-radius: 0;
+  color: var(--color-text-on-dark);
+}
+
+.observatory-hero .secondary-action:hover {
+  border-bottom-color: var(--color-text-on-dark);
+  background: none;
+}
+
+/* CC AI moves from a floating card at the bottom to a labelled affordance in
+ * the top chrome. It sits just under the sticky header rather than inside it:
+ * the panel must stay in the homepage's focus order, so the component keeps
+ * its place in the hero instead of moving into the shared header.
+ *
+ * Desktop only. The narrow layout keeps the existing bottom-anchored trigger,
+ * whose `bottom` is set in a later media query — setting `top` here as well
+ * would stretch the button between both edges. */
+@media (min-width: 64rem) {
+  .observatory-hero .cc-ai-trigger {
+    top: calc(var(--header-height) + 0.65rem);
+    bottom: auto;
+    border-color: rgb(236 223 207 / 30%);
+    border-radius: 999px;
+    background: rgb(42 29 22 / 62%);
+    transform-origin: right top;
+  }
+
+  .observatory-hero .cc-ai-trigger:not(:hover, :focus-visible) {
+    padding: 0.5rem 1.1rem 0.5rem 0.6rem;
+  }
+
+  .observatory-hero .cc-ai-trigger:hover,
+  .observatory-hero .cc-ai-trigger:focus-visible {
+    border-radius: var(--radius-panel);
+    background: rgb(42 29 22 / 88%);
+  }
+}
+
+/* The rail becomes three glass cards over the base scrim instead of a cream
+ * bar, so the scene runs edge to edge behind them. */
+.observatory-hero .selected-systems {
+  padding: 0 var(--page-gutter) 2.25rem;
+  border-top: 0;
+  background: none;
+  backdrop-filter: none;
+}
+
+.observatory-hero .selected-systems__heading {
+  display: flex;
+  max-width: none;
+  align-items: baseline;
+  justify-content: space-between;
+  width: min(100%, var(--page-max));
+  margin: 0 auto 1.1rem;
+  gap: 1.2rem;
+}
+
+.observatory-hero .selected-systems__heading h2 {
+  color: rgb(236 223 207 / 70%);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+}
+
+.selected-systems__count {
+  margin: 0;
+  color: rgb(236 223 207 / 50%);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+}
+
+.observatory-hero .selected-systems__list {
+  gap: 1.25rem;
+  border-top: 0;
+}
+
+.selected-systems__list a.system-card {
+  display: block;
+  min-height: 0;
+  padding: 1.35rem 1.5rem;
+  border: 1px solid rgb(236 223 207 / 22%);
+  border-radius: 10px;
+  background: rgb(254 244 234 / 8%);
+  backdrop-filter: blur(10px);
+  transition:
+    background-color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
+}
+
+.selected-systems__list a.system-card:hover {
+  border-color: rgb(236 223 207 / 45%);
+  background: rgb(254 244 234 / 14%);
+}
+
+.system-card__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.system-card__head > span:first-child {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.system-card strong {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--color-text-on-dark);
+  text-transform: uppercase;
+}
+
+.system-card small {
+  color: rgb(236 223 207 / 74%);
+  font-size: 0.78rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.system-card .system-index {
+  color: rgb(236 223 207 / 55%);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+}
+
+/* Selector carries the list ancestry deliberately: the mechanism span is the
+ * card's second child, which the older `.selected-systems__list a > span:
+ * nth-child(2)` rule already claims with `display: grid`. A bare class loses
+ * to it, so this has to match its specificity and win on order. */
+.selected-systems__list a.system-card > .system-card__mechanism {
+  display: block;
+  margin-top: 1.1rem;
+  color: rgb(236 223 207 / 58%);
+  font-size: 0.74rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 63.99rem) {
+  .observatory-hero .editorial-field {
+    width: auto;
+    right: 0;
+  }
+
+  .observatory-hero .selected-systems__list {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  /* The rail is absolutely positioned to the hero's bottom edge, so three
+   * stacked cards plus mechanism lines would grow it past the fold. Narrow
+   * viewports keep the name, descriptor, and index only. */
+  .selected-systems__list a.system-card > .system-card__mechanism {
+    display: none;
+  }
+
+  .selected-systems__list a.system-card {
+    padding: 0.9rem 1.1rem;
+  }
+}
+
 /* The publication-ready Selected Work layout stays unmounted until task U.4 is approved. */
 .selected-work {
   width: min(100%, var(--page-max));

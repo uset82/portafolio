@@ -63,19 +63,22 @@ export const rawSiteContent = {
     currentFocus:
       "Currently exploring AI agents, resilient energy, creative tools and the patterns connecting technology with human experience.",
     assistantName: "CC AI",
+    /* Direction 1A makes Work the primary action and demotes the Observatory
+     * to the discovery route. Both records keep their approved id, label,
+     * href, and sources; only which one carries primary emphasis changed. */
     primaryAction: {
-      id: "enter-observatory",
-      label: "Enter the Observatory",
-      href: "#selected-systems",
+      id: "explore-selected-work",
+      label: "Explore Selected Work",
+      href: "/work",
       kind: "navigation",
       verification: "reference-approved",
       sourceIds: ["approved-main-ui", "approved-design-copy"],
       external: false,
     },
     secondaryAction: {
-      id: "explore-selected-work",
-      label: "Explore Selected Work",
-      href: "/work",
+      id: "enter-observatory",
+      label: "Enter the Observatory",
+      href: "#selected-systems",
       kind: "navigation",
       verification: "reference-approved",
       sourceIds: ["approved-main-ui", "approved-design-copy"],

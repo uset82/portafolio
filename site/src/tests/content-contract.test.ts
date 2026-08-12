@@ -26,9 +26,11 @@ test("homepage identity content stays focused and approval-backed", () => {
   assert.match(metadata.headline, /\.$/);
   assert.equal(metadata.headline.split(/[.!?]+/).filter(Boolean).length, 1);
   assert.ok(metadata.supportingStatement.length <= 180);
+  // Direction 1A promoted Work to the primary action; the Observatory keeps
+  // the same approved record as the secondary discovery route.
   assert.deepEqual(
     [metadata.primaryAction.href, metadata.secondaryAction.href],
-    ["#selected-systems", "/work"],
+    ["/work", "#selected-systems"],
   );
   assert.notEqual(metadata.primaryAction.label, metadata.secondaryAction.label);
   assert.ok(metadata.sourceIds.includes("approved-public-profile"));

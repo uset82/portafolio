@@ -8,7 +8,7 @@ import { ObservatoryExperienceControls } from "@/components/three/observatory-ex
 import { ObservatoryProgressiveExperienceContent } from "@/components/three/observatory-progressive-experience";
 import { OBSERVATORY_LIVE_CANVAS_PRESENTATION } from "@/lib/three/progressive-loading";
 import { ObservatorySceneRuntimeProvider } from "@/components/three/observatory-scene-runtime-provider";
-import { ActionLink, EditorialLinkItem, ImageFrame } from "@/components/ui";
+import { ActionLink, ImageFrame } from "@/components/ui";
 import { selectedSystems, siteContent } from "@/content/site";
 
 const OBSERVATORY_ARTIFACT_DESCRIPTIONS = {
@@ -83,7 +83,17 @@ export default function Home() {
                     bleed
                   />
                   <ObservatoryHeroVideo />
-                  <div className="poster-bottom-cover" aria-hidden="true" />
+                  {/* Direction 1A overlays the hero type on the scene instead
+                   * of parking it on a cream panel. Two scrims carry that: a
+                   * diagonal one that darkens the reading column, and a
+                   * bottom-up one that seats the Selected Systems cards. They
+                   * sit above the clip and below every text layer, so the copy
+                   * keeps its contrast while the clip keeps playing. */}
+                  <div
+                    className="observatory-scrim observatory-scrim--reading"
+                    aria-hidden="true"
+                  />
+                  <div className="observatory-scrim observatory-scrim--base" aria-hidden="true" />
                 </>
               }
             />
@@ -142,19 +152,40 @@ export default function Home() {
 
         <div className="selected-systems" id="selected-systems">
           <div className="selected-systems__heading">
-            <span aria-hidden="true" />
             <h2>Selected Systems</h2>
-            <span aria-hidden="true" />
+            {/* Counted from the registers rather than written down, so the
+             * ratio cannot drift out of date as entries are added. */}
+            <p className="selected-systems__count">
+              {String(selectedSystems.length).padStart(2, "0")} of{" "}
+              {String(observatoryArtifacts.length).padStart(2, "0")}
+            </p>
           </div>
           <div className="selected-systems__list">
             {selectedSystems.map((system) => (
-              <EditorialLinkItem
+              <a
                 key={system.slug}
+                className="system-card"
                 href={`/work/${system.slug}`}
-                index={system.index}
-                title={system.title}
-                description={system.descriptor}
-              />
+                data-slug={system.slug}
+              >
+                <span className="system-card__head">
+                  <span>
+                    <strong>{system.title}</strong>
+                    <small>{system.descriptor}</small>
+                  </span>
+                  <span className="system-index">{system.index}</span>
+                </span>
+                {/* The mechanism line is the card's evidence. It reuses the
+                 * approved artifact description verbatim rather than a shorter
+                 * paraphrase, so no new claim enters the page. */}
+                <span className="system-card__mechanism">
+                  {
+                    OBSERVATORY_ARTIFACT_DESCRIPTIONS[
+                      system.slug as keyof typeof OBSERVATORY_ARTIFACT_DESCRIPTIONS
+                    ]
+                  }
+                </span>
+              </a>
             ))}
           </div>
         </div>
