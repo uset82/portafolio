@@ -1545,6 +1545,19 @@ body:has(.observatory-hero) .site-header {
   border-bottom: 0;
   background: none;
   backdrop-filter: none;
+  /* The hero sets isolation:isolate, so the CACM AI trigger inside it has its
+     z-index scoped to that context and can never rise above this header. Once
+     the trigger moved onto the header line, the bar - which is full width and
+     mostly empty here - was swallowing its clicks and the button read as a
+     picture. The bar becomes click-through; its real controls take pointer
+     events back below. */
+  pointer-events: none;
+}
+
+body:has(.observatory-hero) .site-header .identity,
+body:has(.observatory-hero) .site-header .desktop-navigation,
+body:has(.observatory-hero) .site-header .site-header__status {
+  pointer-events: auto;
 }
 
 .observatory-hero .editorial-field {
