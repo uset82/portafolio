@@ -1,7 +1,7 @@
 import { CcAiPanel } from "@/components/cc-ai-panel";
 import { HeroReveal, HeroRevealItem, SceneReveal } from "@/components/hero-reveal";
 import { MediaTeaser } from "@/components/media-teaser";
-import { ObservatoryDial } from "@/components/observatory-dial";
+import { ObservatoryAtom } from "@/components/observatory-atom";
 import { PersonalTeaser } from "@/components/personal-teaser";
 import { ObservatoryHeroVideo } from "@/components/observatory-hero-video";
 import { ProfileTeaser } from "@/components/profile-teaser";
@@ -164,10 +164,10 @@ export default function Home() {
               {String(observatoryArtifacts.length).padStart(2, "0")} systems
             </p>
           </div>
-          {/* Every Observatory system sits on the dial, not just the flagship
-           * three, because a six-position ring divides evenly and the whole
-           * register is what the visitor is choosing between. */}
-          <ObservatoryDial
+          {/* Every Observatory system rides the atom, not just the flagship
+           * three: three orbits carry two each, and the whole register is what
+           * the visitor is choosing between. */}
+          <ObservatoryAtom
             items={observatoryArtifacts.map((artifact) => ({
               id: artifact.artifactId,
               href: artifact.href,

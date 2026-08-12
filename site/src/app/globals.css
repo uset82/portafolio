@@ -1772,68 +1772,91 @@ body:has(.observatory-hero) .site-header .site-header__status {
    * turns pale and its light readout disappears - measured 2.13 before this.
    * The ring takes an opaque ground and drops the blur, which has nothing
    * worth sampling behind it at this width anyway. */
-  /* Scoped through .observatory-hero so it outranks the base dial rule, which
-     is declared later in this file and would otherwise win the tie. */
-  .observatory-hero .observatory-dial__ring {
+  /* The rail lands below the scene band on cream here, so translucent surfaces
+     turn pale and their light type disappears. Both take an opaque ground and
+     drop the blur, which has nothing worth sampling behind it at this width.
+     Scoped through .observatory-hero so it outranks the base atom rules, which
+     are declared later in this file and would otherwise win the tie. */
+  .observatory-hero .observatory-atom__nucleus {
     border-color: rgb(95 75 53 / 30%);
     background: rgb(42 29 22 / 95%);
     backdrop-filter: none;
   }
 
-  .observatory-hero .observatory-dial__mark a {
+  .observatory-hero .observatory-atom__marker a {
     background: rgb(42 29 22 / 96%);
+    backdrop-filter: none;
+  }
+
+  .observatory-hero .observatory-atom__orbit {
+    border-color: rgb(95 75 53 / 34%);
   }
 }
 
-/* ── Observatory dial ────────────────────────────────────────────────────────
- * The Selected Systems rail as an instrument: six positions on a ring with a
- * hand sweeping between them. Sized to the band the cards used to occupy, so
- * the hero's proportions are unchanged.
+/* ── Observatory atom ────────────────────────────────────────────────────────
+ * Three orbits crossing at 60°, two projects riding each, a nucleus reading
+ * out the highlighted one. Sized to the band the cards used to occupy, so the
+ * hero's proportions are unchanged.
  *
- * The hand and the auto-advance are the only motion, and both are gated on
- * data-animate, which the component sets from prefers-reduced-motion. */
+ * Orbit geometry lives in the component (RADIUS_X 0.44, RADIUS_Y 0.17 of the
+ * box); the ellipses here are the drawn rings and must match those numbers -
+ * width 88% and height 34% are those radii doubled. */
 
-.observatory-dial {
-  display: flex;
-  justify-content: center;
-}
-
-.observatory-dial__face {
+.observatory-atom {
   position: relative;
-  width: clamp(10rem, 13.5vw, 12.5rem);
+  width: clamp(11rem, 15vw, 13.5rem);
+  margin-inline: auto;
   aspect-ratio: 1;
 }
 
-.observatory-dial__ring {
+.observatory-atom__orbit {
   position: absolute;
-  inset: 0;
-  border: 1px solid rgb(236 223 207 / 24%);
+  top: 50%;
+  left: 50%;
+  width: 88%;
+  height: 34%;
+  border: 1px solid rgb(236 223 207 / 20%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.observatory-atom__nucleus {
+  position: absolute;
+  z-index: 1;
+  inset: 27%;
+  display: grid;
+  margin: 0;
+  gap: 0.2rem;
+  align-content: center;
+  border: 1px solid rgb(236 223 207 / 22%);
   border-radius: 50%;
   background:
-    radial-gradient(circle at 50% 34%, rgb(255 250 244 / 12%) 0%, rgb(255 250 244 / 0%) 62%),
-    rgb(30 22 14 / 34%);
+    radial-gradient(circle at 50% 32%, rgb(255 250 244 / 14%) 0%, rgb(255 250 244 / 0%) 64%),
+    rgb(30 22 14 / 62%);
   box-shadow:
-    inset 0 1px 0 rgb(255 250 244 / 26%),
-    0 10px 30px rgb(20 14 9 / 30%);
+    inset 0 1px 0 rgb(255 250 244 / 28%),
+    0 10px 30px rgb(20 14 9 / 34%);
+  text-align: center;
   backdrop-filter: blur(14px) saturate(1.6);
 }
 
-.observatory-dial__hand {
-  position: absolute;
-  bottom: 50%;
-  left: 50%;
-  width: 1px;
-  height: 40%;
-  margin-left: -0.5px;
-  transform-origin: 50% 100%;
-  background: linear-gradient(to top, rgb(207 161 138 / 0%), rgb(207 161 138 / 90%));
+.observatory-atom__nucleus strong {
+  color: var(--color-text-on-dark);
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  font-weight: 400;
+  letter-spacing: 0.07em;
+  line-height: 1.15;
+  text-transform: uppercase;
 }
 
-.observatory-dial[data-animate="true"] .observatory-dial__hand {
-  transition: transform var(--duration-base) var(--ease-emphasized);
+.observatory-atom__nucleus small {
+  color: rgb(236 223 207 / 78%);
+  font-size: 0.56rem;
+  line-height: 1.3;
 }
 
-.observatory-dial__marks {
+.observatory-atom__markers {
   position: absolute;
   inset: 0;
   margin: 0;
@@ -1841,67 +1864,44 @@ body:has(.observatory-hero) .site-header .site-header__status {
   list-style: none;
 }
 
-.observatory-dial__mark {
+/* Positioned from the centre by the component; the transform it writes carries
+   its own translate(-50%, -50%), so the marker stays centred on its point. */
+.observatory-atom__marker {
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 50%;
 }
 
-.observatory-dial__mark a {
-  position: absolute;
-  top: -0.1rem;
-  left: 50%;
+.observatory-atom__marker a {
   display: grid;
-  width: 2rem;
-  height: 2rem;
-  translate: -50% 0;
-  border: 1px solid rgb(236 223 207 / 22%);
+  width: 1.85rem;
+  height: 1.85rem;
+  border: 1px solid rgb(236 223 207 / 24%);
   border-radius: 50%;
-  background: rgb(30 22 14 / 62%);
-  color: rgb(236 223 207 / 72%);
-  font-size: 0.62rem;
-  letter-spacing: 0.08em;
+  background: rgb(30 22 14 / 74%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 250 244 / 26%),
+    0 4px 12px rgb(20 14 9 / 34%);
+  color: rgb(236 223 207 / 80%);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
   place-items: center;
+  backdrop-filter: blur(8px);
   transition:
     background-color var(--duration-fast) var(--ease-standard),
     border-color var(--duration-fast) var(--ease-standard),
     color var(--duration-fast) var(--ease-standard);
 }
 
-.observatory-dial__mark a[data-active="true"] {
+.observatory-atom__marker a[data-active="true"] {
   border-color: rgb(207 161 138 / 80%);
-  background: rgb(207 161 138 / 92%);
+  background: rgb(207 161 138 / 94%);
   color: #2a1d16;
 }
 
-.observatory-dial__mark a:hover {
-  border-color: rgb(236 223 207 / 60%);
+.observatory-atom__marker a:hover {
+  border-color: rgb(236 223 207 / 62%);
   color: var(--color-text-on-dark);
-}
-
-.observatory-dial__readout {
-  position: absolute;
-  inset: 24%;
-  display: grid;
-  align-content: center;
-  margin: 0;
-  gap: 0.3rem;
-  text-align: center;
-}
-
-.observatory-dial__readout strong {
-  font-family: var(--font-display);
-  font-size: 0.98rem;
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  line-height: 1.15;
-  color: var(--color-text-on-dark);
-  text-transform: uppercase;
-}
-
-.observatory-dial__readout small {
-  color: rgb(236 223 207 / 76%);
-  font-size: 0.62rem;
-  line-height: 1.35;
 }
 
 /* The publication-ready Selected Work layout stays unmounted until task U.4 is approved. */
