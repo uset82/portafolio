@@ -2,9 +2,9 @@ import type { SDKOptions } from "@openrouter/sdk";
 
 /* Sent verbatim as OpenRouter's X-Title HTTP header. HTTP header values are
  * ByteStrings, so any character above U+00FF makes the request throw before it
- * is sent — an em dash here failed every CC AI call as "provider unavailable".
+ * is sent — an em dash here failed every CACM AI call as "provider unavailable".
  * Keep this ASCII; `assertHeaderSafe` enforces it. */
-export const OPENROUTER_APP_TITLE = "Carlos Alfredo Carpio Meza - CC AI";
+export const OPENROUTER_APP_TITLE = "Carlos Alfredo Carpio Meza - CACM AI";
 
 const assertHeaderSafe = (value: string, variableName: string) => {
   if (!/^[ -~]*$/.test(value)) {
@@ -51,7 +51,7 @@ export function buildOpenRouterOptions(environment: OpenRouterEnvironment): SDKO
   const apiKey = environment.OPENROUTER_API_KEY?.trim();
   if (!apiKey) {
     throw new OpenRouterConfigurationError(
-      "CC AI is unavailable because OPENROUTER_API_KEY is not configured on the server.",
+      "CACM AI is unavailable because OPENROUTER_API_KEY is not configured on the server.",
     );
   }
 

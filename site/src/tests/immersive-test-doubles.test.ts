@@ -167,14 +167,14 @@ test("the poster-first component accepts test assets and a loader double without
   assert.deepEqual(loader.requestedUrls, []);
 });
 
-test("the CC AI route double returns a deterministic response and records the provider contract", async () => {
+test("the CACM AI route double returns a deterministic response and records the provider contract", async () => {
   const route = createCcAiRouteDouble();
   const response = await route.handle(route.createRequest({ message: "What is Carlos building?" }));
   const body = (await response.json()) as CcAiSuccessResponse;
 
   assert.equal(response.status, 200);
   assert.equal(body.requestId, CC_AI_TEST_REQUEST_ID);
-  assert.equal(body.answer, "Deterministic CC AI test response.");
+  assert.equal(body.answer, "Deterministic CACM AI test response.");
   assert.equal(body.model.requested, CC_AI_TEST_MODEL);
   assert.equal(body.model.responded, CC_AI_TEST_MODEL);
   assert.equal(route.calls.length, 1);
@@ -185,7 +185,7 @@ test("the CC AI route double returns a deterministic response and records the pr
   });
 });
 
-test("the CC AI double scripts safe failures and produces an e2e route-fulfill payload", async () => {
+test("the CACM AI double scripts safe failures and produces an e2e route-fulfill payload", async () => {
   const route = createCcAiRouteDouble({
     replies: [{ kind: "error", code: "rate_limited", retryable: true }],
   });

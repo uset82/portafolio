@@ -27,7 +27,7 @@ const successfulProvider: CcAiProvider = {
   },
 };
 
-test("CC AI handler stays unavailable while the public service is disabled", async () => {
+test("CACM AI handler stays unavailable while the public service is disabled", async () => {
   const handler = createCcAiPostHandler({
     enabled: false,
     serviceOptions: { provider: successfulProvider, modelPolicy: prototypePolicy },
@@ -42,7 +42,7 @@ test("CC AI handler stays unavailable while the public service is disabled", asy
   assert.equal(response.headers.get("cache-control"), "no-store");
 });
 
-test("CC AI handler rejects invalid input before calling the provider", async () => {
+test("CACM AI handler rejects invalid input before calling the provider", async () => {
   let providerCalled = false;
   const handler = createCcAiPostHandler({
     enabled: true,
@@ -66,7 +66,7 @@ test("CC AI handler rejects invalid input before calling the provider", async ()
   assert.equal(providerCalled, false);
 });
 
-test("CC AI service returns bounded text and actual model metadata", async () => {
+test("CACM AI service returns bounded text and actual model metadata", async () => {
   const response = await runCcAiCompletion(
     { message: "Question", history: [], locale: "en" },
     {
@@ -99,7 +99,7 @@ test("CC AI service returns bounded text and actual model metadata", async () =>
   assert.deepEqual(response.knowledge, { records: 0, sourceIds: [], truncated: false });
 });
 
-test("CC AI handler normalizes provider rate limits without raw errors", async () => {
+test("CACM AI handler normalizes provider rate limits without raw errors", async () => {
   let providerCalls = 0;
   const handler = createCcAiPostHandler({
     enabled: true,
@@ -121,14 +121,14 @@ test("CC AI handler normalizes provider rate limits without raw errors", async (
   assert.equal(response.status, 429);
   assert.deepEqual(body.error, {
     code: "rate_limited",
-    message: "CC AI has reached its current request limit. Please try again later.",
+    message: "CACM AI has reached its current request limit. Please try again later.",
     retryable: true,
   });
   assert.doesNotMatch(JSON.stringify(body), /stack|authorization|raw/i);
   assert.equal(providerCalls, 1);
 });
 
-test("CC AI handler returns success through a fully mocked provider", async () => {
+test("CACM AI handler returns success through a fully mocked provider", async () => {
   const handler = createCcAiPostHandler({
     enabled: true,
     serviceOptions: { provider: successfulProvider, modelPolicy: prototypePolicy },
@@ -143,7 +143,7 @@ test("CC AI handler returns success through a fully mocked provider", async () =
   assert.equal(body.model.responded, "example/responding-model");
 });
 
-test("CC AI handler normalizes exhausted payment allowance", async () => {
+test("CACM AI handler normalizes exhausted payment allowance", async () => {
   const handler = createCcAiPostHandler({
     enabled: true,
     serviceOptions: {
@@ -163,12 +163,12 @@ test("CC AI handler normalizes exhausted payment allowance", async () => {
   assert.equal(response.status, 503);
   assert.deepEqual(body.error, {
     code: "payment_required",
-    message: "CC AI has reached its current usage allowance.",
+    message: "CACM AI has reached its current usage allowance.",
     retryable: false,
   });
 });
 
-test("CC AI handler normalizes provider failure as retryable unavailability", async () => {
+test("CACM AI handler normalizes provider failure as retryable unavailability", async () => {
   const handler = createCcAiPostHandler({
     enabled: true,
     serviceOptions: {
@@ -190,7 +190,7 @@ test("CC AI handler normalizes provider failure as retryable unavailability", as
   assert.equal(body.error.retryable, true);
 });
 
-test("CC AI service aborts the provider and returns a normalized timeout", async () => {
+test("CACM AI service aborts the provider and returns a normalized timeout", async () => {
   await assert.rejects(
     () =>
       runCcAiCompletion(
@@ -212,11 +212,11 @@ test("CC AI service aborts the provider and returns a normalized timeout", async
       ),
     (error: unknown) =>
       error instanceof Error &&
-      error.message === "CC AI took too long to respond. Please try again.",
+      error.message === "CACM AI took too long to respond. Please try again.",
   );
 });
 
-test("CC AI service honors an already-aborted browser request", async () => {
+test("CACM AI service honors an already-aborted browser request", async () => {
   const controller = new AbortController();
   controller.abort();
   let providerCalled = false;

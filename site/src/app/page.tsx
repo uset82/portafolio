@@ -70,7 +70,7 @@ export default function Home() {
                 <>
                   {/* The hero still is the clip's own first frame, not the
                    * design mock-up: that mock-up has a chat panel painted into
-                   * the artwork, which read as a second, stale CC AI box behind
+                   * the artwork, which read as a second, stale CACM AI box behind
                    * the real one whenever the clip had not taken over yet. */}
                   <ImageFrame
                     className="observatory-media-frame"

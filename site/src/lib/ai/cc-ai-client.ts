@@ -73,7 +73,7 @@ export async function requestCcAi(
   const body: unknown = await response.json();
 
   if (!isCcAiResponse(body)) {
-    throw new Error("CC AI returned an invalid response.");
+    throw new Error("CACM AI returned an invalid response.");
   }
 
   return body;

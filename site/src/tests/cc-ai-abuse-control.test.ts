@@ -294,7 +294,7 @@ test("handler returns a user-facing busy state at the concurrency ceiling", asyn
   assert.equal(busyResponse.headers.get("retry-after"), "1");
   assert.deepEqual(body.error, {
     code: "busy",
-    message: "CC AI is helping other visitors right now. Please try again shortly.",
+    message: "CACM AI is helping other visitors right now. Please try again shortly.",
     retryable: true,
   });
 

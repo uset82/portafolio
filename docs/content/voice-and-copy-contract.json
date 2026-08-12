@@ -50,9 +50,9 @@
   },
   "technologyNames": [
     {
-      "canonical": "CC AI",
-      "avoid": ["CCAI", "CC-AI"],
-      "note": "Portfolio assistant name, not a model name."
+      "canonical": "CACM AI",
+      "avoid": ["CACMAI", "CACM-AI", "CC AI", "CCAI", "CC-AI"],
+      "note": "Portfolio assistant name, not a model name. Renamed from \"CC AI\" on 2026-08-12; the earlier spellings are listed so the old name is not reintroduced."
     },
     {
       "canonical": "OpenRouter",

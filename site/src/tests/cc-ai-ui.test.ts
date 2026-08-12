@@ -36,7 +36,7 @@ const successResponse: CcAiSuccessResponse = {
   },
 };
 
-test("CC AI history remains bounded and never duplicates the retried question", () => {
+test("CACM AI history remains bounded and never duplicates the retried question", () => {
   const messages: CcAiUiMessage[] = Array.from({ length: 10 }, (_, index) => ({
     id: `message-${index}`,
     role: index % 2 === 0 ? "user" : "assistant",
@@ -73,7 +73,7 @@ test("CC AI history remains bounded and never duplicates the retried question", 
   assert.equal(boundedContent[0]?.content.length, 2_000);
 });
 
-test("CC AI state presents a complete response progressively and discloses its metadata", () => {
+test("CACM AI state presents a complete response progressively and discloses its metadata", () => {
   const connecting = ccAiUiReducer(initialCcAiUiState, {
     type: "request/start",
     requestId: "question-1",
@@ -104,7 +104,7 @@ test("CC AI state presents a complete response progressively and discloses its m
   assert.ok(getCcAiPresentationChunkSize(12_000) <= 80);
 });
 
-test("CC AI stop and rate-limit states remain explicit and retry-safe", () => {
+test("CACM AI stop and rate-limit states remain explicit and retry-safe", () => {
   const connecting = ccAiUiReducer(initialCcAiUiState, {
     type: "request/start",
     requestId: "question-1",
@@ -133,7 +133,7 @@ test("CC AI stop and rate-limit states remain explicit and retry-safe", () => {
   assert.equal(retried.messages.filter(({ role }) => role === "user").length, 1);
 });
 
-test("CC AI browser transport sends only the public request contract and validates responses", async () => {
+test("CACM AI browser transport sends only the public request contract and validates responses", async () => {
   const controller = new AbortController();
   let sentBody = "";
   const response = await requestCcAi(
@@ -168,7 +168,7 @@ test("CC AI browser transport sends only the public request contract and validat
   );
 });
 
-test("CC AI shell and source contracts preserve disclosure, focus, motion, and mobile fallback", () => {
+test("CACM AI shell and source contracts preserve disclosure, focus, motion, and mobile fallback", () => {
   const markup = renderToStaticMarkup(createElement(CcAiPanel));
   const component = readFileSync(
     path.join(process.cwd(), "src/components/cc-ai-panel.tsx"),
@@ -177,7 +177,7 @@ test("CC AI shell and source contracts preserve disclosure, focus, motion, and m
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
 
   assert.match(markup, /<button[^>]+class="cc-ai-trigger"[^>]+aria-expanded="false"/);
-  assert.match(markup, /Ask CC AI/);
+  assert.match(markup, /Ask CACM AI/);
   assert.match(component, /role="dialog"/);
   assert.match(component, /role="log"/);
   assert.match(component, /aria-live="off"/);

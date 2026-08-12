@@ -62,7 +62,7 @@ export const rawSiteContent = {
       "From artificial intelligence, electronics and future energy to music, astrology and numerology, I transform complex ideas into practical and meaningful experiences.",
     currentFocus:
       "Currently exploring AI agents, resilient energy, creative tools and the patterns connecting technology with human experience.",
-    assistantName: "CC AI",
+    assistantName: "CACM AI",
     /* Direction 1A makes Work the primary action and demotes the Observatory
      * to the discovery route. Both records keep their approved id, label,
      * href, and sources; only which one carries primary emphasis changed. */

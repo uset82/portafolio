@@ -5,7 +5,7 @@ import evaluationSetInput from "@/content/cc-ai-evaluation.json";
 import publicKnowledgeInput from "@/content/cc-ai-public-knowledge.json";
 import { ccAiEvaluationSetSchema, ccAiPublicKnowledgeLedgerSchema } from "@/content/schemas";
 
-test("CC AI evaluation set covers every required behavior with public-ledger evidence", () => {
+test("CACM AI evaluation set covers every required behavior with public-ledger evidence", () => {
   const evaluationSet = ccAiEvaluationSetSchema.parse(evaluationSetInput);
   const knowledgeLedger = ccAiPublicKnowledgeLedgerSchema.parse(publicKnowledgeInput);
   const ledgerFacts = new Set(knowledgeLedger.records.flatMap((record) => record.facts));
@@ -38,7 +38,7 @@ test("CC AI evaluation set covers every required behavior with public-ledger evi
   assert.equal(evaluationSet.releaseGate.liveModelEvaluationRequired, true);
 });
 
-test("CC AI evaluation schema rejects missing category depth and conflict evidence", () => {
+test("CACM AI evaluation schema rejects missing category depth and conflict evidence", () => {
   const parsed = ccAiEvaluationSetSchema.parse(evaluationSetInput);
   const tooFewConflictCases = {
     ...parsed,

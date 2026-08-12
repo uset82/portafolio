@@ -271,7 +271,7 @@ if (!voiceAndCopyContractResult.success) {
     voiceAndCopyContractResult.data.technologyNames.map((technology) => technology.canonical),
   );
   const requiredTechnologyNames = [
-    "CC AI",
+    "CACM AI",
     "OpenRouter",
     "Next.js",
     "Three.js",

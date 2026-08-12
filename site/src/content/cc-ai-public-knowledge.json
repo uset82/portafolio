@@ -52,7 +52,7 @@
     {
       "id": "career-and-education-claims",
       "scope": "employers, job dates, education, institutions, credentials, proficiency ratings, and professional outcomes",
-      "reason": "Normalized private-source facts have not been separately approved as public CC AI knowledge or independently verified with institutions or employers.",
+      "reason": "Normalized private-source facts have not been separately approved as public CACM AI knowledge or independently verified with institutions or employers.",
       "sourceInventoryIds": ["cv-source"],
       "safeResponse": "Use the exact honest-unknown response and refer the visitor to the public Story page when approved career content exists."
     },

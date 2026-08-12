@@ -68,7 +68,7 @@ const getLocale = () => {
 const getStatusAnnouncement = (status: CcAiUiStatus) => {
   switch (status) {
     case "connecting":
-      return "Connecting to CC AI.";
+      return "Connecting to CACM AI.";
     case "presenting":
       return "Answer received. Presenting it now.";
     case "complete":
@@ -239,14 +239,14 @@ export function CcAiPanel({ transport = requestCcAi }: CcAiPanelProps) {
         return;
       }
       const invalidResponse =
-        error instanceof Error && error.message === "CC AI returned an invalid response.";
+        error instanceof Error && error.message === "CACM AI returned an invalid response.";
       dispatch({
         type: "request/fail",
         error: {
           code: invalidResponse ? "invalid_response" : "provider_unavailable",
           message: invalidResponse
-            ? "CC AI returned an unreadable answer. Your portfolio navigation still works."
-            : "CC AI could not reach the server. Your portfolio navigation still works.",
+            ? "CACM AI returned an unreadable answer. Your portfolio navigation still works."
+            : "CACM AI could not reach the server. Your portfolio navigation still works.",
           retryable: true,
         },
       });
@@ -307,7 +307,7 @@ export function CcAiPanel({ transport = requestCcAi }: CcAiPanelProps) {
           >
             <BrandMark compact />
             <span>
-              <strong>Ask CC AI</strong>
+              <strong>Ask CACM AI</strong>
               <small>Public portfolio guide</small>
             </span>
             <span className="cc-ai-trigger__preview">
@@ -361,7 +361,7 @@ export function CcAiPanel({ transport = requestCcAi }: CcAiPanelProps) {
                     <span className="cc-ai-panel__title">
                       <BrandMark compact />
                       <span>
-                        <h2 id={titleId}>CC AI</h2>
+                        <h2 id={titleId}>CACM AI</h2>
                         <small id={descriptionId}>AI answers from Carlos’s public portfolio.</small>
                       </span>
                     </span>
@@ -376,7 +376,7 @@ export function CcAiPanel({ transport = requestCcAi }: CcAiPanelProps) {
                     role="log"
                     aria-live="off"
                     aria-busy={active}
-                    aria-label="Conversation with CC AI"
+                    aria-label="Conversation with CACM AI"
                   >
                     {state.messages.length === 0 ? (
                       <div className="cc-ai-welcome">
@@ -407,7 +407,7 @@ export function CcAiPanel({ transport = requestCcAi }: CcAiPanelProps) {
                         data-state={message.state}
                       >
                         <span className="cc-ai-message__label">
-                          {message.role === "assistant" ? "CC AI" : "You"}
+                          {message.role === "assistant" ? "CACM AI" : "You"}
                         </span>
                         <p>
                           {message.content}
@@ -439,7 +439,7 @@ export function CcAiPanel({ transport = requestCcAi }: CcAiPanelProps) {
                         <strong>
                           {state.status === "rate-limited"
                             ? "Please try again later"
-                            : "CC AI paused"}
+                            : "CACM AI paused"}
                         </strong>
                         <p>{state.error.message}</p>
                         {state.error.code === "disabled" ? (

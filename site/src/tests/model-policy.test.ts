@@ -139,7 +139,7 @@ test("model policy rejects malformed IDs and excessive fallback sequences", () =
 test("provider policy always denies training and scopes zero-retention to production", () => {
   // Requiring zero data retention of the free prototype router matches zero
   // endpoints much of the time ("No endpoints found matching your data
-  // policy"), which made every CC AI request fail. Paid production routing
+  // policy"), which made every CACM AI request fail. Paid production routing
   // keeps the stricter requirement.
   const prototype = createCcAiModelPolicy(environment({ CC_AI_MODE: "prototype" }));
   assert.equal(prototype.provider.dataCollection, "deny");

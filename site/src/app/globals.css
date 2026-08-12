@@ -373,7 +373,7 @@ a {
 }
 
 /* Assistant scale: large enough for the monogram's inner Taurus glyph to stay
-   legible in the CC AI trigger and dialog header. */
+   legible in the CACM AI trigger and dialog header. */
 .brand-mark--compact {
   width: 2.4rem;
 }
@@ -447,7 +447,7 @@ a {
 .observatory-hero {
   position: relative;
   min-height: max(52rem, 100svh);
-  /* Deliberately not `overflow: hidden`: that clipped the viewport-fixed CC AI
+  /* Deliberately not `overflow: hidden`: that clipped the viewport-fixed CACM AI
      panel, which lives inside this section to keep its place in the focus
      order. The bleeding poster and canvas are already clipped by
      `.scene-reveal`, so the media never escapes. */
@@ -929,13 +929,32 @@ a {
   gap: 0.8rem;
   align-content: start;
   padding: 0.9rem;
-  border: 1px solid rgb(254 244 234 / 60%);
+  border: 1px solid rgb(254 244 234 / 26%);
   border-radius: var(--radius-panel);
-  background: rgb(95 75 53 / 88%);
+  /* Liquid-glass surface. Two things separate this from a flat translucent
+     panel: the backdrop is saturated rather than muted, so colour from the
+     scene bleeds through instead of going grey, and a vertical sheen plus a
+     bright inset top rim read as light catching the edge of a thick pane. */
+  /* Tint density is set by contrast, not taste: at 58% the pill sat over the
+     cream crown and "Ask CACM AI" measured 3.48 against a 4.5 minimum. The
+     blur and saturation are what make it glass, so those stay and the tint
+     carries the legibility. */
+  background:
+    linear-gradient(
+      to bottom,
+      rgb(255 250 244 / 15%) 0%,
+      rgb(255 250 244 / 6%) 44%,
+      rgb(20 14 9 / 14%) 100%
+    ),
+    rgb(38 26 20 / 76%);
   color: var(--color-text-on-dark);
-  box-shadow: var(--shadow-soft);
+  box-shadow:
+    inset 0 1px 0 rgb(255 250 244 / 45%),
+    inset 0 -1px 0 rgb(20 14 9 / 28%),
+    0 1px 2px rgb(20 14 9 / 20%),
+    0 14px 44px rgb(20 14 9 / 36%);
   text-align: left;
-  backdrop-filter: blur(16px) saturate(0.8);
+  backdrop-filter: blur(30px) saturate(1.9);
   transform-origin: right bottom;
   touch-action: manipulation;
 }
@@ -1003,13 +1022,25 @@ a {
   width: min(40rem, calc(100vw - 2 * var(--page-gutter)));
   /* Clears the sticky header above and the 2rem anchor below at any height. */
   max-height: min(calc(100svh - 9.5rem), 42rem);
-  border: 1px solid rgb(254 244 234 / 65%);
+  border: 1px solid rgb(254 244 234 / 26%);
   border-radius: var(--radius-panel);
-  background: rgb(95 75 53 / 86%);
+  /* Same liquid-glass surface as the trigger it opens from, so the two read
+     as one material. Denser tint here because it carries a transcript. */
+  background:
+    linear-gradient(
+      to bottom,
+      rgb(255 250 244 / 18%) 0%,
+      rgb(255 250 244 / 7%) 40%,
+      rgb(20 14 9 / 14%) 100%
+    ),
+    rgb(44 30 23 / 72%);
   color: var(--color-text-on-dark);
-  box-shadow: var(--shadow-soft);
+  box-shadow:
+    inset 0 1px 0 rgb(255 250 244 / 40%),
+    inset 0 -1px 0 rgb(20 14 9 / 30%),
+    0 18px 60px rgb(20 14 9 / 42%);
   overflow: hidden;
-  backdrop-filter: blur(18px) saturate(0.85);
+  backdrop-filter: blur(34px) saturate(1.9);
 }
 
 .cc-ai-sheet-handle,
@@ -1578,7 +1609,7 @@ body:has(.observatory-hero) .site-header {
   background: none;
 }
 
-/* CC AI moves from a floating card at the bottom to a labelled affordance in
+/* CACM AI moves from a floating card at the bottom to a labelled affordance in
  * the top chrome, centred on the same line as the primary nav. It stays
  * mounted in the hero rather than moving into the shared header: the panel
  * must keep its place in the homepage's focus order. Its z-index is above the
@@ -1594,9 +1625,9 @@ body:has(.observatory-hero) .site-header {
        downward from a fixed edge instead of shifting the button. */
     top: calc((var(--header-height) - 3.5rem) / 2);
     bottom: auto;
-    border-color: rgb(236 223 207 / 30%);
+    /* No background or border override here: the glass surface defined on the
+       base rule is the point, and a flat fill would paint straight over it. */
     border-radius: 999px;
-    background: rgb(42 29 22 / 62%);
     transform-origin: right top;
   }
 
@@ -1610,10 +1641,24 @@ body:has(.observatory-hero) .site-header {
     padding: 0.5rem 1.1rem 0.5rem 0.6rem;
   }
 
+  /* Opening thickens the pane rather than swapping its colour: the tint goes
+     denser, the sheen and rim brighten, and the shadow spreads. */
   .observatory-hero .cc-ai-trigger:hover,
   .observatory-hero .cc-ai-trigger:focus-visible {
+    border-color: rgb(254 244 234 / 34%);
     border-radius: var(--radius-panel);
-    background: rgb(42 29 22 / 88%);
+    background:
+      linear-gradient(
+        to bottom,
+        rgb(255 250 244 / 24%) 0%,
+        rgb(255 250 244 / 9%) 44%,
+        rgb(20 14 9 / 14%) 100%
+      ),
+      rgb(44 30 23 / 74%);
+    box-shadow:
+      inset 0 1px 0 rgb(255 250 244 / 55%),
+      inset 0 -1px 0 rgb(20 14 9 / 30%),
+      0 20px 60px rgb(20 14 9 / 44%);
   }
 }
 

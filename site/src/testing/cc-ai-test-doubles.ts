@@ -28,14 +28,14 @@ export type CcAiProviderDoubleCall = {
 
 const defaultReply: CcAiProviderDoubleReply = {
   kind: "success",
-  text: "Deterministic CC AI test response.",
+  text: "Deterministic CACM AI test response.",
   model: CC_AI_TEST_MODEL,
 };
 
 export function createCcAiProviderDouble(
   replies: readonly CcAiProviderDoubleReply[] = [defaultReply],
 ) {
-  if (replies.length === 0) throw new Error("The CC AI provider double needs one reply.");
+  if (replies.length === 0) throw new Error("The CACM AI provider double needs one reply.");
   const calls: CcAiProviderDoubleCall[] = [];
   let replyIndex = 0;
 

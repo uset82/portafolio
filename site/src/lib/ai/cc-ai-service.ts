@@ -62,17 +62,17 @@ export type CcAiServiceOptions = {
 };
 
 const publicErrorMessages: Record<CcAiServiceError["code"], string> = {
-  disabled: "CC AI is not available yet.",
+  disabled: "CACM AI is not available yet.",
   forbidden: "This request cannot be accepted from its current origin.",
   invalid_request: "The question could not be read. Please review it and try again.",
-  configuration: "CC AI is temporarily unavailable because its server is not configured.",
-  timeout: "CC AI took too long to respond. Please try again.",
+  configuration: "CACM AI is temporarily unavailable because its server is not configured.",
+  timeout: "CACM AI took too long to respond. Please try again.",
   aborted: "The request was stopped.",
-  rate_limited: "CC AI has reached its current request limit. Please try again later.",
-  payment_required: "CC AI has reached its current usage allowance.",
+  rate_limited: "CACM AI has reached its current request limit. Please try again later.",
+  payment_required: "CACM AI has reached its current usage allowance.",
   provider_unavailable: "The selected model provider is unavailable. Please try again later.",
-  busy: "CC AI is helping other visitors right now. Please try again shortly.",
-  invalid_response: "CC AI returned an unusable response. Please try again.",
+  busy: "CACM AI is helping other visitors right now. Please try again shortly.",
+  invalid_response: "CACM AI returned an unusable response. Please try again.",
 };
 
 export const getCcAiPublicErrorMessage = (code: CcAiErrorCode) => publicErrorMessages[code];
@@ -125,7 +125,7 @@ export async function runCcAiCompletion(
 
   const timeout = setTimeout(() => {
     timedOut = true;
-    controller.abort(new DOMException("CC AI timeout", "TimeoutError"));
+    controller.abort(new DOMException("CACM AI timeout", "TimeoutError"));
   }, timeoutMs);
 
   try {

@@ -14,7 +14,7 @@ test("OpenRouter configuration requires a server key without exposing its value"
     (error: unknown) =>
       error instanceof OpenRouterConfigurationError &&
       error.message ===
-        "CC AI is unavailable because OPENROUTER_API_KEY is not configured on the server.",
+        "CACM AI is unavailable because OPENROUTER_API_KEY is not configured on the server.",
   );
 });
 
