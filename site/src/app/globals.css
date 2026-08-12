@@ -6975,27 +6975,20 @@ body:has(.observatory-hero) .site-header {
     row-gap: 0.15rem;
   }
 
-  /* Six links will not fit beside the two-line name at this width. They scroll
-     sideways instead of collapsing into a drawer, so every route stays
-     reachable from the header. The negative margin lets the row bleed to the
-     screen edges while keeping the first link aligned to the gutter. */
+  /* The six labels measure 272px at 13px, so they fit a phone row on their
+     own - it was the gutter padding either side that pushed the last one off
+     screen and clipped "Contact". Gap and type now scale with the viewport so
+     the whole row fits without scrolling from 320px up, and wrapping is left
+     enabled as a fallback rather than clipping if a label ever grows. */
   .desktop-navigation {
-    justify-content: flex-start;
-    gap: 1.15rem;
-    margin-inline: calc(var(--page-gutter) * -1);
-    padding-inline: var(--page-gutter);
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scrollbar-width: none;
-  }
-
-  .desktop-navigation::-webkit-scrollbar {
-    display: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.1rem clamp(0.4rem, 2.5vw, 1.15rem);
   }
 
   .desktop-navigation a {
     min-height: 2.25rem;
-    font-size: 0.82rem;
+    font-size: clamp(0.72rem, 3.4vw, 0.82rem);
   }
 
   .identity {
