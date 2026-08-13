@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Project Orbit — CAM²</title>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.184.0/build/three.module.js",
+    "three/addons/controls/OrbitControls.js": "https://unpkg.com/three@0.184.0/examples/jsm/controls/OrbitControls.js",
+    "three/addons/exporters/OBJExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/OBJExporter.js",
+    "three/addons/exporters/GLTFExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/GLTFExporter.js"
+  },
+  "integrity": {
+    "https://unpkg.com/three@0.184.0/build/three.module.js": "sha384-8FCZ1eVO6it4+pbec2aDtnTrwjWXZLJRC+MAGCIPDgsYnUrl/E0A2YlF8ioMKI/J",
+    "https://unpkg.com/three@0.184.0/build/three.core.js": "sha384-dw2ooPewaEIrAgl6oFDBmmBWCE9oW9LxRGcfwZ0hLvEprzo202wXl7vCYHRlSnOT",
+    "https://unpkg.com/three@0.184.0/examples/jsm/controls/OrbitControls.js": "sha384-4rziNxOBZKQ69i+w+f89KJ55TCYquwchVbByQwmaOeIOXdOU2PLDn3kOfXHwIJC9",
+    "https://unpkg.com/three@0.184.0/examples/jsm/exporters/OBJExporter.js": "sha384-nbwtoZENJD3Vq+ACK0CuGQdPMuDWHkamC2KJD70EV5nfg6jQjfppKOea07YJN+N3",
+    "https://unpkg.com/three@0.184.0/examples/jsm/exporters/GLTFExporter.js": "sha384-VofkvpG6HERhFCYbsUOHeNXBCqID2nfqkQqnVzE1jc/oPcz+qJ13ADdXH08hE+cQ"
+  }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink-0: #0b0907;
+    --ink-1: #15100c;
+    --ink-2: #21170f;
+    --brass: #c79a56;
+    --brass-soft: #d9b27f;
+    --ivory: #f4e3c6;
+    --taupe: #a38772;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--ink-0); }
+  body {
+    font-family: Manrope, "Segoe UI", sans-serif;
+    color: var(--ivory);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--brass-soft); text-decoration: none; }
+  a:hover { color: var(--ivory); }
+
+  .orbit-section {
+    position: relative;
+    width: 100%;
+    min-height: 660px;
+    padding: 56px 0 0;
+    overflow: hidden;
+    background:
+      radial-gradient(120% 90% at 50% 46%, rgba(58, 42, 28, 0.55), transparent 62%),
+      radial-gradient(80% 70% at 88% 6%, rgba(120, 92, 62, 0.22), transparent 60%),
+      linear-gradient(180deg, #0b0907, #15100c 58%, #0b0907);
+  }
+  .orbit-head {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 clamp(24px, 5vw, 72px);
+    pointer-events: none;
+  }
+  .orbit-head__eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+  .orbit-head__line {
+    max-width: 30ch;
+    margin: 0;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: clamp(22px, 2.4vw, 34px);
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    color: #efe0c9;
+    text-wrap: pretty;
+  }
+  .orbit-head__rule {
+    width: 260px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(199, 154, 86, 0.65), transparent);
+  }
+
+  .orbit-stage {
+    position: relative;
+    width: 100%;
+    height: min(52vw, 540px);
+    min-height: 400px;
+    margin-top: -18px;
+  }
+  .orbit-canvas { position: absolute; inset: 0; }
+  .orbit-canvas canvas { width: 100%; height: 100%; }
+  .orbit-labels { position: absolute; inset: 0; pointer-events: none; }
+
+  .orbit-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: auto;
+    padding: 7px 15px;
+    border: 1px solid rgba(199, 154, 86, 0.42);
+    border-radius: 999px;
+    background: rgba(9, 7, 5, 0.86);
+    color: #e9d7b8;
+    font: inherit;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: border-color 220ms ease, color 220ms ease, background 220ms ease;
+  }
+  .orbit-label[data-active="true"] {
+    border-color: rgba(240, 202, 137, 0.95);
+    background: rgba(24, 17, 11, 0.95);
+    color: #fff3dd;
+  }
+
+  .orbit-panel {
+    position: absolute;
+    right: clamp(16px, 3vw, 48px);
+    bottom: 10px;
+    z-index: 400;
+    display: none;
+    width: min(360px, calc(100% - 40px));
+    padding: 20px 22px 22px;
+    border: 1px solid rgba(199, 154, 86, 0.34);
+    border-radius: 4px;
+    background: linear-gradient(180deg, rgba(33, 23, 15, 0.96), rgba(11, 9, 7, 0.97));
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  }
+  .orbit-panel[data-open="true"] { display: block; }
+  .orbit-panel__name {
+    margin: 0 0 6px;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 27px;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+  }
+  .orbit-panel__desc {
+    margin: 0 0 16px;
+    max-width: 34ch;
+    font-size: 13px;
+    line-height: 1.55;
+    color: #c9b69b;
+    text-wrap: pretty;
+  }
+  .orbit-panel__actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .orbit-action {
+    padding: 9px 16px;
+    border: 1px solid rgba(199, 154, 86, 0.4);
+    border-radius: 2px;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #e2cda9;
+    transition: border-color 200ms ease, background 200ms ease, color 200ms ease;
+  }
+  .orbit-action:hover { border-color: var(--brass-soft); background: rgba(199, 154, 86, 0.12); color: #fff4e2; }
+  .orbit-action--primary { background: rgba(199, 154, 86, 0.9); border-color: rgba(199, 154, 86, 0.9); color: #1a1208; }
+  .orbit-action--primary:hover { background: #e2b978; color: #140e07; }
+  .orbit-panel__close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 26px;
+    height: 26px;
+    border: 0;
+    border-radius: 999px;
+    background: none;
+    color: #96806a;
+    font-size: 19px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .orbit-panel__close:hover { color: var(--ivory); }
+
+  .orbit-hint {
+    position: absolute;
+    left: 50%;
+    bottom: 22px;
+    z-index: 2;
+    transform: translateX(-50%);
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(163, 135, 114, 0.7);
+    pointer-events: none;
+    transition: opacity 300ms ease;
+  }
+  .orbit-section[data-orbit-drag] .orbit-hint { opacity: 0; }
+
+  /* Semantic fallback: always in the DOM and keyboard reachable. */
+  .orbit-fallback {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    padding: 0 clamp(24px, 5vw, 72px) 40px;
+  }
+  .orbit-fallback a {
+    padding: 8px 14px;
+    border: 1px solid rgba(199, 154, 86, 0.16);
+    border-radius: 999px;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(201, 182, 155, 0.62);
+  }
+  .orbit-fallback a:hover,
+  .orbit-fallback a:focus-visible {
+    border-color: var(--brass-soft);
+    color: var(--ivory);
+    outline: none;
+  }
+  .orbit-fallback a[aria-current="true"] { border-color: rgba(199, 154, 86, 0.7); color: var(--ivory); }
+  .orbit-fallback__title {
+    width: 100%;
+    margin: 0 0 4px;
+    font-size: 10px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    text-align: center;
+    color: rgba(163, 135, 114, 0.55);
+  }
+
+  /* No WebGL: the list becomes the navigation. */
+  .orbit-section[data-orbit-state="fallback"] .orbit-stage { display: none; }
+  .orbit-section[data-orbit-state="fallback"] .orbit-fallback a { font-size: 13px; padding: 12px 18px; }
+
+  @media (max-width: 760px) {
+    .orbit-section { min-height: 640px; }
+    .orbit-stage { height: 58vh; margin-top: 4px; }
+    .orbit-label { font-size: 11px; padding: 5px 11px; }
+    .orbit-panel { left: 50%; right: auto; transform: translateX(-50%); width: calc(100% - 32px); }
+  }
+</style>
+</head>
+<body>
+
+<section class="orbit-section" id="selected-systems" data-orbit-root data-orbit-state="loading" data-screen-label="Project Orbit">
+  <header class="orbit-head">
+    <span class="orbit-head__eyebrow">Selected Systems</span>
+    <p class="orbit-head__line">Energy. Creative tools and tech human experience.</p>
+    <div class="orbit-head__rule"></div>
+  </header>
+
+  <div class="orbit-stage">
+    <div class="orbit-canvas" data-orbit-canvas></div>
+    <div class="orbit-labels" data-orbit-labels></div>
+    <div class="orbit-panel" data-orbit-panel data-open="false"></div>
+    <span class="orbit-hint">Drag to rotate · Click a system to focus</span>
+  </div>
+
+  <nav class="orbit-fallback" data-orbit-fallback aria-label="All systems">
+    <p class="orbit-fallback__title">All systems</p>
+  </nav>
+</section>
+
+<script type="module">
+  import { PROJECTS } from "./orbit/projects.js";
+  import { createProjectOrbit } from "./orbit/project-orbit.js";
+
+  const root = document.querySelector("[data-orbit-root]");
+  const nav = root.querySelector("[data-orbit-fallback]");
+  PROJECTS.filter((p) => p.enabled).forEach((p) => {
+    const raw = p.destinationType === "internal-route" ? p.internalRoute || p.href : p.href;
+    const a = document.createElement("a");
+    a.href = raw;
+    a.textContent = p.name;
+    a.dataset.projectId = p.id;
+    a.setAttribute("aria-label", `${p.name} — ${p.description}`);
+    if (/^https?:/i.test(raw)) {
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+    }
+    nav.appendChild(a);
+  });
+
+  window.projectOrbit = createProjectOrbit(root);
+
+  root.addEventListener("orbit:agent", (e) => {
+    console.info("[orbit] agent requested:", e.detail.agentId);
+  });
+</script>
+</body>
+</html>

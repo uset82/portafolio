@@ -171,10 +171,16 @@ test("local media stays hash-pinned with only the two approved derivation source
   // replacement Observatory sequence as the homepage's silent looping visual.
   // The 2026-07-19 robot water source it superseded went back to exclude, so
   // every local file except the monogram and the new sequence stays excluded.
+  // On 2026-08-13 Carlos confirmed the three ChatGPT stills are his own
+  // generations and asked for them to be tracked; they register as owned with
+  // AI provenance and keep the exclude decision, so the include set is unchanged.
   assert.equal(register.status, "runtime-approved");
   assert.deepEqual(
     register.assets.map((asset) => asset.path).sort(),
     [
+      "imagesandvideo/ChatGPT Image Aug 11, 2026, 05_45_29 PM.png",
+      "imagesandvideo/ChatGPT Image Aug 13, 2026, 10_11_48 AM.png",
+      "imagesandvideo/ChatGPT Image Jul 24, 2026, 11_33_23 PM.png",
       "imagesandvideo/Firefly.jpg",
       "imagesandvideo/Rotating Golden Monogram Emblem Animation.mp4",
       "imagesandvideo/Robot_kneeling_in_reflective_water_202607192339.mp4",
