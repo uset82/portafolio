@@ -104,6 +104,9 @@ Until the stack is selected, document intended commands in the plan rather than 
   Start here for anything in the current round. Supporting detail lives beside it in `updates/`:
   `05-runbook.md` (ordered steps and agent kickoff text), `tasks/*-TASKS.md` (per-agent plans),
   `00-master-plan.md` (reasoning), `02-github-inventory.md` (all 61 repos, numbered).
+- `taskplan.md` — ANA / Repo2Agent sequential implementation plan and verification evidence.
+- `mainidea.md` — product thesis including the ANA / Repo2Agent architecture.
+- `docs/DECISIONS.md` — architecture decision log, including ANA / Repo2Agent.
 - `maintaskplan.md` — v1 launch checkbox plan and completion evidence.
 - `deep-research-report (8).md` — research, alternatives, and initial roadmap.
 - `rules.md` — human-readable project rules.

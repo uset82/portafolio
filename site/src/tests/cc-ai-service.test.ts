@@ -241,3 +241,50 @@ test("CACM AI service honors an already-aborted browser request", async () => {
   );
   assert.equal(providerCalled, false);
 });
+
+test("CACM AI answers Ask My Portfolio from public repository knowledge without calling the model", async () => {
+  let providerCalled = false;
+  const handler = createCcAiPostHandler({
+    enabled: true,
+    portfolioAudits: [
+      {
+        repository: "uset82/StrudelAI",
+        hasBackend: false,
+        hasAPI: false,
+        hasDatabase: false,
+        hasLLM: true,
+        domain: ["music"],
+        capabilities: [],
+        status: "prototype",
+        agentPotential: "medium",
+        recommendedType: "agent",
+        visibility: "public",
+        enabled: false,
+        contentsInspected: true,
+        sizeKb: 12,
+        manifestFiles: [],
+        description: "Live coding music system",
+      },
+    ],
+    serviceOptions: {
+      modelPolicy: prototypePolicy,
+      provider: {
+        async complete() {
+          providerCalled = true;
+          return { text: "Unexpected", model: "unexpected" };
+        },
+      },
+    },
+    createRequestId: () => requestId,
+  });
+
+  const response = await handler(
+    jsonRequest({ message: "Which projects best show Carlos's AI work?" }),
+  );
+  const body = (await response.json()) as CcAiSuccessResponse;
+
+  assert.equal(response.status, 200);
+  assert.equal(providerCalled, false);
+  assert.match(body.answer, /uset82\/StrudelAI/);
+  assert.equal(body.model.responded, "ana-knowledge");
+});

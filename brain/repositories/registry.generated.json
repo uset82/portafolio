@@ -1,0 +1,1592 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "ana:audit-repositories",
+  "generatedAt": "2026-08-12",
+  "owner": "uset82",
+  "source": "github-api",
+  "repositoryCount": 62,
+  "repositories": [
+    {
+      "repository": "uset82/3Doodle",
+      "language": "TypeScript",
+      "framework": "vite",
+      "readme": "# 3Doodle - AI-Powered Sketch to 3D Converter ## Project Overview 3Doodle is an interactive web application that transforms simple drawings into 3D images with generated sounds. It's designed to be kid-friendly, using OpenRouter models to chat with users, detect what's been drawn, and generate a corresponding 3D representation of the object. This application bridges the gap between imagination and visualization, making it fun for children to see their drawings come to life! ## Functionality The 3Doodle application works through a simple, user-friendly process: 1. **Draw**: Users create simple sketches on a digital canvas using the drawing tools provided. 2. **Chat**: Users can ask the built-in OpenRouter chat helper for drawing ideas, simple tips, or direct generated objects such as \"pint…",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": true,
+      "hasLLM": true,
+      "domain": [
+        "3d",
+        "web"
+      ],
+      "capabilities": [
+        "natal-chart"
+      ],
+      "status": "prototype",
+      "agentPotential": "medium",
+      "recommendedType": "agent",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 3898,
+      "manifestFiles": [
+        "package.json",
+        "vite.config.ts"
+      ]
+    },
+    {
+      "repository": "uset82/antigravity-vibe",
+      "readme": "# 🌌 Antigravity Vibe > **Unlock the full potential of AI coding with the Antigravity Architect Protocol.** ## What is this? **Antigravity Vibe** is a curated protocol designed to transform your AI coding assistant into a **Senior Product Architect**. Most users treat AI like a junior developer (\"write this function\"). This protocol forces the AI to step back, think systematically (\"System 2 Thinking\"), and act as a partner who understands the *entire* vision before writing a single line of code. ## 🚀 How to Use 1. **Copy the Protocol**: Open [`INITIALPROMPT.MD`](./INITIALPROMPT.MD) and copy the entire text. 2. **Paste into Antigravity**: Start a new session with your AI assistant and paste the text. 3. **Follow the Phases**: - **Phase 0**: The AI will set up your workspace. - **Phase 1*…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [],
+      "capabilities": [],
+      "status": "empty",
+      "agentPotential": "none",
+      "recommendedType": "disabled",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 2,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/ASTROEA",
+      "language": "TypeScript",
+      "framework": "vite",
+      "readme": "# ASTRAEA - Professional Astrology Platform A modern astrology web application that generates accurate natal charts and provides AI-powered interpretations, similar to astro.com. ## Features ✨ **Accurate Chart Calculations** - Powered by Immanuel (Swiss Ephemeris) - Natal / Radix charts - Transit charts - Synastry charts - Composite charts - Solar Return - Secondary Progressions 🎨 **Beautiful Visualization** - SVG chart wheel with European-style rendering - Zodiac signs with element colors - House cusps and planetary positions - Aspect lines 🤖 **AI Interpretation** - Grounded interpretations based on actual chart data - Multiple focus areas (personality, career, relationships, etc.) - Multi-language support (EN/ES/NO) - Streaming responses ## Quick Start ### Prerequisites - Python 3.10+…",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": false,
+      "hasLLM": true,
+      "domain": [
+        "astrology",
+        "career",
+        "web"
+      ],
+      "capabilities": [
+        "interpretation",
+        "natal-chart",
+        "solar-return",
+        "synastry",
+        "transits"
+      ],
+      "status": "prototype",
+      "agentPotential": "high",
+      "recommendedType": "agent",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 815,
+      "manifestFiles": [
+        "backend/Dockerfile",
+        "backend/requirements.txt",
+        "docker-compose.yml",
+        "frontend/Dockerfile",
+        "frontend/netlify/functions/package.json",
+        "frontend/package.json"
+      ]
+    },
+    {
+      "repository": "uset82/Automatic-Watering-Elephant",
+      "language": "C++",
+      "framework": "vite",
+      "readme": "# 🐘 Automatic Watering Elephant [![Made with Arduino](https://img.shields.io/badge/Made%20with-Arduino-00979D?logo=arduino)](https://www.arduino.cc/) [![PlatformIO](https://img.shields.io/badge/Built%20with-PlatformIO-orange)](https://platformio.org/) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) > A dual-microcontroller autonomous plant watering system with a rotating table mechanism **Course:** ADA525 - HW/SW System Design (Western Norway University of Applied Sciences) **Author:** Carlos Carpio **Date:** December 2025 --- ## 📋 Overview The **Automatic Watering Elephant** is an IoT plant care system that autonomously waters two avocado plants using a rotating table mechanism. It features a decorative elephant figurine with…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "education",
+        "electronics",
+        "embedded",
+        "iot",
+        "web"
+      ],
+      "capabilities": [],
+      "status": "educational",
+      "agentPotential": "high",
+      "recommendedType": "agent",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 43873,
+      "manifestFiles": [
+        "PLOTTER ELEFANTE/package.json"
+      ]
+    },
+    {
+      "repository": "uset82/avatar-studio",
+      "language": "TypeScript",
+      "framework": "vite",
+      "readme": "# Codex Avatar Studio Codex Avatar Studio is a local animated assistant for **Visual Studio Code** and compatible **Cursor** builds. It adds an avatar panel that reacts to coding activity, supports local picture-to-SVG creation, imports portable avatar packages, and can render validated 3D GLB avatars through WebGL. The extension works without an account, cloud upload, Blender, or a dedicated GPU. Advanced features are optional and always fall back to the built-in SVG coder orb. > [!IMPORTANT] > The repository and public VSIX do not include the local Cholita artwork, `.blend`, GLB, or workspace previews used during development. Users receive the redistributable coder orb and can create or import avatars for which they have the necessary rights. ## Features - Built-in animated SVG avatar w…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "3d",
+        "construction",
+        "web"
+      ],
+      "capabilities": [
+        "calculate-scaffolding"
+      ],
+      "status": "prototype",
+      "agentPotential": "low",
+      "recommendedType": "knowledge",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 783,
+      "manifestFiles": [
+        "apps/extension/package.json",
+        "apps/webview/package.json",
+        "package.json",
+        "packages/asset-pipeline/package.json",
+        "packages/avatar-core/package.json",
+        "packages/runtime-pixi/package.json"
+      ]
+    },
+    {
+      "repository": "uset82/bankAI",
+      "language": "TypeScript",
+      "framework": "next",
+      "readme": "# AI Bank — Demo for DNB Contest Live demo: https://mybankai.netlify.app/ This is a conversational banking demo showcasing: - Realtime voice (OpenAI Realtime, WebRTC) - Text chat with streaming fallback - Mock accounts and transactions (`public/mock/accounts.json`) - Optional multi‑month ledger for analysis (`public/mock/ledger.json`) Tech stack: - Vite + React + TypeScript - Zustand, SWR, shadcn‑ui, Tailwind CSS - Node/Express bridge for OpenAI (chat/tts/transcribe/realtime) Local development ```sh npm i npm run dev # open http://localhost:8080 (or the port shown by Vite) ``` Environment variables (PowerShell example) ```powershell $env:OPENAI_API_KEY=\"<your key>\" $env:OPENAI_CHAT_MODEL=\"gpt-5-mini-2025-08-07\" $env:OPENAI_REALTIME_API_KEY=\"<your key>\" $env:OPENAI_REALTIME_MODEL=\"gpt-4o-r…",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": false,
+      "hasLLM": true,
+      "domain": [
+        "finance",
+        "web"
+      ],
+      "capabilities": [
+        "natal-chart"
+      ],
+      "status": "production",
+      "agentPotential": "medium",
+      "recommendedType": "agent",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 232,
+      "manifestFiles": [
+        "package.json",
+        "vite.config.ts"
+      ]
+    },
+    {
+      "repository": "uset82/CALLKIRO",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [],
+      "capabilities": [],
+      "status": "empty",
+      "agentPotential": "none",
+      "recommendedType": "disabled",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 0,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/chaclacayo",
+      "language": "JavaScript",
+      "readme": "# Chaclacayo — Premium Real Estate Landing Sitio web bilingüe (ES/EN) de venta directa de la propiedad ubicada en **Cooperativa Alfonso Cobián, Mz B Lt 25, Chaclacayo, Lima, Perú** — propietario: Carlos Carpio. ## Stack Vanilla HTML5 + CSS (custom properties) + JavaScript ES6+. **Cero dependencias**, pensado para hosting estático (Netlify, Vercel, GitHub Pages). ## Estructura ``` chaclacayo/ ├── index.html # Página principal (SPA con todas las secciones) ├── css/ │ └── styles.css # Design system + estilos por sección ├── js/ │ ├── i18n.js # Sistema bilingüe ES/EN │ ├── gallery.js # Carrusel + lightbox + swipe móvil │ └── main.js # Reveals, FAQ, ROI, formularios, sticky nav ├── FOTOS/ # Fotos y video originales ├── assets/ # (preparado para activos optimizados) │ ├── images/ │ ├── video/ │…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": true,
+      "hasLLM": false,
+      "domain": [
+        "design",
+        "video"
+      ],
+      "capabilities": [],
+      "status": "experiment",
+      "agentPotential": "low",
+      "recommendedType": "knowledge",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 16125,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/chatgptvoiceeffect",
+      "description": "Created with CodeSandbox",
+      "readme": "# chatgptvoiceeffect Created with CodeSandbox",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [],
+      "capabilities": [],
+      "status": "empty",
+      "agentPotential": "none",
+      "recommendedType": "disabled",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 0,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/clase-potatoe",
+      "readme": "# clase-potatoe",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [],
+      "capabilities": [],
+      "status": "empty",
+      "agentPotential": "none",
+      "recommendedType": "disabled",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 0,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/cookthis-",
+      "language": "TypeScript",
+      "framework": "next",
+      "readme": "# 🍳 COOKTHIS **What's for dinner?** — Snap your fridge, get AI-powered meal ideas in seconds. COOKTHIS is a mobile-first web application that helps students (and anyone!) decide what to cook by analyzing photos of their fridge and pantry contents. Using AI-powered image recognition, it extracts ingredients and generates personalized meal suggestions based on your preferences. ![Next.js](https://img.shields.io/badge/Next.js-16-black) ![React](https://img.shields.io/badge/React-19-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue) ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8) ## ✨ Features - 📸 **Smart Ingredient Scanning** - Take photos of your fridge and pantry, AI detects ingredients automatically - 🍽️ **Personalized Meal Suggestions** - Get recipes b…",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "web"
+      ],
+      "capabilities": [],
+      "status": "prototype",
+      "agentPotential": "low",
+      "recommendedType": "tool",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 196,
+      "manifestFiles": [
+        "cookthis/package.json"
+      ]
+    },
+    {
+      "repository": "uset82/CRM_SaaS_Educativo",
+      "language": "HTML",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [],
+      "capabilities": [],
+      "status": "prototype",
+      "agentPotential": "none",
+      "recommendedType": "knowledge",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 296,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/DealDash-",
+      "language": "HTML",
+      "readme": "# Deal Dash 🚗🔥 A fun browser-based delivery car game! Race through 10 unique levels, deliver packages, and use fire boost to phase through buildings. ## 🎮 Play Now Just open `index.html` in any modern web browser - no installation needed! **Play Online:** [https://dealdash2025.netlify.app](https://dealdash2025.netlify.app) ## 📝 Game Concept You're a delivery driver racing against the clock. Navigate through city streets, collect glowing packages, and complete all deliveries before time runs out. Use your unlimited fire boost to go super fast and phase through obstacles! ## ✨ Features - **10 Unique Levels** - City, Suburbs, Industrial, Downtown, Beach, Desert, Forest, Snow, Night City, and Final Rush - **Different Cars** - Each level features a unique colored car - **Fire Boost Power**…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "game"
+      ],
+      "capabilities": [],
+      "status": "empty",
+      "agentPotential": "none",
+      "recommendedType": "disabled",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 21,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/diagramcloner",
+      "language": "TypeScript",
+      "framework": "next",
+      "readme": "# Diagram Cloner A browser-based editor that reconstructs diagrams from images using visual detection, manual annotation, and vector overlay export. It enables pixel-accurate reproduction of technical diagrams and exports them as structured data and code for downstream use. > Project status: Work-in-progress (WIP). This is a wishlist/experimental project and not yet complete. Some features are scaffolds or prototypes and may be partially implemented or unstable. Community help to fix, complete, and harden the implementation is very welcome. ## 1. Project Overview Diagram Cloner is a Next.js application for rebuilding existing diagrams from screenshots or scans into precise, editable vectors. It combines: - Visual detection (auto-detect shapes, connectors, and optionally text via OCR) - Ma…",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "numerology",
+        "web"
+      ],
+      "capabilities": [
+        "calculate-scaffolding",
+        "natal-chart",
+        "pinnacle-cycles"
+      ],
+      "status": "experiment",
+      "agentPotential": "high",
+      "recommendedType": "agent",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 195,
+      "manifestFiles": [
+        "next.config.mjs",
+        "package.json"
+      ]
+    },
+    {
+      "repository": "uset82/drone_Lips",
+      "language": "JavaScript",
+      "framework": "astro",
+      "readme": "<div align=\"center\"> # 🚁 Drone Lips ### *Fly a drone with just your mouth* [![Astro](https://img.shields.io/badge/Astro-FF5D01?style=for-the-badge&logo=astro&logoColor=white)](https://astro.build) [![Three.js](https://img.shields.io/badge/Three.js-000000?style=for-the-badge&logo=three.js&logoColor=white)](https://threejs.org) [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org) [![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev) [![Augment](https://img.shields.io/badge/Augment_Code-7C3AED?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Im…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "3d",
+        "drone",
+        "game",
+        "web"
+      ],
+      "capabilities": [],
+      "status": "prototype",
+      "agentPotential": "low",
+      "recommendedType": "knowledge",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 8753,
+      "manifestFiles": [
+        "drone-lips/package.json",
+        "package.json"
+      ]
+    },
+    {
+      "repository": "uset82/EFFATA",
+      "language": "TypeScript",
+      "framework": "next",
+      "readme": "# EFFATA - Universal Product Health & Safety Scanner **Open your eyes to what touches you.** EFFATA is a next-generation web application designed to help users make safer decisions about any product that could touch their skin, enter their mouth, or be absorbed by their body. The app leverages advanced AI (Gemini 2.5) to instantly scan, analyze, and rate everything from food to cosmetics, creams, oils, toothpaste, and other personal care products. ## 🎯 Core Mission EFFATA acts as a real-time guardian for your health, helping you avoid cancerous, toxic, allergenic, or banned ingredients—before you eat, apply, or buy. ## 🔍 What We Scan - **Food & Beverages** - Processed foods, additives, E-numbers, preservatives - **Makeup & Cosmetics** - INCI-listed ingredients, colorants, fragrances, pa…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "web"
+      ],
+      "capabilities": [
+        "natal-chart"
+      ],
+      "status": "prototype",
+      "agentPotential": "low",
+      "recommendedType": "knowledge",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 241,
+      "manifestFiles": [
+        "package.json",
+        "vite.config.ts"
+      ]
+    },
+    {
+      "repository": "uset82/elefante",
+      "language": "C++",
+      "framework": "vite",
+      "readme": "# elefante # elefante",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "electronics",
+        "embedded",
+        "web"
+      ],
+      "capabilities": [],
+      "status": "educational",
+      "agentPotential": "low",
+      "recommendedType": "knowledge",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 10370,
+      "manifestFiles": [
+        "uno/fan_plotter/package.json"
+      ]
+    },
+    {
+      "repository": "uset82/FreeCAD",
+      "description": "Official source code of FreeCAD, a free and opensource multiplatform 3D parametric modeler.",
+      "readme": "<a href=\"https://freecad.org\"><img src=\"/src/Gui/Icons/freecad.svg\" height=\"100px\" width=\"100px\"></a> ### Your own 3D Parametric Modeler [Website](https://www.freecad.org) • [Documentation](https://wiki.freecad.org) • [Forum](https://forum.freecad.org/) • [Bug tracker](https://github.com/FreeCAD/FreeCAD/issues) • [Git repository](https://github.com/FreeCAD/FreeCAD) • [Blog](https://blog.freecad.org) [![Release](https://img.shields.io/github/release/freecad/freecad.svg)](https://github.com/freecad/freecad/releases/latest) [![Crowdin](https://d322cqt584bo4o.cloudfront.net/freecad/localized.svg)](https://crowdin.com/project/freecad) <img src=\"/.github/images/partdesign.png\" width=\"800\"/> Overview -------- * **Freedom to build what you want** FreeCAD is an open-source parametric 3D modeler ma…",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "3d",
+        "embedded"
+      ],
+      "capabilities": [
+        "interpretation"
+      ],
+      "status": "fork",
+      "agentPotential": "none",
+      "recommendedType": "disabled",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 2439041,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/gimmemycake",
+      "language": "TypeScript",
+      "framework": "vite",
+      "readme": "# 🎂 Gimme My Cake A tiny 3D web game built with Three.js + Vite where you grab cakes with your hand (pinch gesture) and feed a crying baby. If camera access is unavailable, the game falls back to mouse/touch controls. ## Demo / Concept - Goal: feed the baby by throwing cakes into the mouth while it opens and closes. - Each successful feed increases score and reduces the cry meter. - Misses increase the cry meter. When the cry meter reaches 100%, it’s game over. ## How To Play ### Option A — Hand Tracking (recommended) 1. Click **🎮 Play Game**. 2. Allow camera permission when prompted. 3. Use **pinch** (thumb + index finger together) to grab a cake. 4. Move your hand to position the cake. 5. **Release** the pinch to throw the cake toward the baby’s mouth. ### Option B — Mouse / Touch fal…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "3d",
+        "game",
+        "web"
+      ],
+      "capabilities": [],
+      "status": "prototype",
+      "agentPotential": "low",
+      "recommendedType": "knowledge",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 27335,
+      "manifestFiles": [
+        "package.json",
+        "vite.config.ts"
+      ]
+    },
+    {
+      "repository": "uset82/hvl2025-microcontroller-assignment3",
+      "language": "C++",
+      "framework": "vite",
+      "readme": "# ELE201 H25 – Assignment 3 (Microcontrollers) A practical mini‑project on STM32 Nucleo that turns temperature into fan control. You will read a TMP36 analog temperature sensor, use a potentiometer as a user control, drive a DC motor (fan) via PWM, and steer a small servo for visual feedback. The repo also includes a simple web plotter to visualize live data from the board. --- ## What You’ll Build - Read temperature from a `TMP36` sensor with ADC and convert it to °C. - Drive a DC motor (fan) using PWM; speed increases with temperature. - Use a potentiometer to: - Adjust sensitivity (gain) of the fan response. - Lower the start threshold (so the fan can respond at cooler room temps). - Move a small servo to reflect the control level. - Stream data over serial and visualize it in the incl…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "electronics",
+        "embedded",
+        "web"
+      ],
+      "capabilities": [],
+      "status": "educational",
+      "agentPotential": "low",
+      "recommendedType": "knowledge",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 4210,
+      "manifestFiles": [
+        "fan_plotter/package.json"
+      ]
+    },
+    {
+      "repository": "uset82/iFoundYou",
+      "language": "TypeScript",
+      "framework": "vite",
+      "readme": "# Dommedag Private, opt-in location sharing for trusted circles with catastrophe-ready community alerts (water, food, medical, shelter, lost person). ## Features - Live MapLibre map with your location + nearby friends. - Unified **Connect Hub** with streamlined sub-navigation for Discovery, Connected friends, Groups, Sharing, Profile, and Mesh. - **Group Chats** for family, neighborhood, and emergency channels. - **Off-grid Mesh** integration (Meshtastic Bluetooth pairing) for communication without internet. - Friend requests, pending approvals, discovery toggle. - Proximity alerts + notification feed. - Emergency broadcast to people nearby (community alerts). - **PWA (Progressive Web App)** support for offline caching and native app installation. - Supabase Auth (email/password + Google…",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": true,
+      "hasLLM": true,
+      "domain": [
+        "osint",
+        "research",
+        "web"
+      ],
+      "capabilities": [],
+      "status": "prototype",
+      "agentPotential": "high",
+      "recommendedType": "agent",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 1678,
+      "manifestFiles": [
+        "Dockerfile",
+        "mcp/package.json",
+        "mobile/Gemfile",
+        "mobile/package.json",
+        "package.json",
+        "web/package.json",
+        "wifi/requirements.txt"
+      ]
+    },
+    {
+      "repository": "uset82/Jacobgolf",
+      "language": "JavaScript",
+      "readme": "# Jacobs Golfspill A browser-based mini golf challenge built with HTML5 canvas and vanilla JavaScript. ## Play - Open `index.html` in a modern browser (no build or installs). - Click and drag from the ball to aim; release to shoot. The dashed guide shows direction and power. - Finish each hole in as few strokes as possible. ## Obstacles and rules - Rocks bounce the ball and bleed speed. - Water resets the current level. - Sand patches add extra friction. - The ball sinks when it is near the hole and moving slowly. ## Levels 1. Niva 1: Oppvarming - simple warm-up. 2. Niva 2: Steinen - one rock in the fairway. 3. Niva 3: Labyrinten - rocks plus a water hazard. 4. Niva 4: Mesterskapet - tighter layout with rocks and sand. 5. Niva 5: Bonus! - mirrored rocks with water in the middle. ## UI and…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "game"
+      ],
+      "capabilities": [],
+      "status": "prototype",
+      "agentPotential": "low",
+      "recommendedType": "knowledge",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 5,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/LLM-Web-App",
+      "language": "JavaScript",
+      "framework": "next",
+      "readme": "# Building LLM Applications Course ## About This Repository This repository hosts a comprehensive course on developing applications with Large Language Models (LLMs). Initially, an attempt was made to create this course using Devin AI, which cost $50 but resulted in recursive loops without producing a complete project. This led to the current human-curated approach. ## Current Implementation - Structured course outline completed - Daily content templates established - Week 1-2 materials drafted - Core concepts and practical exercises in development - Interactive components pending implementation ## How to Contribute 1. Fork the repository 2. Create a feature branch (`git checkout -b feature/YourFeature`) 3. Commit your changes (`git commit -am 'Add some feature'`) 4. Push to the branch (`…",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": false,
+      "hasLLM": true,
+      "domain": [
+        "education",
+        "web"
+      ],
+      "capabilities": [
+        "natal-chart"
+      ],
+      "status": "prototype",
+      "agentPotential": "high",
+      "recommendedType": "agent",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 231,
+      "manifestFiles": [
+        "llm-course-app/Dockerfile",
+        "llm-course-app/package.json"
+      ]
+    },
+    {
+      "repository": "uset82/LyriGenie",
+      "language": "Python",
+      "framework": "flask",
+      "readme": "# LyriGenie ## Project Overview LyriGenie is a web application that transforms lyric viewing into an interactive experience by synchronizing lyrics across multiple music platforms with engaging design elements. ## Features - **Multi-platform Integration**: Works with both YouTube videos and Spotify tracks - **Lyrics Synchronization**: Automatically syncs lyrics with audio playback - **Karaoke-style Display**: Provides word-by-word highlighting as the song progresses - **AI-powered Analysis**: Uses OpenAI to analyze song themes and emotions - **Similar Song Recommendations**: Suggests similar songs based on lyrics and style - **Export Options**: Download lyrics as TXT or SRT subtitle format - **Responsive Design**: Works on various screen sizes with Studio Ghibli-inspired visual elements -…",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": true,
+      "hasLLM": true,
+      "domain": [
+        "music",
+        "video"
+      ],
+      "capabilities": [],
+      "status": "prototype",
+      "agentPotential": "high",
+      "recommendedType": "agent",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 6833,
+      "manifestFiles": [
+        "pyproject.toml"
+      ]
+    },
+    {
+      "repository": "uset82/MandelBro",
+      "language": "JavaScript",
+      "framework": "express",
+      "readme": "# MandelBro ## Project Overview MandelBro is an interactive, multiplayer kids game creator that uses the Mandelbrot set for procedural world generation. It allows children to create unique, explorable worlds by simply describing them in natural language. The game converts these descriptions into parameters for the Mandelbrot set, generating visually interesting and mathematically-based worlds that can be shared with friends using unique codes. The project includes both a standalone browser-based version that works without any server connections, and a more complex server-based implementation with full multiplayer functionality. ## Functionality ### Core Features - **Natural Language World Creation**: Kids can create worlds by describing them in simple language - **Voice Input Support**: A…",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": true,
+      "hasLLM": false,
+      "domain": [
+        "game"
+      ],
+      "capabilities": [],
+      "status": "prototype",
+      "agentPotential": "low",
+      "recommendedType": "tool",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 2020,
+      "manifestFiles": [
+        "MandelBro/deploy/package.json",
+        "MandelBro/package.json",
+        "MandelBro/public/package.json",
+        "MandelBro/src/server/package.json"
+      ]
+    },
+    {
+      "repository": "uset82/mentora",
+      "description": "Mentora is an EdTech webapp designed for College level students, learn at your pace and your way!",
+      "language": "TypeScript",
+      "framework": "next",
+      "readme": "# Mentora Mentora is a production-oriented AI study platform built with Next.js, Supabase, pgvector, OpenAI, and optional OpenRouter testing models. ## What Works - Supabase Auth sign-up/sign-in. - Tenant/profile creation through a Supabase trigger. - Student study spaces with RLS isolation. - Private material upload to Supabase Storage for PDFs, images, DOCX, TXT, Markdown, links, and text notes. - Server-side text extraction, chunking, OpenAI embeddings, and pgvector storage for readable materials. - Citation-backed tutor chat scoped to the active study space. - Studio generation saved as artifacts: summaries, quizzes, flashcards, mind maps, APA help, data tables, study guides, diagrams, and infographic outlines. - AI usage logging by tenant, user, task, provider, model, tokens, and lat…",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": true,
+      "hasLLM": true,
+      "domain": [
+        "design",
+        "education",
+        "web"
+      ],
+      "capabilities": [],
+      "status": "fork",
+      "agentPotential": "high",
+      "recommendedType": "knowledge",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 13419,
+      "manifestFiles": [
+        "next.config.ts",
+        "package.json"
+      ]
+    },
+    {
+      "repository": "uset82/MicrocontrollerPiano",
+      "language": "C",
+      "framework": "platformio",
+      "readme": "# Microcontroller Piano A compact digital piano built around the STM32 Nucleo-F767ZI board. Seven push buttons trigger PWM-generated notes while a dedicated record button captures up to five seconds of performance and plays it back through a buzzer or small speaker. ## Hardware Overview - **Controller:** Nucleo-F767ZI (STM32F767ZIT6 MCU at 96 MHz) - **Sound output:** PB8 (TIM4 CH3 PWM) routed to an active buzzer or amplified speaker - **Record button:** PF12 (CN7 D8, active-low push button to ground) - **Piano keys:** Seven normally-open buttons tied to ground when pressed, matching the mapping below with internal pull-ups enabled - **Power:** USB ST-LINK connector or an external 5 V source routed through the Nucleo board | Note | Frequency (Hz) | Nucleo Pin | Port | Pin | | ---- | ------…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "electronics",
+        "embedded"
+      ],
+      "capabilities": [],
+      "status": "prototype",
+      "agentPotential": "low",
+      "recommendedType": "tool",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 2606,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/mini",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [],
+      "capabilities": [],
+      "status": "empty",
+      "agentPotential": "none",
+      "recommendedType": "disabled",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 0,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/Monkey-Tug-of-War",
+      "language": "JavaScript",
+      "readme": "# math_tug_of_war A new Flutter project. ## Getting Started This project is a starting point for a Flutter application. A few resources to get you started if this is your first Flutter project: - [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter) - [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab) - [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources) For help getting started with Flutter development, view the [online documentation](https://docs.flutter.dev/), which offers tutorials, samples, guidance on mobile development, and a full API reference.",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "game"
+      ],
+      "capabilities": [],
+      "status": "prototype",
+      "agentPotential": "low",
+      "recommendedType": "knowledge",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 23251,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/My-Football-Game",
+      "language": "JavaScript",
+      "readme": "# ⚽ My Football Game A fun 2D football (soccer) game made for kids learning to code! ![Game Preview](https://img.shields.io/badge/Made%20With-HTML%20%2B%20CSS%20%2B%20JavaScript-blue) ![Difficulty](https://img.shields.io/badge/Difficulty-Beginner-green) ![Age](https://img.shields.io/badge/Age-9%2B-orange) --- ## 🎮 How to Play ### Controls | Key | Action | |-----|--------| | ⬆️ Arrow Up | Move player up | | ⬇️ Arrow Down | Move player down | | ⬅️ Arrow Left | Move player left | | ➡️ Arrow Right | Move player right | | **SPACE** | Kick the ball! | ### Goal Score as many goals as possible before the 60-second timer runs out! --- ## 🚀 How to Run the Game ### ▶️ Quick Start (Click to Play!) **[🎮 Launch Game](http://localhost:8080)** ← Click here if the Python server is running! ### Option 1…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": true,
+      "hasLLM": false,
+      "domain": [
+        "game"
+      ],
+      "capabilities": [],
+      "status": "prototype",
+      "agentPotential": "low",
+      "recommendedType": "knowledge",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 1246,
+      "manifestFiles": [
+        "package.json"
+      ]
+    },
+    {
+      "repository": "uset82/nethunter-fix",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [],
+      "capabilities": [],
+      "status": "empty",
+      "agentPotential": "none",
+      "recommendedType": "disabled",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 0,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/opencode",
+      "description": "Run multiple Codex and Claude Code AI sessions in parallel git worktrees. Test, compare approaches & manage AI-assisted development workflows in one desktop app.",
+      "framework": "vite",
+      "readme": "# Crystal - Multi-Session AI Code Assistant Manager <div align=\"center\"> <h3><a href=\"https://github.com/stravu/crystal/releases/latest\">**Get the Latest Release Here**</a></h3> </div> <div align=\"center\"> [![Build](https://github.com/stravu/crystal/actions/workflows/build.yml/badge.svg)](https://github.com/stravu/crystal/actions/workflows/build.yml) [![Quality](https://github.com/stravu/crystal/actions/workflows/quality.yml/badge.svg)](https://github.com/stravu/crystal/actions/workflows/quality.yml) [![Join our Discord](https://img.shields.io/badge/Join%20our-Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/XrVa6q7DPY) </div> <div align=\"center\"> <strong>Crystal lets you use AI on isolated copies of your code so you can work on multiple tasks instead o…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": true,
+      "domain": [
+        "ai-tooling",
+        "web"
+      ],
+      "capabilities": [
+        "natal-chart"
+      ],
+      "status": "fork",
+      "agentPotential": "high",
+      "recommendedType": "knowledge",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 15884,
+      "manifestFiles": [
+        "frontend/package.json",
+        "main/package.json",
+        "package.json",
+        "shared/package.json"
+      ]
+    },
+    {
+      "repository": "uset82/opennemoclaw",
+      "language": "TypeScript",
+      "framework": "vite",
+      "readme": "# OpenNemoClaw <p align=\"center\"> <img src=\"https://github.com/user-attachments/assets/50320065-69d2-4e02-94fb-df8bb0b45036\" alt=\"OpenNemoClaw\" width=\"800\" /> </p> **Personal Agent Framework - Secure creation, deployment, and management of AI agents** OpenNemoClaw is a powerful framework that allows you to easily create, test, configure, and manage intelligent AI agents in a local sandbox environment. It offers flexible model configurations (including deeply integrated support for **OpenRouter**), straightforward agent blueprinting, and complete sandboxing by leveraging Docker. ## Features - **Local & Secure:** Agents run in a sandboxed Docker environment, ensuring that file system access and system execution are completely isolated. - **Provider Agnostic:** Out-of-the-box support for mul…",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": true,
+      "hasLLM": true,
+      "domain": [
+        "ai-tooling",
+        "research",
+        "web"
+      ],
+      "capabilities": [],
+      "status": "prototype",
+      "agentPotential": "high",
+      "recommendedType": "agent",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 347,
+      "manifestFiles": [
+        "package.json",
+        "packages/api/package.json",
+        "packages/cli/package.json",
+        "packages/connectors/package.json",
+        "packages/core/package.json",
+        "packages/policies/package.json",
+        "packages/sandbox/package.json",
+        "packages/web/package.json"
+      ]
+    },
+    {
+      "repository": "uset82/opennemoclawsite",
+      "language": "CSS",
+      "readme": "# OpenNemoClaw Site UI This repository hosts the static landing page framework for the **[OpenNemoClaw](https://github.com/uset82/opennemoclaw)** project. ## About OpenNemoClaw OpenNemoClaw is a powerful personal agent framework allowing you to easily create, test, configure, and manage intelligent AI agents in a local sandbox environment. It offers flexible model configurations, first-class native integration with **OpenRouter**, straightforward agent blueprinting, and complete sandboxing by leveraging Docker. 👉 **[Visit the main OpenNemoClaw repository for the source code, installation, and CLI usage.](https://github.com/uset82/opennemoclaw)** ## About this UI Repository This repository specifically contains the HTML, CSS, and interactive JavaScript for the project's landing page. It s…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": true,
+      "domain": [
+        "ai-tooling"
+      ],
+      "capabilities": [],
+      "status": "prototype",
+      "agentPotential": "high",
+      "recommendedType": "agent",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 295,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/osiris",
+      "description": "Open Source Global Intelligence Platform - Real-Time OSINT Dashboard - A Palantir Alternative",
+      "framework": "next",
+      "readme": "<div align=\"center\"> # ⬡ OSIRIS ### Open Source Intelligence & Reconnaissance Integrated System [![Live Demo](https://img.shields.io/badge/osirisai.live-00E5FF?style=for-the-badge&logo=vercel&logoColor=white)](https://osirislive.app) [![Support OSIRIS](https://img.shields.io/badge/Support_Project-Patreon-FF424D?style=for-the-badge&logo=patreon&logoColor=white)](https://www.patreon.com/posts/159077425) [![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)](https://nextjs.org) [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org) [![MapLibre](https://img.shields.io/badge/MapLibre_GL-GPU_Rendered-396CB2?style=for-the-badge)](https://maplibre.org) [![License](https…",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "osint",
+        "web"
+      ],
+      "capabilities": [],
+      "status": "fork",
+      "agentPotential": "none",
+      "recommendedType": "disabled",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 2327,
+      "manifestFiles": [
+        "docker-compose.yml",
+        "Dockerfile",
+        "next.config.ts",
+        "package.json"
+      ]
+    },
+    {
+      "repository": "uset82/pace-drone-commander",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "drone"
+      ],
+      "capabilities": [],
+      "status": "empty",
+      "agentPotential": "none",
+      "recommendedType": "disabled",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 0,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/pacha",
+      "language": "TypeScript",
+      "framework": "next",
+      "readme": "# Pasha International Food & Bar [![Netlify Status](https://api.netlify.com/api/v1/badges/5d8c44b5-d679-43b5-b57d-ce3c83aa0256/deploy-status)](https://app.netlify.com/projects/pacharestaurant/deploys) Next.js App Router website and lightweight owner CMS for Pasha International Food & Bar in Bergen. Package manager: npm. ## Local setup ```bash npm install cp .env.local.example .env.local npm run dev ``` The public site uses local restaurant images and fallback content until Supabase credentials are configured. Run the SQL in `supabase/migrations` in a Supabase project, add the environment variables, then create an admin user in `admin_users` for CMS access. For Supabase, set `NEXT_PUBLIC_SUPABASE_URL` and either `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` or the legacy `NEXT_PUBLIC_SUPABASE_ANO…",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": true,
+      "hasLLM": true,
+      "domain": [
+        "design",
+        "web"
+      ],
+      "capabilities": [
+        "calculate-scaffolding"
+      ],
+      "status": "prototype",
+      "agentPotential": "medium",
+      "recommendedType": "agent",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 1421,
+      "manifestFiles": [
+        "next.config.ts",
+        "package.json"
+      ]
+    },
+    {
+      "repository": "uset82/paginacuzco1",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [],
+      "capabilities": [],
+      "status": "empty",
+      "agentPotential": "none",
+      "recommendedType": "disabled",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 0,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/Paper2Video",
+      "description": "Automatic Video Generation from Scientific Papers",
+      "framework": "fastapi",
+      "readme": "# Paper2Video <p align=\"right\"> <b>English</b> | <a href=\"./README-CN.md\">简体中文</a> </p> <p align=\"center\"> <b>Paper2Video: Automatic Video Generation from Scientific Papers</b> <br> 从学术论文自动生成演讲视频 </p> <p align=\"center\"> <a href=\"https://zeyu-zhu.github.io/webpage/\">Zeyu Zhu*</a>, <a href=\"https://qhlin.me/\">Kevin Qinghong Lin*</a>, <a href=\"https://scholar.google.com/citations?user=h1-3lSoAAAAJ&hl=en\">Mike Zheng Shou</a> <br> Show Lab, National University of Singapore </p> <p align=\"center\"> <a href=\"https://arxiv.org/abs/2510.05096\">📄 Paper</a> &nbsp; | &nbsp; <a href=\"https://huggingface.co/papers/2510.05096\">🤗 Daily Paper</a> &nbsp; | &nbsp; <a href=\"https://huggingface.co/datasets/ZaynZhu/Paper2Video\">📊 Dataset</a> &nbsp; | &nbsp; <a href=\"https://showlab.github.io/Paper2Video/\">🌐…",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": true,
+      "hasLLM": true,
+      "domain": [
+        "research",
+        "video"
+      ],
+      "capabilities": [
+        "interpretation"
+      ],
+      "status": "fork",
+      "agentPotential": "high",
+      "recommendedType": "knowledge",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 392267,
+      "manifestFiles": [
+        "src/evaluation/PresentQuiz/utils/src/experiment/requirements.txt",
+        "src/evaluation/requirements.txt",
+        "src/requirements.txt"
+      ]
+    },
+    {
+      "repository": "uset82/piano-",
+      "language": "C",
+      "framework": "vite",
+      "readme": "# piano-",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "electronics",
+        "embedded",
+        "web"
+      ],
+      "capabilities": [],
+      "status": "educational",
+      "agentPotential": "low",
+      "recommendedType": "tool",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 8322,
+      "manifestFiles": [
+        "fan_plotter/package.json"
+      ]
+    },
+    {
+      "repository": "uset82/pinaculo",
+      "language": "TypeScript",
+      "framework": "next",
+      "readme": "# 📿 NUMEROLOGO - Sistema Avanzado de Numerología del Pináculo Una aplicación web moderna de numerología que implementa el **Sistema Completo del Pináculo** con 24 posiciones numerológicas, cálculos precisos y análisis detallados en español. ## 🌟 Demo en Vivo **🚀 Aplicación Desplegada**: https://pinaculo.netlify.app/ ## ✨ Características Principales - 🎯 **Sistema del Pináculo Completo (24 posiciones)** - Implementación exacta con todas las reglas especiales - 🇪🇸 **Interfaz en Español** - Diseñado específicamente para la comunidad hispanohablante - 🔢 **Cálculos Precisos con Reglas Especiales**: - Regla de conversión 11→2, 22→4, 33→6 para negativos - Verificación especial para D y H - Triplicidad calculada solo de K,L,M,N,O,P,Q,R,S - Cálculo de números ausentes (T) - 🎨 **Diseño Moder…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "numerology",
+        "web"
+      ],
+      "capabilities": [
+        "master-numbers",
+        "numerology-profile",
+        "pinnacle-cycles"
+      ],
+      "status": "prototype",
+      "agentPotential": "high",
+      "recommendedType": "agent",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 457,
+      "manifestFiles": [
+        "next.config.js",
+        "package.json"
+      ]
+    },
+    {
+      "repository": "uset82/portafolio",
+      "language": "TypeScript",
+      "framework": "next",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": true,
+      "hasLLM": true,
+      "domain": [
+        "3d",
+        "ai-tooling",
+        "astrology",
+        "career",
+        "construction",
+        "design",
+        "drone",
+        "education",
+        "electronics",
+        "embedded",
+        "energy",
+        "finance",
+        "game",
+        "iot",
+        "music",
+        "numerology",
+        "osint",
+        "portfolio",
+        "research",
+        "video",
+        "web"
+      ],
+      "capabilities": [
+        "calculate-scaffolding",
+        "career-analysis",
+        "pinnacle-cycles",
+        "thesis-writing",
+        "transits"
+      ],
+      "status": "educational",
+      "agentPotential": "medium",
+      "recommendedType": "knowledge",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 251463,
+      "manifestFiles": [
+        "Dockerfile",
+        "site/package.json",
+        "thedelegator/package.json"
+      ]
+    },
+    {
+      "repository": "uset82/project-bolt-qrmollebakken-supabase",
+      "description": "project-bolt-qrmollebakken-supabase",
+      "language": "TypeScript",
+      "framework": "vite",
+      "readme": "# QR Møllebakken Art Project A digital art gallery platform for Møllebakken school, allowing teachers to upload student artwork and parents to view their children's creations through QR codes. ## Features - Teacher dashboard for uploading student artwork - Support for images, videos (max 20s), and audio recordings (max 1min) - QR code-based parent access - Offline support - Responsive design ## Tech Stack - React 18 - TypeScript - Vite - Tailwind CSS - Supabase (Authentication, Database, Storage) - Lucide React Icons ## Getting Started 1. Clone the repository: ```bash git clone https://github.com/uset82/qr-mollebakken.git cd qr-mollebakken ``` 2. Install dependencies: ```bash npm install ``` 3. Create a `.env` file with your Supabase configuration: ```env VITE_SUPABASE_URL=your_supabase_u…",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": true,
+      "hasLLM": false,
+      "domain": [
+        "web"
+      ],
+      "capabilities": [
+        "generate-qr"
+      ],
+      "status": "prototype",
+      "agentPotential": "low",
+      "recommendedType": "tool",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 81,
+      "manifestFiles": [
+        "project/package.json"
+      ]
+    },
+    {
+      "repository": "uset82/qr-code-generator",
+      "language": "JavaScript",
+      "framework": "vite",
+      "readme": "# QR Code Generator for Møllebakken Art Project An interactive web application for teachers to manage student artwork and generate QR codes that link to student portfolios or individual artwork pieces. This project is designed specifically for educational institutions to showcase student work through modern web technology. ![QR Code Generator](https://via.placeholder.com/800x400?text=QR+Code+Generator+Screenshot) ## 🌟 Features ### QR Code Generation System - **Dynamic QR Codes** - Generate QR codes for both student portfolios and individual artworks - **Direct URL Links** - Create shareable links alongside QR codes - **Customizable QR Codes** - Adjust size and download options - **Instant Preview** - See QR codes and test links in real-time ### Teacher Portal - **Media Upload** - Upload…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": true,
+      "hasLLM": false,
+      "domain": [
+        "web"
+      ],
+      "capabilities": [
+        "generate-qr"
+      ],
+      "status": "prototype",
+      "agentPotential": "low",
+      "recommendedType": "tool",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 110,
+      "manifestFiles": [
+        "package.json"
+      ]
+    },
+    {
+      "repository": "uset82/QubeSolve",
+      "language": "TypeScript",
+      "framework": "next",
+      "readme": "# QubeSolve QubeSolve is a mobile-first Rubik's cube solver built with Next.js App Router. The app is planned to scan cube faces, validate cube state, and guide the solve step by step. ## Local Setup Install dependencies and start the app: ```bash npm install npm run dev ``` Open [http://localhost:3000](http://localhost:3000). ## OpenRouter Setup The AI vision fallback is wired through a server-only OpenRouter integration and defaults to the free model `qwen/qwen3.6-plus:free`. 1. Copy `.env.example` to `.env.local`. 2. Set `OPENROUTER_API_KEY` in `.env.local`. 3. Optionally override `OPENROUTER_MODEL`, `OPENROUTER_APP_NAME`, or `OPENROUTER_SITE_URL`. The route handler lives at `POST /api/vision` and expects JSON like: ```json { \"imageDataUrl\": \"data:image/jpeg;base64,...\", \"face\": \"F\" }…",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": false,
+      "hasLLM": true,
+      "domain": [
+        "web"
+      ],
+      "capabilities": [],
+      "status": "prototype",
+      "agentPotential": "medium",
+      "recommendedType": "agent",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 1123,
+      "manifestFiles": [
+        "next.config.ts",
+        "package.json"
+      ]
+    },
+    {
+      "repository": "uset82/REACTIONGAME",
+      "language": "C",
+      "framework": "platformio",
+      "readme": "# Reaction Game on STM32F767 (Nucleo‑F767ZI) https://www.tiktok.com/@carloscarpio82/video/7552605792403262742?is_from_webapp=1&sender_device=pc&web_id=7490154445721781782 A simple two‑player reflex game built with STM32Cube HAL and PlatformIO. Two players each have one push button and one LED. A separate \"reflex\" LED turns on after a random delay. As soon as the reflex LED turns on, the first player to press their button wins the round and their LED turns on. If any player presses too early (before the reflex LED turns on), the other player wins. This repo also includes small debug helpers (startup LED test, heartbeat, input mirroring) so you can verify your wiring quickly in the lab. ## What’s in this project - STM32Cube HAL bare‑metal project (C) - PlatformIO configuration for Nucleo‑F7…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "embedded",
+        "game",
+        "video"
+      ],
+      "capabilities": [],
+      "status": "educational",
+      "agentPotential": "low",
+      "recommendedType": "tool",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 805,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/ReportAIEquinor",
+      "language": "HTML",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [],
+      "capabilities": [],
+      "status": "prototype",
+      "agentPotential": "low",
+      "recommendedType": "knowledge",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 94,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/RS232_VHD_DE2115",
+      "language": "VHDL",
+      "readme": "# RS-232 Communication System for DE2-115 FPGA ## ELE111 Semester Project 2025 A complete RS-232 communication system implementation on the Altera/Intel DE2-115 FPGA development board. This project implements the RS-232 protocol for point-to-point serial communication between two DE2-115 boards, following the ELE111 semester assignment specifications. The system features configurable baud rates, dual data sources, and comprehensive status visualization. --- ## 📋 Overview This project implements a full RS-232 communication system following the RS-232 protocol standard. RS-232 is a standard for point-to-point communication over relatively short distances at low to medium data rates. The system enables two DE2-115 boards to communicate with each other, where one board acts as a transmitter…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "fpga"
+      ],
+      "capabilities": [],
+      "status": "educational",
+      "agentPotential": "low",
+      "recommendedType": "knowledge",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 18498,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/skills-github-pages",
+      "description": "My clone repository",
+      "readme": "<header> <!-- <<< Author notes: Course header >>> Include a 1280×640 image, course title in sentence case, and a concise description in emphasis. In your repository settings: enable template repository, add your 1280×640 social image, auto delete head branches. Add your open source license, GitHub uses MIT license. --> # GitHub Pages _Create a site or blog from your GitHub repositories with GitHub Pages._ </header> <!-- <<< Author notes: Step 1 >>> Choose 3-5 steps for your course. The first step is always the hardest, so pick something easy! Link to docs.github.com for further explanations. Encourage users to open new tabs for steps! --> ## Step 1: Enable GitHub Pages _Welcome to GitHub Pages and Jekyll :tada:!_ The first step is to enable GitHub Pages on this [repository](https://docs.g…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "education"
+      ],
+      "capabilities": [],
+      "status": "empty",
+      "agentPotential": "none",
+      "recommendedType": "disabled",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 17,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/smartapply-app",
+      "language": "TypeScript",
+      "framework": "vite",
+      "readme": "# SmartApply - Job Application Tracker A modern web application to help users track job applications and generate AI-powered cover letters. ## Features - Track job applications in one place - Generate customized cover letters using Gemini AI - Search and filter applications - Responsive design for all devices ## Tech Stack - React + TypeScript - Vite for fast development - Tailwind CSS for styling - Supabase for backend services - React Router for navigation - Heroicons for UI icons ## Getting Started ### Prerequisites - Node.js (v16 or higher) - npm or yarn ### Installation 1. Clone the repository ```bash git clone <repository-url> cd smartapply-app ``` 2. Install dependencies ```bash npm install ``` 3. Configure environment variables Create a `.env` file in the root directory with your…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": true,
+      "hasLLM": false,
+      "domain": [
+        "career",
+        "web"
+      ],
+      "capabilities": [
+        "career-analysis",
+        "transits"
+      ],
+      "status": "prototype",
+      "agentPotential": "high",
+      "recommendedType": "agent",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 149,
+      "manifestFiles": [
+        "package.json",
+        "vite.config.ts"
+      ]
+    },
+    {
+      "repository": "uset82/SmartHomeControl",
+      "language": "Python",
+      "framework": "flask",
+      "readme": "# Smart Home Web App with FPGA Integration A sophisticated Flask-based smart home web application that enables comprehensive device monitoring, control, and intelligent user interactions through an intuitive web interface. This project bridges the gap between software and hardware by integrating with FPGA devices (specifically NIOS II with DS3231 RTC) using serial communication protocols. ## Project Overview This project creates a web-based control system for smart home devices connected to FPGA hardware. It features: 1. Real-time monitoring of temperature data from DS3231 RTC sensors 2. Control interface for FPGA-connected devices (lights and fans) 3. Voice command capabilities using OpenAI's Audio API 4. Integration with OpenWeatherMap for real-time weather data 5. Time and date display…",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": true,
+      "hasLLM": true,
+      "domain": [
+        "fpga"
+      ],
+      "capabilities": [],
+      "status": "prototype",
+      "agentPotential": "medium",
+      "recommendedType": "agent",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 2256,
+      "manifestFiles": [
+        "pyproject.toml"
+      ]
+    },
+    {
+      "repository": "uset82/StillasCalculator",
+      "language": "TypeScript",
+      "framework": "next",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": false,
+      "hasLLM": true,
+      "domain": [
+        "construction",
+        "research",
+        "web"
+      ],
+      "capabilities": [
+        "calculate-scaffolding"
+      ],
+      "status": "prototype",
+      "agentPotential": "high",
+      "recommendedType": "agent",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 1058,
+      "manifestFiles": [
+        "next.config.mjs",
+        "package.json"
+      ]
+    },
+    {
+      "repository": "uset82/StrudelAI",
+      "language": "TypeScript",
+      "framework": "next",
+      "readme": "# 🎵 StrudelAI - Aether Sonic Interface **AI-Powered Live Coding Music System** with Voice Control, Synplant Genetic Sound Design, and Professional DJ Tools. 🌐 **Live Demo:** [https://strudelzeroai.app.canner.ca/](https://strudelzeroai.app.canner.ca/) (or mirror at [https://strudelai.netlify.app](https://strudelai.netlify.app)) Built for **live coding festivals**, music producers, and creative technologists - create music layer-by-layer with natural language commands, voice control, genetic sound evolution, and AI-powered pattern generation. --- ## ✨ Features ### Core Features - **🎤 Voice Control:** Speak natural language commands to create music - **🤖 AI-Powered:** Uses [DeepSeek V3.1 Nex N1](https://openrouter.ai/nex-agi/deepseek-v3.1-nex-n1:free) (free) via OpenRouter - **🎹 Live Co…",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": false,
+      "hasLLM": true,
+      "domain": [
+        "music",
+        "research",
+        "video",
+        "web"
+      ],
+      "capabilities": [
+        "generative-music",
+        "live-coding",
+        "voice-control"
+      ],
+      "status": "prototype",
+      "agentPotential": "high",
+      "recommendedType": "agent",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 16920,
+      "manifestFiles": [
+        "next.config.ts",
+        "package.json"
+      ]
+    },
+    {
+      "repository": "uset82/Suno-UDIO-Helper",
+      "language": "Svelte",
+      "framework": "vite",
+      "readme": "# Suno-UDIO-Helper Documentation Documentation site for the Suno & UDIO Helper, providing comprehensive guidance on metatags and usage. ## Development 1. Clone the repository: ```bash git clone https://github.com/uset82/Suno-UDIO-Helper.git cd Suno-UDIO-Helper ``` 2. Install dependencies: ```bash npm install ``` 3. Start development server: ```bash npm run dev ``` 4. Open http://localhost:5173 in your browser ## Building To create a production version: ```bash npm run build ``` ## Deployment to GitHub Pages 1. Push your changes to the main branch: ```bash git add . git commit -m \"Update site\" git push origin main ``` 2. The GitHub Action will automatically: - Build the site - Deploy to GitHub Pages - Make it available at: https://uset82.github.io/Suno-UDIO-Helper/ ## Project Structure ```…",
+      "hasBackend": false,
+      "hasAPI": true,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "music",
+        "web"
+      ],
+      "capabilities": [],
+      "status": "prototype",
+      "agentPotential": "high",
+      "recommendedType": "agent",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 495,
+      "manifestFiles": [
+        "package.json",
+        "svelte.config.js"
+      ]
+    },
+    {
+      "repository": "uset82/Tetris",
+      "description": "A game of Tetris implemented in Java with object-oriented design. The project is divided using the model-view-controller principle.",
+      "readme": "<img align=\"right\" width=200 src=\"./guide/pics/tetris-inaction.png\"> # Tetris I denne oppgaven skal vi implementere [Tetris](https://en.wikipedia.org/wiki/Tetris). Dersom du ikke har spilt Tetris før, anbefaler vi å prøve. Det finnes mange gratis varianter på internett, for eksempel [htmltetris.com](https://htmltetris.com/). I denne oppgaven skal du følge en steg-for-steg -guide for å lage et enkelt Tetris-spill fra grunnen av og opp ved hjelp av Swing-rammeverket som er inkludert i Java sitt standard-bibliotek. Selv om det kanskje finnes andre og bedre måter å lage Tetris på, anbefaler vi på det aller sterkeste at du følger denne guiden så nøyaktig som mulig. Det gjør det lettere for oss å hjelpe deg dersom du blir sittende fast. ## Oversikt over arkitektur Vi vil her først gi et fuglepe…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "game"
+      ],
+      "capabilities": [],
+      "status": "fork",
+      "agentPotential": "none",
+      "recommendedType": "disabled",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 1840,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/thedelegator",
+      "description": "Coordination-free parallelism for AI coding agents. Run Claude, Codex, Cursor and Gemini on one repo without them destroying each other's work.",
+      "language": "JavaScript",
+      "readme": "# the delegator [![npm](https://img.shields.io/npm/v/thedelegator?color=cb3837&logo=npm)](https://www.npmjs.com/package/thedelegator) [![ci](https://github.com/uset82/thedelegator/actions/workflows/ci.yml/badge.svg)](https://github.com/uset82/thedelegator/actions/workflows/ci.yml) [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![node](https://img.shields.io/node/v/thedelegator)](https://nodejs.org) **Run Claude, Codex, Cursor and Gemini on the same repository at the same time — without them destroying each other's work.** Zero dependencies. One JSON file. Four commands. ```bash npx thedelegator doctor # is every agent actually able to work? npx thedelegator check # did this branch write outside its lane? ← CI gate npx thedelegator status # what moved, what is stuck…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "ai-tooling",
+        "portfolio"
+      ],
+      "capabilities": [],
+      "status": "prototype",
+      "agentPotential": "medium",
+      "recommendedType": "knowledge",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 55,
+      "manifestFiles": [
+        "package.json"
+      ]
+    },
+    {
+      "repository": "uset82/Thesis-Writer-Kit",
+      "language": "Rust",
+      "framework": "vite",
+      "readme": "# Thesis Writer Kit <div align=\"center\"> ![Thesis Writer Kit](https://img.shields.io/badge/Thesis-Writer_Kit-blue?style=for-the-badge) [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) [![Python 3.10+](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/downloads/) **AI-powered thesis research and writing assistant with verified citations** > Generate authentic, research-backed academic drafts using specialized AI agents that verify every source against 200M+ academic papers. </div> --- ## Quick Start ```bash # Navigate to the engine cd .agent/opendraft/engine # Install dependencies pip install -r requirements.txt # Setup API key (first time only) python -m opendraft.cli setup # Generate a draft python -m open…",
+      "hasBackend": true,
+      "hasAPI": true,
+      "hasDatabase": true,
+      "hasLLM": true,
+      "domain": [
+        "education",
+        "research",
+        "web"
+      ],
+      "capabilities": [
+        "thesis-writing"
+      ],
+      "status": "prototype",
+      "agentPotential": "high",
+      "recommendedType": "agent",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 18746,
+      "manifestFiles": [
+        ".agent/opendraft/engine/pyproject.toml",
+        ".agent/opendraft/engine/requirements.txt",
+        ".agent/opendraft/harper/Cargo.toml",
+        ".agent/opendraft/harper/docker-compose.yml",
+        ".agent/opendraft/harper/Dockerfile",
+        ".agent/opendraft/harper/package.json",
+        ".agent/opendraft/npm/package.json",
+        ".agent/opendraft/requirements.txt"
+      ]
+    },
+    {
+      "repository": "uset82/TRAFFICLIGHT",
+      "language": "C",
+      "framework": "platformio",
+      "readme": "ELE201 – Traffic Light https://www.tiktok.com/@carloscarpio82/video/7552542509784714518?is_from_webapp=1&sender_device=pc&web_id=7490154445721781782 Overview This project implements the microcontroller part of ELE201 – Assignment 2 on an STM32F767ZI (Nucleo‑F767ZI) using STM32Cube HAL. It fulfills the Part 2 requirements without using HAL_Delay by combining a timer interrupt (TIM3) and an external interrupt (EXTI) for a push button. Hardware - Board: Nucleo‑F767ZI - External LEDs (active‑high wiring): - PB8 → RED (series resistor to 3V3, cathode to GND) - PB9 → YELLOW - PB10 → GREEN - Pedestrian button: - PD3 (EXTI3), button to 3V3, pulldown to GND (external 10 kΩ or internal pulldown enabled in code) ## Part 1 – Traffic Light (no button) - **Behavior**: - On start: only RED is on - Seque…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "electronics",
+        "embedded",
+        "video"
+      ],
+      "capabilities": [],
+      "status": "educational",
+      "agentPotential": "low",
+      "recommendedType": "tool",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 1813,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/uset82",
+      "description": "Config files for my GitHub profile.",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [],
+      "capabilities": [],
+      "status": "empty",
+      "agentPotential": "none",
+      "recommendedType": "disabled",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 0,
+      "manifestFiles": []
+    },
+    {
+      "repository": "uset82/v0-banana-piano-app",
+      "language": "TypeScript",
+      "framework": "next",
+      "readme": "# Banana Piano App *Automatically synced with your [v0.app](https://v0.app) deployments* [![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/uset82s-projects/v0-banana-piano-app) [![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/oeR2Dsr7xiR) ## Overview This repository will stay in sync with your deployed chats on [v0.app](https://v0.app). Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app). ## Deployment Your project is live at: **[https://vercel.com/uset82s-projects/v0-banana-piano-app](https://vercel.com/uset82s-projects/v0-banana-piano-app)** ## Build your app Contin…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "web"
+      ],
+      "capabilities": [
+        "natal-chart"
+      ],
+      "status": "experiment",
+      "agentPotential": "low",
+      "recommendedType": "tool",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 148,
+      "manifestFiles": [
+        "next.config.mjs",
+        "package.json"
+      ]
+    },
+    {
+      "repository": "uset82/webdesigner",
+      "language": "JavaScript",
+      "framework": "next",
+      "readme": "# WebDesigner for Codex WebDesigner is an installable Codex plugin for building polished websites, product interfaces, apps, and explicitly requested 3D experiences. It combines the Nightglass design system, a framework-aware orchestration server, responsive and accessibility guidance, optional Mint routing, and a source-pinned Blender specialist bundle. ## Install in one line Requirements: [Codex CLI](https://developers.openai.com/codex/cli), Git, and Node.js 20 or newer. ### Windows PowerShell ```powershell irm https://raw.githubusercontent.com/uset82/webdesigner/main/install.ps1 | iex ``` ### macOS or Linux ```bash curl -fsSL https://raw.githubusercontent.com/uset82/webdesigner/main/install.sh | sh ``` The installer uses Codex's native plugin commands. It registers or refreshes the `us…",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": true,
+      "domain": [
+        "3d",
+        "construction",
+        "design",
+        "video",
+        "web"
+      ],
+      "capabilities": [
+        "calculate-scaffolding"
+      ],
+      "status": "prototype",
+      "agentPotential": "low",
+      "recommendedType": "knowledge",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 20598,
+      "manifestFiles": [
+        "Blender/apps/extension/package.json",
+        "Blender/Blender/package.json",
+        "Blender/package.json",
+        "package.json",
+        "templates/nextjs-starter/package.json",
+        "templates/react-vite-starter/package.json",
+        "workspaces/ca2-logo-threejs/package.json",
+        "workspaces/m9-bayonet-doppler/package.json"
+      ]
+    },
+    {
+      "repository": "uset82/youtubedata",
+      "description": "it will extract data from youtube",
+      "readme": "# youtubedata it will extract data from youtube",
+      "hasBackend": false,
+      "hasAPI": false,
+      "hasDatabase": false,
+      "hasLLM": false,
+      "domain": [
+        "video"
+      ],
+      "capabilities": [],
+      "status": "empty",
+      "agentPotential": "none",
+      "recommendedType": "disabled",
+      "visibility": "public",
+      "enabled": false,
+      "contentsInspected": true,
+      "sizeKb": 0,
+      "manifestFiles": []
+    }
+  ]
+}

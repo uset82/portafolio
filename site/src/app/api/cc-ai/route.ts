@@ -1,5 +1,11 @@
 import "server-only";
 
+import path from "node:path";
+
+import {
+  defaultBrainRepositoriesRoot,
+  loadEffectiveRepositoryAuditsSync,
+} from "@/ana/repositories/registry";
 import { siteContent } from "@/content/site";
 import { createCcAiAbuseGuardFromEnvironment } from "@/lib/ai/cc-ai-abuse-control";
 import { createCcAiPostHandler } from "@/lib/ai/cc-ai-handler";
@@ -24,6 +30,17 @@ const abuseGuard = createCcAiAbuseGuardFromEnvironment({
   CC_AI_MAX_CONCURRENT: process.env.CC_AI_MAX_CONCURRENT,
 });
 const knowledgeContext = buildCcAiKnowledgeContext(siteContent);
+const brainRoot = defaultBrainRepositoriesRoot();
+const portfolioAudits = (() => {
+  try {
+    return loadEffectiveRepositoryAuditsSync({
+      generatedPath: path.join(brainRoot, "registry.generated.json"),
+      overridesPath: path.join(brainRoot, "registry.overrides.json"),
+    });
+  } catch {
+    return [];
+  }
+})();
 
 /* `openrouter/free` routes to whichever free model is currently available, and
  * those endpoints queue: a 12 s budget times out on answers that arrive fine a
@@ -39,6 +56,7 @@ const timeoutMs =
 export const POST = createCcAiPostHandler({
   enabled: process.env.CC_AI_ENABLED === "true",
   abuseGuard,
+  portfolioAudits,
   serviceOptions: {
     provider: createOpenRouterChatProvider(),
     modelPolicy,

@@ -15,6 +15,14 @@ is part of the public portfolio repository, so every committed file must be safe
   not overwrite them.
 - `index/` is generated and ignored. Production receives only reviewed output emitted into the
   site's generated-content directory by the later build bridge.
+- `repositories/registry.generated.json` is machine-owned ANA / Repo2Agent audit output. Do not
+  hand-edit it. Human corrections belong in `repositories/registry.overrides.json`.
+- Phase 2 approved runtime types live in `registry.overrides.json`. Generated inference is not
+  activation; every override keeps `enabled: false` until a later phase explicitly turns a
+  specialist on.
+- Private repository metadata, if discovered, is written only to the gitignored
+  `repositories/registry.private.generated.json`. Private contents are never inspected or copied
+  into this public repository.
 
 ## Promotion rule
 

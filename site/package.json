@@ -18,6 +18,8 @@
     "palette:check": "tsx scripts/validate-palette.ts",
     "brain:check": "tsx ../scripts/brain-check.ts",
     "brain:sync-github": "tsx ../scripts/brain-sync-github.ts",
+    "ana:audit": "tsx ../scripts/ana-audit-repositories.ts",
+    "repo2agent": "tsx ../scripts/repo2agent.ts",
     "boundary:check": "tsx scripts/validate-server-boundaries.ts",
     "assets:check": "tsx scripts/check-3d-assets.ts",
     "immersive:check": "tsx scripts/validate-immersive-build.ts",

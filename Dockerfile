@@ -12,6 +12,7 @@ COPY site/package.json site/pnpm-lock.yaml site/pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
 
 COPY site/ ./
+COPY brain/repositories ./brain/repositories
 
 ARG NEXT_PUBLIC_SITE_URL
 ENV NEXT_PUBLIC_SITE_URL="${NEXT_PUBLIC_SITE_URL}"
@@ -32,6 +33,7 @@ COPY --from=build --chown=node:node /app/package.json ./package.json
 COPY --from=build --chown=node:node /app/node_modules ./node_modules
 COPY --from=build --chown=node:node /app/.next ./.next
 COPY --from=build --chown=node:node /app/public ./public
+COPY --from=build --chown=node:node /app/brain/repositories ./brain/repositories
 
 USER node
 

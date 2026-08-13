@@ -5,6 +5,7 @@
     "dockerfilePath": "Dockerfile",
     "watchPatterns": [
       "/site/**",
+      "/brain/repositories/**",
       "/Dockerfile",
       "/.dockerignore",
       "/railway.json"

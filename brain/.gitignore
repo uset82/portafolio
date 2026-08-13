@@ -1,6 +1,7 @@
 index/
 private/
 **/private/
+registry.private.generated.json
 *.pdf
 *.epub
 *.mobi

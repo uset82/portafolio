@@ -1,3 +1,7 @@
+import { isAskPortfolioQuestion } from "@/ana/core/intent";
+import { formatPortfolioNavigation, searchPortfolioKnowledge } from "@/ana/knowledge";
+import type { RepositoryAudit } from "@/ana/repositories/schemas";
+
 import { ccAiRequestSchema, type CcAiErrorResponse, type CcAiResponse } from "./cc-ai-contract";
 import { CcAiAbuseError, type CcAiAbuseGuard } from "./cc-ai-abuse-control";
 import {
@@ -12,6 +16,7 @@ type CcAiHandlerOptions = {
   serviceOptions: Omit<CcAiServiceOptions, "requestId" | "requestSignal">;
   abuseGuard?: CcAiAbuseGuard;
   createRequestId?: () => string;
+  portfolioAudits?: readonly RepositoryAudit[];
 };
 
 const jsonResponse = (body: CcAiResponse, status: number, extraHeaders?: HeadersInit) => {
@@ -53,6 +58,7 @@ export function createCcAiPostHandler({
   serviceOptions,
   abuseGuard,
   createRequestId = () => crypto.randomUUID(),
+  portfolioAudits = [],
 }: CcAiHandlerOptions) {
   return async function handleCcAiPost(request: Request) {
     const requestId = createRequestId();
@@ -104,6 +110,35 @@ export function createCcAiPostHandler({
       const parsed = ccAiRequestSchema.safeParse(input);
       if (!parsed.success) {
         return respond(createError(requestId, "invalid_request", false), 400);
+      }
+
+      if (portfolioAudits.length > 0 && isAskPortfolioQuestion(parsed.data.message)) {
+        const hits = searchPortfolioKnowledge(parsed.data.message, portfolioAudits);
+        const navigated = formatPortfolioNavigation({
+          query: parsed.data.message,
+          hits,
+        });
+        return respond(
+          {
+            ok: true,
+            requestId,
+            answer: navigated.answer,
+            truncated: false,
+            model: {
+              requested: serviceOptions.modelPolicy.primaryModel,
+              fallbacks: serviceOptions.modelPolicy.fallbackModels,
+              responded: "ana-knowledge",
+              selection: serviceOptions.modelPolicy.routingKind,
+              variable: serviceOptions.modelPolicy.variableSelection,
+            },
+            knowledge: {
+              records: hits.length,
+              sourceIds: hits.map((hit) => hit.repository),
+              truncated: false,
+            },
+          },
+          200,
+        );
       }
 
       try {

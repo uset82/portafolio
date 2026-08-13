@@ -1,0 +1,33 @@
+import { AGENT_JSON_SCHEMA_V1, type AgentJsonDocument } from "../../manifest/schemas";
+
+export const astraeaAgentJson: AgentJsonDocument = {
+  schema: AGENT_JSON_SCHEMA_V1,
+  type: "agent",
+  id: "astraea",
+  name: "ASTRAEA",
+  repository: "uset82/ASTROEA",
+  version: "1.0.0",
+  description:
+    "Astrology specialist that delegates chart math to the ASTRAEA Immanuel/Swiss Ephemeris API. Symbolic, not scientific.",
+  domains: ["astrology"],
+  capabilities: ["natal-chart", "transits", "synastry", "solar-return", "interpretation"],
+  inputs: [
+    { name: "birthDate", type: "string", required: false, sensitivity: "sensitive" },
+    { name: "birthTime", type: "string", required: false, sensitivity: "sensitive" },
+    { name: "latitude", type: "number", required: false, sensitivity: "sensitive" },
+    { name: "longitude", type: "number", required: false, sensitivity: "sensitive" },
+    { name: "houseSystem", type: "string", required: false },
+    { name: "transitDateTime", type: "string", required: false, sensitivity: "sensitive" },
+    { name: "year", type: "number", required: false },
+    { name: "person2BirthDate", type: "string", required: false, sensitivity: "sensitive" },
+    { name: "person2BirthTime", type: "string", required: false, sensitivity: "sensitive" },
+    { name: "person2Latitude", type: "number", required: false, sensitivity: "sensitive" },
+    { name: "person2Longitude", type: "number", required: false, sensitivity: "sensitive" },
+    { name: "focusArea", type: "string", required: false },
+  ],
+  outputs: [{ name: "chart", type: "object", description: "Chart or interpretation payload" }],
+  permissions: ["read", "compute", "network"],
+  sensitivity: "sensitive",
+  execution: "http",
+  timeoutMs: 15_000,
+};

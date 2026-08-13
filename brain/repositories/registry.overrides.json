@@ -1,0 +1,509 @@
+{
+  "schemaVersion": 1,
+  "overrides": {
+    "uset82/3Doodle": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Wave-2 creative 3D project. Knowledge until a later domain agent.",
+      "domain": [
+        "3d"
+      ],
+      "agentPotential": "low"
+    },
+    "uset82/antigravity-vibe": {
+      "recommendedType": "disabled",
+      "enabled": false,
+      "notes": "Empty placeholder. Disabled.",
+      "status": "empty",
+      "agentPotential": "none"
+    },
+    "uset82/ASTROEA": {
+      "recommendedType": "agent",
+      "enabled": false,
+      "notes": "Phase 6 Astrology Agent candidate. Dropped false career domain from README focus-area text. Not activated.",
+      "domain": [
+        "astrology"
+      ],
+      "agentPotential": "high"
+    },
+    "uset82/Automatic-Watering-Elephant": {
+      "recommendedType": "tool",
+      "enabled": false,
+      "notes": "Deterministic watering controller. Generated agent label rejected; this is a tool.",
+      "domain": [
+        "iot",
+        "embedded"
+      ],
+      "agentPotential": "low"
+    },
+    "uset82/avatar-studio": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Wave-2 avatar pipeline. Knowledge until a Creative domain agent.",
+      "domain": [
+        "3d",
+        "design"
+      ],
+      "agentPotential": "low"
+    },
+    "uset82/bankAI": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Finance demo app. Knowledge, not a specialist agent.",
+      "domain": [
+        "finance",
+        "web"
+      ],
+      "agentPotential": "low"
+    },
+    "uset82/CALLKIRO": {
+      "recommendedType": "disabled",
+      "enabled": false,
+      "notes": "Empty placeholder. Disabled.",
+      "status": "empty",
+      "agentPotential": "none"
+    },
+    "uset82/chaclacayo": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Place/web study. Knowledge, not a specialist.",
+      "agentPotential": "low"
+    },
+    "uset82/chatgptvoiceeffect": {
+      "recommendedType": "disabled",
+      "enabled": false,
+      "notes": "Empty placeholder. Disabled.",
+      "status": "empty",
+      "agentPotential": "none"
+    },
+    "uset82/clase-potatoe": {
+      "recommendedType": "disabled",
+      "enabled": false,
+      "notes": "Empty placeholder. Disabled.",
+      "status": "empty",
+      "agentPotential": "none"
+    },
+    "uset82/cookthis-": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Recipe app experiment. Knowledge, not a deterministic ANA tool.",
+      "agentPotential": "low"
+    },
+    "uset82/CRM_SaaS_Educativo": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Educational CRM study. Searchable knowledge, not executable.",
+      "agentPotential": "low"
+    },
+    "uset82/DealDash-": {
+      "recommendedType": "disabled",
+      "enabled": false,
+      "notes": "Empty/near-empty placeholder. Disabled.",
+      "status": "empty",
+      "agentPotential": "none"
+    },
+    "uset82/diagramcloner": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Diagram tooling. Rejected false numerology domain from name/token collision.",
+      "domain": [
+        "web"
+      ],
+      "status": "experiment",
+      "agentPotential": "low"
+    },
+    "uset82/drone_Lips": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Drone game experiment. Knowledge, not a specialist.",
+      "domain": [
+        "drone",
+        "game"
+      ],
+      "agentPotential": "low"
+    },
+    "uset82/EFFATA": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Early web experiment. Knowledge, not a specialist.",
+      "agentPotential": "low"
+    },
+    "uset82/elefante": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Course embedded sibling of the watering project. Knowledge.",
+      "domain": [
+        "embedded"
+      ],
+      "status": "educational",
+      "agentPotential": "low"
+    },
+    "uset82/FreeCAD": {
+      "recommendedType": "disabled",
+      "enabled": false,
+      "notes": "Unrelated upstream FreeCAD clone. Disabled.",
+      "status": "fork",
+      "agentPotential": "none"
+    },
+    "uset82/gimmemycake": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Interactive game. Knowledge, not a specialist.",
+      "agentPotential": "low"
+    },
+    "uset82/hvl2025-microcontroller-assignment3": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Named coursework assignment. Educational knowledge, not a tool adapter yet.",
+      "domain": [
+        "embedded",
+        "electronics"
+      ],
+      "status": "educational",
+      "agentPotential": "low"
+    },
+    "uset82/iFoundYou": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Wave-2 OSINT project. Knowledge until a later specialist.",
+      "domain": [
+        "osint"
+      ],
+      "agentPotential": "low"
+    },
+    "uset82/Jacobgolf": {
+      "recommendedType": "disabled",
+      "enabled": false,
+      "notes": "Near-empty placeholder. Disabled.",
+      "status": "empty",
+      "agentPotential": "none"
+    },
+    "uset82/LLM-Web-App": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Early LLM web experiment. Knowledge, not a named specialist.",
+      "agentPotential": "low"
+    },
+    "uset82/LyriGenie": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Lyric-generation project. Knowledge until a Creative domain agent.",
+      "domain": [
+        "music"
+      ],
+      "agentPotential": "low"
+    },
+    "uset82/MandelBro": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Interactive fractal explorer. Knowledge, not an ANA tool.",
+      "agentPotential": "low"
+    },
+    "uset82/mentora": {
+      "recommendedType": "agent",
+      "enabled": false,
+      "notes": "Named Education Agent candidate. College fork; Carlos is primary developer (Q.9). Status stays fork. Not activated.",
+      "domain": [
+        "education"
+      ],
+      "agentPotential": "high"
+    },
+    "uset82/MicrocontrollerPiano": {
+      "recommendedType": "tool",
+      "enabled": false,
+      "notes": "Embedded piano firmware. Engineering tool, not a specialist LLM.",
+      "domain": [
+        "electronics",
+        "embedded"
+      ],
+      "agentPotential": "low"
+    },
+    "uset82/mini": {
+      "recommendedType": "disabled",
+      "enabled": false,
+      "notes": "Empty placeholder. Disabled.",
+      "status": "empty",
+      "agentPotential": "none"
+    },
+    "uset82/Monkey-Tug-of-War": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Flutter game. Knowledge, not a specialist agent.",
+      "agentPotential": "low"
+    },
+    "uset82/My-Football-Game": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Playable football game. Knowledge, not a specialist agent.",
+      "agentPotential": "low"
+    },
+    "uset82/nethunter-fix": {
+      "recommendedType": "disabled",
+      "enabled": false,
+      "notes": "Empty placeholder. Disabled.",
+      "status": "empty",
+      "agentPotential": "none"
+    },
+    "uset82/opencode": {
+      "recommendedType": "disabled",
+      "enabled": false,
+      "notes": "Unrelated upstream fork. Disabled.",
+      "status": "fork",
+      "agentPotential": "none"
+    },
+    "uset82/opennemoclaw": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Personal AI-tooling platform. Knowledge, not a visitor specialist.",
+      "domain": [
+        "ai-tooling"
+      ],
+      "agentPotential": "low"
+    },
+    "uset82/opennemoclawsite": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Companion site for OpenNemoClaw. Knowledge.",
+      "domain": [
+        "ai-tooling"
+      ],
+      "agentPotential": "low"
+    },
+    "uset82/osiris": {
+      "recommendedType": "disabled",
+      "enabled": false,
+      "notes": "Unrelated OSINT upstream fork. Disabled.",
+      "status": "fork",
+      "agentPotential": "none"
+    },
+    "uset82/pace-drone-commander": {
+      "recommendedType": "disabled",
+      "enabled": false,
+      "notes": "Empty placeholder. Disabled.",
+      "status": "empty",
+      "agentPotential": "none"
+    },
+    "uset82/pacha": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Design/web study. Knowledge, not a specialist.",
+      "domain": [
+        "design",
+        "web"
+      ],
+      "agentPotential": "low"
+    },
+    "uset82/paginacuzco1": {
+      "recommendedType": "disabled",
+      "enabled": false,
+      "notes": "Empty placeholder. Disabled.",
+      "status": "empty",
+      "agentPotential": "none"
+    },
+    "uset82/Paper2Video": {
+      "recommendedType": "disabled",
+      "enabled": false,
+      "notes": "Upstream Paper2Video fork with no recorded Carlos contribution. Disabled despite later wave-2 mention.",
+      "status": "fork",
+      "agentPotential": "none"
+    },
+    "uset82/piano-": {
+      "recommendedType": "tool",
+      "enabled": false,
+      "notes": "Related microcontroller piano work. Tool in the electronics cluster.",
+      "domain": [
+        "electronics",
+        "embedded"
+      ],
+      "agentPotential": "low"
+    },
+    "uset82/pinaculo": {
+      "recommendedType": "agent",
+      "enabled": false,
+      "notes": "Phase 6 Numerology Agent candidate. Site status remains concept; this does not upgrade it. Not activated.",
+      "domain": [
+        "numerology"
+      ],
+      "agentPotential": "high"
+    },
+    "uset82/portafolio": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "ANA host repository. Knowledge only; never a domain specialist. Domain locked to portfolio.",
+      "domain": [
+        "portfolio"
+      ],
+      "status": "prototype",
+      "agentPotential": "medium"
+    },
+    "uset82/project-bolt-qrmollebakken-supabase": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Early Bolt/Supabase QR experiment. Knowledge, not the QR tool.",
+      "agentPotential": "low"
+    },
+    "uset82/qr-code-generator": {
+      "recommendedType": "tool",
+      "enabled": false,
+      "notes": "Deterministic QR generator. Tool, not an LLM agent.",
+      "domain": [
+        "web"
+      ],
+      "agentPotential": "low"
+    },
+    "uset82/QubeSolve": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Cube-solver app. Knowledge until a later tool adapter.",
+      "agentPotential": "low"
+    },
+    "uset82/REACTIONGAME": {
+      "recommendedType": "tool",
+      "enabled": false,
+      "notes": "Embedded reaction-game firmware. Tool, not a playable web agent.",
+      "domain": [
+        "electronics",
+        "embedded"
+      ],
+      "agentPotential": "low"
+    },
+    "uset82/ReportAIEquinor": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Report prototype. Knowledge, not a specialist.",
+      "agentPotential": "low"
+    },
+    "uset82/RS232_VHD_DE2115": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "FPGA/UART coursework. Electronics knowledge, not a live tool.",
+      "domain": [
+        "fpga",
+        "embedded"
+      ],
+      "status": "educational",
+      "agentPotential": "low"
+    },
+    "uset82/skills-github-pages": {
+      "recommendedType": "disabled",
+      "enabled": false,
+      "notes": "Empty GitHub Pages template. Disabled.",
+      "status": "empty",
+      "agentPotential": "none"
+    },
+    "uset82/smartapply-app": {
+      "recommendedType": "agent",
+      "enabled": false,
+      "notes": "Named Career Agent candidate. Not activated.",
+      "domain": [
+        "career"
+      ],
+      "agentPotential": "high"
+    },
+    "uset82/SmartHomeControl": {
+      "recommendedType": "tool",
+      "enabled": false,
+      "notes": "Smart-home control utility. Dropped false FPGA domain. Tool, not a specialist LLM.",
+      "domain": [
+        "iot",
+        "embedded"
+      ],
+      "agentPotential": "low"
+    },
+    "uset82/StillasCalculator": {
+      "recommendedType": "tool",
+      "enabled": false,
+      "notes": "Deterministic scaffolding calculator. Generated agent/LLM signals are not enough for a specialist.",
+      "domain": [
+        "construction"
+      ],
+      "agentPotential": "low"
+    },
+    "uset82/StrudelAI": {
+      "recommendedType": "agent",
+      "enabled": false,
+      "notes": "Phase 6 Music Agent candidate. Dropped extra research/video domains. Not activated.",
+      "domain": [
+        "music"
+      ],
+      "agentPotential": "high"
+    },
+    "uset82/Suno-UDIO-Helper": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Suno/Udio documentation site. Music knowledge, not an agent.",
+      "domain": [
+        "music"
+      ],
+      "agentPotential": "low"
+    },
+    "uset82/Tetris": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Course work on a teacher example (CC-BY-4.0). Knowledge, not an unrelated-fork disable.",
+      "domain": [
+        "game"
+      ],
+      "status": "fork",
+      "agentPotential": "none"
+    },
+    "uset82/thedelegator": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Multi-agent CLI for developers. Knowledge/tooling, not a visitor-facing specialist.",
+      "domain": [
+        "ai-tooling"
+      ],
+      "agentPotential": "low"
+    },
+    "uset82/Thesis-Writer-Kit": {
+      "recommendedType": "agent",
+      "enabled": false,
+      "notes": "Named Research Agent candidate. Not activated.",
+      "domain": [
+        "research"
+      ],
+      "agentPotential": "high"
+    },
+    "uset82/TRAFFICLIGHT": {
+      "recommendedType": "tool",
+      "enabled": false,
+      "notes": "Deterministic traffic-light state machine. Electronics tool, not a specialist LLM.",
+      "domain": [
+        "electronics",
+        "embedded"
+      ],
+      "agentPotential": "low"
+    },
+    "uset82/uset82": {
+      "recommendedType": "disabled",
+      "enabled": false,
+      "notes": "Profile README repo. Disabled as a capability source.",
+      "status": "empty",
+      "agentPotential": "none"
+    },
+    "uset82/v0-banana-piano-app": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Small piano experiment. Knowledge, not a tool adapter.",
+      "status": "experiment",
+      "agentPotential": "low"
+    },
+    "uset82/webdesigner": {
+      "recommendedType": "knowledge",
+      "enabled": false,
+      "notes": "Design-system exhibit. Knowledge for CC AI /studio, not a visitor specialist agent.",
+      "domain": [
+        "design"
+      ],
+      "agentPotential": "low"
+    },
+    "uset82/youtubedata": {
+      "recommendedType": "disabled",
+      "enabled": false,
+      "notes": "Empty placeholder. Disabled.",
+      "status": "empty",
+      "agentPotential": "none"
+    }
+  }
+}
