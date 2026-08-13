@@ -43,3 +43,6 @@ next-env.d.ts
 
 # Temporary QA build outputs (PORTFOLIO_QA_DIST_DIR)
 /.next-*/
+
+# Private GitHub audit output. Never ship this in the Railway image.
+/brain/repositories/registry.private.generated.json

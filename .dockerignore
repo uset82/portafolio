@@ -2,9 +2,6 @@
 !Dockerfile
 !site/
 !site/**
-!brain/
-!brain/repositories/
-!brain/repositories/**
 
 site/node_modules/
 site/.next/

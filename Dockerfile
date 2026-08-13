@@ -1,5 +1,5 @@
 FROM node:22-bookworm-slim AS build
-LABEL cacm.guide="observatory-2026-08-13"
+LABEL cacm.guide="railway-2026-08-13-site-brain"
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="${PNPM_HOME}:${PATH}"
@@ -13,7 +13,6 @@ COPY site/package.json site/pnpm-lock.yaml site/pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
 
 COPY site/ ./
-COPY brain/repositories ./brain/repositories
 
 ARG NEXT_PUBLIC_SITE_URL
 ENV NEXT_PUBLIC_SITE_URL="${NEXT_PUBLIC_SITE_URL}"

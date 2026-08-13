@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { existsSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
@@ -174,6 +175,17 @@ test("biography and case-study questions still stay behind the CC AI boundary", 
   );
   assert.equal(result.answer, ANA_PORTFOLIO_BOUNDARY);
   assert.equal(result.status, "deferred");
+});
+
+test("the Railway image can load public audits from the site-vendored brain copy", async () => {
+  const generatedPath = path.join(repoRoot, "site/brain/repositories/registry.generated.json");
+  const overridesPath = path.join(repoRoot, "site/brain/repositories/registry.overrides.json");
+  assert.equal(existsSync(generatedPath), true);
+  const audits = await loadEffectiveRepositoryAudits({ generatedPath, overridesPath });
+  assert.equal(
+    audits.some((entry) => entry.repository === "uset82/StrudelAI"),
+    true,
+  );
 });
 
 test("committed public audits never surface Paper2Video, private repos, or forks as built work", async () => {
