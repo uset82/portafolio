@@ -40,7 +40,21 @@ WAVE 4  ░░░░░░░░░░  Launch
 **Open PRs:** 0. `brain:check` is wired into `pnpm test` and green.
 **Next up:** Codex `B.0` + `B.4` · Claude `V.1` then `SPEC.3` · Grok `V.12` · Gemini commit `M.7`
 **Waiting on you:** `Q.10` books · `Q.11` flagships · `Q.12` MIT · `Q.13` private repos ·
-Suno + YouTube links · Gemini's AVIF is larger than its WebP and needs re-encoding
+`M.13` Suno + YouTube links · `M.10` your Buy Me a Coffee handle · a Railway service for
+`My-Football-Game` · Gemini's AVIF is larger than its WebP and needs re-encoding
+
+### 2026-08-13 — the playable layer landed (uncommitted, in the shared worktree)
+
+`/arcade` · `/arcade/[slug]` · `/support` shipped, and `/sound` was rebuilt as a real room.
+A visitor can now **play MandelBro**, reach every game's honest state, contribute to the four
+MIT repositories, and — once the handle exists — tip. Three switches are still off, each one a
+single value rather than a code change: `NEXT_PUBLIC_FOOTBALL_GAME_URL`,
+`NEXT_PUBLIC_BUYMEACOFFEE_URL`, and the track/video entries in `media-library.ts`.
+Evidence per task at `C.1`–`C.4`, `C.11`, `M.10`, `M.12`. Verified: 474/474 tests green
+(20 new), typecheck clean, production build generates all 8 arcade routes, and the play path was
+exercised in-browser at 1280×720 and 375×812. ⚠ `pnpm verify` currently fails on an **unrelated**
+staged change (`src/lib/ai/cc-ai-handler.ts` imports `guideVisitorSite` without using it) that
+belongs to the CC AI work, not to this one.
 
 ### Baseline — every later "we improved X" is measured against these
 
@@ -200,7 +214,8 @@ is identical to the current defaults. It is config hygiene, not a fix.
 
 - [ ] ☐ **V.13** · `CODEX` · **Delete the dead 3D layer** — `lib/three/**`, `components/three/**`, `site/public/three/decoders/**` (1 258 KB), the canvas gate, and the `assets:check` / `immersive:check` gates that test it. _Unblocked by `Q.3`. Removes ~a quarter of the codebase._ ⚠ _Coordinate with Project Orbit (`tasks/rotating.md`, D-008): KEEP the `three` / `@react-three/*` dependencies — the orbit section is their new sole consumer; preferred order is V.13 first, then ORB implementation._
 - [ ] ☐ **A.13** · `CODEX` · Make `model-policy.ts` accept a **named free model** in production mode — zero budget requires it
-- [ ] ☐ **M.10** · `CLAUDE` · "Buy me a coffee" destination and placement
+- [~] ⏳ **M.10** · `CLAUDE` · "Buy me a coffee" destination and placement — _2026-08-13. Placement decided and built: `/support` pairs contribution with tipping, and the Sound room closes into it. Carlos chose **Buy Me a Coffee** as the platform. **The handle is still missing**, so `resolveTipUrl()` returns `null` and the tip card does not render at all — no guessed URL ships. Set `NEXT_PUBLIC_BUYMEACOFFEE_URL` to close this._
+- [x] ☑ **C.11** · `CLAUDE` · **Contribute route** — _2026-08-13, new task. `/support` invites contribution only to the 4 own MIT repositories (`portafolio`, `Thesis-Writer-Kit`, `SmartHomeControl`, `qr-code-generator`) and states plainly that 37 of 42 own repos are unlicensed and therefore all-rights-reserved. Depends on `Q.12`: applying MIT would widen this list from 4 to 41._
 - [ ] ☐ **M.11** · `GEMINI` · **Confirm the Suno plan tier per track**, then choose the music licence — blocks every music publish
 - [ ] ☐ **V.12** · `GROK` · **Stop shipping the 3.96 MB hero video to mobile** — 98 % of mobile page weight. Options: `<source media>` per breakpoint, poster-only on small screens, or a lighter encode. _Found during `F.5b`, highest-value perf fix available._
 - [ ] ☐ **C.8** · `GROK` · Optimize the 90 MB / 85 MB GLBs for web delivery
@@ -212,6 +227,8 @@ is identical to the current defaults. It is config hygiene, not a fix.
 - [ ] ☐ **M.2** · `GEMINI` · Rights record per track — ⛔ _needs `Q.5`_
 - [ ] ☐ **M.8** · `GEMINI` · Arcade posters
 - [ ] ☐ **M.9** · `GEMINI` · Site-wide alt text
+- [x] ☑ **M.12** · `CLAUDE` · **Sound room rebuilt as a real room** — _2026-08-13, new task. The mute-first `SoundFoundation` is retired: it encoded "no player, ever", which Carlos's direction supersedes. `SoundRoom` ships two shelves (music, moving image) that render click-to-load `ConsentEmbed` players from `site/src/content/media-library.ts`. **Both shelves are empty on purpose** — Carlos's Suno and YouTube profiles are linked because he confirmed them; no track or video is invented. Adding one entry to `MUSIC_TRACKS` / `VIDEO_WORKS` is the only step needed to publish it. YouTube uses `youtube-nocookie`. `M.11` still governs what each track's `licence` field may claim._
+- [ ] ☐ **M.13** · `CARLOS` · **Send the published Suno and YouTube URLs** — blocks every entry in `media-library.ts`; the shelves stay empty until they arrive
 
 ---
 
@@ -225,9 +242,18 @@ is identical to the current defaults. It is config hygiene, not a fix.
 - [ ] ☐ **A.8** · `CODEX` · Bounded session memory
 - [ ] ☐ **A.9** · `CODEX` · Durable rate limiting across instances
 - [ ] ☐ **B.9** · `CODEX` · ChatGPT pipeline: split → scan → distill — ⛔ _needs `Q.2`_
-- [ ] ☐ **C.2** · `CODEX` · `/arcade` route — ⛔ _needs `Q.4` and `C.1`_
-- [ ] ☐ **C.3** · `CODEX` · Play shell: poster → click → sandboxed iframe, never autoload
-- [ ] ☐ **C.4** · `CODEX` · Mobile honesty states for desktop-only games
+- [x] ☑ **C.1** · `GROK` · Build and measure every arcade candidate — _measurements recorded in `site/public/games/C1-MEASUREMENTS.md` (2026-07-31); all six candidates built, sized, and tiered_
+- [x] ☑ **C.2** · `CODEX` · `/arcade` route — _2026-08-13. `site/src/content/arcade.ts` carries all 8 games (6 web candidates + 2 hardware/desktop) with engine, input, mobile answer, built size, licence, and a per-game blocker. Index at `site/src/app/arcade/page.tsx` groups them Play now / In preparation / Not in a browser. Every figure is copied from C.1, none estimated._
+- [x] ☑ **C.3** · `CODEX` · Play shell — _2026-08-13. `site/src/components/arcade/game-frame.tsx`: nothing loads before an explicit click, verified by test and in the browser. Same-origin games run `sandbox="allow-scripts allow-pointer-lock allow-popups"` **without** `allow-same-origin`, so a vendored game sits on an opaque origin with no access to site storage. MandelBro is vendored at `site/public/games/mandelbro/` (74 KB, self-contained, `PROVENANCE.md` records the copy and the three checks the sandbox choice depends on) and was played end-to-end at 1280×720 and 375×812._
+- [x] ☑ **C.4** · `CODEX` · Mobile honesty states — _2026-08-13. Every game carries a plain-language `mobile` line and a `needsCamera` flag that raises a camera warning before the frame mounts. Play shell drops to a 3/4 frame under 48rem; no horizontal overflow at 375 px (measured `scrollWidth` 375 = `innerWidth` 375)._
+
+> **`C.2` scope note.** `Q.4` said show ALL games, and all eight are shown. Only MandelBro is
+> playable today: the C.1 budget read stands, and three static candidates are ~96 MB combined
+> against a ~50 MB `site/public` ceiling. `My-Football-Game` is wired but undeployed — set
+> `NEXT_PUBLIC_FOOTBALL_GAME_URL` to a running instance and it serves with no code change.
+> Until then `resolveArcadeSource` returns `null` and the page says so rather than framing a
+> dead URL. Remaining: `C.8`/`C.10` asset optimisation, `C.1b` Flutter HTML-renderer rebuild,
+> `M.8` posters (the index is currently text-led, with no invented artwork).
 
 ### Claude
 

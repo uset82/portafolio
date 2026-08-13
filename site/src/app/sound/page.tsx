@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
 
-import { SoundFoundation } from "@/components/sound-foundation";
-import { rawSiteContent } from "@/content/records";
-import { siteContentSchema } from "@/content/schemas";
-
-const siteContent = siteContentSchema.parse(rawSiteContent);
+import { SoundRoom } from "@/components/sound-room";
 
 export const metadata: Metadata = {
   title: "Sound",
   description:
-    "Carlos Alfredo Carpio Meza's mute-first Sound and moving-image room, with explicit publication, accessibility, rights, and privacy gates.",
+    "Music Carlos Alfredo Carpio Meza makes with Suno and video published on YouTube. Every player is click-to-load: no autoplay, and no provider contacted until you ask for one.",
 };
 
 export default function SoundPage() {
-  return <SoundFoundation content={siteContent.metadata.mediaTeaser} />;
+  return <SoundRoom />;
 }

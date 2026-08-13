@@ -99,8 +99,8 @@ export const rawSiteContent = {
       eyebrow: "Sound + moving image / 02",
       heading: "Sound and moving image as pattern, memory, and response.",
       description:
-        "This room remains mute and player-free until each selected track or video has approved credits, captions, and reuse rights.",
-      status: "Awaiting approved sources",
+        "Music made with Suno and video published on YouTube. Every player is click-to-load, so nothing plays and no provider is contacted until you ask.",
+      status: "Click-to-load players",
       formats: ["Music", "Moving image"],
       action: {
         id: "visit-sound-foundation",
@@ -195,10 +195,12 @@ export const rawSiteContent = {
   },
   navigation: [
     ["nav-work", "Work", "/work"],
+    ["nav-arcade", "Arcade", "/arcade"],
     ["nav-laboratory", "Laboratory", "/laboratory"],
     ["nav-sound", "Sound", "/sound"],
     ["nav-cosmos", "Cosmos", "/cosmos"],
     ["nav-story", "Story", "/story"],
+    ["nav-support", "Support", "/support"],
     ["nav-contact", "Contact", "/contact"],
   ].map(([id, label, href]) => ({
     id,

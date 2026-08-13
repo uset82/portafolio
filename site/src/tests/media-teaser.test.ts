@@ -16,7 +16,7 @@ test("media teaser communicates identity and approval state without creating a p
 
   assert.match(markup, /<section class="media-teaser" aria-labelledby="media-teaser-title">/);
   assert.match(markup, /Sound and moving image as pattern, memory, and response\./);
-  assert.match(markup, /Awaiting approved sources/);
+  assert.match(markup, /Click-to-load players/);
   assert.match(markup, /aria-label="Planned media formats"/);
   assert.match(markup, />Music</);
   assert.match(markup, />Moving image</);
