@@ -40,18 +40,29 @@ test("current public ledger exposes only approved profile and contact facts", ()
 
   assert.deepEqual(
     context.entries.map((entry) => entry.id),
-    ["profile-carlos-carpio", "public-contact-links", "public-observatory-frame"],
+    [
+      "profile-carlos-carpio",
+      "public-contact-links",
+      "public-observatory-frame",
+      "public-strudelai-test",
+    ],
   );
   assert.deepEqual(
     context.sources.map((source) => source.id),
-    ["approved-public-profile", "github-uset82", "public-homepage-observatory"],
+    [
+      "approved-public-profile",
+      "github-uset82",
+      "public-homepage-observatory",
+      "public-strudelai-demo",
+    ],
   );
   assert.match(
     context.systemMessage,
     new RegExp(CC_AI_UNKNOWN_ANSWER.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
   );
   assert.doesNotMatch(context.systemMessage, /mainUI|approved-main-ui|foundation-decision/);
-  assert.doesNotMatch(context.systemMessage, /StrudelAI|private résumé|project-astraea/);
+  assert.doesNotMatch(context.systemMessage, /private résumé|project-astraea/);
+  assert.match(context.systemMessage, /StrudelAI is a public live-coding music system/);
 });
 
 test("builder includes only approved public records with traceable source IDs", () => {
@@ -63,6 +74,7 @@ test("builder includes only approved public records with traceable source IDs", 
       "profile-carlos-carpio",
       "public-contact-links",
       "public-observatory-frame",
+      "public-strudelai-test",
       "project-astraea",
     ],
   );
@@ -72,6 +84,7 @@ test("builder includes only approved public records with traceable source IDs", 
       "approved-public-profile",
       "github-uset82",
       "public-homepage-observatory",
+      "public-strudelai-demo",
       "public-portfolio-source",
     ],
   );
@@ -92,7 +105,12 @@ test("a record with any private source dependency is excluded", () => {
 
   assert.deepEqual(
     context.entries.map((entry) => entry.id),
-    ["profile-carlos-carpio", "public-contact-links", "public-observatory-frame"],
+    [
+      "profile-carlos-carpio",
+      "public-contact-links",
+      "public-observatory-frame",
+      "public-strudelai-test",
+    ],
   );
   assert.doesNotMatch(context.systemMessage, /approved-main-ui|mainUI/);
 });
@@ -155,11 +173,12 @@ test("service sends the bounded context first and returns its public source meta
   );
 
   assert.deepEqual(response.knowledge, {
-    records: 4,
+    records: 5,
     sourceIds: [
       "approved-public-profile",
       "github-uset82",
       "public-homepage-observatory",
+      "public-strudelai-demo",
       "public-portfolio-source",
     ],
     truncated: false,

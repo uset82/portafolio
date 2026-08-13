@@ -63,6 +63,17 @@ export const rawSiteContent = {
       notes:
         "The public homepage includes Enter the Observatory and presents the Observatory as the first-room visual frame, not a separate product.",
     },
+    {
+      id: "public-strudelai-demo",
+      label: "StrudelAI public test build",
+      kind: "external-page",
+      owner: "Carlos Carpio",
+      public: true,
+      url: "https://strudelzeroai.app.canner.ca/",
+      checkedOn: "2026-08-13",
+      notes:
+        "Carlos approved this live URL as the public StrudelAI test build. Contributors are welcome via the public GitHub repository.",
+    },
   ],
   metadata: {
     name: "Carlos Alfredo Carpio Meza",

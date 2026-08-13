@@ -6,7 +6,8 @@
   "knowledgeRecordIds": [
     "profile-carlos-carpio",
     "public-contact-links",
-    "public-observatory-frame"
+    "public-observatory-frame",
+    "public-strudelai-test"
   ],
   "exactUnknownAnswer": "I don't know based on the approved public portfolio information.",
   "cases": [

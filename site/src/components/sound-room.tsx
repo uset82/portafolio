@@ -4,6 +4,7 @@ import {
   MUSIC_PROFILE,
   MUSIC_TRACKS,
   SOUND_ROOM,
+  STRUDEL_AI,
   VIDEO_PROFILE,
   VIDEO_WORKS,
   youtubeEmbedUrl,
@@ -27,17 +28,37 @@ export function SoundRoom() {
       <section className="sound-room__hero" aria-labelledby="sound-room-title">
         <div className="sound-room__rail">
           <p className="section-label">{SOUND_ROOM.eyebrow}</p>
-          <StatusTag tone={hasTracks || hasVideos ? "ready" : "concept"}>
-            {hasTracks || hasVideos ? "Playable" : "Catalogue on the profiles"}
-          </StatusTag>
+          <StatusTag tone="ready">{STRUDEL_AI.status}</StatusTag>
         </div>
 
         <div className="sound-room__identity">
-          <p>Music made with Suno, video published on YouTube</p>
+          <p>Suno, YouTube, and a live-coding system</p>
           <h1 id="sound-room-title">{SOUND_ROOM.heading}</h1>
           <strong>{SOUND_ROOM.description}</strong>
           <small>{SOUND_ROOM.playbackNote}</small>
         </div>
+      </section>
+
+      <section className="sound-room__feature" aria-labelledby="sound-room-strudel-title">
+        <header>
+          <p className="section-label">System / 00</p>
+          <StatusTag tone="ready">{STRUDEL_AI.status}</StatusTag>
+          <h2 id="sound-room-strudel-title">{STRUDEL_AI.title}</h2>
+          <p>{STRUDEL_AI.summary}</p>
+        </header>
+        <nav aria-label="StrudelAI public paths">
+          <ActionLink variant="primary" href={STRUDEL_AI.demoUrl} target="_blank" rel="noreferrer">
+            {STRUDEL_AI.demoLabel} <span aria-hidden="true">&#8599;</span>
+          </ActionLink>
+          <ActionLink
+            variant="secondary"
+            href={STRUDEL_AI.repositoryUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {STRUDEL_AI.repositoryLabel} <span aria-hidden="true">&#8599;</span>
+          </ActionLink>
+        </nav>
       </section>
 
       <section className="sound-room__shelf" aria-labelledby="sound-room-music-title">

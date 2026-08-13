@@ -30,11 +30,20 @@ test("What is the Observatory? answers from the homepage, not the model", () => 
   assert.doesNotMatch(guided.answer, /released scientific|MATCHES|I don't know/i);
 });
 
-test("suggested sound prompt points at the Sound page without a provider", () => {
+test("suggested sound prompt points at StrudelAI and the Sound page", () => {
   const guided = guideVisitorSite("Where can I explore sound and music?");
   assert.ok(guided);
-  assert.match(guided.answer, /Sound page/);
+  assert.match(guided.answer, /StrudelAI/);
+  assert.match(guided.answer, /strudelzeroai\.app\.canner\.ca/);
   assert.match(guided.answer, /click-to-load/);
+});
+
+test("StrudelAI questions name the test build and the repository", () => {
+  const guided = guideVisitorSite("What is StrudelAI?");
+  assert.ok(guided);
+  assert.match(guided.answer, /ready for testing/);
+  assert.match(guided.answer, /https:\/\/github.com\/uset82\/StrudelAI/);
+  assert.doesNotMatch(guided.answer, /festival|DJ Tools|I don't know/i);
 });
 
 test("greetings ask for a preference instead of calling the model", () => {

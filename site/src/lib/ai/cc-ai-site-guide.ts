@@ -53,9 +53,21 @@ const ackAnswer = [
 ].join("\n");
 
 const soundAnswer = [
-  "Sound lives on the Sound page — music and moving image, click-to-load. Nothing plays until you ask.",
+  "Start on the Sound page. StrudelAI is the system you can actually open — a public live-coding music build, ready for testing.",
   "",
-  "If you want Carlos’s AI-and-music systems rather than the players, say sound.",
+  "Test build: https://strudelzeroai.app.canner.ca/",
+  "Repository: https://github.com/uset82/StrudelAI",
+  "",
+  "People who want to contribute are welcome. Suno and YouTube stay click-to-load on that same page.",
+].join("\n");
+
+const strudelAnswer = [
+  "StrudelAI is a public live-coding music system. It is ready for testing, and people who want to contribute are welcome.",
+  "",
+  "Test build: https://strudelzeroai.app.canner.ca/",
+  "Repository: https://github.com/uset82/StrudelAI",
+  "",
+  "That is the open work, not a case study.",
 ].join("\n");
 
 const contactAnswer = [
@@ -112,11 +124,15 @@ export const guideVisitorSite = (message: string): VisitorSiteGuide | null => {
     return { answer: conceptAnswer("Future Energy"), sourceIds: ["approved-main-ui"] };
   }
 
+  if (includesAny(normalized, ["strudel", "strudelai", "aether sonic"])) {
+    return { answer: strudelAnswer, sourceIds: ["public-strudelai-demo", "github-uset82"] };
+  }
+
   if (
     includesAny(normalized, ["sound and music", "explore sound", "where can i explore sound"]) ||
     (/\bsound\b/.test(normalized) && includesAny(normalized, ["where", "page", "listen", "music"]))
   ) {
-    return { answer: soundAnswer, sourceIds: ["approved-main-ui"] };
+    return { answer: soundAnswer, sourceIds: ["public-strudelai-demo"] };
   }
 
   if (includesAny(normalized, ["contact", "email", "reach carlos", "write to"])) {

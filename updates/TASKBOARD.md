@@ -303,7 +303,7 @@ is identical to the current defaults. It is config hygiene, not a fix.
 
 ### Gemini
 
-- [ ] ☐ **C.5** · `GEMINI` · `/sound` content set — ⛔ _needs `Q.5`_
+- [ ] ☐ **C.5** · `GEMINI` · `/sound` content set — ⛔ _needs `Q.5` for Suno/YouTube titles. StrudelAI test build is now featured on `/sound` with the public demo and GitHub._
 - [ ] ☐ **C.6** · `GEMINI` · Video showcase assets
 - [ ] ☐ **M.6** · `GEMINI` · Video inventory + rights
 - [ ] ☐ **B.8** · `GEMINI` · Rights register per brain project
