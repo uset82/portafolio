@@ -1,4 +1,5 @@
 import { AnaExplorationPanel } from "@/components/ana-exploration-panel";
+import { ArcadeTeaser } from "@/components/arcade/arcade-teaser";
 import { CcAiPanel } from "@/components/cc-ai-panel";
 import { HeroReveal, HeroRevealItem, SceneReveal } from "@/components/hero-reveal";
 import { MediaTeaser } from "@/components/media-teaser";
@@ -11,6 +12,7 @@ import { ObservatoryProgressiveExperienceContent } from "@/components/three/obse
 import { OBSERVATORY_LIVE_CANVAS_PRESENTATION } from "@/lib/three/progressive-loading";
 import { ObservatorySceneRuntimeProvider } from "@/components/three/observatory-scene-runtime-provider";
 import { ActionLink, ImageFrame } from "@/components/ui";
+import { ARCADE_GAMES, isArcadeGamePlayable } from "@/content/arcade";
 import { ORBIT_PROJECTS } from "@/content/project-orbit";
 import { selectedSystems, siteContent } from "@/content/site";
 import { observatorySpecialistStatuses, selectExplorationPrompts } from "@/lib/ai/ana-exploration";
@@ -29,6 +31,7 @@ const OBSERVATORY_ARTIFACT_DESCRIPTIONS = {
 
 export default function Home() {
   const { metadata } = siteContent;
+  const playableGames = ARCADE_GAMES.filter(isArcadeGamePlayable);
   const projectArtifacts = (["astraea", "pinaculo", "future-energy"] as const).map((artifactId) => {
     const system = selectedSystems.find((candidate) => candidate.slug === artifactId);
     if (!system) throw new Error(`The approved ${artifactId} project entry is required.`);
@@ -193,6 +196,8 @@ export default function Home() {
           <i />
         </div>
       </section>
+
+      <ArcadeTeaser playable={playableGames} total={ARCADE_GAMES.length} />
 
       <MediaTeaser content={metadata.mediaTeaser} />
 

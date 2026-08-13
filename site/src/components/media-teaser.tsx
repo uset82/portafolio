@@ -11,7 +11,7 @@ export function MediaTeaser({ content }: MediaTeaserProps) {
   return (
     <section className="media-teaser" aria-labelledby={headingId}>
       <div className="media-teaser__instrument" aria-hidden="true">
-        <span className="media-teaser__instrument-label">Silent study / 02</span>
+        <span className="media-teaser__instrument-label">Sound room / 02</span>
         <div className="media-teaser__dial">
           <span>11</span>
           <span>22</span>
@@ -22,7 +22,7 @@ export function MediaTeaser({ content }: MediaTeaserProps) {
             <i key={index} />
           ))}
         </div>
-        <small>Playback remains off</small>
+        <small>Press play to hear it</small>
       </div>
 
       <div className="media-teaser__copy">
