@@ -2,6 +2,7 @@
 !Dockerfile
 !site/
 !site/**
+!brain/
 !brain/repositories/
 !brain/repositories/**
 
