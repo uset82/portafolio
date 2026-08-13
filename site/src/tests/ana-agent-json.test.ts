@@ -149,7 +149,7 @@ test("committed agent.json files are only the host specialist manifests", async 
   const files = (await collectAgentJsonFiles(repoRoot))
     .map((file) => file.split(path.sep).join("/"))
     .sort();
-  assert.deepEqual(files, [
+  const hostManifests = [
     "brain/repositories/manifests/astraea/agent.json",
     "brain/repositories/manifests/electronics/agent.json",
     "brain/repositories/manifests/mentora/agent.json",
@@ -158,5 +158,9 @@ test("committed agent.json files are only the host specialist manifests", async 
     "brain/repositories/manifests/stillas/agent.json",
     "brain/repositories/manifests/strudel/agent.json",
     "brain/repositories/manifests/thesis-writer/agent.json",
+  ] as const;
+  assert.deepEqual(files, [
+    ...hostManifests,
+    ...hostManifests.map((file) => `site/${file}`),
   ]);
 });
