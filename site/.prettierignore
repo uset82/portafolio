@@ -6,3 +6,7 @@ public/images
 public/three/decoders
 pnpm-lock.yaml
 .next-*
+
+# Vendored game builds. These are copied from their own repositories and must
+# stay byte-identical to the source recorded in each PROVENANCE.md.
+public/games

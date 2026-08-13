@@ -61,16 +61,20 @@ test("homepage profile teaser stays approval-backed and excludes private CV mate
   );
 });
 
-test("homepage media teaser stays player-free until sources and rights are approved", () => {
+test("homepage media teaser promises click-to-load playback and embeds nothing itself", () => {
   const { mediaTeaser } = siteContentSchema.parse(rawSiteContent).metadata;
 
-  assert.equal(mediaTeaser.status, "Awaiting approved sources");
+  assert.equal(mediaTeaser.status, "Click-to-load players");
   assert.deepEqual(mediaTeaser.formats, ["Music", "Moving image"]);
   assert.equal(mediaTeaser.action.href, "/sound");
   assert.equal(mediaTeaser.action.external, false);
   assert.ok(mediaTeaser.sourceIds.includes("approved-public-profile"));
-  assert.match(mediaTeaser.description, /mute and player-free/);
-  assert.doesNotMatch(JSON.stringify(mediaTeaser), /(?:src|embed|autoplay|\.mp[34]|youtube)/i);
+  assert.match(mediaTeaser.description, /click-to-load/);
+  // The teaser may name the platforms; it may not carry a playable source.
+  assert.doesNotMatch(
+    JSON.stringify(mediaTeaser),
+    /(?:autoplay|iframe|\.mp[34]|youtube\.com|youtu\.be|suno\.com)/i,
+  );
 });
 
 test("homepage personal teaser adds approved depth without publishing private stories", () => {

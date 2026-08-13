@@ -31,17 +31,15 @@ test("hero reveal markup fails open without inline hidden styles", () => {
   assert.doesNotMatch(markup, /aria-hidden/);
 });
 
-test("the Sound preparation route renders a useful semantic fallback", () => {
+test("the Sound route renders both shelves without contacting a provider", () => {
   const markup = renderToStaticMarkup(createElement(SoundPage));
 
   assert.match(markup, /<main id="main-content"/);
-  assert.match(markup, /<h1[^>]*>Music, harmonic instruments, and responsive systems\.<\/h1>/);
-  assert.match(
-    markup,
-    /id="sound-formats-title">Two lanes, held to the same publication standard\./,
-  );
-  assert.match(markup, /Awaiting approved sources/);
-  assert.match(markup, /An external provider stays unloaded until its privacy cost is clear/);
+  assert.match(markup, /<h1[^>]*>Sound and moving image as pattern, memory, and response\.<\/h1>/);
+  assert.match(markup, /id="sound-room-music-title">Tracks\./);
+  assert.match(markup, /id="sound-room-video-title">Video\./);
+  assert.match(markup, /Players are click-to-load/);
+  // Server markup stays inert: a provider is reached only after a click.
   assert.doesNotMatch(markup, /<(?:audio|video|iframe)\b/);
 });
 

@@ -1123,7 +1123,7 @@ a {
 }
 
 .cc-ai-message {
-  width: min(92%, 24rem);
+  width: min(94%, 28rem);
   margin: 0;
 }
 
@@ -8191,5 +8191,644 @@ body:has(.observatory-hero) .site-header .site-header__status {
   .ana-status__dot {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+/* ===========================================================================
+   Arcade — index, game detail, and the play shell
+   =========================================================================== */
+
+.arcade-index,
+.arcade-game,
+.support-room,
+.sound-room {
+  min-height: 100svh;
+  overflow: clip;
+  background: var(--color-canvas);
+}
+
+.arcade-index__hero,
+.arcade-game__hero,
+.support-room__hero,
+.sound-room__hero {
+  display: grid;
+  grid-template-columns: minmax(7rem, 0.25fr) minmax(20rem, 1.05fr);
+  gap: clamp(2rem, 5vw, 6rem);
+  width: min(100%, var(--page-max));
+  margin-inline: auto;
+  padding: calc(var(--header-height) + clamp(3rem, 7vw, 6rem)) var(--page-gutter)
+    clamp(3rem, 6vw, 5.5rem);
+  align-items: center;
+  border-bottom: 1px solid var(--color-border-soft);
+  background: var(--color-linen);
+}
+
+.arcade-index__rail,
+.arcade-game__rail,
+.support-room__rail,
+.sound-room__rail {
+  display: grid;
+  align-self: start;
+  gap: 1.25rem;
+}
+
+.arcade-index__rail .ui-status,
+.arcade-game__rail .ui-status,
+.support-room__rail .ui-status,
+.sound-room__rail .ui-status {
+  justify-self: start;
+}
+
+.arcade-index__identity,
+.arcade-game__identity,
+.support-room__identity,
+.sound-room__identity {
+  display: grid;
+  align-content: center;
+}
+
+.arcade-index__identity > p,
+.support-room__identity > p,
+.sound-room__identity > p {
+  margin: 0 0 1.2rem;
+  color: var(--color-text-secondary);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.arcade-index__identity h1,
+.arcade-game__identity h1,
+.support-room__identity h1,
+.sound-room__identity h1,
+.arcade-index__group h2,
+.arcade-game__record h2,
+.arcade-game__hold h2,
+.support-room__contribute h2,
+.support-room__tip h2,
+.sound-room__shelf h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+  text-wrap: balance;
+}
+
+.arcade-index__identity h1,
+.arcade-game__identity h1,
+.support-room__identity h1,
+.sound-room__identity h1 {
+  max-width: 18ch;
+  font-size: clamp(3rem, 6vw, 6.4rem);
+}
+
+.arcade-index__identity > strong,
+.arcade-game__identity > strong,
+.support-room__identity > strong,
+.sound-room__identity > strong {
+  max-width: 40rem;
+  margin-top: 2rem;
+  color: var(--color-text-secondary);
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.8vw, 1.8rem);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.arcade-index__identity > small,
+.sound-room__identity > small {
+  max-width: 38rem;
+  margin-top: 1.25rem;
+  color: var(--color-text-secondary);
+  font-size: clamp(0.85rem, 1vw, 0.95rem);
+  line-height: 1.7;
+}
+
+.arcade-index__group,
+.support-room__contribute,
+.sound-room__shelf {
+  width: min(100%, var(--page-max));
+  margin-inline: auto;
+  padding: clamp(3rem, 6vw, 5.5rem) var(--page-gutter);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.arcade-index__group header,
+.support-room__contribute header,
+.sound-room__shelf header,
+.arcade-game__record header {
+  max-width: 44rem;
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+
+.arcade-index__group header h2,
+.support-room__contribute header h2,
+.sound-room__shelf header h2 {
+  font-size: clamp(2rem, 3.4vw, 3.4rem);
+}
+
+.arcade-index__group header > p:last-child,
+.support-room__contribute header > p:last-child,
+.sound-room__shelf header > p:last-child {
+  margin: 1.25rem 0 0;
+  color: var(--color-text-secondary);
+  font-size: clamp(0.9rem, 1vw, 1rem);
+  line-height: 1.7;
+}
+
+/* --- The game list ------------------------------------------------------- */
+
+.arcade-index__games,
+.support-room__repos,
+.sound-room__works {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 21rem), 1fr));
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.arcade-index__game,
+.support-room__repos > li {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  padding: clamp(1.35rem, 2.4vw, 2rem);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-panel);
+  background: var(--color-canvas-soft);
+}
+
+.arcade-index__game-head,
+.support-room__repo-head {
+  display: grid;
+  gap: 0.5rem;
+  justify-items: start;
+}
+
+.arcade-index__game-head > p,
+.support-room__repo-head > p {
+  margin: 0.35rem 0 0;
+  color: var(--color-text-secondary);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.arcade-index__game-head h3,
+.support-room__repo-head h3,
+.sound-room__work-head h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.arcade-index__game-body,
+.support-room__repo-body,
+.sound-room__work-body {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.arcade-index__game-spec {
+  display: grid;
+  gap: 0.65rem;
+  margin: 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--color-border-soft);
+}
+
+.arcade-index__game-spec > div {
+  display: grid;
+  grid-template-columns: minmax(6rem, 0.4fr) 1fr;
+  gap: 0.75rem;
+  align-items: baseline;
+}
+
+.arcade-index__game-spec dt,
+.arcade-game__record dt {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.arcade-index__game-spec dd,
+.arcade-game__record dd {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.arcade-index__game-block {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-left: 2px solid var(--color-clay);
+  background: var(--color-sage-pale);
+  color: var(--color-text-secondary-on-tint);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.arcade-index__game-actions,
+.support-room__repo-actions,
+.arcade-game__record nav,
+.game-frame__actions,
+.game-frame__bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  align-items: center;
+}
+
+/* --- The play shell ------------------------------------------------------ */
+
+.game-frame {
+  width: min(100%, var(--page-max));
+  margin-inline: auto;
+  padding: clamp(2rem, 4vw, 3.5rem) var(--page-gutter);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.game-frame__viewport {
+  position: relative;
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--color-walnut);
+  border-radius: var(--radius-panel);
+  background: var(--color-sage-pale);
+}
+
+.game-frame__viewport[data-playing="true"] {
+  aspect-ratio: 16 / 10;
+  background: var(--color-espresso);
+}
+
+.game-frame__surface {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.game-frame__gate {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+  align-content: center;
+  min-height: 22rem;
+  padding: clamp(1.75rem, 4vw, 3.5rem);
+}
+
+.game-frame__gate h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+
+.game-frame__gate ul {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--color-text-secondary-on-tint);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.game-frame__warning {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-left: 2px solid var(--color-clay);
+  background: color-mix(in srgb, var(--color-canvas) 55%, transparent);
+  color: var(--color-text-secondary-on-tint);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.game-frame__bar {
+  margin-top: 1.25rem;
+}
+
+.game-frame__status {
+  margin: 1rem 0 0;
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+/* --- Game detail --------------------------------------------------------- */
+
+.arcade-game__hold,
+.arcade-game__record {
+  width: min(100%, var(--page-max));
+  margin-inline: auto;
+  padding: clamp(3rem, 6vw, 5rem) var(--page-gutter);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.arcade-game__hold {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: start;
+}
+
+.arcade-game__hold h2 {
+  max-width: 22ch;
+  font-size: clamp(1.9rem, 3vw, 3rem);
+}
+
+.arcade-game__hold p {
+  max-width: 44rem;
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: clamp(0.92rem, 1vw, 1.02rem);
+  line-height: 1.7;
+}
+
+.arcade-game__hold-note {
+  padding-left: 1rem;
+  border-left: 2px solid var(--color-border-soft);
+}
+
+.arcade-game__record dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: 1.5rem 2rem;
+  margin: 0 0 2.5rem;
+}
+
+.arcade-game__record dl > div {
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--color-border-soft);
+}
+
+.arcade-game__record dd ul {
+  display: grid;
+  gap: 0.3rem;
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.arcade-game__record dd small {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--color-text-secondary);
+  font-size: 0.76rem;
+}
+
+/* ===========================================================================
+   Support — contribute and tip
+   =========================================================================== */
+
+.support-room__licensing {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: start;
+  max-width: 46rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding: clamp(1.35rem, 2.4vw, 2rem);
+  border-left: 2px solid var(--color-clay);
+  background: var(--color-sage-pale);
+}
+
+.support-room__licensing h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.support-room__licensing p {
+  margin: 0;
+  color: var(--color-text-secondary-on-tint);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.support-room__licensing small {
+  color: var(--color-text-secondary-on-tint);
+  font-size: 0.75rem;
+}
+
+.support-room__tip {
+  display: grid;
+  grid-template-columns: minmax(20rem, 1.1fr) minmax(14rem, 0.6fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  width: min(100%, var(--page-max));
+  margin-inline: auto;
+  padding: clamp(3rem, 6vw, 5.5rem) var(--page-gutter);
+}
+
+.support-room__tip-copy {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: start;
+}
+
+.support-room__tip-copy h2 {
+  font-size: clamp(2rem, 3.4vw, 3.4rem);
+}
+
+.support-room__tip-copy p {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: clamp(0.9rem, 1vw, 1rem);
+  line-height: 1.7;
+}
+
+.support-room__tip-mark {
+  position: relative;
+  display: grid;
+  width: min(100%, 20rem);
+  aspect-ratio: 4 / 5;
+  justify-self: end;
+  align-content: space-between;
+  padding: 1.5rem;
+  border: 1px solid var(--color-walnut);
+  background: var(--color-buff);
+  box-shadow: inset 0 0 0 0.75rem color-mix(in srgb, var(--color-canvas) 28%, transparent);
+}
+
+.support-room__tip-mark > span {
+  color: var(--color-text-secondary-on-tint);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.support-room__tip-mark > strong {
+  justify-self: center;
+  font-size: clamp(3rem, 7vw, 5rem);
+  line-height: 1;
+}
+
+.support-room__tip-mark > i {
+  width: 100%;
+  height: 1px;
+  background: var(--color-walnut);
+}
+
+/* ===========================================================================
+   Sound — the two shelves
+   =========================================================================== */
+
+.sound-room__works > li {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  padding: clamp(1.35rem, 2.4vw, 2rem);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-panel);
+  background: var(--color-canvas-soft);
+}
+
+.sound-room__work-head {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.sound-room__work-head > p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.sound-room__work-rights {
+  color: var(--color-text-secondary);
+  font-size: 0.76rem;
+  line-height: 1.55;
+}
+
+.sound-room__empty {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: start;
+  max-width: 44rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border: 1px dashed var(--color-border-soft);
+  border-radius: var(--radius-panel);
+  background: var(--color-canvas-soft);
+}
+
+.sound-room__empty p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: clamp(0.9rem, 1vw, 1rem);
+  line-height: 1.7;
+}
+
+/* --- Narrow viewports ---------------------------------------------------- */
+
+@media (max-width: 61.99rem) {
+  .support-room__tip {
+    grid-template-columns: 1fr;
+  }
+
+  .support-room__tip-mark {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 47.99rem) {
+  .arcade-index__hero,
+  .arcade-game__hero,
+  .support-room__hero,
+  .sound-room__hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding-top: calc(var(--header-height) + 2.5rem);
+  }
+
+  .arcade-index__game-spec > div {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+
+  .game-frame__viewport[data-playing="true"] {
+    aspect-ratio: 3 / 4;
+  }
+
+  .arcade-index__game-actions .ui-action,
+  .support-room__repo-actions .ui-action,
+  .game-frame__actions .ui-action,
+  .game-frame__bar .ui-action,
+  .sound-room__empty .ui-action,
+  .arcade-game__record nav .ui-action {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game-frame__viewport,
+  .arcade-index__game,
+  .support-room__tip-mark {
+    transition: none;
+  }
+}
+
+.sound-room__onward {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: start;
+  width: min(100%, var(--page-max));
+  margin-inline: auto;
+  padding: clamp(3rem, 6vw, 5rem) var(--page-gutter);
+}
+
+.sound-room__onward h2 {
+  max-width: 20ch;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.4vw, 3.4rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+  text-wrap: balance;
+}
+
+.sound-room__onward p {
+  max-width: 40rem;
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: clamp(0.9rem, 1vw, 1rem);
+  line-height: 1.7;
+}
+
+.sound-room__onward nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  align-items: center;
+}
+
+@media (max-width: 47.99rem) {
+  .sound-room__onward nav .ui-action {
+    width: 100%;
+    justify-content: center;
   }
 }

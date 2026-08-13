@@ -4,11 +4,13 @@ import test from "node:test";
 import { createElement, type ComponentType } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
+import ArcadePage from "@/app/arcade/page";
 import ContactPage from "@/app/contact/page";
 import CosmosPage from "@/app/cosmos/page";
 import LaboratoryPage from "@/app/laboratory/page";
 import SoundPage from "@/app/sound/page";
 import StoryPage from "@/app/story/page";
+import SupportPage from "@/app/support/page";
 import WorkPage from "@/app/work/page";
 
 type CoreRoute = {
@@ -28,7 +30,9 @@ const coreRoutes: readonly CoreRoute[] = [
     Page: LaboratoryPage,
     expectedHrefs: ["/work/future-energy", "/work", "/contact"],
   },
-  { name: "Sound", Page: SoundPage, expectedHrefs: ["/work", "/contact"] },
+  { name: "Sound", Page: SoundPage, expectedHrefs: ["/arcade", "/support", "/work"] },
+  { name: "Arcade", Page: ArcadePage, expectedHrefs: ["/arcade/mandelbro"] },
+  { name: "Support", Page: SupportPage, expectedHrefs: [] },
   { name: "Cosmos", Page: CosmosPage, expectedHrefs: ["/work", "/story"] },
   { name: "Story", Page: StoryPage, expectedHrefs: ["/work", "/contact"] },
   { name: "Contact", Page: ContactPage, expectedHrefs: ["/work", "/story"] },

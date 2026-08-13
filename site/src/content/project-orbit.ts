@@ -75,6 +75,17 @@ export const ORBIT_PROJECTS = [
     icon: "waveform",
   },
   {
+    id: "arcade",
+    name: "ARCADE",
+    description: "Games you can play here, and the honest state of the rest.",
+    category: "Games",
+    destination: "internal-route",
+    href: "/arcade",
+    external: false,
+    icon: "cube",
+    featured: true,
+  },
+  {
     id: "repo2agent",
     name: "Repo2Agent",
     description: "Turns a repository into an agent ANA can reason with.",
