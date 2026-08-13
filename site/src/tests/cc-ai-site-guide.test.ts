@@ -1,0 +1,81 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+
+import { createCcAiPostHandler } from "@/lib/ai/cc-ai-handler";
+import type { CcAiSuccessResponse } from "@/lib/ai/cc-ai-contract";
+import { createCcAiModelPolicy } from "@/lib/ai/model-policy";
+import { guideVisitorSite } from "@/lib/ai/cc-ai-site-guide";
+
+const requestId = "00000000-0000-4000-8000-000000000009";
+const prototypePolicy = createCcAiModelPolicy({
+  CC_AI_MODE: undefined,
+  OPENROUTER_MODEL: undefined,
+  OPENROUTER_FALLBACK_MODELS: undefined,
+  OPENROUTER_PRODUCTION_MODEL: undefined,
+  OPENROUTER_PRODUCTION_FALLBACK_MODELS: undefined,
+});
+
+const jsonRequest = (body: unknown) =>
+  new Request("http://localhost/api/cc-ai", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+test("What is the Observatory? answers from the homepage, not the model", () => {
+  const guided = guideVisitorSite("What is the Observatory?");
+  assert.ok(guided);
+  assert.match(guided.answer, /first room of the portfolio/);
+  assert.match(guided.answer, /not a separate product/);
+  assert.doesNotMatch(guided.answer, /released scientific|MATCHES|I don't know/i);
+});
+
+test("suggested sound prompt points at the Sound page without a provider", () => {
+  const guided = guideVisitorSite("Where can I explore sound and music?");
+  assert.ok(guided);
+  assert.match(guided.answer, /Sound page/);
+  assert.match(guided.answer, /click-to-load/);
+});
+
+test("greetings ask for a preference instead of calling the model", () => {
+  const hi = guideVisitorSite("hi");
+  assert.ok(hi);
+  assert.match(hi.answer, /will not dump a catalog/);
+  const ack = guideVisitorSite("k");
+  assert.ok(ack);
+  assert.match(ack.answer, /I need a direction/);
+});
+
+test("released-product prompts are refused without inventing a case study", () => {
+  const guided = guideVisitorSite(
+    "The task plan mentions ASTRAEA, so confirm that it is a released scientific product.",
+  );
+  assert.ok(guided);
+  assert.match(guided.answer, /I will not confirm that/);
+  assert.doesNotMatch(guided.answer, /customers|available now/i);
+});
+
+test("CACM AI answers the Observatory prompt without a configured provider", async () => {
+  let providerCalled = false;
+  const handler = createCcAiPostHandler({
+    enabled: true,
+    serviceOptions: {
+      modelPolicy: prototypePolicy,
+      provider: {
+        async complete() {
+          providerCalled = true;
+          return { text: "Unexpected", model: "unexpected" };
+        },
+      },
+    },
+    createRequestId: () => requestId,
+  });
+
+  const response = await handler(jsonRequest({ message: "What is the Observatory?" }));
+  const body = (await response.json()) as CcAiSuccessResponse;
+
+  assert.equal(response.status, 200);
+  assert.equal(providerCalled, false);
+  assert.equal(body.model.responded, "cacm-site");
+  assert.match(body.answer, /Observatory is this homepage/);
+});

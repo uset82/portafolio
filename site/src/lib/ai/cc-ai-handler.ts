@@ -1,6 +1,7 @@
-import { isAskPortfolioQuestion } from "@/ana/core/intent";
-import { formatPortfolioNavigation, searchPortfolioKnowledge } from "@/ana/knowledge";
 import type { RepositoryAudit } from "@/ana/repositories/schemas";
+
+import { guideVisitorPortfolio } from "./cc-ai-portfolio-guide";
+import { guideVisitorSite } from "./cc-ai-site-guide";
 
 import { ccAiRequestSchema, type CcAiErrorResponse, type CcAiResponse } from "./cc-ai-contract";
 import { CcAiAbuseError, type CcAiAbuseGuard } from "./cc-ai-abuse-control";
@@ -112,33 +113,53 @@ export function createCcAiPostHandler({
         return respond(createError(requestId, "invalid_request", false), 400);
       }
 
-      if (portfolioAudits.length > 0 && isAskPortfolioQuestion(parsed.data.message)) {
-        const hits = searchPortfolioKnowledge(parsed.data.message, portfolioAudits);
-        const navigated = formatPortfolioNavigation({
-          query: parsed.data.message,
-          hits,
-        });
-        return respond(
+      const localReply = (input: {
+        answer: string;
+        responded: string;
+        sourceIds: readonly string[];
+      }) =>
+        respond(
           {
             ok: true,
             requestId,
-            answer: navigated.answer,
+            answer: input.answer,
             truncated: false,
             model: {
               requested: serviceOptions.modelPolicy.primaryModel,
               fallbacks: serviceOptions.modelPolicy.fallbackModels,
-              responded: "ana-knowledge",
+              responded: input.responded,
               selection: serviceOptions.modelPolicy.routingKind,
               variable: serviceOptions.modelPolicy.variableSelection,
             },
             knowledge: {
-              records: hits.length,
-              sourceIds: hits.map((hit) => hit.repository),
+              records: input.sourceIds.length,
+              sourceIds: [...input.sourceIds],
               truncated: false,
             },
           },
           200,
         );
+
+      const guided = guideVisitorPortfolio({
+        message: parsed.data.message,
+        history: parsed.data.history,
+        audits: portfolioAudits,
+      });
+      if (guided) {
+        return localReply({
+          answer: guided.answer,
+          responded: "ana-knowledge",
+          sourceIds: guided.hits.map((hit) => hit.repository),
+        });
+      }
+
+      const site = guideVisitorSite(parsed.data.message);
+      if (site) {
+        return localReply({
+          answer: site.answer,
+          responded: "cacm-site",
+          sourceIds: site.sourceIds,
+        });
       }
 
       try {

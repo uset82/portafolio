@@ -242,7 +242,7 @@ test("CACM AI service honors an already-aborted browser request", async () => {
   assert.equal(providerCalled, false);
 });
 
-test("CACM AI answers Ask My Portfolio from public repository knowledge without calling the model", async () => {
+test("CACM AI qualifies a broad portfolio question instead of dumping repositories", async () => {
   let providerCalled = false;
   const handler = createCcAiPostHandler({
     enabled: true,
@@ -285,6 +285,8 @@ test("CACM AI answers Ask My Portfolio from public repository knowledge without 
 
   assert.equal(response.status, 200);
   assert.equal(providerCalled, false);
-  assert.match(body.answer, /uset82\/StrudelAI/);
+  assert.match(body.answer, /Which of those do you actually want to see\?/);
+  assert.doesNotMatch(body.answer, /MATCHES|SOURCES|uset82\/|ANA searched/i);
   assert.equal(body.model.responded, "ana-knowledge");
+  assert.equal(body.knowledge.records, 0);
 });

@@ -12,7 +12,7 @@ Everything else is detail you open only when a task needs it.
 ### ANA / Repo2Agent — Phase 0–30 verified
 
 Tracked in [`../taskplan.md`](../taskplan.md). Sequential ANA / Repo2Agent ledger is complete through Definition of Done (ADR 031). Public ANA stays gated. CC AI stays the visitor assistant.
-Do not enable specialists. Do not replace CC AI. Keep `ANA_SPECIALISTS_ENABLED` false. Keep `ANA_DEBUG_ENABLED` false in public deploys. Remaining product gaps: ADR 030.
+Do not enable specialists. Do not replace CC AI. Keep `ANA_SPECIALISTS_ENABLED` false. Keep `ANA_DEBUG_ENABLED` false in public deploys. Remaining product gaps: ADR 030. CACM AI now qualifies broad project questions before naming work; specialists stay off.
 
 ### Project Orbit — replace Selected Systems with a Three.js orbit · user-directed handoff port
 

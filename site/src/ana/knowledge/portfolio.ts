@@ -52,6 +52,7 @@ export type PortfolioKnowledgeHit = {
   domains: string[];
   capabilities: string[];
   recommendedType: "agent" | "tool" | "knowledge";
+  description?: string;
 };
 
 export const isSearchablePortfolioAudit = (audit: RepositoryAudit): boolean =>
@@ -126,7 +127,21 @@ export const searchPortfolioKnowledge = (
       entry.audit.recommendedType === "agent" || entry.audit.recommendedType === "tool"
         ? entry.audit.recommendedType
         : "knowledge",
+    ...(entry.audit.description ? { description: entry.audit.description } : {}),
   }));
+};
+
+export const displayPortfolioProjectName = (repository: string): string => {
+  const slug = repository.split("/")[1] ?? repository;
+  if (/[-_]/.test(slug)) {
+    return slug
+      .split(/[-_]/)
+      .filter(Boolean)
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ");
+  }
+  if (slug === slug.toLowerCase()) return slug;
+  return slug;
 };
 
 const typeLabel = (type: PortfolioKnowledgeHit["recommendedType"]): string => {
