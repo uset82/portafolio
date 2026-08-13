@@ -1,4 +1,4 @@
-import { GitHubApiError, redactCredentialLikeValues } from "../../../../scripts/brain-sync-github";
+import { GitHubApiError, redactCredentialLikeValues } from "./github-shared";
 
 export const GITHUB_OWNER = "uset82";
 export const MAX_README_CHARS = 800;

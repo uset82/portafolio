@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import path from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 import { buildAgentRegistry } from "@/ana/registry";
 import { parseAgentJsonDocument } from "@/ana/manifest";
 import { auditRepository } from "@/ana/repositories/auditor";
@@ -278,4 +281,13 @@ test("scan does not rewrite known specialist remotes or enable them", () => {
   assert.deepEqual(scan.newPublic, []);
   assert.deepEqual(scan.proposals, []);
   assert.equal(scan.audits.length, 0);
+});
+
+test("the ANA GitHub client does not import repo-root scripts", () => {
+  const source = readFileSync(
+    path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../ana/repositories/github.ts"),
+    "utf8",
+  );
+  assert.equal(source.includes("scripts/brain-sync-github"), false);
+  assert.match(source, /from "\.\/github-shared"/);
 });
