@@ -45,6 +45,20 @@
       "verification": "user-approved",
       "rights": "not-applicable",
       "sourceIds": ["public-homepage-observatory"]
+    },
+    {
+      "id": "public-strudelai-test",
+      "type": "project",
+      "title": "StrudelAI",
+      "facts": [
+        "StrudelAI is a public live-coding music system.",
+        "The public test build is https://strudelzeroai.app.canner.ca/.",
+        "The public repository is https://github.com/uset82/StrudelAI.",
+        "The build is ready for testing, and people interested in contributing are welcome."
+      ],
+      "verification": "user-approved",
+      "rights": "not-applicable",
+      "sourceIds": ["public-strudelai-demo", "github-uset82"]
     }
   ],
   "exclusions": [
@@ -81,7 +95,7 @@
         "project-opennemoclaw",
         "project-webdesigner"
       ],
-      "safeResponse": "Do not summarize held project records in chat; direct visitors only to public static project pages and links that have passed publication gates."
+      "safeResponse": "For StrudelAI, use only the approved test-build and repository facts. Do not summarize held case-study records for the other flagships."
     },
     {
       "id": "unsupported-project-claims",

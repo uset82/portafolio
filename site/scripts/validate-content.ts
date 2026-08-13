@@ -554,6 +554,7 @@ if (!ccAiPublicKnowledgeLedgerResult.success) {
     "profile-carlos-carpio",
     "public-contact-links",
     "public-observatory-frame",
+    "public-strudelai-test",
   ];
   if (
     ccAiPublicKnowledgeLedgerResult.data.records.map((record) => record.id).join("|") !==

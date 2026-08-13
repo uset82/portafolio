@@ -68,7 +68,7 @@ export const SOUND_ROOM = {
   eyebrow: "Sound and moving image / 02",
   heading: "Sound and moving image as pattern, memory, and response.",
   description:
-    "Music made with Suno and video published on YouTube. Nothing plays until you press play, and nothing loads from another company until you ask it to.",
+    "Music made with Suno, video published on YouTube, and StrudelAI — a live-coding music system open for testing.",
   emptyState: {
     music:
       "No track is embedded here yet. The full published catalogue is on Suno in the meantime.",
@@ -76,7 +76,18 @@ export const SOUND_ROOM = {
       "No video is embedded here yet. The full published channel is on YouTube in the meantime.",
   },
   playbackNote:
-    "Players are click-to-load. Loading one shares your IP address and browser information with that provider.",
+    "Players are click-to-load. Loading one shares your IP address and browser information with that provider. The StrudelAI test build opens in its own site.",
+} as const;
+
+export const STRUDEL_AI = {
+  title: "StrudelAI",
+  status: "Open for testing",
+  summary:
+    "A public live-coding music system. The build is ready for people to try, and people who want to contribute are welcome.",
+  demoUrl: "https://strudelzeroai.app.canner.ca/",
+  demoLabel: "Open the test build",
+  repositoryUrl: "https://github.com/uset82/StrudelAI",
+  repositoryLabel: "View the repository",
 } as const;
 
 /** Privacy-enhanced YouTube embed: no cookies until playback actually starts. */

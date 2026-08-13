@@ -10,10 +10,22 @@ import { SoundRoom } from "@/components/sound-room";
 import {
   MUSIC_PROFILE,
   MUSIC_TRACKS,
+  STRUDEL_AI,
   VIDEO_PROFILE,
   VIDEO_WORKS,
   youtubeEmbedUrl,
 } from "@/content/media-library";
+
+test("StrudelAI is the featured public test build", () => {
+  const markup = renderToStaticMarkup(createElement(SoundRoom));
+
+  assert.match(markup, /sound-room__feature/);
+  assert.match(markup, /StrudelAI/);
+  assert.match(markup, /Open for testing/);
+  assert.match(markup, new RegExp(STRUDEL_AI.demoUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  assert.match(markup, new RegExp(STRUDEL_AI.repositoryUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  assert.match(markup, /people who want to contribute are welcome/i);
+});
 
 test("an empty shelf says it is empty and points at the published profile", () => {
   const markup = renderToStaticMarkup(createElement(SoundRoom));
@@ -70,6 +82,7 @@ test("the sound route mounts the room and keeps its responsive rules", () => {
 
   assert.match(page, /<SoundRoom \/>/);
   assert.match(styles, /\.sound-room__empty\s*\{/);
+  assert.match(styles, /\.sound-room__feature\s*\{/);
   assert.match(styles, /@media \(max-width: 47\.99rem\)[\s\S]*?\.sound-room__hero/);
   assert.match(styles, /@media \(prefers-reduced-motion: reduce\)/);
 });

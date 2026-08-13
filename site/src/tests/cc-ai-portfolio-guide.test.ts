@@ -96,7 +96,7 @@ test("a sound preference recommends one music project and withholds the GitHub l
   });
   assert.ok(guided);
   assert.match(guided.answer, /Start with StrudelAI/);
-  assert.match(guided.answer, /Live coding music system/);
+  assert.match(guided.answer, /open for testing/);
   assert.doesNotMatch(guided.answer, /LyriGenie|3Doodle|MATCHES|uset82\//);
   assert.equal(guided.hits.map((hit) => hit.repository).join(), "uset82/StrudelAI");
 });

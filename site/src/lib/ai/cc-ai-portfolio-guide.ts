@@ -184,13 +184,16 @@ const lastUserLanes = (history: readonly ChatTurn[]): PortfolioLane[] => {
 };
 
 const visitorBlurb = (hit: PortfolioKnowledgeHit): string => {
+  if (hit.repository === "uset82/StrudelAI") {
+    return "a public live-coding music system, open for testing";
+  }
   const description = hit.description?.trim();
   if (description && !/\d+\s*%|\busers\b|\bstars\b|\brevenue\b/i.test(description)) {
     const clipped =
       description.length > 140 ? `${description.slice(0, 137).trimEnd()}…` : description;
     return clipped.replace(/\.$/, "");
   }
-  if (hit.capabilities.includes("live-coding")) return "public live-coding music work";
+  if (hit.capabilities.includes("live-coding")) return "public live-coding music system";
   if (hit.capabilities.includes("generative-music")) return "public generative-music work";
   if (hit.domains.includes("music")) return "public music work";
   if (hit.domains.includes("3d")) return "public 3D work";
