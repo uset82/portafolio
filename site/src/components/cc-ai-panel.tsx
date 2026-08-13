@@ -15,8 +15,17 @@ import {
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
-import type { CcAiRequest, CcAiResponse } from "@/lib/ai/cc-ai-contract";
+import type { CcAiRequest, CcAiResponse, CcAiSuccessResponse } from "@/lib/ai/cc-ai-contract";
 import { requestCcAi } from "@/lib/ai/cc-ai-client";
+import {
+  requestAnaStream,
+  type AnaChatRequest,
+  type AnaChatResponse,
+  type AnaStatusHandler,
+} from "@/lib/ai/ana-client";
+import { invokeAssistantChannel, resolveAssistantChannel } from "@/lib/ai/assistant-channel";
+import { observatorySpecialistStatuses, type AnaExplorationPrompt } from "@/lib/ai/ana-exploration";
+import { AnaExplorationPanel } from "./ana-exploration-panel";
 import {
   buildCcAiHistory,
   CC_AI_MAX_MESSAGE_LENGTH,
@@ -39,9 +48,16 @@ const privacyNote =
   "Do not share sensitive information. Questions are sent to a selected model provider to generate an answer and may be subject to that provider's processing terms. Carlos's private files are not available to this assistant.";
 
 type CcAiTransport = (request: CcAiRequest, signal: AbortSignal) => Promise<CcAiResponse>;
+type AnaTransport = (
+  request: AnaChatRequest,
+  signal: AbortSignal,
+  onStatus?: AnaStatusHandler,
+) => Promise<AnaChatResponse>;
 
 type CcAiPanelProps = {
   transport?: CcAiTransport;
+  anaTransport?: AnaTransport;
+  explorationPrompts?: readonly AnaExplorationPrompt[];
 };
 
 /* Hydration-safe mount flag: document.body only exists on the client, and the
@@ -65,10 +81,14 @@ const getLocale = () => {
   return /^[a-z]{2}(?:-[A-Z]{2})?$/.test(locale) ? locale : "en";
 };
 
-const getStatusAnnouncement = (status: CcAiUiStatus) => {
+const getStatusAnnouncement = (
+  status: CcAiUiStatus,
+  channel: "cc-ai" | "ana",
+  anaAnnouncement: string,
+) => {
   switch (status) {
     case "connecting":
-      return "Connecting to CACM AI.";
+      return channel === "ana" ? anaAnnouncement : "Connecting to CACM AI.";
     case "presenting":
       return "Answer received. Presenting it now.";
     case "complete":
@@ -82,7 +102,26 @@ const getStatusAnnouncement = (status: CcAiUiStatus) => {
   }
 };
 
-export function CcAiPanel({ transport = requestCcAi }: CcAiPanelProps) {
+const anaAnswerAsCcAi = (response: AnaChatResponse & { ok: true }): CcAiSuccessResponse => ({
+  ok: true,
+  requestId: response.requestId,
+  answer: response.answer,
+  truncated: false,
+  model: {
+    requested: "ana",
+    fallbacks: [],
+    responded: "ana",
+    selection: "named-model",
+    variable: false,
+  },
+  knowledge: { records: 0, sourceIds: [], truncated: false },
+});
+
+export function CcAiPanel({
+  transport = requestCcAi,
+  anaTransport = requestAnaStream,
+  explorationPrompts = [],
+}: CcAiPanelProps) {
   const [open, setOpen] = useState(false);
   const mounted = useSyncExternalStore(
     subscribeToHydration,
@@ -103,8 +142,12 @@ export function CcAiPanel({ transport = requestCcAi }: CcAiPanelProps) {
   const transcriptRef = useRef<HTMLDivElement>(null);
   const requestControllerRef = useRef<AbortController | null>(null);
   const messageSequenceRef = useRef(0);
+  const [lastChannel, setLastChannel] = useState<"cc-ai" | "ana">("cc-ai");
+  const [anaActiveAgents, setAnaActiveAgents] = useState<readonly string[]>([]);
+  const [anaAnnouncement, setAnaAnnouncement] = useState("ANA is thinking.");
   const reducedMotion = useReducedMotion();
   const active = state.status === "connecting" || state.status === "presenting";
+  const specialistStatuses = observatorySpecialistStatuses(anaActiveAgents);
 
   const closePanel = useCallback(() => {
     if (requestControllerRef.current || state.status === "presenting") {
@@ -195,7 +238,11 @@ export function CcAiPanel({ transport = requestCcAi }: CcAiPanelProps) {
     transcript.scrollTop = transcript.scrollHeight;
   }, [state.messages, state.status]);
 
-  async function sendQuestion(nextQuestion: string, appendUser = true) {
+  async function sendQuestion(
+    nextQuestion: string,
+    appendUser = true,
+    channel: "cc-ai" | "ana" = "cc-ai",
+  ) {
     const message = nextQuestion.trim();
     if (
       !message ||
@@ -209,22 +256,67 @@ export function CcAiPanel({ transport = requestCcAi }: CcAiPanelProps) {
     const controller = new AbortController();
     requestControllerRef.current = controller;
     const sequence = ++messageSequenceRef.current;
-    const requestId = `cc-ai-user-${sequence}`;
+    const requestId = `${channel}-user-${sequence}`;
+    setLastChannel(channel);
     const history = buildCcAiHistory(state.messages, message);
     dispatch({ type: "request/start", requestId, question: message, appendUser });
     setQuestion("");
+    if (channel === "ana") {
+      const prompt = explorationPrompts.find((entry) => entry.prompt === message);
+      setAnaActiveAgents(prompt?.requiredAgentIds ?? []);
+      setAnaAnnouncement("ANA is thinking.");
+    } else {
+      setAnaActiveAgents([]);
+      setAnaAnnouncement("ANA is thinking.");
+    }
 
     try {
-      const response = await transport(
-        {
-          message,
-          history,
-          locale: getLocale(),
-        },
-        controller.signal,
-      );
+      const turn = await invokeAssistantChannel({
+        channel,
+        sendCcAi: () =>
+          transport(
+            {
+              message,
+              history,
+              locale: getLocale(),
+            },
+            controller.signal,
+          ),
+        sendAna: () =>
+          anaTransport({ message, requestId }, controller.signal, (event) => {
+            setAnaAnnouncement(event.announcement);
+            setAnaActiveAgents(event.active);
+          }),
+      });
       if (controller.signal.aborted) return;
 
+      if (turn.channel === "ana") {
+        const response = turn.result;
+        if (response.ok) {
+          setAnaActiveAgents(response.active);
+          dispatch({
+            type: "request/succeed",
+            messageId: `ana-assistant-${sequence}`,
+            response: anaAnswerAsCcAi(response),
+          });
+        } else {
+          setAnaActiveAgents([]);
+          dispatch({
+            type: "request/fail",
+            error: {
+              code: response.error.code === "disabled" ? "disabled" : "provider_unavailable",
+              message:
+                response.error.code === "disabled"
+                  ? "ANA is not enabled. CACM AI remains the public portfolio guide."
+                  : "ANA could not complete that request. Your portfolio navigation still works.",
+              retryable: response.error.retryable,
+            },
+          });
+        }
+        return;
+      }
+
+      const response = turn.result;
       if (response.ok) {
         dispatch({
           type: "request/succeed",
@@ -239,14 +331,16 @@ export function CcAiPanel({ transport = requestCcAi }: CcAiPanelProps) {
         return;
       }
       const invalidResponse =
-        error instanceof Error && error.message === "CACM AI returned an invalid response.";
+        error instanceof Error &&
+        (error.message === "CACM AI returned an invalid response." ||
+          error.message === "ANA returned an invalid response.");
       dispatch({
         type: "request/fail",
         error: {
           code: invalidResponse ? "invalid_response" : "provider_unavailable",
           message: invalidResponse
-            ? "CACM AI returned an unreadable answer. Your portfolio navigation still works."
-            : "CACM AI could not reach the server. Your portfolio navigation still works.",
+            ? "The assistant returned an unreadable answer. Your portfolio navigation still works."
+            : "The assistant could not reach the server. Your portfolio navigation still works.",
           retryable: true,
         },
       });
@@ -266,6 +360,9 @@ export function CcAiPanel({ transport = requestCcAi }: CcAiPanelProps) {
   function clearConversation() {
     requestControllerRef.current?.abort();
     requestControllerRef.current = null;
+    setLastChannel("cc-ai");
+    setAnaActiveAgents([]);
+    setAnaAnnouncement("ANA is thinking.");
     dispatch({ type: "conversation/clear" });
     setQuestion("");
     window.requestAnimationFrame(() => inputRef.current?.focus());
@@ -273,7 +370,7 @@ export function CcAiPanel({ transport = requestCcAi }: CcAiPanelProps) {
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    void sendQuestion(question);
+    void sendQuestion(question, true, resolveAssistantChannel("typed"));
   }
 
   function handleInputKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
@@ -283,7 +380,7 @@ export function CcAiPanel({ transport = requestCcAi }: CcAiPanelProps) {
     }
   }
 
-  const statusAnnouncement = getStatusAnnouncement(state.status);
+  const statusAnnouncement = getStatusAnnouncement(state.status, lastChannel, anaAnnouncement);
   const characterGuidance =
     question.length > 1_600
       ? `${CC_AI_MAX_MESSAGE_LENGTH - question.length} characters remaining.`
@@ -390,7 +487,13 @@ export function CcAiPanel({ transport = requestCcAi }: CcAiPanelProps) {
                               key={prompt}
                               type="button"
                               disabled={active}
-                              onClick={() => void sendQuestion(prompt)}
+                              onClick={() =>
+                                void sendQuestion(
+                                  prompt,
+                                  true,
+                                  resolveAssistantChannel("cc-ai-prompt"),
+                                )
+                              }
                             >
                               {prompt}
                             </button>
@@ -398,6 +501,19 @@ export function CcAiPanel({ transport = requestCcAi }: CcAiPanelProps) {
                         </div>
                       </div>
                     ) : null}
+
+                    <AnaExplorationPanel
+                      prompts={state.messages.length === 0 ? explorationPrompts : []}
+                      statuses={specialistStatuses}
+                      disabled={active}
+                      onPrompt={(prompt) =>
+                        void sendQuestion(
+                          prompt.prompt,
+                          true,
+                          resolveAssistantChannel({ kind: "exploration", channel: prompt.channel }),
+                        )
+                      }
+                    />
 
                     {state.messages.map((message) => (
                       <article
@@ -422,11 +538,19 @@ export function CcAiPanel({ transport = requestCcAi }: CcAiPanelProps) {
                     ))}
 
                     {state.status === "connecting" ? (
-                      <div className="cc-ai-connecting" aria-hidden="true">
-                        <span />
-                        <span />
-                        <span />
-                        <p>Connecting…</p>
+                      <div
+                        className="cc-ai-connecting"
+                        data-channel={lastChannel}
+                        aria-hidden="true"
+                      >
+                        {reducedMotion ? null : (
+                          <>
+                            <span />
+                            <span />
+                            <span />
+                          </>
+                        )}
+                        <p>{lastChannel === "ana" ? anaAnnouncement : "Connecting…"}</p>
                       </div>
                     ) : null}
 
@@ -471,7 +595,16 @@ export function CcAiPanel({ transport = requestCcAi }: CcAiPanelProps) {
                       <button
                         type="button"
                         disabled={state.status === "rate-limited"}
-                        onClick={() => void sendQuestion(state.lastQuestion, false)}
+                        onClick={() =>
+                          void sendQuestion(
+                            state.lastQuestion,
+                            false,
+                            resolveAssistantChannel({
+                              kind: "retry",
+                              lastChannel,
+                            }),
+                          )
+                        }
                       >
                         Retry
                       </button>
@@ -512,19 +645,34 @@ export function CcAiPanel({ transport = requestCcAi }: CcAiPanelProps) {
                     <p>{privacyNote}</p>
                     {state.response ? (
                       <div className="cc-ai-model-disclosure">
-                        <p>
-                          {state.response.model.variable
-                            ? "Model selected automatically for availability and cost."
-                            : "A configured model answered this question."}{" "}
-                          Response model: <code>{state.response.model.responded}</code>.
-                        </p>
-                        <p>
-                          The answer used {state.response.knowledge.records} approved public
-                          portfolio {state.response.knowledge.records === 1 ? "record" : "records"}.
-                          {state.response.truncated || state.response.knowledge.truncated
-                            ? " Some context or output was shortened to stay within safety limits."
-                            : ""}
-                        </p>
+                        {state.response.model.responded === "ana" ? (
+                          <>
+                            <p>
+                              ANA synthesized this answer from selected specialists. It is not a
+                              public knowledge-ledger reply from a provider model.
+                            </p>
+                            <p>
+                              Response model: <code>{state.response.model.responded}</code>.
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <p>
+                              {state.response.model.variable
+                                ? "Model selected automatically for availability and cost."
+                                : "A configured model answered this question."}{" "}
+                              Response model: <code>{state.response.model.responded}</code>.
+                            </p>
+                            <p>
+                              The answer used {state.response.knowledge.records} approved public
+                              portfolio{" "}
+                              {state.response.knowledge.records === 1 ? "record" : "records"}.
+                              {state.response.truncated || state.response.knowledge.truncated
+                                ? " Some context or output was shortened to stay within safety limits."
+                                : ""}
+                            </p>
+                          </>
+                        )}
                       </div>
                     ) : null}
                   </details>

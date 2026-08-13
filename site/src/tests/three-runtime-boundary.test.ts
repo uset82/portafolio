@@ -54,7 +54,7 @@ test("Canvas ownership is client-only, lazy, bounded, and demand-rendered", () =
 test("Drei usage is a named allowlist and app routes do not import WebGL packages directly", () => {
   const dreiSource = readSource("src/components/three/drei-tools.ts");
 
-  for (const approvedUtility of ["PerformanceMonitor", "Preload", "useGLTF", "useKTX2"]) {
+  for (const approvedUtility of ["Html", "PerformanceMonitor", "Preload", "useGLTF", "useKTX2"]) {
     assert.match(dreiSource, new RegExp(`\\b${approvedUtility}\\b`));
   }
 

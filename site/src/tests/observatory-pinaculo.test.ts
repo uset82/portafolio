@@ -298,5 +298,5 @@ test("the scene owns one instanced, bounded PINÁCULO path without numeric or gl
     styles,
     /observatory-progressive-experience:has\([\s\S]*data-selected="true"[\s\S]*data-selected="false"[\s\S]*visibility:\s*hidden/,
   );
-  assert.match(pageSource, /observatoryArtifacts\.map/);
+  assert.match(pageSource, /artifacts=\{observatoryArtifacts\}/);
 });

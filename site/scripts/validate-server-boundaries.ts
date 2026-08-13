@@ -34,6 +34,15 @@ collectSourceFiles(sourceRoot).forEach((file) => {
     violations.push(`${projectPath} exposes an OpenRouter server concern to a client module.`);
   }
 
+  if (
+    isClientModule &&
+    /@\/ana\/(?:memory|privacy|sandbox|security|discovery|debug)|ana\/(?:memory|privacy|sandbox|security|discovery|debug)/.test(
+      contents,
+    )
+  ) {
+    violations.push(`${projectPath} imports ANA private context into a client module.`);
+  }
+
   if (importsOpenRouterRuntime && file !== runtimeSdkModule) {
     violations.push(`${projectPath} imports the OpenRouter runtime outside the server boundary.`);
   }

@@ -85,6 +85,6 @@ test("the held presentation unmounts the artifact overlays", () => {
   assert.match(experience, /liveCanvasHeld\s*\n?\s*\? null\s*\n?\s*: artifacts\.map/);
   // Selected Systems still reaches every destination the overlays exposed.
   const page = readSource("src/app/page.tsx");
-  assert.match(page, /observatoryArtifacts\.map/);
+  assert.match(page, /artifacts=\{observatoryArtifacts\}/);
   assert.match(page, /href="\/laboratory"/);
 });

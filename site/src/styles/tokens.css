@@ -62,6 +62,18 @@
   --color-ivory-warm: var(--swatch-sand);
   --color-focus: var(--swatch-sage-dark);
 
+  /* Isolated source palette for the approved Project Orbit handoff. */
+  --orbit-ink-0: #0b0907;
+  --orbit-ink-1: #15100c;
+  --orbit-ink-2: #21170f;
+  --orbit-brass: #b8934f;
+  --orbit-brass-dim: #8a6a3c;
+  --orbit-bronze: #5d4526;
+  --orbit-graphite: #14100c;
+  --orbit-housing: #1a1511;
+  --orbit-ivory: #f4e3c6;
+  --orbit-bright-brass: #ffe0ac;
+
   --font-display: var(--font-cormorant), Georgia, "Times New Roman", serif;
   --font-body: var(--font-manrope), Inter, "Segoe UI", sans-serif;
   /* Display leading for headings that can wrap; the tighter mark leading is

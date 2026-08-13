@@ -7,7 +7,21 @@ Everything else is detail you open only when a task needs it.
 `CODEX` the build engine, most of the code · `GROK` hard fixes, builds, platform ·
 `GEMINI` music, video, images
 
-**90 open tasks** across the four agent plans. Status: `☐` not started · `⏳` in progress · `☑` done · `⛔` blocked
+**90 open tasks** across the four agent plans, plus the Project Orbit board below. Status: `☐` not started · `⏳` in progress · `☑` done · `⛔` blocked
+
+### ANA / Repo2Agent — Phase 0–30 verified
+
+Tracked in [`../taskplan.md`](../taskplan.md). Sequential ANA / Repo2Agent ledger is complete through Definition of Done (ADR 031). Public ANA stays gated. CC AI stays the visitor assistant.
+Do not enable specialists. Do not replace CC AI. Keep `ANA_SPECIALISTS_ENABLED` false. Keep `ANA_DEBUG_ENABLED` false in public deploys. Remaining product gaps: ADR 030.
+
+### Project Orbit — replace Selected Systems with a Three.js orbit · user-directed handoff port
+
+Tracked in [`tasks/rotating.md`](tasks/rotating.md) (`ORB-0` … `ORB-13`, gates A–F). Original spec
+archived at [`tasks/rotating-spec.md`](tasks/rotating-spec.md). **A user-directed Claude Design
+handoff port is implemented and locally verified in the shared dirty worktree; no ORB phase or
+gate is marked complete because the clean-worktree, switch, and data-governance steps were not
+executed.** The implementation uses existing palette tokens and keeps 3D limited to this one
+lazy below-the-fold section; the hero stays video.
 
 ---
 
@@ -184,7 +198,7 @@ is identical to the current defaults. It is config hygiene, not a fix.
 
 ### Grok
 
-- [ ] ☐ **V.13** · `CODEX` · **Delete the dead 3D layer** — `lib/three/**`, `components/three/**`, `site/public/three/decoders/**` (1 258 KB), the canvas gate, and the `assets:check` / `immersive:check` gates that test it. _Unblocked by `Q.3`. Removes ~a quarter of the codebase._
+- [ ] ☐ **V.13** · `CODEX` · **Delete the dead 3D layer** — `lib/three/**`, `components/three/**`, `site/public/three/decoders/**` (1 258 KB), the canvas gate, and the `assets:check` / `immersive:check` gates that test it. _Unblocked by `Q.3`. Removes ~a quarter of the codebase._ ⚠ _Coordinate with Project Orbit (`tasks/rotating.md`, D-008): KEEP the `three` / `@react-three/*` dependencies — the orbit section is their new sole consumer; preferred order is V.13 first, then ORB implementation._
 - [ ] ☐ **A.13** · `CODEX` · Make `model-policy.ts` accept a **named free model** in production mode — zero budget requires it
 - [ ] ☐ **M.10** · `CLAUDE` · "Buy me a coffee" destination and placement
 - [ ] ☐ **M.11** · `GEMINI` · **Confirm the Suno plan tier per track**, then choose the music licence — blocks every music publish

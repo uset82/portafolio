@@ -1,7 +1,8 @@
+import { AnaExplorationPanel } from "@/components/ana-exploration-panel";
 import { CcAiPanel } from "@/components/cc-ai-panel";
 import { HeroReveal, HeroRevealItem, SceneReveal } from "@/components/hero-reveal";
 import { MediaTeaser } from "@/components/media-teaser";
-import { ObservatoryAtom } from "@/components/observatory-atom";
+import { ProjectOrbit } from "@/components/project-orbit";
 import { PersonalTeaser } from "@/components/personal-teaser";
 import { ObservatoryHeroVideo } from "@/components/observatory-hero-video";
 import { ProfileTeaser } from "@/components/profile-teaser";
@@ -10,7 +11,9 @@ import { ObservatoryProgressiveExperienceContent } from "@/components/three/obse
 import { OBSERVATORY_LIVE_CANVAS_PRESENTATION } from "@/lib/three/progressive-loading";
 import { ObservatorySceneRuntimeProvider } from "@/components/three/observatory-scene-runtime-provider";
 import { ActionLink, ImageFrame } from "@/components/ui";
+import { ORBIT_PROJECTS } from "@/content/project-orbit";
 import { selectedSystems, siteContent } from "@/content/site";
+import { observatorySpecialistStatuses, selectExplorationPrompts } from "@/lib/ai/ana-exploration";
 
 const OBSERVATORY_ARTIFACT_DESCRIPTIONS = {
   astraea: "Three marked rings align when the instrument is focused.",
@@ -148,36 +151,28 @@ export default function Home() {
               </p>
             </HeroRevealItem>
           </HeroReveal>
+          <noscript>
+            <div className="ana-exploration ana-exploration--noscript">
+              <p>CACM AI remains the public portfolio guide.</p>
+              <AnaExplorationPanel prompts={[]} statuses={observatorySpecialistStatuses()} />
+            </div>
+          </noscript>
         </div>
 
-        <CcAiPanel />
+        <CcAiPanel
+          explorationPrompts={selectExplorationPrompts({
+            orchestratorEnabled: process.env.ANA_SPECIALISTS_ENABLED === "true",
+            availableAgentIds: [],
+          })}
+        />
 
         <p className="current-focus current-focus--mobile">
           <span aria-hidden="true" />
           {metadata.currentFocus}
         </p>
-
-        <div className="selected-systems" id="selected-systems">
-          <div className="selected-systems__heading">
-            <h2>Selected Systems</h2>
-            <p className="selected-systems__count">
-              {String(observatoryArtifacts.length).padStart(2, "0")} systems
-            </p>
-          </div>
-          {/* Every Observatory system rides the atom, not just the flagship
-           * three: three orbits carry two each, and the whole register is what
-           * the visitor is choosing between. */}
-          <ObservatoryAtom
-            items={observatoryArtifacts.map((artifact) => ({
-              id: artifact.artifactId,
-              href: artifact.href,
-              title: artifact.title,
-              descriptor: artifact.descriptor,
-              status: artifact.status,
-            }))}
-          />
-        </div>
       </section>
+
+      <ProjectOrbit projects={ORBIT_PROJECTS} />
 
       <section className="editorial-section laboratory-section" aria-labelledby="laboratory-title">
         <p className="section-label">Laboratory / 01</p>

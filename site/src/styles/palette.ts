@@ -33,6 +33,29 @@ export const naturalPalette = {
   silver: "#c8c7be",
   textSecondary: "#6e5b4d",
   borderSoft: "#cdb69e",
+  // Project Orbit is a user-supplied Claude Design handoff. These values are
+  // its sampled warm-black/brass material set, kept named so the isolated
+  // instrument can stay faithful without leaking arbitrary literals into UI.
+  orbitInk: "#0b0907",
+  orbitInkRaised: "#15100c",
+  orbitInkPanel: "#21170f",
+  orbitBrass: "#b8934f",
+  orbitBrassDim: "#8a6a3c",
+  orbitBronze: "#5d4526",
+  orbitGraphite: "#14100c",
+  orbitHousing: "#1a1511",
+  orbitIvory: "#f4e3c6",
+  orbitBrightBrass: "#ffe0ac",
+  orbitKeyLight: "#ffd9a3",
+  orbitRimLight: "#ffc17a",
+  orbitCoreLight: "#ffb972",
+  orbitBearing: "#d7ae70",
+  orbitHalo: "#e8b06a",
+  orbitEnvHighlight: "#6b543c",
+  orbitEnvMid: "#2b211a",
+  orbitEnvDark: "#120e0a",
+  orbitEnvBlack: "#070605",
+  orbitAmbient: "#4a3a2a",
 } as const;
 
 export const threeMaterialPalette = {
