@@ -1,4 +1,5 @@
 FROM node:22-bookworm-slim AS build
+LABEL cacm.guide="observatory-2026-08-13"
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="${PNPM_HOME}:${PATH}"

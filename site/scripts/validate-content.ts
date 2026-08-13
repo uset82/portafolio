@@ -550,7 +550,11 @@ if (!ccAiPublicKnowledgeLedgerResult.success) {
   publicKnowledgeRecordCount = ccAiPublicKnowledgeLedgerResult.data.records.length;
   publicKnowledgeExclusionCount = ccAiPublicKnowledgeLedgerResult.data.exclusions.length;
 
-  const expectedRecordIds = ["profile-carlos-carpio", "public-contact-links"];
+  const expectedRecordIds = [
+    "profile-carlos-carpio",
+    "public-contact-links",
+    "public-observatory-frame",
+  ];
   if (
     ccAiPublicKnowledgeLedgerResult.data.records.map((record) => record.id).join("|") !==
     expectedRecordIds.join("|")

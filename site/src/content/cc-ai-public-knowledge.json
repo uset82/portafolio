@@ -32,6 +32,19 @@
       "verification": "user-approved",
       "rights": "not-applicable",
       "sourceIds": ["approved-public-profile", "github-uset82"]
+    },
+    {
+      "id": "public-observatory-frame",
+      "type": "profile",
+      "title": "The Observatory",
+      "facts": [
+        "The Observatory is the public homepage frame of this portfolio, not a separate product.",
+        "Enter the Observatory is a public navigation action on the homepage.",
+        "Named Observatory pieces are visual and navigational concepts, not shipped scientific products."
+      ],
+      "verification": "user-approved",
+      "rights": "not-applicable",
+      "sourceIds": ["public-homepage-observatory"]
     }
   ],
   "exclusions": [
@@ -95,7 +108,7 @@
       "scope": "ASTRAEA, PINÁCULO, and Future Energy as real, shipped, scientific, predictive, or available systems",
       "reason": "The names are approved visual concepts, but their exact project identity, evidence, contribution, status, and publication rights remain unresolved.",
       "sourceInventoryIds": ["observatory-concepts"],
-      "safeResponse": "Do not treat the concepts as answerable project facts until Carlos approves their exact status and evidence."
+      "safeResponse": "Describe the Observatory only as the public homepage frame. Do not treat ASTRAEA, PINÁCULO, or Future Energy as shipped, scientific, or available systems."
     },
     {
       "id": "three-d-provider-and-asset-claims",

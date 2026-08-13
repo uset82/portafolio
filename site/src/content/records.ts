@@ -52,6 +52,17 @@ export const rawSiteContent = {
       notes:
         "Carlos approved this as the canonical public GitHub account; volatile repository counts are excluded.",
     },
+    {
+      id: "public-homepage-observatory",
+      label: "Public homepage Observatory frame",
+      kind: "external-page",
+      owner: "Carlos Carpio",
+      public: true,
+      url: "https://carloscarpio.up.railway.app/",
+      checkedOn: "2026-08-13",
+      notes:
+        "The public homepage includes Enter the Observatory and presents the Observatory as the first-room visual frame, not a separate product.",
+    },
   ],
   metadata: {
     name: "Carlos Alfredo Carpio Meza",

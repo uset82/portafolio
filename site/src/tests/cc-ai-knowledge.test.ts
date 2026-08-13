@@ -40,11 +40,11 @@ test("current public ledger exposes only approved profile and contact facts", ()
 
   assert.deepEqual(
     context.entries.map((entry) => entry.id),
-    ["profile-carlos-carpio", "public-contact-links"],
+    ["profile-carlos-carpio", "public-contact-links", "public-observatory-frame"],
   );
   assert.deepEqual(
     context.sources.map((source) => source.id),
-    ["approved-public-profile", "github-uset82"],
+    ["approved-public-profile", "github-uset82", "public-homepage-observatory"],
   );
   assert.match(
     context.systemMessage,
@@ -59,11 +59,21 @@ test("builder includes only approved public records with traceable source IDs", 
 
   assert.deepEqual(
     context.entries.map((entry) => entry.id),
-    ["profile-carlos-carpio", "public-contact-links", "project-astraea"],
+    [
+      "profile-carlos-carpio",
+      "public-contact-links",
+      "public-observatory-frame",
+      "project-astraea",
+    ],
   );
   assert.deepEqual(
     context.sources.map((source) => source.id),
-    ["approved-public-profile", "github-uset82", "public-portfolio-source"],
+    [
+      "approved-public-profile",
+      "github-uset82",
+      "public-homepage-observatory",
+      "public-portfolio-source",
+    ],
   );
   assert.match(context.systemMessage, /\[source-id\]/);
   assert.match(context.systemMessage, /public-portfolio-source/);
@@ -82,7 +92,7 @@ test("a record with any private source dependency is excluded", () => {
 
   assert.deepEqual(
     context.entries.map((entry) => entry.id),
-    ["profile-carlos-carpio", "public-contact-links"],
+    ["profile-carlos-carpio", "public-contact-links", "public-observatory-frame"],
   );
   assert.doesNotMatch(context.systemMessage, /approved-main-ui|mainUI/);
 });
@@ -145,8 +155,13 @@ test("service sends the bounded context first and returns its public source meta
   );
 
   assert.deepEqual(response.knowledge, {
-    records: 3,
-    sourceIds: ["approved-public-profile", "github-uset82", "public-portfolio-source"],
+    records: 4,
+    sourceIds: [
+      "approved-public-profile",
+      "github-uset82",
+      "public-homepage-observatory",
+      "public-portfolio-source",
+    ],
     truncated: false,
   });
 });

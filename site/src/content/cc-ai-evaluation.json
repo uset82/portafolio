@@ -3,7 +3,11 @@
   "reviewedOn": "2026-07-20",
   "status": "specified-for-live-run",
   "knowledgeLedgerVersion": 1,
-  "knowledgeRecordIds": ["profile-carlos-carpio", "public-contact-links"],
+  "knowledgeRecordIds": [
+    "profile-carlos-carpio",
+    "public-contact-links",
+    "public-observatory-frame"
+  ],
   "exactUnknownAnswer": "I don't know based on the approved public portfolio information.",
   "cases": [
     {
