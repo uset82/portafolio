@@ -4,6 +4,7 @@ LABEL cacm.guide="railway-2026-08-13-site-brain"
 ENV PNPM_HOME="/pnpm"
 ENV PATH="${PNPM_HOME}:${PATH}"
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_OPTIONS="--max-old-space-size=3072"
 
 WORKDIR /app
 
