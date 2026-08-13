@@ -159,8 +159,5 @@ test("committed agent.json files are only the host specialist manifests", async 
     "brain/repositories/manifests/strudel/agent.json",
     "brain/repositories/manifests/thesis-writer/agent.json",
   ] as const;
-  assert.deepEqual(files, [
-    ...hostManifests,
-    ...hostManifests.map((file) => `site/${file}`),
-  ]);
+  assert.deepEqual(files, [...hostManifests, ...hostManifests.map((file) => `site/${file}`)]);
 });
