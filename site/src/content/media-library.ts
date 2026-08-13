@@ -37,14 +37,14 @@ export type VideoWork = {
 };
 
 /**
- * Empty until Carlos supplies the published song URLs. Adding an entry here is
- * the only step needed for it to appear in the Sound room.
+ * Empty until Carlos pastes published song URLs. This update received none,
+ * so the Sound shelf stays a profile link rather than invented titles.
  */
 export const MUSIC_TRACKS: readonly MusicTrack[] = [];
 
 /**
- * Empty until Carlos supplies the published video URLs. Adding an entry here is
- * the only step needed for it to appear in the Sound room.
+ * Empty until Carlos pastes published YouTube watch URLs. This update received
+ * none, so the video shelf stays a channel link rather than invented titles.
  */
 export const VIDEO_WORKS: readonly VideoWork[] = [];
 

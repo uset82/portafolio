@@ -49,6 +49,8 @@ test("the homepage mounts the teaser from resolved roster data", () => {
 
   assert.match(homepage, /const playableGames = ARCADE_GAMES\.filter\(isArcadeGamePlayable\)/);
   assert.match(homepage, /<ArcadeTeaser playable=\{playableGames\} total=\{ARCADE_GAMES\.length\}/);
+  assert.equal(homepage.indexOf("<ArcadeTeaser") < homepage.indexOf("<MediaTeaser"), true);
+  assert.equal(homepage.indexOf("<MediaTeaser") < homepage.indexOf("<SupportTeaser"), true);
 });
 
 test("the arcade teaser carries responsive and reduced-motion paths", () => {

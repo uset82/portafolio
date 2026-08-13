@@ -60,6 +60,11 @@ test("published media profiles are the two Carlos confirmed", () => {
   assert.equal(VIDEO_PROFILE.url, "https://www.youtube.com/@cucciolo182");
 });
 
+test("no song or video is invented while the published URL list is still empty", () => {
+  assert.deepEqual(MUSIC_TRACKS, []);
+  assert.deepEqual(VIDEO_WORKS, []);
+});
+
 test("every catalogued track carries a published URL and a stated licence", () => {
   for (const track of MUSIC_TRACKS) {
     assert.match(track.url, /^https:\/\//, `${track.id} has no published URL`);

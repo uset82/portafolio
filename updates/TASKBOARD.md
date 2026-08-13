@@ -43,6 +43,10 @@ WAVE 4  ░░░░░░░░░░  Launch
 `M.13` Suno + YouTube links · `M.10` your Buy Me a Coffee handle · a Railway service for
 `My-Football-Game` · Gemini's AVIF is larger than its WebP and needs re-encoding
 
+### 2026-08-13 — homepage path is play, listen, contribute
+
+After Project Orbit the homepage now goes Arcade teaser → Sound teaser → Support teaser, then Laboratory. MandelBro is the only playable game named. Sound names StrudelAI and keeps Suno/YouTube shelves empty until Carlos pastes published URLs (`M.13`). Contribute names the four MIT repos only; Buy Me a Coffee stays hidden (`M.10`). No 61-repo grid.
+
 ### 2026-08-13 — the playable layer landed (uncommitted, in the shared worktree)
 
 `/arcade` · `/arcade/[slug]` · `/support` shipped, and `/sound` was rebuilt as a real room.

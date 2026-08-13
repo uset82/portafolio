@@ -102,6 +102,16 @@ export const TIP: TipDestination = {
   note: "Entirely optional. The games, the music and the code stay free and unchanged either way.",
 };
 
+export const SUPPORT_TEASER = {
+  eyebrow: "Support / Contribute",
+  status: "4 MIT repositories",
+  heading: "The work you can help with.",
+  description:
+    "Four repositories carry an MIT licence. Open an issue or send a pull request. The rest stay readable on GitHub until their licences change.",
+  actionLabel: "Contribute",
+  actionHref: "/support",
+} as const;
+
 export const SUPPORT_SUMMARY = {
   eyebrow: "Support / 06",
   heading: "If something here was worth your time.",

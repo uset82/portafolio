@@ -9081,3 +9081,183 @@ body:has(.observatory-hero) .site-header .site-header__status {
     transition: none;
   }
 }
+
+/* ===========================================================================
+   Support teaser — the homepage's one claim about contribution
+   =========================================================================== */
+
+.support-teaser {
+  display: grid;
+  grid-template-columns: minmax(20rem, 1.05fr) minmax(16rem, 0.65fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  width: min(100%, var(--page-max));
+  margin-inline: auto;
+  padding: clamp(3.5rem, 7vw, 6.5rem) var(--page-gutter);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.support-teaser__copy {
+  display: grid;
+  justify-items: start;
+}
+
+.support-teaser__status {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  margin: 0 0 1.5rem;
+  color: var(--color-text-secondary);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.support-teaser__status > span {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--color-moss);
+}
+
+.support-teaser h2 {
+  max-width: 16ch;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 4.6vw, 4.6rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+  text-wrap: balance;
+}
+
+.support-teaser__description {
+  max-width: 38rem;
+  margin: 1.5rem 0 0;
+  color: var(--color-text-secondary);
+  font-size: clamp(0.9rem, 1vw, 1rem);
+  line-height: 1.7;
+}
+
+.support-teaser__repos {
+  display: grid;
+  gap: 0.9rem;
+  width: 100%;
+  max-width: 34rem;
+  margin: 2rem 0 0;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid var(--color-border-soft);
+  list-style: none;
+}
+
+.support-teaser__repos li {
+  display: grid;
+  grid-template-columns: 2.25rem 1fr;
+  gap: 0.15rem 0.75rem;
+  align-items: baseline;
+}
+
+.support-teaser__repos li > span {
+  color: var(--color-text-secondary);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.support-teaser__repos li > strong {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 1.7vw, 1.5rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.support-teaser__repos li > small {
+  grid-column: 2;
+  color: var(--color-text-secondary);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.support-teaser__action {
+  margin-top: 2.25rem;
+}
+
+.support-teaser__mark {
+  position: relative;
+  display: grid;
+  width: min(100%, 24rem);
+  aspect-ratio: 4 / 5;
+  justify-self: end;
+  align-content: space-between;
+  padding: 1.5rem;
+  overflow: hidden;
+  border: 1px solid var(--color-walnut);
+  background: var(--color-sage-pale);
+  box-shadow: inset 0 0 0 0.75rem color-mix(in srgb, var(--color-canvas) 28%, transparent);
+  transition: transform var(--duration-base) var(--ease-emphasized);
+}
+
+.support-teaser:focus-within .support-teaser__mark,
+.support-teaser:hover .support-teaser__mark {
+  transform: translateY(-0.35rem);
+}
+
+.support-teaser__mark-label,
+.support-teaser__mark > small {
+  color: var(--color-text-secondary-on-tint);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.support-teaser__glyph {
+  display: grid;
+  gap: 0.7rem;
+  align-content: center;
+  justify-self: center;
+  width: 58%;
+}
+
+.support-teaser__glyph i {
+  height: 0.35rem;
+  background: var(--color-walnut);
+}
+
+.support-teaser__glyph i:nth-child(2) {
+  width: 68%;
+}
+
+.support-teaser__glyph b {
+  width: 1.35rem;
+  height: 1.35rem;
+  border: 1px solid var(--color-walnut);
+  background: var(--color-clay);
+}
+
+@media (max-width: 61.99rem) {
+  .support-teaser {
+    grid-template-columns: 1fr;
+  }
+
+  .support-teaser__mark {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 47.99rem) {
+  .support-teaser__action {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .support-teaser__mark,
+  .support-teaser:focus-within .support-teaser__mark,
+  .support-teaser:hover .support-teaser__mark {
+    transform: none;
+    transition: none;
+  }
+}

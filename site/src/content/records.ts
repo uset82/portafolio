@@ -110,7 +110,7 @@ export const rawSiteContent = {
       eyebrow: "Sound + moving image / 02",
       heading: "Sound and moving image as pattern, memory, and response.",
       description:
-        "Music made with Suno and video published on YouTube. Every player is click-to-load, so nothing plays and no provider is contacted until you ask.",
+        "StrudelAI is open for testing. Music and video players stay click-to-load, so nothing plays and no provider is contacted until you ask.",
       status: "Click-to-load players",
       formats: ["Music", "Moving image"],
       action: {
@@ -123,7 +123,12 @@ export const rawSiteContent = {
         external: false,
       },
       verification: "reference-approved",
-      sourceIds: ["approved-main-ui", "approved-public-profile", "foundation-decision"],
+      sourceIds: [
+        "approved-main-ui",
+        "approved-public-profile",
+        "foundation-decision",
+        "public-strudelai-demo",
+      ],
     },
     personalTeaser: {
       eyebrow: "Travel + personal practice / 03",

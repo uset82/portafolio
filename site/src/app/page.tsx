@@ -7,6 +7,7 @@ import { ProjectOrbit } from "@/components/project-orbit";
 import { PersonalTeaser } from "@/components/personal-teaser";
 import { ObservatoryHeroVideo } from "@/components/observatory-hero-video";
 import { ProfileTeaser } from "@/components/profile-teaser";
+import { SupportTeaser } from "@/components/support-teaser";
 import { ObservatoryExperienceControls } from "@/components/three/observatory-experience-controls";
 import { ObservatoryProgressiveExperienceContent } from "@/components/three/observatory-progressive-experience";
 import { OBSERVATORY_LIVE_CANVAS_PRESENTATION } from "@/lib/three/progressive-loading";
@@ -177,6 +178,12 @@ export default function Home() {
 
       <ProjectOrbit projects={ORBIT_PROJECTS} />
 
+      <ArcadeTeaser playable={playableGames} total={ARCADE_GAMES.length} />
+
+      <MediaTeaser content={metadata.mediaTeaser} />
+
+      <SupportTeaser />
+
       <section className="editorial-section laboratory-section" aria-labelledby="laboratory-title">
         <p className="section-label">Laboratory / 01</p>
         <div>
@@ -196,10 +203,6 @@ export default function Home() {
           <i />
         </div>
       </section>
-
-      <ArcadeTeaser playable={playableGames} total={ARCADE_GAMES.length} />
-
-      <MediaTeaser content={metadata.mediaTeaser} />
 
       <PersonalTeaser content={metadata.personalTeaser} />
 

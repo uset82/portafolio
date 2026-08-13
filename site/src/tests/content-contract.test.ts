@@ -69,7 +69,9 @@ test("homepage media teaser promises click-to-load playback and embeds nothing i
   assert.equal(mediaTeaser.action.href, "/sound");
   assert.equal(mediaTeaser.action.external, false);
   assert.ok(mediaTeaser.sourceIds.includes("approved-public-profile"));
+  assert.ok(mediaTeaser.sourceIds.includes("public-strudelai-demo"));
   assert.match(mediaTeaser.description, /click-to-load/);
+  assert.match(mediaTeaser.description, /StrudelAI/);
   // The teaser may name the platforms; it may not carry a playable source.
   assert.doesNotMatch(
     JSON.stringify(mediaTeaser),

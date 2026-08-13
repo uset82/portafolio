@@ -34,10 +34,16 @@ test("the homepage preserves the Observatory layer stack and places Project Orbi
 
   const heroClose = home.indexOf("</section>", home.indexOf('className="observatory-hero"'));
   const orbitPosition = home.indexOf("<ProjectOrbit projects={ORBIT_PROJECTS} />");
+  const arcadePosition = home.indexOf("<ArcadeTeaser");
+  const mediaPosition = home.indexOf("<MediaTeaser");
+  const supportPosition = home.indexOf("<SupportTeaser");
   const laboratoryPosition = home.indexOf('className="editorial-section laboratory-section"');
   assert.equal(orbitPosition > layerOrder.at(-1)!, true);
   assert.equal(orbitPosition > heroClose, true);
-  assert.equal(orbitPosition < laboratoryPosition, true);
+  assert.equal(orbitPosition < arcadePosition, true);
+  assert.equal(arcadePosition < mediaPosition, true);
+  assert.equal(mediaPosition < supportPosition, true);
+  assert.equal(supportPosition < laboratoryPosition, true);
 
   assert.equal(layout.indexOf("<SiteHeader") < layout.indexOf("{children}"), true);
   assert.match(progressive, /<figure/);
