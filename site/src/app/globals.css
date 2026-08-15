@@ -9261,3 +9261,356 @@ body:has(.observatory-hero) .site-header .site-header__status {
     transition: none;
   }
 }
+
+/* ===========================================================================
+   Work register — built projects first, concepts kept separate
+   =========================================================================== */
+
+.work-register {
+  min-height: 100svh;
+  overflow: clip;
+  background: var(--color-canvas);
+}
+
+.work-register__hero {
+  display: grid;
+  grid-template-columns: minmax(7rem, 0.25fr) minmax(20rem, 1.05fr);
+  gap: clamp(2rem, 5vw, 6rem);
+  width: min(100%, var(--page-max));
+  margin-inline: auto;
+  padding: calc(var(--header-height) + clamp(3rem, 7vw, 6rem)) var(--page-gutter)
+    clamp(3rem, 6vw, 5.5rem);
+  align-items: center;
+  border-bottom: 1px solid var(--color-border-soft);
+  background: var(--color-linen);
+}
+
+.work-register__rail {
+  display: grid;
+  gap: 0.75rem;
+  align-self: start;
+  justify-items: start;
+}
+
+.work-register__identity {
+  display: grid;
+  align-content: center;
+}
+
+.work-register__identity > p {
+  margin: 0 0 1.2rem;
+  color: var(--color-text-secondary);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.work-register__identity h1 {
+  max-width: 16ch;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6vw, 6.4rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+  text-wrap: balance;
+}
+
+.work-register__identity > strong {
+  max-width: 40rem;
+  margin-top: 2rem;
+  color: var(--color-text-secondary);
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 1.7vw, 1.7rem);
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.work-register__shipped,
+.work-register__concepts {
+  width: min(100%, var(--page-max));
+  margin-inline: auto;
+  padding: clamp(3rem, 6vw, 5.5rem) var(--page-gutter);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.work-register__shipped header,
+.work-register__concepts header {
+  max-width: 46rem;
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+
+.work-register__shipped header h2,
+.work-register__concepts header h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.4vw, 3.4rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+  text-wrap: balance;
+}
+
+.work-register__shipped header > p,
+.work-register__concepts header > p {
+  margin: 1.25rem 0 0;
+  color: var(--color-text-secondary);
+  font-size: clamp(0.9rem, 1vw, 1rem);
+  line-height: 1.7;
+}
+
+.work-register__threads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.work-register__threads li {
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-control);
+  color: var(--color-text-secondary);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* --- Built projects ------------------------------------------------------ */
+
+.work-register__projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.work-register__project > article {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  height: 100%;
+  padding: clamp(1.35rem, 2.4vw, 2rem);
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-panel);
+  background: var(--color-canvas-soft);
+}
+
+.work-register__project-head {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.work-register__project-head > p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.work-register__project-head h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+}
+
+.work-register__project-head > strong {
+  color: var(--color-text-secondary);
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.work-register__project-body {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.work-register__project-note {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-left: 2px solid var(--color-clay);
+  background: var(--color-sage-pale);
+  color: var(--color-text-secondary-on-tint);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.work-register__project-spec {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--color-border-soft);
+}
+
+.work-register__project-spec > div {
+  display: grid;
+  grid-template-columns: minmax(5.5rem, 0.4fr) 1fr;
+  gap: 0.75rem;
+  align-items: baseline;
+}
+
+.work-register__project-spec dt {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.work-register__project-spec dd {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.work-register__project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.work-register__licensing {
+  display: grid;
+  gap: 0.85rem;
+  justify-items: start;
+  max-width: 46rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding: clamp(1.35rem, 2.4vw, 2rem);
+  border-left: 2px solid var(--color-clay);
+  background: var(--color-sage-pale);
+}
+
+.work-register__licensing p {
+  margin: 0;
+  color: var(--color-text-secondary-on-tint);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+/* --- Concepts ------------------------------------------------------------ */
+
+.work-register__concepts {
+  background: var(--color-linen);
+}
+
+.work-register__concept-list {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.work-register__concept-list > li {
+  border-top: 1px solid var(--color-border-soft);
+}
+
+.work-register__concept-list > li:last-child {
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.work-register__concept-list article {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr) auto;
+  gap: 1.5rem;
+  align-items: start;
+  padding: clamp(1.5rem, 3vw, 2.25rem) 0;
+}
+
+.work-register__concept-index {
+  color: var(--color-text-secondary);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.work-register__concept-identity {
+  display: grid;
+  gap: 0.5rem;
+  justify-items: start;
+}
+
+.work-register__concept-identity h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.4vw, 2.2rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.work-register__concept-identity > strong {
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.work-register__concept-identity > p {
+  max-width: 48rem;
+  margin: 0.25rem 0 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.work-register__concept-link {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+  align-self: center;
+  color: var(--color-text-primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* --- Narrow viewports ---------------------------------------------------- */
+
+@media (max-width: 47.99rem) {
+  .work-register__hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding-top: calc(var(--header-height) + 2.5rem);
+  }
+
+  .work-register__rail {
+    grid-auto-flow: column;
+    justify-content: start;
+  }
+
+  .work-register__project-spec > div {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+
+  .work-register__concept-list article {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  .work-register__project-actions .ui-action,
+  .work-register__licensing .ui-action {
+    width: 100%;
+    justify-content: center;
+  }
+}
