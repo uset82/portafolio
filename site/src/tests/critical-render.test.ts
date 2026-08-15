@@ -62,7 +62,10 @@ test("the Work route exposes every validated project without premature filters",
   assert.match(markup, /A working register of systems and ideas/);
   // Built work leads; the three Observatory concepts keep their own section
   // below it, so a designed idea never reads as a shipped result.
-  assert.equal((markup.match(/class="work-register__project"/g) ?? []).length, 10);
+  // Seven of the ten live here; the two games and StrudelAI keep their full
+  // record in the room where you can use them, and appear here as mentions.
+  assert.equal((markup.match(/class="work-register__project"/g) ?? []).length, 7);
+  assert.match(markup, /more live in another room/);
   assert.equal((markup.match(/class="work-register__concept-index"/g) ?? []).length, 3);
   assert.ok(markup.indexOf("work-register__shipped") < markup.indexOf("work-register__concepts"));
   assert.match(markup, /href="\/work\/astraea"/);

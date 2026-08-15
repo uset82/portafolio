@@ -9,6 +9,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { WorkRegister } from "@/components/work-register";
 import { FLAGSHIP_PROJECTS, flagshipThreads } from "@/content/flagship";
 import { rawSiteContent } from "@/content/records";
+import { livesOn } from "@/content/threads";
 import { siteContentSchema } from "@/content/schemas";
 
 const concepts = siteContentSchema.parse(rawSiteContent).projects;
@@ -18,7 +19,10 @@ test("built work is presented separately from concepts, and first", () => {
   const markup = render();
 
   assert.match(markup, /<main id="main-content" class="work-register">/);
-  assert.equal((markup.match(/class="work-register__project"/g) ?? []).length, 10);
+  // One home per project: the two games and StrudelAI are mentions here, not
+  // second full cards, so the same project is never presented twice.
+  assert.equal((markup.match(/class="work-register__project"/g) ?? []).length, 7);
+  assert.match(markup, /more live in another room/);
   assert.equal(concepts.length, 3);
   assert.ok(
     markup.indexOf("work-register__shipped") < markup.indexOf("work-register__concepts"),
@@ -31,10 +35,15 @@ test("every flagship entry states its languages, licence and source", () => {
   const markup = render();
 
   for (const project of FLAGSHIP_PROJECTS) {
+    // Every project is named here, whether as a full card or as a mention
+    // pointing at the room where it lives.
     assert.match(markup, new RegExp(project.name.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&")));
-    assert.match(markup, new RegExp(project.repository.replace(/\//g, "\\/")));
     assert.ok(project.languages.length > 0, `${project.id} must name what it is built with`);
     assert.match(project.lastPushed, /^\d{4}-\d{2}-\d{2}$/);
+
+    // Only a resident card carries the full record.
+    if (!livesOn(project.id, "/work")) continue;
+    assert.match(markup, new RegExp(project.repository.replace(/\//g, "\\/")));
   }
 
   // An absent licence is stated, never quietly omitted.

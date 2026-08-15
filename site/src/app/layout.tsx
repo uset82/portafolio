@@ -4,7 +4,7 @@ import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { MotionProvider } from "@/components/motion-provider";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { navigation, siteContent } from "@/content/site";
+import { footerNavigation, navigation, siteContent } from "@/content/site";
 
 import "./globals.css";
 
@@ -52,7 +52,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </a>
           <SiteHeader navigation={navigation} />
           {children}
-          <SiteFooter content={siteContent.metadata.footer} navigation={navigation} />
+          <SiteFooter content={siteContent.metadata.footer} navigation={footerNavigation} />
         </MotionProvider>
       </body>
     </html>

@@ -1597,7 +1597,13 @@ export const siteContentSchema = z
   .object({
     sources: z.array(sourceReferenceSchema).min(1),
     metadata: siteMetadataSchema,
-    navigation: z.array(linkSchema).min(1),
+    /* Four doors, answering "what do you want to do" rather than "what is
+     * this". The cap is the point: a fifth door reopens the paralysis this
+     * replaced, so the schema enforces it rather than trusting the content. */
+    navigation: z.array(linkSchema).min(1).max(4),
+    /* Destinations that are real but are not decisions a visitor makes on
+     * arrival. They live in the footer. */
+    secondaryNavigation: z.array(linkSchema).min(1),
     projects: z.array(projectSchema),
     laboratoryConcepts: z
       .array(laboratoryConceptSchema)

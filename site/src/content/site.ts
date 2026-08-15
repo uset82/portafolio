@@ -7,6 +7,18 @@ export const siteContent = siteContentSchema.parse(rawSiteContent);
 
 export const navigation = siteContent.navigation.map(({ href, label }) => ({ href, label }));
 
+export const secondaryNavigation = siteContent.secondaryNavigation.map(({ href, label }) => ({
+  href,
+  label,
+}));
+
+/**
+ * The footer is where the full map lives. The header carries four doors so a
+ * visitor can decide quickly; anyone who scrolled to the bottom is looking for
+ * something specific and should find every route in one place.
+ */
+export const footerNavigation = [...navigation, ...secondaryNavigation];
+
 export type NavigationItem = Pick<LinkRecord, "href" | "label">;
 
 export type SelectedSystem = {

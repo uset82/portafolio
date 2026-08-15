@@ -1,13 +1,10 @@
 import Link from "next/link";
 
+import { ThreadChips } from "@/components/thread-chips";
 import { ActionLink, StatusTag } from "@/components/ui";
-import {
-  FLAGSHIP_PROJECTS,
-  FLAGSHIP_REGISTER,
-  flagshipThreads,
-  type FlagshipProject,
-} from "@/content/flagship";
+import { FLAGSHIP_PROJECTS, FLAGSHIP_REGISTER, type FlagshipProject } from "@/content/flagship";
 import type { Project } from "@/content/schemas";
+import { assignmentFor, livesOn } from "@/content/threads";
 
 type WorkRegisterProps = {
   /** The concept-stage Observatory entries, kept in their own section. */
@@ -31,6 +28,8 @@ function ShippedCard({ project }: { project: FlagshipProject }) {
         </div>
 
         <p className="work-register__project-body">{project.summary}</p>
+
+        <ThreadChips projectId={project.id} label={`What ${project.name} is about`} />
 
         {project.contributionNote ? (
           <p className="work-register__project-note">{project.contributionNote}</p>
@@ -72,7 +71,11 @@ function ShippedCard({ project }: { project: FlagshipProject }) {
 }
 
 export function WorkRegister({ concepts }: WorkRegisterProps) {
-  const threads = flagshipThreads();
+  // One home per project. A game's full card belongs in the arcade and
+  // StrudelAI's in the Sound room; here they are a line with a link, so nobody
+  // reads two framings of the same project and counts it twice.
+  const resident = FLAGSHIP_PROJECTS.filter((project) => livesOn(project.id, "/work"));
+  const elsewhere = FLAGSHIP_PROJECTS.filter((project) => !livesOn(project.id, "/work"));
   const openSource = FLAGSHIP_PROJECTS.filter((project) => project.license === "MIT");
 
   return (
@@ -85,7 +88,7 @@ export function WorkRegister({ concepts }: WorkRegisterProps) {
         </div>
 
         <div className="work-register__identity">
-          <p>{threads.length} threads, one practice</p>
+          <p>Five threads, one practice</p>
           <h1 id="work-register-title">{FLAGSHIP_REGISTER.heading}</h1>
           <strong>
             Built work first, with its languages, its licence and its source. Concepts are kept
@@ -101,18 +104,38 @@ export function WorkRegister({ concepts }: WorkRegisterProps) {
           </p>
           <h2 id="work-register-shipped-title">{FLAGSHIP_REGISTER.shipped.heading}</h2>
           <p>{FLAGSHIP_REGISTER.shipped.description}</p>
-          <ul className="work-register__threads" aria-label="Threads across the register">
-            {threads.map((thread) => (
-              <li key={thread}>{thread}</li>
-            ))}
-          </ul>
         </header>
 
         <ul className="work-register__projects" aria-label="Built projects">
-          {FLAGSHIP_PROJECTS.map((project) => (
+          {resident.map((project) => (
             <ShippedCard key={project.id} project={project} />
           ))}
         </ul>
+
+        {elsewhere.length > 0 ? (
+          <div className="work-register__elsewhere">
+            <h3>{elsewhere.length} more live in another room.</h3>
+            <p>
+              They are part of the same ten. Their full record sits where you can actually use them,
+              rather than being repeated here.
+            </p>
+            <ul aria-label="Projects whose full record lives elsewhere">
+              {elsewhere.map((project) => {
+                const assignment = assignmentFor(project.id);
+                const home = assignment?.home ?? "/work";
+                return (
+                  <li key={project.id}>
+                    <span>{project.name}</span>
+                    <Link href={home} prefetch={false}>
+                      {home === "/arcade" ? "Play it" : "Listen to it"}{" "}
+                      <span aria-hidden="true">&#8594;</span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ) : null}
 
         <aside className="work-register__licensing">
           <p>
@@ -153,6 +176,7 @@ export function WorkRegister({ concepts }: WorkRegisterProps) {
                     <p>
                       {"conceptStatement" in project ? project.conceptStatement : project.summary}
                     </p>
+                    <ThreadChips projectId={project.id} label={`What ${project.title} is about`} />
                   </div>
 
                   <Link

@@ -209,13 +209,29 @@ export const rawSiteContent = {
     verification: "reference-approved",
     sourceIds: ["approved-main-ui", "approved-design-copy", "approved-public-profile"],
   },
+  /* Four verbs, not eight nouns. The menu answers "what do you want to do";
+   * what a project is *about* is carried by threads on each card instead, so
+   * cross-domain work connects without the menu growing. */
   navigation: [
-    ["nav-work", "Work", "/work"],
-    ["nav-arcade", "Arcade", "/arcade"],
+    ["nav-arcade", "Play", "/arcade"],
+    ["nav-work", "See", "/work"],
+    ["nav-sound", "Listen", "/sound"],
+    ["nav-story", "About", "/story"],
+  ].map(([id, label, href]) => ({
+    id,
+    label,
+    href,
+    kind: "navigation",
+    verification: "reference-approved",
+    sourceIds: ["approved-main-ui", "foundation-decision"],
+    external: false,
+  })),
+  /* Real destinations that are not an arrival decision. Laboratory and Cosmos
+   * are reached from inside See and About; Support is where something is
+   * offered, which is the footer's job, not the menu's. */
+  secondaryNavigation: [
     ["nav-laboratory", "Laboratory", "/laboratory"],
-    ["nav-sound", "Sound", "/sound"],
     ["nav-cosmos", "Cosmos", "/cosmos"],
-    ["nav-story", "Story", "/story"],
     ["nav-support", "Support", "/support"],
     ["nav-contact", "Contact", "/contact"],
   ].map(([id, label, href]) => ({

@@ -227,12 +227,17 @@ test("primary routes remain native semantic links with a restrained reduced-moti
   const routeEntryEnd = styles.indexOf("\nbutton,", routeEntryStart);
   const routeEntryStyles = styles.slice(routeEntryStart, routeEntryEnd);
 
+  // The header carries four verbs; Laboratory and Cosmos moved to the footer
+  // list. Every route stays reachable — only which list it sits in changed.
   for (const [label, href] of [
-    ["Work", "/work"],
+    ["Play", "/arcade"],
+    ["See", "/work"],
+    ["Listen", "/sound"],
+    ["About", "/story"],
     ["Laboratory", "/laboratory"],
-    ["Sound", "/sound"],
     ["Cosmos", "/cosmos"],
-    ["Story", "/story"],
+    ["Support", "/support"],
+    ["Contact", "/contact"],
   ] as const) {
     assert.match(records, new RegExp(`"${label}", "${href}"`));
   }
