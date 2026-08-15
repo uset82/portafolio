@@ -64,3 +64,19 @@ test("every outbound repository link is safe to open", () => {
     assert.match(anchor, /rel="noreferrer"/, `missing rel on ${anchor}`);
   }
 });
+
+test("the hero counts only the ways the page actually offers", () => {
+  const withoutTip = renderToStaticMarkup(createElement(SupportRoom, { tipUrl: null }));
+  const withTip = renderToStaticMarkup(
+    createElement(SupportRoom, { tipUrl: "https://buymeacoffee.com/example" }),
+  );
+
+  // Without a destination the page must not advertise a coffee it cannot serve.
+  assert.doesNotMatch(withoutTip, /coffee/i);
+  assert.match(withoutTip, /One way, entirely optional/);
+  assert.match(withoutTip, /There is one way to give something back/);
+
+  // With one configured, both routes are named.
+  assert.match(withTip, /Two ways, both optional/);
+  assert.match(withTip, /buy me a coffee/i);
+});

@@ -7,6 +7,9 @@ type SupportRoomProps = {
 };
 
 export function SupportRoom({ tipUrl }: SupportRoomProps) {
+  // The hero counts the ways this page actually offers, not the ways it could.
+  const summary = tipUrl ? SUPPORT_SUMMARY.withTip : SUPPORT_SUMMARY.withoutTip;
+
   return (
     <main id="main-content" className="support-room">
       <section className="support-room__hero" aria-labelledby="support-title">
@@ -16,9 +19,9 @@ export function SupportRoom({ tipUrl }: SupportRoomProps) {
         </div>
 
         <div className="support-room__identity">
-          <p>Two ways, both optional</p>
+          <p>{summary.kicker}</p>
           <h1 id="support-title">{SUPPORT_SUMMARY.heading}</h1>
-          <strong>{SUPPORT_SUMMARY.description}</strong>
+          <strong>{summary.description}</strong>
         </div>
       </section>
 
