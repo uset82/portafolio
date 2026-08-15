@@ -16,11 +16,15 @@ test("profile teaser publishes only approved biography and privacy-safe paths", 
 
   assert.match(markup, /aria-labelledby="profile-teaser-title"/);
   assert.match(markup, /Engineer · Inventor · Creative Technologist/);
-  assert.match(markup, /presenting verified work separately from prototypes/);
+  // /story publishes the biography in full; the teaser must not reprint it.
+  assert.doesNotMatch(markup, /presenting verified work separately from prototypes/);
+  assert.match(markup, /written out rather than\s+summarised here/);
   assert.equal((markup.match(/<li>/g) ?? []).length, 3);
   assert.match(markup, /href="\/story"/);
-  assert.match(markup, /href="https:\/\/github\.com\/uset82"/);
-  assert.match(markup, /external site/);
+  // The footer directly below carries GitHub and its own CC mark on every page.
+  // Duplicating them here read as two closing sections rather than one.
+  assert.doesNotMatch(markup, /href="https:\/\/github\.com\/uset82"/);
+  assert.doesNotMatch(markup, /profile-teaser__mark/);
   assert.doesNotMatch(markup, /<(?:img|picture)\b/);
   assert.doesNotMatch(markup, /(?:download|\.pdf|mailto:|street address|phone number)/i);
 });

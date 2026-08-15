@@ -1,5 +1,5 @@
 import { ActionLink } from "@/components/ui";
-import { CONTRIBUTABLE_REPOS, SUPPORT_TEASER } from "@/content/support";
+import { SUPPORT_TEASER } from "@/content/support";
 
 /**
  * The homepage's one claim about contribution.
@@ -14,22 +14,16 @@ export function SupportTeaser() {
   return (
     <section className="support-teaser" aria-labelledby={headingId}>
       <div className="support-teaser__copy">
-        <p className="section-label">{SUPPORT_TEASER.eyebrow}</p>
+        <p className="section-label">Contribute / 03</p>
         <p className="support-teaser__status">
           <span aria-hidden="true" />
           {SUPPORT_TEASER.status}
         </p>
         <h2 id={headingId}>{SUPPORT_TEASER.heading}</h2>
         <p className="support-teaser__description">{SUPPORT_TEASER.description}</p>
-        <ul className="support-teaser__repos" aria-label="Repositories open to contribution">
-          {CONTRIBUTABLE_REPOS.map((repo, index) => (
-            <li key={repo.id}>
-              <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-              <strong>{repo.name}</strong>
-              <small>{repo.language}</small>
-            </li>
-          ))}
-        </ul>
+        {/* /support lists the repositories in full. Naming them again here made
+         * the click redundant, so the teaser states how many and in what
+         * languages, and leaves the list where it can be acted on. */}
         <ActionLink className="support-teaser__action" href={SUPPORT_TEASER.actionHref}>
           {SUPPORT_TEASER.actionLabel} <span aria-hidden="true">→</span>
         </ActionLink>

@@ -23,7 +23,7 @@ export function ArcadeTeaser({ playable, total }: ArcadeTeaserProps) {
   return (
     <section className="arcade-teaser" aria-labelledby={headingId}>
       <div className="arcade-teaser__copy">
-        <p className="section-label">Arcade / 03</p>
+        <p className="section-label">Play / 01</p>
         <p className="arcade-teaser__status">
           <span aria-hidden="true" />
           {hasPlayable ? `${playable.length} playable now` : `${total} games, none hosted yet`}
@@ -37,20 +37,12 @@ export function ArcadeTeaser({ playable, total }: ArcadeTeaserProps) {
             : "Every game I have built, with its engine, controls, built size, and the specific reason it is not yet playable on this page."}
         </p>
 
-        {hasPlayable ? (
-          <ul className="arcade-teaser__titles" aria-label="Games you can play now">
-            {playable.map((game, index) => (
-              <li key={game.id}>
-                <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                <ActionLink href={`/arcade/${game.slug}`}>{game.title}</ActionLink>
-                <small>{game.tagline}</small>
-              </li>
-            ))}
-          </ul>
-        ) : null}
-
+        {/* The arcade page names the games. Repeating them here would make a
+         * visitor read the same list twice and learn nothing from the click, so
+         * this teaser carries the count and the reason to go instead. */}
         <ActionLink className="arcade-teaser__action" href="/arcade">
-          Enter the Arcade <span aria-hidden="true">&#8594;</span>
+          {hasPlayable ? `See all ${total} games` : "See the games"}{" "}
+          <span aria-hidden="true">&#8594;</span>
         </ActionLink>
       </div>
 
