@@ -73,7 +73,7 @@ way that "webdesigner" is not once slugs start differing from repo names.
 | 52 | `chaclacayo` | 2026-04-30 | 2026-05-01 | JavaScript | 15.7 | — | ● own |  |
 | 53 | `pacha` | 2026-05-10 | 2026-05-12 | TypeScript | 1.4 | — | ● own |  |
 | 54 | `CRM_SaaS_Educativo` | 2026-05-17 | 2026-05-18 | HTML | 0.3 | — | ● own |  |
-| 55 | `StillasCalculator` | 2026-05-30 | 2026-06-01 | TypeScript | 1.0 | — | ● own |  |
+| 55 | `StillasCalculator` | 2026-05-30 | 2026-06-01 | TypeScript | 1.0 | — | ● own | [live](https://stillascalculator.netlify.app/) |
 | 56 | `osiris` | 2026-06-01 | 2026-05-30 | — | 2.3 | MIT | ⑂ fork | [live](https://osirisai.live) |
 | 57 | `mini` | 2026-06-17 | 2026-06-17 | — | — | — | ○ empty |  |
 | 58 | `mentora` | 2026-06-24 | 2026-07-05 | TypeScript | 13.1 | MIT | ⑂ fork |  |

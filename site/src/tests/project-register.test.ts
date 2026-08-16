@@ -121,6 +121,23 @@ test("Jacobgolf is a playable game in the Games group, not an unfilled start", (
   assert.match(markup, /href="\/arcade\/jacobgolf"/);
 });
 
+test("StillasCalculator is a tools row with the live site Carlos provided", () => {
+  const stillas = GITHUB_REGISTER.find((repository) => repository.name === "StillasCalculator");
+  const tools = GITHUB_REGISTER_GROUPS.find((group) => group.id === "tools");
+  const markup = renderToStaticMarkup(createElement(ProjectRegister));
+
+  assert.ok(stillas);
+  assert.ok(tools);
+  assert.equal(stillas.tryUrl, "https://stillascalculator.netlify.app/");
+  assert.equal(stillas.tryLabel, "Open StillasCalculator");
+  assert.equal(
+    tools.repositories.some((repository) => repository.name === "StillasCalculator"),
+    true,
+  );
+  assert.match(markup, /href="https:\/\/stillascalculator\.netlify\.app\/"/);
+  assert.doesNotMatch(markup, /<(?:iframe)\b/);
+});
+
 test("project register is readable without animation and keeps focus, touch, and mobile contracts", () => {
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
 
