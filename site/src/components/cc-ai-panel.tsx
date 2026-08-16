@@ -36,12 +36,13 @@ import {
 } from "@/lib/ai/cc-ai-ui-state";
 
 import { AnimatedButton } from "./animate-ui/button";
+import { ArtifactView, parseArtifactsFromMessage } from "./artifacts";
 import { BrandMark } from "./brand-mark";
 
 const prompts = [
   "Which projects best show Carlos’s AI work?",
-  "What is the Observatory?",
-  "Where can I explore sound and music?",
+  "Build a React Pomodoro Timer app with sound effects",
+  "Create a playable retro Synth Pad in React",
 ];
 
 const privacyNote =
@@ -145,6 +146,8 @@ export function CcAiPanel({
   const [lastChannel, setLastChannel] = useState<"cc-ai" | "ana">("cc-ai");
   const [anaActiveAgents, setAnaActiveAgents] = useState<readonly string[]>([]);
   const [anaAnnouncement, setAnaAnnouncement] = useState("ANA is thinking.");
+  const [expandedArtifactId, setExpandedArtifactId] = useState<string | null>(null);
+  const [userApiKeyInput, setUserApiKeyInput] = useState<string>("");
   const reducedMotion = useReducedMotion();
   const active = state.status === "connecting" || state.status === "presenting";
   const specialistStatuses = observatorySpecialistStatuses(anaActiveAgents);
@@ -504,7 +507,7 @@ export function CcAiPanel({
 
                     <AnaExplorationPanel
                       prompts={state.messages.length === 0 ? explorationPrompts : []}
-                      statuses={specialistStatuses}
+                      statuses={[]}
                       disabled={active}
                       onPrompt={(prompt) =>
                         void sendQuestion(
@@ -515,27 +518,66 @@ export function CcAiPanel({
                       }
                     />
 
-                    {state.messages.map((message) => (
-                      <article
-                        key={message.id}
-                        className="cc-ai-message"
-                        data-role={message.role}
-                        data-state={message.state}
-                      >
-                        <span className="cc-ai-message__label">
-                          {message.role === "assistant" ? "CACM AI" : "You"}
-                        </span>
-                        <p>
-                          {message.content}
-                          {message.state === "presenting" ? (
-                            <span className="cc-ai-response-cursor" aria-hidden="true" />
-                          ) : null}
-                        </p>
-                        {message.state === "stopped" ? (
-                          <small className="cc-ai-message__state">Answer stopped</small>
-                        ) : null}
-                      </article>
-                    ))}
+                    {state.messages.map((message) => {
+                      if (message.role === "assistant") {
+                        const { segments } = parseArtifactsFromMessage(message.content);
+                        return (
+                          <article
+                            key={message.id}
+                            className="cc-ai-message"
+                            data-role={message.role}
+                            data-state={message.state}
+                          >
+                            <span className="cc-ai-message__label">CACM AI</span>
+                            <div className="cc-ai-message__content">
+                              {segments.map((segment, idx) => {
+                                if (segment.type === "artifact") {
+                                  const isExp = expandedArtifactId === (segment.artifact.id || String(idx));
+                                  return (
+                                    <ArtifactView
+                                      key={segment.artifact.id || idx}
+                                      artifact={segment.artifact}
+                                      isExpanded={isExp}
+                                      onToggleExpand={() =>
+                                        setExpandedArtifactId((prev) =>
+                                          prev === (segment.artifact.id || String(idx))
+                                            ? null
+                                            : (segment.artifact.id || String(idx))
+                                        )
+                                      }
+                                    />
+                                  );
+                                }
+                                return segment.content.trim() ? (
+                                  <p key={idx}>
+                                    {segment.content}
+                                    {message.state === "presenting" &&
+                                    idx === segments.length - 1 ? (
+                                      <span className="cc-ai-response-cursor" aria-hidden="true" />
+                                    ) : null}
+                                  </p>
+                                ) : null;
+                              })}
+                            </div>
+                            {message.state === "stopped" ? (
+                              <small className="cc-ai-message__state">Answer stopped</small>
+                            ) : null}
+                          </article>
+                        );
+                      }
+
+                      return (
+                        <article
+                          key={message.id}
+                          className="cc-ai-message"
+                          data-role={message.role}
+                          data-state={message.state}
+                        >
+                          <span className="cc-ai-message__label">You</span>
+                          <p>{message.content}</p>
+                        </article>
+                      );
+                    })}
 
                     {state.status === "connecting" ? (
                       <div
@@ -571,6 +613,47 @@ export function CcAiPanel({
                             Continue with <Link href="/work">selected work</Link> or{" "}
                             <Link href="/story">Carlos’s story</Link>.
                           </p>
+                        ) : null}
+                        {state.error.code === "configuration" ? (
+                          <div className="mt-2 text-xs flex flex-col gap-1.5 border-t border-stone-800/80 pt-2">
+                            <p className="text-stone-300">
+                              To generate custom live apps with OpenRouter free models, paste your API key below:
+                            </p>
+                            <div className="flex gap-2">
+                              <input
+                                type="password"
+                                placeholder="sk-or-v1-..."
+                                className="flex-1 px-2.5 py-1.5 rounded bg-stone-900 border border-stone-700 text-stone-200 text-xs font-mono"
+                                value={userApiKeyInput}
+                                onChange={(e) => setUserApiKeyInput(e.target.value)}
+                              />
+                              <button
+                                type="button"
+                                className="px-3 py-1.5 rounded bg-amber-900/60 border border-amber-700 text-amber-200 text-xs font-medium hover:bg-amber-900"
+                                onClick={() => {
+                                  if (typeof window !== "undefined" && userApiKeyInput.trim()) {
+                                    window.localStorage?.setItem("cacm_ai_user_key", userApiKeyInput.trim());
+                                    if (state.lastQuestion) {
+                                      void sendQuestion(state.lastQuestion, false, resolveAssistantChannel("cc-ai-prompt"));
+                                    }
+                                  }
+                                }}
+                              >
+                                Save & Retry
+                              </button>
+                            </div>
+                            <small className="text-stone-400">
+                              Get a free key from{" "}
+                              <a
+                                href="https://openrouter.ai/keys"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="underline text-amber-300"
+                              >
+                                openrouter.ai/keys
+                              </a>
+                            </small>
+                          </div>
                         ) : null}
                       </div>
                     ) : null}

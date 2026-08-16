@@ -16,24 +16,32 @@ export function AnaExplorationPanel({
   disabled = false,
   onPrompt,
 }: AnaExplorationPanelProps) {
+  if (statuses.length === 0 && prompts.length === 0) {
+    return null;
+  }
+
   return (
     <div className="ana-exploration">
-      <p className="ana-exploration__kicker">Observatory specialists</p>
-      <p className="ana-exploration__note">Status only — not separate chatbots.</p>
-      <ul className="ana-status" aria-label="Observatory specialist status">
-        {statuses.map((entry) => (
-          <li
-            key={entry.agentId}
-            data-state={entry.state}
-            data-artifact={entry.artifactId}
-            data-agent={entry.agentId}
-          >
-            <span className="ana-status__dot" aria-hidden="true" />
-            <span>{entry.label}</span>
-            <span>{entry.state === "active" ? "active" : "standby"}</span>
-          </li>
-        ))}
-      </ul>
+      {statuses.length > 0 ? (
+        <>
+          <p className="ana-exploration__kicker">Observatory specialists</p>
+          <p className="ana-exploration__note">Status only — not separate chatbots.</p>
+          <ul className="ana-status" aria-label="Observatory specialist status">
+            {statuses.map((entry) => (
+              <li
+                key={entry.agentId}
+                data-state={entry.state}
+                data-artifact={entry.artifactId}
+                data-agent={entry.agentId}
+              >
+                <span className="ana-status__dot" aria-hidden="true" />
+                <span>{entry.label}</span>
+                <span>{entry.state === "active" ? "active" : "standby"}</span>
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : null}
       {prompts.length > 0 ? (
         <div className="suggested-prompts" aria-label="ANA exploration prompts">
           <p className="ana-exploration__kicker">What can I help you explore?</p>

@@ -109,9 +109,9 @@ export async function runCcAiCompletion(
     knowledgeContext = EMPTY_CC_AI_KNOWLEDGE_CONTEXT,
     requestId,
     requestSignal,
-    timeoutMs = 12_000,
-    maxOutputTokens = 600,
-    maxOutputCharacters = 6_000,
+    timeoutMs = 30_000,
+    maxOutputTokens = 4_000,
+    maxOutputCharacters = 40_000,
   }: CcAiServiceOptions,
 ): Promise<CcAiSuccessResponse> {
   if (requestSignal?.aborted) {

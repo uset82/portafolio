@@ -53,14 +53,26 @@ const timeoutMs =
     ? Math.min(configuredTimeoutMs, 60_000)
     : DEFAULT_TIMEOUT_MS;
 
-export const POST = createCcAiPostHandler({
-  enabled: process.env.CC_AI_ENABLED === "true",
-  abuseGuard,
-  portfolioAudits,
-  serviceOptions: {
-    provider: createOpenRouterChatProvider(),
-    modelPolicy,
-    knowledgeContext,
-    timeoutMs,
-  },
-});
+export const POST = (request: Request) => {
+  const userKey = request.headers.get("x-openrouter-key")?.trim();
+  const provider = userKey
+    ? createOpenRouterChatProvider({
+        OPENROUTER_API_KEY: userKey,
+        ...(process.env.NEXT_PUBLIC_SITE_URL ? { NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL } : {}),
+      })
+    : createOpenRouterChatProvider();
+
+  const handler = createCcAiPostHandler({
+    enabled: process.env.CC_AI_ENABLED === "true",
+    abuseGuard,
+    portfolioAudits,
+    serviceOptions: {
+      provider,
+      modelPolicy,
+      knowledgeContext,
+      timeoutMs,
+    },
+  });
+
+  return handler(request);
+};

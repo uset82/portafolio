@@ -190,7 +190,64 @@ export const guideVisitorSite = (message: string): VisitorSiteGuide | null => {
 
   if (
     includesAny(normalized, [
+      "donde vive",
+      "dónde vive",
+      "where does carlos live",
+      "location",
+      "ubicacion",
+      "ubicación",
+      "donde reside",
+      "dónde reside",
+    ])
+  ) {
+    return {
+      answer: [
+        "La ubicación de Carlos no es pública en el portafolio por privacidad.",
+        "",
+        "Puedes contactarlo a través de la sección /contact o explorar su trabajo público en https://github.com/uset82.",
+      ].join("\n"),
+      sourceIds: ["approved-public-profile"],
+    };
+  }
+
+  if (
+    includesAny(normalized, [
+      "en que carlos es bueno",
+      "en qué carlos es bueno",
+      "en que es bueno",
+      "en qué es bueno",
+      "habilidades",
+      "skills",
+      "que hace carlos",
+      "qué hace carlos",
+      "a que se dedica",
+      "a qué se dedica",
+      "especialidad",
+    ])
+  ) {
+    return {
+      answer: [
+        "Carlos Alfredo Carpio Meza es Ingeniero, Inventor y Tecnólogo Creativo.",
+        "",
+        "Sus áreas principales de especialidad son:",
+        "• Inteligencia Artificial y orquestación de agentes",
+        "• Electrónica y sistemas embebidos (FPGA, STM32, IoT)",
+        "• Live-coding musical y herramientas de audio (StrudelAI)",
+        "• Herramientas 3D y aplicaciones experimentales (ASTROEA, Pináculo)",
+        "",
+        PREFERENCE_CLOSE,
+      ].join("\n"),
+      sourceIds: ["approved-public-profile"],
+    };
+  }
+
+  if (
+    includesAny(normalized, [
       "who is carlos",
+      "quien es carlos",
+      "quién es carlos",
+      "sobre carlos",
+      "acerca de carlos",
       "professional role",
       "what does carlos do",
       "tell me about carlos",

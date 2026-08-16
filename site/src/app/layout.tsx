@@ -38,6 +38,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       lang="en"
       className={`${displayFont.variable} ${bodyFont.variable}`}
       data-scroll-behavior="smooth"
+      suppressHydrationWarning
     >
       <body>
         <noscript>

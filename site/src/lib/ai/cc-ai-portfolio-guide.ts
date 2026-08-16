@@ -28,6 +28,18 @@ const BIOGRAPHY_KEYWORDS = [
   "employer",
   "curriculum",
   "case study",
+  "donde vive",
+  "dónde vive",
+  "quien es",
+  "quién es",
+  "sobre carlos",
+  "acerca de",
+  "en que es bueno",
+  "en qué es bueno",
+  "habilidades",
+  "skills",
+  "experience",
+  "experiencia",
 ];
 
 const LANE_QUERY: Record<PortfolioLane, string> = {
@@ -351,7 +363,11 @@ export const guideVisitorPortfolio = (options: {
 
   const prior = lastAssistant(history);
   const inGuide = isVisitorPortfolioGuide(prior);
-  const role = inferPortfolioVisitorRole(`${prior}\n${message}`);
+  const userTurnsText = [
+    ...history.filter((turn) => turn.role === "user").map((turn) => turn.content),
+    message,
+  ].join("\n");
+  const role = inferPortfolioVisitorRole(userTurnsText);
   const lanes = inferPortfolioLanes(message);
   const ask = isAskPortfolioQuestion(message);
   const excluded = mentionedRepositories(history, options.audits);
@@ -404,7 +420,7 @@ export const guideVisitorPortfolio = (options: {
     return { answer: recommendAnswer(hits[0], more.length > 0), hits };
   }
 
-  if (ask || (inGuide && (lanes.length !== 1 || inferPortfolioVisitorRole(message)))) {
+  if (ask || (inGuide && (lanes.length > 1 || Boolean(inferPortfolioVisitorRole(message))))) {
     return { answer: qualifierAnswer(message, role), hits: [] };
   }
 

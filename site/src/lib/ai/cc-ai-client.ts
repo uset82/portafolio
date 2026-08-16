@@ -63,9 +63,20 @@ export async function requestCcAi(
   signal: AbortSignal,
   fetchCcAi: FetchCcAi = fetch,
 ): Promise<CcAiResponse> {
+  const customKey =
+    typeof window !== "undefined"
+      ? window.sessionStorage?.getItem("cacm_ai_user_key") ||
+        window.localStorage?.getItem("cacm_ai_user_key")
+      : null;
+
+  const headers: Record<string, string> = { "content-type": "application/json" };
+  if (customKey) {
+    headers["x-openrouter-key"] = customKey.trim();
+  }
+
   const response = await fetchCcAi("/api/cc-ai", {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers,
     body: JSON.stringify(request),
     cache: "no-store",
     signal,

@@ -3,7 +3,7 @@ import "server-only";
 import { createOpenRouterClient } from "./openrouter-client";
 import { CcAiProviderError, type CcAiProvider, type CcAiProviderResult } from "./cc-ai-service";
 import { buildOpenRouterChatRequest } from "./openrouter-chat-request";
-import { OpenRouterConfigurationError } from "./openrouter-boundary";
+import { OpenRouterConfigurationError, type OpenRouterEnvironment } from "./openrouter-boundary";
 
 const getStatusCode = (error: unknown) => {
   if (typeof error !== "object" || error === null || !("statusCode" in error)) return undefined;
@@ -29,11 +29,11 @@ const normalizeProviderError = (error: unknown): CcAiProviderError => {
   return new CcAiProviderError("provider_unavailable", true);
 };
 
-export function createOpenRouterChatProvider(): CcAiProvider {
+export function createOpenRouterChatProvider(environment?: OpenRouterEnvironment): CcAiProvider {
   return {
     async complete(input): Promise<CcAiProviderResult> {
       try {
-        const client = createOpenRouterClient();
+        const client = createOpenRouterClient(environment);
         const response = await client.chat.send(
           {
             chatRequest: buildOpenRouterChatRequest(input),

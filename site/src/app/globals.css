@@ -1201,6 +1201,17 @@ a {
   }
 }
 
+.cc-ai-message:has(.artifact-card) {
+  width: 100%;
+  max-width: 100%;
+}
+
+.artifact-card {
+  width: 100%;
+  border-radius: var(--radius-control, 0.75rem);
+  box-shadow: 0 10px 30px -10px rgb(0 0 0 / 50%);
+}
+
 .cc-ai-connecting {
   display: flex;
   min-height: var(--control-height);
