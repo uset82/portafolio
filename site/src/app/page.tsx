@@ -184,26 +184,6 @@ export default function Home() {
 
       <SupportTeaser />
 
-      <section className="editorial-section laboratory-section" aria-labelledby="laboratory-title">
-        <p className="section-label">Laboratory / 01</p>
-        <div>
-          <h2 id="laboratory-title">Systems that move between code and matter.</h2>
-          <p>
-            AI agents, resilient energy, electronics, and experimental interfaces—presented as
-            evidence-led work, with concepts clearly separated from shipped systems.
-          </p>
-          <ActionLink className="text-link" href="/laboratory">
-            Enter the Laboratory <span aria-hidden="true">→</span>
-          </ActionLink>
-        </div>
-        <div className="instrument-figure" aria-hidden="true">
-          <span>CC</span>
-          <i />
-          <i />
-          <i />
-        </div>
-      </section>
-
       <PersonalTeaser content={metadata.personalTeaser} />
 
       <ProfileTeaser content={metadata.profileTeaser} />

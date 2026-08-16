@@ -555,6 +555,7 @@ if (!ccAiPublicKnowledgeLedgerResult.success) {
     "public-contact-links",
     "public-observatory-frame",
     "public-strudelai-test",
+    "public-cosmos-apps",
   ];
   if (
     ccAiPublicKnowledgeLedgerResult.data.records.map((record) => record.id).join("|") !==

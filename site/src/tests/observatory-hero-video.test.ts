@@ -83,8 +83,7 @@ test("the held presentation unmounts the artifact overlays", () => {
   const experience = readSource("src/components/three/observatory-progressive-experience.tsx");
 
   assert.match(experience, /liveCanvasHeld\s*\n?\s*\? null\s*\n?\s*: artifacts\.map/);
-  // Selected Systems still reaches every destination the overlays exposed.
   const page = readSource("src/app/page.tsx");
   assert.match(page, /artifacts=\{observatoryArtifacts\}/);
-  assert.match(page, /href="\/laboratory"/);
+  assert.doesNotMatch(page, /laboratory-section/);
 });

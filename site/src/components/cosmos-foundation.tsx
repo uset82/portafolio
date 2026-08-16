@@ -1,49 +1,33 @@
 import { ActionLink, StatusTag } from "@/components/ui";
+import {
+  COSMOS_APPS,
+  COSMOS_CONTRIBUTE,
+  COSMOS_TRAVEL,
+  astraeaApp,
+  pinaculoApp,
+} from "@/content/cosmos";
 import type { SiteMetadata } from "@/content/schemas";
 
 type CosmosFoundationProps = {
   content: SiteMetadata["personalTeaser"];
 };
 
-const practiceDefinitions = [
-  {
-    index: "01",
-    name: "Travel notes",
-    boundary: "Publication format—not a claim that a specific journey is public.",
-    requirements:
-      "A selected first-person story, safe place and time granularity, reusable imagery, captions, alt text, and a privacy review.",
-  },
-  {
-    index: "02",
-    name: "Astrology studies",
-    boundary: "Creative and personal study—not scientific, medical, or predictive advice.",
-    requirements:
-      "A Carlos-approved reflection, clear symbolic framing, reusable supporting media, and no claims about another person.",
-  },
-  {
-    index: "03",
-    name: "Numerology studies",
-    boundary: "Symbolic practice—not evidence, diagnosis, certainty, or prediction.",
-    requirements:
-      "A Carlos-approved reflection, an explicit interpretive boundary, accessible notation, and verified media rights.",
-  },
-] as const;
-
 const publicationBoundaries = [
   {
-    label: "Story selection",
-    value: "Not approved",
-    detail: "No journey, event, reading, or personal account is represented as public.",
+    label: "Travel stories",
+    value: "Held",
+    detail: "No journey, place, date, or personal travel account is represented as public.",
   },
   {
-    label: "Place and time",
-    value: "Withheld",
-    detail: "No location, route, date, coordinate, or inferred movement is exposed.",
+    label: "Birth data",
+    value: "Not collected here",
+    detail:
+      "This portfolio does not collect names or birth dates. Pináculo asks for that on its own site.",
   },
   {
-    label: "Images and rights",
-    value: "Required",
-    detail: "Original or reusable media needs permission, captions, and alt-text intent.",
+    label: "Private charts",
+    value: "Unpublished",
+    detail: "Carlos's own charts, readings, and dates are not published on this page.",
   },
   {
     label: "Claims boundary",
@@ -58,18 +42,18 @@ export function CosmosFoundation({ content }: CosmosFoundationProps) {
       <section className="cosmos-foundation__hero" aria-labelledby="cosmos-foundation-title">
         <div className="cosmos-foundation__rail">
           <p className="section-label">Cosmos / Personal practice</p>
-          <StatusTag tone="hold">{content.status}</StatusTag>
+          <StatusTag tone="neutral">{content.status}</StatusTag>
         </div>
 
         <div className="cosmos-foundation__identity">
-          <p>Observation without disclosure</p>
+          <p>Two apps you can try and read</p>
           <h1 id="cosmos-foundation-title">Personal systems for observing patterns and meaning.</h1>
           <strong>{content.heading}</strong>
           <small>{content.description}</small>
         </div>
 
         <div className="cosmos-foundation__atlas" aria-hidden="true">
-          <span>Unmapped field / 03</span>
+          <span>Public apps / 02</span>
           <div className="cosmos-foundation__orbits">
             <i />
             <i />
@@ -81,43 +65,62 @@ export function CosmosFoundation({ content }: CosmosFoundationProps) {
             <i />
             <i />
           </div>
-          <strong>—</strong>
-          <small>No places or dates plotted</small>
+          <strong>02</strong>
+          <small>Pináculo is open to try</small>
         </div>
       </section>
 
       <section className="cosmos-foundation__practices" aria-labelledby="cosmos-practices-title">
         <header>
           <p className="section-label">Practice register / 01</p>
-          <h2 id="cosmos-practices-title">Three future formats. No invented stories.</h2>
+          <h2 id="cosmos-practices-title">Two apps you can try and read.</h2>
           <p>
-            The register defines how approved personal material could appear. It does not present a
-            trip, reading, location, date, image, or private reflection as already published.
+            ASTROEA and Pináculo are public work. This page points to them; it does not host them,
+            embed them, or collect birth data. {COSMOS_CONTRIBUTE.body}
           </p>
         </header>
 
-        <ol aria-label="Cosmos practices in preparation">
-          {practiceDefinitions.map((practice) => (
-            <li key={practice.name}>
-              <span>{practice.index}</span>
+        <ol aria-label="Cosmos apps and held travel notes">
+          {COSMOS_APPS.map((app, index) => (
+            <li key={app.id}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
               <div>
-                <p>Practice in preparation</p>
-                <h3>{practice.name}</h3>
+                <p>{app.kind}</p>
+                <h3>{app.name}</h3>
               </div>
-              <p>{practice.boundary}</p>
-              <small>{practice.requirements}</small>
+              <p>{app.summary}</p>
+              <small>{app.status}</small>
+              <nav aria-label={`${app.name} links`}>
+                {app.tryUrl && app.tryLabel ? (
+                  <ActionLink href={app.tryUrl} rel="noreferrer" target="_blank">
+                    {app.tryLabel} <span aria-hidden="true">↗</span>
+                  </ActionLink>
+                ) : null}
+                <ActionLink href={app.repository} rel="noreferrer" target="_blank">
+                  {app.repositoryLabel} <span aria-hidden="true">↗</span>
+                </ActionLink>
+              </nav>
             </li>
           ))}
+          <li>
+            <span>03</span>
+            <div>
+              <p>{COSMOS_TRAVEL.status}</p>
+              <h3>{COSMOS_TRAVEL.name}</h3>
+            </div>
+            <p>{COSMOS_TRAVEL.summary}</p>
+            <small>Places and dates withheld</small>
+          </li>
         </ol>
       </section>
 
       <section className="cosmos-foundation__privacy" aria-labelledby="cosmos-privacy-title">
         <header>
           <p className="section-label">Publication boundary / 02</p>
-          <h2 id="cosmos-privacy-title">Personal context needs a higher evidence bar.</h2>
+          <h2 id="cosmos-privacy-title">The apps are public. The private record stays private.</h2>
           <p>
-            A story enters this room only after Carlos chooses it, defines a safe level of detail,
-            confirms the rights, and approves the reflection in its public form.
+            You can try Pináculo and read both repositories. Carlos&apos;s travel stories, own
+            charts, and dates are not published here.
           </p>
         </header>
 
@@ -142,20 +145,39 @@ export function CosmosFoundation({ content }: CosmosFoundationProps) {
           <span>Public stories / 00</span>
           <strong>HOLD</strong>
           <i />
-          <small>Privacy before place</small>
+          <small>Travel still unpublished</small>
         </div>
 
         <div className="cosmos-foundation__boundary-copy">
           <p className="section-label">Available now / 03</p>
-          <h2 id="cosmos-boundary-title">A clear frame, while the private record stays private.</h2>
+          <h2 id="cosmos-boundary-title">Try the work, then look through the code.</h2>
           <p>{content.claimsBoundary}</p>
           <p>
-            No gallery, map, address, date, coordinate, personal image, itinerary, reading, or
-            predictive result is exposed. The approved professional work and public biography remain
-            available through the routes below.
+            This page does not publish Carlos&apos;s private charts, journeys, or dates, and it does
+            not collect birth data. Pináculo and ASTROEA live on their own sites and repositories.
           </p>
+          <nav aria-label="Cosmos app routes">
+            {pinaculoApp.tryUrl && pinaculoApp.tryLabel ? (
+              <ActionLink
+                variant="primary"
+                href={pinaculoApp.tryUrl}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {pinaculoApp.tryLabel}
+              </ActionLink>
+            ) : null}
+            <ActionLink
+              variant="secondary"
+              href={astraeaApp.repository}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {astraeaApp.repositoryLabel}
+            </ActionLink>
+          </nav>
           <nav aria-label="Cosmos route alternatives">
-            <ActionLink variant="primary" href="/work">
+            <ActionLink variant="secondary" href="/work">
               Explore Work
             </ActionLink>
             <ActionLink variant="secondary" href="/story">

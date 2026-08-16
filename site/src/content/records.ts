@@ -74,6 +74,39 @@ export const rawSiteContent = {
       notes:
         "Carlos approved this live URL as the public StrudelAI test build. Contributors are welcome via the public GitHub repository.",
     },
+    {
+      id: "github-astraea",
+      label: "ASTROEA public GitHub repository",
+      kind: "repository",
+      owner: "Carlos Carpio",
+      public: true,
+      url: "https://github.com/uset82/ASTROEA",
+      checkedOn: "2026-08-16",
+      notes:
+        "Carlos directed Cosmos to this public astrology repository. The README describes natal-chart work inspired by astro.com. Educational and personal use; no MIT licence listed. No public demo URL listed.",
+    },
+    {
+      id: "github-pinaculo",
+      label: "Pináculo public GitHub repository",
+      kind: "repository",
+      owner: "Carlos Carpio",
+      public: true,
+      url: "https://github.com/uset82/pinaculo",
+      checkedOn: "2026-08-16",
+      notes:
+        "Carlos directed Cosmos to this public numerology repository. Interpretations draw on Carl Jung, per Carlos. No MIT licence listed.",
+    },
+    {
+      id: "public-pinaculo-demo",
+      label: "Pináculo public demo",
+      kind: "live-demo",
+      owner: "Carlos Carpio",
+      public: true,
+      url: "https://pinaculo.netlify.app/",
+      checkedOn: "2026-08-16",
+      notes:
+        "README and a live fetch confirm the numerology app is reachable. It collects a name and birth date on that origin, not on this portfolio.",
+    },
   ],
   metadata: {
     name: "Carlos Alfredo Carpio Meza",
@@ -126,12 +159,12 @@ export const rawSiteContent = {
       sourceIds: ["approved-main-ui", "approved-public-profile", "foundation-decision"],
     },
     personalTeaser: {
-      eyebrow: "Travel + personal practice / 03",
-      heading: "The observations that happen away from the workbench.",
+      eyebrow: "Astrology + numerology / 03",
+      heading: "Come in and try the two apps.",
       description:
-        "Travel, astrology, and numerology belong here as reflective and creative practice. Specific stories, places, dates, and images remain unpublished until Carlos approves their privacy and reuse rights.",
-      status: "Personal stories held for review",
-      themes: ["Travel notes", "Astrology studies", "Numerology studies"],
+        "ASTROEA is astrology inspired by astro.com. Pináculo is numerology with interpretations that draw on Carl Jung. Pináculo is open to try. Both repositories are public on GitHub.",
+      status: "Two apps you can look through",
+      themes: ["ASTROEA", "Pináculo", "Travel notes"],
       claimsBoundary:
         "Creative and personal practice—not scientific, medical, or predictive advice.",
       action: {
@@ -144,7 +177,14 @@ export const rawSiteContent = {
         external: false,
       },
       verification: "reference-approved",
-      sourceIds: ["approved-design-copy", "approved-public-profile", "foundation-decision"],
+      sourceIds: [
+        "approved-design-copy",
+        "approved-public-profile",
+        "foundation-decision",
+        "github-astraea",
+        "github-pinaculo",
+        "public-pinaculo-demo",
+      ],
     },
     profileTeaser: {
       eyebrow: "Profile / CV",

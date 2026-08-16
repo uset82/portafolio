@@ -40,6 +40,16 @@ const conceptAnswer = (name: string) =>
     PREFERENCE_CLOSE,
   ].join("\n");
 
+const cosmosAnswer = [
+  "Cosmos is where Carlos keeps two public apps for astrology and numerology — creative practice, not scientific, medical, or predictive advice.",
+  "",
+  "ASTROEA is the astrology repository, inspired by astro.com. There is no public try-it URL listed yet: https://github.com/uset82/ASTROEA",
+  "",
+  "Pináculo is the numerology app. You can try it at https://pinaculo.netlify.app/. The code is at https://github.com/uset82/pinaculo. Interpretations draw on Carl Jung.",
+  "",
+  "This portfolio does not host the apps or collect birth data. Travel stories stay unpublished. Start at /cosmos.",
+].join("\n");
+
 const greetingAnswer = [
   "You are in Carlos’s public portfolio. I can walk you through the work — I will not dump a catalog.",
   "",
@@ -114,11 +124,26 @@ export const guideVisitorSite = (message: string): VisitorSiteGuide | null => {
     return { answer: observatoryAnswer, sourceIds: ["approved-main-ui"] };
   }
 
-  if (/\bastraea\b/.test(normalized)) {
-    return { answer: conceptAnswer("ASTRAEA"), sourceIds: ["approved-main-ui"] };
+  if (
+    /\b(cosmos|astroea|pin[aá]culo)\b/.test(normalized) ||
+    (/\b(astrology|numerology)\b/.test(normalized) &&
+      /\b(app|apps|try|github|repository|demo)\b/.test(normalized))
+  ) {
+    return {
+      answer: cosmosAnswer,
+      sourceIds: ["github-astraea", "github-pinaculo", "public-pinaculo-demo"],
+    };
   }
-  if (/\bpin[aá]culo\b/.test(normalized)) {
-    return { answer: conceptAnswer("PINÁCULO"), sourceIds: ["approved-main-ui"] };
+
+  if (/\bastraea\b/.test(normalized)) {
+    return {
+      answer: [
+        "ASTRAEA is a named concept in the Observatory, not a released scientific product.",
+        "",
+        "The public astrology repository is ASTROEA: https://github.com/uset82/ASTROEA. See /cosmos.",
+      ].join("\n"),
+      sourceIds: ["approved-main-ui", "github-astraea"],
+    };
   }
   if (normalized.includes("future energy")) {
     return { answer: conceptAnswer("Future Energy"), sourceIds: ["approved-main-ui"] };

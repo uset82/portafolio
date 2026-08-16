@@ -2993,8 +2993,26 @@ body:has(.observatory-hero) .site-header .site-header__status {
   letter-spacing: 0.08em;
 }
 
-.personal-teaser__action {
+.personal-teaser__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.75rem;
+  align-items: center;
   margin-top: 1.75rem;
+}
+
+.personal-teaser__action {
+  margin-top: 0;
+}
+
+.personal-teaser__theme-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.personal-teaser__theme-link:hover,
+.personal-teaser__theme-link:focus-visible {
+  text-decoration: underline;
 }
 
 .personal-teaser__field {
@@ -6051,6 +6069,13 @@ body:has(.observatory-hero) .site-header .site-header__status {
   font-size: 0.7rem;
 }
 
+.cosmos-foundation__practices li > nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 1.1rem;
+  align-items: center;
+}
+
 .cosmos-foundation__privacy {
   grid-template-columns: minmax(20rem, 0.8fr) minmax(28rem, 1.2fr);
   background: var(--color-sage-pale);
@@ -6236,7 +6261,8 @@ body:has(.observatory-hero) .site-header .site-header__status {
     grid-template-columns: 2rem minmax(9rem, 0.55fr) 1fr;
   }
 
-  .cosmos-foundation__practices li > small {
+  .cosmos-foundation__practices li > small,
+  .cosmos-foundation__practices li > nav {
     grid-column: 2 / -1;
   }
 
@@ -6301,13 +6327,14 @@ body:has(.observatory-hero) .site-header .site-header__status {
   }
 
   .cosmos-foundation__practices li {
-    grid-template-columns: 2rem 1fr auto;
+    grid-template-columns: 2rem 1fr;
     gap: 0.85rem;
     padding-block: 1.5rem;
   }
 
   .cosmos-foundation__practices li > p,
-  .cosmos-foundation__practices li > small {
+  .cosmos-foundation__practices li > small,
+  .cosmos-foundation__practices li > nav {
     grid-column: 2 / -1;
   }
 
@@ -7718,6 +7745,11 @@ body:has(.observatory-hero) .site-header .site-header__status {
     padding-left: 0;
     border-top: 1px solid var(--color-border-soft);
     border-left: 0;
+  }
+
+  .personal-teaser__actions {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .personal-teaser__action {

@@ -7,33 +7,38 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { CosmosFoundation } from "@/components/cosmos-foundation";
+import { astraeaApp, pinaculoApp } from "@/content/cosmos";
 import { rawSiteContent } from "@/content/records";
 import { siteContentSchema } from "@/content/schemas";
 
-test("Cosmos defines approved personal-practice formats without publishing a private story", () => {
+test("Cosmos features the public apps without publishing a private story or collecting birth data", () => {
   const content = siteContentSchema.parse(rawSiteContent).metadata.personalTeaser;
   const markup = renderToStaticMarkup(createElement(CosmosFoundation, { content }));
 
   assert.match(markup, /<main id="main-content" class="cosmos-foundation">/);
   assert.match(markup, /Personal systems for observing patterns and meaning\./);
-  assert.match(markup, /Personal stories held for review/);
-  assert.equal((markup.match(/Practice in preparation/g) ?? []).length, 3);
+  assert.match(markup, /Two apps you can look through/);
+  assert.match(markup, />ASTROEA<\/h3>/);
+  assert.match(markup, />Pináculo<\/h3>/);
   assert.match(markup, />Travel notes<\/h3>/);
-  assert.match(markup, />Astrology studies<\/h3>/);
-  assert.match(markup, />Numerology studies<\/h3>/);
+  assert.match(markup, /https:\/\/github.com\/uset82\/ASTROEA/);
+  assert.match(markup, /https:\/\/github.com\/uset82\/pinaculo/);
+  assert.match(markup, /https:\/\/pinaculo\.netlify\.app\//);
+  assert.match(markup, /astro\.com/);
+  assert.match(markup, /Carl Jung/);
+  assert.match(markup, /does not collect names or birth dates/);
   assert.equal((markup.match(/<dt>/g) ?? []).length, 4);
-  assert.match(markup, /No journey, event, reading, or personal account is represented as public/);
   assert.match(
     markup,
     /Creative and personal practice—not scientific, medical, or predictive advice/,
   );
-  assert.match(markup, /href="\/work"/);
-  assert.match(markup, /href="\/story"/);
   assert.doesNotMatch(
     markup,
     /<(?:img|picture|video|audio|iframe|canvas|map|time|address|form|button)\b/,
   );
   assert.doesNotMatch(markup, /(?:latitude|longitude|street address|postal code|itinerary item)/i);
+  assert.equal(astraeaApp.tryUrl, null);
+  assert.equal(pinaculoApp.tryUrl, "https://pinaculo.netlify.app/");
 });
 
 test("Cosmos keeps a cardless responsive atlas with touch and reduced-motion safeguards", () => {

@@ -45,6 +45,7 @@ test("current public ledger exposes only approved profile and contact facts", ()
       "public-contact-links",
       "public-observatory-frame",
       "public-strudelai-test",
+      "public-cosmos-apps",
     ],
   );
   assert.deepEqual(
@@ -54,6 +55,9 @@ test("current public ledger exposes only approved profile and contact facts", ()
       "github-uset82",
       "public-homepage-observatory",
       "public-strudelai-demo",
+      "github-astraea",
+      "github-pinaculo",
+      "public-pinaculo-demo",
     ],
   );
   assert.match(
@@ -63,6 +67,7 @@ test("current public ledger exposes only approved profile and contact facts", ()
   assert.doesNotMatch(context.systemMessage, /mainUI|approved-main-ui|foundation-decision/);
   assert.doesNotMatch(context.systemMessage, /private résumé|project-astraea/);
   assert.match(context.systemMessage, /StrudelAI is a public live-coding music system/);
+  assert.match(context.systemMessage, /Pináculo is a public numerology repository/);
 });
 
 test("builder includes only approved public records with traceable source IDs", () => {
@@ -75,6 +80,7 @@ test("builder includes only approved public records with traceable source IDs", 
       "public-contact-links",
       "public-observatory-frame",
       "public-strudelai-test",
+      "public-cosmos-apps",
       "project-astraea",
     ],
   );
@@ -85,6 +91,9 @@ test("builder includes only approved public records with traceable source IDs", 
       "github-uset82",
       "public-homepage-observatory",
       "public-strudelai-demo",
+      "github-astraea",
+      "github-pinaculo",
+      "public-pinaculo-demo",
       "public-portfolio-source",
     ],
   );
@@ -110,6 +119,7 @@ test("a record with any private source dependency is excluded", () => {
       "public-contact-links",
       "public-observatory-frame",
       "public-strudelai-test",
+      "public-cosmos-apps",
     ],
   );
   assert.doesNotMatch(context.systemMessage, /approved-main-ui|mainUI/);
@@ -173,12 +183,15 @@ test("service sends the bounded context first and returns its public source meta
   );
 
   assert.deepEqual(response.knowledge, {
-    records: 5,
+    records: 6,
     sourceIds: [
       "approved-public-profile",
       "github-uset82",
       "public-homepage-observatory",
       "public-strudelai-demo",
+      "github-astraea",
+      "github-pinaculo",
+      "public-pinaculo-demo",
       "public-portfolio-source",
     ],
     truncated: false,

@@ -7,25 +7,30 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { PersonalTeaser } from "@/components/personal-teaser";
+import { COSMOS_APPS, pinaculoApp } from "@/content/cosmos";
 import { rawSiteContent } from "@/content/records";
 import { siteContentSchema } from "@/content/schemas";
 
-test("personal teaser exposes approved practices and the privacy hold without private media", () => {
+test("personal teaser names the public apps without publishing private stories", () => {
   const content = siteContentSchema.parse(rawSiteContent).metadata.personalTeaser;
   const markup = renderToStaticMarkup(createElement(PersonalTeaser, { content }));
 
   assert.match(markup, /<section class="personal-teaser" aria-labelledby="personal-teaser-title">/);
-  assert.match(markup, /The observations that happen away from the workbench\./);
-  assert.match(markup, /Personal stories held for review/);
-  assert.match(markup, /aria-label="Cosmos themes in preparation"/);
+  assert.match(markup, /Come in and try the two apps\./);
+  assert.match(markup, /Two apps you can look through/);
+  assert.match(markup, /aria-label="Apps and practices in Cosmos"/);
   assert.equal((markup.match(/<li>/g) ?? []).length, 3);
-  assert.match(markup, />Travel notes</);
-  assert.match(markup, />Astrology studies</);
-  assert.match(markup, />Numerology studies</);
+  assert.match(markup, /ASTROEA/);
+  assert.match(markup, /Pináculo/);
+  assert.match(markup, /Travel notes/);
+  assert.match(markup, /https:\/\/github.com\/uset82\/ASTROEA/);
+  assert.match(markup, /https:\/\/github.com\/uset82\/pinaculo/);
+  assert.match(markup, new RegExp(pinaculoApp.tryUrl!.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
   assert.match(markup, /not scientific, medical, or predictive advice/);
   assert.match(markup, /href="\/cosmos"/);
-  assert.doesNotMatch(markup, /<(?:img|picture|video|iframe|map|time|address)\b/);
+  assert.doesNotMatch(markup, /<(?:img|picture|video|iframe|map|time|address|form)\b/);
   assert.doesNotMatch(markup, /(?:latitude|longitude|street address|postal code)/i);
+  assert.equal(COSMOS_APPS.length, 2);
 });
 
 test("homepage mounts the copy-first responsive teaser with focus and reduced-motion feedback", () => {

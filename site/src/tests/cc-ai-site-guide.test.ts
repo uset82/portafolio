@@ -46,6 +46,20 @@ test("StrudelAI questions name the test build and the repository", () => {
   assert.doesNotMatch(guided.answer, /festival|DJ Tools|I don't know/i);
 });
 
+test("Pináculo and Cosmos questions point at the public apps", () => {
+  const pinaculo = guideVisitorSite("What is Pináculo?");
+  assert.ok(pinaculo);
+  assert.match(pinaculo.answer, /https:\/\/pinaculo\.netlify\.app\//);
+  assert.match(pinaculo.answer, /https:\/\/github.com\/uset82\/pinaculo/);
+  assert.match(pinaculo.answer, /Carl Jung/);
+  assert.doesNotMatch(pinaculo.answer, /released scientific product|I don't know/i);
+
+  const cosmos = guideVisitorSite("Where can I try the astrology app?");
+  assert.ok(cosmos);
+  assert.match(cosmos.answer, /https:\/\/github.com\/uset82\/ASTROEA/);
+  assert.match(cosmos.answer, /no public try-it URL listed yet/);
+});
+
 test("greetings ask for a preference instead of calling the model", () => {
   const hi = guideVisitorSite("hi");
   assert.ok(hi);

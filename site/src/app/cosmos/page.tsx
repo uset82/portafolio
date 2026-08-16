@@ -9,7 +9,7 @@ const siteContent = siteContentSchema.parse(rawSiteContent);
 export const metadata: Metadata = {
   title: "Cosmos",
   description:
-    "Carlos Alfredo Carpio Meza's privacy-first space for future travel notes, astrology studies, and numerology studies, framed as creative and personal practice.",
+    "Try Pináculo, a numerology app with interpretations that draw on Carl Jung, and read ASTROEA, an astrology repository inspired by astro.com. Creative and personal practice—not scientific, medical, or predictive advice.",
 };
 
 export default function CosmosPage() {

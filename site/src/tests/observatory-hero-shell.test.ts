@@ -7,7 +7,7 @@ function readSource(relativePath: string) {
   return readFileSync(path.join(process.cwd(), relativePath), "utf8");
 }
 
-test("the homepage preserves the Observatory layer stack and places Project Orbit before the laboratory", () => {
+test("the homepage preserves the Observatory layer stack and places Project Orbit before play, listen, and contribute", () => {
   const home = readSource("src/app/page.tsx");
   const layout = readSource("src/app/layout.tsx");
   const progressive = readSource("src/components/three/observatory-progressive-experience.tsx");
@@ -37,13 +37,14 @@ test("the homepage preserves the Observatory layer stack and places Project Orbi
   const arcadePosition = home.indexOf("<ArcadeTeaser");
   const mediaPosition = home.indexOf("<MediaTeaser");
   const supportPosition = home.indexOf("<SupportTeaser");
-  const laboratoryPosition = home.indexOf('className="editorial-section laboratory-section"');
+  const personalPosition = home.indexOf("<PersonalTeaser");
   assert.equal(orbitPosition > layerOrder.at(-1)!, true);
   assert.equal(orbitPosition > heroClose, true);
   assert.equal(orbitPosition < arcadePosition, true);
   assert.equal(arcadePosition < mediaPosition, true);
   assert.equal(mediaPosition < supportPosition, true);
-  assert.equal(supportPosition < laboratoryPosition, true);
+  assert.equal(supportPosition < personalPosition, true);
+  assert.doesNotMatch(home, /laboratory-section/);
 
   assert.equal(layout.indexOf("<SiteHeader") < layout.indexOf("{children}"), true);
   assert.match(progressive, /<figure/);
