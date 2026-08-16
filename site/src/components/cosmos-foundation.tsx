@@ -1,6 +1,6 @@
 import { ActionLink, StatusTag } from "@/components/ui";
 import { CosmosMark } from "@/components/cosmos-mark";
-import { COSMOS_APPS, COSMOS_CONTRIBUTE, astraeaApp, pinaculoApp } from "@/content/cosmos";
+import { COSMOS_APPS, COSMOS_CONTRIBUTE } from "@/content/cosmos";
 import type { SiteMetadata } from "@/content/schemas";
 
 type CosmosFoundationProps = {
@@ -17,7 +17,7 @@ const publicationBoundaries = [
     label: "Birth data",
     value: "Not collected here",
     detail:
-      "This portfolio does not collect names or birth dates. Pináculo asks for that on its own site.",
+      "This portfolio does not collect names or birth dates. ASTROEA and Pináculo ask for that on their own sites.",
   },
   {
     label: "Private charts",
@@ -55,7 +55,7 @@ export function CosmosFoundation({ content }: CosmosFoundationProps) {
               <span key={app.id}>{app.name}</span>
             ))}
           </div>
-          <small>Pináculo is open to try</small>
+          <small>Both apps are open to try</small>
         </div>
       </section>
 
@@ -99,7 +99,7 @@ export function CosmosFoundation({ content }: CosmosFoundationProps) {
           <p className="section-label">Publication boundary / 02</p>
           <h2 id="cosmos-privacy-title">The apps are public. The private record stays private.</h2>
           <p>
-            You can try Pináculo and read both repositories. Carlos&apos;s own charts and dates are
+            You can try both apps and read both repositories. Carlos&apos;s own charts and dates are
             not published here.
           </p>
         </header>
@@ -137,24 +137,19 @@ export function CosmosFoundation({ content }: CosmosFoundationProps) {
             not collect birth data. Pináculo and ASTROEA live on their own sites and repositories.
           </p>
           <nav aria-label="Cosmos app routes">
-            {pinaculoApp.tryUrl && pinaculoApp.tryLabel ? (
-              <ActionLink
-                variant="primary"
-                href={pinaculoApp.tryUrl}
-                rel="noreferrer"
-                target="_blank"
-              >
-                {pinaculoApp.tryLabel}
-              </ActionLink>
-            ) : null}
-            <ActionLink
-              variant="secondary"
-              href={astraeaApp.repository}
-              rel="noreferrer"
-              target="_blank"
-            >
-              {astraeaApp.repositoryLabel}
-            </ActionLink>
+            {COSMOS_APPS.map((app, index) =>
+              app.tryUrl && app.tryLabel ? (
+                <ActionLink
+                  key={app.id}
+                  variant={index === 0 ? "primary" : "secondary"}
+                  href={app.tryUrl}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  {app.tryLabel}
+                </ActionLink>
+              ) : null,
+            )}
           </nav>
           <nav aria-label="Cosmos route alternatives">
             <ActionLink variant="secondary" href="/work">

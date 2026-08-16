@@ -43,7 +43,7 @@ const conceptAnswer = (name: string) =>
 const cosmosAnswer = [
   "Cosmos is where Carlos keeps two public apps for astrology and numerology — creative practice, not scientific, medical, or predictive advice.",
   "",
-  "ASTROEA is the astrology repository, inspired by astro.com. There is no public try-it URL listed yet: https://github.com/uset82/ASTROEA",
+  "ASTROEA is the astrology app, inspired by astro.com. You can try it at https://astraia.netlify.app/. The code is at https://github.com/uset82/ASTROEA",
   "",
   "Pináculo is the numerology app. You can try it at https://pinaculo.netlify.app/. The code is at https://github.com/uset82/pinaculo. Interpretations draw on Carl Jung.",
   "",
@@ -131,7 +131,7 @@ export const guideVisitorSite = (message: string): VisitorSiteGuide | null => {
   ) {
     return {
       answer: cosmosAnswer,
-      sourceIds: ["github-astraea", "github-pinaculo", "public-pinaculo-demo"],
+      sourceIds: ["github-astraea", "public-astraea-demo", "github-pinaculo", "public-pinaculo-demo"],
     };
   }
 
@@ -140,9 +140,9 @@ export const guideVisitorSite = (message: string): VisitorSiteGuide | null => {
       answer: [
         "ASTRAEA is a named concept in the Observatory, not a released scientific product.",
         "",
-        "The public astrology repository is ASTROEA: https://github.com/uset82/ASTROEA. See /cosmos.",
+        "The public astrology app is ASTROEA. You can try it at https://astraia.netlify.app/. The code is at https://github.com/uset82/ASTROEA. See /cosmos.",
       ].join("\n"),
-      sourceIds: ["approved-main-ui", "github-astraea"],
+      sourceIds: ["approved-main-ui", "github-astraea", "public-astraea-demo"],
     };
   }
   if (normalized.includes("future energy")) {

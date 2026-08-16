@@ -66,14 +66,14 @@
       "title": "ASTROEA and Pináculo",
       "facts": [
         "Carlos built two public apps for astrology and numerology, framed as creative and personal practice, not scientific, medical, or predictive advice.",
-        "ASTROEA is a public astrology repository at https://github.com/uset82/ASTROEA. Its README describes natal-chart work inspired by astro.com. No public try-it URL is listed yet.",
+        "ASTROEA is a public astrology repository at https://github.com/uset82/ASTROEA. Its README describes natal-chart work inspired by astro.com. A live demo is at https://astraia.netlify.app/.",
         "Pináculo is a public numerology repository at https://github.com/uset82/pinaculo. A live demo is at https://pinaculo.netlify.app/. Interpretations draw on Carl Jung.",
         "The portfolio Cosmos page at /cosmos points to these apps. It does not host them, collect birth data, or publish Carlos's private travel stories, charts, or dates.",
         "The repositories are public to read. They do not carry an MIT licence on this site's contribution list."
       ],
       "verification": "user-approved",
       "rights": "not-applicable",
-      "sourceIds": ["github-uset82", "github-astraea", "github-pinaculo", "public-pinaculo-demo"]
+      "sourceIds": ["github-uset82", "github-astraea", "public-astraea-demo", "github-pinaculo", "public-pinaculo-demo"]
     }
   ],
   "exclusions": [
@@ -130,14 +130,14 @@
         "video-content",
         "trips-hobbies"
       ],
-      "safeResponse": "Do not invent Carlos's private travel stories, charts, or readings. You may point visitors to /cosmos, the public ASTROEA repository, and the Pináculo demo. Do not collect or request birth data in chat."
+      "safeResponse": "Do not invent Carlos's private travel stories, charts, or readings. You may point visitors to /cosmos, the public ASTROEA demo at https://astraia.netlify.app/, the ASTROEA repository, and the Pináculo demo. Do not collect or request birth data in chat."
     },
     {
       "id": "observatory-concept-evidence",
       "scope": "ASTRAEA, PINÁCULO, and Future Energy as real, shipped, scientific, predictive, or available systems",
       "reason": "The names are approved visual concepts, but their exact project identity, evidence, contribution, status, and publication rights remain unresolved.",
       "sourceInventoryIds": ["observatory-concepts"],
-      "safeResponse": "Describe Observatory ASTRAEA, PINÁCULO, and Future Energy as visual concepts, not shipped scientific products. For the public GitHub apps, use only the approved Cosmos facts: ASTROEA has no listed try-it URL; Pináculo can be tried at its demo."
+      "safeResponse": "Describe Observatory ASTRAEA, PINÁCULO, and Future Energy as visual concepts, not shipped scientific products. For the public GitHub apps, use only the approved Cosmos facts: ASTROEA can be tried at https://astraia.netlify.app/; Pináculo can be tried at its demo."
     },
     {
       "id": "three-d-provider-and-asset-claims",

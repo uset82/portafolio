@@ -45,7 +45,7 @@ WAVE 4  ░░░░░░░░░░  Launch
 
 ### 2026-08-16 — Cosmos names the two public apps
 
-The homepage Cosmos teaser and `/cosmos` now point at **ASTROEA** (astrology, GitHub only, inspired by astro.com) and **Pináculo** (numerology, live at [pinaculo.netlify.app](https://pinaculo.netlify.app/), interpretations draw on Carl Jung). Travel stories stay unpublished. This site still does not collect birth data or iframe the apps. The two repos are public to read; they are not on the MIT contribution list (`Q.12`). Observatory case studies for ASTRAEA / PINÁCULO stay concepts.
+The homepage Cosmos teaser and `/cosmos` now point at **ASTROEA** (astrology, live at [astraia.netlify.app](https://astraia.netlify.app/), inspired by astro.com) and **Pináculo** (numerology, live at [pinaculo.netlify.app](https://pinaculo.netlify.app/), interpretations draw on Carl Jung). Travel stories stay unpublished. This site still does not collect birth data or iframe the apps. The two repos are public to read; they are not on the MIT contribution list (`Q.12`). Observatory case studies for ASTRAEA / PINÁCULO stay concepts.
 
 ### 2026-08-13 — homepage path is play, listen, contribute
 

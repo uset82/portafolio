@@ -57,7 +57,8 @@ test("Pináculo and Cosmos questions point at the public apps", () => {
   const cosmos = guideVisitorSite("Where can I try the astrology app?");
   assert.ok(cosmos);
   assert.match(cosmos.answer, /https:\/\/github.com\/uset82\/ASTROEA/);
-  assert.match(cosmos.answer, /no public try-it URL listed yet/);
+  assert.match(cosmos.answer, /https:\/\/astraia\.netlify\.app\//);
+  assert.doesNotMatch(cosmos.answer, /no public try-it URL listed yet/);
 });
 
 test("greetings ask for a preference instead of calling the model", () => {

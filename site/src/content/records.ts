@@ -83,7 +83,18 @@ export const rawSiteContent = {
       url: "https://github.com/uset82/ASTROEA",
       checkedOn: "2026-08-16",
       notes:
-        "Carlos directed Cosmos to this public astrology repository. The README describes natal-chart work inspired by astro.com. Educational and personal use; no MIT licence listed. No public demo URL listed.",
+        "Carlos directed Cosmos to this public astrology repository. The README describes natal-chart work inspired by astro.com. Educational and personal use; no MIT licence listed.",
+    },
+    {
+      id: "public-astraea-demo",
+      label: "ASTROEA public demo",
+      kind: "live-demo",
+      owner: "Carlos Carpio",
+      public: true,
+      url: "https://astraia.netlify.app/",
+      checkedOn: "2026-08-16",
+      notes:
+        "Carlos provided this live URL for ASTROEA. A live fetch confirms the astrology app is reachable. Birth details are collected on that origin, not on this portfolio.",
     },
     {
       id: "github-pinaculo",
@@ -162,8 +173,8 @@ export const rawSiteContent = {
       eyebrow: "Astrology + numerology / 03",
       heading: "Come in and try the two apps.",
       description:
-        "ASTROEA is astrology inspired by astro.com. Pináculo is numerology with interpretations that draw on Carl Jung. Pináculo is open to try. Both repositories are public on GitHub.",
-      status: "Two apps you can look through",
+        "ASTROEA is astrology inspired by astro.com. Pináculo is numerology with interpretations that draw on Carl Jung. Both are open to try, and both repositories are public on GitHub.",
+      status: "Two apps you can try",
       themes: ["ASTROEA", "Pináculo"],
       claimsBoundary:
         "Creative and personal practice—not scientific, medical, or predictive advice.",
@@ -182,6 +193,7 @@ export const rawSiteContent = {
         "approved-public-profile",
         "foundation-decision",
         "github-astraea",
+        "public-astraea-demo",
         "github-pinaculo",
         "public-pinaculo-demo",
       ],

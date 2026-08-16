@@ -22,13 +22,13 @@ export const COSMOS_APPS: readonly CosmosApp[] = [
     id: "astraea",
     name: "ASTROEA",
     kind: "Astrology",
-    status: "Code on GitHub",
+    status: "Open to try",
     summary:
-      "Natal-chart astrology inspired by astro.com, with AI interpretation from the chart data. The repository is public. No try-it URL is listed yet.",
+      "Natal-chart astrology inspired by astro.com, with AI interpretation from the chart data. You can try it on its own site.",
     repository: "https://github.com/uset82/ASTROEA",
     repositoryLabel: "View ASTROEA",
-    tryUrl: null,
-    tryLabel: null,
+    tryUrl: "https://astraia.netlify.app/",
+    tryLabel: "Try ASTROEA",
   },
   {
     id: "pinaculo",

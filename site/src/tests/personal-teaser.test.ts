@@ -7,7 +7,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { PersonalTeaser } from "@/components/personal-teaser";
-import { COSMOS_APPS, pinaculoApp } from "@/content/cosmos";
+import { COSMOS_APPS } from "@/content/cosmos";
 import { rawSiteContent } from "@/content/records";
 import { siteContentSchema } from "@/content/schemas";
 
@@ -17,7 +17,7 @@ test("personal teaser names the public apps without publishing private stories",
 
   assert.match(markup, /<section class="personal-teaser" aria-labelledby="personal-teaser-title">/);
   assert.match(markup, /Come in and try the two apps\./);
-  assert.match(markup, /Two apps you can look through/);
+  assert.match(markup, /Two apps you can try/);
   assert.match(markup, /aria-label="Apps in Cosmos"/);
   assert.equal((markup.match(/<li>/g) ?? []).length, 2);
   assert.match(markup, /ASTROEA/);
@@ -25,7 +25,8 @@ test("personal teaser names the public apps without publishing private stories",
   assert.doesNotMatch(markup, /Travel notes|>Travel</);
   assert.match(markup, /https:\/\/github.com\/uset82\/ASTROEA/);
   assert.match(markup, /https:\/\/github.com\/uset82\/pinaculo/);
-  assert.match(markup, new RegExp(pinaculoApp.tryUrl!.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  assert.match(markup, /https:\/\/astraia\.netlify\.app\//);
+  assert.match(markup, /https:\/\/pinaculo\.netlify\.app\//);
   assert.match(markup, /not scientific, medical, or predictive advice/);
   assert.match(markup, /class="personal-teaser__mark"/);
   assert.match(markup, /cosmos-mark__peak/);

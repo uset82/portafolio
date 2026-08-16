@@ -17,12 +17,13 @@ test("Cosmos features the public apps without publishing a private story or coll
 
   assert.match(markup, /cosmos-mark__peak/);
   assert.match(markup, /Personal systems for observing patterns and meaning\./);
-  assert.match(markup, /Two apps you can look through/);
+  assert.match(markup, /Two apps you can try/);
   assert.match(markup, />ASTROEA<\/h3>/);
   assert.match(markup, />Pináculo<\/h3>/);
   assert.doesNotMatch(markup, /Travel notes|>Travel</);
   assert.match(markup, /https:\/\/github.com\/uset82\/ASTROEA/);
   assert.match(markup, /https:\/\/github.com\/uset82\/pinaculo/);
+  assert.match(markup, /https:\/\/astraia\.netlify\.app\//);
   assert.match(markup, /https:\/\/pinaculo\.netlify\.app\//);
   assert.match(markup, /astro\.com/);
   assert.match(markup, /Carl Jung/);
@@ -37,7 +38,7 @@ test("Cosmos features the public apps without publishing a private story or coll
     /<(?:img|picture|video|audio|iframe|canvas|map|time|address|form|button)\b/,
   );
   assert.doesNotMatch(markup, /(?:latitude|longitude|street address|postal code|itinerary item)/i);
-  assert.equal(astraeaApp.tryUrl, null);
+  assert.equal(astraeaApp.tryUrl, "https://astraia.netlify.app/");
   assert.equal(pinaculoApp.tryUrl, "https://pinaculo.netlify.app/");
 });
 

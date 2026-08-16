@@ -1,6 +1,6 @@
 import { ActionLink } from "@/components/ui";
 import { CosmosMark } from "@/components/cosmos-mark";
-import { COSMOS_APPS, pinaculoApp } from "@/content/cosmos";
+import { COSMOS_APPS } from "@/content/cosmos";
 import type { SiteMetadata } from "@/content/schemas";
 
 type PersonalTeaserProps = {
@@ -47,16 +47,19 @@ export function PersonalTeaser({ content }: PersonalTeaserProps) {
           })}
         </ul>
         <div className="personal-teaser__actions">
-          {pinaculoApp.tryUrl ? (
-            <ActionLink
-              className="personal-teaser__action"
-              href={pinaculoApp.tryUrl}
-              rel="noreferrer"
-              target="_blank"
-            >
-              {pinaculoApp.tryLabel} <span aria-hidden="true">↗</span>
-            </ActionLink>
-          ) : null}
+          {COSMOS_APPS.map((app) =>
+            app.tryUrl && app.tryLabel ? (
+              <ActionLink
+                key={app.id}
+                className="personal-teaser__action"
+                href={app.tryUrl}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {app.tryLabel} <span aria-hidden="true">↗</span>
+              </ActionLink>
+            ) : null,
+          )}
           <ActionLink className="personal-teaser__action" href={content.action.href}>
             {content.action.label} <span aria-hidden="true">→</span>
           </ActionLink>
@@ -71,7 +74,7 @@ export function PersonalTeaser({ content }: PersonalTeaserProps) {
             <span key={theme}>{theme}</span>
           ))}
         </div>
-        <small>Pináculo is open to try</small>
+        <small>Both apps are open to try</small>
       </div>
     </section>
   );

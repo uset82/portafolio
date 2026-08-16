@@ -84,13 +84,14 @@ test("homepage personal teaser names the public apps without publishing private 
   const { personalTeaser } = siteContentSchema.parse(rawSiteContent).metadata;
 
   assert.equal(personalTeaser.verification, "reference-approved");
-  assert.equal(personalTeaser.status, "Two apps you can look through");
+  assert.equal(personalTeaser.status, "Two apps you can try");
   assert.deepEqual(personalTeaser.themes, ["ASTROEA", "Pináculo"]);
   assert.equal(personalTeaser.action.href, "/cosmos");
   assert.equal(personalTeaser.action.external, false);
   assert.match(personalTeaser.claimsBoundary, /not scientific, medical, or predictive advice/);
   assert.ok(personalTeaser.sourceIds.includes("approved-public-profile"));
   assert.ok(personalTeaser.sourceIds.includes("github-astraea"));
+  assert.ok(personalTeaser.sourceIds.includes("public-astraea-demo"));
   assert.ok(personalTeaser.sourceIds.includes("github-pinaculo"));
   assert.ok(personalTeaser.sourceIds.includes("public-pinaculo-demo"));
   assert.doesNotMatch(

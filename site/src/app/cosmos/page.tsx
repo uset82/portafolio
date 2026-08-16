@@ -9,7 +9,7 @@ const siteContent = siteContentSchema.parse(rawSiteContent);
 export const metadata: Metadata = {
   title: "Cosmos",
   description:
-    "Try Pináculo, a numerology app with interpretations that draw on Carl Jung, and read ASTROEA, an astrology repository inspired by astro.com. Creative and personal practice—not scientific, medical, or predictive advice.",
+    "Try ASTROEA, an astrology app inspired by astro.com, and Pináculo, a numerology app with interpretations that draw on Carl Jung. Creative and personal practice—not scientific, medical, or predictive advice.",
 };
 
 export default function CosmosPage() {
