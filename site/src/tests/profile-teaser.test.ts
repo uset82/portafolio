@@ -12,7 +12,8 @@ import { siteContentSchema } from "@/content/schemas";
 
 test("profile teaser publishes only approved biography and privacy-safe paths", () => {
   const content = siteContentSchema.parse(rawSiteContent).metadata.profileTeaser;
-  const markup = renderToStaticMarkup(createElement(ProfileTeaser, { content }));
+  const footer = siteContentSchema.parse(rawSiteContent).metadata.footer;
+  const markup = renderToStaticMarkup(createElement(ProfileTeaser, { content, footer }));
 
   assert.match(markup, /aria-labelledby="profile-teaser-title"/);
   assert.match(markup, /Engineer · Inventor · Creative Technologist/);
@@ -25,6 +26,12 @@ test("profile teaser publishes only approved biography and privacy-safe paths", 
   // Duplicating them here read as two closing sections rather than one.
   assert.doesNotMatch(markup, /href="https:\/\/github\.com\/uset82"/);
   assert.doesNotMatch(markup, /profile-teaser__mark/);
+  // The decorative monogram is gone: the footer already carries the identity,
+  // and two marks one above the other read as two closing sections.
+  assert.doesNotMatch(markup, /profile-teaser__mark/);
+  // The invitation lives here now, so the close is one section, not two.
+  assert.match(markup, /Work together/);
+  assert.match(markup, /href="\/contact"/);
   assert.doesNotMatch(markup, /<(?:img|picture)\b/);
   assert.doesNotMatch(markup, /(?:download|\.pdf|mailto:|street address|phone number)/i);
 });
@@ -33,12 +40,10 @@ test("homepage mounts the profile teaser with responsive, focus, and touch-safe 
   const homepage = readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
 
-  assert.match(homepage, /<ProfileTeaser content=\{metadata\.profileTeaser\} \/>/);
-  assert.match(styles, /\.profile-teaser:focus-within \.profile-teaser__mark/);
-  assert.match(styles, /\.profile-teaser:hover \.profile-teaser__mark/);
   assert.match(
-    styles,
-    /\.profile-teaser__threads li\s*\{[\s\S]*?min-height:\s*var\(--control-height\)/,
+    homepage,
+    /<ProfileTeaser content=\{metadata\.profileTeaser\} footer=\{metadata\.footer\} \/>/,
   );
+  assert.match(styles, /\.profile-teaser__invite\s*\{/);
   assert.match(styles, /@media \(max-width: 47\.99rem\)[\s\S]*?\.profile-teaser/);
 });

@@ -187,7 +187,7 @@ export default function Home() {
 
       <SupportTeaser />
 
-      <ProfileTeaser content={metadata.profileTeaser} />
+      <ProfileTeaser content={metadata.profileTeaser} footer={metadata.footer} />
     </main>
   );
 }
