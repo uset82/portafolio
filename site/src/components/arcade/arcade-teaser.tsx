@@ -29,12 +29,14 @@ export function ArcadeTeaser({ playable, total }: ArcadeTeaserProps) {
           {hasPlayable ? `${playable.length} playable now` : `${total} games, none hosted yet`}
         </p>
         <h2 id={headingId}>
-          {hasPlayable ? "Some of this you can just play." : "The games, and what each one needs."}
+          {hasPlayable
+            ? "You can just play some of these games."
+            : "The games, and what each one needs."}
         </h2>
         <p className="arcade-teaser__description">
           {hasPlayable
-            ? "Games I built, running in the browser. Nothing loads until you press play, and every game that is not playable here says exactly why."
-            : "Every game I have built, with its engine, controls, built size, and the specific reason it is not yet playable on this page."}
+            ? "Come in and try a game whenever you like. They run here in the browser, and you are welcome to browse the ones still on the way."
+            : "The full shelf is here: engine, controls, size, and why each one is not playable on this page yet."}
         </p>
 
         <ActionLink className="arcade-teaser__action" href="/arcade">
@@ -45,9 +47,26 @@ export function ArcadeTeaser({ playable, total }: ArcadeTeaserProps) {
       <div className="arcade-teaser__cabinet" aria-hidden="true">
         <span className="arcade-teaser__cabinet-label">Play / {total} titles</span>
         <div className="arcade-teaser__screen">
-          <i />
-          <i />
-          <i />
+          <svg className="arcade-teaser__mark" viewBox="0 0 96 72" focusable="false">
+            <rect className="arcade-teaser__mark-block" x="14" y="46" width="20" height="10" />
+            <rect className="arcade-teaser__mark-cap" x="14" y="46" width="20" height="2.2" />
+            <rect className="arcade-teaser__mark-block" x="38" y="34" width="18" height="10" />
+            <rect className="arcade-teaser__mark-cap" x="38" y="34" width="18" height="2.2" />
+            <rect className="arcade-teaser__mark-block" x="60" y="22" width="16" height="10" />
+            <rect className="arcade-teaser__mark-cap" x="60" y="22" width="16" height="2.2" />
+            <circle className="arcade-teaser__mark-figure" cx="24" cy="35.4" r="3.6" />
+            <rect
+              className="arcade-teaser__mark-figure"
+              x="21.4"
+              y="38.6"
+              width="5.2"
+              height="7.4"
+            />
+            <g className="arcade-teaser__mark-coin">
+              <rect x="64.6" y="12.6" width="6.8" height="6.8" transform="rotate(45 68 16)" />
+            </g>
+            <rect className="arcade-teaser__mark-ground" x="10" y="60" width="76" height="2.4" />
+          </svg>
         </div>
         <div className="arcade-teaser__controls">
           <b />

@@ -17,6 +17,8 @@ test("the homepage teaser counts games without repeating the arcade list", () =>
   );
 
   assert.match(markup, /<section class="arcade-teaser" aria-labelledby="arcade-teaser-title">/);
+  assert.match(markup, /You can just play some of these games\./);
+  assert.doesNotMatch(markup, /Some of this you can just play/);
   assert.match(markup, new RegExp(`${playable.length} playable now`));
   assert.match(markup, /href="\/arcade"/);
   assert.doesNotMatch(markup, /arcade-teaser__titles/);
@@ -31,6 +33,8 @@ test("the homepage teaser counts games without repeating the arcade list", () =>
 
   // The teaser is a promise, not a player.
   assert.doesNotMatch(markup, /<(?:iframe|audio|video|canvas)\b/);
+  assert.match(markup, /class="arcade-teaser__mark"/);
+  assert.doesNotMatch(markup, /arcade-teaser__screen"><i/);
 });
 
 test("the teaser degrades honestly when nothing resolves", () => {
@@ -61,6 +65,10 @@ test("the arcade teaser carries responsive and reduced-motion paths", () => {
   assert.match(
     styles,
     /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.arcade-teaser__cabinet[\s\S]*?transform:\s*none/,
+  );
+  assert.match(
+    styles,
+    /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.arcade-teaser__mark-coin[\s\S]*?transform:\s*none/,
   );
 });
 

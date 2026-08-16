@@ -8974,48 +8974,121 @@ body:has(.observatory-hero) .site-header .site-header__status {
 }
 
 .arcade-teaser__screen {
+  position: relative;
   display: grid;
-  gap: 0.5rem;
-  align-content: center;
+  place-items: center;
   justify-self: center;
-  width: 72%;
-  aspect-ratio: 4 / 3;
-  padding: 0.9rem;
+  width: 78%;
+  aspect-ratio: 5 / 4;
+  padding: 0.7rem;
+  overflow: hidden;
   border: 1px solid var(--color-walnut);
-  background: color-mix(in srgb, var(--color-espresso) 88%, transparent);
+  border-radius: 0.28rem 0.28rem 0.55rem 0.55rem;
+  background: var(--color-espresso);
+  box-shadow: inset 0 0 0 0.32rem color-mix(in srgb, var(--color-walnut) 62%, transparent);
 }
 
-.arcade-teaser__screen i {
-  height: 0.4rem;
-  background: var(--color-buff);
+.arcade-teaser__screen::after {
+  content: "";
+  position: absolute;
+  inset: 0.32rem;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 3px,
+    color-mix(in srgb, var(--color-canvas) 8%, transparent) 3px 4px
+  );
 }
 
-.arcade-teaser__screen i:nth-child(2) {
-  width: 72%;
+.arcade-teaser__mark {
+  width: 86%;
+  height: auto;
+  overflow: visible;
 }
 
-.arcade-teaser__screen i:nth-child(3) {
-  width: 45%;
+.arcade-teaser__mark-block {
+  fill: var(--color-buff);
+}
+
+.arcade-teaser__mark-cap {
+  fill: var(--color-clay);
+}
+
+.arcade-teaser__mark-figure {
+  fill: var(--color-clay);
+}
+
+.arcade-teaser__mark-ground {
+  fill: var(--color-walnut);
+}
+
+.arcade-teaser__mark-coin {
+  fill: var(--color-clay);
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform var(--duration-base) var(--ease-emphasized);
+}
+
+.arcade-teaser:hover .arcade-teaser__mark-coin,
+.arcade-teaser:focus-within .arcade-teaser__mark-coin {
+  transform: rotate(28deg);
 }
 
 .arcade-teaser__controls {
   display: flex;
-  gap: 0.6rem;
-  align-items: center;
+  gap: 0.65rem;
+  align-items: flex-end;
   justify-content: center;
+  min-height: 2rem;
 }
 
 .arcade-teaser__controls b {
+  position: relative;
   width: 1.15rem;
   height: 1.15rem;
   border-radius: 50%;
   background: var(--color-clay);
+  transform-origin: 50% 120%;
+  transition: transform var(--duration-base) var(--ease-emphasized);
+}
+
+.arcade-teaser__controls b::before {
+  content: "";
+  position: absolute;
+  top: 148%;
+  left: 50%;
+  width: 0.9rem;
+  height: 0.22rem;
+  border-radius: 50%;
+  background: var(--color-walnut);
+  transform: translateX(-50%);
+}
+
+.arcade-teaser__controls b::after {
+  content: "";
+  position: absolute;
+  top: 92%;
+  left: 50%;
+  width: 0.2rem;
+  height: 0.55rem;
+  background: var(--color-walnut);
+  transform: translateX(-50%);
+}
+
+.arcade-teaser:hover .arcade-teaser__controls b,
+.arcade-teaser:focus-within .arcade-teaser__controls b {
+  transform: rotate(-14deg);
 }
 
 .arcade-teaser__controls i {
-  width: 0.75rem;
-  height: 0.75rem;
+  width: 0.82rem;
+  height: 0.82rem;
   border: 1px solid var(--color-walnut);
+  border-radius: 50%;
+}
+
+.arcade-teaser__controls i:first-of-type {
+  background: color-mix(in srgb, var(--color-clay) 58%, transparent);
 }
 
 @media (max-width: 61.99rem) {
@@ -9038,7 +9111,13 @@ body:has(.observatory-hero) .site-header .site-header__status {
 @media (prefers-reduced-motion: reduce) {
   .arcade-teaser__cabinet,
   .arcade-teaser:focus-within .arcade-teaser__cabinet,
-  .arcade-teaser:hover .arcade-teaser__cabinet {
+  .arcade-teaser:hover .arcade-teaser__cabinet,
+  .arcade-teaser__controls b,
+  .arcade-teaser:focus-within .arcade-teaser__controls b,
+  .arcade-teaser:hover .arcade-teaser__controls b,
+  .arcade-teaser__mark-coin,
+  .arcade-teaser:focus-within .arcade-teaser__mark-coin,
+  .arcade-teaser:hover .arcade-teaser__mark-coin {
     transform: none;
     transition: none;
   }
