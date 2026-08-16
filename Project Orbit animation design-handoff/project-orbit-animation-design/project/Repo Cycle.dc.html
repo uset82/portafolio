@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #1b140e; }
+  a { color: #d9b27f; text-decoration: none; }
+  a:hover { color: #fef4ea; }
+  @keyframes cc-breathe { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.7; } }
+</style>
+</helmet>
+
+<div style="min-height: 100%; padding: 56px 48px 96px; background: #1b140e; font-family: Manrope, 'Segoe UI', sans-serif; color: #fef4ea; display: flex; flex-direction: column; gap: 40px;">
+
+  <section style="display: flex; flex-direction: column; gap: 28px;">
+    <div style="display: flex; align-items: baseline; gap: 16px;">
+      <span style="font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #b08a63;">Turn 01</span>
+      <span style="font-size: 13px; color: #8d7a68;">Selected Systems as a clockwise cycle — two mechanisms, same band, same 8 repositories.</span>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start;">
+
+      <div id="1a" style="display: flex; flex-direction: column; gap: 14px; width: 1240px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 15px; letter-spacing: 0.06em; padding: 4px 12px; border: 1px solid #6b5744; border-radius: 999px; color: #d9b27f;">1a</span>
+          <span style="font-size: 14px; color: #cdbba6;">Instrument dial — the ring turns clockwise, each repository docks at the gate, the hub reads it out.</span>
+        </div>
+
+        <div onMouseEnter="{{ hold }}" onMouseLeave="{{ release }}" style="position: relative; overflow: hidden; border: 1px solid rgba(217, 178, 127, 0.22); border-radius: 4px; background: linear-gradient(160deg, rgba(58, 42, 28, 0.96), rgba(23, 17, 12, 0.98) 60%), radial-gradient(120% 90% at 78% 10%, rgba(190, 150, 125, 0.22), transparent 60%); padding: 26px 34px 30px;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #c3aa8d;">
+            <span>Selected Systems</span>
+            <span style="color: #9a8672;">{{ counter }}</span>
+          </div>
+
+          <div style="display: flex; justify-content: center;">
+            <div style="position: relative; width: 400px; height: 400px; margin-top: -6px;">
+              <svg viewBox="0 0 400 400" style="position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible;">
+                <circle cx="200" cy="200" r="188" fill="none" stroke="rgba(217, 178, 127, 0.1)" stroke-width="1"></circle>
+                <circle cx="200" cy="200" r="112" fill="none" stroke="rgba(217, 178, 127, 0.14)" stroke-width="1"></circle>
+                <g style="transform: rotate({{ rotation }}deg); transform-origin: 200px 200px; transition: transform 1100ms cubic-bezier(0.16, 1, 0.3, 1);">
+                  <sc-for list="{{ segments }}" as="seg" hint-placeholder-count="8">
+                    <path d="{{ seg.d }}" fill="rgba(236, 223, 207, 0.07)" stroke="rgba(217, 178, 127, 0.28)" stroke-width="0.75"></path>
+                  </sc-for>
+                </g>
+                <path d="{{ gate }}" fill="rgba(217, 178, 127, 0.2)" stroke="#d9b27f" stroke-width="1"></path>
+                <polygon points="{{ gateTip }}" fill="#d9b27f"></polygon>
+              </svg>
+
+              <div style="position: absolute; inset: 0; transform: rotate({{ rotation }}deg); transition: transform 1100ms cubic-bezier(0.16, 1, 0.3, 1);">
+                <sc-for list="{{ dial }}" as="node" hint-placeholder-count="8">
+                  <button onClick="{{ node.go }}" type="button" style="position: absolute; left: {{ node.left }}px; top: {{ node.top }}px; width: 44px; height: 44px; margin: -22px 0 0 -22px; padding: 0; border: 0; background: none; transform: rotate({{ node.counter }}deg); transition: transform 1100ms cubic-bezier(0.16, 1, 0.3, 1);">
+                    <span style="display: grid; place-items: center; width: 100%; height: 100%; border-radius: 999px; font-size: 11px; letter-spacing: 0.08em; border: 1px solid {{ node.line }}; background: {{ node.fill }}; color: {{ node.ink }}; box-shadow: {{ node.glow }}; transition: all 600ms cubic-bezier(0.2, 0.8, 0.2, 1);">{{ node.index }}</span>
+                  </button>
+                </sc-for>
+              </div>
+
+              <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 210px; text-align: center; display: flex; flex-direction: column; gap: 8px;">
+                <span style="font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #a58e73;">{{ active.group }}</span>
+                <span style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 30px; line-height: 1.05; letter-spacing: 0.02em; color: #fef4ea;">{{ active.name }}</span>
+                <span style="font-size: 12px; color: #cdbba6;">{{ active.meta }}</span>
+                <a href="{{ active.url }}" style="font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin-top: 4px;">Open repository →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="1b" style="display: flex; flex-direction: column; gap: 14px; width: 1240px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 15px; letter-spacing: 0.06em; padding: 4px 12px; border: 1px solid #6b5744; border-radius: 999px; color: #d9b27f;">1b</span>
+          <span style="font-size: 14px; color: #cdbba6;">Card wheel — the existing cards ride a large clockwise wheel; the one at the crest is the live one. Keeps the band shallow.</span>
+        </div>
+
+        <div onMouseEnter="{{ hold }}" onMouseLeave="{{ release }}" style="position: relative; overflow: hidden; border: 1px solid rgba(217, 178, 127, 0.22); border-radius: 4px; background: linear-gradient(160deg, rgba(58, 42, 28, 0.96), rgba(23, 17, 12, 0.98) 60%), radial-gradient(120% 90% at 78% 10%, rgba(190, 150, 125, 0.22), transparent 60%); padding: 26px 34px 0;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #c3aa8d;">
+            <span>Selected Systems</span>
+            <span style="color: #9a8672;">{{ counter }}</span>
+          </div>
+
+          <div style="position: relative; height: 280px; overflow: hidden; margin: 0 -34px;">
+            <div style="position: absolute; left: 50%; bottom: -10px; width: 1500px; height: 1px; margin-left: -750px; background: linear-gradient(90deg, transparent, rgba(217, 178, 127, 0.35), transparent);"></div>
+            <sc-for list="{{ wheel }}" as="card" hint-placeholder-count="8">
+              <div style="position: absolute; left: {{ card.x }}px; top: {{ card.y }}px; width: 320px; margin: 0 0 0 -160px; opacity: {{ card.opacity }}; transform: translateY(-50%) rotate({{ card.rot }}deg) scale({{ card.scale }}); transition: all 1100ms cubic-bezier(0.16, 1, 0.3, 1);">
+                <a href="{{ card.url }}" style="display: flex; flex-direction: column; gap: 10px; padding: 20px 22px 22px; border: 1px solid {{ card.line }}; border-radius: 3px; background: {{ card.fill }};">
+                  <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                    <span style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: 26px; line-height: 1; letter-spacing: 0.02em; color: {{ card.ink }};">{{ card.name }}</span>
+                    <span style="font-size: 10px; letter-spacing: 0.16em; color: #a58e73;">{{ card.index }}</span>
+                  </div>
+                  <span style="font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #a58e73;">{{ card.group }}</span>
+                  <span style="font-size: 12px; color: #cdbba6;">{{ card.meta }}</span>
+                </a>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <p style="max-width: 720px; font-size: 13px; line-height: 1.6; color: #8d7a68; margin: 0;">Both cycles advance on their own, pause on hover, and use real repository data (owner uset82): primary language and last push. <a href="#1a">1a</a> is taller than the current band; <a href="#1b">1b</a> fits it as-is.</p>
+  </section>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;autoRotate&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;dwellMs&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:3200,&quot;min&quot;:900,&quot;max&quot;:8000,&quot;step&quot;:100,&quot;unit&quot;:&quot;ms&quot;,&quot;tsType&quot;:&quot;number&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#d9b27f&quot;,&quot;options&quot;:[&quot;#d9b27f&quot;,&quot;#be967d&quot;,&quot;#c1bfb0&quot;,&quot;#e8bdb4&quot;],&quot;tsType&quot;:&quot;string&quot;}}">
+const REPOS = [
+  { name: "ASTROEA", group: "Cosmos", meta: "TypeScript · pushed 2026", slug: "ASTROEA" },
+  { name: "PINÁCULO", group: "Cosmos", meta: "TypeScript · pushed 2025", slug: "pinaculo" },
+  { name: "AVATAR STUDIO", group: "Laboratory", meta: "TypeScript · pushed 2026", slug: "avatar-studio" },
+  { name: "STRUDEL AI", group: "Sound", meta: "TypeScript · pushed 2026", slug: "StrudelAI" },
+  { name: "QUBESOLVE", group: "Laboratory", meta: "TypeScript · pushed 2026", slug: "QubeSolve" },
+  { name: "BANK AI", group: "Work", meta: "TypeScript · pushed 2025", slug: "bankAI" },
+  { name: "LYRIGENIE", group: "Sound", meta: "Python · pushed 2025", slug: "LyriGenie" },
+  { name: "MANDELBRO", group: "Laboratory", meta: "JavaScript · pushed 2025", slug: "MandelBro" },
+];
+
+const STEP = 360 / REPOS.length;
+const pad = (n) => String(n).padStart(2, "0");
+const pt = (a, r) => [200 + r * Math.sin((a * Math.PI) / 180), 200 - r * Math.cos((a * Math.PI) / 180)];
+
+function sector(a0, a1, r0, r1) {
+  const [x1, y1] = pt(a0, r1);
+  const [x2, y2] = pt(a1, r1);
+  const [x3, y3] = pt(a1, r0);
+  const [x4, y4] = pt(a0, r0);
+  const f = (v) => v.toFixed(2);
+  return `M${f(x1)} ${f(y1)} A${r1} ${r1} 0 0 1 ${f(x2)} ${f(y2)} L${f(x3)} ${f(y3)} A${r0} ${r0} 0 0 0 ${f(x4)} ${f(y4)} Z`;
+}
+
+class Component extends DCLogic {
+  state = { step: 0, held: false };
+
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      if (this.state.held || this.props.autoRotate === false) return;
+      this.setState((s) => ({ step: s.step + 1 }));
+    }, Math.max(900, this.props.dwellMs ?? 3200));
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
+  renderVals() {
+    const n = REPOS.length;
+    const step = this.state.step;
+    const activeIdx = ((step % n) + n) % n;
+    const active = REPOS[activeIdx];
+    const accent = this.props.accent ?? "#d9b27f";
+    const rotation = step * STEP;
+
+    const jump = (i) => () => {
+      const delta = ((i - activeIdx + n + n / 2) % n) - n / 2;
+      this.setState((s) => ({ step: s.step + delta }));
+    };
+
+    const segments = REPOS.map((_, i) => ({ d: sector(i * STEP + 2.6, (i + 1) * STEP - 2.6, 128, 168) }));
+    const gate = sector(-STEP / 2 + 1.4, STEP / 2 - 1.4, 122, 174);
+    const tip = [pt(STEP / 2 + 1, 122), pt(STEP / 2 + 1, 174), pt(STEP / 2 + 10, 148)]
+      .map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`)
+      .join(" ");
+
+    const dial = REPOS.map((r, i) => {
+      const [left, top] = pt(-i * STEP, 148);
+      const on = i === activeIdx;
+      return {
+        index: pad(i + 1),
+        left: left.toFixed(1),
+        top: top.toFixed(1),
+        counter: -rotation,
+        go: jump(i),
+        line: on ? accent : "rgba(217, 178, 127, 0.35)",
+        fill: on ? accent : "rgba(28, 21, 15, 0.85)",
+        ink: on ? "#22180f" : "#c3aa8d",
+        glow: on ? "0 0 0 6px rgba(217, 178, 127, 0.12)" : "none",
+      };
+    });
+
+    const R = 980;
+    const SPACING = 21;
+    const wheel = REPOS.map((r, i) => {
+      let t = ((i - step) * SPACING) % 360;
+      if (t > 180) t -= 360;
+      if (t < -180) t += 360;
+      const rad = (t * Math.PI) / 180;
+      const on = i === activeIdx;
+      const fade = Math.min(1, Math.abs(t) / 52);
+      return {
+        name: r.name,
+        group: r.group,
+        meta: r.meta,
+        index: pad(i + 1),
+        url: `https://github.com/uset82/${r.slug}`,
+        x: (620 + R * Math.sin(rad)).toFixed(1),
+        y: (150 + R * (1 - Math.cos(rad))).toFixed(1),
+        rot: t.toFixed(2),
+        scale: (1 - Math.min(0.18, Math.abs(t) / 260)).toFixed(3),
+        opacity: (1 - fade).toFixed(3),
+        line: on ? accent : "rgba(217, 178, 127, 0.22)",
+        fill: on ? "rgba(64, 47, 32, 0.92)" : "rgba(30, 22, 16, 0.72)",
+        ink: on ? "#fef4ea" : "#e3d3bd",
+      };
+    });
+
+    return {
+      counter: `${pad(activeIdx + 1)} of ${pad(n)}`,
+      active: { ...active, url: `https://github.com/uset82/${active.slug}` },
+      rotation,
+      segments,
+      gate,
+      gateTip: tip,
+      dial,
+      wheel,
+      hold: () => this.setState({ held: true }),
+      release: () => this.setState({ held: false }),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

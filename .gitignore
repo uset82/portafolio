@@ -18,3 +18,7 @@ Thumbs.db
 
 # Local arcade candidate clones and build scratch (C.1). Never commit.
 /_arcade-build/
+
+# Project Orbit design handoff: keep the 192 KB of design work, exclude the
+# 64 MB snapshot of this repository that the design tool ingested as context.
+/Project Orbit animation design-handoff/**/uploads/
