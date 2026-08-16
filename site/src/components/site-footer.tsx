@@ -3,63 +3,98 @@ import Link from "next/link";
 import { ActionLink } from "@/components/ui";
 import type { LinkRecord, SiteMetadata } from "@/content/schemas";
 
+type FooterLink = Pick<LinkRecord, "href" | "label">;
+
 type SiteFooterProps = {
   content: SiteMetadata["footer"];
-  navigation: Array<Pick<LinkRecord, "href" | "label">>;
+  /** Primary site routes. Defaults to the 4 main doors: Play, See, Listen, About */
+  navigation?: FooterLink[];
+  /** Secondary site routes. Defaults to Laboratory, Cosmos, Support */
+  secondaryNavigation?: FooterLink[];
 };
 
-export function SiteFooter({ content, navigation }: SiteFooterProps) {
-  const footerNavigation = navigation.filter((item) => item.href !== content.primaryAction.href);
+const DEFAULT_PRIMARY_NAV: FooterLink[] = [
+  { label: "Play", href: "/arcade" },
+  { label: "See", href: "/work" },
+  { label: "Listen", href: "/sound" },
+  { label: "About", href: "/story" },
+];
+
+const DEFAULT_SECONDARY_NAV: FooterLink[] = [
+  { label: "Laboratory", href: "/laboratory" },
+  { label: "Cosmos", href: "/cosmos" },
+  { label: "Support", href: "/support" },
+];
+
+/**
+ * Site footer — Direction 4a ("One blend").
+ *
+ * Sits directly on the espresso surface below the gradient blend.
+ * Contains the invitation ask, contact action, divided navigation row,
+ * and single signature line.
+ */
+export function SiteFooter({
+  content,
+  navigation = DEFAULT_PRIMARY_NAV,
+  secondaryNavigation = DEFAULT_SECONDARY_NAV,
+}: SiteFooterProps) {
   const headingId = "footer-contact-title";
 
   return (
     <footer className="site-footer" aria-labelledby={headingId}>
-      <div className="site-footer__lead">
-        <p className="section-label">{content.eyebrow}</p>
-        <p className="site-footer__status">
-          <span aria-hidden="true" />
-          {content.status}
-        </p>
-        <h2 id={headingId}>{content.heading}</h2>
-        <p className="site-footer__description">{content.description}</p>
-        <nav className="site-footer__actions" aria-label="Contact and public profile">
-          <ActionLink variant="primary" href={content.primaryAction.href}>
-            {content.primaryAction.label} <span aria-hidden="true">→</span>
-          </ActionLink>
-          <ActionLink variant="text" href={content.secondaryAction.href} prefetch={false}>
-            {content.secondaryAction.label} <span aria-hidden="true">↗</span>
-            <span className="visually-hidden"> — external site</span>
-          </ActionLink>
-        </nav>
-      </div>
+      <div className="site-footer__inner">
+        <section className="site-footer__ask" aria-labelledby={headingId}>
+          <h2 id={headingId} className="site-footer__heading">
+            {content.heading}
+          </h2>
+          <div className="site-footer__action-row">
+            <ActionLink
+              variant="primary"
+              href={content.primaryAction.href}
+              className="site-footer__cta"
+            >
+              {content.primaryAction.label} <span aria-hidden="true">→</span>
+            </ActionLink>
+            <p className="site-footer__disclaimer">{content.description}</p>
+          </div>
+        </section>
 
-      <div className="site-footer__signal" aria-hidden="true">
-        <span>Contact study / 05</span>
-        <strong>CC</strong>
-        <div>
-          <i />
-          <i />
-          <i />
+        <div className="site-footer__nav-group">
+          <div className="site-footer__nav-row">
+            <nav className="site-footer__primary-nav" aria-label="Primary site navigation">
+              {navigation.map((item) => (
+                <Link key={item.href} href={item.href}>
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+
+            <nav className="site-footer__secondary-nav" aria-label="Explore and external links">
+              {secondaryNavigation.map((item) => (
+                <Link key={item.href} href={item.href}>
+                  {item.label}
+                </Link>
+              ))}
+              <Link
+                href={content.secondaryAction.href}
+                prefetch={false}
+                className="site-footer__external-link"
+              >
+                {content.secondaryAction.label === "View GitHub"
+                  ? "GitHub"
+                  : content.secondaryAction.label}{" "}
+                <span aria-hidden="true">↗</span>
+                <span className="visually-hidden"> — external site</span>
+              </Link>
+            </nav>
+          </div>
         </div>
-        <small>Verified paths only</small>
-      </div>
 
-      <div className="site-footer__routes">
-        <p>Explore</p>
-        <nav aria-label="Footer navigation">
-          {footerNavigation.map((item, index) => (
-            <Link key={item.href} href={item.href}>
-              <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+        <p className="site-footer__signature">
+          © {new Date().getFullYear()} Carlos Alfredo Carpio Meza · Engineer · Inventor · Creative
+          Technologist · Built as a semantic portfolio with an optional immersive layer.
+        </p>
       </div>
-
-      <p className="site-footer__note">
-        © {new Date().getFullYear()} Carlos Alfredo Carpio Meza. Built as a semantic portfolio with
-        an optional immersive layer.
-      </p>
     </footer>
   );
 }

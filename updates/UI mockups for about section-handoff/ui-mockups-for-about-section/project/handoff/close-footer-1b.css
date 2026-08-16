@@ -1,0 +1,405 @@
+/* ===========================================================================
+   The close (About / 04) + footer — direction 1b, "type as image"
+   Replaces the previous "The close" and "Footer" blocks at the end of
+   globals.css. Two structural changes:
+     1. The invitation moves out of .profile-teaser and into the dark band at
+        the top of .site-footer, so the page ends once instead of twice.
+     2. The practice threads stop being pill chips and become full-width
+        display-serif rows separated by hairlines.
+   Tokens only — no new colours, fonts or timings.
+   =========================================================================== */
+
+.profile-teaser {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  width: min(100%, var(--page-max));
+  margin-inline: auto;
+  padding: clamp(4rem, 7vw, 6rem) var(--page-gutter) clamp(3rem, 5vw, 5rem);
+}
+
+/* --- Header: label left, role right, one rule under both ----------------- */
+
+.profile-teaser__copy {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+.profile-teaser__copy header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border-strong);
+}
+
+.profile-teaser__role {
+  margin: 0;
+  /* The muted tier resolves to text-secondary precisely so the micro-label
+     sizes keep AA on parchment; taupe measures 2.55:1 here. */
+  color: var(--color-text-secondary);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* --- The heading carries the section ------------------------------------- */
+
+.profile-teaser h2 {
+  max-width: 24ch;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(3.6rem, 8.6vw, 8.25rem);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: var(--leading-display);
+  text-wrap: balance;
+}
+
+/* Optional accent: an <em> inside the heading, set in italic walnut.
+   Nothing else in the section uses italics, so it reads as emphasis. */
+.profile-teaser h2 em {
+  color: var(--color-oak);
+  font-style: italic;
+}
+
+/* --- Threads left, summary + CV link right ------------------------------- */
+
+.profile-teaser__lower {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: end;
+}
+
+.profile-teaser__threads ul {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid color-mix(in srgb, var(--color-border-strong) 50%, transparent);
+  list-style: none;
+}
+
+.profile-teaser__threads li {
+  display: flex;
+  gap: 1.25rem;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-border-strong) 30%, transparent);
+  transition: padding-inline-start var(--duration-base) var(--ease-standard);
+}
+
+/* Hover indents the row; the serif is already the emphasis, so no colour
+   change. Pointer-only: the indent means nothing on touch. */
+@media (hover: hover) {
+  .profile-teaser__threads li:hover {
+    padding-inline-start: 0.875rem;
+  }
+}
+
+.profile-teaser__threads li > span:first-child {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.2vw, 1.875rem);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.profile-teaser__threads li > span + span {
+  color: var(--color-text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+.profile-teaser__summary {
+  display: grid;
+  gap: 1.375rem;
+  justify-items: start;
+}
+
+.profile-teaser__biography {
+  max-width: 38ch;
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: clamp(0.95rem, 1.05vw, 1.06rem);
+  line-height: 1.7;
+}
+
+.profile-teaser__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  align-items: center;
+}
+
+/* ===========================================================================
+   Footer — the invitation, then the signature
+   =========================================================================== */
+
+.site-footer {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  width: 100%;
+  margin: 0;
+  padding: clamp(3.5rem, 6vw, 4.75rem) var(--page-gutter) clamp(1.75rem, 3vw, 2.125rem);
+  background: var(--color-espresso);
+  color: var(--color-text-on-dark);
+}
+
+.site-footer .section-label {
+  color: var(--color-buff);
+}
+
+/* --- The invitation, moved here from About ------------------------------- */
+
+.site-footer__invite {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.7fr);
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: end;
+}
+
+.site-footer__invite > div:first-child {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: start;
+}
+
+.site-footer__invite h2 {
+  max-width: 18ch;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5.2vw, 3.875rem);
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+  text-wrap: pretty;
+}
+
+.site-footer__invite > div + div {
+  display: grid;
+  gap: 1.375rem;
+  justify-items: start;
+}
+
+.site-footer__invite p {
+  max-width: 36ch;
+  margin: 0;
+  color: color-mix(in srgb, var(--color-text-on-dark) 62%, transparent);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.site-footer__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  align-items: center;
+}
+
+.site-footer__actions .ui-action--primary {
+  border-color: var(--color-canvas-soft);
+  background: var(--color-canvas-soft);
+  color: var(--color-espresso);
+}
+
+.site-footer__actions .ui-action--primary:where(:hover, :focus-visible) {
+  border-color: var(--color-buff);
+  background: var(--color-buff);
+}
+
+/* --- Signature row: identity, two route runs, external ------------------- */
+
+.site-footer__signature {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  padding-top: clamp(1.75rem, 3vw, 2.25rem);
+  border-top: 1px solid color-mix(in srgb, var(--color-text-on-dark) 16%, transparent);
+}
+
+.site-footer__identity {
+  display: grid;
+  align-content: start;
+  gap: 0.625rem;
+}
+
+.site-footer__identity h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.site-footer__identity > p {
+  margin: 0;
+  color: color-mix(in srgb, var(--color-text-on-dark) 50%, transparent);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.site-footer__routes {
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
+}
+
+.site-footer__routes > p {
+  margin: 0;
+  color: color-mix(in srgb, var(--color-text-on-dark) 42%, transparent);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.site-footer__routes nav {
+  display: grid;
+  gap: 0.125rem;
+}
+
+.site-footer__routes nav a {
+  display: flex;
+  align-items: center;
+  min-height: 2.5rem;
+  color: color-mix(in srgb, var(--color-text-on-dark) 82%, transparent);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.site-footer__routes--secondary nav a {
+  color: color-mix(in srgb, var(--color-text-on-dark) 60%, transparent);
+}
+
+.site-footer__routes nav a:where(:hover, :focus-visible) {
+  color: var(--color-buff);
+}
+
+.site-footer__external a {
+  color: var(--color-buff);
+}
+
+.site-footer__note {
+  margin: 0;
+  padding-top: clamp(1.25rem, 2.5vw, 1.375rem);
+  border-top: 1px solid color-mix(in srgb, var(--color-text-on-dark) 12%, transparent);
+  color: color-mix(in srgb, var(--color-text-on-dark) 45%, transparent);
+  font-size: 0.69rem;
+  line-height: 1.6;
+}
+
+/* --- Scroll-in ----------------------------------------------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .profile-teaser h2,
+  .profile-teaser__lower,
+  .site-footer__invite {
+    animation: close-rise var(--duration-reveal) var(--ease-emphasized) both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 45%;
+  }
+}
+
+@keyframes close-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+}
+
+/* --- Tablet -------------------------------------------------------------- */
+
+@media (max-width: 61.99rem) {
+  .profile-teaser__lower {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .site-footer__invite {
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer__signature {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 2rem;
+  }
+}
+
+/* --- Phone --------------------------------------------------------------- */
+
+@media (max-width: 47.99rem) {
+  .profile-teaser {
+    padding-top: 3.5rem;
+  }
+
+  .profile-teaser h2 {
+    font-size: clamp(3rem, 14.5vw, 3.625rem);
+    max-width: 12ch;
+  }
+
+  /* The monospace thread number is redundant once the rows are stacked and
+     the row is the full width of the screen. */
+  .profile-teaser__threads li > span + span {
+    display: none;
+  }
+
+  .profile-teaser__threads li > span:first-child {
+    font-size: 1.5rem;
+  }
+
+  .profile-teaser__actions .ui-action,
+  .site-footer__actions .ui-action {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .site-footer {
+    padding-bottom: 7rem; /* clears the fixed mobile navigation */
+  }
+
+  .site-footer__invite h2 {
+    font-size: clamp(2.125rem, 10vw, 2.5rem);
+  }
+
+  .site-footer__signature {
+    grid-template-columns: 1fr;
+    gap: 1.625rem;
+  }
+
+  /* Start-here becomes a 2x2 tile grid: four doors, thumb-sized. */
+  .site-footer__routes--primary nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    border: 1px solid color-mix(in srgb, var(--color-text-on-dark) 14%, transparent);
+    border-radius: var(--radius-panel);
+    background: color-mix(in srgb, var(--color-text-on-dark) 14%, transparent);
+    overflow: hidden;
+  }
+
+  .site-footer__routes--primary nav a {
+    min-height: 3.25rem;
+    padding-inline: 1rem;
+    background: var(--color-espresso);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+  }
+
+  .site-footer__routes--secondary nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.125rem;
+  }
+}

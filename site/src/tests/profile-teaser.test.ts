@@ -15,12 +15,20 @@ test("profile teaser publishes only approved biography and privacy-safe paths", 
   const markup = renderToStaticMarkup(createElement(ProfileTeaser, { content }));
 
   assert.match(markup, /aria-labelledby="profile-teaser-title"/);
-  assert.match(markup, /Engineer · Inventor · Creative Technologist/);
-  assert.match(markup, /presenting verified work separately from prototypes/);
-  assert.equal((markup.match(/<li>/g) ?? []).length, 3);
   assert.match(markup, /href="\/story"/);
-  assert.match(markup, /href="https:\/\/github\.com\/uset82"/);
-  assert.match(markup, /external site/);
+  assert.match(markup, /One practice/);
+  assert.match(markup, /many ways/);
+  assert.match(markup, /The practice behind all of it/);
+  assert.match(markup, /Explore profile and CV/);
+
+  // Direction 4a puts the heading at full display scale and lets /story carry
+  // the detail. The role line, the practice-thread list and the GitHub link all
+  // moved out of this section, so the close reads as one statement.
+  assert.doesNotMatch(markup, /presenting verified work separately from prototypes/);
+  assert.doesNotMatch(markup, /href="https:\/\/github\.com\/uset82"/);
+  assert.equal((markup.match(/<li>/g) ?? []).length, 0);
+
+  // What the section must never do, whatever it looks like.
   assert.doesNotMatch(markup, /<(?:img|picture)\b/);
   assert.doesNotMatch(markup, /(?:download|\.pdf|mailto:|street address|phone number)/i);
 });
@@ -30,11 +38,9 @@ test("homepage mounts the profile teaser with responsive, focus, and touch-safe 
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
 
   assert.match(homepage, /<ProfileTeaser content=\{metadata\.profileTeaser\} \/>/);
-  assert.match(styles, /\.profile-teaser:focus-within \.profile-teaser__mark/);
-  assert.match(styles, /\.profile-teaser:hover \.profile-teaser__mark/);
-  assert.match(
-    styles,
-    /\.profile-teaser__threads li\s*\{[\s\S]*?min-height:\s*var\(--control-height\)/,
-  );
-  assert.match(styles, /@media \(max-width: 47\.99rem\)[\s\S]*?\.profile-teaser/);
+  assert.match(styles, /\.profile-teaser__heading/);
+  assert.match(styles, /\.profile-teaser__link:hover/);
+  assert.match(styles, /\.profile-teaser__link:focus-visible/);
+  assert.match(styles, /\.profile-teaser__blend/);
+  assert.match(styles, /@media \(max-width: 47\.99rem\)[\s\S]*?\.profile-teaser__copy/);
 });

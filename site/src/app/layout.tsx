@@ -52,7 +52,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </a>
           <SiteHeader navigation={navigation} />
           {children}
-          <SiteFooter content={siteContent.metadata.footer} navigation={navigation} />
+          <SiteFooter content={siteContent.metadata.footer} />
         </MotionProvider>
       </body>
     </html>

@@ -18,3 +18,10 @@ Thumbs.db
 
 # Local arcade candidate clones and build scratch (C.1). Never commit.
 /_arcade-build/
+
+# Design handoffs: keep the design work, exclude the snapshot of this repository
+# that the design tool ingested as context. Committing a stale copy of the repo
+# into the repo is permanent in history and slows every clone.
+**/*-handoff/**/uploads/
+# The delivered archives themselves; the unpacked design files are what we keep.
+**/*-handoff.zip

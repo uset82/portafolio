@@ -154,6 +154,7 @@ export const rawSiteContent = {
     profileTeaser: {
       eyebrow: "Profile / CV",
       heading: "One practice, many ways of seeing.",
+      headingAccent: "many ways",
       role: "Engineer · Inventor · Creative Technologist",
       biography:
         "Carlos works across artificial intelligence, electronics, resilient energy, music, astrology, and numerology. His portfolio connects engineering practice with creative experimentation, presenting verified work separately from prototypes, personal studies, and future concepts.",

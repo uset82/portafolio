@@ -63,12 +63,22 @@ const specExampleAstraea = {
 
 const skippedDirectoryNames = new Set([".git", ".next", "node_modules"]);
 
+/**
+ * Design handoffs arrive with an `uploads/` folder holding a snapshot of this
+ * repository, which the design tool ingested as context. That snapshot is not
+ * our source — it is a copy of it — so its manifests would otherwise be counted
+ * twice. `.gitignore` draws the same boundary and keeps it out of git.
+ */
+const isHandoffUpload = (entryPath: string) =>
+  entryPath.includes("-handoff") && entryPath.split(path.sep).includes("uploads");
+
 const collectAgentJsonFiles = async (directory: string): Promise<string[]> => {
   const entries = await readdir(directory, { withFileTypes: true });
   const files: string[] = [];
   for (const entry of entries) {
     if (skippedDirectoryNames.has(entry.name)) continue;
     const entryPath = path.join(directory, entry.name);
+    if (isHandoffUpload(entryPath)) continue;
     if (entry.isDirectory()) {
       files.push(...(await collectAgentJsonFiles(entryPath)));
       continue;

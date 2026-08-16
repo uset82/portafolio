@@ -1215,6 +1215,7 @@ export const profileTeaserSchema = z
   .object({
     eyebrow: z.string().min(3).max(40),
     heading: z.string().min(12).max(100),
+    headingAccent: z.string().min(3).max(40).optional(),
     role: z.string().min(12).max(100),
     biography: z.string().min(80).max(500),
     practiceThreads: z.array(z.string().min(3).max(40)).length(3),
