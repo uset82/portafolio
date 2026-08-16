@@ -23,6 +23,8 @@ const TITLE_OVERRIDES: Record<string, string> = {
   "Monkey-Tug-of-War": "Monkey Tug of War",
   "My-Football-Game": "My Football Game",
   Jacobgolf: "Jacobs Golfspill",
+  pacha: "Pasha",
+  chaclacayo: "Chaclacayo",
 };
 
 const DESCRIPTION_OVERRIDES: Record<string, string> = {
@@ -31,6 +33,8 @@ const DESCRIPTION_OVERRIDES: Record<string, string> = {
   Jacobgolf: "A browser-based mini golf challenge built with HTML5 canvas and vanilla JavaScript.",
   StillasCalculator:
     "A scaffolding calculator: draw a building perimeter and get a planning material estimate.",
+  pacha: "Website for Pasha International Food & Bar in Bergen.",
+  chaclacayo: "A property website for a house in Chaclacayo, Lima.",
 };
 
 const ROOM_OVERRIDES: Record<string, { href: string; label: string }> = {
@@ -50,6 +54,14 @@ const TRY_OVERRIDES: Record<string, { url: string; label: string }> = {
   StillasCalculator: {
     url: "https://stillascalculator.netlify.app/",
     label: "Open StillasCalculator",
+  },
+  pacha: {
+    url: "https://pasharestaurant.netlify.app/",
+    label: "Open Pasha",
+  },
+  chaclacayo: {
+    url: "https://chaclacayo.netlify.app/",
+    label: "Open Chaclacayo",
   },
 };
 
@@ -94,6 +106,7 @@ export type WorkGroupId =
   | "games"
   | "music"
   | "design"
+  | "websites"
   | "hardware"
   | "astrology"
   | "business"
@@ -118,6 +131,7 @@ export const WORK_GROUPS: readonly WorkGroupDefinition[] = [
   { id: "games", title: "Games", chartLabel: "Juegos" },
   { id: "music", title: "Music and audio", chartLabel: "Música y audio" },
   { id: "design", title: "Design and web", chartLabel: "Diseño y web" },
+  { id: "websites", title: "Website creation", chartLabel: "Creación de sitios" },
   { id: "hardware", title: "Hardware and embedded", chartLabel: "Hardware y embebido" },
   { id: "astrology", title: "Astrology and numerology", chartLabel: "Astrología y numerología" },
   { id: "business", title: "Business and SaaS", chartLabel: "Negocio y SaaS" },
@@ -133,7 +147,6 @@ const GROUP_BY_NAME: Record<string, WorkGroupId> = {
   "project-bolt-qrmollebakken-supabase": "tools",
   SmartHomeControl: "tools",
   iFoundYou: "tools",
-  pacha: "tools",
   opennemoclawsite: "tools",
   thedelegator: "ai",
   "LLM-Web-App": "ai",
@@ -160,7 +173,8 @@ const GROUP_BY_NAME: Record<string, WorkGroupId> = {
   "avatar-studio": "design",
   diagramcloner: "design",
   portafolio: "design",
-  chaclacayo: "design",
+  chaclacayo: "websites",
+  pacha: "websites",
   RS232_VHD_DE2115: "hardware",
   "Automatic-Watering-Elephant": "hardware",
   elefante: "hardware",

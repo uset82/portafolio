@@ -70,8 +70,8 @@ way that "webdesigner" is not once slugs start differing from repo names.
 | 49 | `opennemoclawsite` | 2026-03-18 | 2026-03-18 | CSS | 0.3 | — | ● own |  |
 | 50 | `FreeCAD` | 2026-03-29 | 2026-03-29 | — | 2381.9 | LGPL-2.1 | ⑂ fork | [live](https://www.freecad.org) |
 | 51 | `QubeSolve` | 2026-04-04 | 2026-04-05 | TypeScript | 1.1 | — | ● own |  |
-| 52 | `chaclacayo` | 2026-04-30 | 2026-05-01 | JavaScript | 15.7 | — | ● own |  |
-| 53 | `pacha` | 2026-05-10 | 2026-05-12 | TypeScript | 1.4 | — | ● own |  |
+| 52 | `chaclacayo` | 2026-04-30 | 2026-05-01 | JavaScript | 15.7 | — | ● own | [live](https://chaclacayo.netlify.app/) |
+| 53 | `pacha` | 2026-05-10 | 2026-05-12 | TypeScript | 1.4 | — | ● own | [live](https://pasharestaurant.netlify.app/) |
 | 54 | `CRM_SaaS_Educativo` | 2026-05-17 | 2026-05-18 | HTML | 0.3 | — | ● own |  |
 | 55 | `StillasCalculator` | 2026-05-30 | 2026-06-01 | TypeScript | 1.0 | — | ● own | [live](https://stillascalculator.netlify.app/) |
 | 56 | `osiris` | 2026-06-01 | 2026-05-30 | — | 2.3 | MIT | ⑂ fork | [live](https://osirisai.live) |

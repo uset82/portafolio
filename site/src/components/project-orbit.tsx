@@ -1,11 +1,17 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import type { OrbitProject } from "@/content/project-orbit";
 
 import { ProjectOrbitAtomic } from "./project-orbit-atomic";
+
+const LazyProjectOrbitScene = dynamic(
+  () => import("./project-orbit-scene").then((module) => module.ProjectOrbitScene),
+  { ssr: false, loading: () => null },
+);
 
 export type ProjectOrbitProps = {
   projects: readonly OrbitProject[];
@@ -14,20 +20,31 @@ export type ProjectOrbitProps = {
 /**
  * Project Orbit: the CA²M nucleus with each system on its own shell.
  *
- * The instrument is `ProjectOrbitAtomic`, a 2.5D SVG that draws the orbits, the
- * nodes and the nucleus, and positions its own pill labels from the node
- * geometry. It renders on the server and needs no WebGL, so the section is the
- * same for everyone.
+ * Two layers, in this order:
  *
- * Two layers used to sit on top of it and both were dead weight. A WebGL scene
- * mounted on intersection, except the observer never flipped it on, so it never
- * rendered. A second set of labels lived here waiting for that scene to place
- * them; with nothing placing them, all eleven stacked in the corner of the
- * stage. Removing both is what fixed the section — the atom underneath was
- * already correct.
+ *   1. `ProjectOrbitAtomic` — a server-rendered 2.5D SVG of the same
+ *      instrument. It is what a visitor sees immediately, and what they keep if
+ *      WebGL is unavailable or JavaScript never runs.
+ *   2. `ProjectOrbitScene` — the real thing: the optimised CA²M logo as a glTF
+ *      nucleus, brass tube rings, instanced bearings, and a slow revolution.
+ *      It replaces the SVG once its chunk has loaded.
+ *
+ * The 3D layer was switched off in 76501d0 (`void LazyProjectOrbitScene`) and
+ * later shadowed by a second scene that never mounted, which left only the flat
+ * SVG on the page. Both are corrected here: the scene mounts again, and the SVG
+ * goes back to being the fallback it was written as.
+ *
+ * The scene positions the label buttons through `labelRefs`, so those buttons
+ * exist only while the scene owns the layout. Without it the SVG draws its own
+ * pills instead — two label systems must never be visible at once, which is
+ * what stacked eleven of them in one corner.
  */
 export function ProjectOrbit({ projects }: ProjectOrbitProps) {
   const stageRef = useRef<HTMLDivElement>(null);
+  const labelRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const [shouldMountScene, setShouldMountScene] = useState(false);
+  const [sceneReady, setSceneReady] = useState(false);
+  const [inView, setInView] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
@@ -37,6 +54,26 @@ export function ProjectOrbit({ projects }: ProjectOrbitProps) {
     update();
     query.addEventListener("change", update);
     return () => query.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    const target = stageRef.current;
+    if (!target || typeof IntersectionObserver === "undefined") {
+      setShouldMountScene(true);
+      setInView(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.some((entry) => entry.isIntersecting);
+        setInView(visible);
+        if (visible) setShouldMountScene(true);
+      },
+      { rootMargin: "240px 0px", threshold: 0 },
+    );
+    observer.observe(target);
+    return () => observer.disconnect();
   }, []);
 
   const selected = useMemo(
@@ -78,8 +115,13 @@ export function ProjectOrbit({ projects }: ProjectOrbitProps) {
         <span className="project-orbit-section__rule" aria-hidden="true" />
       </header>
 
-      <div ref={stageRef} className="project-orbit__stage" data-reduced-motion={reducedMotion}>
-        <div className="project-orbit__instrument">
+      <div
+        ref={stageRef}
+        className="project-orbit__stage"
+        data-scene-ready={sceneReady}
+        data-reduced-motion={reducedMotion}
+      >
+        <div className="project-orbit__instrument" aria-hidden={sceneReady}>
           <ProjectOrbitAtomic
             projects={projects}
             selectedId={selectedId}
@@ -87,6 +129,40 @@ export function ProjectOrbit({ projects }: ProjectOrbitProps) {
             onOpen={openProject}
           />
         </div>
+
+        {shouldMountScene ? (
+          <div className="project-orbit__canvas" aria-hidden="true">
+            <LazyProjectOrbitScene
+              inView={inView}
+              projects={projects}
+              reducedMotion={reducedMotion}
+              selectedId={selectedId}
+              labelRefs={labelRefs}
+              onOpen={openProject}
+              onSelect={setSelectedId}
+              onReady={setSceneReady}
+            />
+          </div>
+        ) : null}
+
+        {sceneReady ? (
+          <div className="project-orbit__labels" aria-hidden="true">
+            {projects.map((project, index) => (
+              <button
+                key={project.id}
+                ref={(label) => {
+                  labelRefs.current[index] = label;
+                }}
+                className="project-orbit__label"
+                tabIndex={-1}
+                type="button"
+                onClick={() => setSelectedId(project.id)}
+              >
+                {project.name}
+              </button>
+            ))}
+          </div>
+        ) : null}
 
         {selected ? (
           <aside className="project-orbit__panel" aria-live="polite">
@@ -119,10 +195,10 @@ export function ProjectOrbit({ projects }: ProjectOrbitProps) {
         ) : null}
       </div>
 
-      {/* The instrument's pills are pointer affordances and are hidden from
-       * assistive technology. This rail is the keyboard, screen-reader and
-       * no-JavaScript path to every system. */}
-      <nav className="project-orbit__all" aria-label="All systems">
+      {/* The instrument's affordances are pointer-only and hidden from assistive
+       * technology. This rail is the keyboard, screen-reader and no-JavaScript
+       * path to every system. */}
+      <nav className="project-orbit__all" data-scene-ready={sceneReady} aria-label="All systems">
         <p>All systems</p>
         <ul>
           {projects.map((project) => (

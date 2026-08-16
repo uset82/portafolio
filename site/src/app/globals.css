@@ -2033,6 +2033,9 @@ body:has(.observatory-hero) .site-header .site-header__status {
  * `pointer-events: none` and faded out on `data-scene-mounted`: its pills were
  * never meant to be clicked. The scene is gone, so the pills are the interface
  * and must receive pointer events. */
+/* The SVG instrument holds the section from first paint and stays if WebGL is
+ * unavailable. Once the 3D scene reports itself ready it owns the layout, so
+ * the SVG retires — drawing both is what produced two sets of labels. */
 .project-orbit__instrument {
   position: relative;
   z-index: 1;
@@ -2040,6 +2043,14 @@ body:has(.observatory-hero) .site-header .site-header__status {
   /* Never `overflow: hidden`: the pills sit at the outer edge of the orbits and
    * clipping them is what hid two of them in the first place. */
   overflow: visible;
+  transition: opacity var(--duration-base) var(--ease-standard);
+}
+
+.project-orbit__stage[data-scene-ready="true"] .project-orbit__instrument {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .project-orbit__canvas,
@@ -2069,10 +2080,6 @@ body:has(.observatory-hero) .site-header .site-header__status {
   overflow: hidden;
   pointer-events: none;
   transition: opacity var(--duration-base) var(--ease-standard);
-}
-
-.project-orbit__stage[data-scene-mounted="true"] .project-orbit__fallback-instrument {
-  opacity: 0;
 }
 
 .project-orbit__fallback-rail {

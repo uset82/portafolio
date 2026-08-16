@@ -29,6 +29,8 @@ const coreRoutes: readonly CoreRoute[] = [
       "https://github.com/uset82/StrudelAI",
       "https://jacobgolf.netlify.app/",
       "https://stillascalculator.netlify.app/",
+      "https://pasharestaurant.netlify.app/",
+      "https://chaclacayo.netlify.app/",
       "/cosmos",
       "/support",
     ],

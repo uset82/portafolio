@@ -45,6 +45,7 @@ test("every public repository is classified into exactly one Work group", () => 
       "games",
       "music",
       "design",
+      "websites",
       "hardware",
       "astrology",
       "business",
@@ -63,7 +64,7 @@ test("project register renders grouped public repositories as ordered, linkable 
   assert.match(markup, /aria-label="Work groups"/);
   assert.equal(GITHUB_REGISTER_META.count, 62);
   assert.equal((markup.match(/class="project-register__row"/g) ?? []).length, 62);
-  assert.equal((markup.match(/class="project-register__group"/g) ?? []).length, 12);
+  assert.equal((markup.match(/class="project-register__group"/g) ?? []).length, 13);
 
   for (const group of GITHUB_REGISTER_GROUPS) {
     assert.match(markup, new RegExp(`id="work-group-${group.id}"`));
@@ -136,6 +137,49 @@ test("StillasCalculator is a tools row with the live site Carlos provided", () =
   );
   assert.match(markup, /href="https:\/\/stillascalculator\.netlify\.app\/"/);
   assert.doesNotMatch(markup, /<(?:iframe)\b/);
+});
+
+test("pacha is the Pasha restaurant site in Website creation", () => {
+  const pacha = GITHUB_REGISTER.find((repository) => repository.name === "pacha");
+  const websites = GITHUB_REGISTER_GROUPS.find((group) => group.id === "websites");
+  const design = GITHUB_REGISTER_GROUPS.find((group) => group.id === "design");
+  const markup = renderToStaticMarkup(createElement(ProjectRegister));
+
+  assert.ok(pacha);
+  assert.ok(websites);
+  assert.ok(design);
+  assert.equal(pacha.title, "Pasha");
+  assert.equal(pacha.tryUrl, "https://pasharestaurant.netlify.app/");
+  assert.equal(pacha.tryLabel, "Open Pasha");
+  assert.equal(
+    websites.repositories.some((repository) => repository.name === "pacha"),
+    true,
+  );
+  assert.equal(
+    design.repositories.some((repository) => repository.name === "pacha"),
+    false,
+  );
+  assert.match(markup, /href="https:\/\/pasharestaurant\.netlify\.app\/"/);
+  assert.doesNotMatch(markup, /Strandgaten|5004/);
+});
+
+test("chaclacayo is a Website creation row with the live site, without private contact details", () => {
+  const chaclacayo = GITHUB_REGISTER.find((repository) => repository.name === "chaclacayo");
+  const websites = GITHUB_REGISTER_GROUPS.find((group) => group.id === "websites");
+  const markup = renderToStaticMarkup(createElement(ProjectRegister));
+
+  assert.ok(chaclacayo);
+  assert.ok(websites);
+  assert.equal(chaclacayo.title, "Chaclacayo");
+  assert.equal(chaclacayo.tryUrl, "https://chaclacayo.netlify.app/");
+  assert.equal(chaclacayo.tryLabel, "Open Chaclacayo");
+  assert.equal(
+    websites.repositories.some((repository) => repository.name === "chaclacayo"),
+    true,
+  );
+  assert.match(markup, />Website creation</);
+  assert.match(markup, /href="https:\/\/chaclacayo\.netlify\.app\/"/);
+  assert.doesNotMatch(markup, /hotmail|450 41 112|\+47|Alfonso Cobi[aá]n|350,?000|Mz\.?\s*B/i);
 });
 
 test("project register is readable without animation and keeps focus, touch, and mobile contracts", () => {

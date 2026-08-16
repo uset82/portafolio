@@ -32,6 +32,10 @@ type ProjectOrbitSceneProps = {
   labelRefs: MutableRefObject<Array<HTMLButtonElement | null>>;
   onOpen: (project: OrbitProject) => void;
   onSelect: (projectId: string | null) => void;
+  /** Fired once the scene owns the layout, so the shell can retire the SVG
+   * fallback and hand the label buttons over. Until this fires, the SVG is the
+   * instrument and the scene must not be assumed to be on screen. */
+  onReady?: (ready: boolean) => void;
 };
 
 type FocusState = {
@@ -490,8 +494,17 @@ function OrbitScene({
   labelRefs,
   onOpen,
   onSelect,
+  onReady,
 }: ProjectOrbitSceneProps) {
   const { camera: viewCamera, invalidate, size } = useThree();
+
+  /* Reaching this point means the Three chunk loaded, WebGL was granted and the
+   * canvas exists, so the scene — not the SVG — owns the instrument from here.
+   * Reporting it lets the shell retire the fallback instead of drawing both. */
+  useEffect(() => {
+    onReady?.(true);
+    return () => onReady?.(false);
+  }, [onReady]);
   const worldScale = size.width < 760 ? 0.9 : 1;
   const nodeRefs = useRef<Array<THREE.Group | null>>([]);
   const ringMaterialRefs = useRef<Array<THREE.MeshStandardMaterial | null>>([]);

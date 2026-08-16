@@ -12,34 +12,39 @@ test("Project Orbit renders one instrument and keeps a semantic navigation shell
   const styles = readSource("src/app/globals.css");
 
   assert.match(shell, /^"use client";/);
+
+  // Two layers, in order: the SVG instrument paints immediately and survives
+  // without WebGL; the 3D scene takes over once its chunk is live.
   assert.match(shell, /<ProjectOrbitAtomic/);
   assert.match(shell, /className="project-orbit__instrument"/);
+  assert.match(shell, /LazyProjectOrbitScene/);
+  assert.match(shell, /ssr:\s*false/);
+  assert.match(shell, /IntersectionObserver/);
 
-  // One visual layer. A lazily mounted WebGL scene sat on top of the atom and
-  // its IntersectionObserver never flipped it on, so it rendered nothing; a
-  // second label layer waited for that scene to position it and stacked all
-  // eleven labels in the corner instead. Neither may come back.
-  assert.doesNotMatch(shell, /IntersectionObserver/);
-  assert.doesNotMatch(shell, /data-scene-mounted/);
-  assert.doesNotMatch(shell, /className="project-orbit__labels"/);
-  assert.doesNotMatch(shell, /RepositoryAtomScene|ProjectOrbitScene/);
+  // `void LazyProjectOrbitScene` in 76501d0 is what switched the 3D off and
+  // left the flat SVG as the whole section. It must never be voided again.
+  // Statement form only: the component's own comment names the mistake, and
+  // matching prose would fail on the explanation rather than on the code.
+  assert.doesNotMatch(shell, /^\s*void LazyProjectOrbitScene;/m);
+  assert.doesNotMatch(shell, /RepositoryAtomScene/);
 
-  // The atom draws its own pills, so they must be able to receive clicks.
+  // Only one label system may be on screen. The scene positions
+  // `project-orbit__label` through refs, so those buttons exist only while the
+  // scene owns the layout; otherwise the atom's own pills are the labels.
+  // Rendering both is what stacked eleven labels in one corner.
+  assert.match(
+    shell,
+    /\{sceneReady \? \(\s*<div className="project-orbit__labels"/,
+    "label buttons must be gated on the scene actually being ready",
+  );
+  assert.match(shell, /onReady=\{setSceneReady\}/);
   assert.match(
     styles,
-    /\.project-orbit__instrument\s*\{[\s\S]*?position:\s*absolute/,
-    "the instrument needs its own layout rule, not the old fallback's",
-  );
-  assert.doesNotMatch(
-    styles.slice(
-      styles.indexOf(".project-orbit__instrument"),
-      styles.indexOf(".project-orbit__canvas,"),
-    ),
-    /pointer-events:\s*none/,
-    "the instrument carries the interface and must stay clickable",
+    /\.project-orbit__stage\[data-scene-ready="true"\] \.project-orbit__instrument\s*\{[\s\S]*?opacity:\s*0/,
+    "the SVG must retire once the scene reports itself ready",
   );
 
-  assert.match(shell, /<nav className="project-orbit__all" aria-label="All systems">/);
+  assert.match(shell, /<nav className="project-orbit__all" data-scene-ready=\{sceneReady\}/);
   assert.doesNotMatch(shell, /project-orbit__hint/);
   assert.match(shell, /projects\.map\(\(project\) =>/);
   assert.match(shell, /onFocus=\{\(\) => setSelectedId\(project\.id\)\}/);
