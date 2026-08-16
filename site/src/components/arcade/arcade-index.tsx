@@ -1,3 +1,4 @@
+import { ThreadChips } from "@/components/thread-chips";
 import { ActionLink, StatusTag } from "@/components/ui";
 import { ARCADE_SUMMARY, type ArcadeGame } from "@/content/arcade";
 
@@ -55,6 +56,8 @@ function GameCard({ game }: { game: ResolvedArcadeGame }) {
       </div>
 
       <p className="arcade-index__game-body">{game.description}</p>
+
+      <ThreadChips projectId={game.id} label={`What ${game.title} is about`} />
 
       <dl className="arcade-index__game-spec">
         <div>

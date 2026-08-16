@@ -7,7 +7,7 @@ function readSource(relativePath: string) {
   return readFileSync(path.join(process.cwd(), relativePath), "utf8");
 }
 
-test("the homepage preserves the Observatory layer stack and places Project Orbit before the laboratory", () => {
+test("the homepage preserves the Observatory layer stack and runs the four doors in menu order", () => {
   const home = readSource("src/app/page.tsx");
   const layout = readSource("src/app/layout.tsx");
   const progressive = readSource("src/components/three/observatory-progressive-experience.tsx");
@@ -37,13 +37,17 @@ test("the homepage preserves the Observatory layer stack and places Project Orbi
   const arcadePosition = home.indexOf("<ArcadeTeaser");
   const mediaPosition = home.indexOf("<MediaTeaser");
   const supportPosition = home.indexOf("<SupportTeaser");
-  const laboratoryPosition = home.indexOf('className="editorial-section laboratory-section"');
+  const profilePosition = home.indexOf("<ProfileTeaser");
   assert.equal(orbitPosition > layerOrder.at(-1)!, true);
   assert.equal(orbitPosition > heroClose, true);
   assert.equal(orbitPosition < arcadePosition, true);
   assert.equal(arcadePosition < mediaPosition, true);
   assert.equal(mediaPosition < supportPosition, true);
-  assert.equal(supportPosition < laboratoryPosition, true);
+  assert.equal(supportPosition < profilePosition, true);
+  // Laboratory and Cosmos are reached from inside See and About and from the
+  // footer. Re-adding them here would restore the eight-choice homepage.
+  assert.equal(home.includes("laboratory-section"), false);
+  assert.equal(home.includes("<PersonalTeaser"), false);
 
   assert.equal(layout.indexOf("<SiteHeader") < layout.indexOf("{children}"), true);
   assert.match(progressive, /<figure/);
@@ -70,7 +74,6 @@ test("the Observatory and Project Orbit contracts preserve focus, reduced motion
   assert.match(styles, /\.observatory-scrim--base\s*\{[\s\S]*?var\(--color-canvas\)/);
   assert.match(styles, /\.project-orbit-section\s*\{[\s\S]*?var\(--color-canvas\)/);
   assert.match(styles, /\.project-orbit-section::before\s*\{[\s\S]*?radial-gradient\(\s*ellipse/);
-  assert.match(styles, /\.laboratory-section\s*\{[\s\S]*?background:\s*var\(--color-canvas\)/);
   assert.doesNotMatch(styles, /\.observatory-hero \.project-orbit-section/);
   assert.match(
     styles,

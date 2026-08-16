@@ -11,7 +11,7 @@ import { ARCADE_GAMES, findArcadeGame, isArcadeGamePlayable } from "@/content/ar
 
 const playable = ARCADE_GAMES.filter(isArcadeGamePlayable);
 
-test("the homepage teaser names only games this build can serve", () => {
+test("the homepage teaser counts games without repeating the arcade list", () => {
   const markup = renderToStaticMarkup(
     createElement(ArcadeTeaser, { playable, total: ARCADE_GAMES.length }),
   );
@@ -20,14 +20,14 @@ test("the homepage teaser names only games this build can serve", () => {
   assert.match(markup, new RegExp(`${playable.length} playable now`));
   assert.match(markup, /href="\/arcade"/);
 
-  for (const game of playable) {
-    assert.match(markup, new RegExp(`href="/arcade/${game.slug}"`));
-  }
-
-  // A game that is not playable must never be advertised as one here.
-  const blocked = ARCADE_GAMES.filter((game) => !isArcadeGamePlayable(game));
-  for (const game of blocked) {
+  // The arcade page names the games. The teaser must not repeat that list, or
+  // the click delivers a second reading of what the visitor just read.
+  for (const game of ARCADE_GAMES) {
     assert.doesNotMatch(markup, new RegExp(`href="/arcade/${game.slug}"`));
+    assert.ok(
+      !markup.includes(game.title),
+      `${game.title} is named on both the teaser and /arcade`,
+    );
   }
 
   // The teaser is a promise, not a player.

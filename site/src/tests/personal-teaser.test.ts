@@ -28,14 +28,13 @@ test("personal teaser exposes approved practices and the privacy hold without pr
   assert.doesNotMatch(markup, /(?:latitude|longitude|street address|postal code)/i);
 });
 
-test("homepage mounts the copy-first responsive teaser with focus and reduced-motion feedback", () => {
+test("the Cosmos teaser keeps its styling for /cosmos after leaving the homepage", () => {
   const homepage = readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
-  const personalIndex = homepage.indexOf("<PersonalTeaser");
-  const profileIndex = homepage.indexOf("<ProfileTeaser");
 
-  assert.ok(personalIndex > -1);
-  assert.ok(profileIndex > personalIndex);
+  // Cosmos is reached from About and from the footer. Putting it back on the
+  // homepage would restore the eight-section scroll this replaced.
+  assert.equal(homepage.includes("<PersonalTeaser"), false);
   assert.match(styles, /\.personal-teaser:focus-within \.personal-teaser__field/);
   assert.match(styles, /\.personal-teaser:hover \.personal-teaser__field/);
   assert.match(styles, /\.personal-teaser__themes li[^}]*min-height:\s*4rem/);

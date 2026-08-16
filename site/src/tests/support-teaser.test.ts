@@ -9,7 +9,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { SupportTeaser } from "@/components/support-teaser";
 import { CONTRIBUTABLE_REPOS } from "@/content/support";
 
-test("the homepage teaser names only the MIT repositories and one contribute door", () => {
+test("the homepage teaser counts the MIT repositories without listing them", () => {
   const markup = renderToStaticMarkup(createElement(SupportTeaser));
 
   assert.match(markup, /<section class="support-teaser" aria-labelledby="support-teaser-title">/);
@@ -17,20 +17,26 @@ test("the homepage teaser names only the MIT repositories and one contribute doo
   assert.match(markup, /href="\/support"/);
   assert.doesNotMatch(markup, /Buy [Mm]e a [Cc]offee/);
 
+  // /support carries the list. Repeating four names here made the click
+  // redundant, so the teaser states the count and leaves the list where it can
+  // be acted on.
   for (const repo of CONTRIBUTABLE_REPOS) {
-    assert.match(markup, new RegExp(repo.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+    assert.ok(
+      !markup.includes(repo.name),
+      `${repo.name} is listed on both the teaser and /support`,
+    );
   }
 
   assert.doesNotMatch(markup, /href="https:\/\/github\.com\/uset82\/[^"]+"/);
   assert.doesNotMatch(markup, /<(?:iframe|form|button)\b/);
 });
 
-test("the homepage mounts the support teaser after listen and before the laboratory", () => {
+test("the homepage mounts the support teaser as the third door", () => {
   const homepage = readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
 
   assert.match(homepage, /<SupportTeaser \/>/);
   assert.equal(homepage.indexOf("<MediaTeaser") < homepage.indexOf("<SupportTeaser"), true);
-  assert.equal(homepage.indexOf("<SupportTeaser") < homepage.indexOf("laboratory-section"), true);
+  assert.equal(homepage.indexOf("<SupportTeaser") < homepage.indexOf("<ProfileTeaser"), true);
 });
 
 test("the support teaser carries responsive and reduced-motion paths", () => {

@@ -4,7 +4,6 @@ import { CcAiPanel } from "@/components/cc-ai-panel";
 import { HeroReveal, HeroRevealItem, SceneReveal } from "@/components/hero-reveal";
 import { MediaTeaser } from "@/components/media-teaser";
 import { ProjectOrbit } from "@/components/project-orbit";
-import { PersonalTeaser } from "@/components/personal-teaser";
 import { ObservatoryHeroVideo } from "@/components/observatory-hero-video";
 import { ProfileTeaser } from "@/components/profile-teaser";
 import { SupportTeaser } from "@/components/support-teaser";
@@ -178,35 +177,17 @@ export default function Home() {
 
       <ProjectOrbit projects={ORBIT_PROJECTS} />
 
+      {/* The four sections below are the four doors, in the same order and with
+       * the same numbering. Laboratory and Cosmos used to sit here too; they are
+       * reached from inside See and About and from the footer, so the homepage
+       * stops asking a visitor to choose eight times before anything happens. */}
       <ArcadeTeaser playable={playableGames} total={ARCADE_GAMES.length} />
 
       <MediaTeaser content={metadata.mediaTeaser} />
 
       <SupportTeaser />
 
-      <section className="editorial-section laboratory-section" aria-labelledby="laboratory-title">
-        <p className="section-label">Laboratory / 01</p>
-        <div>
-          <h2 id="laboratory-title">Systems that move between code and matter.</h2>
-          <p>
-            AI agents, resilient energy, electronics, and experimental interfaces—presented as
-            evidence-led work, with concepts clearly separated from shipped systems.
-          </p>
-          <ActionLink className="text-link" href="/laboratory">
-            Enter the Laboratory <span aria-hidden="true">→</span>
-          </ActionLink>
-        </div>
-        <div className="instrument-figure" aria-hidden="true">
-          <span>CC</span>
-          <i />
-          <i />
-          <i />
-        </div>
-      </section>
-
-      <PersonalTeaser content={metadata.personalTeaser} />
-
-      <ProfileTeaser content={metadata.profileTeaser} />
+      <ProfileTeaser content={metadata.profileTeaser} footer={metadata.footer} />
     </main>
   );
 }

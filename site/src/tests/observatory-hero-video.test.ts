@@ -86,5 +86,6 @@ test("the held presentation unmounts the artifact overlays", () => {
   // Selected Systems still reaches every destination the overlays exposed.
   const page = readSource("src/app/page.tsx");
   assert.match(page, /artifacts=\{observatoryArtifacts\}/);
-  assert.match(page, /href="\/laboratory"/);
+  // Laboratory left the homepage; the orbit still carries it as a destination.
+  assert.match(page, /ORBIT_PROJECTS/);
 });

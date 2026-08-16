@@ -11,7 +11,7 @@ export function MediaTeaser({ content }: MediaTeaserProps) {
   return (
     <section className="media-teaser" aria-labelledby={headingId}>
       <div className="media-teaser__instrument" aria-hidden="true">
-        <span className="media-teaser__instrument-label">Sound room / 02</span>
+        <span className="media-teaser__instrument-label">Sound room</span>
         <div className="media-teaser__dial">
           <span>11</span>
           <span>22</span>
@@ -26,7 +26,7 @@ export function MediaTeaser({ content }: MediaTeaserProps) {
       </div>
 
       <div className="media-teaser__copy">
-        <p className="section-label">{content.eyebrow}</p>
+        <p className="section-label">Listen / 02</p>
         <p className="media-teaser__status">
           <span aria-hidden="true" />
           {content.status}
@@ -34,11 +34,8 @@ export function MediaTeaser({ content }: MediaTeaserProps) {
         <h2 id={headingId}>{content.heading}</h2>
         <p className="media-teaser__description">{content.description}</p>
         <ul className="media-teaser__formats" aria-label="Planned media formats">
-          {content.formats.map((format, index) => (
-            <li key={format}>
-              <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-              {format}
-            </li>
+          {content.formats.map((format) => (
+            <li key={format}>{format}</li>
           ))}
         </ul>
         <ActionLink className="media-teaser__action" href={content.action.href}>
