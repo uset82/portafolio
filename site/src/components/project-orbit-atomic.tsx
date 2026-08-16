@@ -19,108 +19,142 @@ type NodeConfig = {
   labelX: number;
   labelY: number;
   labelAlign: "left" | "right" | "center";
-  stem?: { x1: number; y1: number; x2: number; y2: number };
 };
 
+type RailConfig = {
+  id: string;
+  rx: number;
+  ry: number;
+  /** Degrees, SVG-clockwise about the shared centre (500, 290). */
+  rotate: number;
+  /** Fixed decorative bearing beads, parked between the node seats. */
+  beadAngles: readonly number[];
+};
+
+/**
+ * The four orbital rails of the atom. Everything — rails, beads and node
+ * seats — is computed from these same four ellipses so nothing can drift
+ * out of alignment.
+ */
+const ORBIT_RAILS: readonly RailConfig[] = [
+  { id: "vertical", rx: 96, ry: 220, rotate: 0, beadAngles: [45, 135, 225, 315] },
+  { id: "horizontal", rx: 396, ry: 76, rotate: 0, beadAngles: [30, 150, 210, 330] },
+  { id: "diagonal-a", rx: 366, ry: 102, rotate: -34, beadAngles: [90, 200, 270, 335] },
+  { id: "diagonal-b", rx: 366, ry: 102, rotate: 34, beadAngles: [90, 195, 270, 315] },
+];
+
+/** A point on a rail's ellipse, matching the SVG `rotate(deg 500 290)`. */
+function railPoint(rail: RailConfig, thetaDegrees: number) {
+  const theta = (thetaDegrees * Math.PI) / 180;
+  const dx = Math.cos(theta) * rail.rx;
+  const dy = Math.sin(theta) * rail.ry;
+  const rad = (rail.rotate * Math.PI) / 180;
+  const cos = Math.cos(rad);
+  const sin = Math.sin(rad);
+  return {
+    x: 500 + dx * cos - dy * sin,
+    y: 290 + dx * sin + dy * cos,
+  };
+}
+
+/**
+ * Every node sits EXACTLY on its rail — each position below is the rail
+ * ellipse evaluated at a designed angle, not placed by eye — and every pair
+ * mirrors across the vertical centreline: 3Doodle↔FUTURE ENERGY (meridian),
+ * Repo2Agent↔SmartChatbot and ARCADE↔Avatar Studio (equator),
+ * StrudelAI↔iFoundYou (upper diagonals), SOUND LAB↔ASTRAEA (lower
+ * diagonals). PINÁCULO, the eleventh system, takes the remaining seat on the
+ * lower-right diagonal arc, exactly as in the reference composition. Labels
+ * hang outward from the centre so none of them cross the instrument.
+ */
 const ATOMIC_NODES: Record<string, NodeConfig> = {
   "3doodle": {
     id: "3doodle",
     cx: 500,
-    cy: 78,
+    cy: 70,
     labelX: 566,
-    labelY: 78,
+    labelY: 70,
     labelAlign: "left",
-    stem: { x1: 500, y1: 106, x2: 500, y2: 122 },
+  },
+  strudelai: {
+    id: "strudelai",
+    cx: 209,
+    cy: 155,
+    labelX: 143,
+    labelY: 155,
+    labelAlign: "right",
+  },
+  ifoundyou: {
+    id: "ifoundyou",
+    cx: 791,
+    cy: 155,
+    labelX: 857,
+    labelY: 155,
+    labelAlign: "left",
+  },
+  repo2agent: {
+    id: "repo2agent",
+    cx: 104,
+    cy: 290,
+    labelX: 64,
+    labelY: 290,
+    labelAlign: "right",
+  },
+  smartchatbot: {
+    id: "smartchatbot",
+    cx: 896,
+    cy: 290,
+    labelX: 936,
+    labelY: 290,
+    labelAlign: "left",
+  },
+  arcade: {
+    id: "arcade",
+    cx: 333,
+    cy: 359,
+    labelX: 293,
+    labelY: 359,
+    labelAlign: "right",
+  },
+  "avatar-studio": {
+    id: "avatar-studio",
+    cx: 667,
+    cy: 359,
+    labelX: 707,
+    labelY: 359,
+    labelAlign: "left",
+  },
+  pinaculo: {
+    id: "pinaculo",
+    cx: 795,
+    cy: 431,
+    labelX: 861,
+    labelY: 431,
+    labelAlign: "left",
+  },
+  "sound-lab": {
+    id: "sound-lab",
+    cx: 284,
+    cy: 506,
+    labelX: 324,
+    labelY: 506,
+    labelAlign: "left",
+  },
+  astraea: {
+    id: "astraea",
+    cx: 716,
+    cy: 506,
+    labelX: 676,
+    labelY: 506,
+    labelAlign: "right",
   },
   "future-energy": {
     id: "future-energy",
     cx: 500,
-    cy: 502,
+    cy: 510,
     labelX: 500,
-    labelY: 556,
+    labelY: 560,
     labelAlign: "center",
-    stem: { x1: 500, y1: 458, x2: 500, y2: 474 },
-  },
-  repo2agent: {
-    id: "repo2agent",
-    cx: 128,
-    cy: 290,
-    labelX: 68,
-    labelY: 290,
-    labelAlign: "right",
-    stem: { x1: 156, y1: 290, x2: 182, y2: 290 },
-  },
-  smartchatbot: {
-    id: "smartchatbot",
-    cx: 872,
-    cy: 290,
-    labelX: 932,
-    labelY: 290,
-    labelAlign: "left",
-    stem: { x1: 818, y1: 290, x2: 844, y2: 290 },
-  },
-  strudelai: {
-    id: "strudelai",
-    cx: 308,
-    cy: 136,
-    labelX: 374,
-    labelY: 136,
-    labelAlign: "left",
-    stem: { x1: 326, y1: 152, x2: 348, y2: 168 },
-  },
-  astraea: {
-    id: "astraea",
-    cx: 746,
-    cy: 494,
-    labelX: 676,
-    labelY: 534,
-    labelAlign: "right",
-    stem: { x1: 728, y1: 476, x2: 708, y2: 460 },
-  },
-  pinaculo: {
-    id: "pinaculo",
-    cx: 848,
-    cy: 428,
-    labelX: 914,
-    labelY: 428,
-    labelAlign: "left",
-    stem: { x1: 824, y1: 412, x2: 802, y2: 398 },
-  },
-  ifoundyou: {
-    id: "ifoundyou",
-    cx: 692,
-    cy: 136,
-    labelX: 758,
-    labelY: 136,
-    labelAlign: "left",
-    stem: { x1: 674, y1: 152, x2: 652, y2: 168 },
-  },
-  "avatar-studio": {
-    id: "avatar-studio",
-    cx: 668,
-    cy: 364,
-    labelX: 736,
-    labelY: 364,
-    labelAlign: "left",
-    stem: { x1: 648, y1: 348, x2: 628, y2: 334 },
-  },
-  "sound-lab": {
-    id: "sound-lab",
-    cx: 288,
-    cy: 494,
-    labelX: 358,
-    labelY: 520,
-    labelAlign: "left",
-    stem: { x1: 308, y1: 476, x2: 328, y2: 460 },
-  },
-  arcade: {
-    id: "arcade",
-    cx: 332,
-    cy: 364,
-    labelX: 264,
-    labelY: 364,
-    labelAlign: "right",
-    stem: { x1: 352, y1: 348, x2: 372, y2: 334 },
   },
 };
 
@@ -390,6 +424,13 @@ export function ProjectOrbitAtomic({
             <stop offset="100%" stopColor={naturalPalette.orbitBrass} />
           </linearGradient>
 
+          {/* Dark channel between the two brass tubes of every rail */}
+          <linearGradient id="po-rail-channel" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor={naturalPalette.deepWood} />
+            <stop offset="50%" stopColor={naturalPalette.orbitInk} />
+            <stop offset="100%" stopColor={naturalPalette.espresso} />
+          </linearGradient>
+
           {/* Drop Shadows */}
           <filter id="po-shadow" x="-15%" y="-15%" width="130%" height="130%">
             <feDropShadow
@@ -398,6 +439,16 @@ export function ProjectOrbitAtomic({
               stdDeviation="8"
               floodColor={naturalPalette.orbitInk}
               floodOpacity="0.32"
+            />
+          </filter>
+
+          <filter id="po-rail-shadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow
+              dx="0"
+              dy="5"
+              stdDeviation="7"
+              floodColor={naturalPalette.orbitInk}
+              floodOpacity="0.26"
             />
           </filter>
 
@@ -410,218 +461,80 @@ export function ProjectOrbitAtomic({
               floodOpacity="0.85"
             />
           </filter>
+
+          <clipPath id="po-medallion-clip">
+            <circle cx="500" cy="290" r="64" />
+          </clipPath>
         </defs>
 
-        {/* --- 1. AMBIENT SHADOW LAYER --- */}
-        <g opacity="0.4" filter="url(#po-shadow)">
-          <ellipse
-            cx="500"
-            cy="290"
-            rx="92"
-            ry="226"
-            fill="none"
-            stroke={naturalPalette.orbitInk}
-            strokeWidth="7"
-          />
-          <ellipse
-            cx="500"
-            cy="290"
-            rx="392"
-            ry="74"
-            fill="none"
-            stroke={naturalPalette.orbitInk}
-            strokeWidth="7"
-          />
-          <ellipse
-            cx="500"
-            cy="290"
-            rx="362"
-            ry="100"
-            fill="none"
-            stroke={naturalPalette.orbitInk}
-            strokeWidth="7"
-            transform="rotate(-34 500 290)"
-          />
-          <ellipse
-            cx="500"
-            cy="290"
-            rx="362"
-            ry="100"
-            fill="none"
-            stroke={naturalPalette.orbitInk}
-            strokeWidth="7"
-            transform="rotate(34 500 290)"
-          />
-        </g>
-
-        {/* --- 2. DUAL BRASS ORBITAL RAILS --- */}
-        {/* Ring 1: Vertical Orbit */}
-        <g id="ring-vertical">
-          <ellipse
-            cx="500"
-            cy="290"
-            rx="96"
-            ry="232"
-            fill="none"
-            stroke="url(#po-brass-linear)"
-            strokeWidth="4"
-          />
-          <ellipse
-            cx="500"
-            cy="290"
-            rx="86"
-            ry="220"
-            fill="none"
-            stroke="url(#po-brass-inner)"
-            strokeWidth="2.5"
-          />
-          {[Math.PI * 0.25, Math.PI * 0.75, Math.PI * 1.25, Math.PI * 1.75].map((ang, i) => {
-            const x = 500 + Math.cos(ang) * 91;
-            const y = 290 + Math.sin(ang) * 226;
-            return (
-              <circle
-                key={i}
-                cx={x}
-                cy={y}
-                r="4.5"
-                fill="url(#po-gold-sphere)"
-                stroke={naturalPalette.orbitBronze}
-                strokeWidth="0.8"
+        {/* --- 1. FOUR ORBITAL RAILS ---
+         * One geometry per rail, drawn twice: a wide brass stroke with a
+         * narrow dark channel down its middle, which reads as two perfectly
+         * parallel machined tubes at every point of the ellipse. The previous
+         * version drew separately-offset ellipses (plus offset shadow copies),
+         * which can never stay parallel and is what made the instrument look
+         * doubled and misaligned. */}
+        <g filter="url(#po-rail-shadow)">
+          {ORBIT_RAILS.map((rail) => (
+            <g
+              key={rail.id}
+              id={`ring-${rail.id}`}
+              transform={rail.rotate ? `rotate(${rail.rotate} 500 290)` : undefined}
+            >
+              <ellipse
+                cx="500"
+                cy="290"
+                rx={rail.rx}
+                ry={rail.ry}
+                fill="none"
+                stroke="url(#po-brass-linear)"
+                strokeWidth="9.5"
               />
-            );
-          })}
-        </g>
-
-        {/* Ring 2: Horizontal Orbit */}
-        <g id="ring-horizontal">
-          <ellipse
-            cx="500"
-            cy="290"
-            rx="396"
-            ry="76"
-            fill="none"
-            stroke="url(#po-brass-linear)"
-            strokeWidth="4.2"
-          />
-          <ellipse
-            cx="500"
-            cy="290"
-            rx="382"
-            ry="65"
-            fill="none"
-            stroke="url(#po-brass-inner)"
-            strokeWidth="2.5"
-          />
-          {[
-            Math.PI * 0.2,
-            Math.PI * 0.45,
-            Math.PI * 0.8,
-            Math.PI * 1.2,
-            Math.PI * 1.55,
-            Math.PI * 1.8,
-          ].map((ang, i) => {
-            const x = 500 + Math.cos(ang) * 389;
-            const y = 290 + Math.sin(ang) * 70;
-            return (
-              <circle
-                key={i}
-                cx={x}
-                cy={y}
-                r="4.5"
-                fill="url(#po-gold-sphere)"
-                stroke={naturalPalette.orbitBronze}
-                strokeWidth="0.8"
+              <ellipse
+                cx="500"
+                cy="290"
+                rx={rail.rx}
+                ry={rail.ry}
+                fill="none"
+                stroke="url(#po-rail-channel)"
+                strokeWidth="5"
               />
-            );
-          })}
+            </g>
+          ))}
         </g>
 
-        {/* Ring 3: Diagonal A (-34deg) */}
-        <g id="ring-diagonal-a" transform="rotate(-34 500 290)">
-          <ellipse
-            cx="500"
-            cy="290"
-            rx="366"
-            ry="102"
-            fill="none"
-            stroke="url(#po-brass-linear)"
-            strokeWidth="4"
-          />
-          <ellipse
-            cx="500"
-            cy="290"
-            rx="352"
-            ry="90"
-            fill="none"
-            stroke="url(#po-brass-inner)"
-            strokeWidth="2.5"
-          />
-          {[Math.PI * 0.15, Math.PI * 0.6, Math.PI * 1.15, Math.PI * 1.6].map((ang, i) => {
-            const x = 500 + Math.cos(ang) * 359;
-            const y = 290 + Math.sin(ang) * 96;
-            return (
-              <circle
-                key={i}
-                cx={x}
-                cy={y}
-                r="4.5"
-                fill="url(#po-gold-sphere)"
-                stroke={naturalPalette.orbitBronze}
-                strokeWidth="0.8"
-              />
-            );
-          })}
-        </g>
+        {/* --- 2. FIXED BEARING BEADS, seated in the rail channel --- */}
+        {ORBIT_RAILS.map((rail) => (
+          <g key={`beads-${rail.id}`}>
+            {rail.beadAngles.map((deg) => {
+              const point = railPoint(rail, deg);
+              return (
+                <circle
+                  key={deg}
+                  cx={point.x}
+                  cy={point.y}
+                  r="4.5"
+                  fill="url(#po-gold-sphere)"
+                  stroke={naturalPalette.orbitBronze}
+                  strokeWidth="0.8"
+                />
+              );
+            })}
+          </g>
+        ))}
 
-        {/* Ring 4: Diagonal B (+34deg) */}
-        <g id="ring-diagonal-b" transform="rotate(34 500 290)">
-          <ellipse
-            cx="500"
-            cy="290"
-            rx="366"
-            ry="102"
-            fill="none"
-            stroke="url(#po-brass-linear)"
-            strokeWidth="4"
-          />
-          <ellipse
-            cx="500"
-            cy="290"
-            rx="352"
-            ry="90"
-            fill="none"
-            stroke="url(#po-brass-inner)"
-            strokeWidth="2.5"
-          />
-          {[Math.PI * 0.35, Math.PI * 0.85, Math.PI * 1.35, Math.PI * 1.85].map((ang, i) => {
-            const x = 500 + Math.cos(ang) * 359;
-            const y = 290 + Math.sin(ang) * 96;
-            return (
-              <circle
-                key={i}
-                cx={x}
-                cy={y}
-                r="4.5"
-                fill="url(#po-gold-sphere)"
-                stroke={naturalPalette.orbitBronze}
-                strokeWidth="0.8"
-              />
-            );
-          })}
-        </g>
-
-        {/* --- 3. GLIDING ORBITAL BEADS --- */}
+        {/* --- 3. GLIDING ORBITAL BEADS, one per rail --- */}
         <circle
-          cx={500 + Math.cos(beadAngle * 1.2) * 91}
-          cy={290 + Math.sin(beadAngle * 1.2) * 226}
+          cx={500 + Math.cos(beadAngle * 1.2) * 96}
+          cy={290 + Math.sin(beadAngle * 1.2) * 220}
           r="5.5"
           fill="url(#po-gold-sphere)"
           stroke={naturalPalette.orbitBrightBrass}
           strokeWidth="0.9"
         />
         <circle
-          cx={500 + Math.cos(beadAngle * 0.9 + 1.2) * 389}
-          cy={290 + Math.sin(beadAngle * 0.9 + 1.2) * 70}
+          cx={500 + Math.cos(beadAngle * 0.9 + 1.2) * 396}
+          cy={290 + Math.sin(beadAngle * 0.9 + 1.2) * 76}
           r="5.5"
           fill="url(#po-gold-sphere)"
           stroke={naturalPalette.orbitBrightBrass}
@@ -629,8 +542,8 @@ export function ProjectOrbitAtomic({
         />
         {(() => {
           const ang = beadAngle * 1.1 + 2.5;
-          const lx = Math.cos(ang) * 359;
-          const ly = Math.sin(ang) * 96;
+          const lx = Math.cos(ang) * 366;
+          const ly = Math.sin(ang) * 102;
           const rad = (-34 * Math.PI) / 180;
           const gx = 500 + lx * Math.cos(rad) - ly * Math.sin(rad);
           const gy = 290 + lx * Math.sin(rad) + ly * Math.cos(rad);
@@ -647,8 +560,8 @@ export function ProjectOrbitAtomic({
         })()}
         {(() => {
           const ang = beadAngle * 1.05 + 4.2;
-          const lx = Math.cos(ang) * 359;
-          const ly = Math.sin(ang) * 96;
+          const lx = Math.cos(ang) * 366;
+          const ly = Math.sin(ang) * 102;
           const rad = (34 * Math.PI) / 180;
           const gx = 500 + lx * Math.cos(rad) - ly * Math.sin(rad);
           const gy = 290 + lx * Math.sin(rad) + ly * Math.cos(rad);
@@ -664,27 +577,7 @@ export function ProjectOrbitAtomic({
           );
         })()}
 
-        {/* --- 4. CONNECTING STEMS TO NODES --- */}
-        {Object.values(ATOMIC_NODES).map((node) => {
-          if (!node.stem) return null;
-          return (
-            <g key={`stem-${node.id}`}>
-              <line
-                x1={node.stem.x1}
-                y1={node.stem.y1}
-                x2={node.stem.x2}
-                y2={node.stem.y2}
-                stroke="url(#po-brass-linear)"
-                strokeWidth="3.5"
-                strokeLinecap="round"
-              />
-              <circle cx={node.stem.x1} cy={node.stem.y1} r="3.5" fill="url(#po-gold-sphere)" />
-              <circle cx={node.stem.x2} cy={node.stem.y2} r="3" fill="url(#po-gold-sphere)" />
-            </g>
-          );
-        })}
-
-        {/* --- 5. CENTRAL CA²M MEDALLION NUCLEUS --- */}
+        {/* --- 4. CENTRAL CA²M MEDALLION NUCLEUS --- */}
         <g
           id="central-medallion"
           filter="url(#po-shadow)"
@@ -728,50 +621,20 @@ export function ProjectOrbitAtomic({
             strokeWidth="1.8"
           />
 
-          {/* Embossed Taurus / CAM² Emblem */}
-          <g transform="translate(500, 290)">
-            <path
-              d="M-28 -18 C-36 -38 -6 -48 10 -40 C-10 -42 -22 -28 -16 -12 Z"
-              fill={naturalPalette.orbitBearing}
-              filter="drop-shadow(0 1px 2px rgba(0,0,0,0.6))"
-            />
-            <path
-              d="M0 -32 L22 28 L14 28 L8 12 L-8 12 L-14 28 L-22 28 Z M0 -14 L-5 6 L5 6 Z"
-              fill={naturalPalette.orbitBearing}
-              stroke={naturalPalette.orbitBronze}
-              strokeWidth="0.8"
-              filter="drop-shadow(0 2px 3px rgba(0,0,0,0.7))"
-            />
-            <circle
-              cx="0"
-              cy="-6"
-              r="6"
-              fill="none"
-              stroke={naturalPalette.orbitBrightBrass}
-              strokeWidth="2.5"
-            />
-            <path
-              d="M-6 -10 C-6 -16 6 -16 6 -10"
-              fill="none"
-              stroke={naturalPalette.orbitBrightBrass}
-              strokeWidth="2.5"
-              strokeLinecap="round"
-            />
-            <text
-              x="22"
-              y="-24"
-              fontFamily="var(--font-heading, Georgia, serif)"
-              fontSize="20"
-              fontWeight="600"
-              fill={naturalPalette.orbitBrightBrass}
-              filter="drop-shadow(0 1px 2px rgba(0,0,0,0.6))"
-            >
-              ²
-            </text>
-          </g>
+          {/* The real CA²M mark — the same asset the 3D scene textures with —
+           * instead of a hand-drawn approximation of it. */}
+          <image
+            href="/images/brand/ca2m-mark.png"
+            x="442"
+            y="232"
+            width="116"
+            height="116"
+            clipPath="url(#po-medallion-clip)"
+            preserveAspectRatio="xMidYMid meet"
+          />
         </g>
 
-        {/* --- 6. INTERACTIVE NODE MEDALLIONS --- */}
+        {/* --- 5. INTERACTIVE NODE MEDALLIONS --- */}
         {Object.values(ATOMIC_NODES).map((node) => {
           const project = projectMap.get(node.id);
           if (!project) return null;
@@ -810,45 +673,50 @@ export function ProjectOrbitAtomic({
               }}
               transform={`translate(${node.cx}, ${node.cy})`}
             >
-              {isActive ? (
+              {/* The hover scale lives on this INNER group: a CSS transform on
+               * the outer one would override its `translate` attribute and
+               * teleport the node to the viewBox origin mid-hover. */}
+              <g className="project-orbit-atomic__node-scale">
+                {isActive ? (
+                  <circle
+                    cx="0"
+                    cy="0"
+                    r="38"
+                    fill="none"
+                    stroke={naturalPalette.orbitBrightBrass}
+                    strokeWidth="2"
+                    filter="url(#po-glow)"
+                    opacity="0.9"
+                  />
+                ) : null}
+
                 <circle
                   cx="0"
                   cy="0"
-                  r="38"
-                  fill="none"
-                  stroke={naturalPalette.orbitBrightBrass}
-                  strokeWidth="2"
-                  filter="url(#po-glow)"
-                  opacity="0.9"
+                  r="28"
+                  fill="url(#po-node-bezel)"
+                  stroke={naturalPalette.orbitBronze}
+                  strokeWidth="1.5"
+                  filter="url(#po-shadow)"
                 />
-              ) : null}
+                <circle
+                  cx="0"
+                  cy="0"
+                  r="25"
+                  fill="none"
+                  stroke={naturalPalette.orbitIvory}
+                  strokeWidth="1"
+                />
+                <circle cx="0" cy="0" r="23" fill="url(#po-node-core)" />
 
-              <circle
-                cx="0"
-                cy="0"
-                r="28"
-                fill="url(#po-node-bezel)"
-                stroke={naturalPalette.orbitBronze}
-                strokeWidth="1.5"
-                filter="url(#po-shadow)"
-              />
-              <circle
-                cx="0"
-                cy="0"
-                r="25"
-                fill="none"
-                stroke={naturalPalette.orbitIvory}
-                strokeWidth="1"
-              />
-              <circle cx="0" cy="0" r="23" fill="url(#po-node-core)" />
-
-              <g transform="scale(1.05)">{renderIconSvg(project.icon)}</g>
+                <g transform="scale(1.05)">{renderIconSvg(project.icon)}</g>
+              </g>
             </g>
           );
         })}
       </svg>
 
-      {/* --- 7. EDITORIAL PILL BADGES --- */}
+      {/* --- 6. EDITORIAL PILL BADGES --- */}
       <div className="project-orbit-atomic__labels" aria-hidden="true">
         {Object.values(ATOMIC_NODES).map((node) => {
           const project = projectMap.get(node.id);

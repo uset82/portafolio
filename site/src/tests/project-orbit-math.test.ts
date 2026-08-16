@@ -57,4 +57,12 @@ test("Atomic Orbit positions coordinates across 3D rings with Euler rotation", (
   approximately(verticalTop.x, 0);
   approximately(verticalTop.y, 7.2 + 0.16);
   approximately(verticalTop.z, 0);
+
+  // The Euler order matches three.js 'XYZ' (matrix Rx·Ry·Rz): Z reaches the
+  // point first, then Y, then X — so a node computed here lands exactly on a
+  // rail mesh rotated by the identical Euler. X→Y→Z would return (0, 1, 0).
+  const compound = getAtomicOrbitPosition(0, 1, 1, [Math.PI / 2, 0, Math.PI / 2], 0);
+  approximately(compound.x, 0);
+  approximately(compound.y, 0);
+  approximately(compound.z, 1);
 });

@@ -108,7 +108,14 @@ test("Project Orbit scene uses the approved lazy Three runtime and avoids a raw 
   assert.match(scene, /const ORBIT_CAMERA_NARROW_FOV_DEGREES = 38/);
   assert.match(scene, /const ORBIT_CAMERA_FIT_PADDING = 1\.16/);
   assert.match(scene, /Math\.tan\(horizontalFov \/ 2\)/);
+  // The atom is a centred, mirror-symmetric composition: the camera faces it
+  // dead-on at the shared centre. The old elevated three-quarter view is what
+  // collapsed the rings into an off-axis tangle.
+  assert.match(scene, /camera\.position\.set\(0, ORBIT_MEDALLION_BASE_Y, distance\)/);
   assert.match(scene, /camera\.lookAt\(0, ORBIT_MEDALLION_BASE_Y, 0\)/);
+  // Nodes hold fixed, designed seats; the frame loop must not add a revolving
+  // offset to them (the bearing balls carry the motion instead).
+  assert.doesNotMatch(scene, /baseAngle \+ active\.rotation/);
   assert.match(
     scene,
     /<group ref=\{medallionDragYawRef\} name="ProjectOrbitMedallionDragYaw">[\s\S]*?<group ref=\{medallionRimRef\} name="ProjectOrbitMedallionRimDiagonalTilt">[\s\S]*?<group ref=\{logoSpinRef\} name="ProjectOrbitLogoLeftYaw">[\s\S]*?<ProjectOrbitLogoModel \/>/,

@@ -1987,12 +1987,18 @@ body:has(.observatory-hero) .site-header .site-header__status {
 .project-orbit-atomic__node {
   cursor: pointer;
   outline: none;
-  transform-origin: center;
+}
+
+/* The scale lives on an inner group: a CSS transform on the outer <g> would
+ * override its `translate` presentation attribute and teleport the node to
+ * the viewBox origin mid-hover. The inner group's local origin IS the node
+ * centre, so a plain scale is enough. */
+.project-orbit-atomic__node-scale {
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.project-orbit-atomic__node:hover,
-.project-orbit-atomic__node[data-active="true"] {
+.project-orbit-atomic__node:hover .project-orbit-atomic__node-scale,
+.project-orbit-atomic__node[data-active="true"] .project-orbit-atomic__node-scale {
   transform: scale(1.12);
 }
 
