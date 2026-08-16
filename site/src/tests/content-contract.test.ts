@@ -85,7 +85,7 @@ test("homepage personal teaser names the public apps without publishing private 
 
   assert.equal(personalTeaser.verification, "reference-approved");
   assert.equal(personalTeaser.status, "Two apps you can look through");
-  assert.deepEqual(personalTeaser.themes, ["ASTROEA", "Pináculo", "Travel notes"]);
+  assert.deepEqual(personalTeaser.themes, ["ASTROEA", "Pináculo"]);
   assert.equal(personalTeaser.action.href, "/cosmos");
   assert.equal(personalTeaser.action.external, false);
   assert.match(personalTeaser.claimsBoundary, /not scientific, medical, or predictive advice/);

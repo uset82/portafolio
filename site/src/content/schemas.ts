@@ -1271,7 +1271,7 @@ export const personalTeaserSchema = z
     heading: z.string().min(12).max(120),
     description: z.string().min(60).max(300),
     status: z.string().min(8).max(60),
-    themes: z.array(z.string().min(3).max(40)).length(3),
+    themes: z.array(z.string().min(3).max(40)).length(2),
     claimsBoundary: z.string().min(30).max(180),
     action: linkSchema,
     verification: z.literal("reference-approved"),

@@ -164,7 +164,7 @@ export const rawSiteContent = {
       description:
         "ASTROEA is astrology inspired by astro.com. Pináculo is numerology with interpretations that draw on Carl Jung. Pináculo is open to try. Both repositories are public on GitHub.",
       status: "Two apps you can look through",
-      themes: ["ASTROEA", "Pináculo", "Travel notes"],
+      themes: ["ASTROEA", "Pináculo"],
       claimsBoundary:
         "Creative and personal practice—not scientific, medical, or predictive advice.",
       action: {

@@ -1,11 +1,6 @@
 import { ActionLink, StatusTag } from "@/components/ui";
-import {
-  COSMOS_APPS,
-  COSMOS_CONTRIBUTE,
-  COSMOS_TRAVEL,
-  astraeaApp,
-  pinaculoApp,
-} from "@/content/cosmos";
+import { CosmosMark } from "@/components/cosmos-mark";
+import { COSMOS_APPS, COSMOS_CONTRIBUTE, astraeaApp, pinaculoApp } from "@/content/cosmos";
 import type { SiteMetadata } from "@/content/schemas";
 
 type CosmosFoundationProps = {
@@ -14,8 +9,8 @@ type CosmosFoundationProps = {
 
 const publicationBoundaries = [
   {
-    label: "Travel stories",
-    value: "Held",
+    label: "Private journeys",
+    value: "Unpublished",
     detail: "No journey, place, date, or personal travel account is represented as public.",
   },
   {
@@ -54,18 +49,12 @@ export function CosmosFoundation({ content }: CosmosFoundationProps) {
 
         <div className="cosmos-foundation__atlas" aria-hidden="true">
           <span>Public apps / 02</span>
-          <div className="cosmos-foundation__orbits">
-            <i />
-            <i />
-            <i />
-            <b />
+          <CosmosMark className="cosmos-foundation__mark" />
+          <div className="cosmos-foundation__legend">
+            {COSMOS_APPS.map((app) => (
+              <span key={app.id}>{app.name}</span>
+            ))}
           </div>
-          <div className="cosmos-foundation__axis">
-            <i />
-            <i />
-            <i />
-          </div>
-          <strong>02</strong>
           <small>Pináculo is open to try</small>
         </div>
       </section>
@@ -80,7 +69,7 @@ export function CosmosFoundation({ content }: CosmosFoundationProps) {
           </p>
         </header>
 
-        <ol aria-label="Cosmos apps and held travel notes">
+        <ol aria-label="Cosmos apps">
           {COSMOS_APPS.map((app, index) => (
             <li key={app.id}>
               <span>{String(index + 1).padStart(2, "0")}</span>
@@ -102,15 +91,6 @@ export function CosmosFoundation({ content }: CosmosFoundationProps) {
               </nav>
             </li>
           ))}
-          <li>
-            <span>03</span>
-            <div>
-              <p>{COSMOS_TRAVEL.status}</p>
-              <h3>{COSMOS_TRAVEL.name}</h3>
-            </div>
-            <p>{COSMOS_TRAVEL.summary}</p>
-            <small>Places and dates withheld</small>
-          </li>
         </ol>
       </section>
 
@@ -119,8 +99,8 @@ export function CosmosFoundation({ content }: CosmosFoundationProps) {
           <p className="section-label">Publication boundary / 02</p>
           <h2 id="cosmos-privacy-title">The apps are public. The private record stays private.</h2>
           <p>
-            You can try Pináculo and read both repositories. Carlos&apos;s travel stories, own
-            charts, and dates are not published here.
+            You can try Pináculo and read both repositories. Carlos&apos;s own charts and dates are
+            not published here.
           </p>
         </header>
 
@@ -145,7 +125,7 @@ export function CosmosFoundation({ content }: CosmosFoundationProps) {
           <span>Public stories / 00</span>
           <strong>HOLD</strong>
           <i />
-          <small>Travel still unpublished</small>
+          <small>Private record unpublished</small>
         </div>
 
         <div className="cosmos-foundation__boundary-copy">

@@ -2962,7 +2962,7 @@ body:has(.observatory-hero) .site-header .site-header__status {
 
 .personal-teaser__themes {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   padding: 0;
   margin: 2rem 0 0;
   border-block: 1px solid var(--color-border-soft);
@@ -3054,73 +3054,71 @@ body:has(.observatory-hero) .site-header .site-header__status {
   left: auto;
 }
 
-.personal-teaser__contours {
+.personal-teaser__mark {
   position: absolute;
-  inset: 14% 10% 24%;
-  border: 1px solid var(--color-taupe);
-  border-radius: 48% 52% 44% 56%;
+  z-index: 2;
+  inset: 16% 12% 28%;
+  width: auto;
+  height: auto;
+  margin: auto;
+  color: var(--color-walnut);
+  overflow: visible;
   transition: transform var(--duration-base) var(--ease-standard);
 }
 
-.personal-teaser:focus-within .personal-teaser__contours,
-.personal-teaser:hover .personal-teaser__contours {
-  transform: rotate(2deg);
+.personal-teaser:focus-within .personal-teaser__mark,
+.personal-teaser:hover .personal-teaser__mark {
+  transform: rotate(4deg);
 }
 
-.personal-teaser__contours i {
-  position: absolute;
-  border: 1px solid var(--color-sage-muted);
-  border-radius: 50%;
+@media (prefers-reduced-motion: reduce) {
+  .personal-teaser__mark,
+  .personal-teaser:focus-within .personal-teaser__mark,
+  .personal-teaser:hover .personal-teaser__mark {
+    transform: none;
+    transition: none;
+  }
+
+  .cosmos-foundation__mark,
+  .cosmos-foundation__hero:focus-within .cosmos-foundation__mark,
+  .cosmos-foundation__hero:hover .cosmos-foundation__mark {
+    transform: translateX(-50%);
+    transition: none;
+  }
 }
 
-.personal-teaser__contours i:nth-child(1) {
-  inset: 12%;
+.cosmos-mark__ring,
+.cosmos-mark__tick,
+.cosmos-mark__axis,
+.cosmos-mark__peak,
+.cosmos-mark__diamond {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
 }
 
-.personal-teaser__contours i:nth-child(2) {
-  inset: 28% 20%;
+.cosmos-mark__ring {
+  stroke-width: 0.7;
 }
 
-.personal-teaser__contours i:nth-child(3) {
-  inset: 40% 34%;
+.cosmos-mark__ring--inner {
+  stroke-width: 0.45;
+  opacity: 0.72;
 }
 
-.personal-teaser__horizon {
-  position: absolute;
-  z-index: 2;
-  right: 8%;
-  bottom: 26%;
-  left: 8%;
-  height: 1px;
-  background: var(--color-walnut);
+.cosmos-mark__tick,
+.cosmos-mark__axis {
+  stroke-width: 0.55;
 }
 
-.personal-teaser__horizon i {
-  position: absolute;
-  bottom: -0.28rem;
-  width: 0.58rem;
-  height: 0.58rem;
-  border: 1px solid var(--color-walnut);
-  background: var(--color-canvas-soft);
-  transform: rotate(45deg);
-  transition: transform var(--duration-fast) var(--ease-standard);
+.cosmos-mark__peak {
+  stroke-width: 0.9;
 }
 
-.personal-teaser__horizon i:nth-child(1) {
-  left: 18%;
-}
-
-.personal-teaser__horizon i:nth-child(2) {
-  left: 50%;
-}
-
-.personal-teaser__horizon i:nth-child(3) {
-  left: 80%;
-}
-
-.personal-teaser:focus-within .personal-teaser__horizon i:nth-child(2),
-.personal-teaser:hover .personal-teaser__horizon i:nth-child(2) {
-  transform: translateY(-0.45rem) rotate(45deg);
+.cosmos-mark__diamond {
+  fill: var(--color-canvas-soft);
+  stroke-width: 0.9;
 }
 
 .personal-teaser__legend {
@@ -3129,7 +3127,7 @@ body:has(.observatory-hero) .site-header .site-header__status {
   bottom: 18%;
   left: 8%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   color: var(--color-text-muted);
   font-size: 0.58rem;
   font-weight: 600;
@@ -3173,11 +3171,18 @@ body:has(.observatory-hero) .site-header .site-header__status {
   letter-spacing: -0.02em;
   line-height: var(--leading-display);
   text-wrap: balance;
+  font-feature-settings:
+    "liga" 1,
+    "dlig" 1,
+    "calt" 1,
+    "kern" 1;
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
 }
 
 .profile-teaser__accent {
   color: var(--color-walnut);
   font-style: italic;
+  font-weight: 400;
 }
 
 .profile-teaser__meta {
@@ -5883,100 +5888,38 @@ body:has(.observatory-hero) .site-header .site-header__status {
   text-transform: uppercase;
 }
 
-.cosmos-foundation__orbits {
+.cosmos-foundation__mark {
   position: absolute;
-  top: 13%;
+  z-index: 2;
+  top: 14%;
   left: 50%;
-  width: 78%;
+  width: 72%;
   aspect-ratio: 1;
-  border: 1px solid var(--color-taupe);
-  border-radius: 48% 52% 44% 56%;
+  color: var(--color-walnut);
   transform: translateX(-50%);
+  overflow: visible;
   transition: transform var(--duration-base) var(--ease-emphasized);
 }
 
-.cosmos-foundation__hero:focus-within .cosmos-foundation__orbits,
-.cosmos-foundation__hero:hover .cosmos-foundation__orbits {
-  transform: translateX(-50%) rotate(2deg);
+.cosmos-foundation__hero:focus-within .cosmos-foundation__mark,
+.cosmos-foundation__hero:hover .cosmos-foundation__mark {
+  transform: translateX(-50%) rotate(4deg);
 }
 
-.cosmos-foundation__orbits i {
+.cosmos-foundation__legend {
   position: absolute;
-  border: 1px solid var(--color-sage-muted);
-  border-radius: 50%;
-}
-
-.cosmos-foundation__orbits i:nth-child(1) {
-  inset: 12%;
-}
-
-.cosmos-foundation__orbits i:nth-child(2) {
-  inset: 27% 20%;
-}
-
-.cosmos-foundation__orbits i:nth-child(3) {
-  inset: 40% 34%;
-}
-
-.cosmos-foundation__orbits b {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0.65rem;
-  aspect-ratio: 1;
-  border: 1px solid var(--color-walnut);
-  background: var(--color-buff);
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.cosmos-foundation__axis {
-  position: absolute;
-  z-index: 2;
+  z-index: 4;
   right: 9%;
-  bottom: 25%;
+  bottom: 16%;
   left: 9%;
-  height: 1px;
-  background: var(--color-walnut);
-}
-
-.cosmos-foundation__axis i {
-  position: absolute;
-  bottom: -0.28rem;
-  width: 0.58rem;
-  height: 0.58rem;
-  border: 1px solid var(--color-walnut);
-  background: var(--color-canvas-soft);
-  transform: rotate(45deg);
-  transition: transform var(--duration-fast) var(--ease-standard);
-}
-
-.cosmos-foundation__axis i:nth-child(1) {
-  left: 16%;
-}
-
-.cosmos-foundation__axis i:nth-child(2) {
-  left: 50%;
-}
-
-.cosmos-foundation__axis i:nth-child(3) {
-  left: 82%;
-}
-
-.cosmos-foundation__hero:focus-within .cosmos-foundation__axis i:nth-child(2),
-.cosmos-foundation__hero:hover .cosmos-foundation__axis i:nth-child(2) {
-  transform: translateY(-0.5rem) rotate(45deg);
-}
-
-.cosmos-foundation__atlas > strong {
-  position: relative;
-  z-index: 3;
-  align-self: center;
-  color: var(--color-walnut);
-  font-family: var(--font-display);
-  font-size: clamp(6rem, 11vw, 10rem);
-  font-weight: 500;
-  line-height: 0.7;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  color: var(--color-text-muted);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-align: center;
+  text-transform: uppercase;
 }
 
 .cosmos-foundation__practices,
@@ -6326,13 +6269,9 @@ body:has(.observatory-hero) .site-header .site-header__status {
     justify-self: stretch;
   }
 
-  .cosmos-foundation__orbits {
-    top: 5%;
-    width: 48%;
-  }
-
-  .cosmos-foundation__atlas > strong {
-    font-size: clamp(5rem, 24vw, 7rem);
+  .cosmos-foundation__mark {
+    top: 8%;
+    width: 42%;
   }
 
   .cosmos-foundation__practices,

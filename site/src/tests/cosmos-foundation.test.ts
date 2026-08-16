@@ -15,12 +15,12 @@ test("Cosmos features the public apps without publishing a private story or coll
   const content = siteContentSchema.parse(rawSiteContent).metadata.personalTeaser;
   const markup = renderToStaticMarkup(createElement(CosmosFoundation, { content }));
 
-  assert.match(markup, /<main id="main-content" class="cosmos-foundation">/);
+  assert.match(markup, /cosmos-mark__peak/);
   assert.match(markup, /Personal systems for observing patterns and meaning\./);
   assert.match(markup, /Two apps you can look through/);
   assert.match(markup, />ASTROEA<\/h3>/);
   assert.match(markup, />Pináculo<\/h3>/);
-  assert.match(markup, />Travel notes<\/h3>/);
+  assert.doesNotMatch(markup, /Travel notes|>Travel</);
   assert.match(markup, /https:\/\/github.com\/uset82\/ASTROEA/);
   assert.match(markup, /https:\/\/github.com\/uset82\/pinaculo/);
   assert.match(markup, /https:\/\/pinaculo\.netlify\.app\//);

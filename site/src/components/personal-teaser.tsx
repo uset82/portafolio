@@ -1,4 +1,5 @@
 import { ActionLink } from "@/components/ui";
+import { CosmosMark } from "@/components/cosmos-mark";
 import { COSMOS_APPS, pinaculoApp } from "@/content/cosmos";
 import type { SiteMetadata } from "@/content/schemas";
 
@@ -23,7 +24,7 @@ export function PersonalTeaser({ content }: PersonalTeaserProps) {
         <h2 id={headingId}>{content.heading}</h2>
         <p className="personal-teaser__description">{content.description}</p>
         <p className="personal-teaser__boundary">{content.claimsBoundary}</p>
-        <ul className="personal-teaser__themes" aria-label="Apps and practices in Cosmos">
+        <ul className="personal-teaser__themes" aria-label="Apps in Cosmos">
           {content.themes.map((theme, index) => {
             const href = themeHref(theme);
             return (
@@ -64,20 +65,11 @@ export function PersonalTeaser({ content }: PersonalTeaserProps) {
 
       <div className="personal-teaser__field" aria-hidden="true">
         <span className="personal-teaser__field-label">Cosmos / apps</span>
-        <div className="personal-teaser__contours">
-          <i />
-          <i />
-          <i />
-        </div>
-        <div className="personal-teaser__horizon">
-          <i />
-          <i />
-          <i />
-        </div>
+        <CosmosMark className="personal-teaser__mark" />
         <div className="personal-teaser__legend">
-          <span>ASTROEA</span>
-          <span>Pináculo</span>
-          <span>Travel</span>
+          {content.themes.map((theme) => (
+            <span key={theme}>{theme}</span>
+          ))}
         </div>
         <small>Pináculo is open to try</small>
       </div>

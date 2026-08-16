@@ -1,5 +1,5 @@
 /**
- * Cosmos: the two public astrology and numerology apps, plus the travel hold.
+ * Cosmos: the two public astrology and numerology apps.
  *
  * These repositories are public to read. They are not on the MIT contribution
  * list in /support. This portfolio does not host the apps, iframe them, or
@@ -46,13 +46,6 @@ export const COSMOS_APPS: readonly CosmosApp[] = [
 
 export const astraeaApp: CosmosApp = COSMOS_APPS[0]!;
 export const pinaculoApp: CosmosApp = COSMOS_APPS[1]!;
-
-export const COSMOS_TRAVEL = {
-  name: "Travel notes",
-  status: "Held for privacy",
-  summary:
-    "Specific journeys, places, dates, and images stay unpublished until Carlos approves their privacy and reuse rights.",
-} as const;
 
 export const COSMOS_CONTRIBUTE = {
   heading: "The repositories are public.",
