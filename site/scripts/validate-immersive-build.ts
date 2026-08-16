@@ -229,10 +229,16 @@ async function validateFallbackRender() {
       !/<video\b/i.test(homepage),
       "The prerendered hero must remain the still poster, not a video element.",
     );
+    /* Project Orbit carried these links and now lives on /work, so that is the
+     * page that must still reach them without the artifact overlays. Asserting
+     * against the homepage kept failing for a route change rather than for a
+     * regression in the semantic fallback this gate exists to protect. */
+    const workPath = path.join(buildRoot, "server/app/work.html");
+    const workPage = await readFile(workPath, "utf8");
     ["/work/astraea", "/work/pinaculo", "/work/future-energy", "/laboratory"].forEach((href) =>
       invariant(
-        homepage.includes(`href="${href}"`),
-        `The homepage must still reach ${href} without the artifact overlays.`,
+        workPage.includes(`href="${href}"`),
+        `Work must still reach ${href} without the artifact overlays.`,
       ),
     );
   } else {

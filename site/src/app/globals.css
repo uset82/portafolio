@@ -2062,6 +2062,12 @@ body:has(.observatory-hero) .site-header .site-header__status {
   inset: 0;
   opacity: 0;
   pointer-events: none;
+  /* `opacity: 0` hides the SVG but keeps it in layout, and its outermost pills
+   * sit past the stage edge by design — at 900px they pushed the page 30px
+   * wider than the viewport. Once the scene owns the instrument the SVG is not
+   * meant to be measurable at all. */
+  visibility: hidden;
+  overflow: clip;
 }
 
 .project-orbit__canvas,

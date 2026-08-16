@@ -86,6 +86,21 @@ const ORBIT_CAMERA_FOV_DEGREES = 34;
 const ORBIT_CAMERA_NARROW_FOV_DEGREES = 38;
 const ORBIT_CAMERA_FIT_PADDING = 1.16;
 const ORBIT_MEDALLION_BASE_Y = 0.16;
+/** The nucleus reads heavy at full size against the ring span; this trims it
+ * without touching the logo's own geometry or the rings around it. */
+const ORBIT_MEDALLION_SCALE = 0.78;
+
+/**
+ * How much of full size the instrument runs at, for a given viewport width.
+ *
+ * This replaced a single `width < 760 ? 0.9 : 1` step, which meant every width
+ * from a small laptop to a wide monitor got the identical world and only two
+ * sizes existed in total. Interpolating instead keeps the rings inside the
+ * frame at the in-between widths where the step left them cramped.
+ */
+function orbitWorldScale(width: number) {
+  return THREE.MathUtils.clamp(THREE.MathUtils.mapLinear(width, 420, 1180, 0.68, 1), 0.68, 1);
+}
 const ORBIT_MEDALLION_BRASS_RIM_RADIUS = 1.3;
 const ORBIT_MEDALLION_GOLD_EDGE_RADIUS = 1.44;
 const ORBIT_MEDALLION_CORE_RADIUS = 1.47;
@@ -462,7 +477,7 @@ function OrbitCamera() {
     const camera = cameraRef.current;
     if (!camera) return;
     const narrow = size.width < 760;
-    const worldScale = narrow ? 0.9 : 1;
+    const worldScale = orbitWorldScale(size.width);
     const aspect = Math.max(size.width / Math.max(size.height, 1), 0.01);
     const fov = narrow ? ORBIT_CAMERA_NARROW_FOV_DEGREES : ORBIT_CAMERA_FOV_DEGREES;
     const verticalFov = THREE.MathUtils.degToRad(fov);
@@ -505,7 +520,7 @@ function OrbitScene({
     onReady?.(true);
     return () => onReady?.(false);
   }, [onReady]);
-  const worldScale = size.width < 760 ? 0.9 : 1;
+  const worldScale = orbitWorldScale(size.width);
   const nodeRefs = useRef<Array<THREE.Group | null>>([]);
   const ringMaterialRefs = useRef<Array<THREE.MeshStandardMaterial | null>>([]);
   const edgeMaterialRefs = useRef<Array<THREE.MeshStandardMaterial | null>>([]);
@@ -752,7 +767,7 @@ function OrbitScene({
       // concentric because both rotate about this shared zero point.
       medallion.position.set(pan.current.x, ORBIT_MEDALLION_BASE_Y + pan.current.y, 0);
       medallion.lookAt(camera.position);
-      medallion.scale.setScalar((0.6 + entrance * 0.4) * worldScale);
+      medallion.scale.setScalar((0.6 + entrance * 0.4) * worldScale * ORBIT_MEDALLION_SCALE);
     }
     const medallionDragYaw = medallionDragYawRef.current;
     if (medallionDragYaw) medallionDragYaw.rotation.y = centerDragYaw.current;
@@ -797,8 +812,19 @@ function OrbitScene({
     };
     const medallionScreenRadius = Math.min(size.width, size.height) * 0.17;
 
+    /* How far forward a node must be for its label to earn space, scaled by how
+     * much room there is. Labels keep their pixel size while the world shrinks,
+     * so a canvas that comfortably holds eleven at 1400px cannot hold them at
+     * 900px — nudging them apart is not enough, some have to stand down. */
+    const depthCut = THREE.MathUtils.clamp(
+      THREE.MathUtils.mapLinear(size.width, 1180, 760, 0, 0.55),
+      0,
+      0.55,
+    );
+
     const labelLayouts: Array<{
       label: HTMLButtonElement;
+      visible: boolean;
       x: number;
       y: number;
       radialX: number;
@@ -908,8 +934,26 @@ function OrbitScene({
           /* Behind the medallion plane and inside its screen disc: the node is
            * genuinely occluded, so its label must not float over the logo. */
           occluded: depth < 0.5 && radialLength < medallionScreenRadius,
+          visible:
+            selected ||
+            hovered ||
+            (depth > depthCut && !(depth < 0.5 && radialLength < medallionScreenRadius)),
         });
       }
+    });
+
+    /* Keep every label inside the canvas. A node at the far edge of its orbit
+     * projected past the bottom of the stage and its label rode along, landing
+     * on top of the All systems list underneath. This runs BEFORE collision
+     * resolution: clamping afterwards pushed separated labels back together at
+     * the edges and reintroduced the overlaps the pass had just removed. */
+    const edgeInsetX = 92;
+    const edgeInsetY = 26;
+    const minY = edgeInsetY;
+    const maxY = size.height - edgeInsetY;
+    labelLayouts.forEach((layout) => {
+      layout.x = Math.min(Math.max(layout.x, edgeInsetX), size.width - edgeInsetX);
+      layout.y = Math.min(Math.max(layout.y, minY), maxY);
     });
 
     /* Second pass. Labels are laid out per node, but whether two of them
@@ -918,34 +962,82 @@ function OrbitScene({
      * on another one. Front-to-back order also decides who moves. */
     labelLayouts.sort((a, b) => b.depth - a.depth);
 
-    const minimumGapY = 30;
-    const minimumGapX = 118;
-    for (let i = 0; i < labelLayouts.length; i += 1) {
-      for (let j = i + 1; j < labelLayouts.length; j += 1) {
-        const a = labelLayouts[i]!;
-        const b = labelLayouts[j]!;
-        if (Math.abs(a.x - b.x) > minimumGapX) continue;
-        const gap = b.y - a.y;
-        if (Math.abs(gap) >= minimumGapY) continue;
-        const push = (minimumGapY - Math.abs(gap)) * (gap >= 0 ? 1 : -1);
-        b.y += push;
+    /* Only labels that will actually be drawn take part. Including hidden ones
+     * let an invisible label absorb a nudge that a visible pair needed, which
+     * is why separation still failed at 900px after the pass was made
+     * iterative. */
+    const contesting = labelLayouts.filter((layout) => layout.visible);
+
+    /* Each label's own box. A fixed horizontal window guessed at this and got
+     * it wrong: pills run from about 80px to 140px wide, so two labels 100px
+     * apart still overlapped while the window said they could not. Measuring is
+     * eleven `offsetWidth` reads per frame, which is cheap next to being
+     * wrong. */
+    const boxes = contesting.map((layout) => ({
+      layout,
+      halfWidth: layout.label.offsetWidth / 2,
+      halfHeight: layout.label.offsetHeight / 2,
+      /* The anchor decides which way the box extends from the layout point. */
+      centreOffsetX:
+        layout.radialX < -0.3
+          ? -layout.label.offsetWidth / 2
+          : layout.radialX > 0.3
+            ? layout.label.offsetWidth / 2
+            : 0,
+    }));
+
+    const separation = 6;
+
+    /* Separating one pair can push a label onto a third, so a single sweep
+     * leaves chains unresolved at narrow widths. Repeat until nothing moves,
+     * with a hard cap so a frame can never spin here. */
+    for (let pass = 0; pass < 4; pass += 1) {
+      let moved = false;
+      for (let i = 0; i < boxes.length; i += 1) {
+        for (let j = i + 1; j < boxes.length; j += 1) {
+          const a = boxes[i]!;
+          const b = boxes[j]!;
+          const aCentreX = a.layout.x + a.centreOffsetX;
+          const bCentreX = b.layout.x + b.centreOffsetX;
+          if (Math.abs(aCentreX - bCentreX) >= a.halfWidth + b.halfWidth) continue;
+
+          const gap = b.layout.y - a.layout.y;
+          const needed = a.halfHeight + b.halfHeight + separation;
+          if (Math.abs(gap) >= needed) continue;
+
+          /* Push away from the nearer label, but flip the direction when that
+           * would leave the canvas, so a label at the edge separates inward
+           * instead of being clamped back onto its neighbour. */
+          const away = gap >= 0 ? 1 : -1;
+          const push = (needed - Math.abs(gap)) * away;
+          const target = b.layout.y + push;
+          const next = target > maxY || target < minY ? b.layout.y - push : target;
+          const clamped = Math.min(Math.max(next, minY), maxY);
+          if (clamped !== b.layout.y) {
+            b.layout.y = clamped;
+            moved = true;
+          }
+        }
       }
+      if (!moved) break;
     }
 
     labelLayouts.forEach((layout) => {
       const { label, selected, hovered, depth, occluded } = layout;
       const active = selected || hovered;
-      const narrow = size.width < 760;
+      /* How far forward a node must be for its label to earn space, scaled by
+       * how much room there is. Labels keep their pixel size while the world
+       * shrinks, so a canvas that comfortably holds eleven at 1400px cannot
+       * hold them at 900px — nudging them apart is not enough, some have to
+       * stand down. This used to be a single 760px step, which is why the
+       * in-between widths stayed crowded. */
+      const depthCut = THREE.MathUtils.clamp(
+        THREE.MathUtils.mapLinear(size.width, 1180, 760, 0, 0.55),
+        0,
+        0.55,
+      );
       const visibility =
-        occluded && !active
-          ? 0
-          : narrow
-            ? active
-              ? 1
-              : depth > 0.55
-                ? 0.85
-                : 0
-            : 0.58 + depth * 0.42;
+        occluded && !active ? 0 : active ? 1 : depth > depthCut ? 0.58 + depth * 0.42 : 0;
 
       const translate =
         layout.radialX < -0.3
