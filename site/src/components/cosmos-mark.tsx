@@ -9,7 +9,8 @@ import { useEffect, useRef } from "react";
  * The triangle is the pinnacle, rising from the horizon (ASC–DSC) toward MC.
  * The line below the base is IC / the unpublished side. No zodiac glyphs.
  *
- * Gyroscope / Compass: Rotates dynamically with phone orientation on iOS & Android like a compass.
+ * Gyroscope / Compass: Rotates dynamically with phone orientation, gravity tilt,
+ * touch-drag, and scroll momentum on iOS & Android like a compass.
  */
 const CX = 50;
 const CY = 50;
@@ -52,17 +53,18 @@ export function CosmosMark({ className, enableCompass = true }: CosmosMarkProps)
     let targetTiltX = 0;
     let currentTiltY = 0;
     let targetTiltY = 0;
-    let isDeviceActive = false;
+    let isTouching = false;
+    let hasMotionSource = false;
 
     const updateFrame = () => {
       // Shortest path interpolation for circular compass angle
       let diff = (targetAngle - currentAngle) % 360;
       if (diff > 180) diff -= 360;
       if (diff < -180) diff += 360;
-      currentAngle += diff * 0.08;
+      currentAngle += diff * 0.1;
 
-      currentTiltX += (targetTiltX - currentTiltX) * 0.08;
-      currentTiltY += (targetTiltY - currentTiltY) * 0.08;
+      currentTiltX += (targetTiltX - currentTiltX) * 0.1;
+      currentTiltY += (targetTiltY - currentTiltY) * 0.1;
 
       if (dialRef.current) {
         dialRef.current.style.transform = `rotate(${currentAngle.toFixed(2)}deg)`;
@@ -74,14 +76,13 @@ export function CosmosMark({ className, enableCompass = true }: CosmosMarkProps)
       animId = requestAnimationFrame(updateFrame);
     };
 
+    // 1. Device Orientation (Magnetic / Compass Heading)
     const handleOrientation = (event: DeviceOrientationEvent) => {
-      isDeviceActive = true;
+      hasMotionSource = true;
       const iosHeading = (event as unknown as { webkitCompassHeading?: number }).webkitCompassHeading;
       if (typeof iosHeading === "number" && !isNaN(iosHeading)) {
-        // True/magnetic compass heading on iOS Safari
         targetAngle = -iosHeading;
       } else if (event.alpha !== null && !isNaN(event.alpha)) {
-        // Standard Android/Web compass orientation
         targetAngle = -event.alpha;
       }
 
@@ -91,8 +92,36 @@ export function CosmosMark({ className, enableCompass = true }: CosmosMarkProps)
       }
     };
 
+    // 2. Device Motion / Gravity Sensor (Fallback for all mobile devices)
+    const handleMotion = (event: DeviceMotionEvent) => {
+      const acc = event.accelerationIncludingGravity;
+      if (acc && acc.x !== null && acc.y !== null) {
+        hasMotionSource = true;
+        const x = acc.x;
+        const y = acc.y;
+        if (Math.abs(x) > 0.3 || Math.abs(y) > 0.3) {
+          // Angle of device in hand relative to gravity
+          const gravityAngle = Math.atan2(x, y) * (180 / Math.PI);
+          targetAngle = -gravityAngle;
+          targetTiltX = Math.max(-15, Math.min(15, (y - 5) * 1.5));
+          targetTiltY = Math.max(-15, Math.min(15, x * 1.5));
+        }
+      }
+    };
+
+    // 3. Pointer / Mouse Interaction (Desktop & touch drag)
     const handlePointerMove = (event: PointerEvent) => {
-      if (isDeviceActive) return;
+      if (isTouching) {
+        const rect = containerRef.current?.getBoundingClientRect();
+        if (!rect) return;
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const angleRad = Math.atan2(event.clientY - centerY, event.clientX - centerX);
+        targetAngle = (angleRad * 180) / Math.PI + 90;
+        return;
+      }
+
+      if (hasMotionSource) return;
       const rect = containerRef.current?.getBoundingClientRect();
       if (!rect) return;
       const centerX = rect.left + rect.width / 2;
@@ -100,16 +129,34 @@ export function CosmosMark({ className, enableCompass = true }: CosmosMarkProps)
       const deltaX = (event.clientX - centerX) / (window.innerWidth / 2);
       const deltaY = (event.clientY - centerY) / (window.innerHeight / 2);
 
-      targetAngle = deltaX * 18;
+      targetAngle = deltaX * 24;
       targetTiltX = -deltaY * 12;
       targetTiltY = deltaX * 12;
     };
 
-    const handlePointerLeave = () => {
-      if (isDeviceActive) return;
-      targetAngle = 0;
-      targetTiltX = 0;
-      targetTiltY = 0;
+    const handlePointerDown = (event: PointerEvent) => {
+      isTouching = true;
+      const rect = containerRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const angleRad = Math.atan2(event.clientY - centerY, event.clientX - centerX);
+      targetAngle = (angleRad * 180) / Math.PI + 90;
+    };
+
+    const handlePointerUp = () => {
+      isTouching = false;
+    };
+
+    // 4. Scroll Momentum reaction
+    let lastScrollY = window.scrollY;
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const velocity = (currentScrollY - lastScrollY) * 0.15;
+      lastScrollY = currentScrollY;
+      if (!isTouching && !hasMotionSource) {
+        targetAngle += velocity;
+      }
     };
 
     window.addEventListener("deviceorientation", handleOrientation, { passive: true });
@@ -118,8 +165,11 @@ export function CosmosMark({ className, enableCompass = true }: CosmosMarkProps)
       handleOrientation as unknown as EventListener,
       { passive: true },
     );
+    window.addEventListener("devicemotion", handleMotion, { passive: true });
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
-    window.addEventListener("pointerleave", handlePointerLeave, { passive: true });
+    window.addEventListener("pointerdown", handlePointerDown, { passive: true });
+    window.addEventListener("pointerup", handlePointerUp, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     animId = requestAnimationFrame(updateFrame);
 
@@ -130,8 +180,11 @@ export function CosmosMark({ className, enableCompass = true }: CosmosMarkProps)
         "deviceorientationabsolute" as unknown as keyof WindowEventMap,
         handleOrientation as unknown as EventListener,
       );
+      window.removeEventListener("devicemotion", handleMotion);
       window.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("pointerleave", handlePointerLeave);
+      window.removeEventListener("pointerdown", handlePointerDown);
+      window.removeEventListener("pointerup", handlePointerUp);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [enableCompass]);
 
@@ -146,7 +199,7 @@ export function CosmosMark({ className, enableCompass = true }: CosmosMarkProps)
           DeviceOrientationEvent as unknown as { requestPermission: () => Promise<string> }
         ).requestPermission();
       } catch {
-        // Gracefully ignore refusal
+        // Fallback to devicemotion / touch interaction
       }
     }
   };
@@ -161,6 +214,7 @@ export function CosmosMark({ className, enableCompass = true }: CosmosMarkProps)
       focusable="false"
       onClick={requestGyroPermission}
       onTouchStart={requestGyroPermission}
+      style={{ touchAction: "none" }}
     >
       <g
         ref={dialRef}
