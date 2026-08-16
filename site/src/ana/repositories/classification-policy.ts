@@ -173,6 +173,10 @@ export const phase2Classifications: Readonly<Record<string, Phase2Classification
     status: "educational",
   }),
   "uset82/gimmemycake": knowledge("Interactive game. Knowledge, not a specialist."),
+  "uset82/Jacobgolf": knowledge(
+    "Browser mini-golf game hosted at jacobgolf.netlify.app. Knowledge, not a specialist.",
+    { domain: ["game"], status: "prototype" },
+  ),
   "uset82/hvl2025-microcontroller-assignment3": knowledge(
     "Named coursework assignment. Educational knowledge, not a tool adapter yet.",
     { domain: ["embedded", "electronics"], status: "educational" },
@@ -220,7 +224,6 @@ export const phase2Classifications: Readonly<Record<string, Phase2Classification
   "uset82/clase-potatoe": disabled("Empty placeholder. Disabled.", { status: "empty" }),
   "uset82/DealDash-": disabled("Empty/near-empty placeholder. Disabled.", { status: "empty" }),
   "uset82/FreeCAD": disabled("Unrelated upstream FreeCAD clone. Disabled.", { status: "fork" }),
-  "uset82/Jacobgolf": disabled("Near-empty placeholder. Disabled.", { status: "empty" }),
   "uset82/mini": disabled("Empty placeholder. Disabled.", { status: "empty" }),
   "uset82/nethunter-fix": disabled("Empty placeholder. Disabled.", { status: "empty" }),
   "uset82/opencode": disabled("Unrelated upstream fork. Disabled.", { status: "fork" }),

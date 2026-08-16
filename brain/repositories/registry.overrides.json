@@ -172,11 +172,14 @@
       "agentPotential": "low"
     },
     "uset82/Jacobgolf": {
-      "recommendedType": "disabled",
+      "recommendedType": "knowledge",
       "enabled": false,
-      "notes": "Near-empty placeholder. Disabled.",
-      "status": "empty",
-      "agentPotential": "none"
+      "notes": "Browser mini-golf game hosted at jacobgolf.netlify.app. Knowledge, not a specialist.",
+      "domain": [
+        "game"
+      ],
+      "status": "prototype",
+      "agentPotential": "low"
     },
     "uset82/LLM-Web-App": {
       "recommendedType": "knowledge",

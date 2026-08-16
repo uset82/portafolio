@@ -22,11 +22,13 @@ const TITLE_OVERRIDES: Record<string, string> = {
   drone_Lips: "Drone Lips",
   "Monkey-Tug-of-War": "Monkey Tug of War",
   "My-Football-Game": "My Football Game",
+  Jacobgolf: "Jacobs Golfspill",
 };
 
 const DESCRIPTION_OVERRIDES: Record<string, string> = {
   portafolio: "This portfolio site.",
   mentora: "Fork of a college Mentora base. Carlos is the primary developer of this copy.",
+  Jacobgolf: "A browser-based mini golf challenge built with HTML5 canvas and vanilla JavaScript.",
 };
 
 const ROOM_OVERRIDES: Record<string, { href: string; label: string }> = {
@@ -38,6 +40,10 @@ const TRY_OVERRIDES: Record<string, { url: string; label: string }> = {
   StrudelAI: {
     url: "https://strudelzeroai.app.canner.ca/",
     label: "Try StrudelAI",
+  },
+  Jacobgolf: {
+    url: "https://jacobgolf.netlify.app/",
+    label: "Play Jacobs Golfspill",
   },
 };
 
@@ -76,6 +82,118 @@ export const GITHUB_REGISTER_META = {
   count: githubRegisterInput.count,
 } as const;
 
+export type WorkGroupId =
+  | "tools"
+  | "ai"
+  | "games"
+  | "music"
+  | "design"
+  | "hardware"
+  | "astrology"
+  | "business"
+  | "creative"
+  | "academic"
+  | "forks"
+  | "starts";
+
+export type WorkGroupDefinition = {
+  id: WorkGroupId;
+  title: string;
+  chartLabel: string;
+};
+
+export type GithubWorkGroup = WorkGroupDefinition & {
+  repositories: readonly GithubWorkEntry[];
+};
+
+export const WORK_GROUPS: readonly WorkGroupDefinition[] = [
+  { id: "tools", title: "Tools and utilities", chartLabel: "Herramientas y utilidades" },
+  { id: "ai", title: "AI and agents", chartLabel: "IA y agentes" },
+  { id: "games", title: "Games", chartLabel: "Juegos" },
+  { id: "music", title: "Music and audio", chartLabel: "Música y audio" },
+  { id: "design", title: "Design and web", chartLabel: "Diseño y web" },
+  { id: "hardware", title: "Hardware and embedded", chartLabel: "Hardware y embebido" },
+  { id: "astrology", title: "Astrology and numerology", chartLabel: "Astrología y numerología" },
+  { id: "business", title: "Business and SaaS", chartLabel: "Negocio y SaaS" },
+  { id: "creative", title: "Creative and 3D", chartLabel: "Creativo y 3D" },
+  { id: "academic", title: "Academic writing", chartLabel: "Escritura académica" },
+  { id: "forks", title: "Forks", chartLabel: "Forks" },
+  { id: "starts", title: "Starts", chartLabel: "Starts" },
+];
+
+const GROUP_BY_NAME: Record<string, WorkGroupId> = {
+  "qr-code-generator": "tools",
+  StillasCalculator: "tools",
+  "project-bolt-qrmollebakken-supabase": "tools",
+  SmartHomeControl: "tools",
+  iFoundYou: "tools",
+  pacha: "tools",
+  opennemoclawsite: "tools",
+  thedelegator: "ai",
+  "LLM-Web-App": "ai",
+  EFFATA: "ai",
+  bankAI: "ai",
+  opennemoclaw: "ai",
+  ReportAIEquinor: "ai",
+  QubeSolve: "ai",
+  "cookthis-": "ai",
+  "Monkey-Tug-of-War": "games",
+  "My-Football-Game": "games",
+  MandelBro: "games",
+  drone_Lips: "games",
+  gimmemycake: "games",
+  REACTIONGAME: "games",
+  Jacobgolf: "games",
+  StrudelAI: "music",
+  LyriGenie: "music",
+  "Suno-UDIO-Helper": "music",
+  "v0-banana-piano-app": "music",
+  MicrocontrollerPiano: "music",
+  "piano-": "music",
+  webdesigner: "design",
+  "avatar-studio": "design",
+  diagramcloner: "design",
+  portafolio: "design",
+  chaclacayo: "design",
+  RS232_VHD_DE2115: "hardware",
+  "Automatic-Watering-Elephant": "hardware",
+  elefante: "hardware",
+  TRAFFICLIGHT: "hardware",
+  "hvl2025-microcontroller-assignment3": "hardware",
+  ASTROEA: "astrology",
+  pinaculo: "astrology",
+  CRM_SaaS_Educativo: "business",
+  "smartapply-app": "business",
+  "3Doodle": "creative",
+  "Thesis-Writer-Kit": "academic",
+  mentora: "forks",
+  osiris: "forks",
+  FreeCAD: "forks",
+  opencode: "forks",
+  Paper2Video: "forks",
+  Tetris: "forks",
+  mini: "starts",
+  "nethunter-fix": "starts",
+  "pace-drone-commander": "starts",
+  "DealDash-": "starts",
+  "skills-github-pages": "starts",
+  "antigravity-vibe": "starts",
+  CALLKIRO: "starts",
+  paginacuzco1: "starts",
+  "clase-potatoe": "starts",
+  chatgptvoiceeffect: "starts",
+  youtubedata: "starts",
+  uset82: "starts",
+};
+
+function groupIdFor(name: string): WorkGroupId {
+  const groupId = GROUP_BY_NAME[name];
+  if (!groupId) {
+    throw new Error(`Unclassified public repository: ${name}`);
+  }
+  return groupId;
+}
+
 export const GITHUB_REGISTER: readonly GithubWorkEntry[] = githubRegisterInput.repositories.map(
   (repository) => {
     const tryOverlay = TRY_OVERRIDES[repository.name] ?? ownHomepageTry(repository);
@@ -98,3 +216,8 @@ export const GITHUB_REGISTER: readonly GithubWorkEntry[] = githubRegisterInput.r
     };
   },
 );
+
+export const GITHUB_REGISTER_GROUPS: readonly GithubWorkGroup[] = WORK_GROUPS.map((group) => ({
+  ...group,
+  repositories: GITHUB_REGISTER.filter((repository) => groupIdFor(repository.name) === group.id),
+})).filter((group) => group.repositories.length > 0);

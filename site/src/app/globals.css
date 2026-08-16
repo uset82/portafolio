@@ -12,6 +12,12 @@ html {
   background: var(--color-canvas);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
   margin: 0;
   min-width: 20rem;
@@ -4500,6 +4506,40 @@ body:has(.observatory-hero) .site-header .site-header__status {
   min-height: var(--control-height);
 }
 
+.work-index__toc {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 2.5rem;
+  width: min(100%, var(--page-max));
+  margin-inline: auto;
+  padding: 0 var(--page-gutter) clamp(3.5rem, 7vw, 6rem);
+  border-top: 1px solid var(--color-border-strong);
+  padding-top: 1.75rem;
+}
+
+.work-index__toc a {
+  display: grid;
+  grid-template-columns: 2.4rem minmax(0, 1fr);
+  gap: 0.85rem;
+  align-items: baseline;
+  min-height: var(--control-height);
+  padding-block: 0.55rem;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+}
+
+.work-index__toc a span:first-child {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.work-index__toc a:hover,
+.work-index__toc a:focus-visible {
+  color: var(--color-sage-dark);
+}
+
 .work-index__boundary {
   display: flex;
   gap: 0.7rem;
@@ -4524,6 +4564,10 @@ body:has(.observatory-hero) .site-header .site-header__status {
 .project-register {
   border-top: 1px solid var(--color-border-strong);
   background: var(--color-canvas-soft);
+}
+
+.project-register--github {
+  padding-bottom: clamp(5rem, 8vw, 8rem);
 }
 
 .project-register__list {
@@ -4626,6 +4670,7 @@ body:has(.observatory-hero) .site-header .site-header__status {
 
 .project-register__identity > p,
 .project-register__identity h2,
+.project-register__identity h3,
 .project-register__identity strong,
 .project-register__evidence p {
   margin: 0;
@@ -4636,7 +4681,8 @@ body:has(.observatory-hero) .site-header .site-header__status {
   gap: 0.75rem;
 }
 
-.project-register__identity h2 {
+.project-register__identity h2,
+.project-register__identity h3 {
   font-family: var(--font-display);
   font-size: clamp(2.25rem, 4.3vw, 4.8rem);
   font-weight: 500;
@@ -4711,7 +4757,65 @@ body:has(.observatory-hero) .site-header .site-header__status {
   align-items: start;
 }
 
-.project-register--github .project-register__identity h2 {
+.project-register--github .project-register__group {
+  width: min(100%, var(--page-max));
+  margin-inline: auto;
+  padding-inline: var(--page-gutter);
+}
+
+.project-register--github .project-register__group + .project-register__group {
+  margin-top: clamp(2.75rem, 6vw, 5.5rem);
+}
+
+.project-register--github .project-register__group-head {
+  display: grid;
+  grid-template-columns: minmax(8rem, 0.34fr) minmax(0, 1fr) auto;
+  gap: clamp(1.5rem, 4vw, 4.5rem);
+  align-items: end;
+  padding-block: 1.75rem 1.1rem;
+  border-bottom: 1px solid var(--color-border-strong);
+  scroll-margin-top: calc(var(--header-height) + 0.75rem);
+}
+
+.project-register--github .project-register__group-head h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 3.8vw, 3.5rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.92;
+  text-wrap: balance;
+}
+
+.project-register--github .project-register__group-count {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0;
+  justify-items: end;
+}
+
+.project-register--github .project-register__group-count span {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  letter-spacing: -0.04em;
+  line-height: 0.85;
+}
+
+.project-register--github .project-register__group-count small {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.project-register--github .project-register__list {
+  width: 100%;
+  padding: 0;
+}
+
+.project-register--github .project-register__identity h2,
+.project-register--github .project-register__identity h3 {
   font-size: clamp(1.7rem, 2.6vw, 2.55rem);
 }
 
@@ -4767,6 +4871,15 @@ body:has(.observatory-hero) .site-header .site-header__status {
     grid-template-columns: 3rem minmax(0, 1fr);
   }
 
+  .project-register--github .project-register__group-head {
+    grid-template-columns: minmax(7rem, 0.3fr) minmax(0, 1fr);
+  }
+
+  .project-register--github .project-register__group-count {
+    grid-column: 2;
+    justify-items: start;
+  }
+
   .project-register--github .project-register__actions {
     grid-column: 2;
     justify-content: flex-start;
@@ -4816,6 +4929,20 @@ body:has(.observatory-hero) .site-header .site-header__status {
     width: 100%;
   }
 
+  .work-index__toc {
+    grid-template-columns: 1fr;
+    padding-bottom: 3.5rem;
+  }
+
+  .project-register--github .project-register__group-head {
+    grid-template-columns: 1fr auto;
+    gap: 0.85rem 1.25rem;
+  }
+
+  .project-register--github .project-register__group-head .section-label {
+    grid-column: 1 / -1;
+  }
+
   .project-register__list {
     padding-bottom: 5rem;
   }
@@ -4836,7 +4963,8 @@ body:has(.observatory-hero) .site-header .site-header__status {
     min-height: 8rem;
   }
 
-  .project-register__identity h2 {
+  .project-register__identity h2,
+  .project-register__identity h3 {
     font-size: clamp(2.65rem, 13vw, 4rem);
   }
 

@@ -79,9 +79,13 @@ test("the homepage no longer describes sound as permanently silent", () => {
   assert.match(teaser, /Press play to hear it/);
 });
 
-test("MandelBro is the game the teaser can currently promise", () => {
+test("MandelBro and Jacobs Golfspill are the games the teaser can currently promise", () => {
   const mandelbro = findArcadeGame("mandelbro");
+  const jacobgolf = findArcadeGame("jacobgolf");
   assert.ok(mandelbro);
+  assert.ok(jacobgolf);
   assert.ok(isArcadeGamePlayable(mandelbro));
+  assert.ok(isArcadeGamePlayable(jacobgolf));
   assert.ok(playable.some((game) => game.id === mandelbro.id));
+  assert.ok(playable.some((game) => game.id === jacobgolf.id));
 });

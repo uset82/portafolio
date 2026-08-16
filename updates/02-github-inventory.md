@@ -51,7 +51,7 @@ way that "webdesigner" is not once slugs start differing from repo names.
 | 30 | `antigravity-vibe` | 2025-11-20 | 2025-11-20 | — | — | — | ○ empty |  |
 | 31 | `StrudelAI` | 2025-12-01 | 2026-06-21 | TypeScript | 16.5 | — | ● own |  |
 | 32 | `My-Football-Game` | 2025-12-07 | 2025-12-08 | JavaScript | 1.2 | — | ● own |  |
-| 33 | `Jacobgolf` | 2025-12-09 | 2025-12-09 | JavaScript | — | — | ○ empty |  |
+| 33 | `Jacobgolf` | 2025-12-09 | 2025-12-09 | JavaScript | — | — | ● own | [live](https://jacobgolf.netlify.app/) |
 | 34 | `DealDash-` | 2025-12-10 | 2025-12-10 | HTML | — | — | ○ empty |  |
 | 35 | `Automatic-Watering-Elephant` | 2025-12-11 | 2025-12-11 | C++ | 42.8 | — | ● own |  |
 | 36 | `cookthis-` | 2025-12-13 | 2025-12-13 | TypeScript | 0.2 | — | ● own |  |
@@ -130,13 +130,13 @@ primary-developer framing above.
 
 ### 2.2 Empty / near-empty (< 50 KB) — exclude from portfolio and brain
 
-#57 `mini`, #47 `nethunter-fix`, #38 `pace-drone-commander`, #34 `DealDash-`, #33 `Jacobgolf`,
+#57 `mini`, #47 `nethunter-fix`, #38 `pace-drone-commander`, #34 `DealDash-`,
 #5 `skills-github-pages`, #30 `antigravity-vibe`, #17 `CALLKIRO`, #16 `paginacuzco1`, #15 `clase-potatoe`,
 #8 `chatgptvoiceeffect`, #3 `youtubedata`, #2 `uset82`
 
 These are placeholders and abandoned starts. They should not get brain folders and CC AI
-should not know about them. Thirteen empty repos on a profile is noise; the sync script
-(`B.4`) must filter them by default.
+should not know about them. Twelve empty repos remain on the 2026-07-31 snapshot after
+`Jacobgolf` was filled and hosted; the sync script (`B.4`) must filter empties by default.
 
 ### 2.3 Licensing gap
 
@@ -159,6 +159,7 @@ That is fine for *your own* display — `rights: "owned"` is accurate. But it is
 | #46 `Monkey-Tug-of-War` | **Flutter** (`pubspec.yaml`, `lib/`, `web/`, `build/`) + `netlify.toml` | 22.7 MB | Flutter web → static bundle | **A or B** — depends on built size, not repo size |
 | #32 `My-Football-Game` | Node + Express (`server.js`) | 1.2 MB | **Already has `railway.json`**, plus `render.yaml`, `glitch.json`, `netlify.toml` | **B** — server-backed, and already Railway-shaped |
 | #14 `MandelBro` | JavaScript, nested `MandelBro/` | 2.0 MB | Likely static fractal explorer | **A** (verify) |
+| #33 `Jacobgolf` | HTML5 canvas + vanilla JS | — | **Already live** at `jacobgolf.netlify.app` → Tier C | **C** |
 | #12 `3Doodle` | Vite + `client/` + `server/` + `drizzle.config.ts` | 3.8 MB | Full-stack, needs Postgres | **B** — needs a database service |
 | #37 `drone_Lips` | JS + `netlify.toml`, `drone-lips/`, `maingameIDEA/` | 8.5 MB | Static | **A** |
 | #42 `gimmemycake` | Vite + `index.html` + `src/` + `public/` | 26.7 MB | Static build | **A** — repo is heavy with images; built output should be far smaller |

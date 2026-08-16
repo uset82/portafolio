@@ -93,6 +93,30 @@ export const ARCADE_GAMES: readonly ArcadeGame[] = [
     measuredOn: "2026-07-31",
   },
   {
+    id: "jacobgolf",
+    slug: "jacobgolf",
+    title: "Jacobs Golfspill",
+    tagline: "Browser mini golf",
+    description:
+      "A browser-based mini golf challenge built with HTML5 canvas and vanilla JavaScript. Click or drag to aim, then release to shoot.",
+    engine: "HTML5 Canvas and vanilla JavaScript",
+    input: "Mouse or touch",
+    controls: ["Click or drag from the ball to aim", "Release to shoot", "Avoid water and rocks"],
+    mobile: "The live build is a canvas game that accepts click or drag aim.",
+    needsCamera: false,
+    status: "playable",
+    tier: "C",
+    source: {
+      kind: "external",
+      url: "https://jacobgolf.netlify.app/",
+      provider: "Netlify",
+    },
+    builtSize: "17 KB hosted (702 B HTML, 14.9 KB JS, 1.4 KB CSS), measured 2026-08-16",
+    repository: "https://github.com/uset82/Jacobgolf",
+    license: "No LICENSE file in the repository yet - all rights reserved by Carlos Carpio",
+    measuredOn: "2026-08-16",
+  },
+  {
     id: "my-football-game",
     slug: "football",
     title: "My Football Game",
@@ -288,5 +312,5 @@ export const ARCADE_SUMMARY = {
   description:
     "Every game here is mine. Some run in this page, some are waiting on hosting, and two run on hardware or a desktop runtime and never will. Each one says which it is, what it needs, and where the code lives.",
   measurementNote:
-    "Build sizes come from a real build of each repository on 2026-07-31, not from repository size.",
+    "Most build sizes come from a real build of each repository on 2026-07-31, not from repository size. Jacobs Golfspill was measured from its live Netlify host on 2026-08-16.",
 } as const;

@@ -74,10 +74,30 @@ test("the arcade index separates playable games from the honest remainder", () =
   assert.match(markup, /Waiting on hosting/);
   assert.match(markup, /Documented only/);
   assert.match(markup, /href="\/arcade\/mandelbro"/);
+  assert.match(markup, /href="\/arcade\/jacobgolf"/);
   assert.match(markup, /github\.com\/uset82\/MandelBro/);
+  assert.match(markup, /github\.com\/uset82\/Jacobgolf/);
 
   // The index links to games; it never embeds one.
   assert.doesNotMatch(markup, /<(?:iframe|audio|video)\b/);
+});
+
+test("Jacobs Golfspill is playable from its live Netlify host", () => {
+  const jacobgolf = findArcadeGame("jacobgolf");
+  assert.ok(jacobgolf);
+  assert.equal(jacobgolf.source.kind, "external");
+  assert.equal(resolveArcadeSource(jacobgolf), "https://jacobgolf.netlify.app/");
+  assert.equal(isArcadeGamePlayable(jacobgolf), true);
+
+  const markup = renderToStaticMarkup(
+    createElement(ArcadeGameDetail, {
+      game: jacobgolf,
+      source: resolveArcadeSource(jacobgolf),
+    }),
+  );
+
+  assert.doesNotMatch(markup, /<iframe\b/, "no frame may exist before an explicit click");
+  assert.match(markup, /Play Jacobs Golfspill/);
 });
 
 test("the play shell loads nothing before the visitor presses play", () => {

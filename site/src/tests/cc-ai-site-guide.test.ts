@@ -50,6 +50,7 @@ test("Work questions point at the public GitHub register, not only two apps", ()
   const guided = guideVisitorSite("Where are all the projects listed?");
   assert.ok(guided);
   assert.match(guided.answer, /public GitHub register/);
+  assert.match(guided.answer, /grouped by practice/);
   assert.match(guided.answer, /since 2022/);
   assert.match(guided.answer, /welcome to try/);
 });

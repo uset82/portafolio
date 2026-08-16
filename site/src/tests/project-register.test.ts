@@ -7,7 +7,11 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { ProjectRegister } from "@/components/project-register";
-import { GITHUB_REGISTER, GITHUB_REGISTER_META } from "@/content/github-register";
+import {
+  GITHUB_REGISTER,
+  GITHUB_REGISTER_GROUPS,
+  GITHUB_REGISTER_META,
+} from "@/content/github-register";
 
 const PRIVATE_REPOSITORY_NAMES = [
   "brain-private",
@@ -20,26 +24,60 @@ const PRIVATE_REPOSITORY_NAMES = [
   "tragatelo-food-facts",
 ] as const;
 
-test("project register renders every public GitHub repository as an ordered, linkable row", () => {
-  const markup = renderToStaticMarkup(createElement(ProjectRegister));
-  const titles = GITHUB_REGISTER.map((repository) => repository.title);
-  const titlePositions = titles.map((title) => markup.indexOf(`>${title}<`));
-
-  assert.match(markup, /<main id="main-content" class="work-index">/);
-  assert.match(
-    markup,
-    /<nav class="project-register project-register--github" aria-label="Project register">/,
+test("every public repository is classified into exactly one Work group", () => {
+  const groupedNames = GITHUB_REGISTER_GROUPS.flatMap((group) =>
+    group.repositories.map((repository) => repository.name),
   );
+
   assert.equal(GITHUB_REGISTER_META.count, 62);
   assert.equal(GITHUB_REGISTER.length, 62);
-  assert.equal((markup.match(/class="project-register__row"/g) ?? []).length, 62);
+  assert.equal(groupedNames.length, 62);
   assert.deepEqual(
-    titlePositions,
-    [...titlePositions].sort((left, right) => left - right),
+    [...groupedNames].sort(),
+    [...GITHUB_REGISTER.map((repository) => repository.name)].sort(),
   );
+  assert.equal(new Set(groupedNames).size, 62);
+  assert.deepEqual(
+    GITHUB_REGISTER_GROUPS.map((group) => group.id),
+    [
+      "tools",
+      "ai",
+      "games",
+      "music",
+      "design",
+      "hardware",
+      "astrology",
+      "business",
+      "creative",
+      "academic",
+      "forks",
+      "starts",
+    ],
+  );
+});
+
+test("project register renders grouped public repositories as ordered, linkable rows", () => {
+  const markup = renderToStaticMarkup(createElement(ProjectRegister));
+
+  assert.match(markup, /<main id="main-content" class="work-index">/);
+  assert.match(markup, /aria-label="Work groups"/);
+  assert.equal(GITHUB_REGISTER_META.count, 62);
+  assert.equal((markup.match(/class="project-register__row"/g) ?? []).length, 62);
+  assert.equal((markup.match(/class="project-register__group"/g) ?? []).length, 12);
+
+  for (const group of GITHUB_REGISTER_GROUPS) {
+    assert.match(markup, new RegExp(`id="work-group-${group.id}"`));
+    assert.match(markup, new RegExp(`href="#work-group-${group.id}"`));
+    assert.match(markup, new RegExp(`>${group.title}<`));
+    assert.match(markup, new RegExp(`>${group.chartLabel}<`));
+  }
 
   for (const repository of GITHUB_REGISTER) {
     assert.equal((markup.match(new RegExp(`href="${repository.url}"`, "g")) ?? []).length, 1);
+    assert.match(
+      markup,
+      new RegExp(`<h3 id="project-register-${repository.id}-title">${repository.title}</h3>`),
+    );
   }
 
   assert.match(markup, /public repositories/);
@@ -57,6 +95,30 @@ test("project register renders every public GitHub repository as an ordered, lin
   }
   assert.doesNotMatch(markup, /<(?:img|video|audio|iframe|button|form|input)\b/);
   assert.doesNotMatch(markup, /(?:mailto:)/);
+});
+
+test("Jacobgolf is a playable game in the Games group, not an unfilled start", () => {
+  const jacobgolf = GITHUB_REGISTER.find((repository) => repository.name === "Jacobgolf");
+  const games = GITHUB_REGISTER_GROUPS.find((group) => group.id === "games");
+  const starts = GITHUB_REGISTER_GROUPS.find((group) => group.id === "starts");
+  const markup = renderToStaticMarkup(createElement(ProjectRegister));
+
+  assert.ok(jacobgolf);
+  assert.ok(games);
+  assert.ok(starts);
+  assert.equal(jacobgolf.title, "Jacobs Golfspill");
+  assert.equal(jacobgolf.tryUrl, "https://jacobgolf.netlify.app/");
+  assert.equal(jacobgolf.roomHref, "/arcade/jacobgolf");
+  assert.equal(
+    games.repositories.some((repository) => repository.name === "Jacobgolf"),
+    true,
+  );
+  assert.equal(
+    starts.repositories.some((repository) => repository.name === "Jacobgolf"),
+    false,
+  );
+  assert.match(markup, /href="https:\/\/jacobgolf\.netlify\.app\/"/);
+  assert.match(markup, /href="\/arcade\/jacobgolf"/);
 });
 
 test("project register is readable without animation and keeps focus, touch, and mobile contracts", () => {

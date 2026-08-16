@@ -82,11 +82,11 @@ const contactAnswer = [
 const githubAnswer = [
   "The public GitHub account is https://github.com/uset82.",
   "",
-  "Work lists every public repository. Private repositories stay off this site. Cosmos is where ASTROEA and Pináculo can be tried.",
+  "Work groups every public repository by practice. Private repositories stay off this site. Cosmos is where ASTROEA and Pináculo can be tried.",
 ].join("\n");
 
 const workAnswer = [
-  "Work is the public GitHub register of what Carlos has been building since 2022.",
+  "Work is the public GitHub register of what Carlos has been building since 2022, grouped by practice.",
   "",
   "You are welcome to try what is open and to contribute. Cosmos holds ASTROEA and Pináculo to try. Support lists the four MIT repositories. Private repositories stay off the page.",
 ].join("\n");

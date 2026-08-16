@@ -45,7 +45,7 @@ WAVE 4  ░░░░░░░░░░  Launch
 
 ### 2026-08-16 — Work is the public GitHub register
 
-Work lists every **public** `uset82` repository (62 on 2026-08-16). Cosmos stays the room for **ASTROEA** and **Pináculo** to try. Arcade stays the games. Private repositories stay off the site (`Q.13`). Unlicensed repos remain readable, not MIT-open (`Q.12`). No invented case studies.
+Work lists every **public** `uset82` repository (62 on 2026-08-16), grouped by practice (tools, AI, games, music, design, hardware, astrology/numerology, business, 3D, academic writing, plus forks and unfilled starts). Jacobs Golfspill sits in Games and is playable at https://jacobgolf.netlify.app/. Cosmos stays the room for **ASTROEA** and **Pináculo** to try. Arcade stays the games. Private repositories stay off the site (`Q.13`). Unlicensed repos remain readable, not MIT-open (`Q.12`). No invented case studies.
 
 ### 2026-08-16 — Cosmos names the two public apps
 
@@ -53,7 +53,7 @@ The homepage Cosmos teaser and `/cosmos` point at **ASTROEA** and **Pináculo** 
 
 ### 2026-08-13 — homepage path is play, listen, contribute
 
-After Project Orbit the homepage now goes Arcade teaser → Sound teaser → Support teaser, then Laboratory. MandelBro is the only playable game named. Sound names StrudelAI and keeps Suno/YouTube shelves empty until Carlos pastes published URLs (`M.13`). Contribute names the four MIT repos only; Buy Me a Coffee stays hidden (`M.10`). No 61-repo grid.
+After Project Orbit the homepage now goes Arcade teaser → Sound teaser → Support teaser, then Laboratory. MandelBro and Jacobs Golfspill are playable. Sound names StrudelAI and keeps Suno/YouTube shelves empty until Carlos pastes published URLs (`M.13`). Contribute names the four MIT repos only; Buy Me a Coffee stays hidden (`M.10`). No 61-repo grid.
 
 ### 2026-08-13 — the playable layer landed (uncommitted, in the shared worktree)
 
