@@ -33,11 +33,9 @@ test("profile teaser publishes only approved biography and privacy-safe paths", 
   assert.doesNotMatch(markup, /(?:download|\.pdf|mailto:|street address|phone number)/i);
 });
 
-test("homepage mounts the profile teaser with responsive, focus, and touch-safe styling", () => {
-  const homepage = readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
+test("profile teaser component preserves responsive, focus, and touch-safe styling", () => {
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
 
-  assert.match(homepage, /<ProfileTeaser content=\{metadata\.profileTeaser\} \/>/);
   assert.match(styles, /\.profile-teaser__heading/);
   assert.match(styles, /\.profile-teaser__link:hover/);
   assert.match(styles, /\.profile-teaser__link:focus-visible/);

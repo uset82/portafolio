@@ -6,7 +6,6 @@ import { MediaTeaser } from "@/components/media-teaser";
 import { ProjectOrbit } from "@/components/project-orbit";
 import { PersonalTeaser } from "@/components/personal-teaser";
 import { ObservatoryHeroVideo } from "@/components/observatory-hero-video";
-import { ProfileTeaser } from "@/components/profile-teaser";
 import { SupportTeaser } from "@/components/support-teaser";
 import { ObservatoryExperienceControls } from "@/components/three/observatory-experience-controls";
 import { ObservatoryProgressiveExperienceContent } from "@/components/three/observatory-progressive-experience";
@@ -185,8 +184,6 @@ export default function Home() {
       <SupportTeaser />
 
       <PersonalTeaser content={metadata.personalTeaser} />
-
-      <ProfileTeaser content={metadata.profileTeaser} />
     </main>
   );
 }

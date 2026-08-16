@@ -39,10 +39,10 @@ test("homepage mounts the copy-first responsive teaser with focus and reduced-mo
   const homepage = readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
   const personalIndex = homepage.indexOf("<PersonalTeaser");
-  const profileIndex = homepage.indexOf("<ProfileTeaser");
+  const supportIndex = homepage.indexOf("<SupportTeaser");
 
   assert.ok(personalIndex > -1);
-  assert.ok(profileIndex > personalIndex);
+  assert.ok(personalIndex > supportIndex);
   assert.match(styles, /\.personal-teaser:focus-within \.personal-teaser__field/);
   assert.match(styles, /\.personal-teaser:hover \.personal-teaser__field/);
   assert.match(styles, /\.personal-teaser__themes li[^}]*min-height:\s*4rem/);

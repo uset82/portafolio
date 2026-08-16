@@ -3334,7 +3334,7 @@ body:has(.observatory-hero) .site-header .site-header__status {
 .site-footer {
   width: 100%;
   margin: 0;
-  padding: clamp(0.75rem, 1.2vw, 1rem) var(--page-gutter) clamp(2.5rem, 4vw, 3.5rem);
+  padding: clamp(3.5rem, 6vw, 5rem) var(--page-gutter) clamp(2.5rem, 4vw, 3.5rem);
   background: var(--color-deep-espresso);
   color: var(--color-text-on-dark);
 }
@@ -5878,8 +5878,7 @@ body:has(.observatory-hero) .site-header .site-header__status {
 
 .cosmos-foundation__identity h1,
 .cosmos-foundation__practices h2,
-.cosmos-foundation__privacy h2,
-.cosmos-foundation__boundary h2 {
+.cosmos-foundation__close h2 {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 500;
@@ -5977,8 +5976,7 @@ body:has(.observatory-hero) .site-header .site-header__status {
 }
 
 .cosmos-foundation__practices,
-.cosmos-foundation__privacy,
-.cosmos-foundation__boundary {
+.cosmos-foundation__close {
   display: grid;
   gap: clamp(2rem, 5vw, 6rem);
   width: min(100%, var(--page-max));
@@ -5992,24 +5990,28 @@ body:has(.observatory-hero) .site-header .site-header__status {
 }
 
 .cosmos-foundation__practices header,
-.cosmos-foundation__privacy header {
+.cosmos-foundation__close-copy {
   display: grid;
   gap: 1.5rem;
   align-content: start;
 }
 
 .cosmos-foundation__practices h2,
-.cosmos-foundation__privacy h2,
-.cosmos-foundation__boundary h2 {
+.cosmos-foundation__close h2 {
   font-size: clamp(3.4rem, 6.2vw, 6.8rem);
 }
 
-.cosmos-foundation__practices header > p:last-child,
-.cosmos-foundation__privacy header > p:last-child,
-.cosmos-foundation__boundary-copy > p {
+.cosmos-foundation__practices header > p:last-child {
   max-width: 42rem;
   margin: 0;
   color: var(--color-text-secondary-on-tint);
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  line-height: 1.75;
+}
+
+.cosmos-foundation__close-copy > p {
+  max-width: 38rem;
+  margin: 0;
   font-size: clamp(1rem, 1.2vw, 1.15rem);
   line-height: 1.75;
 }
@@ -6022,8 +6024,9 @@ body:has(.observatory-hero) .site-header .site-header__status {
 
 .cosmos-foundation__practices li {
   display: grid;
-  grid-template-columns: 2.5rem minmax(9rem, 0.55fr) minmax(12rem, 0.85fr) minmax(13rem, 1fr) auto;
-  gap: 1.25rem;
+  grid-template-columns: 2.5rem max-content minmax(12rem, 1fr) max-content auto;
+  column-gap: 1.75rem;
+  row-gap: 0.65rem;
   min-height: 8.5rem;
   padding-block: 1.35rem;
   align-items: center;
@@ -6049,6 +6052,7 @@ body:has(.observatory-hero) .site-header .site-header__status {
 .cosmos-foundation__practices li > div {
   display: grid;
   gap: 0.35rem;
+  min-width: max-content;
 }
 
 .cosmos-foundation__practices li > div p,
@@ -6071,6 +6075,7 @@ body:has(.observatory-hero) .site-header .site-header__status {
   font-size: clamp(1.8rem, 2.8vw, 2.8rem);
   font-weight: 500;
   line-height: 1;
+  white-space: nowrap;
 }
 
 .cosmos-foundation__practices li > p,
@@ -6080,11 +6085,14 @@ body:has(.observatory-hero) .site-header .site-header__status {
 }
 
 .cosmos-foundation__practices li > p {
+  min-width: 0;
+  max-width: 36rem;
   font-size: 0.86rem;
 }
 
 .cosmos-foundation__practices li > small {
   font-size: 0.7rem;
+  white-space: nowrap;
 }
 
 .cosmos-foundation__practices li > nav {
@@ -6094,169 +6102,55 @@ body:has(.observatory-hero) .site-header .site-header__status {
   align-items: center;
 }
 
-.cosmos-foundation__privacy {
-  grid-template-columns: minmax(20rem, 0.8fr) minmax(28rem, 1.2fr);
-  background: var(--color-sage-pale);
-}
-
-.cosmos-foundation__privacy dl {
-  margin: 0;
-  border-top: 1px solid var(--color-border-soft);
-}
-
-.cosmos-foundation__privacy dl > div {
-  display: grid;
-  grid-template-columns: minmax(13rem, 0.72fr) 1fr;
-  gap: 1.5rem;
-  min-height: 6rem;
-  padding-block: 1rem;
-  align-items: center;
-  border-bottom: 1px solid var(--color-border-soft);
-  transition: padding-inline var(--duration-fast) var(--ease-standard);
-}
-
-.cosmos-foundation__privacy dt {
-  display: grid;
-  grid-template-columns: 2.5rem 1fr;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.cosmos-foundation__privacy dt span {
-  color: var(--color-text-muted);
-  font-size: 0.6rem;
-}
-
-.cosmos-foundation__privacy dd {
-  display: grid;
-  gap: 0.35rem;
-  margin: 0;
-}
-
-.cosmos-foundation__privacy dd strong {
-  font-family: var(--font-display);
-  font-size: clamp(1.25rem, 1.8vw, 1.65rem);
-  font-weight: 500;
-}
-
-.cosmos-foundation__privacy dd small {
-  color: var(--color-text-secondary);
-  font-size: 0.72rem;
-  line-height: 1.55;
-}
-
-.cosmos-foundation__boundary {
-  grid-template-columns: minmax(18rem, 0.72fr) minmax(26rem, 1.28fr);
+.cosmos-foundation__close {
+  grid-template-columns: minmax(22rem, 1.2fr) minmax(14rem, 0.55fr);
   align-items: end;
   color: var(--color-text-on-dark);
   background: var(--color-walnut);
+  border-bottom: 0;
 }
 
-.cosmos-foundation__boundary-mark {
-  position: relative;
-  display: grid;
-  width: min(100%, 24rem);
-  aspect-ratio: 1;
-  padding: 1.5rem;
-  overflow: hidden;
-  align-content: space-between;
-  border: 1px solid rgb(254 244 234 / 32%);
-  border-radius: 50%;
+.cosmos-foundation__close h2 {
+  max-width: 14ch;
+  color: var(--color-text-on-dark);
+  font-size: clamp(2.8rem, 5vw, 5.2rem);
 }
 
-.cosmos-foundation__boundary-mark::before,
-.cosmos-foundation__boundary-mark::after {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 72%;
-  aspect-ratio: 1;
-  border: 1px solid rgb(254 244 234 / 20%);
-  border-radius: 50%;
-  content: "";
-  transform: translate(-50%, -50%);
-}
-
-.cosmos-foundation__boundary-mark::after {
-  width: 42%;
-  border-color: var(--color-sage-muted);
-}
-
-.cosmos-foundation__boundary-mark > span,
-.cosmos-foundation__boundary-mark > small,
-.cosmos-foundation__boundary-mark > strong,
-.cosmos-foundation__boundary-mark > i {
-  position: relative;
-  z-index: 1;
-}
-
-.cosmos-foundation__boundary-mark > span,
-.cosmos-foundation__boundary-mark > small {
-  color: rgb(254 244 234 / 68%);
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-}
-
-.cosmos-foundation__boundary-mark > strong {
-  align-self: center;
-  color: var(--color-buff);
-  font-family: var(--font-display);
-  font-size: clamp(3.6rem, 7vw, 6rem);
-  font-weight: 500;
-  letter-spacing: -0.07em;
-  line-height: 0.75;
-  text-align: center;
-}
-
-.cosmos-foundation__boundary-mark > i {
-  width: 52%;
-  height: 1px;
-  justify-self: center;
-  background: var(--color-sage-muted);
-}
-
-.cosmos-foundation__boundary-copy {
-  display: grid;
-  gap: 1.5rem;
-  align-content: end;
-}
-
-.cosmos-foundation__boundary .section-label,
-.cosmos-foundation__boundary-copy > p {
+.cosmos-foundation__close .section-label,
+.cosmos-foundation__close-copy > p {
   color: rgb(254 244 234 / 72%);
 }
 
-.cosmos-foundation__boundary h2 {
-  color: var(--color-text-on-dark);
-}
-
-.cosmos-foundation__boundary nav {
+.cosmos-foundation__close nav {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  flex-wrap: nowrap;
   gap: 0.75rem;
-  margin-top: 0.5rem;
+  align-items: stretch;
+  min-width: 13rem;
 }
 
-.cosmos-foundation__boundary .ui-action--primary {
+.cosmos-foundation__close nav .ui-action {
+  width: 100%;
+  justify-content: center;
+}
+
+.cosmos-foundation__close .ui-action--primary {
   border-color: var(--color-buff);
   background: var(--color-buff);
   color: var(--color-deep-espresso);
 }
 
-.cosmos-foundation__boundary .ui-action--primary:hover {
+.cosmos-foundation__close .ui-action--primary:hover {
   background: var(--color-off-white);
 }
 
-.cosmos-foundation__boundary .ui-action--secondary {
+.cosmos-foundation__close .ui-action--secondary {
   border-color: rgb(254 244 234 / 40%);
   color: var(--color-text-on-dark);
 }
 
-.cosmos-foundation__boundary .ui-action--secondary:hover {
+.cosmos-foundation__close .ui-action--secondary:hover {
   background: rgb(254 244 234 / 10%);
 }
 
@@ -6276,7 +6170,7 @@ body:has(.observatory-hero) .site-header .site-header__status {
   }
 
   .cosmos-foundation__practices li {
-    grid-template-columns: 2rem minmax(9rem, 0.55fr) 1fr;
+    grid-template-columns: 2rem max-content minmax(0, 1fr);
   }
 
   .cosmos-foundation__practices li > small,
@@ -6285,7 +6179,7 @@ body:has(.observatory-hero) .site-header .site-header__status {
   }
 
   .cosmos-foundation__practices,
-  .cosmos-foundation__privacy {
+  .cosmos-foundation__close {
     grid-template-columns: 1fr;
   }
 }
@@ -6293,8 +6187,7 @@ body:has(.observatory-hero) .site-header .site-header__status {
 @media (max-width: 47.99rem) {
   .cosmos-foundation__hero,
   .cosmos-foundation__practices,
-  .cosmos-foundation__privacy,
-  .cosmos-foundation__boundary {
+  .cosmos-foundation__close {
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }
@@ -6329,14 +6222,12 @@ body:has(.observatory-hero) .site-header .site-header__status {
   }
 
   .cosmos-foundation__practices,
-  .cosmos-foundation__privacy,
-  .cosmos-foundation__boundary {
+  .cosmos-foundation__close {
     padding-block: 5rem;
   }
 
   .cosmos-foundation__practices h2,
-  .cosmos-foundation__privacy h2,
-  .cosmos-foundation__boundary h2 {
+  .cosmos-foundation__close h2 {
     font-size: clamp(3rem, 13vw, 4.5rem);
   }
 
@@ -6346,27 +6237,31 @@ body:has(.observatory-hero) .site-header .site-header__status {
     padding-block: 1.5rem;
   }
 
+  .cosmos-foundation__practices li > div {
+    min-width: 0;
+  }
+
+  .cosmos-foundation__practices h3 {
+    white-space: normal;
+  }
+
+  .cosmos-foundation__practices li > small {
+    white-space: normal;
+  }
+
   .cosmos-foundation__practices li > p,
   .cosmos-foundation__practices li > small,
   .cosmos-foundation__practices li > nav {
     grid-column: 2 / -1;
   }
 
-  .cosmos-foundation__privacy dl > div {
-    grid-template-columns: 1fr;
-    gap: 0.65rem;
-  }
-
-  .cosmos-foundation__boundary-mark {
-    width: min(88vw, 22rem);
-  }
-
-  .cosmos-foundation__boundary nav {
+  .cosmos-foundation__close nav {
     align-items: stretch;
+    justify-content: stretch;
     flex-direction: column;
   }
 
-  .cosmos-foundation__boundary nav .ui-action {
+  .cosmos-foundation__close nav .ui-action {
     width: 100%;
   }
 }

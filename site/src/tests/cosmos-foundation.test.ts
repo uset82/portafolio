@@ -28,7 +28,9 @@ test("Cosmos features the public apps without publishing a private story or coll
   assert.match(markup, /astro\.com/);
   assert.match(markup, /Carl Jung/);
   assert.match(markup, /does not collect names or birth dates/);
-  assert.equal((markup.match(/<dt>/g) ?? []).length, 4);
+  assert.match(markup, /href="\/work"/);
+  assert.match(markup, /href="\/story"/);
+  assert.doesNotMatch(markup, /<dt>|HOLD|Publication boundary|Available now/);
   assert.match(
     markup,
     /Creative and personal practice—not scientific, medical, or predictive advice/,
@@ -49,9 +51,14 @@ test("Cosmos keeps a cardless responsive atlas with touch and reduced-motion saf
   assert.match(page, /<CosmosFoundation/);
   assert.match(styles, /\.cosmos-foundation__hero:focus-within \.cosmos-foundation__atlas/);
   assert.match(styles, /\.cosmos-foundation__hero:hover \.cosmos-foundation__atlas/);
+  assert.match(
+    styles,
+    /\.cosmos-foundation__practices li\s*\{[\s\S]*?grid-template-columns:\s*2\.5rem max-content minmax\(12rem, 1fr\) max-content auto/,
+  );
   assert.match(styles, /\.cosmos-foundation__practices li\s*\{[\s\S]*?min-height:\s*8\.5rem/);
+  assert.match(styles, /\.cosmos-foundation__practices h3\s*\{[\s\S]*?white-space:\s*nowrap/);
   assert.match(styles, /@media \(max-width: 47\.99rem\)[\s\S]*?\.cosmos-foundation__hero/);
-  assert.match(styles, /\.cosmos-foundation__boundary nav \.ui-action\s*\{[\s\S]*?width:\s*100%/);
+  assert.match(styles, /\.cosmos-foundation__close nav \.ui-action\s*\{[\s\S]*?width:\s*100%/);
   assert.match(styles, /@media \(prefers-reduced-motion: reduce\)/);
   assert.doesNotMatch(page, /PageIntro|RecoveryState/);
 });

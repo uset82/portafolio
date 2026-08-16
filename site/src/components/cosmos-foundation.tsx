@@ -7,30 +7,6 @@ type CosmosFoundationProps = {
   content: SiteMetadata["personalTeaser"];
 };
 
-const publicationBoundaries = [
-  {
-    label: "Private journeys",
-    value: "Unpublished",
-    detail: "No journey, place, date, or personal travel account is represented as public.",
-  },
-  {
-    label: "Birth data",
-    value: "Not collected here",
-    detail:
-      "This portfolio does not collect names or birth dates. ASTROEA and Pináculo ask for that on their own sites.",
-  },
-  {
-    label: "Private charts",
-    value: "Unpublished",
-    detail: "Carlos's own charts, readings, and dates are not published on this page.",
-  },
-  {
-    label: "Claims boundary",
-    value: "Locked",
-    detail: "Symbolic practices remain personal and creative, never scientific or medical advice.",
-  },
-] as const;
-
 export function CosmosFoundation({ content }: CosmosFoundationProps) {
   return (
     <main id="main-content" className="cosmos-foundation">
@@ -94,72 +70,38 @@ export function CosmosFoundation({ content }: CosmosFoundationProps) {
         </ol>
       </section>
 
-      <section className="cosmos-foundation__privacy" aria-labelledby="cosmos-privacy-title">
-        <header>
-          <p className="section-label">Publication boundary / 02</p>
-          <h2 id="cosmos-privacy-title">The apps are public. The private record stays private.</h2>
-          <p>
-            You can try both apps and read both repositories. Carlos&apos;s own charts and dates are
-            not published here.
-          </p>
-        </header>
-
-        <dl>
-          {publicationBoundaries.map((item, index) => (
-            <div key={item.label}>
-              <dt>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                {item.label}
-              </dt>
-              <dd>
-                <strong>{item.value}</strong>
-                <small>{item.detail}</small>
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </section>
-
-      <section className="cosmos-foundation__boundary" aria-labelledby="cosmos-boundary-title">
-        <div className="cosmos-foundation__boundary-mark" aria-hidden="true">
-          <span>Public stories / 00</span>
-          <strong>HOLD</strong>
-          <i />
-          <small>Private record unpublished</small>
-        </div>
-
-        <div className="cosmos-foundation__boundary-copy">
-          <p className="section-label">Available now / 03</p>
-          <h2 id="cosmos-boundary-title">Try the work, then look through the code.</h2>
+      <section className="cosmos-foundation__close" aria-labelledby="cosmos-close-title">
+        <div className="cosmos-foundation__close-copy">
+          <p className="section-label">Close / 02</p>
+          <h2 id="cosmos-close-title">The apps are public. The private record stays private.</h2>
           <p>{content.claimsBoundary}</p>
           <p>
-            This page does not publish Carlos&apos;s private charts, journeys, or dates, and it does
-            not collect birth data. Pináculo and ASTROEA live on their own sites and repositories.
+            This page does not collect names or birth dates, and it does not publish Carlos&apos;s
+            charts, journeys, or dates. ASTROEA and Pináculo live on their own sites.
           </p>
-          <nav aria-label="Cosmos app routes">
-            {COSMOS_APPS.map((app, index) =>
-              app.tryUrl && app.tryLabel ? (
-                <ActionLink
-                  key={app.id}
-                  variant={index === 0 ? "primary" : "secondary"}
-                  href={app.tryUrl}
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  {app.tryLabel}
-                </ActionLink>
-              ) : null,
-            )}
-          </nav>
-          <nav aria-label="Cosmos route alternatives">
-            <ActionLink variant="secondary" href="/work">
-              Explore Work
-            </ActionLink>
-            <ActionLink variant="secondary" href="/story">
-              Read Story
-            </ActionLink>
-          </nav>
         </div>
+
+        <nav aria-label="Cosmos routes">
+          {COSMOS_APPS.map((app, index) =>
+            app.tryUrl && app.tryLabel ? (
+              <ActionLink
+                key={app.id}
+                variant={index === 0 ? "primary" : "secondary"}
+                href={app.tryUrl}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {app.tryLabel}
+              </ActionLink>
+            ) : null,
+          )}
+          <ActionLink variant="secondary" href="/work">
+            Explore Work
+          </ActionLink>
+          <ActionLink variant="secondary" href="/story">
+            Read Story
+          </ActionLink>
+        </nav>
       </section>
     </main>
   );
