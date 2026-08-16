@@ -75,7 +75,7 @@ const ORBIT_RIM_TILT_AXIS_START_RADIANS = (3 * Math.PI) / 4;
 const ORBIT_MEDALLION_USER_DRAG_LIMIT_DEGREES = 18;
 const ORBIT_MEDALLION_USER_DRAG_LIMIT_RADIANS =
   (ORBIT_MEDALLION_USER_DRAG_LIMIT_DEGREES * Math.PI) / 180;
-/** One stately clockwise (rightward) revolution of the CAM² emblem. */
+/** One stately revolution period constant for the CAM² emblem. */
 const ORBIT_LOGO_SPIN_SECONDS = 12;
 /* Dragging the emblem or its rim repositions the medallion only; the big
  * repository ring stays put. The clamp keeps the medallion recoverable on
@@ -771,9 +771,10 @@ function OrbitScene({
       }
     }
     const logoSpin = logoSpinRef.current;
-    if (logoSpin && isVisible && !reducedMotion) {
-      // A positive yaw turns the emblem's face toward +X: a rightward spin.
-      logoSpin.rotation.y = (logoSpin.rotation.y + (TAU / ORBIT_LOGO_SPIN_SECONDS) * delta) % TAU;
+    if (logoSpin) {
+      // The CAM² emblem remains stationary and front-facing
+      void ORBIT_LOGO_SPIN_SECONDS;
+      logoSpin.rotation.y = 0;
     }
     const breathe = reducedMotion ? 0.5 : 0.5 + 0.5 * Math.sin(now / 3400);
     if (medallionSheenRef.current) {
@@ -1139,6 +1140,26 @@ function OrbitScene({
             position={[0, ORBIT_MEDALLION_BASE_Y, 0]}
             onPointerDown={(event) => beginDrag(event, "pan")}
             onDoubleClick={resetOrbitPan}
+            onClick={(event) => {
+              event.stopPropagation();
+              if (!interaction.current.wasDragged) {
+                const target =
+                  document.getElementById("work-group-websites") ||
+                  document.getElementById("main-content");
+                if (target && window.location.pathname.startsWith("/work")) {
+                  target.scrollIntoView({ behavior: "smooth" });
+                } else {
+                  window.location.assign("/work#work-group-websites");
+                }
+              }
+            }}
+            onPointerOver={(event) => {
+              event.stopPropagation();
+              document.body.style.cursor = "pointer";
+            }}
+            onPointerOut={() => {
+              document.body.style.cursor = "auto";
+            }}
           >
             {/* The halo rides inside the medallion so it follows a user drag,
              * but it must never widen the medallion's pointer target. */}

@@ -689,6 +689,19 @@ export function ProjectOrbitAtomic({
           id="central-medallion"
           filter="url(#po-shadow)"
           className="project-orbit-atomic__medallion"
+          role="button"
+          tabIndex={0}
+          aria-label="Work register: Website creation and all projects"
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            window.location.assign("/work#work-group-websites");
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              window.location.assign("/work#work-group-websites");
+            }
+          }}
         >
           <circle
             cx="500"
