@@ -115,11 +115,25 @@ export const SUPPORT_TEASER = {
   actionHref: "/support",
 } as const;
 
+/**
+ * The hero copy has to match what the page actually renders. The tip card is
+ * environment-gated, so promising "two ways" while only one is on the page
+ * would advertise something a visitor cannot find. Both variants are written
+ * out and the room picks by the resolved tip URL.
+ */
 export const SUPPORT_SUMMARY = {
   eyebrow: "Support / 06",
   heading: "If something here was worth your time.",
-  description:
-    "There are two ways to give something back, and neither is required. Contribute to the code, or buy me a coffee.",
+  withTip: {
+    kicker: "Two ways, both optional",
+    description:
+      "There are two ways to give something back, and neither is required. Contribute to the code, or buy me a coffee.",
+  },
+  withoutTip: {
+    kicker: "One way, entirely optional",
+    description:
+      "There is one way to give something back, and it is not required. Contribute to the code: four repositories are open, and issues and pull requests are both read.",
+  },
 } as const;
 
 /**
