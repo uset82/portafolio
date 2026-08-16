@@ -172,45 +172,61 @@ export type AtomicRingDefinition = {
   initialNodeAngles: readonly number[];
 };
 
+/**
+ * The four shells of the CA²M atom, authored for a front-facing camera so the
+ * instrument reads as one centred, mirror-symmetric composition:
+ *
+ *   - rings live in their local XY plane (the view plane) and only lean a few
+ *     degrees out of it for depth — the diagonals lean as exact mirrors;
+ *   - `initialNodeAngles` are fixed seats, not starting phases: every node has
+ *     a designed position and the pairs mirror each other across the vertical
+ *     axis (StrudelAI↔iFoundYou, SOUND LAB↔ASTRAEA, ARCADE↔Avatar Studio,
+ *     Repo2Agent↔SmartChatbot, 3Doodle↔FUTURE ENERGY).
+ *
+ * Angles are in radians on the ring's own ellipse, y-up, counter-clockwise,
+ * 0 at the ring's +X axis.
+ */
+const DIAGONAL_TILT = Math.PI * (34 / 180);
+
 export const ATOMIC_ORBIT_RINGS: readonly AtomicRingDefinition[] = [
   {
     id: "vertical",
-    name: "Vertical Polar Orbit",
-    radiusX: 5.2,
-    radiusZ: 2.1,
-    rotationEuler: [0, Math.PI / 2.35, Math.PI / 2],
+    name: "Meridian Orbit",
+    radiusX: 1.9,
+    radiusZ: 4.5,
+    rotationEuler: [0, 0.14, 0],
     bearingBalls: 14,
     projectIds: ["3doodle", "future-energy"],
-    initialNodeAngles: [Math.PI, 0],
+    initialNodeAngles: [Math.PI / 2, -Math.PI / 2],
   },
   {
     id: "horizontal",
     name: "Equatorial Orbit",
     radiusX: 7.8,
-    radiusZ: 2.4,
-    rotationEuler: [0.36, 0, 0],
+    radiusZ: 1.5,
+    rotationEuler: [-0.12, 0, 0],
     bearingBalls: 18,
-    projectIds: ["repo2agent", "smartchatbot"],
-    initialNodeAngles: [Math.PI, 0],
+    projectIds: ["repo2agent", "smartchatbot", "arcade", "avatar-studio"],
+    initialNodeAngles: [Math.PI, 0, (-115 * Math.PI) / 180, (-65 * Math.PI) / 180],
   },
   {
     id: "diagonal-a",
     name: "Diagonal Orbit Alpha",
-    radiusX: 7.4,
-    radiusZ: 2.25,
-    rotationEuler: [0.32, 0.24, Math.PI / 5.2],
+    radiusX: 7.2,
+    radiusZ: 2,
+    rotationEuler: [0.08, 0.11, DIAGONAL_TILT],
     bearingBalls: 16,
-    projectIds: ["strudelai", "astraea", "pinaculo"],
-    initialNodeAngles: [Math.PI, Math.PI * 0.15, Math.PI * 0.28],
+    projectIds: ["ifoundyou", "sound-lab"],
+    initialNodeAngles: [(-30 * Math.PI) / 180, (-145 * Math.PI) / 180],
   },
   {
     id: "diagonal-b",
     name: "Diagonal Orbit Beta",
-    radiusX: 7.4,
-    radiusZ: 2.25,
-    rotationEuler: [0.32, -0.24, -Math.PI / 5.2],
+    radiusX: 7.2,
+    radiusZ: 2,
+    rotationEuler: [0.08, -0.11, -DIAGONAL_TILT],
     bearingBalls: 16,
-    projectIds: ["ifoundyou", "avatar-studio", "sound-lab", "arcade"],
-    initialNodeAngles: [0, Math.PI * 0.22, Math.PI, Math.PI * 0.85],
+    projectIds: ["strudelai", "astraea", "pinaculo"],
+    initialNodeAngles: [(-150 * Math.PI) / 180, (-35 * Math.PI) / 180, (28 * Math.PI) / 180],
   },
 ] as const;

@@ -158,6 +158,22 @@ test("QubeSolve is a playable game in the Games group with the live Netlify solv
   assert.match(markup, /href="\/arcade\/qubesolve"/);
 });
 
+test("opennemoclaw links to the live personal agent framework app", () => {
+  const opennemoclaw = GITHUB_REGISTER.find((repository) => repository.name === "opennemoclaw");
+  const opennemoclawsite = GITHUB_REGISTER.find(
+    (repository) => repository.name === "opennemoclawsite",
+  );
+  const markup = renderToStaticMarkup(createElement(ProjectRegister));
+
+  assert.ok(opennemoclaw);
+  assert.ok(opennemoclawsite);
+  assert.equal(opennemoclaw.title, "OpenNemoClaw");
+  assert.equal(opennemoclaw.tryUrl, "https://opennemoclaw.netlify.app/");
+  assert.equal(opennemoclaw.tryLabel, "Open OpenNemoClaw");
+  assert.equal(opennemoclawsite.tryUrl, "https://opennemoclaw.netlify.app/");
+  assert.match(markup, /href="https:\/\/opennemoclaw\.netlify\.app\/"/);
+});
+
 test("pacha is the Pasha restaurant site in Website creation", () => {
   const pacha = GITHUB_REGISTER.find((repository) => repository.name === "pacha");
   const websites = GITHUB_REGISTER_GROUPS.find((group) => group.id === "websites");

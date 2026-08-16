@@ -22,7 +22,15 @@ export function getOrbitPosition(
 
 /**
  * Computes 3D world coordinates for a point on an atomic orbital ring.
- * The point is evaluated on the ring's local ellipse and rotated by its 3D Euler angles.
+ *
+ * Rings are authored in their local XY plane — the plane that faces the
+ * camera in the front-on composition — and carried into place by the same
+ * Euler angles their rail meshes use. three.js composes an 'XYZ' Euler as
+ * the matrix product Rx·Ry·Rz, which reaches the vector Z-first, then Y,
+ * then X. The same order is applied here so a node computed by this
+ * function lands exactly on a rail mesh rotated by the identical Euler;
+ * the previous X→Y→Z order let nodes drift off their rails on any ring
+ * with a compound rotation.
  */
 export function getAtomicOrbitPosition(
   angle: number,
@@ -32,31 +40,31 @@ export function getAtomicOrbitPosition(
   originY = 0.16,
 ): OrbitPosition {
   const localX = Math.cos(angle) * radiusX;
-  const localY = 0;
-  const localZ = Math.sin(angle) * radiusZ;
+  const localY = Math.sin(angle) * radiusZ;
+  const localZ = 0;
 
   const [rx, ry, rz] = rotationEuler;
 
-  // Rotate around X
-  const cosX = Math.cos(rx);
-  const sinX = Math.sin(rx);
-  const x1 = localX;
-  const y1 = localY * cosX - localZ * sinX;
-  const z1 = localY * sinX + localZ * cosX;
+  // Rotate around Z (in-plane orientation: the diagonals' ±34°)
+  const cosZ = Math.cos(rz);
+  const sinZ = Math.sin(rz);
+  const x1 = localX * cosZ - localY * sinZ;
+  const y1 = localX * sinZ + localY * cosZ;
+  const z1 = localZ;
 
-  // Rotate around Y
+  // Rotate around Y (depth lean along the ring's width)
   const cosY = Math.cos(ry);
   const sinY = Math.sin(ry);
   const x2 = x1 * cosY + z1 * sinY;
   const y2 = y1;
   const z2 = -x1 * sinY + z1 * cosY;
 
-  // Rotate around Z
-  const cosZ = Math.cos(rz);
-  const sinZ = Math.sin(rz);
-  const x3 = x2 * cosZ - y2 * sinZ;
-  const y3 = x2 * sinZ + y2 * cosZ;
-  const z3 = z2;
+  // Rotate around X (depth lean along the ring's height)
+  const cosX = Math.cos(rx);
+  const sinX = Math.sin(rx);
+  const x3 = x2;
+  const y3 = y2 * cosX - z2 * sinX;
+  const z3 = y2 * sinX + z2 * cosX;
 
   return {
     x: x3,

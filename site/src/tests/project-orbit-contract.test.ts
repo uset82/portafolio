@@ -108,7 +108,7 @@ test("Project Orbit scene uses the approved lazy Three runtime and avoids a raw 
   assert.match(scene, /const ORBIT_CAMERA_NARROW_FOV_DEGREES = 38/);
   assert.match(scene, /const ORBIT_CAMERA_FIT_PADDING = 1\.16/);
   assert.match(scene, /Math\.tan\(horizontalFov \/ 2\)/);
-  assert.match(scene, /camera\.lookAt\(0, -0\.3, 0\)/);
+  assert.match(scene, /camera\.lookAt\(0, ORBIT_MEDALLION_BASE_Y, 0\)/);
   assert.match(
     scene,
     /<group ref=\{medallionDragYawRef\} name="ProjectOrbitMedallionDragYaw">[\s\S]*?<group ref=\{medallionRimRef\} name="ProjectOrbitMedallionRimDiagonalTilt">[\s\S]*?<group ref=\{logoSpinRef\} name="ProjectOrbitLogoLeftYaw">[\s\S]*?<ProjectOrbitLogoModel \/>/,

@@ -215,9 +215,10 @@ export const guideVisitorSite = (message: string): VisitorSiteGuide | null => {
   }
 
   if (isGreeting(text)) {
-    const isAck = /^(ok|okay|k|cool|nice|thanks|thank you|gracias|muchas gracias|vale|entendido|de acuerdo)[.!?¡¿]*$/i.test(
-      text,
-    );
+    const isAck =
+      /^(ok|okay|k|cool|nice|thanks|thank you|gracias|muchas gracias|vale|entendido|de acuerdo)[.!?¡¿]*$/i.test(
+        text,
+      );
     if (isEs) {
       return { answer: isAck ? ackAnswerEs : greetingAnswerEs, sourceIds: [] };
     }
@@ -280,7 +281,16 @@ export const guideVisitorSite = (message: string): VisitorSiteGuide | null => {
       "dónde escuchar",
     ]) ||
     (/\b(sound|sonido|musica|música)\b/.test(normalized) &&
-      includesAny(normalized, ["where", "page", "listen", "music", "donde", "dónde", "escuchar", "canciones"]))
+      includesAny(normalized, [
+        "where",
+        "page",
+        "listen",
+        "music",
+        "donde",
+        "dónde",
+        "escuchar",
+        "canciones",
+      ]))
   ) {
     return {
       answer: isEs ? soundAnswerEs : soundAnswerEn,
@@ -288,7 +298,17 @@ export const guideVisitorSite = (message: string): VisitorSiteGuide | null => {
     };
   }
 
-  if (includesAny(normalized, ["contact", "email", "reach carlos", "write to", "contacto", "correo", "escribir a"])) {
+  if (
+    includesAny(normalized, [
+      "contact",
+      "email",
+      "reach carlos",
+      "write to",
+      "contacto",
+      "correo",
+      "escribir a",
+    ])
+  ) {
     return {
       answer: isEs ? contactAnswerEs : contactAnswerEn,
       sourceIds: ["approved-public-profile"],
@@ -321,7 +341,19 @@ export const guideVisitorSite = (message: string): VisitorSiteGuide | null => {
     };
   }
 
-  if (includesAny(normalized, ["who are you", "what are you", "what is cacm", "quien eres", "quién eres", "que eres", "qué eres", "que es cacm", "qué es cacm"])) {
+  if (
+    includesAny(normalized, [
+      "who are you",
+      "what are you",
+      "what is cacm",
+      "quien eres",
+      "quién eres",
+      "que eres",
+      "qué eres",
+      "que es cacm",
+      "qué es cacm",
+    ])
+  ) {
     return {
       answer: [
         isEs

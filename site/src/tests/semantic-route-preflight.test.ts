@@ -32,6 +32,7 @@ const coreRoutes: readonly CoreRoute[] = [
       "https://pasharestaurant.netlify.app/",
       "https://chaclacayo.netlify.app/",
       "https://qubesolve.netlify.app/",
+      "https://opennemoclaw.netlify.app/",
       "/cosmos",
       "/support",
     ],

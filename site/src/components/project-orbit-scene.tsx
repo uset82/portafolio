@@ -15,14 +15,7 @@ import {
 } from "@/content/project-orbit";
 import { naturalPalette } from "@/styles/palette";
 
-import {
-  damp,
-  depth01,
-  easeInOutCubic,
-  getAtomicOrbitPosition,
-  shortestDelta,
-  TAU,
-} from "./project-orbit-math";
+import { damp, depth01, easeInOutCubic, getAtomicOrbitPosition, TAU } from "./project-orbit-math";
 
 type ProjectOrbitSceneProps = {
   inView: boolean;
@@ -38,16 +31,9 @@ type ProjectOrbitSceneProps = {
   onReady?: (ready: boolean) => void;
 };
 
-type FocusState = {
-  from: number;
-  to: number;
-  startedAt: number;
-} | null;
-
 const BRASS = new THREE.Color(naturalPalette.orbitBrass);
 const BRIGHT_BRASS = new THREE.Color(naturalPalette.orbitBrightBrass);
 const IVORY = naturalPalette.orbitIvory;
-const DOTS_PER_NODE = 6;
 const ORBIT_LOGO_URL = "/images/brand/ca2m-logo.glb";
 const ORBIT_LOGO_SCALE = 2;
 /* The forward push lives OUTSIDE the spin group: keeping it inside made the
@@ -85,6 +71,11 @@ const ORBIT_PAN_LIMIT_Y = 1.5;
 const ORBIT_CAMERA_FOV_DEGREES = 34;
 const ORBIT_CAMERA_NARROW_FOV_DEGREES = 38;
 const ORBIT_CAMERA_FIT_PADDING = 1.16;
+/* Widest and tallest half-extents of the composition — the equatorial ring's
+ * reach and the meridian ring's reach, each plus a node medallion — so the
+ * camera frames the whole atom with even margins on every side. */
+const ORBIT_HALF_WIDTH_EXTENT = 8.5;
+const ORBIT_HALF_HEIGHT_EXTENT = 5.2;
 const ORBIT_MEDALLION_BASE_Y = 0.16;
 /** The nucleus reads heavy at full size against the ring span; this trims it
  * without touching the logo's own geometry or the rings around it. */
@@ -163,10 +154,13 @@ function roundRect(
   context.closePath();
 }
 
+/* Rails are authored in the ring's local XY plane — the plane that faces the
+ * camera in the front-on composition — and carried into place by the ring's
+ * Euler, exactly like every node computed by getAtomicOrbitPosition. */
 function createRailGeometry(radiusX: number, radiusZ: number, tubeRadius: number) {
   const points = new THREE.EllipseCurve(0, 0, radiusX, radiusZ, 0, Math.PI * 2, false, 0)
     .getPoints(220)
-    .map((point) => new THREE.Vector3(point.x, 0, point.y));
+    .map((point) => new THREE.Vector3(point.x, point.y, 0));
   return new THREE.TubeGeometry(
     new THREE.CatmullRomCurve3(points, true, "centripetal", 0.5),
     260,
@@ -483,16 +477,20 @@ function OrbitCamera() {
     const verticalFov = THREE.MathUtils.degToRad(fov);
     const horizontalFov = 2 * Math.atan(Math.tan(verticalFov / 2) * aspect);
     const distWidth =
-      (ORBIT_CONFIG.radiusX * worldScale * ORBIT_CAMERA_FIT_PADDING) / Math.tan(horizontalFov / 2);
+      (ORBIT_HALF_WIDTH_EXTENT * worldScale * ORBIT_CAMERA_FIT_PADDING) /
+      Math.tan(horizontalFov / 2);
     const distHeight =
-      ((ORBIT_CONFIG.radiusZ * worldScale + 1.15) * ORBIT_CAMERA_FIT_PADDING) /
+      (ORBIT_HALF_HEIGHT_EXTENT * worldScale * ORBIT_CAMERA_FIT_PADDING) /
       Math.tan(verticalFov / 2);
     const distance = Math.max(8.2, distWidth, distHeight);
 
     camera.fov = fov;
     camera.aspect = aspect;
-    camera.position.set(0, distance * 0.788, distance * 0.616);
-    camera.lookAt(0, -0.3, 0);
+    /* Dead ahead. The atom is a centred, mirror-symmetric composition, so the
+     * camera faces it straight on at the shared centre — the earlier elevated
+     * three-quarter view is what collapsed the rings into an off-axis tangle. */
+    camera.position.set(0, ORBIT_MEDALLION_BASE_Y, distance);
+    camera.lookAt(0, ORBIT_MEDALLION_BASE_Y, 0);
     camera.updateProjectionMatrix();
     setRootState({ camera });
     invalidate();
@@ -529,7 +527,6 @@ function OrbitScene({
   const medallionSheenRef = useRef<THREE.MeshBasicMaterial | null>(null);
   const medallionGlowRef = useRef<THREE.SpriteMaterial | null>(null);
   const coreLightRef = useRef<THREE.PointLight | null>(null);
-  const dotMaterialRef = useRef<THREE.PointsMaterial | null>(null);
   const bearingRef = useRef<THREE.InstancedMesh | null>(null);
   const medallionRef = useRef<THREE.Group | null>(null);
   const medallionDragYawRef = useRef<THREE.Group | null>(null);
@@ -551,7 +548,6 @@ function OrbitScene({
     wasDragged: false,
   });
   const orbit = useRef({
-    focus: null as FocusState,
     hoveredId: null as string | null,
     rotation: -Math.PI / 2,
     selectedId: null as string | null,
@@ -577,17 +573,6 @@ function OrbitScene({
       };
     });
   }, []);
-  const dotGeometry = useMemo(() => {
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute(
-      "position",
-      new THREE.BufferAttribute(new Float32Array(projects.length * DOTS_PER_NODE * 3), 3),
-    );
-    return geometry;
-  }, [projects.length]);
-  const dotPositionAttributeRef = useRef(
-    dotGeometry.getAttribute("position") as THREE.BufferAttribute,
-  );
   const medallionSheenTexture = useMemo(() => createMedallionSheenTexture(), []);
   const medallionGlowTexture = useMemo(() => createMedallionGlowTexture(), []);
 
@@ -598,34 +583,21 @@ function OrbitScene({
 
   useEffect(
     () => () => {
-      dotGeometry.dispose();
       medallionSheenTexture?.dispose();
       medallionGlowTexture?.dispose();
     },
-    [dotGeometry, medallionGlowTexture, medallionSheenTexture],
+    [medallionGlowTexture, medallionSheenTexture],
   );
 
   useEffect(() => {
     const active = orbit.current;
     if (active.selectedId === selectedId) return;
 
+    /* Every node holds a designed seat in the composition, so selection only
+     * changes emphasis — nothing revolves toward the camera any more. */
     active.selectedId = selectedId;
-    active.velocity = 0;
-    if (selectedId) {
-      const index = projects.findIndex((project) => project.id === selectedId);
-      if (index >= 0) {
-        const target = ORBIT_CONFIG.focusAngle - (index / projects.length) * Math.PI * 2;
-        active.focus = {
-          from: active.rotation,
-          to: active.rotation + shortestDelta(active.rotation, target),
-          startedAt: performance.now(),
-        };
-      }
-    } else {
-      active.focus = null;
-    }
     invalidate();
-  }, [invalidate, projects, selectedId]);
+  }, [invalidate, selectedId]);
 
   useEffect(() => {
     const onVisibilityChange = () => {
@@ -660,7 +632,6 @@ function OrbitScene({
     interaction.current.moved = 0;
     interaction.current.pointerId = event.pointerId;
     interaction.current.wasDragged = false;
-    orbit.current.focus = null;
     orbit.current.velocity = 0;
     const pointerTarget = event.nativeEvent.currentTarget;
     if (pointerTarget instanceof HTMLElement) {
@@ -745,16 +716,14 @@ function OrbitScene({
         : 1;
     const entrance = easeInOutCubic(entranceProgress);
 
-    if (active.focus) {
-      const duration = reducedMotion ? 160 : ORBIT_CONFIG.focusDurationMs;
-      const progress = Math.min(1, (now - active.focus.startedAt) / duration);
-      active.rotation =
-        active.focus.from + (active.focus.to - active.focus.from) * easeInOutCubic(progress);
-      if (progress === 1) active.focus = null;
-    } else if (!drag.dragging && Math.abs(active.velocity) > 0.00002) {
+    /* `rotation` no longer moves the nodes — every system keeps its designed
+     * seat so the composition stays centred and mirror-symmetric. It drives
+     * the bearing balls gliding along the rails (and a drag spins them), which
+     * keeps the instrument alive without ever disturbing the layout. */
+    if (!drag.dragging && Math.abs(active.velocity) > 0.00002) {
       active.rotation += active.velocity;
       active.velocity *= ORBIT_CONFIG.inertiaDamping;
-    } else if (isVisible && !reducedMotion && !active.selectedId && !drag.dragging) {
+    } else if (isVisible && !reducedMotion && !drag.dragging) {
       const targetSpeed = active.hoveredId ? ORBIT_CONFIG.hoverSlowFactor : 1;
       active.speedScale = damp(active.speedScale, targetSpeed, 6, delta);
       active.rotation +=
@@ -812,14 +781,13 @@ function OrbitScene({
     };
     const medallionScreenRadius = Math.min(size.width, size.height) * 0.17;
 
-    /* How far forward a node must be for its label to earn space, scaled by how
-     * much room there is. Labels keep their pixel size while the world shrinks,
-     * so a canvas that comfortably holds eleven at 1400px cannot hold them at
-     * 900px — nudging them apart is not enough, some have to stand down. */
+    /* With fixed seats the depth spread is narrow — the rings only lean a few
+     * degrees out of the view plane — so the cut retires labels only on
+     * genuinely cramped canvases instead of hiding half the roster. */
     const depthCut = THREE.MathUtils.clamp(
-      THREE.MathUtils.mapLinear(size.width, 1180, 760, 0, 0.55),
+      THREE.MathUtils.mapLinear(size.width, 1180, 760, 0, 0.3),
       0,
-      0.55,
+      0.3,
     );
 
     const labelLayouts: Array<{
@@ -841,18 +809,11 @@ function OrbitScene({
         ATOMIC_ORBIT_RINGS.find((r) => r.projectIds.includes(project.id)) ??
         (ATOMIC_ORBIT_RINGS[1] as AtomicRingDefinition);
       const projectIndexOnRing = ringDef.projectIds.indexOf(project.id);
-      const baseAngle =
+      /* A fixed seat, not a starting phase: the layout is a designed,
+       * symmetric composition, so nodes do not revolve. */
+      const angle =
         ringDef.initialNodeAngles[projectIndexOnRing] ??
         (projectIndexOnRing / ringDef.projectIds.length) * TAU;
-      const ringSpeed =
-        ringDef.id === "vertical"
-          ? 0.75
-          : ringDef.id === "horizontal"
-            ? 1.0
-            : ringDef.id === "diagonal-a"
-              ? 0.88
-              : -0.92;
-      const angle = baseAngle + active.rotation * ringSpeed;
 
       const position = getAtomicOrbitPosition(
         angle,
@@ -895,16 +856,6 @@ function OrbitScene({
           ((project.featured ? 0.16 + (reducedMotion ? 0 : Math.sin(now / 900) * 0.05) : 0) +
             glow * 0.3) *
           entrance;
-      }
-
-      for (let dotIndex = 0; dotIndex < DOTS_PER_NODE; dotIndex += 1) {
-        const progress = 0.34 + (dotIndex / (DOTS_PER_NODE - 1)) * 0.52;
-        dotPositionAttributeRef.current.setXYZ(
-          index * DOTS_PER_NODE + dotIndex,
-          position.x * (1 - progress),
-          position.y * (1 - progress) + ORBIT_MEDALLION_BASE_Y * progress,
-          position.z * (1 - progress),
-        );
       }
 
       const label = labelRefs.current[index];
@@ -1025,17 +976,6 @@ function OrbitScene({
     labelLayouts.forEach((layout) => {
       const { label, selected, hovered, depth, occluded } = layout;
       const active = selected || hovered;
-      /* How far forward a node must be for its label to earn space, scaled by
-       * how much room there is. Labels keep their pixel size while the world
-       * shrinks, so a canvas that comfortably holds eleven at 1400px cannot
-       * hold them at 900px — nudging them apart is not enough, some have to
-       * stand down. This used to be a single 760px step, which is why the
-       * in-between widths stayed crowded. */
-      const depthCut = THREE.MathUtils.clamp(
-        THREE.MathUtils.mapLinear(size.width, 1180, 760, 0, 0.55),
-        0,
-        0.55,
-      );
       const visibility =
         occluded && !active ? 0 : active ? 1 : depth > depthCut ? 0.58 + depth * 0.42 : 0;
 
@@ -1051,9 +991,6 @@ function OrbitScene({
       label.style.zIndex = String(100 + Math.round(depth * 100));
       label.dataset.active = String(active);
     });
-
-    dotPositionAttributeRef.current.needsUpdate = true;
-    if (dotMaterialRef.current) dotMaterialRef.current.opacity = 0.8 * entrance;
 
     const bearing = bearingRef.current;
     if (bearing) {
@@ -1086,8 +1023,7 @@ function OrbitScene({
 
     const needsAnotherFrame =
       isVisible &&
-      (Boolean(active.focus) ||
-        drag.dragging ||
+      (drag.dragging ||
         Math.abs(active.velocity) > 0.00002 ||
         entranceProgress < 1 ||
         !reducedMotion);
@@ -1125,9 +1061,11 @@ function OrbitScene({
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
       >
+        {/* The catch-all pointer plane faces the camera behind the rings, so
+         * clicks in empty space clear the selection and drags reach the
+         * instrument from anywhere on the stage. */}
         <mesh
-          position={[0, -0.12, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
+          position={[0, ORBIT_MEDALLION_BASE_Y, -1.2]}
           onClick={() => {
             if (!interaction.current.wasDragged) onSelect(null);
             interaction.current.wasDragged = false;
@@ -1177,42 +1115,35 @@ function OrbitScene({
                   transparent
                 />
               </mesh>
-              {[0, Math.PI / 2, Math.PI, (3 * Math.PI) / 2].map((spacerAngle, sIdx) => {
-                const sx = Math.cos(spacerAngle) * ring.radiusX * worldScale;
-                const sz = Math.sin(spacerAngle) * ring.radiusZ * worldScale;
-                return (
-                  <mesh
-                    key={sIdx}
-                    position={[sx, 0, sz]}
-                    rotation={[0, -spacerAngle, 0]}
-                    scale={worldScale}
-                  >
-                    <boxGeometry args={[0.08, 0.06, 0.44]} />
-                    <meshStandardMaterial
-                      color={naturalPalette.orbitBrightBrass}
-                      metalness={0.95}
-                      roughness={0.22}
-                    />
-                  </mesh>
-                );
-              })}
+              {/* Connector sleeves lie tangent to the rail in the ring's own
+               * plane, parked at the quarter marks between the node seats. */}
+              {[Math.PI / 4, (3 * Math.PI) / 4, (5 * Math.PI) / 4, (7 * Math.PI) / 4].map(
+                (spacerAngle, sIdx) => {
+                  const sx = Math.cos(spacerAngle) * ring.radiusX * worldScale;
+                  const sy = Math.sin(spacerAngle) * ring.radiusZ * worldScale;
+                  const tangentAngle = Math.atan2(
+                    Math.cos(spacerAngle) * ring.radiusZ,
+                    -Math.sin(spacerAngle) * ring.radiusX,
+                  );
+                  return (
+                    <mesh
+                      key={sIdx}
+                      position={[sx, sy, 0]}
+                      rotation={[0, 0, tangentAngle]}
+                      scale={worldScale}
+                    >
+                      <boxGeometry args={[0.44, 0.06, 0.08]} />
+                      <meshStandardMaterial
+                        color={naturalPalette.orbitBrightBrass}
+                        metalness={0.95}
+                        roughness={0.22}
+                      />
+                    </mesh>
+                  );
+                },
+              )}
             </group>
           ))}
-          <mesh rotation={[Math.PI / 2, 0, 0]} scale={worldScale}>
-            <torusGeometry args={[1, 0.004, 4, 200]} />
-            <meshBasicMaterial color={naturalPalette.taupe} opacity={0.1} transparent />
-          </mesh>
-
-          <points geometry={dotGeometry}>
-            <pointsMaterial
-              ref={dotMaterialRef}
-              color={naturalPalette.taupe}
-              size={0.07}
-              transparent
-              opacity={0.8}
-              depthWrite={false}
-            />
-          </points>
 
           <instancedMesh
             ref={bearingRef}

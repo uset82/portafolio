@@ -25,6 +25,8 @@ const TITLE_OVERRIDES: Record<string, string> = {
   Jacobgolf: "Jacobs Golfspill",
   pacha: "Pasha",
   chaclacayo: "Chaclacayo",
+  opennemoclaw: "OpenNemoClaw",
+  opennemoclawsite: "OpenNemoClaw Site",
 };
 
 const DESCRIPTION_OVERRIDES: Record<string, string> = {
@@ -37,6 +39,9 @@ const DESCRIPTION_OVERRIDES: Record<string, string> = {
   chaclacayo: "A property website for a house in Chaclacayo, Lima.",
   QubeSolve:
     "A 3D Rubik's Cube solver with interactive 3D visualization and step-by-step solving algorithms.",
+  opennemoclaw:
+    "A personal agent framework with modular local architecture, Docker integration, and policy controls.",
+  opennemoclawsite: "Live companion website and documentation for OpenNemoClaw.",
 };
 
 const ROOM_OVERRIDES: Record<string, { href: string; label: string }> = {
@@ -56,6 +61,14 @@ const TRY_OVERRIDES: Record<string, { url: string; label: string }> = {
   QubeSolve: {
     url: "https://qubesolve.netlify.app/",
     label: "Solve with QubeSolve",
+  },
+  opennemoclaw: {
+    url: "https://opennemoclaw.netlify.app/",
+    label: "Open OpenNemoClaw",
+  },
+  opennemoclawsite: {
+    url: "https://opennemoclaw.netlify.app/",
+    label: "Open OpenNemoClaw",
   },
   StillasCalculator: {
     url: "https://stillascalculator.netlify.app/",
