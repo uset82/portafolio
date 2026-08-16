@@ -148,23 +148,22 @@
     {
       "id": "observatory-concepts",
       "type": "project",
-      "title": "ASTRAEA, PINÁCULO, and Future Energy concepts",
+      "title": "Future Energy Laboratory thread",
       "owner": "Carlos Carpio",
-      "source": "Approved homepage reference and design copy",
+      "source": "Approved homepage reference, design copy, and 2026-08-16 Work recast",
       "verification": "reference-approved",
       "rights": "pending",
       "missingFields": [
         "Project evidence",
         "Contribution",
-        "Status",
         "Case-study sources",
         "Publication rights"
       ],
       "priority": "launch-important",
       "launchDecision": "fallback",
-      "requestedAction": "Decide whether each name represents a real project, experiment, or visual concept.",
-      "fallback": "Show the names only as clearly labeled Observatory concepts.",
-      "launchImpact": "They may support the composition but cannot imply shipped work."
+      "requestedAction": "Keep Future Energy as a Laboratory thread until verified evidence exists. Do not restore ASTROEA or Pináculo as unpublished Observatory concepts on Work.",
+      "fallback": "Work lists ASTROEA and Pináculo as public apps. Future Energy stays a held Laboratory thread, not a Work row.",
+      "launchImpact": "Work can point to the two public apps; Future Energy cannot imply a shipped energy product."
     },
     {
       "id": "project-links",
@@ -427,7 +426,7 @@
       "requestedAction": "Keep the two approved records synchronized with their source decisions and add a record only after its public source, fact wording, privacy, and rights gates pass.",
       "fallback": "If a source becomes stale or loses approval, remove its complete record and use the exact honest-unknown response.",
       "launchImpact": "CC AI now has a bounded public-only profile and contact knowledge base; chat activation still depends on the evaluation and runtime release gates.",
-      "notes": "Two runtime records contain ten approved facts backed by a Carlos-approved profile ledger and canonical GitHub source. Nine exclusion groups block private contact/location, private résumé and career claims, held projects, unsupported metrics/contributions, unapproved media/personal stories, unresolved Observatory concepts, unapproved 3D/provider claims, and hidden operational data."
+      "notes": "Two runtime records contain ten approved facts backed by a Carlos-approved profile ledger and canonical GitHub source. Nine exclusion groups block private contact/location, private résumé and career claims, held projects, unsupported metrics/contributions, unapproved media/personal stories, Future Energy product claims, unapproved 3D/provider claims, and hidden operational data."
     },
     {
       "id": "cc-ai-evaluation",

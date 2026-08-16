@@ -26,12 +26,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   if (!system || !project) notFound();
 
+  const listedSystems = selectedSystems.filter((item) => item.status !== "concept");
+
   return (
     <CaseStudyLayout
       project={project}
       index={system.index}
       group={system.group}
-      relatedWork={<CaseStudyJourney currentSlug={slug} systems={selectedSystems} />}
+      relatedWork={<CaseStudyJourney currentSlug={slug} systems={listedSystems} />}
     />
   );
 }

@@ -185,17 +185,17 @@
     {
       "id": "observatory-concept-status",
       "category": "project-publication",
-      "status": "awaiting-user",
+      "status": "deferred-with-fallback",
       "priority": "section-blocker",
       "owner": "Carlos Carpio",
       "sourceInventoryIds": ["observatory-concepts"],
-      "requestedAction": "Decide whether ASTRAEA, PINÁCULO, and Future Energy represent real projects, experiments, or visual concepts, and provide evidence before any stronger status is used.",
-      "fallback": "Keep the names only as clearly labeled Observatory concepts and do not imply shipped work, ownership, outcomes, or public availability.",
-      "resolutionBy": "Before promoting any Observatory concept into a project summary or case study.",
-      "launchImpact": "The names may support the approved composition, but they cannot carry evidence-backed project claims.",
+      "requestedAction": "Keep Future Energy as a Laboratory thread until verified evidence exists. Do not restore ASTROEA or Pináculo as unpublished Observatory concepts on Work.",
+      "fallback": "Work lists ASTROEA and Pináculo as public apps with try and GitHub links. Future Energy stays a held Laboratory thread, not a Work row, and is not a shipped energy product.",
+      "resolutionBy": "Before promoting Future Energy into a published product case study.",
+      "launchImpact": "Work can name the two public apps; Future Energy cannot carry shipped-product claims.",
       "blocks": [
-        "Observatory concept case studies",
-        "stronger project-status labels"
+        "Future Energy product claims",
+        "Observatory concept rows on Work"
       ]
     },
     {

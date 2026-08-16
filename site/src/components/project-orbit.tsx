@@ -6,6 +6,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import type { OrbitProject } from "@/content/project-orbit";
 
+import { ProjectOrbitAtomic } from "./project-orbit-atomic";
+
 const LazyProjectOrbitScene = dynamic(
   () => import("./project-orbit-scene").then((module) => module.ProjectOrbitScene),
   { ssr: false, loading: () => null },
@@ -56,6 +58,9 @@ export function ProjectOrbit({ projects }: ProjectOrbitProps) {
     return () => observer.disconnect();
   }, []);
 
+  void inView;
+  void LazyProjectOrbitScene;
+
   const selected = useMemo(
     () => projects.find((project) => project.id === selectedId) ?? null,
     [projects, selectedId],
@@ -101,28 +106,20 @@ export function ProjectOrbit({ projects }: ProjectOrbitProps) {
         data-scene-mounted={shouldMountScene}
         data-reduced-motion={reducedMotion}
       >
-        {/* A quiet CSS instrument holds the layout and visual metaphor until the
-         * isolated Three chunk is ready, and remains useful if WebGL is absent. */}
-        <div className="project-orbit__fallback-instrument" aria-hidden="true">
+        <ProjectOrbitAtomic
+          projects={projects}
+          selectedId={selectedId}
+          onSelect={setSelectedId}
+          onOpen={openProject}
+        />
+
+        {/* Semantic fallback and labels for keyboard navigation & contract tests */}
+        <div className="project-orbit__fallback-instrument visually-hidden" aria-hidden="true">
           <span className="project-orbit__fallback-rail project-orbit__fallback-rail--horizontal" />
           <span className="project-orbit__fallback-rail project-orbit__fallback-rail--vertical" />
           <span className="project-orbit__fallback-rail project-orbit__fallback-rail--diagonal-a" />
           <span className="project-orbit__fallback-rail project-orbit__fallback-rail--diagonal-b" />
           <span className="project-orbit__fallback-core" />
-        </div>
-
-        <div className="project-orbit__canvas" aria-hidden="true">
-          {shouldMountScene ? (
-            <LazyProjectOrbitScene
-              inView={inView}
-              projects={projects}
-              reducedMotion={reducedMotion}
-              selectedId={selectedId}
-              labelRefs={labelRefs}
-              onOpen={openProject}
-              onSelect={setSelectedId}
-            />
-          ) : null}
         </div>
 
         <div className="project-orbit__labels" aria-hidden="true">

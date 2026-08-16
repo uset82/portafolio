@@ -40,7 +40,7 @@
       "facts": [
         "The Observatory is the public homepage frame of this portfolio, not a separate product.",
         "Enter the Observatory is a public navigation action on the homepage.",
-        "Named Observatory pieces are visual and navigational concepts, not shipped scientific products."
+        "The Observatory homepage is a visual first room. Public apps live on Work, Cosmos, Arcade, and Sound; they are not scientific products."
       ],
       "verification": "user-approved",
       "rights": "not-applicable",
@@ -140,10 +140,10 @@
     },
     {
       "id": "observatory-concept-evidence",
-      "scope": "ASTRAEA, PINÁCULO, and Future Energy as real, shipped, scientific, predictive, or available systems",
-      "reason": "The names are approved visual concepts, but their exact project identity, evidence, contribution, status, and publication rights remain unresolved.",
+      "scope": "Future Energy as a real, shipped, scientific, or available energy system",
+      "reason": "Future Energy remains a Laboratory thread without a published case study or live product.",
       "sourceInventoryIds": ["observatory-concepts"],
-      "safeResponse": "Describe Observatory ASTRAEA, PINÁCULO, and Future Energy as visual concepts, not shipped scientific products. For the public GitHub apps, use only the approved Cosmos facts: ASTROEA can be tried at https://astraia.netlify.app/; Pináculo can be tried at its demo."
+      "safeResponse": "Describe Future Energy as a Laboratory thread, not a shipped energy product. For the public apps, use only the approved Cosmos facts: ASTROEA can be tried at https://astraia.netlify.app/; Pináculo can be tried at its demo."
     },
     {
       "id": "three-d-provider-and-asset-claims",

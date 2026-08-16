@@ -23,7 +23,12 @@ const coreRoutes: readonly CoreRoute[] = [
   {
     name: "Work",
     Page: WorkPage,
-    expectedHrefs: ["/work/astraea", "/work/pinaculo", "/work/future-energy"],
+    expectedHrefs: [
+      "https://github.com/uset82/ASTROEA",
+      "https://github.com/uset82/pinaculo",
+      "https://github.com/uset82/StrudelAI",
+      "/cosmos",
+    ],
   },
   {
     name: "Laboratory",

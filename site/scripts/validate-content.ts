@@ -650,8 +650,8 @@ const negativeContracts = [
     name: "an evidence project without evidence fields",
     passed: !siteContentSchema.safeParse({
       ...rawSiteContent,
-      projects: rawSiteContent.projects.map((project, index) =>
-        index === 0 ? { ...project, status: "shipped" } : project,
+      projects: rawSiteContent.projects.map((project) =>
+        project.slug === "future-energy" ? { ...project, status: "shipped" } : project,
       ),
     }).success,
   },

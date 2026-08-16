@@ -28,17 +28,10 @@ const PREFERENCE_CLOSE =
 const observatoryAnswer = [
   "The Observatory is this homepage — the first room of the portfolio, not a separate product.",
   "",
-  "It is the visual frame: identity, selected systems, and the instruments you can walk toward. Named pieces there are concepts for navigation, not shipped scientific products.",
+  "It is the visual frame: identity, selected systems, and the instruments you can walk toward. Work lists the public GitHub register. Cosmos, Arcade, and Sound are the rooms you can enter.",
   "",
   PREFERENCE_CLOSE,
 ].join("\n");
-
-const conceptAnswer = (name: string) =>
-  [
-    `${name} is a named concept in the Observatory, not a released product. I will not turn the label into a case study.`,
-    "",
-    PREFERENCE_CLOSE,
-  ].join("\n");
 
 const cosmosAnswer = [
   "Cosmos is where Carlos keeps two public apps for astrology and numerology — creative practice, not scientific, medical, or predictive advice.",
@@ -89,7 +82,13 @@ const contactAnswer = [
 const githubAnswer = [
   "The public GitHub account is https://github.com/uset82.",
   "",
-  "A list of every repo is the lazy tour. Tell me whether you care about sound, form, orchestration, or electronics.",
+  "Work lists every public repository. Private repositories stay off this site. Cosmos is where ASTROEA and Pináculo can be tried.",
+].join("\n");
+
+const workAnswer = [
+  "Work is the public GitHub register — every public repository on https://github.com/uset82, not a shortlist of two apps.",
+  "",
+  "Cosmos already holds ASTROEA and Pináculo to try. Arcade holds the games. Private repositories stay off the page.",
 ].join("\n");
 
 const profileAnswer = [
@@ -101,7 +100,7 @@ const profileAnswer = [
 ].join("\n");
 
 const releasedRefusal = [
-  "I will not confirm that. Named Observatory pieces are visual concepts, not released scientific products.",
+  "I will not confirm that. ASTROEA and Pináculo are public creative apps, not scientific products. Future Energy remains a Laboratory thread.",
   "",
   PREFERENCE_CLOSE,
 ].join("\n");
@@ -125,7 +124,7 @@ export const guideVisitorSite = (message: string): VisitorSiteGuide | null => {
   }
 
   if (
-    /\b(cosmos|astroea|pin[aá]culo)\b/.test(normalized) ||
+    /\b(cosmos|astroea|astraea|pin[aá]culo)\b/.test(normalized) ||
     (/\b(astrology|numerology)\b/.test(normalized) &&
       /\b(app|apps|try|github|repository|demo)\b/.test(normalized))
   ) {
@@ -140,18 +139,15 @@ export const guideVisitorSite = (message: string): VisitorSiteGuide | null => {
     };
   }
 
-  if (/\bastraea\b/.test(normalized)) {
+  if (normalized.includes("future energy")) {
     return {
       answer: [
-        "ASTRAEA is a named concept in the Observatory, not a released scientific product.",
+        "Future Energy is a Laboratory thread, not a shipped energy product.",
         "",
-        "The public astrology app is ASTROEA. You can try it at https://astraia.netlify.app/. The code is at https://github.com/uset82/ASTROEA. See /cosmos.",
+        PREFERENCE_CLOSE,
       ].join("\n"),
-      sourceIds: ["approved-main-ui", "github-astraea", "public-astraea-demo"],
+      sourceIds: ["approved-main-ui"],
     };
-  }
-  if (normalized.includes("future energy")) {
-    return { answer: conceptAnswer("Future Energy"), sourceIds: ["approved-main-ui"] };
   }
 
   if (includesAny(normalized, ["strudel", "strudelai", "aether sonic"])) {
@@ -171,6 +167,14 @@ export const guideVisitorSite = (message: string): VisitorSiteGuide | null => {
 
   if (includesAny(normalized, ["github", "git hub"])) {
     return { answer: githubAnswer, sourceIds: ["approved-public-profile", "github-uset82"] };
+  }
+
+  if (
+    includesAny(normalized, ["work page", "all the projects", "all projects", "all the repos"]) ||
+    (/\bwork\b/.test(normalized) &&
+      includesAny(normalized, ["list", "register", "projects", "repos"]))
+  ) {
+    return { answer: workAnswer, sourceIds: ["approved-public-profile", "github-uset82"] };
   }
 
   if (includesAny(normalized, ["who are you", "what are you", "what is cacm"])) {

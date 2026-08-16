@@ -27,11 +27,19 @@ const withPublicKnowledge = (): SiteContent => {
   content.metadata.verification = "user-approved";
   content.metadata.sourceIds = ["public-portfolio-source"];
   const project = content.projects[0];
-  if (!project) throw new Error("Expected the ASTRAEA fixture.");
+  if (!project) throw new Error("Expected the ASTROEA fixture.");
   project.publication = "ready";
   project.verification = "user-approved";
   project.rights = "owned";
   project.sourceIds = ["public-portfolio-source"];
+  project.summary = "A short approved public project summary for the knowledge fixture.";
+  if (!("conceptStatement" in project)) {
+    project.contribution = "Built the public fixture used only by knowledge tests.";
+    project.problem = "The knowledge ledger needs a compact eligible project record.";
+    project.constraints = ["Keep the fixture short enough to fit the context budget."];
+    project.approach = "Use a compact owned record so inclusion can be asserted.";
+    project.outcome = "The ledger includes the approved project without truncation.";
+  }
   return content;
 };
 
@@ -66,9 +74,10 @@ test("current public ledger exposes only approved profile and contact facts", ()
     new RegExp(CC_AI_UNKNOWN_ANSWER.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
   );
   assert.doesNotMatch(context.systemMessage, /mainUI|approved-main-ui|foundation-decision/);
-  assert.doesNotMatch(context.systemMessage, /private résumé|project-astraea/);
+  assert.doesNotMatch(context.systemMessage, /private résumé/);
   assert.match(context.systemMessage, /StrudelAI is a public live-coding music system/);
   assert.match(context.systemMessage, /Pináculo is a public numerology repository/);
+  assert.doesNotMatch(context.systemMessage, /Status: prototype/);
 });
 
 test("builder includes only approved public records with traceable source IDs", () => {
@@ -101,15 +110,15 @@ test("builder includes only approved public records with traceable source IDs", 
   );
   assert.match(context.systemMessage, /\[source-id\]/);
   assert.match(context.systemMessage, /public-portfolio-source/);
-  assert.match(context.systemMessage, /Status: concept/);
-  assert.doesNotMatch(context.systemMessage, /project-pinaculo|approved-main-ui/);
+  assert.match(context.systemMessage, /Status: prototype/);
+  assert.doesNotMatch(context.systemMessage, /approved-main-ui/);
 });
 
 test("a record with any private source dependency is excluded", () => {
   const content = withPublicKnowledge();
   content.metadata.verification = "reference-approved";
   const project = content.projects[0];
-  if (!project) throw new Error("Expected the ASTRAEA fixture.");
+  if (!project) throw new Error("Expected the ASTROEA fixture.");
   project.sourceIds = ["public-portfolio-source", "approved-main-ui"];
 
   const context = buildCcAiKnowledgeContext(content);

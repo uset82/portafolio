@@ -46,6 +46,14 @@ test("StrudelAI questions name the test build and the repository", () => {
   assert.doesNotMatch(guided.answer, /festival|DJ Tools|I don't know/i);
 });
 
+test("Work questions point at the public GitHub register, not only two apps", () => {
+  const guided = guideVisitorSite("Where are all the projects listed?");
+  assert.ok(guided);
+  assert.match(guided.answer, /public GitHub register/);
+  assert.match(guided.answer, /github.com\/uset82/);
+  assert.match(guided.answer, /Cosmos already holds ASTROEA/);
+});
+
 test("Pináculo and Cosmos questions point at the public apps", () => {
   const pinaculo = guideVisitorSite("What is Pináculo?");
   assert.ok(pinaculo);

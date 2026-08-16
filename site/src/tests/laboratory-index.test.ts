@@ -64,7 +64,7 @@ test("Laboratory exposes three bounded concepts without claiming working hardwar
   assert.match(markup, />Electronics \/ AI<\/h3>/);
   assert.match(markup, />Aerial systems<\/h3>/);
   assert.equal((markup.match(/Concept only/g) ?? []).length, 2);
-  assert.match(markup, /approved visual and navigational concept only/);
+  assert.match(markup, /visual and navigational Laboratory concept/);
   assert.match(
     markup,
     /not a functioning computer, proprietary board, trained model, or live system/,

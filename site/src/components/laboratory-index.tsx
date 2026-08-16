@@ -55,8 +55,8 @@ export function LaboratoryIndex({
           <p>Software, energy, electronics, and aerial systems</p>
           <h1 id="laboratory-index-title">Experiments where software meets matter.</h1>
           <strong>
-            A working index for future energy, electronics / AI, and aerial systems concepts in the
-            Observatory.
+            A working index for future energy, electronics / AI, and aerial systems in the
+            Laboratory.
           </strong>
           <small>
             This page separates designed mechanisms from evidence-backed projects. Nothing here
@@ -87,9 +87,8 @@ export function LaboratoryIndex({
           <p className="section-label">Current register / 01</p>
           <h2 id="laboratory-register-title">Three mechanisms, each with a visible limit.</h2>
           <p>
-            All three entries are part of the approved Observatory composition. Only Future Energy
-            has a held case-study route; Electronics / AI and Aerial systems remain in-scene
-            concepts without separate project claims.
+            Only Future Energy has a held case-study route; Electronics / AI and Aerial systems
+            remain in-scene Laboratory threads without separate product claims.
           </p>
         </header>
 
@@ -190,9 +189,8 @@ export function LaboratoryIndex({
           <p className="section-label">Continue / 03</p>
           <h2 id="laboratory-next-title">Follow the evidence, not the machinery.</h2>
           <p>
-            Work contains the currently validated concept records. Contact provides the approved
-            public path without implying a product enquiry, demonstration request, or open
-            engagement.
+            Work lists the public GitHub register. Contact provides the approved public path without
+            implying a product enquiry, demonstration request, or open engagement.
           </p>
           <nav aria-label="Laboratory route alternatives">
             <ActionLink variant="primary" href="/work">

@@ -15,7 +15,15 @@ test("approved display records satisfy the site content contract", () => {
 
   assert.equal(content.projects.length, 3);
   assert.equal(content.mediaWorks.length, 0);
-  assert.ok(content.projects.every((project) => project.publication === "hold"));
+  const [astraea, pinaculo, futureEnergy] = content.projects;
+  assert.equal(astraea?.title, "ASTROEA");
+  assert.equal(astraea?.publication, "ready");
+  assert.equal(astraea?.status, "prototype");
+  assert.equal(pinaculo?.title, "Pináculo");
+  assert.equal(pinaculo?.publication, "ready");
+  assert.equal(futureEnergy?.slug, "future-energy");
+  assert.equal(futureEnergy?.status, "concept");
+  assert.equal(futureEnergy?.publication, "hold");
 });
 
 test("homepage identity content stays focused and approval-backed", () => {

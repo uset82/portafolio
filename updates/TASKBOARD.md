@@ -43,9 +43,13 @@ WAVE 4  ░░░░░░░░░░  Launch
 `M.13` Suno + YouTube links · `M.10` your Buy Me a Coffee handle · a Railway service for
 `My-Football-Game` · Gemini's AVIF is larger than its WebP and needs re-encoding
 
+### 2026-08-16 — Work is the public GitHub register
+
+Work lists every **public** `uset82` repository (62 on 2026-08-16). Cosmos stays the room for **ASTROEA** and **Pináculo** to try. Arcade stays the games. Private repositories stay off the site (`Q.13`). Unlicensed repos remain readable, not MIT-open (`Q.12`). No invented case studies.
+
 ### 2026-08-16 — Cosmos names the two public apps
 
-The homepage Cosmos teaser and `/cosmos` now point at **ASTROEA** (astrology, live at [astraia.netlify.app](https://astraia.netlify.app/), inspired by astro.com) and **Pináculo** (numerology, live at [pinaculo.netlify.app](https://pinaculo.netlify.app/), interpretations draw on Carl Jung). Travel stories stay unpublished. This site still does not collect birth data or iframe the apps. The two repos are public to read; they are not on the MIT contribution list (`Q.12`). Observatory case studies for ASTRAEA / PINÁCULO stay concepts.
+The homepage Cosmos teaser and `/cosmos` point at **ASTROEA** and **Pináculo** as public apps you can try. Travel stories stay unpublished. This site still does not collect birth data or iframe the apps. The two repos are public to read; they are not on the MIT contribution list (`Q.12`).
 
 ### 2026-08-13 — homepage path is play, listen, contribute
 

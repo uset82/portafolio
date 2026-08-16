@@ -32,8 +32,8 @@ function humanize(value: string) {
 
 function statusTone(status: Project["status"]): StatusTone {
   if (status === "shipped" || status === "maintained") return "ready";
+  if (status === "prototype" || status === "experiment" || status === "archived") return "neutral";
   if (status === "preparation") return "hold";
-  if (status === "archived") return "neutral";
   return "concept";
 }
 
@@ -231,8 +231,8 @@ export function CaseStudyLayout({
               A full case study will add contribution, constraints, approach, evidence, outcomes,
               learning, stack, and source links only after those records are verified.
             </p>
-            <ActionLink href="/" variant="secondary">
-              Return to the Observatory
+            <ActionLink href="/work" variant="secondary">
+              Return to Work
             </ActionLink>
           </ReadingSection>
         </>

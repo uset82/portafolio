@@ -54,17 +54,17 @@ test("the recovery state keeps 404 visitors oriented with two known routes", () 
   assert.match(markup, /Nothing is lost/);
 });
 
-test("the Work route exposes every validated project without premature filters", () => {
+test("the Work route lists the public GitHub register without Observatory concept rows", () => {
   const markup = renderToStaticMarkup(createElement(WorkPage));
 
   assert.doesNotMatch(markup, /<(?:button|form|input)\b/);
   assert.doesNotMatch(markup, /filter/i);
-  assert.match(markup, /A working register of systems and ideas/);
-  assert.match(markup, /Evidence-led publication remains under review/);
-  assert.equal((markup.match(/class="project-register__row"/g) ?? []).length, 3);
-  assert.match(markup, /href="\/work\/astraea"/);
-  assert.match(markup, /href="\/work\/pinaculo"/);
-  assert.match(markup, /href="\/work\/future-energy"/);
+  assert.match(markup, /The public GitHub register/);
+  assert.equal((markup.match(/class="project-register__row"/g) ?? []).length, 62);
+  assert.match(markup, /href="https:\/\/github.com\/uset82\/ASTROEA"/);
+  assert.match(markup, /href="https:\/\/github.com\/uset82\/pinaculo"/);
+  assert.doesNotMatch(markup, /href="\/work\/future-energy"|Observatory concepts|Open concept/);
+  assert.doesNotMatch(markup, /brain-private|marcoloco|ask-bank-ai/);
 });
 
 test("the Story route never exposes the private résumé as a download", () => {

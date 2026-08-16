@@ -7,39 +7,55 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { ProjectRegister } from "@/components/project-register";
-import { rawSiteContent } from "@/content/records";
-import { siteContentSchema } from "@/content/schemas";
+import { GITHUB_REGISTER, GITHUB_REGISTER_META } from "@/content/github-register";
 
-const content = siteContentSchema.parse(rawSiteContent);
+const PRIVATE_REPOSITORY_NAMES = [
+  "brain-private",
+  "marcoloco",
+  "ecco8-circular-luxe",
+  "rentme",
+  "ask-bank-ai",
+  "masterHVL",
+  "diagram-pixel-perfect-clone",
+  "tragatelo-food-facts",
+] as const;
 
-test("project register renders every validated project as an ordered, linkable concept", () => {
-  const markup = renderToStaticMarkup(
-    createElement(ProjectRegister, { projects: content.projects }),
-  );
-  const titles = content.projects.map((project) => project.title);
-  const titlePositions = titles.map((title) => markup.indexOf(title));
+test("project register renders every public GitHub repository as an ordered, linkable row", () => {
+  const markup = renderToStaticMarkup(createElement(ProjectRegister));
+  const titles = GITHUB_REGISTER.map((repository) => repository.title);
+  const titlePositions = titles.map((title) => markup.indexOf(`>${title}<`));
 
   assert.match(markup, /<main id="main-content" class="work-index">/);
-  assert.match(markup, /<nav class="project-register" aria-label="Project register">/);
-  assert.equal(
-    (markup.match(/class="project-register__row"/g) ?? []).length,
-    content.projects.length,
+  assert.match(
+    markup,
+    /<nav class="project-register project-register--github" aria-label="Project register">/,
   );
+  assert.equal(GITHUB_REGISTER_META.count, 62);
+  assert.equal(GITHUB_REGISTER.length, 62);
+  assert.equal((markup.match(/class="project-register__row"/g) ?? []).length, 62);
   assert.deepEqual(
     titlePositions,
     [...titlePositions].sort((left, right) => left - right),
   );
 
-  for (const project of content.projects) {
-    assert.equal((markup.match(new RegExp(`href="/work/${project.slug}"`, "g")) ?? []).length, 1);
-    assert.match(markup, new RegExp(project.presentation?.group ?? "Work"));
-    assert.match(markup, new RegExp(project.category, "i"));
+  for (const repository of GITHUB_REGISTER) {
+    assert.equal((markup.match(new RegExp(`href="${repository.url}"`, "g")) ?? []).length, 1);
   }
 
-  assert.equal((markup.match(/Concept/g) ?? []).length >= content.projects.length, true);
-  assert.match(markup, /no shipped result, ownership claim, or outcome is implied/i);
+  assert.match(markup, /public repositories/);
+  assert.match(markup, /The public GitHub register/);
+  assert.match(markup, /ASTROEA/);
+  assert.match(markup, /Pináculo/);
+  assert.match(markup, /StrudelAI/);
+  assert.match(markup, /thedelegator/);
+  assert.match(markup, /href="\/cosmos"/);
+  assert.doesNotMatch(markup, /Observatory concepts|Open concept/);
+  assert.doesNotMatch(markup, /href="\/work\/future-energy"/);
+  for (const name of PRIVATE_REPOSITORY_NAMES) {
+    assert.doesNotMatch(markup, new RegExp(name));
+  }
   assert.doesNotMatch(markup, /<(?:img|video|audio|iframe|button|form|input)\b/);
-  assert.doesNotMatch(markup, /(?:mailto:|https?:\/\/)/);
+  assert.doesNotMatch(markup, /(?:mailto:)/);
 });
 
 test("project register is readable without animation and keeps focus, touch, and mobile contracts", () => {
