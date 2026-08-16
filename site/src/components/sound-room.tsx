@@ -13,7 +13,7 @@ import {
 /**
  * The Sound room.
  *
- * Two shelves, music and moving image, both real and both currently empty. An
+ * Two shelves, music and video, both real and both currently empty. An
  * empty shelf states that it is empty and points at the public profile; it does
  * not invent a track list. When entries arrive in `media-library.ts` they render
  * here as click-to-load players, so no provider is contacted until a visitor
@@ -28,7 +28,6 @@ export function SoundRoom() {
       <section className="sound-room__hero" aria-labelledby="sound-room-title">
         <div className="sound-room__rail">
           <p className="section-label">{SOUND_ROOM.eyebrow}</p>
-          <StatusTag tone="ready">{STRUDEL_AI.status}</StatusTag>
         </div>
 
         <div className="sound-room__identity">
@@ -108,7 +107,7 @@ export function SoundRoom() {
 
       <section className="sound-room__shelf" aria-labelledby="sound-room-video-title">
         <header>
-          <p className="section-label">Moving image / 02</p>
+          <p className="section-label">Video / 02</p>
           <h2 id="sound-room-video-title">Video.</h2>
           <p>{VIDEO_PROFILE.description}</p>
         </header>

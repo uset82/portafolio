@@ -107,12 +107,12 @@ export const rawSiteContent = {
       external: false,
     },
     mediaTeaser: {
-      eyebrow: "Sound + moving image / 02",
-      heading: "Sound and moving image as pattern, memory, and response.",
+      eyebrow: "Listen / 02",
+      heading: "Music you can hear, and video you can watch.",
       description:
-        "StrudelAI is open for testing. Music and video players stay click-to-load, so nothing plays and no provider is contacted until you ask.",
-      status: "Click-to-load players",
-      formats: ["Music", "Moving image"],
+        "Come in whenever you like. The songs live on Suno and the videos on YouTube, and nothing starts until you press play.",
+      status: "Listen when you are ready",
+      formats: ["Music", "Video"],
       action: {
         id: "visit-sound-foundation",
         label: "Visit Sound",
@@ -123,12 +123,7 @@ export const rawSiteContent = {
         external: false,
       },
       verification: "reference-approved",
-      sourceIds: [
-        "approved-main-ui",
-        "approved-public-profile",
-        "foundation-decision",
-        "public-strudelai-demo",
-      ],
+      sourceIds: ["approved-main-ui", "approved-public-profile", "foundation-decision"],
     },
     personalTeaser: {
       eyebrow: "Travel + personal practice / 03",

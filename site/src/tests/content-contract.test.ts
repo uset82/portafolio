@@ -64,14 +64,15 @@ test("homepage profile teaser stays approval-backed and excludes private CV mate
 test("homepage media teaser promises click-to-load playback and embeds nothing itself", () => {
   const { mediaTeaser } = siteContentSchema.parse(rawSiteContent).metadata;
 
-  assert.equal(mediaTeaser.status, "Click-to-load players");
-  assert.deepEqual(mediaTeaser.formats, ["Music", "Moving image"]);
+  assert.equal(mediaTeaser.status, "Listen when you are ready");
+  assert.deepEqual(mediaTeaser.formats, ["Music", "Video"]);
   assert.equal(mediaTeaser.action.href, "/sound");
   assert.equal(mediaTeaser.action.external, false);
   assert.ok(mediaTeaser.sourceIds.includes("approved-public-profile"));
-  assert.ok(mediaTeaser.sourceIds.includes("public-strudelai-demo"));
-  assert.match(mediaTeaser.description, /click-to-load/);
-  assert.match(mediaTeaser.description, /StrudelAI/);
+  assert.doesNotMatch(mediaTeaser.description, /StrudelAI/);
+  assert.match(mediaTeaser.description, /nothing starts until you press play/);
+  assert.match(mediaTeaser.heading, /Music you can hear/);
+  assert.match(mediaTeaser.heading, /video you can watch/);
   // The teaser may name the platforms; it may not carry a playable source.
   assert.doesNotMatch(
     JSON.stringify(mediaTeaser),

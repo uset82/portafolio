@@ -2686,6 +2686,8 @@ body:has(.observatory-hero) .site-header .site-header__status {
 
 .media-teaser__instrument {
   position: relative;
+  display: grid;
+  place-items: center;
   width: min(100%, 34rem);
   aspect-ratio: 1;
   overflow: hidden;
@@ -2697,23 +2699,6 @@ body:has(.observatory-hero) .site-header .site-header__status {
 .media-teaser:focus-within .media-teaser__instrument,
 .media-teaser:hover .media-teaser__instrument {
   transform: translateY(-0.35rem);
-}
-
-.media-teaser__instrument::before,
-.media-teaser__instrument::after {
-  position: absolute;
-  border: 1px solid var(--color-taupe);
-  border-radius: 50%;
-  content: "";
-}
-
-.media-teaser__instrument::before {
-  inset: 11%;
-}
-
-.media-teaser__instrument::after {
-  inset: 24%;
-  border-color: var(--color-sage-muted);
 }
 
 .media-teaser__instrument-label,
@@ -2737,61 +2722,76 @@ body:has(.observatory-hero) .site-header .site-header__status {
   bottom: 1.25rem;
 }
 
-.media-teaser__dial {
-  position: absolute;
-  z-index: 1;
-  inset: 26%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  align-items: center;
-  border-block: 1px solid var(--color-taupe);
-  transition: transform var(--duration-base) var(--ease-standard);
+.media-teaser__mark {
+  width: 78%;
+  height: auto;
+  overflow: visible;
 }
 
-.media-teaser:focus-within .media-teaser__dial,
-.media-teaser:hover .media-teaser__dial {
-  transform: rotate(-2deg);
+.media-teaser__vinyl {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform var(--duration-base) var(--ease-emphasized);
 }
 
-.media-teaser__dial span {
-  color: var(--color-walnut);
-  font-family: var(--font-display);
-  font-size: clamp(1.6rem, 3.5vw, 3.5rem);
-  text-align: center;
+.media-teaser:focus-within .media-teaser__vinyl,
+.media-teaser:hover .media-teaser__vinyl {
+  transform: rotate(12deg);
 }
 
-.media-teaser__score {
-  position: absolute;
-  z-index: 1;
-  right: 9%;
-  bottom: 20%;
-  left: 9%;
-  display: flex;
-  height: 24%;
-  align-items: flex-end;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--color-walnut);
+.media-teaser__disc {
+  fill: var(--color-walnut);
 }
 
-.media-teaser__score i {
-  width: 1px;
-  height: 38%;
-  background: var(--color-walnut);
-  transform-origin: bottom;
-  transition: transform var(--duration-fast) var(--ease-standard);
+.media-teaser__groove {
+  fill: none;
+  stroke: var(--color-buff);
+  stroke-width: 1.15;
 }
 
-.media-teaser__score i:nth-child(3n + 1) {
-  height: 68%;
+.media-teaser__label {
+  fill: var(--color-clay);
 }
 
-.media-teaser__score i:nth-child(3n + 2) {
-  height: 100%;
+.media-teaser__spindle {
+  fill: var(--color-sage-pale);
 }
 
-.media-teaser:focus-within .media-teaser__score i:nth-child(even),
-.media-teaser:hover .media-teaser__score i:nth-child(even) {
-  transform: scaleY(0.72);
+.media-teaser__arm {
+  transform-box: fill-box;
+  transform-origin: 76px 14px;
+  transition: transform var(--duration-base) var(--ease-emphasized);
+}
+
+.media-teaser:focus-within .media-teaser__arm,
+.media-teaser:hover .media-teaser__arm {
+  transform: rotate(6deg);
+}
+
+.media-teaser__arm circle {
+  fill: var(--color-walnut);
+}
+
+.media-teaser__arm line {
+  stroke: var(--color-walnut);
+  stroke-linecap: round;
+  stroke-width: 1.7;
+}
+
+.media-teaser__arm rect {
+  fill: var(--color-clay);
+}
+
+.media-teaser__bar {
+  fill: var(--color-clay);
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  transition: transform var(--duration-base) var(--ease-emphasized);
+}
+
+.media-teaser:focus-within .media-teaser__bar:nth-child(odd),
+.media-teaser:hover .media-teaser__bar:nth-child(odd) {
+  transform: scaleY(1.28);
 }
 
 .media-teaser__copy {
@@ -2871,6 +2871,24 @@ body:has(.observatory-hero) .site-header .site-header__status {
 
 .media-teaser__action {
   margin-top: 1.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .media-teaser__instrument,
+  .media-teaser:focus-within .media-teaser__instrument,
+  .media-teaser:hover .media-teaser__instrument,
+  .media-teaser__vinyl,
+  .media-teaser:focus-within .media-teaser__vinyl,
+  .media-teaser:hover .media-teaser__vinyl,
+  .media-teaser__arm,
+  .media-teaser:focus-within .media-teaser__arm,
+  .media-teaser:hover .media-teaser__arm,
+  .media-teaser__bar,
+  .media-teaser:focus-within .media-teaser__bar:nth-child(odd),
+  .media-teaser:hover .media-teaser__bar:nth-child(odd) {
+    transform: none;
+    transition: none;
+  }
 }
 
 .personal-teaser {

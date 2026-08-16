@@ -35,7 +35,7 @@ test("the Sound route renders both shelves without contacting a provider", () =>
   const markup = renderToStaticMarkup(createElement(SoundPage));
 
   assert.match(markup, /<main id="main-content"/);
-  assert.match(markup, /<h1[^>]*>Sound and moving image as pattern, memory, and response\.<\/h1>/);
+  assert.match(markup, /<h1[^>]*>Music you can hear, and video you can watch\.<\/h1>/);
   assert.match(markup, /id="sound-room-music-title">Tracks\./);
   assert.match(markup, /id="sound-room-video-title">Video\./);
   assert.match(markup, /Players are click-to-load/);

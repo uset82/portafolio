@@ -1,5 +1,5 @@
 /**
- * The music and moving-image library.
+ * The music and video library.
  *
  * The rooms are built; the shelves start empty on purpose. Carlos's Suno and
  * YouTube profiles are public and confirmed by him, so they are linked here.
@@ -65,8 +65,8 @@ export const VIDEO_PROFILE = {
 } as const;
 
 export const SOUND_ROOM = {
-  eyebrow: "Sound and moving image / 02",
-  heading: "Sound and moving image as pattern, memory, and response.",
+  eyebrow: "Sound / 02",
+  heading: "Music you can hear, and video you can watch.",
   description:
     "Music made with Suno, video published on YouTube, and StrudelAI — a live-coding music system open for testing.",
   emptyState: {
