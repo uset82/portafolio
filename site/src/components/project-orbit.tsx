@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
@@ -8,25 +7,27 @@ import type { OrbitProject } from "@/content/project-orbit";
 
 import { ProjectOrbitAtomic } from "./project-orbit-atomic";
 
-const LazyProjectOrbitScene = dynamic(
-  () => import("./project-orbit-scene").then((module) => module.ProjectOrbitScene),
-  { ssr: false, loading: () => null },
-);
-
 export type ProjectOrbitProps = {
   projects: readonly OrbitProject[];
 };
 
 /**
- * Semantic shell for the imported Claude Design orbit. The optional WebGL
- * scene mounts only as the section approaches the viewport; all systems remain
- * in the server-rendered navigation list when WebGL or JavaScript is absent.
+ * Project Orbit: the CA²M nucleus with each system on its own shell.
+ *
+ * The instrument is `ProjectOrbitAtomic`, a 2.5D SVG that draws the orbits, the
+ * nodes and the nucleus, and positions its own pill labels from the node
+ * geometry. It renders on the server and needs no WebGL, so the section is the
+ * same for everyone.
+ *
+ * Two layers used to sit on top of it and both were dead weight. A WebGL scene
+ * mounted on intersection, except the observer never flipped it on, so it never
+ * rendered. A second set of labels lived here waiting for that scene to place
+ * them; with nothing placing them, all eleven stacked in the corner of the
+ * stage. Removing both is what fixed the section — the atom underneath was
+ * already correct.
  */
 export function ProjectOrbit({ projects }: ProjectOrbitProps) {
   const stageRef = useRef<HTMLDivElement>(null);
-  const labelRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const [shouldMountScene, setShouldMountScene] = useState(false);
-  const [inView, setInView] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
@@ -37,29 +38,6 @@ export function ProjectOrbit({ projects }: ProjectOrbitProps) {
     query.addEventListener("change", update);
     return () => query.removeEventListener("change", update);
   }, []);
-
-  useEffect(() => {
-    const target = stageRef.current;
-    if (!target || typeof IntersectionObserver === "undefined") {
-      setShouldMountScene(true);
-      setInView(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.some((entry) => entry.isIntersecting);
-        setInView(visible);
-        if (visible) setShouldMountScene(true);
-      },
-      { rootMargin: "240px 0px", threshold: 0.01 },
-    );
-    observer.observe(target);
-    return () => observer.disconnect();
-  }, []);
-
-  void inView;
-  void LazyProjectOrbitScene;
 
   const selected = useMemo(
     () => projects.find((project) => project.id === selectedId) ?? null,
@@ -100,43 +78,14 @@ export function ProjectOrbit({ projects }: ProjectOrbitProps) {
         <span className="project-orbit-section__rule" aria-hidden="true" />
       </header>
 
-      <div
-        ref={stageRef}
-        className="project-orbit__stage"
-        data-scene-mounted={shouldMountScene}
-        data-reduced-motion={reducedMotion}
-      >
-        <ProjectOrbitAtomic
-          projects={projects}
-          selectedId={selectedId}
-          onSelect={setSelectedId}
-          onOpen={openProject}
-        />
-
-        {/* Semantic fallback and labels for keyboard navigation & contract tests */}
-        <div className="project-orbit__fallback-instrument visually-hidden" aria-hidden="true">
-          <span className="project-orbit__fallback-rail project-orbit__fallback-rail--horizontal" />
-          <span className="project-orbit__fallback-rail project-orbit__fallback-rail--vertical" />
-          <span className="project-orbit__fallback-rail project-orbit__fallback-rail--diagonal-a" />
-          <span className="project-orbit__fallback-rail project-orbit__fallback-rail--diagonal-b" />
-          <span className="project-orbit__fallback-core" />
-        </div>
-
-        <div className="project-orbit__labels" aria-hidden="true">
-          {projects.map((project, index) => (
-            <button
-              key={project.id}
-              ref={(label) => {
-                labelRefs.current[index] = label;
-              }}
-              className="project-orbit__label"
-              tabIndex={-1}
-              type="button"
-              onClick={() => setSelectedId(project.id)}
-            >
-              {project.name}
-            </button>
-          ))}
+      <div ref={stageRef} className="project-orbit__stage" data-reduced-motion={reducedMotion}>
+        <div className="project-orbit__instrument">
+          <ProjectOrbitAtomic
+            projects={projects}
+            selectedId={selectedId}
+            onSelect={setSelectedId}
+            onOpen={openProject}
+          />
         </div>
 
         {selected ? (
@@ -170,14 +119,10 @@ export function ProjectOrbit({ projects }: ProjectOrbitProps) {
         ) : null}
       </div>
 
-      {/* The rail leaves the visual layout once the 3D orbit is active, but it
-       * stays in the document: it is the keyboard, screen-reader, and
-       * no-JavaScript path to every system, and it reappears on focus. */}
-      <nav
-        className="project-orbit__all"
-        data-scene-mounted={shouldMountScene}
-        aria-label="All systems"
-      >
+      {/* The instrument's pills are pointer affordances and are hidden from
+       * assistive technology. This rail is the keyboard, screen-reader and
+       * no-JavaScript path to every system. */}
+      <nav className="project-orbit__all" aria-label="All systems">
         <p>All systems</p>
         <ul>
           {projects.map((project) => (

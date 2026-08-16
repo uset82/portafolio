@@ -1926,11 +1926,16 @@ body:has(.observatory-hero) .site-header .site-header__status {
   background: linear-gradient(90deg, rgb(184 147 79 / 65%), transparent);
 }
 
+/* The stage takes its height from the instrument rather than from the viewport.
+ * With a fixed height the atom — which sizes by its own 1000:580 ratio — grew
+ * past the bottom edge at common widths, and the two lowest pills (FUTURE
+ * ENERGY and ASTRAEA) ended up outside the stage where nothing could click
+ * them. Letting the instrument set the height removes that class of bug. */
 .project-orbit__stage {
   position: relative;
   z-index: 2;
   width: 100%;
-  min-height: 32rem;
+  min-height: 38rem;
   margin-top: 0.5rem;
   margin-bottom: 2rem;
   overflow: visible;
@@ -2021,6 +2026,20 @@ body:has(.observatory-hero) .site-header .site-header__status {
     0 0 14px rgb(244 207 138 / 30%),
     inset 0 1px 0 rgb(255 255 255 / 25%);
   transform: translate(var(--tw-translate-x, 0), var(--tw-translate-y, 0)) scale(1.08);
+}
+
+/* The instrument is the section's only visual layer. It was previously a
+ * fallback sitting under a WebGL scene, which is why it carried
+ * `pointer-events: none` and faded out on `data-scene-mounted`: its pills were
+ * never meant to be clicked. The scene is gone, so the pills are the interface
+ * and must receive pointer events. */
+.project-orbit__instrument {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  /* Never `overflow: hidden`: the pills sit at the outer edge of the orbits and
+   * clipping them is what hid two of them in the first place. */
+  overflow: visible;
 }
 
 .project-orbit__canvas,
@@ -2116,32 +2135,37 @@ body:has(.observatory-hero) .site-header .site-header__status {
   top: 0;
   left: 0;
   min-height: 0;
-  padding: 0.5rem 1.0625rem;
-  border: 1px solid rgb(199 161 92 / 58%);
+  padding: 0.38rem 0.88rem;
+  border: 1px solid rgb(199 154 86 / 52%);
   border-radius: 999px;
-  background: rgb(9 7 5 / 86%);
-  box-shadow: none;
-  color: rgb(244 231 205);
+  background: rgb(24 19 14 / 92%);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 40%);
+  color: rgb(245 237 224 / 95%);
   cursor: pointer;
-  font: inherit;
-  font-size: 0.8125rem;
+  font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
+  font-size: clamp(0.72rem, 1.1vw, 0.82rem);
   font-weight: 500;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.02em;
   line-height: 1;
-  opacity: 0;
+  opacity: 1;
   pointer-events: auto;
   transition:
     border-color 220ms ease,
     color 220ms ease,
     background-color 220ms ease,
-    opacity 220ms ease;
+    box-shadow 220ms ease;
   white-space: nowrap;
+  z-index: 10;
 }
 
+.project-orbit__label:hover,
 .project-orbit__label[data-active="true"] {
-  border-color: rgb(240 202 137 / 95%);
-  background: rgb(24 17 11 / 95%);
-  color: rgb(255 243 221);
+  border-color: rgb(244 207 138 / 90%);
+  background: rgb(38 29 20 / 96%);
+  color: #fff;
+  box-shadow:
+    0 4px 16px rgb(199 154 86 / 45%),
+    0 0 14px rgb(244 207 138 / 30%);
 }
 
 .project-orbit__labels {
@@ -2326,8 +2350,8 @@ body:has(.observatory-hero) .site-header .site-header__status {
     padding-inline: var(--page-gutter);
   }
 
+  /* No fixed height here either: it is what pushed the atom past the stage. */
   .project-orbit__stage {
-    height: min(68vh, 40rem);
     min-height: 26rem;
   }
 }
@@ -2344,10 +2368,17 @@ body:has(.observatory-hero) .site-header .site-header__status {
     gap: 0.625rem;
   }
 
+  /* The atom is a wide composition: eleven pills around a 1000:580 field. On a
+   * phone it shrinks to roughly 220px tall, the labels stop being readable and
+   * the outermost ones cross the screen edge. The rail below already lists
+   * every system, so narrow screens get that instead of a squashed instrument. */
   .project-orbit__stage {
-    height: min(70svh, 32rem);
-    min-height: 22rem;
+    min-height: 0;
     margin-top: 0.5rem;
+  }
+
+  .project-orbit__instrument {
+    display: none;
   }
 
   .project-orbit__labels {

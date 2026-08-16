@@ -7,18 +7,39 @@ function readSource(relativePath: string) {
   return readFileSync(path.join(process.cwd(), relativePath), "utf8");
 }
 
-test("Project Orbit keeps a semantic navigation shell while the scene loads lazily", () => {
+test("Project Orbit renders one instrument and keeps a semantic navigation shell", () => {
   const shell = readSource("src/components/project-orbit.tsx");
+  const styles = readSource("src/app/globals.css");
 
   assert.match(shell, /^"use client";/);
-  assert.match(shell, /ssr:\s*false/);
-  assert.match(shell, /IntersectionObserver/);
-  assert.match(shell, /rootMargin:\s*"240px 0px"/);
+  assert.match(shell, /<ProjectOrbitAtomic/);
+  assert.match(shell, /className="project-orbit__instrument"/);
+
+  // One visual layer. A lazily mounted WebGL scene sat on top of the atom and
+  // its IntersectionObserver never flipped it on, so it rendered nothing; a
+  // second label layer waited for that scene to position it and stacked all
+  // eleven labels in the corner instead. Neither may come back.
+  assert.doesNotMatch(shell, /IntersectionObserver/);
+  assert.doesNotMatch(shell, /data-scene-mounted/);
+  assert.doesNotMatch(shell, /className="project-orbit__labels"/);
+  assert.doesNotMatch(shell, /RepositoryAtomScene|ProjectOrbitScene/);
+
+  // The atom draws its own pills, so they must be able to receive clicks.
   assert.match(
-    shell,
-    /<nav\s+className="project-orbit__all"\s+data-scene-mounted=\{shouldMountScene\}\s+aria-label="All systems"\s*>/,
+    styles,
+    /\.project-orbit__instrument\s*\{[\s\S]*?position:\s*absolute/,
+    "the instrument needs its own layout rule, not the old fallback's",
   );
-  assert.match(shell, /className="project-orbit__labels"/);
+  assert.doesNotMatch(
+    styles.slice(
+      styles.indexOf(".project-orbit__instrument"),
+      styles.indexOf(".project-orbit__canvas,"),
+    ),
+    /pointer-events:\s*none/,
+    "the instrument carries the interface and must stay clickable",
+  );
+
+  assert.match(shell, /<nav className="project-orbit__all" aria-label="All systems">/);
   assert.doesNotMatch(shell, /project-orbit__hint/);
   assert.match(shell, /projects\.map\(\(project\) =>/);
   assert.match(shell, /onFocus=\{\(\) => setSelectedId\(project\.id\)\}/);
