@@ -3,7 +3,6 @@ import { ArcadeTeaser } from "@/components/arcade/arcade-teaser";
 import { CcAiPanel } from "@/components/cc-ai-panel";
 import { HeroReveal, HeroRevealItem, SceneReveal } from "@/components/hero-reveal";
 import { MediaTeaser } from "@/components/media-teaser";
-import { ProjectOrbit } from "@/components/project-orbit";
 import { PersonalTeaser } from "@/components/personal-teaser";
 import { ObservatoryHeroVideo } from "@/components/observatory-hero-video";
 import { SupportTeaser } from "@/components/support-teaser";
@@ -13,7 +12,6 @@ import { OBSERVATORY_LIVE_CANVAS_PRESENTATION } from "@/lib/three/progressive-lo
 import { ObservatorySceneRuntimeProvider } from "@/components/three/observatory-scene-runtime-provider";
 import { ActionLink, ImageFrame } from "@/components/ui";
 import { ARCADE_GAMES, isArcadeGamePlayable } from "@/content/arcade";
-import { ORBIT_PROJECTS } from "@/content/project-orbit";
 import { selectedSystems, siteContent } from "@/content/site";
 import { observatorySpecialistStatuses, selectExplorationPrompts } from "@/lib/ai/ana-exploration";
 
@@ -174,8 +172,6 @@ export default function Home() {
           {metadata.currentFocus}
         </p>
       </section>
-
-      <ProjectOrbit projects={ORBIT_PROJECTS} />
 
       <ArcadeTeaser playable={playableGames} total={ARCADE_GAMES.length} />
 

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
+import { ProjectOrbit } from "@/components/project-orbit";
 import { ProjectRegister } from "@/components/project-register";
+import { ORBIT_PROJECTS } from "@/content/project-orbit";
 
 export const metadata: Metadata = {
   title: "Work",
@@ -9,5 +11,10 @@ export const metadata: Metadata = {
 };
 
 export default function WorkPage() {
-  return <ProjectRegister />;
+  return (
+    <>
+      <ProjectOrbit projects={ORBIT_PROJECTS} />
+      <ProjectRegister />
+    </>
+  );
 }

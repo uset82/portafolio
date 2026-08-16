@@ -54,16 +54,14 @@ test("the recovery state keeps 404 visitors oriented with two known routes", () 
   assert.match(markup, /Nothing is lost/);
 });
 
-test("the Work route lists the public GitHub register without Observatory concept rows", () => {
+test("the Work route features Project Orbit and lists the public GitHub register", () => {
   const markup = renderToStaticMarkup(createElement(WorkPage));
 
-  assert.doesNotMatch(markup, /<(?:button|form|input)\b/);
-  assert.doesNotMatch(markup, /filter/i);
+  assert.match(markup, /class="project-orbit-section"/);
   assert.match(markup, /Work from 2022 to now/);
   assert.equal((markup.match(/class="project-register__row"/g) ?? []).length, 62);
   assert.match(markup, /href="https:\/\/github.com\/uset82\/ASTROEA"/);
   assert.match(markup, /href="https:\/\/github.com\/uset82\/pinaculo"/);
-  assert.doesNotMatch(markup, /href="\/work\/future-energy"|Observatory concepts|Open concept/);
   assert.doesNotMatch(markup, /brain-private|marcoloco|ask-bank-ai/);
 });
 
