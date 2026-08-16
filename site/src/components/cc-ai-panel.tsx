@@ -623,7 +623,7 @@ export function CcAiPanel({
                               <input
                                 type="password"
                                 placeholder="sk-or-v1-..."
-                                className="flex-1 px-2.5 py-1.5 rounded bg-stone-900 border border-stone-700 text-stone-200 text-xs font-mono"
+                                className="flex-1 px-2.5 py-1.5 rounded bg-stone-900 border border-stone-700 text-stone-200 text-base sm:text-xs font-mono"
                                 value={userApiKeyInput}
                                 onChange={(e) => setUserApiKeyInput(e.target.value)}
                               />

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 
 import { MotionProvider } from "@/components/motion-provider";
@@ -7,6 +7,13 @@ import { SiteHeader } from "@/components/site-header";
 import { navigation, siteContent } from "@/content/site";
 
 import "./globals.css";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  interactiveWidget: "resizes-content",
+};
 
 const displayFont = Cormorant_Garamond({
   variable: "--font-cormorant",
