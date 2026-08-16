@@ -96,7 +96,7 @@
 /* Gradient blend transition: Color-mix scrim fade matching the header wash */
 .profile-teaser__blend {
   width: 100%;
-  height: clamp(240px, 32vw, 460px);
+  height: clamp(80px, 9vw, 130px);
   margin-bottom: -1px;
   background: linear-gradient(
     to bottom,

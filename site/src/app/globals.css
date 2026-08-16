@@ -3157,18 +3157,18 @@ body:has(.observatory-hero) .site-header .site-header__status {
 
 .profile-teaser__copy {
   display: grid;
-  gap: clamp(2rem, 3.5vw, 3rem);
+  gap: clamp(1.75rem, 3vw, 2.5rem);
   width: min(100%, var(--page-max));
   margin-inline: auto;
-  padding: clamp(5rem, 8vw, 7rem) var(--page-gutter) clamp(1rem, 2vw, 1.5rem);
+  padding: clamp(3.5rem, 6vw, 5rem) var(--page-gutter) clamp(0.5rem, 1vw, 0.75rem);
 }
 
 .profile-teaser__heading {
-  max-width: 20ch;
+  max-width: 18ch;
   margin: 0;
   color: var(--color-text-primary);
   font-family: var(--font-display);
-  font-size: clamp(3.2rem, 8.5vw, 8.25rem);
+  font-size: clamp(3.2rem, 7.5vw, 7.5rem);
   font-weight: 300;
   letter-spacing: -0.02em;
   line-height: var(--leading-display);
@@ -3184,16 +3184,17 @@ body:has(.observatory-hero) .site-header .site-header__status {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 1.25rem 2.5rem;
-  max-width: 56rem;
+  justify-content: space-between;
+  gap: 1.5rem 3rem;
+  max-width: min(100%, 60rem);
 }
 
 .profile-teaser__biography {
-  max-width: 34ch;
+  max-width: 36ch;
   margin: 0;
   color: var(--color-text-secondary);
   font-family: var(--font-body);
-  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  font-size: clamp(1.05rem, 1.25vw, 1.15rem);
   line-height: 1.65;
   text-wrap: pretty;
 }
@@ -3211,18 +3212,20 @@ body:has(.observatory-hero) .site-header .site-header__status {
   border-bottom: 1px solid var(--color-border-strong);
   color: var(--color-text-primary);
   font-family: var(--font-display);
-  font-size: clamp(1.35rem, 1.8vw, 1.625rem);
+  font-size: clamp(1.4rem, 1.9vw, 1.75rem);
   font-weight: 400;
   line-height: 1.2;
   text-decoration: none;
   transition:
     color var(--duration-fast) var(--ease-standard),
-    border-color var(--duration-fast) var(--ease-standard);
+    border-color var(--duration-fast) var(--ease-standard),
+    transform var(--duration-fast) var(--ease-standard);
 }
 
 .profile-teaser__link:hover {
   border-bottom-color: var(--color-text-primary);
   color: var(--color-walnut);
+  transform: translateX(3px);
 }
 
 .profile-teaser__link:focus-visible {
@@ -3232,7 +3235,7 @@ body:has(.observatory-hero) .site-header .site-header__status {
 
 .profile-teaser__blend {
   width: 100%;
-  height: clamp(240px, 32vw, 460px);
+  height: clamp(80px, 9vw, 130px);
   margin-bottom: -1px;
   background: linear-gradient(
     to bottom,
@@ -3248,6 +3251,23 @@ body:has(.observatory-hero) .site-header .site-header__status {
   );
 }
 
+@media (max-width: 47.99rem) {
+  .profile-teaser__copy {
+    gap: 1.5rem;
+    padding-top: 3rem;
+  }
+
+  .profile-teaser__meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .profile-teaser__blend {
+    height: 70px;
+  }
+}
+
 /* ===========================================================================
    Footer — direction 4a: the ask, partitioned routes, and signature
    =========================================================================== */
@@ -3255,14 +3275,14 @@ body:has(.observatory-hero) .site-header .site-header__status {
 .site-footer {
   width: 100%;
   margin: 0;
-  padding: clamp(1rem, 2vw, 1.5rem) var(--page-gutter) clamp(2.5rem, 4vw, 3.5rem);
+  padding: clamp(0.75rem, 1.2vw, 1rem) var(--page-gutter) clamp(2.5rem, 4vw, 3.5rem);
   background: var(--color-deep-espresso);
   color: var(--color-text-on-dark);
 }
 
 .site-footer__inner {
   display: grid;
-  gap: clamp(2.5rem, 4.5vw, 3.5rem);
+  gap: clamp(2.25rem, 4vw, 3.25rem);
   width: min(100%, var(--page-max));
   margin-inline: auto;
 }
@@ -3273,13 +3293,14 @@ body:has(.observatory-hero) .site-header .site-header__status {
 }
 
 .site-footer__heading {
-  max-width: 30ch;
+  max-width: 28ch;
   margin: 0;
   color: var(--color-text-on-dark);
   font-family: var(--font-display);
-  font-size: clamp(2.2rem, 4.8vw, 4.25rem);
+  font-size: clamp(2.2rem, 4.5vw, 4.25rem);
   font-weight: 300;
   line-height: 1.04;
+  text-wrap: balance;
 }
 
 .site-footer__action-row {
@@ -3294,7 +3315,7 @@ body:has(.observatory-hero) .site-header .site-header__status {
   align-items: center;
   gap: 0.75rem;
   min-height: 3.5rem;
-  padding: 0 1.75rem;
+  padding: 0 2rem;
   border-radius: var(--radius-control);
   background: var(--color-text-on-dark);
   color: var(--color-deep-espresso);
@@ -3327,7 +3348,7 @@ body:has(.observatory-hero) .site-header .site-header__status {
 }
 
 .site-footer__nav-group {
-  padding-top: 2rem;
+  padding-top: clamp(1.5rem, 2.5vw, 2rem);
   border-top: 1px solid color-mix(in srgb, var(--color-text-on-dark) 16%, transparent);
 }
 
