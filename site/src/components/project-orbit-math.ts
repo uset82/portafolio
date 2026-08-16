@@ -20,6 +20,51 @@ export function getOrbitPosition(
   };
 }
 
+/**
+ * Computes 3D world coordinates for a point on an atomic orbital ring.
+ * The point is evaluated on the ring's local ellipse and rotated by its 3D Euler angles.
+ */
+export function getAtomicOrbitPosition(
+  angle: number,
+  radiusX: number,
+  radiusZ: number,
+  rotationEuler: readonly [number, number, number] = [0, 0, 0],
+  originY = 0.16,
+): OrbitPosition {
+  const localX = Math.cos(angle) * radiusX;
+  const localY = 0;
+  const localZ = Math.sin(angle) * radiusZ;
+
+  const [rx, ry, rz] = rotationEuler;
+
+  // Rotate around X
+  const cosX = Math.cos(rx);
+  const sinX = Math.sin(rx);
+  const x1 = localX;
+  const y1 = localY * cosX - localZ * sinX;
+  const z1 = localY * sinX + localZ * cosX;
+
+  // Rotate around Y
+  const cosY = Math.cos(ry);
+  const sinY = Math.sin(ry);
+  const x2 = x1 * cosY + z1 * sinY;
+  const y2 = y1;
+  const z2 = -x1 * sinY + z1 * cosY;
+
+  // Rotate around Z
+  const cosZ = Math.cos(rz);
+  const sinZ = Math.sin(rz);
+  const x3 = x2 * cosZ - y2 * sinZ;
+  const y3 = x2 * sinZ + y2 * cosZ;
+  const z3 = z2;
+
+  return {
+    x: x3,
+    y: y3 + originY,
+    z: z3,
+  };
+}
+
 export function nodeAngle(index: number, count: number, rotation: number) {
   return rotation + (index / count) * TAU;
 }

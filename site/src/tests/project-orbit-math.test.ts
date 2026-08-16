@@ -6,6 +6,7 @@ import {
   damp,
   depth01,
   easeInOutCubic,
+  getAtomicOrbitPosition,
   getOrbitPosition,
   nodeAngle,
   shortestDelta,
@@ -43,4 +44,17 @@ test("Project Orbit focus easing and inertia remain bounded", () => {
 
   const next = damp(0, 1, 6, 1 / 60);
   assert.ok(next > 0 && next < 1);
+});
+
+test("Atomic Orbit positions coordinates across 3D rings with Euler rotation", () => {
+  const horizontalTop = getAtomicOrbitPosition(0, 7.6, 2.95, [0, 0, 0], 0.16);
+  approximately(horizontalTop.x, 7.6);
+  approximately(horizontalTop.y, 0.16);
+  approximately(horizontalTop.z, 0);
+
+  const verticalTop = getAtomicOrbitPosition(0, 7.2, 2.85, [0, 0, Math.PI / 2], 0.16);
+  // When rotated around Z by PI/2, x moves to y
+  approximately(verticalTop.x, 0);
+  approximately(verticalTop.y, 7.2 + 0.16);
+  approximately(verticalTop.z, 0);
 });

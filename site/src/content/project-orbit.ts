@@ -147,7 +147,6 @@ export const ORBIT_PROJECTS = [
   },
 ] as const satisfies readonly OrbitProject[];
 
-/** Every moving element reads this same ellipse configuration. */
 export const ORBIT_CONFIG = {
   radiusX: 7.5,
   radiusZ: 2.95,
@@ -159,3 +158,59 @@ export const ORBIT_CONFIG = {
   dragThresholdPx: 5,
   inertiaDamping: 0.93,
 } as const;
+
+export type AtomicRingId = "vertical" | "horizontal" | "diagonal-a" | "diagonal-b";
+
+export type AtomicRingDefinition = {
+  id: AtomicRingId;
+  name: string;
+  radiusX: number;
+  radiusZ: number;
+  rotationEuler: readonly [number, number, number];
+  bearingBalls: number;
+  projectIds: readonly string[];
+  initialNodeAngles: readonly number[];
+};
+
+export const ATOMIC_ORBIT_RINGS: readonly AtomicRingDefinition[] = [
+  {
+    id: "vertical",
+    name: "Vertical Polar Orbit",
+    radiusX: 5.2,
+    radiusZ: 2.1,
+    rotationEuler: [0, Math.PI / 2.35, Math.PI / 2],
+    bearingBalls: 14,
+    projectIds: ["3doodle", "future-energy"],
+    initialNodeAngles: [Math.PI, 0],
+  },
+  {
+    id: "horizontal",
+    name: "Equatorial Orbit",
+    radiusX: 7.8,
+    radiusZ: 2.4,
+    rotationEuler: [0.36, 0, 0],
+    bearingBalls: 18,
+    projectIds: ["repo2agent", "smartchatbot"],
+    initialNodeAngles: [Math.PI, 0],
+  },
+  {
+    id: "diagonal-a",
+    name: "Diagonal Orbit Alpha",
+    radiusX: 7.4,
+    radiusZ: 2.25,
+    rotationEuler: [0.32, 0.24, Math.PI / 5.2],
+    bearingBalls: 16,
+    projectIds: ["strudelai", "astraea", "pinaculo"],
+    initialNodeAngles: [Math.PI, Math.PI * 0.15, Math.PI * 0.28],
+  },
+  {
+    id: "diagonal-b",
+    name: "Diagonal Orbit Beta",
+    radiusX: 7.4,
+    radiusZ: 2.25,
+    rotationEuler: [0.32, -0.24, -Math.PI / 5.2],
+    bearingBalls: 16,
+    projectIds: ["ifoundyou", "avatar-studio", "sound-lab", "arcade"],
+    initialNodeAngles: [0, Math.PI * 0.22, Math.PI, Math.PI * 0.85],
+  },
+] as const;

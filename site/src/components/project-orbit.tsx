@@ -104,9 +104,10 @@ export function ProjectOrbit({ projects }: ProjectOrbitProps) {
         {/* A quiet CSS instrument holds the layout and visual metaphor until the
          * isolated Three chunk is ready, and remains useful if WebGL is absent. */}
         <div className="project-orbit__fallback-instrument" aria-hidden="true">
-          <span className="project-orbit__fallback-rail" />
-          <span className="project-orbit__fallback-rail project-orbit__fallback-rail--middle" />
-          <span className="project-orbit__fallback-rail project-orbit__fallback-rail--inner" />
+          <span className="project-orbit__fallback-rail project-orbit__fallback-rail--horizontal" />
+          <span className="project-orbit__fallback-rail project-orbit__fallback-rail--vertical" />
+          <span className="project-orbit__fallback-rail project-orbit__fallback-rail--diagonal-a" />
+          <span className="project-orbit__fallback-rail project-orbit__fallback-rail--diagonal-b" />
           <span className="project-orbit__fallback-core" />
         </div>
 

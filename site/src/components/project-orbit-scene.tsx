@@ -6,15 +6,20 @@ import * as THREE from "three";
 
 import { LazyThreeCanvas } from "@/components/three/lazy-three-canvas";
 import { useGLTF } from "@/components/three/drei-tools";
-import { ORBIT_CONFIG, type OrbitIcon, type OrbitProject } from "@/content/project-orbit";
+import {
+  ATOMIC_ORBIT_RINGS,
+  ORBIT_CONFIG,
+  type AtomicRingDefinition,
+  type OrbitIcon,
+  type OrbitProject,
+} from "@/content/project-orbit";
 import { naturalPalette } from "@/styles/palette";
 
 import {
   damp,
   depth01,
   easeInOutCubic,
-  getOrbitPosition,
-  nodeAngle,
+  getAtomicOrbitPosition,
   shortestDelta,
   TAU,
 } from "./project-orbit-math";
@@ -530,14 +535,19 @@ function OrbitScene({
     () => projects.map((project) => createIconTexture(project.icon)),
     [projects],
   );
-  const railGeometries = useMemo(
-    () => [
-      createRailGeometry(ORBIT_CONFIG.radiusX, ORBIT_CONFIG.radiusZ, 0.05),
-      createRailGeometry(ORBIT_CONFIG.radiusX - 0.34, ORBIT_CONFIG.radiusZ - 0.26, 0.028),
-      createRailGeometry(ORBIT_CONFIG.radiusX + 0.38, ORBIT_CONFIG.radiusZ + 0.3, 0.016),
-    ],
-    [],
-  );
+  const atomicRingsData = useMemo(() => {
+    return ATOMIC_ORBIT_RINGS.map((ring) => {
+      const mainRail = createRailGeometry(ring.radiusX, ring.radiusZ, 0.046);
+      const innerRail = createRailGeometry(ring.radiusX - 0.28, ring.radiusZ - 0.22, 0.024);
+      const outerRail = createRailGeometry(ring.radiusX + 0.22, ring.radiusZ + 0.18, 0.02);
+      return {
+        ...ring,
+        mainRail,
+        innerRail,
+        outerRail,
+      };
+    });
+  }, []);
   const dotGeometry = useMemo(() => {
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute(
@@ -766,14 +776,31 @@ function OrbitScene({
     projects.forEach((project, index) => {
       const node = nodeRefs.current[index];
       if (!node) return;
-      const angle = nodeAngle(index, projects.length, active.rotation);
-      const position = getOrbitPosition(
+      const ringDef: AtomicRingDefinition =
+        ATOMIC_ORBIT_RINGS.find((r) => r.projectIds.includes(project.id)) ??
+        (ATOMIC_ORBIT_RINGS[1] as AtomicRingDefinition);
+      const projectIndexOnRing = ringDef.projectIds.indexOf(project.id);
+      const baseAngle =
+        ringDef.initialNodeAngles[projectIndexOnRing] ??
+        (projectIndexOnRing / ringDef.projectIds.length) * TAU;
+      const ringSpeed =
+        ringDef.id === "vertical"
+          ? 0.75
+          : ringDef.id === "horizontal"
+            ? 1.0
+            : ringDef.id === "diagonal-a"
+              ? 0.88
+              : -0.92;
+      const angle = baseAngle + active.rotation * ringSpeed;
+
+      const position = getAtomicOrbitPosition(
         angle,
-        ORBIT_CONFIG.radiusX * worldScale,
-        ORBIT_CONFIG.radiusZ * worldScale,
-        0.16,
+        ringDef.radiusX * worldScale,
+        ringDef.radiusZ * worldScale,
+        ringDef.rotationEuler,
+        ORBIT_MEDALLION_BASE_Y,
       );
-      const depth = depth01(position.z, ORBIT_CONFIG.radiusZ * worldScale);
+      const depth = depth01(position.z, 3.2 * worldScale);
       const selected = project.id === active.selectedId;
       const hovered = project.id === active.hoveredId;
       const nodeEntrance = Math.min(1, Math.max(0, (entranceProgress - index * 0.045) * 3.4));
@@ -814,7 +841,7 @@ function OrbitScene({
         dotPositionAttributeRef.current.setXYZ(
           index * DOTS_PER_NODE + dotIndex,
           position.x * (1 - progress),
-          0.16,
+          position.y * (1 - progress) + ORBIT_MEDALLION_BASE_Y * progress,
           position.z * (1 - progress),
         );
       }
@@ -824,23 +851,28 @@ function OrbitScene({
         projectedPosition.copy(position).project(camera);
         const screenX = (projectedPosition.x * 0.5 + 0.5) * size.width;
         const screenY = (-projectedPosition.y * 0.5 + 0.5) * size.height;
-        const offset = 52 * nextScale;
-        const cosAngle = Math.cos(angle);
+        const offset = 54 * nextScale;
+        const dx = position.x;
+        const dy = position.y - ORBIT_MEDALLION_BASE_Y;
         let translate = "translate(-50%, -50%)";
         let labelX = screenX;
         let labelY = screenY;
-        if (cosAngle < -0.28) {
-          translate = "translate(-100%, -50%)";
-          labelX -= offset;
-        } else if (cosAngle > 0.28) {
-          translate = "translate(0, -50%)";
-          labelX += offset;
-        } else if (Math.sin(angle) > 0) {
-          translate = "translate(-50%, 0)";
-          labelY += offset * 0.86;
+        if (Math.abs(dx) > Math.abs(dy) * 1.1) {
+          if (dx < 0) {
+            translate = "translate(-100%, -50%)";
+            labelX -= offset;
+          } else {
+            translate = "translate(0, -50%)";
+            labelX += offset;
+          }
         } else {
-          translate = "translate(-50%, -100%)";
-          labelY -= offset * 0.86;
+          if (dy > 0) {
+            translate = "translate(-50%, -100%)";
+            labelY -= offset * 0.88;
+          } else {
+            translate = "translate(-50%, 0)";
+            labelY += offset * 0.88;
+          }
         }
         const labelVisibility =
           size.width < 760
@@ -862,21 +894,30 @@ function OrbitScene({
 
     const bearing = bearingRef.current;
     if (bearing) {
-      const count = size.width < 760 ? 14 : ORBIT_CONFIG.bearingBalls;
-      for (let index = 0; index < count; index += 1) {
-        const angle = (index / count) * Math.PI * 2 + active.rotation * 1.45 + 0.14;
-        const position = getOrbitPosition(
-          angle,
-          ORBIT_CONFIG.radiusX * worldScale,
-          ORBIT_CONFIG.radiusZ * worldScale,
-          0.215,
-        );
-        dummy.position.set(position.x, position.y, position.z);
-        dummy.scale.setScalar(worldScale * entrance);
-        dummy.updateMatrix();
-        bearing.setMatrixAt(index, dummy.matrix);
-      }
-      bearing.count = count;
+      const totalBalls = size.width < 760 ? 16 : ORBIT_CONFIG.bearingBalls;
+      let ballIdx = 0;
+      ATOMIC_ORBIT_RINGS.forEach((ringDef, ringIndex) => {
+        const ballsOnRing = Math.floor(totalBalls / ATOMIC_ORBIT_RINGS.length);
+        for (let i = 0; i < ballsOnRing; i += 1) {
+          const ballAngle =
+            (i / ballsOnRing) * TAU +
+            active.rotation * (ringIndex % 2 === 0 ? 1.35 : -1.35) +
+            ringIndex * 0.45;
+          const ballPos = getAtomicOrbitPosition(
+            ballAngle,
+            ringDef.radiusX * worldScale,
+            ringDef.radiusZ * worldScale,
+            ringDef.rotationEuler,
+            ORBIT_MEDALLION_BASE_Y,
+          );
+          dummy.position.set(ballPos.x, ballPos.y, ballPos.z);
+          dummy.scale.setScalar(worldScale * entrance * 0.85);
+          dummy.updateMatrix();
+          bearing.setMatrixAt(ballIdx, dummy.matrix);
+          ballIdx += 1;
+        }
+      });
+      bearing.count = ballIdx;
       bearing.instanceMatrix.needsUpdate = true;
     }
 
@@ -937,24 +978,62 @@ function OrbitScene({
         </mesh>
 
         <group>
-          {railGeometries.map((geometry, index) => (
-            <mesh
-              key={geometry.uuid}
-              geometry={geometry}
-              position={[0, index === 0 ? 0 : index === 1 ? -0.02 : -0.05, 0]}
-              scale={worldScale}
+          {atomicRingsData.map((ring, ringIndex) => (
+            <group
+              key={ring.id}
+              rotation={ring.rotationEuler}
+              position={[0, ORBIT_MEDALLION_BASE_Y, 0]}
             >
-              <meshStandardMaterial
-                ref={(material) => {
-                  railMaterialRefs.current[index] = material;
-                }}
-                color={index === 0 ? naturalPalette.orbitBrass : naturalPalette.orbitBronze}
-                envMapIntensity={1.35}
-                metalness={index === 0 ? 0.95 : 0.9}
-                roughness={index === 0 ? 0.28 : 0.42}
-                transparent
-              />
-            </mesh>
+              <mesh geometry={ring.outerRail} scale={worldScale}>
+                <meshStandardMaterial
+                  color={naturalPalette.orbitBronze}
+                  envMapIntensity={1.25}
+                  metalness={0.92}
+                  roughness={0.36}
+                  transparent
+                />
+              </mesh>
+              <mesh geometry={ring.mainRail} scale={worldScale}>
+                <meshStandardMaterial
+                  ref={(material) => {
+                    railMaterialRefs.current[ringIndex] = material;
+                  }}
+                  color={naturalPalette.orbitBrass}
+                  envMapIntensity={1.4}
+                  metalness={0.96}
+                  roughness={0.25}
+                  transparent
+                />
+              </mesh>
+              <mesh geometry={ring.innerRail} scale={worldScale}>
+                <meshStandardMaterial
+                  color={naturalPalette.orbitBronze}
+                  envMapIntensity={1.25}
+                  metalness={0.92}
+                  roughness={0.36}
+                  transparent
+                />
+              </mesh>
+              {[0, Math.PI / 2, Math.PI, (3 * Math.PI) / 2].map((spacerAngle, sIdx) => {
+                const sx = Math.cos(spacerAngle) * ring.radiusX * worldScale;
+                const sz = Math.sin(spacerAngle) * ring.radiusZ * worldScale;
+                return (
+                  <mesh
+                    key={sIdx}
+                    position={[sx, 0, sz]}
+                    rotation={[0, -spacerAngle, 0]}
+                    scale={worldScale}
+                  >
+                    <boxGeometry args={[0.08, 0.06, 0.44]} />
+                    <meshStandardMaterial
+                      color={naturalPalette.orbitBrightBrass}
+                      metalness={0.95}
+                      roughness={0.22}
+                    />
+                  </mesh>
+                );
+              })}
+            </group>
           ))}
           <mesh rotation={[Math.PI / 2, 0, 0]} scale={worldScale}>
             <torusGeometry args={[1, 0.004, 4, 200]} />
