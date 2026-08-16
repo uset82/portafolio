@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
 import { ProjectRegister } from "@/components/project-register";
-import { GITHUB_REGISTER_META } from "@/content/github-register";
 
 export const metadata: Metadata = {
   title: "Work",
-  description: `Public GitHub register for Carlos Alfredo Carpio Meza: ${GITHUB_REGISTER_META.count} public repositories. Cosmos holds ASTROEA and Pináculo to try.`,
+  description:
+    "Work Carlos Alfredo Carpio Meza has been building since 2022. Public GitHub register, with an invitation to try and to contribute.",
 };
 
 export default function WorkPage() {

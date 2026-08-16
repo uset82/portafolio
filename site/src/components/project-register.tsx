@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { ActionLink } from "@/components/ui";
 import { GITHUB_REGISTER, GITHUB_REGISTER_META } from "@/content/github-register";
 
 function formatIndex(index: number) {
@@ -20,13 +21,21 @@ export function ProjectRegister() {
           </p>
         </div>
 
-        <h1 id="work-index-title">The public GitHub register.</h1>
+        <h1 id="work-index-title">Work from 2022 to now.</h1>
 
         <div className="work-index__intro">
           <p>
-            Every public repository on github.com/uset82. Cosmos already holds ASTROEA and Pináculo
-            to try. Arcade holds the games. Private repositories stay off this page.
+            This is the work I have been building since 2022. You are welcome to try what is open,
+            and to contribute. Private repositories stay off this page.
           </p>
+          <nav className="work-index__welcome" aria-label="Try and contribute">
+            <ActionLink variant="primary" href="/cosmos">
+              Try
+            </ActionLink>
+            <ActionLink variant="secondary" href="/support">
+              Contribute
+            </ActionLink>
+          </nav>
         </div>
       </section>
 

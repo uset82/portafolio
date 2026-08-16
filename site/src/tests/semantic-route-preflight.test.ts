@@ -28,6 +28,7 @@ const coreRoutes: readonly CoreRoute[] = [
       "https://github.com/uset82/pinaculo",
       "https://github.com/uset82/StrudelAI",
       "/cosmos",
+      "/support",
     ],
   },
   {

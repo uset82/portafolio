@@ -86,9 +86,9 @@ const githubAnswer = [
 ].join("\n");
 
 const workAnswer = [
-  "Work is the public GitHub register — every public repository on https://github.com/uset82, not a shortlist of two apps.",
+  "Work is the public GitHub register of what Carlos has been building since 2022.",
   "",
-  "Cosmos already holds ASTROEA and Pináculo to try. Arcade holds the games. Private repositories stay off the page.",
+  "You are welcome to try what is open and to contribute. Cosmos holds ASTROEA and Pináculo to try. Support lists the four MIT repositories. Private repositories stay off the page.",
 ].join("\n");
 
 const profileAnswer = [

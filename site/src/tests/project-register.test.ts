@@ -43,12 +43,13 @@ test("project register renders every public GitHub repository as an ordered, lin
   }
 
   assert.match(markup, /public repositories/);
-  assert.match(markup, /The public GitHub register/);
-  assert.match(markup, /ASTROEA/);
-  assert.match(markup, /Pináculo/);
-  assert.match(markup, /StrudelAI/);
-  assert.match(markup, /thedelegator/);
+  assert.match(markup, /Work from 2022 to now/);
+  assert.match(markup, /building since 2022/);
+  assert.match(markup, /You are welcome to try what is open/);
   assert.match(markup, /href="\/cosmos"/);
+  assert.match(markup, /href="\/support"/);
+  assert.match(markup, />Try</);
+  assert.match(markup, />Contribute</);
   assert.doesNotMatch(markup, /Observatory concepts|Open concept/);
   assert.doesNotMatch(markup, /href="\/work\/future-energy"/);
   for (const name of PRIVATE_REPOSITORY_NAMES) {

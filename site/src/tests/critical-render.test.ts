@@ -59,7 +59,7 @@ test("the Work route lists the public GitHub register without Observatory concep
 
   assert.doesNotMatch(markup, /<(?:button|form|input)\b/);
   assert.doesNotMatch(markup, /filter/i);
-  assert.match(markup, /The public GitHub register/);
+  assert.match(markup, /Work from 2022 to now/);
   assert.equal((markup.match(/class="project-register__row"/g) ?? []).length, 62);
   assert.match(markup, /href="https:\/\/github.com\/uset82\/ASTROEA"/);
   assert.match(markup, /href="https:\/\/github.com\/uset82\/pinaculo"/);
