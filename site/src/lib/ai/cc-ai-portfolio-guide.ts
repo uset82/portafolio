@@ -124,6 +124,8 @@ const wantsAnother = (text: string) =>
 
 const isBiographyQuestion = (text: string) => includesAny(normalize(text), BIOGRAPHY_KEYWORDS);
 
+import { isSpanishText } from "./cc-ai-site-guide";
+
 export const isVisitorPortfolioGuide = (content: string): boolean =>
   includesAny(content, [
     "Which of those do you actually want to see?",
@@ -137,6 +139,17 @@ export const isVisitorPortfolioGuide = (content: string): boolean =>
     "Which one actually matters to you?",
     "I need a direction, not a nod.",
     "If you want work you can actually open",
+    "¿Cuál de esas áreas te interesa?",
+    "¿Cuál de ellos te interesa ver?",
+    "¿Estás evaluando sonido, forma",
+    "Uno a la vez.",
+    "El trabajo de IA de Carlos se divide en tres ramas",
+    "Dime qué dirección prefieres explorar",
+    "Si deseas ver proyectos interactivos",
+    "sin saturarte con una lista",
+    "Ese es el repositorio",
+    "El siguiente es",
+    "Comienza con",
   ]);
 
 const lastAssistant = (history: readonly ChatTurn[]): string =>
@@ -195,9 +208,11 @@ const lastUserLanes = (history: readonly ChatTurn[]): PortfolioLane[] => {
   return [];
 };
 
-const visitorBlurb = (hit: PortfolioKnowledgeHit): string => {
+const visitorBlurb = (hit: PortfolioKnowledgeHit, isEs = false): string => {
   if (hit.repository === "uset82/StrudelAI") {
-    return "a public live-coding music system, open for testing";
+    return isEs
+      ? "un sistema público de live-coding musical, abierto para pruebas"
+      : "a public live-coding music system, open for testing";
   }
   const description = hit.description?.trim();
   if (description && !/\d+\s*%|\busers\b|\bstars\b|\brevenue\b/i.test(description)) {
@@ -205,16 +220,28 @@ const visitorBlurb = (hit: PortfolioKnowledgeHit): string => {
       description.length > 140 ? `${description.slice(0, 137).trimEnd()}…` : description;
     return clipped.replace(/\.$/, "");
   }
-  if (hit.capabilities.includes("live-coding")) return "public live-coding music system";
-  if (hit.capabilities.includes("generative-music")) return "public generative-music work";
-  if (hit.domains.includes("music")) return "public music work";
-  if (hit.domains.includes("3d")) return "public 3D work";
-  if (hit.domains.includes("ai-tooling")) return "public AI-tooling work";
-  if (hit.domains.includes("electronics") || hit.domains.includes("embedded")) {
-    return "public electronics work";
+  if (hit.capabilities.includes("live-coding")) {
+    return isEs ? "sistema público de live-coding musical" : "public live-coding music system";
   }
-  if (hit.domains.includes("design")) return "public design work";
-  return "public work";
+  if (hit.capabilities.includes("generative-music")) {
+    return isEs ? "proyecto de música generativa" : "public generative-music work";
+  }
+  if (hit.domains.includes("music")) {
+    return isEs ? "proyecto de sonido y música" : "public music work";
+  }
+  if (hit.domains.includes("3d")) {
+    return isEs ? "herramientas y visualización 3D" : "public 3D work";
+  }
+  if (hit.domains.includes("ai-tooling")) {
+    return isEs ? "herramientas y orquestación de IA" : "public AI-tooling work";
+  }
+  if (hit.domains.includes("electronics") || hit.domains.includes("embedded")) {
+    return isEs ? "electrónica y sistemas embebidos" : "public electronics work";
+  }
+  if (hit.domains.includes("design")) {
+    return isEs ? "diseño interactivo" : "public design work";
+  }
+  return isEs ? "proyecto público" : "public work";
 };
 
 const LANE_CAPABILITIES: Record<PortfolioLane, readonly string[]> = {
@@ -245,48 +272,98 @@ const pickHits = (
     .slice(0, limit);
 
 const qualifierAnswer = (message: string, role?: PortfolioVisitorRole): string => {
+  const isEs = isSpanishText(message);
   if (role === "recruiter") {
-    return [
-      "If you are hiring, a list is how people hide.",
-      "",
-      "I will not start with eight GitHub links. Are you weighing sound, form, or the orchestration layer?",
-    ].join("\n");
+    return isEs
+      ? [
+          "Si estás contratando, una lista suele ser donde la gente se oculta.",
+          "",
+          "No voy a empezar con ocho enlaces de GitHub. ¿Estás evaluando sonido, forma (3D) o la capa de orquestación de agentes?",
+        ].join("\n")
+      : [
+          "If you are hiring, a list is how people hide.",
+          "",
+          "I will not start with eight GitHub links. Are you weighing sound, form, or the orchestration layer?",
+        ].join("\n");
   }
 
   const lanes = inferPortfolioLanes(message);
   const mentionsCreativity =
     includesAny(normalize(message), ["creativ", "creatividad"]) && lanes.length !== 1;
   if (mentionsCreativity) {
-    return [
-      "Creativity here is not a mood board. It is sound or form.",
-      "",
-      "Which of those do you actually want to see?",
-    ].join("\n");
+    return isEs
+      ? [
+          "La creatividad aquí no es un mood board. Es sonido o forma 3D.",
+          "",
+          "¿Cuál de ellos te interesa ver?",
+        ].join("\n")
+      : [
+          "Creativity here is not a mood board. It is sound or form.",
+          "",
+          "Which of those do you actually want to see?",
+        ].join("\n");
   }
 
-  if (includesAny(normalize(message), ["ai", "artificial"]) || lanes.length === 0) {
-    return [
-      "I could list every public repo that mentions AI. That is the easy answer, and it is usually the wrong one.",
-      "",
-      "Carlos’s AI work is not one pile. It splits three ways:",
-      "",
-      "Sound — live-coding and lyric systems",
-      "Form — sketch-to-3D tools",
-      "Orchestration — agents that coordinate other work",
-      "",
-      "Which of those do you actually want to see? If you are hiring, say that too. The cut is different.",
-    ].join("\n");
+  if (
+    includesAny(normalize(message), ["ai", "ia", "artificial", "inteligencia"]) ||
+    lanes.length === 0
+  ) {
+    return isEs
+      ? [
+          "Podría listar cada repositorio público que menciona IA. Esa es la respuesta fácil, y casi siempre es la incorrecta.",
+          "",
+          "El trabajo de IA de Carlos se divide en tres ramas:",
+          "",
+          "Sonido — live-coding y sistemas líricos",
+          "Forma — herramientas de boceto a 3D",
+          "Orquestación — agentes que coordinan otros sistemas",
+          "",
+          "¿Cuál de esas áreas te interesa ver? Si estás evaluando para contratación, menciónalo también.",
+        ].join("\n")
+      : [
+          "I could list every public repo that mentions AI. That is the easy answer, and it is usually the wrong one.",
+          "",
+          "Carlos’s AI work is not one pile. It splits three ways:",
+          "",
+          "Sound — live-coding and lyric systems",
+          "Form — sketch-to-3D tools",
+          "Orchestration — agents that coordinate other work",
+          "",
+          "Which of those do you actually want to see? If you are hiring, say that too. The cut is different.",
+        ].join("\n");
   }
 
-  return [
-    "I could walk the whole public GitHub. That would waste your time.",
-    "",
-    "What are you actually here for — sound, form, electronics, or the AI orchestration work?",
-  ].join("\n");
+  return isEs
+    ? [
+        "Podría recorrer todo el GitHub público, pero te haría perder el tiempo.",
+        "",
+        "¿Qué estás buscando explorar — sonido, forma 3D, electrónica o la orquestación de agentes de IA?",
+      ].join("\n")
+    : [
+        "I could walk the whole public GitHub. That would waste your time.",
+        "",
+        "What are you actually here for — sound, form, electronics, or the AI orchestration work?",
+      ].join("\n");
 };
 
-const recommendAnswer = (hit: PortfolioKnowledgeHit, anotherAvailable: boolean): string => {
+const recommendAnswer = (
+  hit: PortfolioKnowledgeHit,
+  anotherAvailable: boolean,
+  isEs = false,
+): string => {
   const name = displayPortfolioProjectName(hit.repository);
+  if (isEs) {
+    const offer = anotherAvailable
+      ? "¿Quieres ver otro proyecto en esa área o el repositorio público de GitHub?"
+      : "¿Prefieres el repositorio público o explorar una dirección diferente?";
+    return [
+      `Entonces no empezaré con una lista.`,
+      ``,
+      `Comienza con ${name} — ${visitorBlurb(hit, true)}.`,
+      ``,
+      offer,
+    ].join("\n");
+  }
   const offer = anotherAvailable
     ? "I have one more in that lane, not a catalog. Want that, or the public repo?"
     : "Want the public repo, or a different direction?";
@@ -299,8 +376,15 @@ const recommendAnswer = (hit: PortfolioKnowledgeHit, anotherAvailable: boolean):
   ].join("\n");
 };
 
-const anotherAnswer = (hit: PortfolioKnowledgeHit): string => {
+const anotherAnswer = (hit: PortfolioKnowledgeHit, isEs = false): string => {
   const name = displayPortfolioProjectName(hit.repository);
+  if (isEs) {
+    return [
+      `El siguiente es ${name} — ${visitorBlurb(hit, true)}.`,
+      "",
+      "Uno a la vez. ¿Quieres el repositorio público o explorar otra dirección?",
+    ].join("\n");
+  }
   return [
     `The next one is ${name} — ${visitorBlurb(hit)}.`,
     "",
@@ -308,7 +392,21 @@ const anotherAnswer = (hit: PortfolioKnowledgeHit): string => {
   ].join("\n");
 };
 
-const catalogAnswer = (hits: readonly PortfolioKnowledgeHit[]): string => {
+const catalogAnswer = (hits: readonly PortfolioKnowledgeHit[], isEs = false): string => {
+  if (isEs) {
+    const names = hits.map(
+      (hit) => `${displayPortfolioProjectName(hit.repository)} — ${visitorBlurb(hit, true)}.`,
+    );
+    return [
+      "Puedes ver un catálogo breve:",
+      "",
+      "Tres proyectos seleccionados:",
+      "",
+      ...names,
+      "",
+      "Elige uno de ellos para profundizar.",
+    ].join("\n");
+  }
   const names = hits.map(
     (hit) => `${displayPortfolioProjectName(hit.repository)} — ${visitorBlurb(hit)}.`,
   );
@@ -323,19 +421,35 @@ const catalogAnswer = (hits: readonly PortfolioKnowledgeHit[]): string => {
   ].join("\n");
 };
 
-const linkAnswer = (hit: PortfolioKnowledgeHit): string =>
-  [
+const linkAnswer = (hit: PortfolioKnowledgeHit, isEs = false): string => {
+  if (isEs) {
+    return [
+      `Repositorio público: ${hit.href}`,
+      "",
+      "Ese es el repositorio. ¿Deseas ver otro proyecto o explorar una dirección diferente?",
+    ].join("\n");
+  }
+  return [
     `Public repository: ${hit.href}`,
     "",
     "That is the repo, not a case study. Want another name, or a different direction?",
   ].join("\n");
+};
 
-const emptyLaneAnswer = (): string =>
-  [
+const emptyLaneAnswer = (isEs = false): string => {
+  if (isEs) {
+    return [
+      "No hay proyectos públicos adicionales en esa área específica.",
+      "",
+      "¿Te gustaría explorar sonido, forma 3D o la capa de orquestación de agentes?",
+    ].join("\n");
+  }
+  return [
     "Nothing public in that lane is a clean match, and I will not invent one.",
     "",
     "Sound, form, or orchestration — which do you actually want to see?",
   ].join("\n");
+};
 
 const lastRecommendedHit = (
   content: string,
@@ -361,6 +475,7 @@ export const guideVisitorPortfolio = (options: {
   const history = options.history ?? [];
   if (options.audits.length === 0 || isBiographyQuestion(message)) return null;
 
+  const isEs = isSpanishText(message);
   const prior = lastAssistant(history);
   const inGuide = isVisitorPortfolioGuide(prior);
   const userTurnsText = [
@@ -376,7 +491,7 @@ export const guideVisitorPortfolio = (options: {
 
   if (inGuide && wantsLink(message)) {
     const last = lastRecommendedHit(prior, options.audits);
-    if (last) return { answer: linkAnswer(last), hits: [last] };
+    if (last) return { answer: linkAnswer(last, isEs), hits: [last] };
   }
 
   if (inGuide && wantsCatalog(message)) {
@@ -385,15 +500,15 @@ export const guideVisitorPortfolio = (options: {
     const hits = catalogLanes
       .map((lane) => pickHits(LANE_QUERY[lane], options.audits, new Set(), 1)[0])
       .filter((hit): hit is PortfolioKnowledgeHit => Boolean(hit));
-    if (hits.length === 0) return { answer: emptyLaneAnswer(), hits: [] };
-    return { answer: catalogAnswer(hits), hits };
+    if (hits.length === 0) return { answer: emptyLaneAnswer(isEs), hits: [] };
+    return { answer: catalogAnswer(hits, isEs), hits };
   }
 
   if (inGuide && wantsAnother(message)) {
     const lane = lanes[0] ?? lastUserLanes(history)[0] ?? "sound";
     const hits = pickHits(LANE_QUERY[lane], options.audits, excluded, 1);
-    if (hits[0]) return { answer: anotherAnswer(hits[0]), hits };
-    return { answer: emptyLaneAnswer(), hits: [] };
+    if (hits[0]) return { answer: anotherAnswer(hits[0], isEs), hits };
+    return { answer: emptyLaneAnswer(isEs), hits: [] };
   }
 
   const named = findNamedProject(message, options.audits);
@@ -402,7 +517,7 @@ export const guideVisitorPortfolio = (options: {
     const more = lane
       ? pickHits(LANE_QUERY[lane], options.audits, new Set([named.repository]), 1)
       : [];
-    return { answer: recommendAnswer(named, more.length > 0), hits: [named] };
+    return { answer: recommendAnswer(named, more.length > 0, isEs), hits: [named] };
   }
 
   const focusedLane = lanes.length === 1 ? lanes[0] : undefined;
@@ -410,14 +525,14 @@ export const guideVisitorPortfolio = (options: {
 
   if (shouldRecommend && focusedLane) {
     const hits = pickHits(LANE_QUERY[focusedLane], options.audits, excluded, 1);
-    if (!hits[0]) return { answer: emptyLaneAnswer(), hits: [] };
+    if (!hits[0]) return { answer: emptyLaneAnswer(isEs), hits: [] };
     const more = pickHits(
       LANE_QUERY[focusedLane],
       options.audits,
       new Set([hits[0].repository]),
       1,
     );
-    return { answer: recommendAnswer(hits[0], more.length > 0), hits };
+    return { answer: recommendAnswer(hits[0], more.length > 0, isEs), hits };
   }
 
   if (ask || (inGuide && (lanes.length > 1 || Boolean(inferPortfolioVisitorRole(message))))) {
