@@ -93,24 +93,21 @@
   outline-offset: 4px;
 }
 
-/* Gradient blend transition: Ultra-soft optical progressive fade into deep espresso */
+/* Gradient blend transition: Color-mix scrim fade matching the header wash */
 .profile-teaser__blend {
   width: 100%;
-  height: clamp(320px, 42vw, 560px);
+  height: clamp(240px, 32vw, 460px);
   margin-bottom: -1px;
   background: linear-gradient(
-    180deg,
-    rgba(42, 29, 22, 0) 0%,
-    rgba(42, 29, 22, 0.003) 12%,
-    rgba(42, 29, 22, 0.012) 24%,
-    rgba(42, 29, 22, 0.03) 35%,
-    rgba(42, 29, 22, 0.065) 46%,
-    rgba(42, 29, 22, 0.12) 56%,
-    rgba(42, 29, 22, 0.2) 65%,
-    rgba(42, 29, 22, 0.32) 74%,
-    rgba(42, 29, 22, 0.48) 82%,
-    rgba(42, 29, 22, 0.68) 90%,
-    rgba(42, 29, 22, 0.86) 96%,
+    to bottom,
+    var(--color-canvas) 0%,
+    color-mix(in srgb, var(--color-canvas) 95%, var(--color-deep-espresso)) 12%,
+    color-mix(in srgb, var(--color-canvas) 86%, var(--color-deep-espresso)) 25%,
+    color-mix(in srgb, var(--color-canvas) 72%, var(--color-deep-espresso)) 40%,
+    color-mix(in srgb, var(--color-canvas) 54%, var(--color-deep-espresso)) 55%,
+    color-mix(in srgb, var(--color-canvas) 34%, var(--color-deep-espresso)) 70%,
+    color-mix(in srgb, var(--color-canvas) 18%, var(--color-deep-espresso)) 82%,
+    color-mix(in srgb, var(--color-canvas) 6%, var(--color-deep-espresso)) 92%,
     var(--color-deep-espresso) 100%
   );
 }
