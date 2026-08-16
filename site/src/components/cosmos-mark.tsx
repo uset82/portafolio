@@ -79,7 +79,8 @@ export function CosmosMark({ className, enableCompass = true }: CosmosMarkProps)
     // 1. Device Orientation (Magnetic / Compass Heading)
     const handleOrientation = (event: DeviceOrientationEvent) => {
       hasMotionSource = true;
-      const iosHeading = (event as unknown as { webkitCompassHeading?: number }).webkitCompassHeading;
+      const iosHeading = (event as unknown as { webkitCompassHeading?: number })
+        .webkitCompassHeading;
       if (typeof iosHeading === "number" && !isNaN(iosHeading)) {
         targetAngle = -iosHeading;
       } else if (event.alpha !== null && !isNaN(event.alpha)) {
@@ -216,11 +217,7 @@ export function CosmosMark({ className, enableCompass = true }: CosmosMarkProps)
       onTouchStart={requestGyroPermission}
       style={{ touchAction: "none" }}
     >
-      <g
-        ref={dialRef}
-        className="cosmos-mark__dial"
-        style={{ transformOrigin: "50px 50px" }}
-      >
+      <g ref={dialRef} className="cosmos-mark__dial" style={{ transformOrigin: "50px 50px" }}>
         <circle className="cosmos-mark__ring" cx={CX} cy={CY} r="44.6" />
         <circle className="cosmos-mark__ring cosmos-mark__ring--inner" cx={CX} cy={CY} r="28.5" />
         {ticks.map((tick) => (
