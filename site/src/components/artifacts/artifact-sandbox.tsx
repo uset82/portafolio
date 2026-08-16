@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useId, useMemo, useRef } from "react";
 import type { ParsedArtifact } from "./artifact-parser";
 
 export type ViewportMode = "desktop" | "tablet" | "mobile";
@@ -13,12 +13,61 @@ type ArtifactSandboxProps = {
 };
 
 const SUPPORTED_LUCIDE_ICONS = [
-  "Play", "Pause", "RefreshCw", "Copy", "Check", "Sparkles", "ChevronRight", "ChevronLeft",
-  "ChevronDown", "ChevronUp", "Settings", "Star", "Heart", "Trash", "Trash2", "Plus", "Minus",
-  "Search", "X", "Menu", "Home", "User", "Calendar", "Clock", "Volume2", "VolumeX", "Code",
-  "ExternalLink", "Download", "Eye", "Terminal", "Zap", "Flame", "Compass", "Globe", "Sliders",
-  "Layers", "Cpu", "Database", "Activity", "Shield", "Lock", "Unlock", "Folder", "File", "Music",
-  "Sun", "Moon", "Send", "Share", "Info", "AlertCircle", "AlertTriangle", "Maximize2", "Minimize2"
+  "Play",
+  "Pause",
+  "RefreshCw",
+  "Copy",
+  "Check",
+  "Sparkles",
+  "ChevronRight",
+  "ChevronLeft",
+  "ChevronDown",
+  "ChevronUp",
+  "Settings",
+  "Star",
+  "Heart",
+  "Trash",
+  "Trash2",
+  "Plus",
+  "Minus",
+  "Search",
+  "X",
+  "Menu",
+  "Home",
+  "User",
+  "Calendar",
+  "Clock",
+  "Volume2",
+  "VolumeX",
+  "Code",
+  "ExternalLink",
+  "Download",
+  "Eye",
+  "Terminal",
+  "Zap",
+  "Flame",
+  "Compass",
+  "Globe",
+  "Sliders",
+  "Layers",
+  "Cpu",
+  "Database",
+  "Activity",
+  "Shield",
+  "Lock",
+  "Unlock",
+  "Folder",
+  "File",
+  "Music",
+  "Sun",
+  "Moon",
+  "Send",
+  "Share",
+  "Info",
+  "AlertCircle",
+  "AlertTriangle",
+  "Maximize2",
+  "Minimize2",
 ] as const;
 
 /**
@@ -58,9 +107,9 @@ export function buildSandboxHtml(artifact: ParsedArtifact): string {
     .replace(/import\s+\{[^}]*\}\s+from\s+['"]lucide-react['"];?/g, "")
     .replace(/import\s+.*from\s+['"][^'"]+['"];?/g, "");
 
-  const iconAssignments = SUPPORTED_LUCIDE_ICONS
-    .map((name) => `const ${name} = icons['${name}'];`)
-    .join("\n    ");
+  const iconAssignments = SUPPORTED_LUCIDE_ICONS.map(
+    (name) => `const ${name} = icons['${name}'];`,
+  ).join("\n    ");
 
   return `<!DOCTYPE html>
 <html lang="en" class="dark">
@@ -237,12 +286,7 @@ export function ArtifactSandbox({
 }: ArtifactSandboxProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const titleId = useId();
-  const [srcDoc, setSrcDoc] = useState<string>("");
-
-  useEffect(() => {
-    const html = buildSandboxHtml(artifact);
-    setSrcDoc(html);
-  }, [artifact]);
+  const srcDoc = useMemo(() => buildSandboxHtml(artifact), [artifact]);
 
   const viewportStyles: Record<ViewportMode, string> = {
     desktop: "w-full h-full",
@@ -251,7 +295,9 @@ export function ArtifactSandbox({
   };
 
   return (
-    <div className={`artifact-sandbox-wrapper relative w-full h-full bg-stone-950 flex items-center justify-center overflow-hidden ${className}`}>
+    <div
+      className={`artifact-sandbox-wrapper relative w-full h-full bg-stone-950 flex items-center justify-center overflow-hidden ${className}`}
+    >
       <iframe
         ref={iframeRef}
         title={`Sandbox Preview: ${artifact.title}`}

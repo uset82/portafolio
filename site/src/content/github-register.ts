@@ -35,6 +35,8 @@ const DESCRIPTION_OVERRIDES: Record<string, string> = {
     "A scaffolding calculator: draw a building perimeter and get a planning material estimate.",
   pacha: "Website for Pasha International Food & Bar in Bergen.",
   chaclacayo: "A property website for a house in Chaclacayo, Lima.",
+  QubeSolve:
+    "A 3D Rubik's Cube solver with interactive 3D visualization and step-by-step solving algorithms.",
 };
 
 const ROOM_OVERRIDES: Record<string, { href: string; label: string }> = {
@@ -50,6 +52,10 @@ const TRY_OVERRIDES: Record<string, { url: string; label: string }> = {
   Jacobgolf: {
     url: "https://jacobgolf.netlify.app/",
     label: "Play Jacobs Golfspill",
+  },
+  QubeSolve: {
+    url: "https://qubesolve.netlify.app/",
+    label: "Solve with QubeSolve",
   },
   StillasCalculator: {
     url: "https://stillascalculator.netlify.app/",
@@ -154,7 +160,6 @@ const GROUP_BY_NAME: Record<string, WorkGroupId> = {
   bankAI: "ai",
   opennemoclaw: "ai",
   ReportAIEquinor: "ai",
-  QubeSolve: "ai",
   "cookthis-": "ai",
   "Monkey-Tug-of-War": "games",
   "My-Football-Game": "games",
@@ -163,6 +168,7 @@ const GROUP_BY_NAME: Record<string, WorkGroupId> = {
   gimmemycake: "games",
   REACTIONGAME: "games",
   Jacobgolf: "games",
+  QubeSolve: "games",
   StrudelAI: "music",
   LyriGenie: "music",
   "Suno-UDIO-Helper": "music",

@@ -117,6 +117,33 @@ export const ARCADE_GAMES: readonly ArcadeGame[] = [
     measuredOn: "2026-08-16",
   },
   {
+    id: "qubesolve",
+    slug: "qubesolve",
+    title: "QubeSolve",
+    tagline: "3D Rubik's Cube solver",
+    description:
+      "A 3D Rubik's Cube solver and interactive puzzle built with Three.js. Rotate and manipulate the 3D cube, input any state, and follow step-by-step optimal solving solutions.",
+    engine: "TypeScript and Three.js",
+    input: "Mouse or touch",
+    controls: [
+      "Click or drag to rotate cube faces and inspect from all angles",
+      "Follow step-by-step solving algorithms",
+    ],
+    mobile: "Interactive 3D canvas runs in modern mobile and desktop browsers.",
+    needsCamera: false,
+    status: "playable",
+    tier: "C",
+    source: {
+      kind: "external",
+      url: "https://qubesolve.netlify.app/",
+      provider: "Netlify",
+    },
+    builtSize: "Hosted on Netlify, measured 2026-08-16",
+    repository: "https://github.com/uset82/QubeSolve",
+    license: "No LICENSE file in the repository yet - all rights reserved by Carlos Carpio",
+    measuredOn: "2026-08-16",
+  },
+  {
     id: "my-football-game",
     slug: "football",
     title: "My Football Game",

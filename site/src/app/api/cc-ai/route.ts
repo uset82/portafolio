@@ -58,7 +58,9 @@ export const POST = (request: Request) => {
   const provider = userKey
     ? createOpenRouterChatProvider({
         OPENROUTER_API_KEY: userKey,
-        ...(process.env.NEXT_PUBLIC_SITE_URL ? { NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL } : {}),
+        ...(process.env.NEXT_PUBLIC_SITE_URL
+          ? { NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL }
+          : {}),
       })
     : createOpenRouterChatProvider();
 

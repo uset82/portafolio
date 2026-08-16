@@ -1,12 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import {
-  parseArtifactsFromMessage,
-} from "../components/artifacts/artifact-parser";
-import {
-  buildSandboxHtml,
-} from "../components/artifacts/artifact-sandbox";
+import { parseArtifactsFromMessage } from "../components/artifacts/artifact-parser";
+import { buildSandboxHtml } from "../components/artifacts/artifact-sandbox";
 
 test("artifact parser detects explicit <artifact> tags with attributes and code", () => {
   const message = `Here is a custom Pomodoro Timer for you:

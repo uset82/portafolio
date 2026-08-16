@@ -150,7 +150,6 @@ export function CcAiPanel({
   const [userApiKeyInput, setUserApiKeyInput] = useState<string>("");
   const reducedMotion = useReducedMotion();
   const active = state.status === "connecting" || state.status === "presenting";
-  const specialistStatuses = observatorySpecialistStatuses(anaActiveAgents);
 
   const closePanel = useCallback(() => {
     if (requestControllerRef.current || state.status === "presenting") {
@@ -507,9 +506,9 @@ export function CcAiPanel({
 
                     <AnaExplorationPanel
                       prompts={state.messages.length === 0 ? explorationPrompts : []}
-                      statuses={[]}
+                      statuses={observatorySpecialistStatuses(anaActiveAgents)}
                       disabled={active}
-                      onPrompt={(prompt) =>
+                      onPrompt={(prompt: AnaExplorationPrompt) =>
                         void sendQuestion(
                           prompt.prompt,
                           true,
@@ -532,7 +531,8 @@ export function CcAiPanel({
                             <div className="cc-ai-message__content">
                               {segments.map((segment, idx) => {
                                 if (segment.type === "artifact") {
-                                  const isExp = expandedArtifactId === (segment.artifact.id || String(idx));
+                                  const isExp =
+                                    expandedArtifactId === (segment.artifact.id || String(idx));
                                   return (
                                     <ArtifactView
                                       key={segment.artifact.id || idx}
@@ -542,7 +542,7 @@ export function CcAiPanel({
                                         setExpandedArtifactId((prev) =>
                                           prev === (segment.artifact.id || String(idx))
                                             ? null
-                                            : (segment.artifact.id || String(idx))
+                                            : segment.artifact.id || String(idx),
                                         )
                                       }
                                     />
@@ -617,7 +617,8 @@ export function CcAiPanel({
                         {state.error.code === "configuration" ? (
                           <div className="mt-2 text-xs flex flex-col gap-1.5 border-t border-stone-800/80 pt-2">
                             <p className="text-stone-300">
-                              To generate custom live apps with OpenRouter free models, paste your API key below:
+                              To generate custom live apps with OpenRouter free models, paste your
+                              API key below:
                             </p>
                             <div className="flex gap-2">
                               <input
@@ -632,9 +633,16 @@ export function CcAiPanel({
                                 className="px-3 py-1.5 rounded bg-amber-900/60 border border-amber-700 text-amber-200 text-xs font-medium hover:bg-amber-900"
                                 onClick={() => {
                                   if (typeof window !== "undefined" && userApiKeyInput.trim()) {
-                                    window.localStorage?.setItem("cacm_ai_user_key", userApiKeyInput.trim());
+                                    window.localStorage?.setItem(
+                                      "cacm_ai_user_key",
+                                      userApiKeyInput.trim(),
+                                    );
                                     if (state.lastQuestion) {
-                                      void sendQuestion(state.lastQuestion, false, resolveAssistantChannel("cc-ai-prompt"));
+                                      void sendQuestion(
+                                        state.lastQuestion,
+                                        false,
+                                        resolveAssistantChannel("cc-ai-prompt"),
+                                      );
                                     }
                                   }
                                 }}

@@ -48,7 +48,9 @@ export function ArtifactView({
   return (
     <div
       className={`artifact-card relative my-4 rounded-xl border border-stone-800 bg-stone-900/90 shadow-2xl backdrop-blur-md overflow-hidden transition-all duration-300 ${
-        isExpanded ? "fixed inset-4 z-50 flex flex-col my-0 bg-stone-950 border-stone-700" : "flex flex-col h-[520px]"
+        isExpanded
+          ? "fixed inset-4 z-50 flex flex-col my-0 bg-stone-950 border-stone-700"
+          : "flex flex-col h-[520px]"
       } ${className}`}
     >
       {/* Top Toolbar */}
@@ -101,7 +103,9 @@ export function ArtifactView({
                 onClick={() => setViewport("desktop")}
                 title="Desktop View"
                 className={`p-1 rounded text-xs ${
-                  viewport === "desktop" ? "bg-stone-800 text-stone-100" : "text-stone-500 hover:text-stone-300"
+                  viewport === "desktop"
+                    ? "bg-stone-800 text-stone-100"
+                    : "text-stone-500 hover:text-stone-300"
                 }`}
               >
                 🖥️
@@ -111,7 +115,9 @@ export function ArtifactView({
                 onClick={() => setViewport("tablet")}
                 title="Tablet View (768px)"
                 className={`p-1 rounded text-xs ${
-                  viewport === "tablet" ? "bg-stone-800 text-stone-100" : "text-stone-500 hover:text-stone-300"
+                  viewport === "tablet"
+                    ? "bg-stone-800 text-stone-100"
+                    : "text-stone-500 hover:text-stone-300"
                 }`}
               >
                 💻
@@ -121,7 +127,9 @@ export function ArtifactView({
                 onClick={() => setViewport("mobile")}
                 title="Mobile View (375px)"
                 className={`p-1 rounded text-xs ${
-                  viewport === "mobile" ? "bg-stone-800 text-stone-100" : "text-stone-500 hover:text-stone-300"
+                  viewport === "mobile"
+                    ? "bg-stone-800 text-stone-100"
+                    : "text-stone-500 hover:text-stone-300"
                 }`}
               >
                 📱

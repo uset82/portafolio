@@ -100,6 +100,24 @@ test("Jacobs Golfspill is playable from its live Netlify host", () => {
   assert.match(markup, /Play Jacobs Golfspill/);
 });
 
+test("QubeSolve is playable from its live Netlify host", () => {
+  const qubesolve = findArcadeGame("qubesolve");
+  assert.ok(qubesolve);
+  assert.equal(qubesolve.source.kind, "external");
+  assert.equal(resolveArcadeSource(qubesolve), "https://qubesolve.netlify.app/");
+  assert.equal(isArcadeGamePlayable(qubesolve), true);
+
+  const markup = renderToStaticMarkup(
+    createElement(ArcadeGameDetail, {
+      game: qubesolve,
+      source: resolveArcadeSource(qubesolve),
+    }),
+  );
+
+  assert.doesNotMatch(markup, /<iframe\b/, "no frame may exist before an explicit click");
+  assert.match(markup, /Play QubeSolve/);
+});
+
 test("the play shell loads nothing before the visitor presses play", () => {
   const mandelbro = findArcadeGame("mandelbro");
   assert.ok(mandelbro);

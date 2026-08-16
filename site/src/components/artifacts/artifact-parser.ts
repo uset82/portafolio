@@ -10,8 +10,7 @@ export type ParsedArtifact = {
 };
 
 export type MessageSegment =
-  | { type: "text"; content: string }
-  | { type: "artifact"; artifact: ParsedArtifact };
+  { type: "text"; content: string } | { type: "artifact"; artifact: ParsedArtifact };
 
 /**
  * Extracts artifact blocks (<artifact ...>...</artifact>) or standalone React/HTML code blocks
@@ -29,7 +28,8 @@ export function parseArtifactsFromMessage(content: string): {
   const segments: MessageSegment[] = [];
 
   // Match <artifact identifier="..." type="..." title="...">...</artifact>
-  const artifactRegex = /<artifact(?:\s+identifier="([^"]*)")?(?:\s+type="([^"]*)")?(?:\s+title="([^"]*)")?[^>]*>([\s\S]*?)<\/artifact>/gi;
+  const artifactRegex =
+    /<artifact(?:\s+identifier="([^"]*)")?(?:\s+type="([^"]*)")?(?:\s+title="([^"]*)")?[^>]*>([\s\S]*?)<\/artifact>/gi;
 
   let lastIndex = 0;
   let match: RegExpExecArray | null;
@@ -42,13 +42,14 @@ export function parseArtifactsFromMessage(content: string): {
 
     const id = match[1] || `artifact-${artifacts.length + 1}`;
     const typeStr = (match[2] || "application/react").toLowerCase();
-    const type: ArtifactType =
-      typeStr.includes("html") ? "text/html" : "application/react";
+    const type: ArtifactType = typeStr.includes("html") ? "text/html" : "application/react";
     const title = match[3] || "Interactive App";
     const innerContent = match[4] || "";
 
     // Extract code from inside markdown code fences if present
-    const fenceMatch = /```(?:tsx|jsx|javascript|typescript|html|react)?\s*([\s\S]*?)```/i.exec(innerContent);
+    const fenceMatch = /```(?:tsx|jsx|javascript|typescript|html|react)?\s*([\s\S]*?)```/i.exec(
+      innerContent,
+    );
     const code = (fenceMatch && fenceMatch[1] ? fenceMatch[1] : innerContent).trim();
 
     const parsed: ParsedArtifact = {
@@ -77,8 +78,13 @@ export function parseArtifactsFromMessage(content: string): {
 
       // Only treat as artifact if it contains React component structure or HTML document
       const isReactApp =
-        (codeLang === "tsx" || codeLang === "jsx" || codeLang === "typescript" || codeLang === "javascript") &&
-        /(export\s+default\s+function|function\s+\w+\s*\([^)]*\)\s*\{[\s\S]*return\s*\(|<[A-Z]\w+)/.test(codeBody);
+        (codeLang === "tsx" ||
+          codeLang === "jsx" ||
+          codeLang === "typescript" ||
+          codeLang === "javascript") &&
+        /(export\s+default\s+function|function\s+\w+\s*\([^)]*\)\s*\{[\s\S]*return\s*\(|<[A-Z]\w+)/.test(
+          codeBody,
+        );
       const isHtmlDoc = codeLang === "html" && /(<!DOCTYPE|<html|<div|<main)/i.test(codeBody);
 
       if (isReactApp || isHtmlDoc) {

@@ -139,6 +139,25 @@ test("StillasCalculator is a tools row with the live site Carlos provided", () =
   assert.doesNotMatch(markup, /<(?:iframe)\b/);
 });
 
+test("QubeSolve is a playable game in the Games group with the live Netlify solver", () => {
+  const qubesolve = GITHUB_REGISTER.find((repository) => repository.name === "QubeSolve");
+  const games = GITHUB_REGISTER_GROUPS.find((group) => group.id === "games");
+  const markup = renderToStaticMarkup(createElement(ProjectRegister));
+
+  assert.ok(qubesolve);
+  assert.ok(games);
+  assert.equal(qubesolve.title, "QubeSolve");
+  assert.equal(qubesolve.tryUrl, "https://qubesolve.netlify.app/");
+  assert.equal(qubesolve.tryLabel, "Solve with QubeSolve");
+  assert.equal(qubesolve.roomHref, "/arcade/qubesolve");
+  assert.equal(
+    games.repositories.some((repository) => repository.name === "QubeSolve"),
+    true,
+  );
+  assert.match(markup, /href="https:\/\/qubesolve\.netlify\.app\/"/);
+  assert.match(markup, /href="\/arcade\/qubesolve"/);
+});
+
 test("pacha is the Pasha restaurant site in Website creation", () => {
   const pacha = GITHUB_REGISTER.find((repository) => repository.name === "pacha");
   const websites = GITHUB_REGISTER_GROUPS.find((group) => group.id === "websites");
