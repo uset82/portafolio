@@ -524,6 +524,7 @@ function OrbitScene({
   const centerDragYaw = useRef(0);
   const pan = useRef({ x: 0, y: 0 });
   const projectedPosition = useMemo(() => new THREE.Vector3(), []);
+  const medallionWorld = useMemo(() => new THREE.Vector3(), []);
   const rimTiltAxis = useMemo(() => new THREE.Vector3(), []);
   const interaction = useRef({
     dragging: false,
@@ -786,6 +787,26 @@ function OrbitScene({
       if (material) material.opacity = entranceProgress > 0.12 + index * 0.06 ? 1 : 0;
     });
 
+    /* The nucleus in screen space. Labels are placed relative to it and culled
+     * against it, so both need it before any node is laid out. */
+    medallionWorld.set(0, ORBIT_MEDALLION_BASE_Y, 0).project(camera);
+    const medallionScreen = {
+      x: (medallionWorld.x * 0.5 + 0.5) * size.width,
+      y: (-medallionWorld.y * 0.5 + 0.5) * size.height,
+    };
+    const medallionScreenRadius = Math.min(size.width, size.height) * 0.17;
+
+    const labelLayouts: Array<{
+      label: HTMLButtonElement;
+      x: number;
+      y: number;
+      radialX: number;
+      depth: number;
+      selected: boolean;
+      hovered: boolean;
+      occluded: boolean;
+    }> = [];
+
     projects.forEach((project, index) => {
       const node = nodeRefs.current[index];
       if (!node) return;
@@ -864,42 +885,78 @@ function OrbitScene({
         projectedPosition.copy(position).project(camera);
         const screenX = (projectedPosition.x * 0.5 + 0.5) * size.width;
         const screenY = (-projectedPosition.y * 0.5 + 0.5) * size.height;
-        const offset = 54 * nextScale;
-        const dx = position.x;
-        const dy = position.y - ORBIT_MEDALLION_BASE_Y;
-        let translate = "translate(-50%, -50%)";
-        let labelX = screenX;
-        let labelY = screenY;
-        if (Math.abs(dx) > Math.abs(dy) * 1.1) {
-          if (dx < 0) {
-            translate = "translate(-100%, -50%)";
-            labelX -= offset;
-          } else {
-            translate = "translate(0, -50%)";
-            labelX += offset;
-          }
-        } else {
-          if (dy > 0) {
-            translate = "translate(-50%, -100%)";
-            labelY -= offset * 0.88;
-          } else {
-            translate = "translate(-50%, 0)";
-            labelY += offset * 0.88;
-          }
-        }
-        const labelVisibility =
-          size.width < 760
-            ? selected || hovered
+
+        /* Push the label away from the nucleus along the radial direction on
+         * screen, rather than along whichever world axis happened to dominate.
+         * The old axis rule sent labels for nodes near the centre straight over
+         * the medallion, which is how FUTURE ENERGY ended up covering the
+         * logo. */
+        const radialX = screenX - medallionScreen.x;
+        const radialY = screenY - medallionScreen.y;
+        const radialLength = Math.hypot(radialX, radialY) || 1;
+        const offset = 58 * nextScale;
+
+        labelLayouts.push({
+          label,
+          x: screenX + (radialX / radialLength) * offset,
+          y: screenY + (radialY / radialLength) * offset,
+          radialX: radialX / radialLength,
+          depth,
+          selected,
+          hovered,
+          /* Behind the medallion plane and inside its screen disc: the node is
+           * genuinely occluded, so its label must not float over the logo. */
+          occluded: depth < 0.5 && radialLength < medallionScreenRadius,
+        });
+      }
+    });
+
+    /* Second pass. Labels are laid out per node, but whether two of them
+     * collide is only knowable once every position is known. Nudge overlapping
+     * pairs apart vertically, nearest-to-camera winning, so a label never sits
+     * on another one. Front-to-back order also decides who moves. */
+    labelLayouts.sort((a, b) => b.depth - a.depth);
+
+    const minimumGapY = 30;
+    const minimumGapX = 118;
+    for (let i = 0; i < labelLayouts.length; i += 1) {
+      for (let j = i + 1; j < labelLayouts.length; j += 1) {
+        const a = labelLayouts[i]!;
+        const b = labelLayouts[j]!;
+        if (Math.abs(a.x - b.x) > minimumGapX) continue;
+        const gap = b.y - a.y;
+        if (Math.abs(gap) >= minimumGapY) continue;
+        const push = (minimumGapY - Math.abs(gap)) * (gap >= 0 ? 1 : -1);
+        b.y += push;
+      }
+    }
+
+    labelLayouts.forEach((layout) => {
+      const { label, selected, hovered, depth, occluded } = layout;
+      const active = selected || hovered;
+      const narrow = size.width < 760;
+      const visibility =
+        occluded && !active
+          ? 0
+          : narrow
+            ? active
               ? 1
               : depth > 0.55
                 ? 0.85
                 : 0
             : 0.58 + depth * 0.42;
-        label.style.transform = `translate(${labelX}px, ${labelY}px) ${translate}`;
-        label.style.opacity = String(labelVisibility * entrance);
-        label.style.zIndex = String(100 + Math.round(depth * 100));
-        label.dataset.active = String(selected || hovered);
-      }
+
+      const translate =
+        layout.radialX < -0.3
+          ? "translate(-100%, -50%)"
+          : layout.radialX > 0.3
+            ? "translate(0, -50%)"
+            : "translate(-50%, -50%)";
+
+      label.style.transform = `translate(${layout.x}px, ${layout.y}px) ${translate}`;
+      label.style.opacity = String(visibility * entrance);
+      label.style.zIndex = String(100 + Math.round(depth * 100));
+      label.dataset.active = String(active);
     });
 
     dotPositionAttributeRef.current.needsUpdate = true;
