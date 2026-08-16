@@ -78,6 +78,8 @@ export const OPEN_SOURCE = {
     "These carry an MIT licence, which means you can read, fork, change and reuse them. Open an issue, or send a pull request; both are read.",
   profileUrl: "https://github.com/uset82",
   profileLabel: "All repositories on GitHub",
+  repositoriesUrl: "https://github.com/uset82?tab=repositories",
+  repositoriesLabel: "See the repositories",
   /**
    * The honest counterpart to the invitation above. Counts come from the
    * licence audit, not from a live API call.
@@ -103,11 +105,12 @@ export const TIP: TipDestination = {
 };
 
 export const SUPPORT_TEASER = {
-  eyebrow: "Support / Contribute",
-  status: "4 MIT repositories",
-  heading: "The work you can help with.",
+  eyebrow: "GitHub / Contribute",
+  status: "The work is on GitHub",
+  heading: "Come in and look through the work.",
   description:
-    "Four repositories carry an MIT licence. Open an issue or send a pull request. The rest stay readable on GitHub until their licences change.",
+    "You are welcome to browse the repositories: games, music, AI, hardware, and tools. Four of them carry an MIT licence if you want to open an issue or send a pull request.",
+  threads: ["Games", "Music", "AI", "Hardware", "Tools"],
   actionLabel: "Contribute",
   actionHref: "/support",
 } as const;

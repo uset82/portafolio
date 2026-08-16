@@ -7,21 +7,26 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import { SupportTeaser } from "@/components/support-teaser";
-import { CONTRIBUTABLE_REPOS } from "@/content/support";
+import { OPEN_SOURCE, SUPPORT_TEASER } from "@/content/support";
 
-test("the homepage teaser names only the MIT repositories and one contribute door", () => {
+test("the homepage teaser welcomes visitors onto GitHub without listing unlicensed repos as contribute", () => {
   const markup = renderToStaticMarkup(createElement(SupportTeaser));
 
   assert.match(markup, /<section class="support-teaser" aria-labelledby="support-teaser-title">/);
-  assert.match(markup, /4 MIT repositories/);
+  assert.match(markup, /Come in and look through the work\./);
   assert.match(markup, /href="\/support"/);
+  assert.match(
+    markup,
+    new RegExp(`href="${OPEN_SOURCE.repositoriesUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`),
+  );
+  assert.match(markup, /tab=repositories/);
   assert.doesNotMatch(markup, /Buy [Mm]e a [Cc]offee/);
 
-  for (const repo of CONTRIBUTABLE_REPOS) {
-    assert.match(markup, new RegExp(repo.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  for (const thread of SUPPORT_TEASER.threads) {
+    assert.match(markup, new RegExp(thread));
   }
 
-  assert.doesNotMatch(markup, /href="https:\/\/github\.com\/uset82\/[^"]+"/);
+  assert.doesNotMatch(markup, /href="https:\/\/github\.com\/uset82\/[^"?]+"/);
   assert.doesNotMatch(markup, /<(?:iframe|form|button)\b/);
 });
 

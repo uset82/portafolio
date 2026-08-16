@@ -59,8 +59,8 @@ export function SupportRoom({ tipUrl }: SupportRoomProps) {
           <h3 id="support-licensing-title">{OPEN_SOURCE.licensingNote.heading}</h3>
           <p>{OPEN_SOURCE.licensingNote.body}</p>
           <small>Licence audit run {OPEN_SOURCE.licensingNote.auditedOn}.</small>
-          <ActionLink href={OPEN_SOURCE.profileUrl} target="_blank" rel="noreferrer">
-            {OPEN_SOURCE.profileLabel} <span aria-hidden="true">&#8599;</span>
+          <ActionLink href={OPEN_SOURCE.repositoriesUrl} target="_blank" rel="noreferrer">
+            {OPEN_SOURCE.repositoriesLabel} <span aria-hidden="true">&#8599;</span>
           </ActionLink>
         </aside>
       </section>
