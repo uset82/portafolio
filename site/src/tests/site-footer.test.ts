@@ -20,7 +20,7 @@ test("footer closes with one honest contact path and one verified public profile
 
   assert.match(markup, /<footer class="site-footer" aria-labelledby="footer-contact-title">/);
   assert.match(markup, /Let’s turn a difficult idea into a working system/);
-  assert.match(markup, /The contact route remains privacy-first/);
+  assert.doesNotMatch(markup, /The contact route remains privacy-first/);
   assert.match(markup, /aria-label="Primary site navigation"/);
   assert.match(markup, /aria-label="Explore and external links"/);
   assert.match(markup, /Play/);

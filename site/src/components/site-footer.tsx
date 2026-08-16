@@ -55,7 +55,6 @@ export function SiteFooter({
             >
               {content.primaryAction.label} <span aria-hidden="true">→</span>
             </ActionLink>
-            <p className="site-footer__disclaimer">{content.description}</p>
           </div>
         </section>
 
