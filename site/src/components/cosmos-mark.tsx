@@ -1,9 +1,15 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
 /**
  * Cosmos mark: ASTROEA's natal-chart wheel holding Pináculo's rising triangle.
  *
  * 24 ticks = Pináculo positions. Every second tick is longer = 12 houses.
  * The triangle is the pinnacle, rising from the horizon (ASC–DSC) toward MC.
  * The line below the base is IC / the unpublished side. No zodiac glyphs.
+ *
+ * Gyroscope / Compass: Rotates dynamically with phone orientation on iOS & Android like a compass.
  */
 const CX = 50;
 const CY = 50;
@@ -26,33 +32,158 @@ const ticks = Array.from({ length: 24 }, (_, index) => {
 
 type CosmosMarkProps = {
   className?: string;
+  enableCompass?: boolean;
 };
 
-export function CosmosMark({ className }: CosmosMarkProps) {
+export function CosmosMark({ className, enableCompass = true }: CosmosMarkProps) {
+  const containerRef = useRef<SVGSVGElement | null>(null);
+  const dialRef = useRef<SVGGElement | null>(null);
+
+  useEffect(() => {
+    if (!enableCompass || typeof window === "undefined") return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion) return;
+
+    let animId: number;
+    let currentAngle = 0;
+    let targetAngle = 0;
+    let currentTiltX = 0;
+    let targetTiltX = 0;
+    let currentTiltY = 0;
+    let targetTiltY = 0;
+    let isDeviceActive = false;
+
+    const updateFrame = () => {
+      // Shortest path interpolation for circular compass angle
+      let diff = (targetAngle - currentAngle) % 360;
+      if (diff > 180) diff -= 360;
+      if (diff < -180) diff += 360;
+      currentAngle += diff * 0.08;
+
+      currentTiltX += (targetTiltX - currentTiltX) * 0.08;
+      currentTiltY += (targetTiltY - currentTiltY) * 0.08;
+
+      if (dialRef.current) {
+        dialRef.current.style.transform = `rotate(${currentAngle.toFixed(2)}deg)`;
+      }
+      if (containerRef.current) {
+        containerRef.current.style.transform = `perspective(600px) rotateX(${currentTiltX.toFixed(2)}deg) rotateY(${currentTiltY.toFixed(2)}deg)`;
+      }
+
+      animId = requestAnimationFrame(updateFrame);
+    };
+
+    const handleOrientation = (event: DeviceOrientationEvent) => {
+      isDeviceActive = true;
+      const iosHeading = (event as unknown as { webkitCompassHeading?: number }).webkitCompassHeading;
+      if (typeof iosHeading === "number" && !isNaN(iosHeading)) {
+        // True/magnetic compass heading on iOS Safari
+        targetAngle = -iosHeading;
+      } else if (event.alpha !== null && !isNaN(event.alpha)) {
+        // Standard Android/Web compass orientation
+        targetAngle = -event.alpha;
+      }
+
+      if (event.beta !== null && event.gamma !== null) {
+        targetTiltX = Math.max(-15, Math.min(15, (event.beta - 45) * 0.3));
+        targetTiltY = Math.max(-15, Math.min(15, event.gamma * 0.3));
+      }
+    };
+
+    const handlePointerMove = (event: PointerEvent) => {
+      if (isDeviceActive) return;
+      const rect = containerRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const deltaX = (event.clientX - centerX) / (window.innerWidth / 2);
+      const deltaY = (event.clientY - centerY) / (window.innerHeight / 2);
+
+      targetAngle = deltaX * 18;
+      targetTiltX = -deltaY * 12;
+      targetTiltY = deltaX * 12;
+    };
+
+    const handlePointerLeave = () => {
+      if (isDeviceActive) return;
+      targetAngle = 0;
+      targetTiltX = 0;
+      targetTiltY = 0;
+    };
+
+    window.addEventListener("deviceorientation", handleOrientation, { passive: true });
+    window.addEventListener(
+      "deviceorientationabsolute" as unknown as keyof WindowEventMap,
+      handleOrientation as unknown as EventListener,
+      { passive: true },
+    );
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("pointerleave", handlePointerLeave, { passive: true });
+
+    animId = requestAnimationFrame(updateFrame);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener("deviceorientation", handleOrientation);
+      window.removeEventListener(
+        "deviceorientationabsolute" as unknown as keyof WindowEventMap,
+        handleOrientation as unknown as EventListener,
+      );
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerleave", handlePointerLeave);
+    };
+  }, [enableCompass]);
+
+  const requestGyroPermission = async () => {
+    if (
+      typeof window !== "undefined" &&
+      typeof (DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> })
+        .requestPermission === "function"
+    ) {
+      try {
+        await (
+          DeviceOrientationEvent as unknown as { requestPermission: () => Promise<string> }
+        ).requestPermission();
+      } catch {
+        // Gracefully ignore refusal
+      }
+    }
+  };
+
   return (
     <svg
+      ref={containerRef}
       className={className}
       viewBox="0 0 100 100"
       fill="none"
       aria-hidden="true"
       focusable="false"
+      onClick={requestGyroPermission}
+      onTouchStart={requestGyroPermission}
     >
-      <circle className="cosmos-mark__ring" cx={CX} cy={CY} r="44.6" />
-      <circle className="cosmos-mark__ring cosmos-mark__ring--inner" cx={CX} cy={CY} r="28.5" />
-      {ticks.map((tick) => (
-        <line
-          key={tick.key}
-          className="cosmos-mark__tick"
-          x1={tick.x1}
-          y1={tick.y1}
-          x2={tick.x2}
-          y2={tick.y2}
-        />
-      ))}
-      <line className="cosmos-mark__axis" x1="18" y1="58" x2="82" y2="58" />
-      <line className="cosmos-mark__axis" x1="50" y1="22" x2="50" y2="78" />
-      <polygon className="cosmos-mark__peak" points="50,24 32,58 68,58" />
-      <polygon className="cosmos-mark__diamond" points="50,20.4 53.4,24 50,27.6 46.6,24" />
+      <g
+        ref={dialRef}
+        className="cosmos-mark__dial"
+        style={{ transformOrigin: "50px 50px" }}
+      >
+        <circle className="cosmos-mark__ring" cx={CX} cy={CY} r="44.6" />
+        <circle className="cosmos-mark__ring cosmos-mark__ring--inner" cx={CX} cy={CY} r="28.5" />
+        {ticks.map((tick) => (
+          <line
+            key={tick.key}
+            className="cosmos-mark__tick"
+            x1={tick.x1}
+            y1={tick.y1}
+            x2={tick.x2}
+            y2={tick.y2}
+          />
+        ))}
+        <line className="cosmos-mark__axis" x1="18" y1="58" x2="82" y2="58" />
+        <line className="cosmos-mark__axis" x1="50" y1="22" x2="50" y2="78" />
+        <polygon className="cosmos-mark__peak" points="50,24 32,58 68,58" />
+        <polygon className="cosmos-mark__diamond" points="50,20.4 53.4,24 50,27.6 46.6,24" />
+      </g>
     </svg>
   );
 }

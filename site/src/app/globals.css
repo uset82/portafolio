@@ -8055,9 +8055,16 @@ body:has(.observatory-hero) .site-header .site-header__status {
   .personal-teaser__field {
     grid-row: 2;
     width: 100%;
-    max-width: none;
-    aspect-ratio: 1;
-    justify-self: stretch;
+    max-width: 26rem;
+    aspect-ratio: 1 / 1;
+    margin-inline: auto;
+    justify-self: center;
+    border-radius: var(--radius-card, 0.75rem);
+  }
+
+  .personal-teaser__mark {
+    inset: 14% 12% 20%;
+    transform-origin: 50% 50%;
   }
 
   .personal-teaser__copy h2 {
