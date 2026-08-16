@@ -11,10 +11,10 @@ type ArcadeTeaserProps = {
 /**
  * The homepage's one claim about the arcade.
  *
- * The count and the named titles come from the resolved roster, so this section
- * cannot promise a playable game that the deployment does not serve. When
- * nothing resolves it says so and still offers the route, because the arcade
- * page is worth reading even when its games are waiting on hosting.
+ * The count comes from the resolved roster, so this section cannot promise a
+ * playable game that the deployment does not serve. Game titles live on
+ * `/arcade`; repeating them here would make the click a second reading of the
+ * same list. When nothing resolves it says so and still offers the route.
  */
 export function ArcadeTeaser({ playable, total }: ArcadeTeaserProps) {
   const headingId = "arcade-teaser-title";
@@ -36,18 +36,6 @@ export function ArcadeTeaser({ playable, total }: ArcadeTeaserProps) {
             ? "Games I built, running in the browser. Nothing loads until you press play, and every game that is not playable here says exactly why."
             : "Every game I have built, with its engine, controls, built size, and the specific reason it is not yet playable on this page."}
         </p>
-
-        {hasPlayable ? (
-          <ul className="arcade-teaser__titles" aria-label="Games you can play now">
-            {playable.map((game, index) => (
-              <li key={game.id}>
-                <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                <ActionLink href={`/arcade/${game.slug}`}>{game.title}</ActionLink>
-                <small>{game.tagline}</small>
-              </li>
-            ))}
-          </ul>
-        ) : null}
 
         <ActionLink className="arcade-teaser__action" href="/arcade">
           Enter the Arcade <span aria-hidden="true">&#8594;</span>
