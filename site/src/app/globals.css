@@ -3214,14 +3214,19 @@ body:has(.observatory-hero) .site-header .site-header__status {
 
 .profile-teaser__blend {
   width: 100%;
-  height: clamp(140px, 18vw, 240px);
+  height: clamp(200px, 26vw, 380px);
+  margin-bottom: -1px;
   background: linear-gradient(
     180deg,
-    var(--color-canvas) 0%,
-    var(--color-linen) 22%,
-    var(--scene-sand) 44%,
-    var(--color-oak) 62%,
-    var(--scene-deep-wood) 82%,
+    rgba(42, 29, 22, 0) 0%,
+    rgba(42, 29, 22, 0.015) 10%,
+    rgba(42, 29, 22, 0.05) 22%,
+    rgba(42, 29, 22, 0.12) 34%,
+    rgba(42, 29, 22, 0.22) 46%,
+    rgba(42, 29, 22, 0.36) 58%,
+    rgba(42, 29, 22, 0.54) 70%,
+    rgba(42, 29, 22, 0.74) 82%,
+    rgba(42, 29, 22, 0.9) 92%,
     var(--color-deep-espresso) 100%
   );
 }
