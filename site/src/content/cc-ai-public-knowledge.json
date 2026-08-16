@@ -73,7 +73,13 @@
       ],
       "verification": "user-approved",
       "rights": "not-applicable",
-      "sourceIds": ["github-uset82", "github-astraea", "public-astraea-demo", "github-pinaculo", "public-pinaculo-demo"]
+      "sourceIds": [
+        "github-uset82",
+        "github-astraea",
+        "public-astraea-demo",
+        "github-pinaculo",
+        "public-pinaculo-demo"
+      ]
     }
   ],
   "exclusions": [

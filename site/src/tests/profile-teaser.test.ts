@@ -20,10 +20,10 @@ test("profile teaser publishes only approved biography and privacy-safe paths", 
   assert.match(markup, /many ways/);
   assert.match(markup, /The practice behind all of it/);
   assert.match(markup, /Explore profile and CV/);
+  assert.match(markup, /AI and electronics/);
+  assert.match(markup, /Resilient energy/);
+  assert.match(markup, /Music and symbolic systems/);
 
-  // Direction 4a puts the heading at full display scale and lets /story carry
-  // the detail. The role line, the practice-thread list and the GitHub link all
-  // moved out of this section, so the close reads as one statement.
   assert.doesNotMatch(markup, /presenting verified work separately from prototypes/);
   assert.doesNotMatch(markup, /href="https:\/\/github\.com\/uset82"/);
   assert.equal((markup.match(/<li>/g) ?? []).length, 0);

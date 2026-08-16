@@ -131,7 +131,12 @@ export const guideVisitorSite = (message: string): VisitorSiteGuide | null => {
   ) {
     return {
       answer: cosmosAnswer,
-      sourceIds: ["github-astraea", "public-astraea-demo", "github-pinaculo", "public-pinaculo-demo"],
+      sourceIds: [
+        "github-astraea",
+        "public-astraea-demo",
+        "github-pinaculo",
+        "public-pinaculo-demo",
+      ],
     };
   }
 
