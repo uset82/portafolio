@@ -1,4 +1,4 @@
-import { ActionLink } from "@/components/ui";
+import Link from "next/link";
 import type { SiteMetadata } from "@/content/schemas";
 
 type ProfileTeaserProps = {
@@ -6,68 +6,43 @@ type ProfileTeaserProps = {
 };
 
 /**
- * The closing section — direction 1b.
+ * The closing section — Direction 4a ("One blend").
  *
- * The heading now carries the section at display scale instead of sitting in a
- * narrow right-hand column beside an empty half of the page, and the practice
- * threads read as three serif rows rather than three small pills.
- *
- * The invitation is no longer here: it lives at the top of the footer, where
- * the dark band gives it the contrast a closing action needs. `footer` is
- * therefore no longer a prop of this component.
+ * Heading carries the section at full display scale, paired directly with the
+ * concise practice statement and editorial link to explore the CV on /story.
+ * Transitions directly into espresso via the gradient blend band.
  */
 export function ProfileTeaser({ content }: ProfileTeaserProps) {
   const headingId = "profile-teaser-title";
 
   return (
     <section className="profile-teaser" aria-labelledby={headingId}>
-      <div className="profile-teaser__copy">
-        <header>
-          <p className="section-label">About / 04</p>
-          <p className="profile-teaser__role">{content.role}</p>
-        </header>
+      <div className="profile-teaser__surface">
+        <div className="profile-teaser__copy">
+          <h2 id={headingId} className="profile-teaser__heading">
+            {renderHeading(content.heading, content.headingAccent)}
+          </h2>
 
-        {/* If `profileTeaser.headingAccent` is added to the schema, the words it
-         * names are wrapped in <em> and set in italic walnut. Until then the
-         * heading prints plain, which is also a valid reading of the design. */}
-        <h2 id={headingId}>{renderHeading(content.heading, content.headingAccent)}</h2>
-
-        <div className="profile-teaser__lower">
-          {/* Three parallel threads, not three steps: numbering them implied an
-           * order that does not exist, so the numerals are labels, not ranks. */}
-          <div className="profile-teaser__threads">
-            <ul>
-              {content.practiceThreads.map((thread, index) => (
-                <li key={thread}>
-                  <span>{thread}</span>
-                  <span aria-hidden="true">
-                    THREAD {String(index + 1).padStart(2, "0")}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="profile-teaser__summary">
-            {/* `content.biography` is what /story publishes in full. Printing it
-             * here as well meant the click delivered nothing new. */}
+          <div className="profile-teaser__meta">
             <p className="profile-teaser__biography">
-              The practice behind all of it, and the CV that goes with it — written out rather
-              than summarised here.
+              The practice behind all of it, and the CV that goes with it — written out rather than
+              summarised here.
             </p>
-            <nav className="profile-teaser__actions" aria-label="Profile and CV paths">
-              <ActionLink variant="secondary" href={content.primaryAction.href}>
-                {content.primaryAction.label} <span aria-hidden="true">&#8594;</span>
-              </ActionLink>
+            <nav className="profile-teaser__actions" aria-label="Profile and CV path">
+              <Link href={content.primaryAction.href} className="profile-teaser__link">
+                {content.primaryAction.label} <span aria-hidden="true">→</span>
+              </Link>
             </nav>
           </div>
         </div>
+
+        <div className="profile-teaser__blend" aria-hidden="true" />
       </div>
     </section>
   );
 }
 
-/** Splits the heading once around `accent` so the emphasis stays in content. */
+/** Splits the heading around `accent` so the editorial italic emphasis stays clean. */
 function renderHeading(heading: string, accent?: string) {
   if (!accent) return heading;
   const at = heading.indexOf(accent);
@@ -76,7 +51,7 @@ function renderHeading(heading: string, accent?: string) {
   return (
     <>
       {heading.slice(0, at)}
-      <em>{accent}</em>
+      <em className="profile-teaser__accent">{accent}</em>
       {heading.slice(at + accent.length)}
     </>
   );

@@ -1,98 +1,103 @@
 import Link from "next/link";
+import type { SiteMetadata } from "@/content/schemas";
 
-import { ActionLink } from "@/components/ui";
-import type { LinkRecord, SiteMetadata } from "@/content/schemas";
-
-type FooterLink = Pick<LinkRecord, "href" | "label">;
+type FooterLink = {
+  href: string;
+  label: string;
+};
 
 type SiteFooterProps = {
   content: SiteMetadata["footer"];
-  /** The four doors, in menu order. */
-  navigation: FooterLink[];
-  /** Everything reachable but not an arrival decision. */
-  secondaryNavigation: FooterLink[];
+  navigation?: readonly FooterLink[];
+  secondaryNavigation?: readonly FooterLink[];
 };
 
+const DEFAULT_PRIMARY_NAV: FooterLink[] = [
+  { label: "Play", href: "/arcade" },
+  { label: "See", href: "/work" },
+  { label: "Listen", href: "/sound" },
+  { label: "About", href: "/story" },
+];
+
+const DEFAULT_SECONDARY_NAV: FooterLink[] = [
+  { label: "Laboratory", href: "/laboratory" },
+  { label: "Cosmos", href: "/cosmos" },
+  { label: "Support", href: "/support" },
+];
+
 /**
- * The close — direction 1b.
- *
- * The invitation moved down here from About. Above, the parchment section ends
- * on the CV link; the dark band opens with the ask, and the signature row sits
- * under it. One ending, on one surface, instead of two competing ones.
+ * The closing footer — Direction 4a ("One blend").
+ * Sits on dark espresso following the parchment-to-espresso blend band.
+ * Contains the direct ask, pill CTA, privacy note, split navigation doors, and copyright signature.
  */
-export function SiteFooter({ content, navigation, secondaryNavigation }: SiteFooterProps) {
-  const inviteId = "footer-contact-title";
-  // Contact is the action directly above. Listing it again in the route grid
-  // put the same destination on the page twice, two inches apart.
-  const alsoHere = secondaryNavigation.filter((item) => item.href !== content.primaryAction.href);
+export function SiteFooter({
+  content,
+  navigation = DEFAULT_PRIMARY_NAV,
+  secondaryNavigation = DEFAULT_SECONDARY_NAV,
+}: SiteFooterProps) {
+  const contactTitleId = "footer-contact-title";
 
   return (
-    <footer className="site-footer" aria-labelledby={inviteId}>
-      <section className="site-footer__invite" aria-labelledby={inviteId}>
-        <div>
-          <p className="section-label">Work together</p>
-          <h2 id={inviteId}>{content.heading}</h2>
-        </div>
-        <div>
-          <p>{content.description}</p>
-          <nav className="site-footer__actions" aria-label="Contact">
-            <ActionLink variant="primary" href={content.primaryAction.href}>
-              {content.primaryAction.label} <span aria-hidden="true">&#8594;</span>
-            </ActionLink>
-          </nav>
-        </div>
-      </section>
+    <footer className="site-footer" aria-labelledby={contactTitleId}>
+      <div className="site-footer__surface">
+        {/* Top: The ask */}
+        <div className="site-footer__ask">
+          <p id={contactTitleId} className="site-footer__statement">
+            Let’s turn a difficult idea into a working system.
+          </p>
 
-      <div className="site-footer__signature">
-        <div className="site-footer__identity">
-          <h2>
-            Carlos Alfredo
-            <br />
-            Carpio Meza
-          </h2>
-          <p>Engineer · Inventor · Creative Technologist</p>
-        </div>
-
-        {/* Grouped rather than numbered 01–07: the four doors are a set, and the
-         * rest are somewhere else entirely. One run of numbers implied a single
-         * ordered list and hid that difference. */}
-        <div className="site-footer__routes site-footer__routes--primary">
-          <p>Start here</p>
-          <nav aria-label="Footer navigation">
-            {navigation.map((item) => (
-              <Link key={item.href} href={item.href}>
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-
-        <div className="site-footer__routes site-footer__routes--secondary">
-          <p>Also here</p>
-          <nav aria-label="Secondary footer navigation">
-            {alsoHere.map((item) => (
-              <Link key={item.href} href={item.href}>
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-
-        <div className="site-footer__routes site-footer__external">
-          <p>Elsewhere</p>
-          <nav aria-label="Public profile">
-            <Link href={content.secondaryAction.href} prefetch={false}>
-              {content.secondaryAction.label} <span aria-hidden="true">&#8599;</span>
-              <span className="visually-hidden"> — external site</span>
+          <div className="site-footer__action-row">
+            <Link href={content.contactAction.href} className="site-footer__cta">
+              {content.contactAction.label} <span aria-hidden="true">→</span>
             </Link>
+            <p className="site-footer__privacy">{content.privacyNote}</p>
+          </div>
+        </div>
+
+        <div className="site-footer__divider" aria-hidden="true" />
+
+        {/* Bottom: Navigation and copyright */}
+        <div className="site-footer__nav-row">
+          <nav className="site-footer__primary-nav" aria-label="Primary site navigation">
+            <ul>
+              {navigation.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href}>{item.label}</Link>
+                </li>
+              ))}
+            </ul>
           </nav>
+
+          <div className="site-footer__secondary-group">
+            <nav className="site-footer__secondary-nav" aria-label="Explore and external links">
+              <ul>
+                {secondaryNavigation.map((item) => (
+                  <li key={item.href}>
+                    <Link href={item.href}>{item.label}</Link>
+                  </li>
+                ))}
+                <li>
+                  <a
+                    href={content.publicProfile.href}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="site-footer__ext-link"
+                  >
+                    {content.publicProfile.label}
+                    <span className="sr-only"> (opens in new window, external site)</span>
+                    <span aria-hidden="true"> ↗</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+
+            <p className="site-footer__copyright">
+              <span className="site-footer__copy-mark">©</span> Carlos Alfredo Carpio Meza — Built
+              as a working system
+            </p>
+          </div>
         </div>
       </div>
-
-      <p className="site-footer__note">
-        © {new Date().getFullYear()} Carlos Alfredo Carpio Meza. Built as a semantic portfolio with
-        an optional immersive layer.
-      </p>
     </footer>
   );
 }
