@@ -1,30 +1,21 @@
 import Link from "next/link";
 
 import { ActionLink } from "@/components/ui";
+import { FOOTER_ES, linkLabelEs } from "@/content/i18n/records-es";
+import { ui } from "@/content/i18n/ui";
 import type { LinkRecord, SiteMetadata } from "@/content/schemas";
+import { resolveHref, type Locale } from "@/lib/i18n";
 
 type FooterLink = Pick<LinkRecord, "href" | "label">;
 
 type SiteFooterProps = {
   content: SiteMetadata["footer"];
+  locale?: Locale;
   /** Primary site routes. Defaults to the 4 main doors: Play, See, Listen, About */
   navigation?: FooterLink[];
   /** Secondary site routes. Defaults to Laboratory, Cosmos, Support */
   secondaryNavigation?: FooterLink[];
 };
-
-const DEFAULT_PRIMARY_NAV: FooterLink[] = [
-  { label: "Play", href: "/arcade" },
-  { label: "See", href: "/work" },
-  { label: "Listen", href: "/sound" },
-  { label: "About", href: "/story" },
-];
-
-const DEFAULT_SECONDARY_NAV: FooterLink[] = [
-  { label: "Laboratory", href: "/laboratory" },
-  { label: "Cosmos", href: "/cosmos" },
-  { label: "Support", href: "/support" },
-];
 
 /**
  * Site footer — Direction 4a ("One blend").
@@ -35,42 +26,65 @@ const DEFAULT_SECONDARY_NAV: FooterLink[] = [
  */
 export function SiteFooter({
   content,
-  navigation = DEFAULT_PRIMARY_NAV,
-  secondaryNavigation = DEFAULT_SECONDARY_NAV,
+  locale = "en",
+  navigation,
+  secondaryNavigation,
 }: SiteFooterProps) {
   const headingId = "footer-contact-title";
+  const copy = ui(locale);
+
+  const primary: FooterLink[] = navigation ?? [
+    { label: copy.footer.nav.play, href: "/arcade" },
+    { label: copy.footer.nav.see, href: "/work" },
+    { label: copy.footer.nav.listen, href: "/sound" },
+    { label: copy.footer.nav.about, href: "/story" },
+  ];
+
+  const secondary: FooterLink[] = secondaryNavigation ?? [
+    { label: copy.footer.nav.laboratory, href: "/laboratory" },
+    { label: copy.footer.nav.cosmos, href: "/cosmos" },
+    { label: copy.footer.nav.support, href: "/support" },
+  ];
+
+  const heading = locale === "es" ? FOOTER_ES.heading : content.heading;
+  const primaryLabel =
+    locale === "es"
+      ? linkLabelEs(content.primaryAction.id, content.primaryAction.label)
+      : content.primaryAction.label;
+  const secondaryLabel =
+    content.secondaryAction.label === "View GitHub" ? "GitHub" : content.secondaryAction.label;
 
   return (
     <footer className="site-footer" aria-labelledby={headingId}>
       <div className="site-footer__inner">
         <section className="site-footer__ask" aria-labelledby={headingId}>
           <h2 id={headingId} className="site-footer__heading">
-            {content.heading}
+            {heading}
           </h2>
           <div className="site-footer__action-row">
             <ActionLink
               variant="primary"
-              href={content.primaryAction.href}
+              href={resolveHref(locale, content.primaryAction.href)}
               className="site-footer__cta"
             >
-              {content.primaryAction.label} <span aria-hidden="true">→</span>
+              {primaryLabel} <span aria-hidden="true">→</span>
             </ActionLink>
           </div>
         </section>
 
         <div className="site-footer__nav-group">
           <div className="site-footer__nav-row">
-            <nav className="site-footer__primary-nav" aria-label="Primary site navigation">
-              {navigation.map((item) => (
-                <Link key={item.href} href={item.href}>
+            <nav className="site-footer__primary-nav" aria-label={copy.footer.primaryNavAria}>
+              {primary.map((item) => (
+                <Link key={item.href} href={resolveHref(locale, item.href)}>
                   {item.label}
                 </Link>
               ))}
             </nav>
 
-            <nav className="site-footer__secondary-nav" aria-label="Explore and external links">
-              {secondaryNavigation.map((item) => (
-                <Link key={item.href} href={item.href}>
+            <nav className="site-footer__secondary-nav" aria-label={copy.footer.secondaryNavAria}>
+              {secondary.map((item) => (
+                <Link key={item.href} href={resolveHref(locale, item.href)}>
                   {item.label}
                 </Link>
               ))}
@@ -79,19 +93,15 @@ export function SiteFooter({
                 prefetch={false}
                 className="site-footer__external-link"
               >
-                {content.secondaryAction.label === "View GitHub"
-                  ? "GitHub"
-                  : content.secondaryAction.label}{" "}
-                <span aria-hidden="true">↗</span>
-                <span className="visually-hidden"> — external site</span>
+                {secondaryLabel} <span aria-hidden="true">↗</span>
+                <span className="visually-hidden">{copy.common.externalSite}</span>
               </Link>
             </nav>
           </div>
         </div>
 
         <p className="site-footer__signature">
-          © {new Date().getFullYear()} Carlos Alfredo Carpio Meza · Engineer · Inventor · Creative
-          Technologist · Built as a semantic portfolio with an optional immersive layer.
+          © {new Date().getFullYear()} {copy.footer.signature}
         </p>
       </div>
     </footer>

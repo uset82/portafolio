@@ -82,7 +82,7 @@ test("every catalogued track carries a published URL and a stated licence", () =
 });
 
 test("the sound route mounts the room and keeps its responsive rules", () => {
-  const page = readFileSync(path.join(process.cwd(), "src/app/sound/page.tsx"), "utf8");
+  const page = readFileSync(path.join(process.cwd(), "src/app/(en)/sound/page.tsx"), "utf8");
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
 
   assert.match(page, /<SoundRoom \/>/);

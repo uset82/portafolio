@@ -5,9 +5,13 @@ import { siteContentSchema, type LinkRecord, type Project } from "./schemas";
 
 export const siteContent = siteContentSchema.parse(rawSiteContent);
 
-export const navigation = siteContent.navigation.map(({ href, label }) => ({ href, label }));
+export const navigation = siteContent.navigation.map(({ id, href, label }) => ({
+  id,
+  href,
+  label,
+}));
 
-export type NavigationItem = Pick<LinkRecord, "href" | "label">;
+export type NavigationItem = Pick<LinkRecord, "id" | "href" | "label">;
 
 export type SelectedSystem = {
   index: string;

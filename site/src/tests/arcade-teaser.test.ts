@@ -48,7 +48,7 @@ test("the teaser degrades honestly when nothing resolves", () => {
 });
 
 test("the homepage mounts the teaser from resolved roster data", () => {
-  const homepage = readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
+  const homepage = readFileSync(path.join(process.cwd(), "src/components/home-page.tsx"), "utf8");
 
   assert.match(homepage, /const playableGames = ARCADE_GAMES\.filter\(isArcadeGamePlayable\)/);
   assert.match(homepage, /<ArcadeTeaser playable=\{playableGames\} total=\{ARCADE_GAMES\.length\}/);
@@ -76,7 +76,12 @@ test("the homepage no longer describes sound as permanently silent", () => {
   const teaser = readFileSync(path.join(process.cwd(), "src/components/media-teaser.tsx"), "utf8");
 
   assert.doesNotMatch(teaser, /Playback remains off|Silent study/);
-  assert.match(teaser, /Press play to hear it/);
+  // The wording moved into the dictionary when the room went bilingual.
+  assert.match(teaser, /copy\.pressPlay/);
+  assert.match(
+    readFileSync(path.join(process.cwd(), "src/content/i18n/ui.ts"), "utf8"),
+    /Press play to hear it/,
+  );
 });
 
 test("MandelBro and Jacobs Golfspill are the games the teaser can currently promise", () => {

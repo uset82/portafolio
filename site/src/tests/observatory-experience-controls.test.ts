@@ -131,7 +131,7 @@ test("the mounted control source is semantic, discoverable, and keeps every fall
     path.join(process.cwd(), "src/components/three/observatory-progressive-experience.tsx"),
     "utf8",
   );
-  const homeSource = readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
+  const homeSource = readFileSync(path.join(process.cwd(), "src/components/home-page.tsx"), "utf8");
   const headerSource = readFileSync(
     path.join(process.cwd(), "src/components/site-header.tsx"),
     "utf8",
@@ -158,7 +158,7 @@ test("the mounted control source is semantic, discoverable, and keeps every fall
     homeSource,
     /<ObservatorySceneRuntimeProvider>[\s\S]*?<SceneReveal>[\s\S]*?<ObservatoryProgressiveExperienceContent[\s\S]*?<\/SceneReveal>[\s\S]*?<ObservatoryExperienceControls \/>/,
   );
-  assert.match(headerSource, /href="\/#observatory-experience-settings"/);
+  assert.match(headerSource, /#observatory-experience-settings/);
   assert.match(controlStyles, /min-height: var\(--control-height\)/);
   assert.match(
     controlStyles,

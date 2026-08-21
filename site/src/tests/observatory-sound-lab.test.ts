@@ -268,7 +268,7 @@ test("the scene owns one sparse Sound Lab mechanism without fake media or perpet
   const componentSource = readSource("src/components/three/observatory-sound-lab.tsx");
   const systemSource = readSource("src/lib/three/sound-lab-system.ts");
   const shellSource = readSource("src/components/three/observatory-scene-shell.tsx");
-  const pageSource = readSource("src/app/page.tsx");
+  const pageSource = readSource("src/components/home-page.tsx");
   const styles = readSource("src/app/globals.css");
 
   assert.match(componentSource, /InstancedMesh/);

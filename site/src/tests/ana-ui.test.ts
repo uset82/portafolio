@@ -161,8 +161,8 @@ test("typed and welcome-prompt questions stay on CC AI even when ANA transport i
 test("ANA chips do not replace the CACM AI trigger, skip link, or primary navigation", () => {
   const markup = renderToStaticMarkup(createElement(CcAiPanel));
   const panel = readSource("src/components/cc-ai-panel.tsx");
-  const home = readSource("src/app/page.tsx");
-  const layout = readSource("src/app/layout.tsx");
+  const home = readSource("src/components/home-page.tsx");
+  const layout = readSource("src/components/site-document.tsx");
   const navigation = readSource("src/content/records.ts");
 
   assert.match(markup, /<button[^>]+class="cc-ai-trigger"[^>]+aria-expanded="false"/);
@@ -214,12 +214,15 @@ test("Observatory specialist mapping is status, not separate chatbots", () => {
 });
 
 test("ANA UI keeps a reduced-motion and no-JS specialist status path", () => {
-  const home = readSource("src/app/page.tsx");
+  const home = readSource("src/components/home-page.tsx");
   const styles = readSource("src/app/globals.css");
   const panel = readSource("src/components/cc-ai-panel.tsx");
 
   assert.match(home, /<noscript>/);
-  assert.match(home, /CACM AI remains the public portfolio guide/);
+  // The note itself now lives in the dictionary, because the Spanish page
+  // renders the same no-script path with its own wording.
+  assert.match(home, /copy\.home\.guideNote/);
+  assert.match(readSource("src/content/i18n/ui.ts"), /CACM AI remains the public portfolio guide/);
   assert.match(home, /observatorySpecialistStatuses\(\)/);
   assert.match(styles, /\.ana-status__dot\s*\{[^}]*animation:\s*none/);
   assert.doesNotMatch(styles, /@keyframes\s+ana-/);

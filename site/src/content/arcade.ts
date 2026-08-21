@@ -187,10 +187,10 @@ export const ARCADE_GAMES: readonly ArcadeGame[] = [
     description:
       "A three-dimensional scene you play with your hands: MediaPipe reads the webcam and your grasp flicks cake to the crying baby, and a drag-and-flick mode carries machines without a camera. It is by far the heaviest thing here, so open it on a connection that can take it.",
     engine: "Vite, Three.js and MediaPipe Hands",
-    input: "Webcam hand tracking, with a touch fallback",
+    input: "Webcam hand tracking, with mouse and touch",
     controls: [
-      "Allow camera access, then move your hands in view",
-      "Touch mode is available without a camera",
+      "Allow camera access, then pinch to pick a cake up and let go to feed the baby",
+      "Or drag a cake with the mouse or your finger, no camera needed",
     ],
     mobile:
       "Needs HTTPS and camera permission, and it is a 33 MB download - unkind to a phone connection.",

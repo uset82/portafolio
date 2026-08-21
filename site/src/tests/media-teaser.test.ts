@@ -30,10 +30,10 @@ test("media teaser communicates identity and approval state without creating a p
 });
 
 test("homepage mounts the responsive teaser with focus and reduced-motion-safe feedback", () => {
-  const homepage = readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
+  const homepage = readFileSync(path.join(process.cwd(), "src/components/home-page.tsx"), "utf8");
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
 
-  assert.match(homepage, /<MediaTeaser content=\{metadata\.mediaTeaser\} \/>/);
+  assert.match(homepage, /<MediaTeaser content=\{metadata\.mediaTeaser\} locale=\{locale\} \/>/);
   assert.doesNotMatch(homepage, /sound-section|sound-index/);
   assert.match(styles, /\.media-teaser:focus-within \.media-teaser__instrument/);
   assert.match(styles, /\.media-teaser:hover \.media-teaser__instrument/);

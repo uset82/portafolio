@@ -232,7 +232,7 @@ test("debug is off by default and is not a public navigation target", () => {
     rawSiteContent.navigation.some((item) => item.href === "/ana/debug"),
     false,
   );
-  const page = readFileSync(path.join(process.cwd(), "src/app/ana/debug/page.tsx"), "utf8");
+  const page = readFileSync(path.join(process.cwd(), "src/app/(en)/ana/debug/page.tsx"), "utf8");
   assert.match(page, /robots:\s*\{\s*index:\s*false/);
   assert.match(page, /notFound\(\)/);
   assert.match(page, /isAnaDebugEnabled/);

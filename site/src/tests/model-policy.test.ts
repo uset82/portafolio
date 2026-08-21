@@ -46,6 +46,23 @@ test("prototype model can be overridden with a named free variant", () => {
   assert.equal(policy.variableSelection, false);
 });
 
+test("prototype policy accepts stealth/ox-alpha as a named extra model with the free-router fallback", () => {
+  const policy = createCcAiModelPolicy(
+    environment({
+      OPENROUTER_MODEL: "stealth/ox-alpha",
+      OPENROUTER_FALLBACK_MODELS: "openrouter/free",
+    }),
+  );
+
+  assert.equal(policy.primaryModel, "stealth/ox-alpha");
+  assert.deepEqual(policy.fallbackModels, ["openrouter/free"]);
+  assert.deepEqual(policy.requestedModels, ["stealth/ox-alpha", "openrouter/free"]);
+  assert.equal(policy.routingKind, "named-model");
+  assert.equal(policy.variableSelection, false);
+  assert.equal(policy.provider.dataCollection, "deny");
+  assert.equal(policy.provider.zdr, false);
+});
+
 test("ordered model fallbacks and strict provider constraints reach the OpenRouter request", () => {
   const policy = createCcAiModelPolicy(
     environment({

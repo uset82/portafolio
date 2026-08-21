@@ -8,8 +8,8 @@ function readSource(relativePath: string) {
 }
 
 test("the homepage preserves the Observatory layer stack and places Project Orbit before play, listen, and contribute", () => {
-  const home = readSource("src/app/page.tsx");
-  const layout = readSource("src/app/layout.tsx");
+  const home = readSource("src/components/home-page.tsx");
+  const layout = readSource("src/app/(en)/layout.tsx");
   const progressive = readSource("src/components/three/observatory-progressive-experience.tsx");
   const canvas = readSource("src/components/three/three-canvas.tsx");
 

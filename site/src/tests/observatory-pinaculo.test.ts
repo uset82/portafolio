@@ -249,7 +249,7 @@ test("the scene owns one instanced, bounded PINÁCULO path without numeric or gl
   const systemSource = readSource("src/lib/three/pinaculo-system.ts");
   const shellSource = readSource("src/components/three/observatory-scene-shell.tsx");
   const accessSource = readSource("src/components/three/observatory-artifact-access.tsx");
-  const pageSource = readSource("src/app/page.tsx");
+  const pageSource = readSource("src/components/home-page.tsx");
   const styles = readSource("src/app/globals.css");
 
   assert.match(pinaculoSource, /InstancedMesh/);

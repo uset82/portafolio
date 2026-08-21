@@ -36,7 +36,7 @@ test("personal teaser names the public apps without publishing private stories",
 });
 
 test("homepage mounts the copy-first responsive teaser with focus and reduced-motion feedback", () => {
-  const homepage = readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
+  const homepage = readFileSync(path.join(process.cwd(), "src/components/home-page.tsx"), "utf8");
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
   const personalIndex = homepage.indexOf("<PersonalTeaser");
   const supportIndex = homepage.indexOf("<SupportTeaser");

@@ -1,19 +1,11 @@
-import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 
 import { MotionProvider } from "@/components/motion-provider";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { ui } from "@/content/i18n/ui";
 import { navigation, siteContent } from "@/content/site";
-
-import "./globals.css";
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  viewportFit: "cover",
-  interactiveWidget: "resizes-content",
-};
+import type { Locale } from "@/lib/i18n";
 
 const displayFont = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -30,19 +22,23 @@ const bodyFont = Manrope({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: "Carlos Alfredo Carpio Meza — Engineer, Inventor, Creative Technologist",
-    template: "%s — Carlos Alfredo Carpio Meza",
-  },
-  description:
-    "Carlos Alfredo Carpio Meza turns hidden patterns across AI, electronics, future energy, music, astrology, and numerology into working systems.",
-};
+/**
+ * The document both language trees render.
+ *
+ * Each locale has its own root layout so it can declare its own `lang`, and
+ * both delegate here: the chrome, the fonts and the no-script fallback are the
+ * same page furniture in either language, and duplicating them would let the
+ * two versions drift apart one fix at a time.
+ */
+export function SiteDocument({
+  locale,
+  children,
+}: Readonly<{ locale: Locale; children: React.ReactNode }>) {
+  const copy = ui(locale);
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
-      lang="en"
+      lang={locale}
       className={`${displayFont.variable} ${bodyFont.variable}`}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
@@ -57,11 +53,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </noscript>
         <MotionProvider>
           <a className="skip-link" href="#main-content">
-            Skip to main content
+            {copy.common.skipToContent}
           </a>
-          <SiteHeader navigation={navigation} />
+          <SiteHeader navigation={navigation} locale={locale} />
           {children}
-          <SiteFooter content={siteContent.metadata.footer} />
+          <SiteFooter content={siteContent.metadata.footer} locale={locale} />
         </MotionProvider>
       </body>
     </html>

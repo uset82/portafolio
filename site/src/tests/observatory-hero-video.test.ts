@@ -18,7 +18,7 @@ test("the hero video never replaces the server-rendered still poster", () => {
   // page's client-only CSS modules.
   assert.equal(renderToStaticMarkup(createElement(ObservatoryHeroVideo)), "");
 
-  const page = readSource("src/app/page.tsx");
+  const page = readSource("src/components/home-page.tsx");
   assert.match(page, /src="\/images\/robot-water-poster\.jpg"/);
   assert.equal(
     page.indexOf("/images/robot-water-poster.jpg") < page.indexOf("<ObservatoryHeroVideo />"),
@@ -83,7 +83,7 @@ test("the held presentation unmounts the artifact overlays", () => {
   const experience = readSource("src/components/three/observatory-progressive-experience.tsx");
 
   assert.match(experience, /liveCanvasHeld\s*\n?\s*\? null\s*\n?\s*: artifacts\.map/);
-  const page = readSource("src/app/page.tsx");
+  const page = readSource("src/components/home-page.tsx");
   assert.match(page, /artifacts=\{observatoryArtifacts\}/);
   assert.doesNotMatch(page, /laboratory-section/);
 });

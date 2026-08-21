@@ -4,14 +4,14 @@ import test from "node:test";
 import { createElement, type ComponentType } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
-import ArcadePage from "@/app/arcade/page";
-import ContactPage from "@/app/contact/page";
-import CosmosPage from "@/app/cosmos/page";
-import LaboratoryPage from "@/app/laboratory/page";
-import SoundPage from "@/app/sound/page";
-import StoryPage from "@/app/story/page";
-import SupportPage from "@/app/support/page";
-import WorkPage from "@/app/work/page";
+import ArcadePage from "@/app/(en)/arcade/page";
+import ContactPage from "@/app/(en)/contact/page";
+import CosmosPage from "@/app/(en)/cosmos/page";
+import LaboratoryPage from "@/app/(en)/laboratory/page";
+import SoundPage from "@/app/(en)/sound/page";
+import StoryPage from "@/app/(en)/story/page";
+import SupportPage from "@/app/(en)/support/page";
+import WorkPage from "@/app/(en)/work/page";
 
 type CoreRoute = {
   name: string;

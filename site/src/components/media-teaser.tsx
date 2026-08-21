@@ -1,17 +1,21 @@
 import { ActionLink } from "@/components/ui";
+import { ui } from "@/content/i18n/ui";
 import type { SiteMetadata } from "@/content/schemas";
+import { resolveHref, type Locale } from "@/lib/i18n";
 
 type MediaTeaserProps = {
   content: SiteMetadata["mediaTeaser"];
+  locale?: Locale;
 };
 
-export function MediaTeaser({ content }: MediaTeaserProps) {
+export function MediaTeaser({ content, locale = "en" }: MediaTeaserProps) {
+  const copy = ui(locale).mediaTeaser;
   const headingId = "media-teaser-title";
 
   return (
     <section className="media-teaser" aria-labelledby={headingId}>
       <div className="media-teaser__instrument" aria-hidden="true">
-        <span className="media-teaser__instrument-label">Sound / Listen</span>
+        <span className="media-teaser__instrument-label">{copy.instrumentLabel}</span>
         <svg className="media-teaser__mark" viewBox="0 0 96 96" focusable="false">
           <g className="media-teaser__vinyl">
             <circle className="media-teaser__disc" cx="48" cy="38" r="26" />
@@ -37,7 +41,7 @@ export function MediaTeaser({ content }: MediaTeaserProps) {
             <rect className="media-teaser__bar" x="80" y="81" width="4" height="5" />
           </g>
         </svg>
-        <small>Press play to hear it</small>
+        <small>{copy.pressPlay}</small>
       </div>
 
       <div className="media-teaser__copy">
@@ -48,7 +52,7 @@ export function MediaTeaser({ content }: MediaTeaserProps) {
         </p>
         <h2 id={headingId}>{content.heading}</h2>
         <p className="media-teaser__description">{content.description}</p>
-        <ul className="media-teaser__formats" aria-label="Music and video">
+        <ul className="media-teaser__formats" aria-label={copy.formatsAria}>
           {content.formats.map((format, index) => (
             <li key={format}>
               <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
@@ -56,7 +60,10 @@ export function MediaTeaser({ content }: MediaTeaserProps) {
             </li>
           ))}
         </ul>
-        <ActionLink className="media-teaser__action" href={content.action.href}>
+        <ActionLink
+          className="media-teaser__action"
+          href={resolveHref(locale, content.action.href)}
+        >
           {content.action.label} <span aria-hidden="true">→</span>
         </ActionLink>
       </div>

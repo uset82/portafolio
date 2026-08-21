@@ -45,7 +45,7 @@ test("Cosmos features the public apps without publishing a private story or coll
 });
 
 test("Cosmos keeps a cardless responsive atlas with touch and reduced-motion safeguards", () => {
-  const page = readFileSync(path.join(process.cwd(), "src/app/cosmos/page.tsx"), "utf8");
+  const page = readFileSync(path.join(process.cwd(), "src/app/(en)/cosmos/page.tsx"), "utf8");
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
 
   assert.match(page, /<CosmosFoundation/);

@@ -319,7 +319,7 @@ test("one sparse drone owner is wired with visibility pause, DOM fallback, and n
     "src/components/three/observatory-progressive-experience.tsx",
   );
   const capabilitySource = readSource("src/components/three/observatory-capability-controller.tsx");
-  const pageSource = readSource("src/app/page.tsx");
+  const pageSource = readSource("src/components/home-page.tsx");
   const recordsSource = readSource("src/content/records.ts");
   const styles = readSource("src/app/globals.css");
   const manifest = readSource("../docs/assets/observatory-3d-manifest.json");

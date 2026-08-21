@@ -182,7 +182,7 @@ test("scene status remains truthful from capability check through loading and fa
 });
 
 test("poster markup precedes the conditional Canvas and Three stays behind dynamic boundaries", () => {
-  const pageSource = readSource("src/app/page.tsx");
+  const pageSource = readSource("src/components/home-page.tsx");
   const experienceSource = readSource(
     "src/components/three/observatory-progressive-experience.tsx",
   );

@@ -3,6 +3,8 @@
 import { useId, useRef, useState } from "react";
 
 import { ActionButton, ActionLink } from "@/components/ui";
+import { ui } from "@/content/i18n/ui";
+import type { Locale } from "@/lib/i18n";
 
 type GameFrameProps = {
   title: string;
@@ -12,6 +14,7 @@ type GameFrameProps = {
   sameOrigin: boolean;
   controls: readonly string[];
   needsCamera: boolean;
+  locale?: Locale;
 };
 
 /**
@@ -24,7 +27,15 @@ type GameFrameProps = {
  * hosted service keeps `allow-same-origin` so it can reach its own back end,
  * which is a different origin from this one either way.
  */
-export function GameFrame({ title, src, sameOrigin, controls, needsCamera }: GameFrameProps) {
+export function GameFrame({
+  title,
+  src,
+  sameOrigin,
+  controls,
+  needsCamera,
+  locale = "en",
+}: GameFrameProps) {
+  const copy = ui(locale).gameFrame;
   const [playing, setPlaying] = useState(false);
   const statusId = useId();
   const frameRef = useRef<HTMLIFrameElement>(null);
@@ -34,14 +45,14 @@ export function GameFrame({ title, src, sameOrigin, controls, needsCamera }: Gam
     : "allow-scripts allow-same-origin allow-pointer-lock allow-popups";
 
   return (
-    <section className="game-frame" aria-label={`Play ${title}`} aria-describedby={statusId}>
+    <section className="game-frame" aria-label={copy.playAria(title)} aria-describedby={statusId}>
       <div className="game-frame__viewport" data-playing={playing}>
         {playing ? (
           <iframe
             ref={frameRef}
             className="game-frame__surface"
             src={src}
-            title={`${title}, playable`}
+            title={copy.frameTitle(title)}
             sandbox={sandbox}
             allow={needsCamera ? "camera; fullscreen" : "fullscreen"}
             referrerPolicy="strict-origin-when-cross-origin"
@@ -49,25 +60,20 @@ export function GameFrame({ title, src, sameOrigin, controls, needsCamera }: Gam
           />
         ) : (
           <div className="game-frame__gate">
-            <p className="section-label">Ready to play</p>
+            <p className="section-label">{copy.ready}</p>
             <h2>{title}</h2>
-            <ul aria-label="Controls">
+            <ul aria-label={copy.controlsAria}>
               {controls.map((control) => (
                 <li key={control}>{control}</li>
               ))}
             </ul>
-            {needsCamera ? (
-              <p className="game-frame__warning">
-                This one asks for your camera. Your browser will ask first, and nothing is recorded
-                or sent anywhere.
-              </p>
-            ) : null}
+            {needsCamera ? <p className="game-frame__warning">{copy.cameraWarning}</p> : null}
             <div className="game-frame__actions">
               <ActionButton variant="primary" onClick={() => setPlaying(true)}>
-                Play {title}
+                {copy.play(title)}
               </ActionButton>
               <ActionLink href={src} target="_blank" rel="noreferrer">
-                Open in a new tab <span aria-hidden="true">&#8599;</span>
+                {copy.openInNewTab} <span aria-hidden="true">&#8599;</span>
               </ActionLink>
             </div>
           </div>
@@ -77,18 +83,16 @@ export function GameFrame({ title, src, sameOrigin, controls, needsCamera }: Gam
       {playing ? (
         <div className="game-frame__bar">
           <ActionButton variant="secondary" onClick={() => setPlaying(false)}>
-            Stop and unload
+            {copy.stop}
           </ActionButton>
           <ActionLink href={src} target="_blank" rel="noreferrer">
-            Open in a new tab <span aria-hidden="true">&#8599;</span>
+            {copy.openInNewTab} <span aria-hidden="true">&#8599;</span>
           </ActionLink>
         </div>
       ) : null}
 
       <p id={statusId} className="game-frame__status" aria-live="polite">
-        {playing
-          ? `${title} is loaded and running in an isolated frame.`
-          : `${title} has not loaded yet. Nothing runs until you press play.`}
+        {playing ? copy.running(title) : copy.idle(title)}
       </p>
     </section>
   );

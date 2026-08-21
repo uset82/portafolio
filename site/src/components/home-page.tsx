@@ -13,6 +13,9 @@ import { ObservatorySceneRuntimeProvider } from "@/components/three/observatory-
 import { ActionLink, ImageFrame } from "@/components/ui";
 import { ARCADE_GAMES, isArcadeGamePlayable } from "@/content/arcade";
 import { selectedSystems, siteContent } from "@/content/site";
+import { localizeMetadata } from "@/content/i18n/records-es";
+import { ui } from "@/content/i18n/ui";
+import { resolveHref, type Locale } from "@/lib/i18n";
 import { observatorySpecialistStatuses, selectExplorationPrompts } from "@/lib/ai/ana-exploration";
 
 const OBSERVATORY_ARTIFACT_DESCRIPTIONS = {
@@ -27,8 +30,9 @@ const OBSERVATORY_ARTIFACT_DESCRIPTIONS = {
     "A compact protected-rotor camera drone uses one sparse bounded stabilization cycle; it is a visual concept, not a flight-performance or autonomous-operation claim.",
 } as const;
 
-export default function Home() {
-  const { metadata } = siteContent;
+export function HomePage({ locale = "en" }: { locale?: Locale }) {
+  const copy = ui(locale);
+  const metadata = localizeMetadata(siteContent.metadata, locale);
   const playableGames = ARCADE_GAMES.filter(isArcadeGamePlayable);
   const projectArtifacts = (["astraea", "pinaculo", "future-energy"] as const).map((artifactId) => {
     const system = selectedSystems.find((candidate) => candidate.slug === artifactId);
@@ -132,7 +136,7 @@ export default function Home() {
                 <ActionLink
                   variant="primary"
                   className="primary-action"
-                  href={metadata.primaryAction.href}
+                  href={resolveHref(locale, metadata.primaryAction.href)}
                 >
                   {metadata.primaryAction.label}
                 </ActionLink>
@@ -154,7 +158,7 @@ export default function Home() {
           </HeroReveal>
           <noscript>
             <div className="ana-exploration ana-exploration--noscript">
-              <p>CACM AI remains the public portfolio guide.</p>
+              <p>{copy.home.guideNote}</p>
               <AnaExplorationPanel prompts={[]} statuses={observatorySpecialistStatuses()} />
             </div>
           </noscript>
@@ -173,13 +177,13 @@ export default function Home() {
         </p>
       </section>
 
-      <ArcadeTeaser playable={playableGames} total={ARCADE_GAMES.length} />
+      <ArcadeTeaser playable={playableGames} total={ARCADE_GAMES.length} locale={locale} />
 
-      <MediaTeaser content={metadata.mediaTeaser} />
+      <MediaTeaser content={metadata.mediaTeaser} locale={locale} />
 
-      <SupportTeaser />
+      <SupportTeaser locale={locale} />
 
-      <PersonalTeaser content={metadata.personalTeaser} />
+      <PersonalTeaser content={metadata.personalTeaser} locale={locale} />
     </main>
   );
 }

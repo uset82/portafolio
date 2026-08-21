@@ -216,7 +216,7 @@ test("the scene owns one bounded ASTRAEA interaction path with no text mesh or p
   const experienceSource = readSource(
     "src/components/three/observatory-progressive-experience.tsx",
   );
-  const pageSource = readSource("src/app/page.tsx");
+  const pageSource = readSource("src/components/home-page.tsx");
   const styles = readSource("src/app/globals.css");
 
   assert.match(astraeaSource, /useFrame/);

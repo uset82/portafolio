@@ -1,4 +1,6 @@
 import { ActionLink } from "@/components/ui";
+import { ui } from "@/content/i18n/ui";
+import { localeHref, type Locale } from "@/lib/i18n";
 import { type ArcadeGame } from "@/content/arcade";
 
 type ArcadeTeaserProps = {
@@ -6,6 +8,7 @@ type ArcadeTeaserProps = {
   playable: readonly ArcadeGame[];
   /** How many games the roster carries in total, playable or not. */
   total: number;
+  locale?: Locale;
 };
 
 /**
@@ -16,36 +19,31 @@ type ArcadeTeaserProps = {
  * `/arcade`; repeating them here would make the click a second reading of the
  * same list. When nothing resolves it says so and still offers the route.
  */
-export function ArcadeTeaser({ playable, total }: ArcadeTeaserProps) {
+export function ArcadeTeaser({ playable, total, locale = "en" }: ArcadeTeaserProps) {
+  const copy = ui(locale).arcadeTeaser;
   const headingId = "arcade-teaser-title";
   const hasPlayable = playable.length > 0;
 
   return (
     <section className="arcade-teaser" aria-labelledby={headingId}>
       <div className="arcade-teaser__copy">
-        <p className="section-label">Arcade / 03</p>
+        <p className="section-label">{copy.label}</p>
         <p className="arcade-teaser__status">
           <span aria-hidden="true" />
-          {hasPlayable ? `${playable.length} playable now` : `${total} games, none hosted yet`}
+          {hasPlayable ? copy.playableNow(playable.length) : copy.noneHosted(total)}
         </p>
-        <h2 id={headingId}>
-          {hasPlayable
-            ? "You can just play some of these games."
-            : "The games, and what each one needs."}
-        </h2>
+        <h2 id={headingId}>{hasPlayable ? copy.headingPlayable : copy.headingEmpty}</h2>
         <p className="arcade-teaser__description">
-          {hasPlayable
-            ? "Come in and try a game whenever you like. They run here in the browser, and you are welcome to browse the ones still on the way."
-            : "The full shelf is here: engine, controls, size, and why each one is not playable on this page yet."}
+          {hasPlayable ? copy.descriptionPlayable : copy.descriptionEmpty}
         </p>
 
-        <ActionLink className="arcade-teaser__action" href="/arcade">
-          Enter the Arcade <span aria-hidden="true">&#8594;</span>
+        <ActionLink className="arcade-teaser__action" href={localeHref(locale, "/arcade")}>
+          {copy.action} <span aria-hidden="true">&#8594;</span>
         </ActionLink>
       </div>
 
       <div className="arcade-teaser__cabinet" aria-hidden="true">
-        <span className="arcade-teaser__cabinet-label">Play / {total} titles</span>
+        <span className="arcade-teaser__cabinet-label">{copy.cabinet(total)}</span>
         <div className="arcade-teaser__screen">
           <svg className="arcade-teaser__mark" viewBox="0 0 96 72" focusable="false">
             <rect className="arcade-teaser__mark-block" x="14" y="46" width="20" height="10" />

@@ -221,7 +221,7 @@ test("camera diagnostics are opt-in and forwarded without a global or second loo
 test("primary routes remain native semantic links with a restrained reduced-motion-safe entry", () => {
   const records = readSource("src/content/records.ts");
   const header = readSource("src/components/site-header.tsx");
-  const template = readSource("src/app/template.tsx");
+  const template = readSource("src/app/(en)/template.tsx");
   const styles = readSource("src/app/globals.css");
   const routeEntryStart = styles.indexOf("@keyframes route-entry-settle");
   const routeEntryEnd = styles.indexOf("\nbutton,", routeEntryStart);

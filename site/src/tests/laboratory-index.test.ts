@@ -84,7 +84,7 @@ test("Laboratory exposes three bounded concepts without claiming working hardwar
 });
 
 test("Laboratory keeps a cardless responsive workbench with touch and reduced-motion safeguards", () => {
-  const page = readFileSync(path.join(process.cwd(), "src/app/laboratory/page.tsx"), "utf8");
+  const page = readFileSync(path.join(process.cwd(), "src/app/(en)/laboratory/page.tsx"), "utf8");
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
 
   assert.match(page, /<LaboratoryIndex/);

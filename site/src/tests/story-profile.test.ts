@@ -37,7 +37,7 @@ test("Story publishes the approved profile and an explicit privacy-safe CV bound
 });
 
 test("Story keeps a cardless responsive composition with touch and reduced-motion safeguards", () => {
-  const page = readFileSync(path.join(process.cwd(), "src/app/story/page.tsx"), "utf8");
+  const page = readFileSync(path.join(process.cwd(), "src/app/(en)/story/page.tsx"), "utf8");
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
 
   assert.match(page, /<StoryProfile/);

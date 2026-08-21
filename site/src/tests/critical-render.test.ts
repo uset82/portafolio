@@ -5,9 +5,9 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import NotFound from "@/app/not-found";
-import SoundPage from "@/app/sound/page";
-import StoryPage from "@/app/story/page";
-import WorkPage from "@/app/work/page";
+import SoundPage from "@/app/(en)/sound/page";
+import StoryPage from "@/app/(en)/story/page";
+import WorkPage from "@/app/(en)/work/page";
 import { HeroReveal, HeroRevealItem, SceneReveal } from "@/components/hero-reveal";
 
 test("hero reveal markup fails open without inline hidden styles", () => {

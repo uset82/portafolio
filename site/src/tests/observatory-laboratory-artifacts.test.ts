@@ -400,7 +400,7 @@ test("the scene owns one bounded procedural instance of each Laboratory artifact
   const futureSource = readSource("src/components/three/observatory-future-energy.tsx");
   const electronicsSource = readSource("src/components/three/observatory-electronics-ai.tsx");
   const shellSource = readSource("src/components/three/observatory-scene-shell.tsx");
-  const pageSource = readSource("src/app/page.tsx");
+  const pageSource = readSource("src/components/home-page.tsx");
   const styles = readSource("src/app/globals.css");
   const manifest = readSource("../docs/assets/observatory-3d-manifest.json");
 

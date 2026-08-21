@@ -31,9 +31,9 @@ test("the homepage teaser welcomes visitors onto GitHub without listing unlicens
 });
 
 test("the homepage mounts the support teaser after listen and before personal", () => {
-  const homepage = readFileSync(path.join(process.cwd(), "src/app/page.tsx"), "utf8");
+  const homepage = readFileSync(path.join(process.cwd(), "src/components/home-page.tsx"), "utf8");
 
-  assert.match(homepage, /<SupportTeaser \/>/);
+  assert.match(homepage, /<SupportTeaser locale=\{locale\} \/>/);
   assert.equal(homepage.indexOf("<MediaTeaser") < homepage.indexOf("<SupportTeaser"), true);
   assert.equal(homepage.indexOf("<SupportTeaser") < homepage.indexOf("<PersonalTeaser"), true);
   assert.doesNotMatch(homepage, /laboratory-section/);

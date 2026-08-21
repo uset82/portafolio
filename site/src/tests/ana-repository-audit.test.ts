@@ -185,7 +185,7 @@ test("pinaculo-like inspection infers a numerology agent candidate", () => {
       description: "Sistema de numerología del pináculo",
     }),
     contentsInspected: true,
-    treePaths: ["package.json", "src/app/page.tsx"],
+    treePaths: ["package.json", "src/components/home-page.tsx"],
     manifests: {
       "package.json": JSON.stringify({ dependencies: { next: "15.0.0" } }),
     },

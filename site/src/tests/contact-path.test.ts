@@ -31,7 +31,7 @@ test("Contact exposes one verified public profile without inventing a direct con
 });
 
 test("Contact keeps a cardless responsive hierarchy with touch and reduced-motion safeguards", () => {
-  const page = readFileSync(path.join(process.cwd(), "src/app/contact/page.tsx"), "utf8");
+  const page = readFileSync(path.join(process.cwd(), "src/app/(en)/contact/page.tsx"), "utf8");
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
 
   assert.match(page, /<ContactPath/);
