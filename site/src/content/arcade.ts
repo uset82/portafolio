@@ -149,25 +149,27 @@ export const ARCADE_GAMES: readonly ArcadeGame[] = [
     title: "My Football Game",
     tagline: "Two-player canvas football",
     description:
-      "A canvas football match with a Socket.IO server behind it, so two people can play the same match at once. It carries its own Railway configuration and runs as a separate service rather than inside this build.",
-    engine: "Canvas 2D and Socket.IO",
+      "A canvas football match: one player against the AI, or two players sharing one keyboard. An online mode ships with it as well, but the Socket.IO server it dials no longer answers, so the two modes you can rely on are the local ones.",
+    engine: "Canvas 2D, with Socket.IO behind the online mode",
     input: "Keyboard, with on-screen touch controls",
     controls: [
-      "Arrow keys or WASD to move",
+      "Player one: arrow keys to move, space to kick, shift and space for a power shot",
+      "Player two: WASD to move, E to kick, Q and E for a power shot",
       "On-screen touch pad on phones",
-      "Two players share one match",
     ],
-    mobile: "Touch controls are built in; two-player is more comfortable on a desktop.",
+    mobile: "Touch controls are built in; two players on one keyboard needs a desktop.",
     needsCamera: false,
-    status: "preparing",
-    blockedBy:
-      "Its own service is not deployed yet. As soon as NEXT_PUBLIC_FOOTBALL_GAME_URL points at a running instance, this page serves it.",
-    tier: "B",
-    source: { kind: "service", envVar: "NEXT_PUBLIC_FOOTBALL_GAME_URL" },
-    builtSize: "4.85 MB deployed (0.14 MB client, 4.70 MB server dependencies)",
+    status: "playable",
+    tier: "C",
+    source: {
+      kind: "external",
+      url: "https://poetic-faun-843df2.netlify.app/",
+      provider: "Netlify",
+    },
+    builtSize: "36 KB transferred from the live host (1.9 KB HTML), 154 KB decoded",
     repository: "https://github.com/uset82/My-Football-Game",
     license: "No LICENSE file in the repository yet - all rights reserved by Carlos Carpio",
-    measuredOn: "2026-07-31",
+    measuredOn: "2026-08-21",
   },
   {
     id: "monkey-tug-of-war",
@@ -179,17 +181,21 @@ export const ARCADE_GAMES: readonly ArcadeGame[] = [
     engine: "Flutter and Flame",
     input: "Touch or tap keypad",
     controls: ["Tap the number keypad to answer", "No keyboard required"],
-    mobile: "Runs in any browser, but the payload is heavy on a phone connection.",
+    mobile:
+      "Runs in any browser; the Flutter payload is still a few megabytes on a phone connection.",
     needsCamera: false,
-    status: "preparing",
-    blockedBy:
-      "The committed Flutter build is 35.6 MB, of which 31.6 MB is the CanvasKit renderer. It needs a fresh HTML-renderer build before it is fair to serve.",
-    tier: "A",
-    source: { kind: "none" },
-    builtSize: "35.59 MB (4.02 MB without CanvasKit)",
+    status: "playable",
+    tier: "C",
+    source: {
+      kind: "external",
+      url: "https://monkeytugofwar.netlify.app/",
+      provider: "Netlify",
+    },
+    builtSize:
+      "774 KB transferred from the live host, 2.6 MB decoded, plus the CanvasKit renderer the page pulls from a Google CDN",
     repository: "https://github.com/uset82/Monkey-Tug-of-War",
     license: "No LICENSE file in the repository yet - all rights reserved by Carlos Carpio",
-    measuredOn: "2026-07-31",
+    measuredOn: "2026-08-21",
   },
   {
     id: "gimmemycake",
@@ -197,24 +203,28 @@ export const ARCADE_GAMES: readonly ArcadeGame[] = [
     title: "Gimme My Cake",
     tagline: "Reach for the cake with your hands",
     description:
-      "A three-dimensional scene you play with your hands: MediaPipe reads the webcam and your grasp moves the cake. A touch mode exists for machines without a camera.",
+      "A three-dimensional scene you play with your hands: MediaPipe reads the webcam and your grasp flicks cake to the crying baby, and a drag-and-flick mode carries machines without a camera. It is by far the heaviest thing here, so open it on a connection that can take it.",
     engine: "Vite, Three.js and MediaPipe Hands",
     input: "Webcam hand tracking, with a touch fallback",
     controls: [
       "Allow camera access, then move your hands in view",
       "Touch mode is available without a camera",
     ],
-    mobile: "Needs HTTPS and camera permission; the touch fallback carries phones.",
+    mobile:
+      "Needs HTTPS and camera permission, and it is a 33 MB download - unkind to a phone connection.",
     needsCamera: true,
-    status: "preparing",
-    blockedBy:
-      "The build is 33.8 MB and a single 29.5 MB model file accounts for nearly all of it. That model has to be optimised or moved off the page first.",
-    tier: "A",
-    source: { kind: "none" },
-    builtSize: "33.78 MB (29.49 MB is one model file)",
+    status: "playable",
+    tier: "C",
+    source: {
+      kind: "external",
+      url: "https://gimmemycake.netlify.app/",
+      provider: "Netlify",
+    },
+    builtSize:
+      "32.7 MB transferred from the live host, of which one 29.5 MB model file is nearly all of it, plus MediaPipe from a CDN",
     repository: "https://github.com/uset82/gimmemycake",
     license: "No LICENSE file in the repository yet - all rights reserved by Carlos Carpio",
-    measuredOn: "2026-07-31",
+    measuredOn: "2026-08-21",
   },
   {
     id: "drone-lips",
@@ -222,21 +232,28 @@ export const ARCADE_GAMES: readonly ArcadeGame[] = [
     title: "Drone Lips",
     tagline: "Fly a drone with your face",
     description:
-      "MediaPipe tracks facial landmarks and turns them into flight input, so the drone answers your expression rather than a controller. Built and tuned against a phone camera.",
+      "MediaPipe tracks facial landmarks and turns them into flight input, so the drone answers your expression rather than a controller. It flies forward on its own; you steer it through the diamonds and past the enemies with your face.",
     engine: "Astro, React Three Fiber and MediaPipe Face",
     input: "Webcam face tracking",
-    controls: ["Allow camera access", "Move your head and mouth to steer"],
+    controls: [
+      "Allow camera access, then press start",
+      "Move your mouth left, right, up or down to strafe",
+      "Open your mouth to boost; blink to fire, and hold a long blink to keep firing",
+    ],
     mobile: "Written with a phone camera in mind; needs HTTPS and camera permission.",
     needsCamera: true,
-    status: "preparing",
-    blockedBy:
-      "The build is 27.3 MB, dominated by 18.1 MB of MediaPipe WebAssembly. That has to load from a shared location before it belongs in this build.",
-    tier: "A",
-    source: { kind: "none" },
-    builtSize: "27.30 MB (18.1 MB MediaPipe WebAssembly)",
+    status: "playable",
+    tier: "C",
+    source: {
+      kind: "external",
+      url: "https://superlative-pony-49581f.netlify.app/",
+      provider: "Netlify",
+    },
+    builtSize:
+      "201 KB transferred to open the page, then about 10 MB once you press start - almost all of it the MediaPipe face model",
     repository: "https://github.com/uset82/drone_Lips",
     license: "No LICENSE file in the repository yet - all rights reserved by Carlos Carpio",
-    measuredOn: "2026-07-31",
+    measuredOn: "2026-08-21",
   },
   {
     id: "3doodle",
@@ -344,7 +361,7 @@ export const ARCADE_SUMMARY = {
   eyebrow: "Arcade / Play",
   heading: "Games you can play, and the honest state of the rest.",
   description:
-    "Every game here is mine. Some run in this page, some are waiting on hosting, and two run on hardware or a desktop runtime and never will. Each one says which it is, what it needs, and where the code lives.",
+    "Every game here is mine. Most of them run in this page; two run on hardware or a desktop runtime and never will. Each one says which it is, what it needs, and where the code lives.",
   measurementNote:
-    "Most build sizes come from a real build of each repository on 2026-07-31, not from repository size. Jacobs Golfspill was measured from its live Netlify host on 2026-08-16, and 3Doodle from its live Netlify host on 2026-08-21.",
+    "Build sizes come from a real build of each repository on 2026-07-31, not from repository size. The games served from a live Netlify host were re-measured against that host instead: Jacobs Golfspill and QubeSolve on 2026-08-16, and 3Doodle, My Football Game, Monkey Tug of War, Gimme My Cake and Drone Lips on 2026-08-21.",
 } as const;

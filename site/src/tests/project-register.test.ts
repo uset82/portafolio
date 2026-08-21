@@ -186,6 +186,31 @@ test("EFFATA links to the live product scanner and says it needs the camera", ()
   assert.match(markup, /href="https:\/\/effata\.netlify\.app\/"/);
 });
 
+test("every repository with a live Netlify deployment carries its link", () => {
+  const expected: Record<string, string> = {
+    "My-Football-Game": "https://poetic-faun-843df2.netlify.app/",
+    "Monkey-Tug-of-War": "https://monkeytugofwar.netlify.app/",
+    gimmemycake: "https://gimmemycake.netlify.app/",
+    drone_Lips: "https://superlative-pony-49581f.netlify.app/",
+    iFoundYou: "https://dommedag.netlify.app/",
+    bankAI: "https://mybankai.netlify.app/",
+    "cookthis-": "https://resplendent-sherbet-1d2236.netlify.app/",
+    ReportAIEquinor: "https://fanciful-heliotrope-b6fb9c.netlify.app/",
+    "smartapply-app": "https://smartapply.netlify.app/",
+    "DealDash-": "https://dealdash2025.netlify.app/",
+  };
+  const markup = renderToStaticMarkup(createElement(ProjectRegister));
+
+  for (const [name, url] of Object.entries(expected)) {
+    const entry = GITHUB_REGISTER.find((repository) => repository.name === name);
+    assert.ok(entry, `${name} is missing from the register`);
+    assert.equal(entry.tryUrl, url);
+    assert.ok(entry.tryLabel, `${name} has a link with no label`);
+    assert.notEqual(entry.description, "No GitHub description.");
+    assert.ok(markup.includes(`href="${url}"`), `${name} link is not rendered`);
+  }
+});
+
 test("opennemoclaw links to the live personal agent framework app", () => {
   const opennemoclaw = GITHUB_REGISTER.find((repository) => repository.name === "opennemoclaw");
   const opennemoclawsite = GITHUB_REGISTER.find(

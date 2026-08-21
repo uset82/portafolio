@@ -46,6 +46,26 @@ const DESCRIPTION_OVERRIDES: Record<string, string> = {
     "A children's drawing app: sketch on the canvas, press Generate 3D, and the result is kept in a gallery.",
   EFFATA:
     "A product health and safety scanner: it reads a barcode or an ingredient label and checks it for carcinogens, toxins, allergens and banned ingredients. The live app is in Spanish and asks for camera access before it can scan.",
+  "My-Football-Game":
+    "A canvas football match for one player against the AI or two players on one keyboard. The online mode still ships, but the server it dials no longer answers.",
+  "Monkey-Tug-of-War":
+    "A Flutter and Flame arithmetic game for a classroom screen: answer faster than the other side and pull the rope your way.",
+  gimmemycake:
+    "A 3D scene played with your hands through the webcam: flick cake to the crying baby. Heavy - one 29.5 MB model file - and it asks for camera access.",
+  drone_Lips:
+    "A drone flown with your face: MediaPipe reads mouth and blink and turns them into strafe, boost and fire. Asks for camera access.",
+  iFoundYou:
+    "Dommedag, a MapLibre and OpenStreetMap map that shares a position and searches from the map centre.",
+  bankAI:
+    "A concept for a bank you talk to instead of navigating menus: a demo console built around voice, one decisive action per answer, and a Norwegian BankID and NAV framing. A prototype, not a bank.",
+  "cookthis-":
+    "Photograph what is in the fridge and get meal ideas back. Built for students who do not know what is for dinner.",
+  ReportAIEquinor:
+    "A case-study paper on governing AI and sustainability at Equinor, published as a website: full structure, a roughly 4,100-word report, and its references.",
+  "smartapply-app":
+    "A job-application tracker with an AI assistant: applications by stage, uploaded CVs and diplomas, and generated cover letters.",
+  "DealDash-":
+    "A browser driving game: deliver packages across ten levels against the clock, with arrow keys or on-screen controls.",
 };
 
 const ROOM_OVERRIDES: Record<string, { href: string; label: string }> = {
@@ -93,6 +113,46 @@ const TRY_OVERRIDES: Record<string, { url: string; label: string }> = {
   EFFATA: {
     url: "https://effata.netlify.app/",
     label: "Scan with EFFATA",
+  },
+  "My-Football-Game": {
+    url: "https://poetic-faun-843df2.netlify.app/",
+    label: "Play My Football Game",
+  },
+  "Monkey-Tug-of-War": {
+    url: "https://monkeytugofwar.netlify.app/",
+    label: "Play Monkey Tug of War",
+  },
+  gimmemycake: {
+    url: "https://gimmemycake.netlify.app/",
+    label: "Play Gimme My Cake",
+  },
+  drone_Lips: {
+    url: "https://superlative-pony-49581f.netlify.app/",
+    label: "Play Drone Lips",
+  },
+  iFoundYou: {
+    url: "https://dommedag.netlify.app/",
+    label: "Open Dommedag",
+  },
+  bankAI: {
+    url: "https://mybankai.netlify.app/",
+    label: "Open AI Bank",
+  },
+  "cookthis-": {
+    url: "https://resplendent-sherbet-1d2236.netlify.app/",
+    label: "Open COOKTHIS",
+  },
+  ReportAIEquinor: {
+    url: "https://fanciful-heliotrope-b6fb9c.netlify.app/",
+    label: "Read the Equinor paper",
+  },
+  "smartapply-app": {
+    url: "https://smartapply.netlify.app/",
+    label: "Open SmartApply",
+  },
+  "DealDash-": {
+    url: "https://dealdash2025.netlify.app/",
+    label: "Play Deal Dash",
   },
 };
 

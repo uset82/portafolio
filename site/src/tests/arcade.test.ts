@@ -10,6 +10,7 @@ import { ArcadeGameDetail } from "@/components/arcade/arcade-game-detail";
 import { ArcadeIndex, type ResolvedArcadeGame } from "@/components/arcade/arcade-index";
 import {
   ARCADE_GAMES,
+  type ArcadeGame,
   findArcadeGame,
   isArcadeGamePlayable,
   resolveArcadeSource,
@@ -47,18 +48,25 @@ test("a game that cannot be served says why instead of offering a play button", 
 test("an undeployed service never resolves to a URL", () => {
   const football = findArcadeGame("football");
   assert.ok(football);
-  assert.equal(football.source.kind, "service");
+
+  // No roster entry is env-backed today, so the service contract is checked
+  // against a constructed entry rather than left untested.
+  const asService: ArcadeGame = {
+    ...football,
+    status: "preparing",
+    source: { kind: "service", envVar: "NEXT_PUBLIC_FOOTBALL_GAME_URL" },
+  };
 
   const previous = process.env.NEXT_PUBLIC_FOOTBALL_GAME_URL;
   delete process.env.NEXT_PUBLIC_FOOTBALL_GAME_URL;
-  assert.equal(resolveArcadeSource(football), null);
-  assert.equal(isArcadeGamePlayable(football), false);
+  assert.equal(resolveArcadeSource(asService), null);
+  assert.equal(isArcadeGamePlayable(asService), false);
 
   process.env.NEXT_PUBLIC_FOOTBALL_GAME_URL = "";
-  assert.equal(resolveArcadeSource(football), null, "an empty variable is not a deployment");
+  assert.equal(resolveArcadeSource(asService), null, "an empty variable is not a deployment");
 
   process.env.NEXT_PUBLIC_FOOTBALL_GAME_URL = "https://football.example.com";
-  assert.equal(resolveArcadeSource(football), "https://football.example.com");
+  assert.equal(resolveArcadeSource(asService), "https://football.example.com");
 
   if (previous === undefined) delete process.env.NEXT_PUBLIC_FOOTBALL_GAME_URL;
   else process.env.NEXT_PUBLIC_FOOTBALL_GAME_URL = previous;
@@ -71,8 +79,12 @@ test("the arcade index separates playable games from the honest remainder", () =
   assert.match(markup, /<main id="main-content" class="arcade-index">/);
   assert.match(markup, /MandelBro/);
   assert.match(markup, /Playable now/);
-  assert.match(markup, /Waiting on hosting/);
   assert.match(markup, /Documented only/);
+  assert.doesNotMatch(
+    markup,
+    /Waiting on hosting/,
+    "every measured game now has a host, so the in-preparation group is empty",
+  );
   assert.match(markup, /href="\/arcade\/mandelbro"/);
   assert.match(markup, /href="\/arcade\/jacobgolf"/);
   assert.match(markup, /github\.com\/uset82\/MandelBro/);
@@ -136,6 +148,31 @@ test("3Doodle is playable from its live Netlify host", () => {
   assert.match(markup, /Play 3Doodle/);
 });
 
+test("the games that were waiting on hosting are served from their live hosts", () => {
+  const hosted = [
+    ["football", "https://poetic-faun-843df2.netlify.app/"],
+    ["monkey-tug-of-war", "https://monkeytugofwar.netlify.app/"],
+    ["gimmemycake", "https://gimmemycake.netlify.app/"],
+    ["drone-lips", "https://superlative-pony-49581f.netlify.app/"],
+  ] as const;
+
+  for (const [slug, url] of hosted) {
+    const game = findArcadeGame(slug);
+    assert.ok(game, `${slug} is missing from the roster`);
+    assert.equal(game.source.kind, "external");
+    assert.equal(resolveArcadeSource(game), url);
+    assert.equal(isArcadeGamePlayable(game), true);
+    assert.equal(game.blockedBy, undefined, `${slug} still carries a blocking reason`);
+  }
+});
+
+test("no game is left in the waiting-on-hosting state", () => {
+  assert.deepEqual(
+    ARCADE_GAMES.filter((game) => game.status === "preparing").map((game) => game.slug),
+    [],
+  );
+});
+
 test("the play shell loads nothing before the visitor presses play", () => {
   const mandelbro = findArcadeGame("mandelbro");
   assert.ok(mandelbro);
@@ -153,16 +190,16 @@ test("the play shell loads nothing before the visitor presses play", () => {
 });
 
 test("a blocked game renders its reason and no play affordance", () => {
-  const monkey = findArcadeGame("monkey-tug-of-war");
-  assert.ok(monkey);
+  const reaction = findArcadeGame("reaction-game");
+  assert.ok(reaction);
 
   const markup = renderToStaticMarkup(
-    createElement(ArcadeGameDetail, { game: monkey, source: resolveArcadeSource(monkey) }),
+    createElement(ArcadeGameDetail, { game: reaction, source: resolveArcadeSource(reaction) }),
   );
 
   assert.doesNotMatch(markup, /<iframe\b/);
   assert.match(markup, /Why you cannot play this one here/);
-  assert.match(markup, /CanvasKit/);
+  assert.match(markup, /runs on hardware, not in a browser/);
   assert.match(markup, /Not playable here yet/);
 });
 
