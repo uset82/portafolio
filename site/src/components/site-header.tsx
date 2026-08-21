@@ -50,15 +50,15 @@ export function SiteHeader({
               </Link>
             );
           })}
-        </nav>
 
-        <div className="site-header__status">
-          {/* The switch points at the same page in the other language, so a
-           * reader who changes language keeps their place instead of being
-           * dropped on a translated home page. */}
+          {/* The switch lives on the navigation line, not in the status cell:
+           * that cell is hidden below 78rem and is covered by the CACM AI
+           * trigger above it, so a language switch parked there is invisible
+           * at every width. It points at the same page in the other language,
+           * so a reader who changes language keeps their place. */}
           {hasTranslation(pathname) ? (
             <Link
-              className="quiet-control site-header__language"
+              className="site-header__language"
               href={alternateHref(locale, pathname)}
               hrefLang={locale === "en" ? "es" : "en"}
               aria-label={copy.common.switchLanguageAria}
@@ -67,7 +67,9 @@ export function SiteHeader({
               <span>{copy.common.switchLanguage}</span>
             </Link>
           ) : null}
+        </nav>
 
+        <div className="site-header__status">
           {/* The Experience settings anchor only exists while the live Canvas is
            * approved (U.20 currently holds it poster-authoritative). */}
           {OBSERVATORY_LIVE_CANVAS_PRESENTATION === "approved" ? (

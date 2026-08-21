@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import path from "node:path";
 import test from "node:test";
 
 import { createElement } from "react";
@@ -60,6 +62,26 @@ test("a Spanish page links to English for routes that are not translated yet", (
     "/work/astraea",
     "a route with no Spanish page must not be given an /es prefix",
   );
+});
+
+test("the language switch sits on the navigation line, not in the status cell", () => {
+  const header = readFileSync(path.join(process.cwd(), "src/components/site-header.tsx"), "utf8");
+
+  const nav = header.slice(
+    header.indexOf('<nav className="desktop-navigation"'),
+    header.indexOf("</nav>"),
+  );
+
+  // The status cell is display:none below 78rem and sits under the CACM AI
+  // trigger above it, so a switch parked there is invisible at every width.
+  assert.match(nav, /site-header__language/, "the switch must render inside the navigation");
+  assert.doesNotMatch(
+    header.slice(header.indexOf('<div className="site-header__status">')),
+    /site-header__language/,
+  );
+
+  const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
+  assert.match(styles, /\.site-header__language \{/, "the switch needs its own visible styling");
 });
 
 test("every arcade game has Spanish copy", () => {

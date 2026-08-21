@@ -420,6 +420,25 @@ a {
   transform-origin: left;
 }
 
+.site-header__language {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding-left: clamp(0.75rem, 1.4vw, 1.5rem);
+  border-left: 1px solid rgb(95 75 53 / 22%);
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+}
+
+.site-header__language span[aria-hidden="true"] {
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+.site-header__language:hover {
+  color: var(--color-espresso);
+}
+
 .site-header__status {
   display: flex;
   align-items: center;
