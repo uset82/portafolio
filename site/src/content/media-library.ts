@@ -1,10 +1,9 @@
 /**
  * The music and video library.
  *
- * The rooms are built; the shelves start empty on purpose. Carlos's Suno and
- * YouTube profiles are public and confirmed by him, so they are linked here.
- * Individual tracks and videos are added only once their published URL is
- * supplied, which keeps invented titles, durations and dates out of the build.
+ * Carlos's Suno and YouTube profiles are public and confirmed by him, so they
+ * are linked here. Individual tracks and videos are added only once he supplies
+ * the URL, which keeps invented titles, durations and dates out of the build.
  *
  * One rights question is still open and is tracked as `M.11`: Suno's free tier
  * does not grant the same commercial rights as a paid tier, so `licence` on a
@@ -37,10 +36,24 @@ export type VideoWork = {
 };
 
 /**
- * Empty until Carlos pastes published song URLs. This update received none,
- * so the Sound shelf stays a profile link rather than invented titles.
+ * Tracks Carlos has sent for publication, in the order he sent them.
+ *
+ * `ABC on Crete Beach` is reachable by link but is not listed on his Suno
+ * profile, so the profile link alone will not lead a visitor to it. Its title
+ * is copied exactly as Suno stores it, ellipsis and all.
  */
-export const MUSIC_TRACKS: readonly MusicTrack[] = [];
+export const MUSIC_TRACKS: readonly MusicTrack[] = [
+  {
+    id: "abc-on-crete-beach",
+    title: "ABC on Crete Beach — Greek x Indi… x ZORBA vs PUNJABI — BEACH BATTLE (Mashup)",
+    url: "https://suno.com/song/474592ab-7d93-4307-831b-7e447b11c11a",
+    embedUrl: sunoEmbedUrl("474592ab-7d93-4307-831b-7e447b11c11a"),
+    description:
+      "Greek zorba and sirtaki traded against Punjabi bhangra, with the bouzouki always on top. Three and a half minutes, no vocals to speak of.",
+    licence:
+      "Made by Carlos with Suno and put here by him. Listening is free; this page grants no reuse rights.",
+  },
+];
 
 /**
  * Empty until Carlos pastes published YouTube watch URLs. This update received
@@ -53,7 +66,7 @@ export const MUSIC_PROFILE = {
   handle: "uset182",
   url: "https://suno.com/@uset182",
   description:
-    "Everything I have published with Suno lives here. Individual tracks arrive on this page as their rights are confirmed one by one.",
+    "Tracks arrive on this page one at a time, as the rights on each one are confirmed. The full catalogue stays on Suno.",
 } as const;
 
 export const VIDEO_PROFILE = {
@@ -93,4 +106,9 @@ export const STRUDEL_AI = {
 /** Privacy-enhanced YouTube embed: no cookies until playback actually starts. */
 export function youtubeEmbedUrl(videoId: string): string {
   return `https://www.youtube-nocookie.com/embed/${videoId}`;
+}
+
+/** Suno's own player for one song. It plays for visitors with no Suno account. */
+export function sunoEmbedUrl(songId: string): string {
+  return `https://suno.com/embed/${songId}`;
 }

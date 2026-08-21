@@ -42,8 +42,19 @@ WAVE 4  ░░░░░░░░░░  Launch
 **Waiting on you:** Deploy the Ox Alpha max-effort fix (reasoning.effort=max + 180 s
 prototype budget) · optional Railway `OPENROUTER_FALLBACK_MODELS=openrouter/free` ·
 `Q.10` books · `Q.11` flagships · `Q.12` MIT · `Q.13` private repos ·
-`M.13` Suno + YouTube links · `M.10` your Buy Me a Coffee handle · a Railway service for
+`M.13` more Suno links + the YouTube links (first Suno track is live) · `M.11` the licence line
+for that track · `M.10` your Buy Me a Coffee handle · a Railway service for
 `My-Football-Game` · Gemini's AVIF is larger than its WebP and needs re-encoding
+
+### 2026-08-21 — the first song is playable on the site
+
+`/sound` and `/es/sound` now carry **ABC on Crete Beach — Greek x Indi… x ZORBA vs PUNJABI —
+BEACH BATTLE (Mashup)** as a click-to-load Suno player, in both languages. The shelf is no longer
+empty. Nothing reaches Suno until a visitor presses **Load Suno** / **Cargar Suno**; the gate, the
+privacy line and the rights line all read in the page's own language, because `ConsentEmbed` was
+translated at the same time. Two things Carlos should know: the song is **unlisted** on Suno
+(`is_public: false`), so his profile page will not lead anyone to it, and its rights line claims
+nothing beyond "free to listen" while `M.11` is open. Evidence at `M.13`.
 
 ### 2026-08-18 — Work register search
 
@@ -241,7 +252,7 @@ is identical to the current defaults. It is config hygiene, not a fix.
 - [ ] ☐ **A.13** · `CODEX` · Make `model-policy.ts` accept a **named free model** in production mode — zero budget requires it
 - [~] ⏳ **M.10** · `CLAUDE` · "Buy me a coffee" destination and placement — _2026-08-13. Placement decided and built: `/support` pairs contribution with tipping, and the Sound room closes into it. Carlos chose **Buy Me a Coffee** as the platform. **The handle is still missing**, so `resolveTipUrl()` returns `null` and the tip card does not render at all — no guessed URL ships. Set `NEXT_PUBLIC_BUYMEACOFFEE_URL` to close this._
 - [x] ☑ **C.11** · `CLAUDE` · **Contribute route** — _2026-08-13, new task. `/support` invites contribution only to the 4 own MIT repositories (`portafolio`, `Thesis-Writer-Kit`, `SmartHomeControl`, `qr-code-generator`) and states plainly that 37 of 42 own repos are unlicensed and therefore all-rights-reserved. Depends on `Q.12`: applying MIT would widen this list from 4 to 41._
-- [ ] ☐ **M.11** · `GEMINI` · **Confirm the Suno plan tier per track**, then choose the music licence — blocks every music publish
+- [ ] ☐ **M.11** · `GEMINI` · **Confirm the Suno plan tier per track**, then choose the music licence — _2026-08-21: evidence arrived for the first track. Suno's own payload reports `ownership.ownership_reason: "subscribed"` and model `chirp-fenix` (v5.5) for `abc-on-crete-beach`, which points at a paid generation rather than a free one. That is Suno's metadata, not Carlos's confirmation, so the published rights line still claims only "free to listen, no reuse rights granted". Carlos decides whether `Q.5`'s "open to anyone" becomes an explicit licence._
 - [ ] ☐ **V.12** · `GROK` · **Stop shipping the 3.96 MB hero video to mobile** — 98 % of mobile page weight. Options: `<source media>` per breakpoint, poster-only on small screens, or a lighter encode. _Found during `F.5b`, highest-value perf fix available._
 - [ ] ☐ **C.8** · `GROK` · Optimize the 90 MB / 85 MB GLBs for web delivery
 - [ ] ☐ **P.3** · `GROK` · Preview environments per branch
@@ -253,7 +264,7 @@ is identical to the current defaults. It is config hygiene, not a fix.
 - [ ] ☐ **M.8** · `GEMINI` · Arcade posters
 - [ ] ☐ **M.9** · `GEMINI` · Site-wide alt text
 - [x] ☑ **M.12** · `CLAUDE` · **Sound room rebuilt as a real room** — _2026-08-13, new task. The mute-first `SoundFoundation` is retired: it encoded "no player, ever", which Carlos's direction supersedes. `SoundRoom` ships two shelves (music, moving image) that render click-to-load `ConsentEmbed` players from `site/src/content/media-library.ts`. **Both shelves are empty on purpose** — Carlos's Suno and YouTube profiles are linked because he confirmed them; no track or video is invented. Adding one entry to `MUSIC_TRACKS` / `VIDEO_WORKS` is the only step needed to publish it. YouTube uses `youtube-nocookie`. `M.11` still governs what each track's `licence` field may claim._
-- [ ] ☐ **M.13** · `CARLOS` · **Send the published Suno and YouTube URLs** — blocks every entry in `media-library.ts`; the shelves stay empty until they arrive
+- [~] ⏳ **M.13** · `CARLOS` · **Send the published Suno and YouTube URLs** — _2026-08-21. First link arrived: `https://suno.com/s/iJuqAuRalpnE55xF`, which resolves to song `474592ab-7d93-4307-831b-7e447b11c11a`. It is shelved as `abc-on-crete-beach` in `media-library.ts` and plays through `https://suno.com/embed/474592ab-…`, verified anonymously (no Suno account, `paused: false`, 3:33 duration) and rendered on `/sound` and `/es/sound` at 1000×700 and 390×844. Title, cover and duration are Suno's own; the created date (2026-08-09) is deliberately **not** published as "Published", because the song is unlisted rather than published. The video shelf is still empty — **no YouTube URL has arrived**, so this stays open._
 
 ---
 

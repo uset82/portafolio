@@ -10,6 +10,7 @@ import {
   youtubeEmbedUrl,
 } from "@/content/media-library";
 import {
+  localizeTrack,
   MUSIC_PROFILE_ES,
   SOUND_ROOM_ES,
   STRUDEL_AI_ES,
@@ -21,11 +22,10 @@ import { resolveHref, type Locale } from "@/lib/i18n";
 /**
  * The Sound room.
  *
- * Two shelves, music and video, both real and both currently empty. An
- * empty shelf states that it is empty and points at the public profile; it does
- * not invent a track list. When entries arrive in `media-library.ts` they render
- * here as click-to-load players, so no provider is contacted until a visitor
- * asks for one.
+ * Two shelves, music and video. An empty shelf states that it is empty and
+ * points at the public profile rather than inventing a track list. Entries from
+ * `media-library.ts` render as click-to-load players, so no provider is
+ * contacted until a visitor asks for one.
  */
 export function SoundRoom({ locale = "en" }: { locale?: Locale }) {
   const copy = ui(locale).sound;
@@ -34,7 +34,8 @@ export function SoundRoom({ locale = "en" }: { locale?: Locale }) {
   const strudel = es ? { ...STRUDEL_AI, ...STRUDEL_AI_ES } : STRUDEL_AI;
   const music = es ? { ...MUSIC_PROFILE, ...MUSIC_PROFILE_ES } : MUSIC_PROFILE;
   const video = es ? { ...VIDEO_PROFILE, ...VIDEO_PROFILE_ES } : VIDEO_PROFILE;
-  const hasTracks = MUSIC_TRACKS.length > 0;
+  const tracks = MUSIC_TRACKS.map((track) => localizeTrack(track, locale));
+  const hasTracks = tracks.length > 0;
   const hasVideos = VIDEO_WORKS.length > 0;
 
   return (
@@ -83,7 +84,7 @@ export function SoundRoom({ locale = "en" }: { locale?: Locale }) {
 
         {hasTracks ? (
           <ul className="sound-room__works" aria-label={copy.musicAria}>
-            {MUSIC_TRACKS.map((track) => (
+            {tracks.map((track) => (
               <li key={track.id}>
                 <div className="sound-room__work-head">
                   <h3>{track.title}</h3>
@@ -99,6 +100,9 @@ export function SoundRoom({ locale = "en" }: { locale?: Locale }) {
                     embedUrl={track.embedUrl}
                     fallbackUrl={track.url}
                     privacyMode={false}
+                    locale={locale}
+                    className="consent-embed--audio"
+                    showHeading={false}
                   />
                 ) : (
                   <ActionLink variant="secondary" href={track.url} target="_blank" rel="noreferrer">
@@ -143,6 +147,7 @@ export function SoundRoom({ locale = "en" }: { locale?: Locale }) {
                   embedUrl={youtubeEmbedUrl(video.videoId)}
                   fallbackUrl={video.url}
                   privacyMode
+                  locale={locale}
                 />
               </li>
             ))}

@@ -7527,6 +7527,24 @@ body:has(.observatory-hero) .site-header .site-header__status {
   height: 100%;
 }
 
+/* Audio is a strip, not a 16:9 stage: no poster panel, and the gate sits in flow. */
+.consent-embed--audio .consent-embed__viewport {
+  min-height: 0;
+  aspect-ratio: auto;
+}
+
+.consent-embed--audio .consent-embed__placeholder {
+  display: none;
+}
+
+.consent-embed--audio .consent-embed__gate {
+  position: static;
+}
+
+.consent-embed--audio:is([data-state="loading"], [data-state="ready"]) .consent-embed__viewport {
+  height: 14rem;
+}
+
 .consent-embed__poster {
   object-fit: cover;
 }

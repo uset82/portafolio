@@ -58,6 +58,19 @@ const EN = {
     pressPlay: "Press play to hear it",
     formatsAria: "Music and video",
   },
+  mediaEmbed: {
+    privacyEnhanced: "Privacy-enhanced URL",
+    externalProvider: "External provider",
+    load: (provider: string) => `Load ${provider}`,
+    retry: (provider: string) => `Retry ${provider}`,
+    openExternally: "Open externally",
+    notice: (provider: string) =>
+      `Loading ${provider} may share your IP address and browser information with that provider.`,
+    noResponse: (provider: string) =>
+      `${provider} did not respond. You can retry or use the approved source.`,
+    loading: (provider: string) => `${provider} is loading…`,
+    ready: (provider: string) => `${provider} is loaded. Its own privacy policy now applies.`,
+  },
   supportTeaser: {
     reposAria: "Kinds of work on GitHub",
     markLabel: "GitHub / uset82",
@@ -395,6 +408,20 @@ const ES: UiCopy = {
     instrumentLabel: "Sonido / Escucha",
     pressPlay: "Pulsa play para oírlo",
     formatsAria: "Música y vídeo",
+  },
+  mediaEmbed: {
+    privacyEnhanced: "URL con privacidad reforzada",
+    externalProvider: "Proveedor externo",
+    load: (provider: string) => `Cargar ${provider}`,
+    retry: (provider: string) => `Reintentar ${provider}`,
+    openExternally: "Abrir en su sitio",
+    notice: (provider: string) =>
+      `Cargar ${provider} puede compartir tu dirección IP y la información de tu navegador con ese proveedor.`,
+    noResponse: (provider: string) =>
+      `${provider} no ha respondido. Puedes reintentarlo o ir a la fuente aprobada.`,
+    loading: (provider: string) => `${provider} se está cargando…`,
+    ready: (provider: string) =>
+      `${provider} está cargado. Ahora se aplica su propia política de privacidad.`,
   },
   supportTeaser: {
     reposAria: "Tipos de trabajo en GitHub",
