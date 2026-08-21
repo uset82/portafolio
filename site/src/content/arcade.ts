@@ -7,6 +7,9 @@
  * than estimated, and no game is described as playable here unless this build
  * can actually serve it.
  *
+ * Roster order is render order: the index groups by status and then keeps this
+ * order inside each group, so moving an entry here moves its card.
+ *
  * Hosting tiers follow `updates/00-master-plan.md` section 8.2:
  *   A - static build vendored into `public/games/<slug>/`, same origin.
  *   B - its own Railway service, reached through an environment-backed URL.
@@ -69,29 +72,6 @@ export type ArcadeGame = {
  * become unreachable when iterating the roster.
  */
 export const ARCADE_GAMES: readonly ArcadeGame[] = [
-  {
-    id: "mandelbro",
-    slug: "mandelbro",
-    title: "MandelBro",
-    tagline: "Kids world creator",
-    description:
-      "This was an idea project: a prototype made to test whether the concept held up, not a finished game. Pick a character, describe the world you want, and build it from one of six templates: blocky caves, sky defence, racing, retro arcade, ocean, or galaxy. The simplified build runs entirely in your browser with no account and no network calls.",
-    engine: "HTML5 Canvas",
-    input: "Mouse or touch",
-    controls: [
-      "Click or tap to choose a character and a template",
-      "Type a description of the world you want",
-    ],
-    mobile: "Works on phones; the template grid is easier to read on a larger screen.",
-    needsCamera: false,
-    status: "playable",
-    tier: "A",
-    source: { kind: "same-origin", path: "/games/mandelbro/index.html" },
-    builtSize: "74 KB, single self-contained file",
-    repository: "https://github.com/uset82/MandelBro",
-    license: "No LICENSE file in the repository yet - all rights reserved by Carlos Carpio",
-    measuredOn: "2026-07-31",
-  },
   {
     id: "jacobgolf",
     slug: "jacobgolf",
@@ -283,6 +263,29 @@ export const ARCADE_GAMES: readonly ArcadeGame[] = [
     repository: "https://github.com/uset82/3Doodle",
     license: "No LICENSE file in the repository yet - all rights reserved by Carlos Carpio",
     measuredOn: "2026-08-21",
+  },
+  {
+    id: "mandelbro",
+    slug: "mandelbro",
+    title: "MandelBro",
+    tagline: "Kids world creator",
+    description:
+      "This was an idea project: a prototype made to test whether the concept held up, not a finished game. Pick a character, describe the world you want, and build it from one of six templates: blocky caves, sky defence, racing, retro arcade, ocean, or galaxy. The simplified build runs entirely in your browser with no account and no network calls.",
+    engine: "HTML5 Canvas",
+    input: "Mouse or touch",
+    controls: [
+      "Click or tap to choose a character and a template",
+      "Type a description of the world you want",
+    ],
+    mobile: "Works on phones; the template grid is easier to read on a larger screen.",
+    needsCamera: false,
+    status: "playable",
+    tier: "A",
+    source: { kind: "same-origin", path: "/games/mandelbro/index.html" },
+    builtSize: "74 KB, single self-contained file",
+    repository: "https://github.com/uset82/MandelBro",
+    license: "No LICENSE file in the repository yet - all rights reserved by Carlos Carpio",
+    measuredOn: "2026-07-31",
   },
   {
     id: "reactiongame",
