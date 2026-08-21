@@ -62,10 +62,23 @@ export const MUSIC_TRACKS: readonly MusicTrack[] = [
 ];
 
 /**
- * Empty until Carlos pastes published YouTube watch URLs. This update received
- * none, so the video shelf stays a channel link rather than invented titles.
+ * Videos Carlos has sent for publication, in the order he sent them.
+ *
+ * Unlike the Suno song, this one is listed on his channel (`isUnlisted: false`,
+ * `playableInEmbed: true`), so its publication date can be shown. The title is
+ * YouTube's own, and the watch URL drops the share token his link carried.
  */
-export const VIDEO_WORKS: readonly VideoWork[] = [];
+export const VIDEO_WORKS: readonly VideoWork[] = [
+  {
+    id: "hedra-seedance-2-5",
+    title: "HEDRA × SEEDANCE 2.5",
+    url: "https://www.youtube.com/watch?v=030X0DYiDS8",
+    videoId: "030X0DYiDS8",
+    publishedOn: "2026-08-10",
+    description:
+      "The song above as a video, generated in Hedra with Seedance 2.5. Three minutes fifty-three.",
+  },
+];
 
 export const MUSIC_PROFILE = {
   platform: "Suno",

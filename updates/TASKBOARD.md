@@ -42,9 +42,22 @@ WAVE 4  ░░░░░░░░░░  Launch
 **Waiting on you:** Deploy the Ox Alpha max-effort fix (reasoning.effort=max + 180 s
 prototype budget) · optional Railway `OPENROUTER_FALLBACK_MODELS=openrouter/free` ·
 `Q.10` books · `Q.11` flagships · `Q.12` MIT · `Q.13` private repos ·
-`M.13` more Suno links + the YouTube links (first Suno track plays in one press) · `M.11` the
-licence line for that track · `M.10` your Buy Me a Coffee handle · a Railway service for
+`M.13` more Suno and YouTube links (the first song plays in one press and its video is up) ·
+`M.11` the licence line for that track · `M.10` your Buy Me a Coffee handle · a Railway service for
 `My-Football-Game` · Gemini's AVIF is larger than its WebP and needs re-encoding
+
+### 2026-08-21 — the song's video is on the site too
+
+The video shelf is no longer empty: **HEDRA × SEEDANCE 2.5**, the video for the track above, is on
+`/sound` and `/es/sound` with its publication date, 10 August 2026. Unlike the Suno song, this one is
+genuinely listed on the channel, so the date is shown rather than withheld. The share token from the
+shared link is not published with it.
+
+The video sits behind the click-to-load gate, because a YouTube player is YouTube's application and
+there is no plain file to play; the song above it still plays in one press. Loading the video and
+measuring it turned up a real bug on phones: the frame was resolving 16:9 from its minimum height
+instead of its width, so it came out 569 px wide inside a 390 px screen and the video was cropped.
+It now measures 311×175 inside its card, and the same fix covers every future embed.
 
 ### 2026-08-21 — the first song is playable on the site, in one press
 
@@ -273,7 +286,7 @@ is identical to the current defaults. It is config hygiene, not a fix.
 - [ ] ☐ **M.8** · `GEMINI` · Arcade posters
 - [ ] ☐ **M.9** · `GEMINI` · Site-wide alt text
 - [x] ☑ **M.12** · `CLAUDE` · **Sound room rebuilt as a real room** — _2026-08-13, new task. The mute-first `SoundFoundation` is retired: it encoded "no player, ever", which Carlos's direction supersedes. `SoundRoom` ships two shelves (music, moving image) that render click-to-load `ConsentEmbed` players from `site/src/content/media-library.ts`. **Both shelves are empty on purpose** — Carlos's Suno and YouTube profiles are linked because he confirmed them; no track or video is invented. Adding one entry to `MUSIC_TRACKS` / `VIDEO_WORKS` is the only step needed to publish it. YouTube uses `youtube-nocookie`. `M.11` still governs what each track's `licence` field may claim._
-- [~] ⏳ **M.13** · `CARLOS` · **Send the published Suno and YouTube URLs** — _2026-08-21. First link arrived: `https://suno.com/s/iJuqAuRalpnE55xF`, which resolves to song `474592ab-7d93-4307-831b-7e447b11c11a`. It is shelved as `abc-on-crete-beach` in `media-library.ts`. Carlos then asked for the song to be loaded permanently so a visitor only presses play, so the shelf plays `https://cdn1.suno.ai/474592ab-….mp3` with a native `<audio controls preload="none">` instead of loading Suno's player application. Measured on `/es/sound`: nothing is requested before the press (`networkState: 1`, `readyState: 0`), then `paused: false`, `muted: false`, `volume: 1`, `currentTime: 3.96` of `213.2`; keyboard-reachable (`tabIndex: 0`); 833 px at 1000×700 and 313 px at 390×844 with no overflow. Suno's CDN serves it 200 `audio/mpeg`, 5,121,192 B, `Accept-Ranges: bytes`, with no hotlink protection. Title and duration are Suno's own; the created date (2026-08-09) is deliberately **not** published as "Published", because the song is unlisted rather than published. **Standing risk:** the file URL belongs to Suno, so deleting or moving the song there silences the player; self-hosting the ~5 MB file would end that dependency. The video shelf is still empty — **no YouTube URL has arrived**, so this stays open._
+- [~] ⏳ **M.13** · `CARLOS` · **Send the published Suno and YouTube URLs** — _2026-08-21. First link arrived: `https://suno.com/s/iJuqAuRalpnE55xF`, which resolves to song `474592ab-7d93-4307-831b-7e447b11c11a`. It is shelved as `abc-on-crete-beach` in `media-library.ts`. Carlos then asked for the song to be loaded permanently so a visitor only presses play, so the shelf plays `https://cdn1.suno.ai/474592ab-….mp3` with a native `<audio controls preload="none">` instead of loading Suno's player application. Measured on `/es/sound`: nothing is requested before the press (`networkState: 1`, `readyState: 0`), then `paused: false`, `muted: false`, `volume: 1`, `currentTime: 3.96` of `213.2`; keyboard-reachable (`tabIndex: 0`); 833 px at 1000×700 and 313 px at 390×844 with no overflow. Suno's CDN serves it 200 `audio/mpeg`, 5,121,192 B, `Accept-Ranges: bytes`, with no hotlink protection. Title and duration are Suno's own; the created date (2026-08-09) is deliberately **not** published as "Published", because the song is unlisted rather than published. **Standing risk:** the file URL belongs to Suno, so deleting or moving the song there silences the player; self-hosting the ~5 MB file would end that dependency. The YouTube link arrived too: `https://youtu.be/030X0DYiDS8?si=…`, the video for the same song, shelved as `hedra-seedance-2-5` with the share token dropped. Verified from YouTube's own data as listed and embeddable (`isUnlisted: false`, `playability: OK`, `playableInEmbed: true`, owner `UCyXl-JyWpxFYV9UlKYNAGFg`, 233 s, `2026-08-10`), so its date is published. It loads through `youtube-nocookie` on click: 831×468 on desktop, 311×175 on a 390 px phone. This stays open for the **rest** of the tracks and videos, since one of each is not a launch set._
 
 ---
 

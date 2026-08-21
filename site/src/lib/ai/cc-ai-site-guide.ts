@@ -107,7 +107,7 @@ const soundAnswerEn = [
   "Test build: https://strudelzeroai.app.canner.ca/",
   "Repository: https://github.com/uset82/StrudelAI",
   "",
-  "People who want to contribute are welcome. Suno and YouTube stay click-to-load on that same page.",
+  "People who want to contribute are welcome. The same page has a Suno track that plays in one press, and its video on YouTube behind a click-to-load player.",
 ].join("\n");
 
 const soundAnswerEs = [
@@ -116,7 +116,7 @@ const soundAnswerEs = [
   "Demo interactiva: https://strudelzeroai.app.canner.ca/",
   "Repositorio: https://github.com/uset82/StrudelAI",
   "",
-  "Las contribuciones al código son bienvenidas. En la página /sound también puedes escuchar las composiciones y producciones.",
+  "Las contribuciones al código son bienvenidas. En la misma página /sound hay una canción de Suno que suena pulsando play una vez, y su vídeo de YouTube tras un reproductor que se carga al hacer clic.",
 ].join("\n");
 
 const strudelAnswerEn = [

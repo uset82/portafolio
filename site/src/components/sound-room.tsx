@@ -11,13 +11,14 @@ import {
 } from "@/content/media-library";
 import {
   localizeTrack,
+  localizeVideo,
   MUSIC_PROFILE_ES,
   SOUND_ROOM_ES,
   STRUDEL_AI_ES,
   VIDEO_PROFILE_ES,
 } from "@/content/i18n/media-library-es";
 import { ui } from "@/content/i18n/ui";
-import { resolveHref, type Locale } from "@/lib/i18n";
+import { formatLongDate, resolveHref, type Locale } from "@/lib/i18n";
 
 /**
  * The Sound room.
@@ -38,8 +39,9 @@ export function SoundRoom({ locale = "en" }: { locale?: Locale }) {
   const music = es ? { ...MUSIC_PROFILE, ...MUSIC_PROFILE_ES } : MUSIC_PROFILE;
   const video = es ? { ...VIDEO_PROFILE, ...VIDEO_PROFILE_ES } : VIDEO_PROFILE;
   const tracks = MUSIC_TRACKS.map((track) => localizeTrack(track, locale));
+  const videos = VIDEO_WORKS.map((work) => localizeVideo(work, locale));
   const hasTracks = tracks.length > 0;
-  const hasVideos = VIDEO_WORKS.length > 0;
+  const hasVideos = videos.length > 0;
 
   return (
     <main id="main-content" className="sound-room">
@@ -91,7 +93,9 @@ export function SoundRoom({ locale = "en" }: { locale?: Locale }) {
               <li key={track.id}>
                 <div className="sound-room__work-head">
                   <h3>{track.title}</h3>
-                  {track.publishedOn ? <p>{copy.published(track.publishedOn)}</p> : null}
+                  {track.publishedOn ? (
+                    <p>{copy.published(formatLongDate(track.publishedOn, locale))}</p>
+                  ) : null}
                 </div>
                 {track.description ? (
                   <p className="sound-room__work-body">{track.description}</p>
@@ -148,20 +152,22 @@ export function SoundRoom({ locale = "en" }: { locale?: Locale }) {
 
         {hasVideos ? (
           <ul className="sound-room__works" aria-label={copy.videoAria}>
-            {VIDEO_WORKS.map((video) => (
-              <li key={video.id}>
+            {videos.map((work) => (
+              <li key={work.id}>
                 <div className="sound-room__work-head">
-                  <h3>{video.title}</h3>
-                  {video.publishedOn ? <p>{copy.published(video.publishedOn)}</p> : null}
+                  <h3>{work.title}</h3>
+                  {work.publishedOn ? (
+                    <p>{copy.published(formatLongDate(work.publishedOn, locale))}</p>
+                  ) : null}
                 </div>
-                {video.description ? (
-                  <p className="sound-room__work-body">{video.description}</p>
+                {work.description ? (
+                  <p className="sound-room__work-body">{work.description}</p>
                 ) : null}
                 <ConsentEmbed
                   provider={VIDEO_PROFILE.platform}
-                  accessibleName={copy.onPlatform(video.title, VIDEO_PROFILE.platform)}
-                  embedUrl={youtubeEmbedUrl(video.videoId)}
-                  fallbackUrl={video.url}
+                  accessibleName={copy.onPlatform(work.title, VIDEO_PROFILE.platform)}
+                  embedUrl={youtubeEmbedUrl(work.videoId)}
+                  fallbackUrl={work.url}
                   privacyMode
                   locale={locale}
                 />

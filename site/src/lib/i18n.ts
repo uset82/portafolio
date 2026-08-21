@@ -110,6 +110,26 @@ export function alternateHref(locale: Locale, pathname: string): string {
   return localeHref(other, path);
 }
 
+/** The regional tag to format dates and numbers with, per locale. */
+const FORMAT_LOCALE: Record<Locale, string> = {
+  en: "en-GB",
+  es: "es-ES",
+};
+
+/**
+ * Renders an ISO date as prose in `locale`: "10 August 2026", "10 de agosto de
+ * 2026". Content keeps the ISO form so a date is stored once and read in either
+ * language, and the day is fixed to UTC so it cannot drift by a timezone.
+ */
+export function formatLongDate(isoDate: string, locale: Locale): string {
+  return new Intl.DateTimeFormat(FORMAT_LOCALE[locale], {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${isoDate}T00:00:00Z`));
+}
+
 /**
  * Picks a locale-shaped value. Content records keep one entry per locale, so a
  * missing Spanish string is a type error rather than a silent English fallback.

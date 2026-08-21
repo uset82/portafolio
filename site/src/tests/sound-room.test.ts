@@ -18,7 +18,8 @@ import {
   VIDEO_WORKS,
   youtubeEmbedUrl,
 } from "@/content/media-library";
-import { MUSIC_TRACKS_ES } from "@/content/i18n/media-library-es";
+import { MUSIC_TRACKS_ES, VIDEO_WORKS_ES } from "@/content/i18n/media-library-es";
+import { formatLongDate } from "@/lib/i18n";
 
 test("StrudelAI is the featured public test build", () => {
   const markup = renderToStaticMarkup(createElement(SoundRoom));
@@ -131,12 +132,71 @@ test("published media profiles are the two Carlos confirmed", () => {
   assert.equal(VIDEO_PROFILE.url, "https://www.youtube.com/@cucciolo182");
 });
 
-test("only the songs Carlos sent are shelved, and no video is invented yet", () => {
+test("only the media Carlos sent is shelved", () => {
   assert.deepEqual(
     MUSIC_TRACKS.map((track) => track.id),
     ["abc-on-crete-beach"],
   );
-  assert.deepEqual(VIDEO_WORKS, []);
+  assert.deepEqual(
+    VIDEO_WORKS.map((work) => work.id),
+    ["hedra-seedance-2-5"],
+  );
+});
+
+test("a video's embed, watch URL and share-token-free link agree", () => {
+  const [work] = VIDEO_WORKS;
+
+  assert.ok(work, "the video shelf has nothing to render");
+  assert.equal(work.videoId, "030X0DYiDS8");
+  assert.equal(work.url, `https://www.youtube.com/watch?v=${work.videoId}`);
+  assert.ok(!work.url.includes("si="), "a share token must not be published");
+  assert.equal(
+    youtubeEmbedUrl(work.videoId),
+    `https://www.youtube-nocookie.com/embed/${work.videoId}`,
+  );
+});
+
+test("the published video renders behind a gate, dated in the page's language", () => {
+  const english = renderToStaticMarkup(createElement(SoundRoom));
+  const spanish = renderToStaticMarkup(createElement(SoundRoom, { locale: "es" as const }));
+
+  assert.match(english, /HEDRA × SEEDANCE 2\.5/);
+  assert.match(english, /Published 10 August 2026/);
+  assert.match(english, /generated in Hedra with Seedance 2\.5/);
+  assert.match(english, /Load YouTube/);
+  assert.ok(!english.includes("No video is embedded here yet"), "the shelf is no longer empty");
+
+  assert.match(spanish, /Publicado el 10 de agosto de 2026/);
+  assert.match(spanish, /generado en Hedra con Seedance 2\.5/);
+  assert.match(spanish, /Cargar YouTube/);
+  for (const leak of ["Published 10 August", "Load YouTube", "The song above as a video"]) {
+    assert.ok(!spanish.includes(leak), `the Spanish shelf still says "${leak}"`);
+  }
+
+  // The provider is still not reached until someone asks for it.
+  assert.doesNotMatch(english, /<iframe\b/);
+  assert.ok(!english.includes("youtube-nocookie.com/embed"), "the frame URL waits for the click");
+});
+
+test("every shelved video carries Spanish prose without restating its title or URL", () => {
+  for (const work of VIDEO_WORKS) {
+    const copy = VIDEO_WORKS_ES[work.id];
+    assert.ok(copy, `${work.id} has no Spanish entry`);
+    assert.ok(!copy.description.includes("http"), `${work.id} restates a URL in Spanish`);
+    assert.ok(!copy.description.includes(work.title), `${work.id} restates its title in Spanish`);
+  }
+});
+
+test("a shelved date is stored once as ISO and read in both languages", () => {
+  for (const work of VIDEO_WORKS) {
+    if (!work.publishedOn) continue;
+    assert.match(work.publishedOn, /^\d{4}-\d{2}-\d{2}$/, `${work.id} does not store an ISO date`);
+  }
+
+  assert.equal(formatLongDate("2026-08-10", "en"), "10 August 2026");
+  assert.equal(formatLongDate("2026-08-10", "es"), "10 de agosto de 2026");
+  // A UTC day cannot drift backwards in a western timezone.
+  assert.equal(formatLongDate("2026-01-01", "en"), "1 January 2026");
 });
 
 test("a track's player and its song page point at the same Suno song", () => {
@@ -174,6 +234,13 @@ test("the sound route mounts the room and keeps its responsive rules", () => {
 
   assert.match(page, /<SoundRoom \/>/);
   assert.match(styles, /\.sound-room__audio\s*\{/);
+  // A loaded player must resolve 16:9 from its width. Leaving the gate's
+  // min-height in place widens the frame past its card on a phone.
+  assert.match(styles, /\.consent-embed__viewport\s*\{[^}]*width:\s*100%/);
+  assert.match(
+    styles,
+    /\.consent-embed:is\(\[data-state="loading"\], \[data-state="ready"\]\) \.consent-embed__viewport\s*\{\s*min-height:\s*0;/,
+  );
   assert.match(styles, /\.sound-room__empty\s*\{/);
   assert.match(styles, /\.sound-room__feature\s*\{/);
   assert.match(styles, /@media \(max-width: 47\.99rem\)[\s\S]*?\.sound-room__hero/);

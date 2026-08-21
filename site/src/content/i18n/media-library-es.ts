@@ -5,7 +5,7 @@
  * point at exactly the same places. Track titles stay as the platform stores
  * them; only the prose around a track is translated.
  */
-import type { MusicTrack } from "@/content/media-library";
+import type { MusicTrack, VideoWork } from "@/content/media-library";
 import type { Locale } from "@/lib/i18n";
 
 export const SOUND_ROOM_ES = {
@@ -51,6 +51,24 @@ export function localizeTrack(track: MusicTrack, locale: Locale): MusicTrack {
   if (!copy) return track;
 
   return { ...track, description: copy.description, licence: copy.licence };
+}
+
+/** Per-video prose, keyed by the video id in `VIDEO_WORKS`. */
+export const VIDEO_WORKS_ES: Record<string, { description: string }> = {
+  "hedra-seedance-2-5": {
+    description:
+      "El vídeo de la canción de arriba, generado en Hedra con Seedance 2.5. Tres minutos cincuenta y tres.",
+  },
+};
+
+/** Returns the video with its prose in `locale`. Titles and URLs never change. */
+export function localizeVideo(work: VideoWork, locale: Locale): VideoWork {
+  if (locale === "en") return work;
+
+  const copy = VIDEO_WORKS_ES[work.id];
+  if (!copy) return work;
+
+  return { ...work, description: copy.description };
 }
 
 export const STRUDEL_AI_ES = {
