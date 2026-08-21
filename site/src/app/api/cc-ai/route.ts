@@ -12,6 +12,7 @@ import { createCcAiPostHandler } from "@/lib/ai/cc-ai-handler";
 import { buildCcAiKnowledgeContext } from "@/lib/ai/cc-ai-knowledge";
 import { createCcAiModelPolicy } from "@/lib/ai/model-policy";
 import { createOpenRouterChatProvider } from "@/lib/ai/openrouter-chat-provider";
+import { resolveCcAiTimeoutMs } from "@/lib/ai/openrouter-chat-request";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -42,16 +43,10 @@ const portfolioAudits = (() => {
   }
 })();
 
-/* `openrouter/free` routes to whichever free model is currently available, and
- * those endpoints queue: a 12 s budget times out on answers that arrive fine a
- * few seconds later. The paid production fleet keeps the tighter budget.
- * CC_AI_TIMEOUT_MS overrides both. */
-const DEFAULT_TIMEOUT_MS = modelPolicy.mode === "production" ? 12_000 : 30_000;
-const configuredTimeoutMs = Number.parseInt(process.env.CC_AI_TIMEOUT_MS ?? "", 10);
-const timeoutMs =
-  Number.isFinite(configuredTimeoutMs) && configuredTimeoutMs > 0
-    ? Math.min(configuredTimeoutMs, 60_000)
-    : DEFAULT_TIMEOUT_MS;
+/* Named reasoning models such as stealth/ox-alpha at max effort need more
+ * than the old 30–60 s prototype budget. Production stays tighter.
+ * CC_AI_TIMEOUT_MS overrides both and is capped at 180 s. */
+const timeoutMs = resolveCcAiTimeoutMs(modelPolicy.mode, process.env.CC_AI_TIMEOUT_MS);
 
 export const POST = (request: Request) => {
   const userKey = request.headers.get("x-openrouter-key")?.trim();

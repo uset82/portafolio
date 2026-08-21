@@ -109,7 +109,7 @@ export async function runCcAiCompletion(
     knowledgeContext = EMPTY_CC_AI_KNOWLEDGE_CONTEXT,
     requestId,
     requestSignal,
-    timeoutMs = 30_000,
+    timeoutMs = 180_000,
     maxOutputTokens = 4_000,
     maxOutputCharacters = 40_000,
   }: CcAiServiceOptions,

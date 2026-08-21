@@ -39,8 +39,8 @@ WAVE 4  ░░░░░░░░░░  Launch
 (PR #1) · `SPEC.1` design system · `P.7` robots.txt · all of Wave 0
 **Open PRs:** 0. `brain:check` is wired into `pnpm test` and green.
 **Next up:** Codex `B.0` + `B.4` · Claude `V.1` then `SPEC.3` · Grok `V.12` · Gemini commit `M.7`
-**Waiting on you:** Railway CC AI model vars (`OPENROUTER_MODEL=stealth/ox-alpha`,
-`OPENROUTER_FALLBACK_MODELS=openrouter/free`; delete the unused `stealth/ox-alpha` row) ·
+**Waiting on you:** Deploy the Ox Alpha max-effort fix (reasoning.effort=max + 180 s
+prototype budget) · optional Railway `OPENROUTER_FALLBACK_MODELS=openrouter/free` ·
 `Q.10` books · `Q.11` flagships · `Q.12` MIT · `Q.13` private repos ·
 `M.13` Suno + YouTube links · `M.10` your Buy Me a Coffee handle · a Railway service for
 `My-Football-Game` · Gemini's AVIF is larger than its WebP and needs re-encoding
@@ -126,7 +126,7 @@ I inspected the live Railway config instead of assuming. What is actually set:
 | `OPENROUTER_MODEL`                                         | **not set** → code default `openrouter/free`             |
 | `CC_AI_RATE_LIMIT` / `_WINDOW_SECONDS` / `_MAX_CONCURRENT` | **not set** → defaults 6 req / 60 s / 4 concurrent       |
 
-**2026-08-21 — extra OpenRouter model `stealth/ox-alpha`:** this is a model slug on the existing OpenRouter key, not a second API. A Railway variable named `stealth/ox-alpha` is unused — the route only reads `OPENROUTER_MODEL` and `OPENROUTER_FALLBACK_MODELS`. Local `.env.local` now uses primary `stealth/ox-alpha` with fallback `openrouter/free`. Production still needs those two Railway names (and the unused `stealth/ox-alpha` row deleted) before the live assistant switches. Preview window and provider prompt-retention are documented on [openrouter.ai/stealth/ox-alpha](https://openrouter.ai/stealth/ox-alpha). Do not put a key in those variables; the values are the slugs themselves.
+**2026-08-21 — extra OpenRouter model `stealth/ox-alpha`:** this is a model slug on the existing OpenRouter key, not a second API. Railway `OPENROUTER_MODEL=stealth/ox-alpha` is live. A leftover variable named `stealth/ox-alpha` is unused and can be deleted. Long “build an app” prompts timed out at the old 30 s prototype budget; the request now pins `reasoning.effort=max` and the prototype budget is 180 s. Optional backup: `OPENROUTER_FALLBACK_MODELS=openrouter/free`. Preview window and provider prompt-retention are documented on [openrouter.ai/stealth/ox-alpha](https://openrouter.ai/stealth/ox-alpha).
 
 **Decision: keep it on.** Reasoning:
 

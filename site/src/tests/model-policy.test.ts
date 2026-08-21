@@ -7,7 +7,7 @@ import {
   createCcAiModelPolicy,
   type CcAiModelEnvironment,
 } from "@/lib/ai/model-policy";
-import { buildOpenRouterChatRequest } from "@/lib/ai/openrouter-chat-request";
+import { buildOpenRouterChatRequest, resolveCcAiTimeoutMs } from "@/lib/ai/openrouter-chat-request";
 
 const environment = (overrides: Partial<CcAiModelEnvironment> = {}): CcAiModelEnvironment => ({
   CC_AI_MODE: undefined,
@@ -84,9 +84,18 @@ test("ordered model fallbacks and strict provider constraints reach the OpenRout
       dataCollection: "deny",
       zdr: false,
     },
+    reasoning: { effort: "max" },
     maxCompletionTokens: 120,
     stream: false,
   });
+});
+
+test("prototype timeout defaults to 180s and stays capped", () => {
+  assert.equal(resolveCcAiTimeoutMs("prototype", undefined), 180_000);
+  assert.equal(resolveCcAiTimeoutMs("production", undefined), 12_000);
+  assert.equal(resolveCcAiTimeoutMs("prototype", "45000"), 45_000);
+  assert.equal(resolveCcAiTimeoutMs("prototype", "90000"), 90_000);
+  assert.equal(resolveCcAiTimeoutMs("prototype", "300000"), 180_000);
 });
 
 test("a policy without fallbacks emits one model instead of a models sequence", () => {
