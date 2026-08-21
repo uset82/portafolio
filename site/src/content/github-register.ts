@@ -32,7 +32,8 @@ const TITLE_OVERRIDES: Record<string, string> = {
 const DESCRIPTION_OVERRIDES: Record<string, string> = {
   portafolio: "This portfolio site.",
   mentora: "Fork of a college Mentora base. Carlos is the primary developer of this copy.",
-  Jacobgolf: "A browser-based mini golf challenge built with HTML5 canvas and vanilla JavaScript.",
+  Jacobgolf:
+    "A browser mini golf challenge in HTML5 canvas and vanilla JavaScript. Made by Carlos's son Jacob at nine years old: his own idea, and his own fixes.",
   StillasCalculator:
     "A scaffolding calculator: draw a building perimeter and get a planning material estimate.",
   pacha: "Website for Pasha International Food & Bar in Bergen.",

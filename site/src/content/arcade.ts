@@ -78,7 +78,7 @@ export const ARCADE_GAMES: readonly ArcadeGame[] = [
     title: "Jacobs Golfspill",
     tagline: "Browser mini golf",
     description:
-      "A browser-based mini golf challenge built with HTML5 canvas and vanilla JavaScript. Click or drag to aim, then release to shoot.",
+      "This one is not mine. My son Jacob made it when he was nine: his idea, his game. I talked him through the instructions, and he did the fixing himself. It is a browser mini golf challenge in HTML5 canvas and vanilla JavaScript - click or drag to aim, then release to shoot.",
     engine: "HTML5 Canvas and vanilla JavaScript",
     input: "Mouse or touch",
     controls: ["Click or drag from the ball to aim", "Release to shoot", "Avoid water and rocks"],
@@ -364,7 +364,7 @@ export const ARCADE_SUMMARY = {
   eyebrow: "Arcade / Play",
   heading: "Games you can play, and the honest state of the rest.",
   description:
-    "Every game here is mine. Most of them run in this page; two run on hardware or a desktop runtime and never will. Each one says which it is, what it needs, and where the code lives.",
+    "Every game here is mine, apart from the mini golf: that one is my son Jacob's, built when he was nine. Most of them run in this page; two run on hardware or a desktop runtime and never will. Each one says which it is, what it needs, and where the code lives.",
   measurementNote:
     "Build sizes come from a real build of each repository on 2026-07-31, not from repository size. The games served from a live Netlify host were re-measured against that host instead: Jacobs Golfspill and QubeSolve on 2026-08-16, and 3Doodle, My Football Game, Monkey Tug of War, Gimme My Cake and Drone Lips on 2026-08-21.",
 } as const;

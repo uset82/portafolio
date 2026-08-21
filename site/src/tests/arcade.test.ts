@@ -110,6 +110,7 @@ test("Jacobs Golfspill is playable from its live Netlify host", () => {
 
   assert.doesNotMatch(markup, /<iframe\b/, "no frame may exist before an explicit click");
   assert.match(markup, /Play Jacobs Golfspill/);
+  assert.match(markup, /my son Jacob made it when he was nine/i, "the credit belongs on the page");
 });
 
 test("QubeSolve is playable from its live Netlify host", () => {
