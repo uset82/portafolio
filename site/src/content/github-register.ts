@@ -48,7 +48,7 @@ const DESCRIPTION_OVERRIDES: Record<string, string> = {
   EFFATA:
     "A product health and safety scanner: it reads a barcode or an ingredient label and checks it for carcinogens, toxins, allergens and banned ingredients. The live app is in Spanish and asks for camera access before it can scan.",
   "My-Football-Game":
-    "A canvas football match for one player against the AI or two players on one keyboard. The online mode still ships, but the server it dials no longer answers.",
+    "A canvas football match for one player against the AI or two players on one keyboard. Made by Carlos's son Jacob at nine years old: his own idea, and his own fixes. The online mode still ships, but the server it dials no longer answers.",
   "Monkey-Tug-of-War":
     "A Flutter and Flame arithmetic game for a classroom screen: answer faster than the other side and pull the rope your way.",
   gimmemycake:

@@ -10,6 +10,7 @@ import { ArcadeGameDetail } from "@/components/arcade/arcade-game-detail";
 import { ArcadeIndex, type ResolvedArcadeGame } from "@/components/arcade/arcade-index";
 import {
   ARCADE_GAMES,
+  ARCADE_SUMMARY,
   type ArcadeGame,
   findArcadeGame,
   isArcadeGamePlayable,
@@ -111,6 +112,17 @@ test("Jacobs Golfspill is playable from its live Netlify host", () => {
   assert.doesNotMatch(markup, /<iframe\b/, "no frame may exist before an explicit click");
   assert.match(markup, /Play Jacobs Golfspill/);
   assert.match(markup, /my son Jacob made it when he was nine/i, "the credit belongs on the page");
+});
+
+test("both of Jacob's games carry his credit", () => {
+  for (const slug of ["jacobgolf", "football"]) {
+    const game = findArcadeGame(slug);
+    assert.ok(game, `${slug} is missing from the roster`);
+    assert.match(game.description, /Jacob/, `${slug} does not credit Jacob`);
+    assert.match(game.description, /nine/, `${slug} does not say how old he was`);
+  }
+
+  assert.match(ARCADE_SUMMARY.description, /my son Jacob's/);
 });
 
 test("QubeSolve is playable from its live Netlify host", () => {

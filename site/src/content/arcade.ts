@@ -129,7 +129,7 @@ export const ARCADE_GAMES: readonly ArcadeGame[] = [
     title: "My Football Game",
     tagline: "Two-player canvas football",
     description:
-      "A canvas football match: one player against the AI, or two players sharing one keyboard. An online mode ships with it as well, but the Socket.IO server it dials no longer answers, so the two modes you can rely on are the local ones.",
+      "This one is Jacob's as well. My son made it when he was nine: his idea, his game, and his own fixes once I had talked him through the instructions. It is a canvas football match - one player against the AI, or two players sharing one keyboard. An online mode ships with it too, but the Socket.IO server it dials no longer answers, so the local modes are the ones to rely on.",
     engine: "Canvas 2D, with Socket.IO behind the online mode",
     input: "Keyboard, with on-screen touch controls",
     controls: [
@@ -364,7 +364,7 @@ export const ARCADE_SUMMARY = {
   eyebrow: "Arcade / Play",
   heading: "Games you can play, and the honest state of the rest.",
   description:
-    "Every game here is mine, apart from the mini golf: that one is my son Jacob's, built when he was nine. Most of them run in this page; two run on hardware or a desktop runtime and never will. Each one says which it is, what it needs, and where the code lives.",
+    "Every game here is mine, apart from the mini golf and the football: those two are my son Jacob's, built when he was nine. Most of them run in this page; two run on hardware or a desktop runtime and never will. Each one says which it is, what it needs, and where the code lives.",
   measurementNote:
     "Build sizes come from a real build of each repository on 2026-07-31, not from repository size. The games served from a live Netlify host were re-measured against that host instead: Jacobs Golfspill and QubeSolve on 2026-08-16, and 3Doodle, My Football Game, Monkey Tug of War, Gimme My Cake and Drone Lips on 2026-08-21.",
 } as const;
