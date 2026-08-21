@@ -112,7 +112,11 @@ test("held public rooms retain truthful no-media and no-collection boundaries", 
   const contact = renderRoute(ContactPage);
 
   assert.doesNotMatch(laboratory, /<(?:audio|video|iframe|canvas)\b/);
-  assert.doesNotMatch(sound, /<(?:audio|video|iframe)\b/);
+  // Sound is no longer held: it ships a player, which still fetches nothing
+  // until a visitor presses play.
+  assert.doesNotMatch(sound, /<(?:video|iframe)\b/);
+  assert.doesNotMatch(sound, /autoplay/);
+  assert.match(sound, /<audio[^>]+preload="none"/);
   assert.doesNotMatch(cosmos, /<(?:audio|video|iframe|canvas)\b/);
   assert.doesNotMatch(contact, /<(?:form|input|textarea|select|button)\b/);
 });

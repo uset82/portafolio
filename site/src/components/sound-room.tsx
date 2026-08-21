@@ -23,9 +23,12 @@ import { resolveHref, type Locale } from "@/lib/i18n";
  * The Sound room.
  *
  * Two shelves, music and video. An empty shelf states that it is empty and
- * points at the public profile rather than inventing a track list. Entries from
- * `media-library.ts` render as click-to-load players, so no provider is
- * contacted until a visitor asks for one.
+ * points at the public profile rather than inventing a track list.
+ *
+ * A track with a direct audio file plays through the browser's own control, so
+ * one press is enough and no provider's application is loaded. A work that only
+ * exists as a provider embed keeps the click-to-load gate. Either way nothing is
+ * requested from anyone until the visitor acts.
  */
 export function SoundRoom({ locale = "en" }: { locale?: Locale }) {
   const copy = ui(locale).sound;
@@ -93,7 +96,22 @@ export function SoundRoom({ locale = "en" }: { locale?: Locale }) {
                 {track.description ? (
                   <p className="sound-room__work-body">{track.description}</p>
                 ) : null}
-                {track.embedUrl ? (
+                {track.audioUrl ? (
+                  <div className="sound-room__player">
+                    {/* No client JavaScript: the browser's own control is the player. */}
+                    <audio
+                      className="sound-room__audio"
+                      src={track.audioUrl}
+                      controls
+                      preload="none"
+                      aria-label={copy.playerLabel(track.title)}
+                    />
+                    <ActionLink href={track.url} target="_blank" rel="noreferrer">
+                      {copy.listenOn(MUSIC_PROFILE.platform)}{" "}
+                      <span aria-hidden="true">&#8599;</span>
+                    </ActionLink>
+                  </div>
+                ) : track.embedUrl ? (
                   <ConsentEmbed
                     provider={MUSIC_PROFILE.platform}
                     accessibleName={copy.onPlatform(track.title, MUSIC_PROFILE.platform)}
@@ -101,8 +119,6 @@ export function SoundRoom({ locale = "en" }: { locale?: Locale }) {
                     fallbackUrl={track.url}
                     privacyMode={false}
                     locale={locale}
-                    className="consent-embed--audio"
-                    showHeading={false}
                   />
                 ) : (
                   <ActionLink variant="secondary" href={track.url} target="_blank" rel="noreferrer">

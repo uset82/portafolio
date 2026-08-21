@@ -6,11 +6,13 @@ import test from "node:test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
+import { ConsentEmbed } from "@/components/media";
 import { SoundRoom } from "@/components/sound-room";
 import {
   MUSIC_PROFILE,
   MUSIC_TRACKS,
   STRUDEL_AI,
+  sunoAudioUrl,
   sunoEmbedUrl,
   VIDEO_PROFILE,
   VIDEO_WORKS,
@@ -45,54 +47,74 @@ test("an empty shelf says it is empty and points at the published profile", () =
   }
 });
 
-test("no provider is contacted before a visitor asks for one", () => {
+test("nothing is fetched from anyone before the visitor presses play", () => {
   const markup = renderToStaticMarkup(createElement(SoundRoom));
 
   assert.doesNotMatch(markup, /<iframe\b/, "an embed may only appear after an explicit click");
-  assert.doesNotMatch(markup, /autoplay|preload=/);
-  assert.doesNotMatch(markup, /<(?:audio|video)\b/);
+  assert.doesNotMatch(markup, /autoplay/, "no player may start on its own");
+  assert.match(
+    markup,
+    /<audio[^>]+preload="none"/,
+    "the audio element must hold its request until play",
+  );
+  assert.doesNotMatch(markup, /<video\b/);
 });
 
 test("video embeds use the no-cookie host", () => {
   assert.equal(youtubeEmbedUrl("abc123"), "https://www.youtube-nocookie.com/embed/abc123");
 });
 
-test("music embeds use Suno's own player for the song", () => {
+test("Suno URLs are built from one song id", () => {
   assert.equal(sunoEmbedUrl("abc123"), "https://suno.com/embed/abc123");
+  assert.equal(sunoAudioUrl("abc123"), "https://cdn1.suno.ai/abc123.mp3");
 });
 
-test("the published track renders a click-to-load player and states its rights", () => {
+test("the published track plays on one press and states its rights", () => {
   const markup = renderToStaticMarkup(createElement(SoundRoom));
   const [track] = MUSIC_TRACKS;
 
-  assert.ok(track, "the music shelf has nothing to render");
+  assert.ok(track?.audioUrl, "the shelved track has no audio to play");
   assert.match(markup, /ABC on Crete Beach/);
-  assert.match(markup, /Load Suno/);
   assert.match(markup, /this page grants no reuse rights/);
-  assert.match(markup, /consent-embed--audio/, "a track plays in the strip, not a 16:9 stage");
-  assert.doesNotMatch(
-    markup,
-    /<h3[^>]*>[^<]*, on Suno<\/h3>/,
-    "the gate must not repeat the title the card already shows",
-  );
 
-  // The song page is offered as the escape hatch; the player URL is not
-  // requested, or even present, until the visitor loads it.
+  // The song plays here, and Suno stays one click away for whoever wants it.
+  assert.match(markup, new RegExp(`<audio[^>]+src="${track.audioUrl}"`));
+  assert.match(markup, /aria-label="ABC on Crete Beach[^"]*audio player"/);
   assert.match(markup, new RegExp(`href="${track.url}"`));
-  assert.ok(!markup.includes("suno.com/embed"), "the player must not be reachable before a click");
+  assert.match(markup, /Listen on Suno/);
+  assert.ok(!markup.includes("Load Suno"), "a direct file needs no provider gate");
 });
 
-test("the Spanish shelf reads in Spanish, player gate included", () => {
+test("the Spanish shelf reads in Spanish, player label included", () => {
   const markup = renderToStaticMarkup(createElement(SoundRoom, { locale: "es" as const }));
 
-  assert.match(markup, /Cargar Suno/);
-  assert.match(markup, /Abrir en su sitio/);
+  assert.match(markup, /Escuchar en Suno/);
+  assert.match(markup, /reproductor de audio"/);
   assert.match(markup, /no concede derechos de reutilización/);
   assert.match(markup, /bouzouki siempre por encima/);
 
-  for (const leak of ["Load Suno", "Open externally", "grants no reuse rights"]) {
+  for (const leak of ["audio player", "Listen on Suno", "grants no reuse rights"]) {
     assert.ok(!markup.includes(leak), `the Spanish shelf still says "${leak}"`);
   }
+});
+
+test("a provider gate that does appear speaks the page's language", () => {
+  const spanish = renderToStaticMarkup(
+    createElement(ConsentEmbed, {
+      provider: "Suno",
+      accessibleName: "Una pista, en Suno",
+      embedUrl: "https://suno.com/embed/abc123",
+      fallbackUrl: "https://suno.com/song/abc123",
+      privacyMode: false,
+      locale: "es" as const,
+    }),
+  );
+
+  assert.match(spanish, /Cargar Suno/);
+  assert.match(spanish, /Abrir en su sitio/);
+  assert.match(spanish, /compartir tu dirección IP/);
+  assert.ok(!spanish.includes("Load Suno"), "the Spanish gate still says Load Suno");
+  assert.doesNotMatch(spanish, /<iframe\b/, "the gate must not mount the frame by itself");
 });
 
 test("every track carries Spanish prose without restating its title or URL", () => {
@@ -121,8 +143,11 @@ test("a track's player and its song page point at the same Suno song", () => {
   for (const track of MUSIC_TRACKS) {
     const songId = track.url.match(/\/song\/([\w-]+)/)?.[1];
     assert.ok(songId, `${track.id} does not link a Suno song page`);
+    if (track.audioUrl) {
+      assert.equal(track.audioUrl, sunoAudioUrl(songId), `${track.id} plays a different song`);
+    }
     if (track.embedUrl) {
-      assert.equal(track.embedUrl, sunoEmbedUrl(songId), `${track.id} plays a different song`);
+      assert.equal(track.embedUrl, sunoEmbedUrl(songId), `${track.id} embeds a different song`);
     }
   }
 });
@@ -148,7 +173,7 @@ test("the sound route mounts the room and keeps its responsive rules", () => {
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
 
   assert.match(page, /<SoundRoom \/>/);
-  assert.match(styles, /\.consent-embed--audio \.consent-embed__viewport\s*\{/);
+  assert.match(styles, /\.sound-room__audio\s*\{/);
   assert.match(styles, /\.sound-room__empty\s*\{/);
   assert.match(styles, /\.sound-room__feature\s*\{/);
   assert.match(styles, /@media \(max-width: 47\.99rem\)[\s\S]*?\.sound-room__hero/);

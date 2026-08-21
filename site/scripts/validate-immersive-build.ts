@@ -35,6 +35,8 @@ type StaticRouteContract = {
   name: string;
   outputFile: string;
   forbiddenElements?: readonly string[];
+  /** Markup the published route must contain, with the reason it must. */
+  requiredMarkup?: readonly { pattern: RegExp; reason: string }[];
 };
 
 const globalNavigationHrefs = [
@@ -55,9 +57,17 @@ const staticRouteContracts: readonly StaticRouteContract[] = [
     forbiddenElements: ["audio", "video", "iframe", "canvas"],
   },
   {
+    // Sound publishes a player on purpose. The contract is no longer "no media"
+    // but "no media that fetches or plays on its own".
     name: "Sound",
     outputFile: "sound.html",
-    forbiddenElements: ["audio", "video", "iframe"],
+    forbiddenElements: ["video", "iframe"],
+    requiredMarkup: [
+      {
+        pattern: /<audio[^>]+preload="none"/,
+        reason: "the track must hold its request until a visitor presses play",
+      },
+    ],
   },
   {
     name: "Cosmos",
@@ -281,6 +291,13 @@ async function validateStaticRouteSemantics() {
       invariant(
         !new RegExp(`<${element}\\b`, "i").test(markup),
         `${route.name} must not publish a ${element} element before its content is ready.`,
+      );
+    }
+
+    for (const requirement of route.requiredMarkup ?? []) {
+      invariant(
+        requirement.pattern.test(markup),
+        `${route.name} is missing required markup: ${requirement.reason}.`,
       );
     }
   }

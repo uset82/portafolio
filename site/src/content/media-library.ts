@@ -15,7 +15,13 @@ export type MusicTrack = {
   title: string;
   /** The public Suno song page. Required - this is the proof it is published. */
   url: string;
-  /** Suno's embeddable player URL, when one exists for this song. */
+  /**
+   * Suno's own audio file. When present the page plays the song with its own
+   * controls, so a visitor presses play once instead of loading a provider's
+   * application first. Nothing is requested from Suno until that press.
+   */
+  audioUrl?: string;
+  /** Suno's embeddable player, for a song with no direct file. */
   embedUrl?: string;
   /** ISO date the song was published, when known. */
   publishedOn?: string;
@@ -47,7 +53,7 @@ export const MUSIC_TRACKS: readonly MusicTrack[] = [
     id: "abc-on-crete-beach",
     title: "ABC on Crete Beach — Greek x Indi… x ZORBA vs PUNJABI — BEACH BATTLE (Mashup)",
     url: "https://suno.com/song/474592ab-7d93-4307-831b-7e447b11c11a",
-    embedUrl: sunoEmbedUrl("474592ab-7d93-4307-831b-7e447b11c11a"),
+    audioUrl: sunoAudioUrl("474592ab-7d93-4307-831b-7e447b11c11a"),
     description:
       "Greek zorba and sirtaki traded against Punjabi bhangra, with the bouzouki always on top. Three and a half minutes, no vocals to speak of.",
     licence:
@@ -89,7 +95,7 @@ export const SOUND_ROOM = {
       "No video is embedded here yet. The full published channel is on YouTube in the meantime.",
   },
   playbackNote:
-    "Players are click-to-load. Loading one shares your IP address and browser information with that provider. The StrudelAI test build opens in its own site.",
+    "Press play and the music streams straight from Suno; nothing is asked of anyone before that. Video players still load on click, and the StrudelAI test build opens in its own site.",
 } as const;
 
 export const STRUDEL_AI = {
@@ -111,4 +117,13 @@ export function youtubeEmbedUrl(videoId: string): string {
 /** Suno's own player for one song. It plays for visitors with no Suno account. */
 export function sunoEmbedUrl(songId: string): string {
   return `https://suno.com/embed/${songId}`;
+}
+
+/**
+ * The song's audio file on Suno's CDN, which serves range requests and needs no
+ * Suno account. It is the same master their player streams, so a broken link
+ * here means the song moved on Suno rather than that the page is wrong.
+ */
+export function sunoAudioUrl(songId: string): string {
+  return `https://cdn1.suno.ai/${songId}.mp3`;
 }

@@ -38,9 +38,12 @@ test("the Sound route renders both shelves without contacting a provider", () =>
   assert.match(markup, /<h1[^>]*>Music you can hear, and video you can watch\.<\/h1>/);
   assert.match(markup, /id="sound-room-music-title">Tracks\./);
   assert.match(markup, /id="sound-room-video-title">Video\./);
-  assert.match(markup, /Players are click-to-load/);
-  // Server markup stays inert: a provider is reached only after a click.
-  assert.doesNotMatch(markup, /<(?:audio|video|iframe)\b/);
+  assert.match(markup, /Press play and the music streams straight from Suno/);
+  // Server markup stays inert: the audio holds its request until play, and an
+  // embedded provider is reached only after a click.
+  assert.doesNotMatch(markup, /<(?:video|iframe)\b/);
+  assert.doesNotMatch(markup, /autoplay/);
+  assert.match(markup, /<audio[^>]+preload="none"/);
 });
 
 test("the recovery state keeps 404 visitors oriented with two known routes", () => {

@@ -20,7 +20,7 @@ export const SOUND_ROOM_ES = {
       "Todavía no hay ningún vídeo incrustado aquí. Mientras tanto, el canal publicado completo está en YouTube.",
   },
   playbackNote:
-    "Los reproductores se cargan al hacer clic. Cargar uno comparte tu dirección IP y la información de tu navegador con ese proveedor. La versión de prueba de StrudelAI se abre en su propio sitio.",
+    "Pulsa play y la música se transmite directamente desde Suno; antes de eso no se le pide nada a nadie. Los reproductores de vídeo siguen cargándose al hacer clic, y la versión de prueba de StrudelAI se abre en su propio sitio.",
 } as const;
 
 export const MUSIC_PROFILE_ES = {

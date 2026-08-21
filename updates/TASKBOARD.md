@@ -42,19 +42,28 @@ WAVE 4  ░░░░░░░░░░  Launch
 **Waiting on you:** Deploy the Ox Alpha max-effort fix (reasoning.effort=max + 180 s
 prototype budget) · optional Railway `OPENROUTER_FALLBACK_MODELS=openrouter/free` ·
 `Q.10` books · `Q.11` flagships · `Q.12` MIT · `Q.13` private repos ·
-`M.13` more Suno links + the YouTube links (first Suno track is live) · `M.11` the licence line
-for that track · `M.10` your Buy Me a Coffee handle · a Railway service for
+`M.13` more Suno links + the YouTube links (first Suno track plays in one press) · `M.11` the
+licence line for that track · `M.10` your Buy Me a Coffee handle · a Railway service for
 `My-Football-Game` · Gemini's AVIF is larger than its WebP and needs re-encoding
 
-### 2026-08-21 — the first song is playable on the site
+### 2026-08-21 — the first song is playable on the site, in one press
 
 `/sound` and `/es/sound` now carry **ABC on Crete Beach — Greek x Indi… x ZORBA vs PUNJABI —
-BEACH BATTLE (Mashup)** as a click-to-load Suno player, in both languages. The shelf is no longer
-empty. Nothing reaches Suno until a visitor presses **Load Suno** / **Cargar Suno**; the gate, the
-privacy line and the rights line all read in the page's own language, because `ConsentEmbed` was
-translated at the same time. Two things Carlos should know: the song is **unlisted** on Suno
-(`is_public: false`), so his profile page will not lead anyone to it, and its rights line claims
-nothing beyond "free to listen" while `M.11` is open. Evidence at `M.13`.
+BEACH BATTLE (Mashup)**, in both languages. The shelf is no longer empty.
+
+The player is on the page from the start, so a visitor presses play once and hears the song: no
+"Load Suno" step, and no Suno application loading inside the page. It is the browser's own audio
+control, streaming the file from Suno, and it asks Suno for nothing until that press — measured
+before any interaction as `networkState: 1`, `readyState: 0`. Playback was confirmed at full volume,
+3.96 s into the 3:33 track, and the control fits a phone with no overflow. **Listen on Suno** stays
+beside it as the attribution and the fallback. The click-to-load gate is still there for anything
+that only exists as a provider embed, such as YouTube, and it now speaks Spanish too.
+
+Two things Carlos should know: the song is **unlisted** on Suno (`is_public: false`), so his profile
+page will not lead anyone to it, and its rights line claims nothing beyond "free to listen" while
+`M.11` is open. One risk worth naming: the page streams Suno's own file URL, so if the song is
+deleted or moved on Suno the player goes quiet while the link still works. Copying the file into the
+repository would remove that dependency, at about 5 MB and a rights record. Evidence at `M.13`.
 
 ### 2026-08-18 — Work register search
 
@@ -264,7 +273,7 @@ is identical to the current defaults. It is config hygiene, not a fix.
 - [ ] ☐ **M.8** · `GEMINI` · Arcade posters
 - [ ] ☐ **M.9** · `GEMINI` · Site-wide alt text
 - [x] ☑ **M.12** · `CLAUDE` · **Sound room rebuilt as a real room** — _2026-08-13, new task. The mute-first `SoundFoundation` is retired: it encoded "no player, ever", which Carlos's direction supersedes. `SoundRoom` ships two shelves (music, moving image) that render click-to-load `ConsentEmbed` players from `site/src/content/media-library.ts`. **Both shelves are empty on purpose** — Carlos's Suno and YouTube profiles are linked because he confirmed them; no track or video is invented. Adding one entry to `MUSIC_TRACKS` / `VIDEO_WORKS` is the only step needed to publish it. YouTube uses `youtube-nocookie`. `M.11` still governs what each track's `licence` field may claim._
-- [~] ⏳ **M.13** · `CARLOS` · **Send the published Suno and YouTube URLs** — _2026-08-21. First link arrived: `https://suno.com/s/iJuqAuRalpnE55xF`, which resolves to song `474592ab-7d93-4307-831b-7e447b11c11a`. It is shelved as `abc-on-crete-beach` in `media-library.ts` and plays through `https://suno.com/embed/474592ab-…`, verified anonymously (no Suno account, `paused: false`, 3:33 duration) and rendered on `/sound` and `/es/sound` at 1000×700 and 390×844. Title, cover and duration are Suno's own; the created date (2026-08-09) is deliberately **not** published as "Published", because the song is unlisted rather than published. The video shelf is still empty — **no YouTube URL has arrived**, so this stays open._
+- [~] ⏳ **M.13** · `CARLOS` · **Send the published Suno and YouTube URLs** — _2026-08-21. First link arrived: `https://suno.com/s/iJuqAuRalpnE55xF`, which resolves to song `474592ab-7d93-4307-831b-7e447b11c11a`. It is shelved as `abc-on-crete-beach` in `media-library.ts`. Carlos then asked for the song to be loaded permanently so a visitor only presses play, so the shelf plays `https://cdn1.suno.ai/474592ab-….mp3` with a native `<audio controls preload="none">` instead of loading Suno's player application. Measured on `/es/sound`: nothing is requested before the press (`networkState: 1`, `readyState: 0`), then `paused: false`, `muted: false`, `volume: 1`, `currentTime: 3.96` of `213.2`; keyboard-reachable (`tabIndex: 0`); 833 px at 1000×700 and 313 px at 390×844 with no overflow. Suno's CDN serves it 200 `audio/mpeg`, 5,121,192 B, `Accept-Ranges: bytes`, with no hotlink protection. Title and duration are Suno's own; the created date (2026-08-09) is deliberately **not** published as "Published", because the song is unlisted rather than published. **Standing risk:** the file URL belongs to Suno, so deleting or moving the song there silences the player; self-hosting the ~5 MB file would end that dependency. The video shelf is still empty — **no YouTube URL has arrived**, so this stays open._
 
 ---
 

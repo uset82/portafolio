@@ -27,8 +27,6 @@ export type ConsentEmbedProps = {
   sandbox?: string;
   className?: string;
   locale?: Locale;
-  /** Set false when the surrounding card already shows the work's title. */
-  showHeading?: boolean;
 };
 
 type EmbedState = "idle" | "loading" | "ready" | "error";
@@ -54,7 +52,6 @@ export function ConsentEmbed({
   sandbox = defaultSandbox,
   className,
   locale = "en",
-  showHeading = true,
 }: ConsentEmbedProps) {
   const copy = ui(locale).mediaEmbed;
   const [state, setState] = useState<EmbedState>("idle");
@@ -112,7 +109,7 @@ export function ConsentEmbed({
               <StatusTag tone={privacyMode ? "concept" : "hold"}>
                 {privacyMode ? copy.privacyEnhanced : copy.externalProvider}
               </StatusTag>
-              {showHeading ? <h3>{accessibleName}</h3> : null}
+              <h3>{accessibleName}</h3>
               {state === "error" ? (
                 <div className="media-message media-message--error" role="alert">
                   <p>{copy.noResponse(provider)}</p>
