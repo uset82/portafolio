@@ -93,7 +93,8 @@ export const ARCADE_GAMES: readonly ArcadeGame[] = [
     },
     builtSize: "17 KB hosted (702 B HTML, 14.9 KB JS, 1.4 KB CSS), measured 2026-08-16",
     repository: "https://github.com/uset82/Jacobgolf",
-    license: "No LICENSE file in the repository yet - all rights reserved by Carlos Carpio",
+    license:
+      "No LICENSE file in the repository yet - all rights reserved by its author, Carlos Carpio's son Jacob",
     measuredOn: "2026-08-16",
   },
   {
@@ -148,7 +149,8 @@ export const ARCADE_GAMES: readonly ArcadeGame[] = [
     },
     builtSize: "36 KB transferred from the live host (1.9 KB HTML), 154 KB decoded",
     repository: "https://github.com/uset82/My-Football-Game",
-    license: "No LICENSE file in the repository yet - all rights reserved by Carlos Carpio",
+    license:
+      "No LICENSE file in the repository yet - all rights reserved by its author, Carlos Carpio's son Jacob",
     measuredOn: "2026-08-21",
   },
   {
