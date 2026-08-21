@@ -75,7 +75,7 @@ export const ARCADE_GAMES: readonly ArcadeGame[] = [
     title: "MandelBro",
     tagline: "Kids world creator",
     description:
-      "Pick a character, describe the world you want, and build it from one of six templates: blocky caves, sky defence, racing, retro arcade, ocean, or galaxy. The simplified build runs entirely in your browser with no account and no network calls.",
+      "This was an idea project: a prototype made to test whether the concept held up, not a finished game. Pick a character, describe the world you want, and build it from one of six templates: blocky caves, sky defence, racing, retro arcade, ocean, or galaxy. The simplified build runs entirely in your browser with no account and no network calls.",
     engine: "HTML5 Canvas",
     input: "Mouse or touch",
     controls: [

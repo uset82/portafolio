@@ -152,7 +152,7 @@ const contactAnswerEs = [
 const githubAnswerEn = [
   "The public GitHub account is https://github.com/uset82.",
   "",
-  "Work groups every public repository by practice. Private repositories stay off this site. Cosmos is where ASTROEA and Pináculo can be tried.",
+  "Work groups every public repository by practice. Search /work to find a project, open Playable for live demos, or open Astrology for ASTROEA and Pináculo. Private repositories stay off this site. Cosmos is where ASTROEA and Pináculo can be tried.",
 ].join("\n");
 
 const githubAnswerEs = [
@@ -164,13 +164,13 @@ const githubAnswerEs = [
 const workAnswerEn = [
   "Work is the public GitHub register of what Carlos has been building since 2022, grouped by practice.",
   "",
-  "You are welcome to try what is open and to contribute. Cosmos holds ASTROEA and Pináculo to try. Support lists the four MIT repositories. Private repositories stay off the page.",
+  "You are welcome to try what is open and to contribute. Search /work to find a project, open Playable for live demos, or open Astrology for ASTROEA and Pináculo. Cosmos also holds those two apps. Support lists the four MIT repositories. Private repositories stay off the page.",
 ].join("\n");
 
 const workAnswerEs = [
   "La sección Work es el registro público de GitHub con los proyectos desarrollados por Carlos desde 2022, agrupados por disciplina técnica.",
   "",
-  "Puedes probar el software de código abierto y explorar sus repositorios en /work o en GitHub.",
+  "Puedes buscar en /work, abrir Playable para las demos en vivo, o abrir Astrology para ASTROEA y Pináculo. También puedes explorar los repositorios en GitHub.",
 ].join("\n");
 
 const profileAnswerEn = [

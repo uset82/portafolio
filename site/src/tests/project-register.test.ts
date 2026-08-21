@@ -12,6 +12,7 @@ import {
   GITHUB_REGISTER_GROUPS,
   GITHUB_REGISTER_META,
 } from "@/content/github-register";
+import { matchingWorkIds } from "@/lib/work-search";
 
 const PRIVATE_REPOSITORY_NAMES = [
   "brain-private",
@@ -94,7 +95,11 @@ test("project register renders grouped public repositories as ordered, linkable 
   for (const name of PRIVATE_REPOSITORY_NAMES) {
     assert.doesNotMatch(markup, new RegExp(name));
   }
-  assert.doesNotMatch(markup, /<(?:img|video|audio|iframe|button|form|input)\b/);
+  assert.match(markup, /role="search"/);
+  assert.match(markup, /type="search"/);
+  assert.match(markup, />Playable</);
+  assert.match(markup, />Astrology</);
+  assert.doesNotMatch(markup, /<(?:img|video|audio|iframe)\b/);
   assert.doesNotMatch(markup, /(?:mailto:)/);
 });
 
@@ -217,6 +222,34 @@ test("chaclacayo is a Website creation row with the live site, without private c
   assert.doesNotMatch(markup, /hotmail|450 41 112|\+47|Alfonso Cobi[aá]n|350,?000|Mz\.?\s*B/i);
 });
 
+test("work search keeps every row in the DOM and hides non-matches", () => {
+  const astro = renderToStaticMarkup(createElement(ProjectRegister, { initialQuery: "astro" }));
+  const playable = renderToStaticMarkup(
+    createElement(ProjectRegister, { initialFacet: "playable" }),
+  );
+  const empty = renderToStaticMarkup(
+    createElement(ProjectRegister, { initialQuery: "zzzxnotarepository" }),
+  );
+  const astroIds = matchingWorkIds(GITHUB_REGISTER_GROUPS, "astro", "all");
+  const playableIds = matchingWorkIds(GITHUB_REGISTER_GROUPS, "", "playable");
+
+  assert.equal((astro.match(/class="project-register__row"/g) ?? []).length, 62);
+  assert.equal((astro.match(/class="project-register__row"[^>]*hidden/g) ?? []).length, 60);
+  assert.match(astro, /href="https:\/\/astraia\.netlify\.app\/"/);
+  assert.match(astro, /href="https:\/\/pinaculo\.netlify\.app\/"/);
+  assert.match(astro, />Try ASTROEA</);
+  assert.match(astro, />Try Pináculo</);
+  assert.equal(astroIds.size, 2);
+  assert.equal(
+    (playable.match(/class="project-register__row"[^>]*hidden/g) ?? []).length,
+    62 - playableIds.size,
+  );
+  assert.match(playable, /aria-pressed="true">Playable</);
+  assert.match(empty, /No public repositories match/);
+  assert.match(empty, /Clear the search to see the full register/);
+  assert.equal((empty.match(/class="project-register__row"[^>]*hidden/g) ?? []).length, 62);
+});
+
 test("project register is readable without animation and keeps focus, touch, and mobile contracts", () => {
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
 
@@ -228,8 +261,21 @@ test("project register is readable without animation and keeps focus, touch, and
   assert.match(styles, /\.project-register__link:active/);
   assert.match(styles, /@media \(max-width: 63\.99rem\)[\s\S]*?\.project-register__row/);
   assert.match(styles, /@media \(max-width: 39\.99rem\)[\s\S]*?\.project-register__link/);
+  assert.match(
+    styles,
+    /\.work-index__search-field\s*\{[\s\S]*?min-height:\s*var\(--control-height\)/,
+  );
+  assert.match(
+    styles,
+    /\.work-index__search-chip\s*\{[\s\S]*?min-height:\s*var\(--control-height\)/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 39\.99rem\)[\s\S]*?\.work-index__search input\[type="search"\][\s\S]*?font-size:\s*16px/,
+  );
   assert.doesNotMatch(
     styles,
     /\.project-register(?:__row|__identity|__evidence|__link)?\s*\{[^}]*animation:/,
   );
+  assert.doesNotMatch(styles, /\.work-index__search[^{]*\{[^}]*animation:/);
 });

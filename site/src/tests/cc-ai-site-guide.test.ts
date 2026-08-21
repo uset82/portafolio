@@ -53,6 +53,9 @@ test("Work questions point at the public GitHub register, not only two apps", ()
   assert.match(guided.answer, /grouped by practice/);
   assert.match(guided.answer, /since 2022/);
   assert.match(guided.answer, /welcome to try/);
+  assert.match(guided.answer, /Search \/work/);
+  assert.match(guided.answer, /Playable/);
+  assert.match(guided.answer, /Astrology/);
 });
 
 test("Pináculo and Cosmos questions point at the public apps", () => {

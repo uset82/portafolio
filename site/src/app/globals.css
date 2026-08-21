@@ -4567,6 +4567,116 @@ body:has(.observatory-hero) .site-header .site-header__status {
   min-height: var(--control-height);
 }
 
+.work-index__search {
+  display: grid;
+  grid-template-columns: minmax(8rem, 0.34fr) minmax(24rem, 1.25fr) minmax(16rem, 0.58fr);
+  gap: clamp(1.5rem, 4vw, 4.5rem);
+  align-items: end;
+  width: min(100%, var(--page-max));
+  margin-inline: auto;
+  padding: 1.75rem var(--page-gutter) clamp(2.5rem, 5vw, 4rem);
+  border-top: 1px solid var(--color-border-strong);
+}
+
+.work-index__search-rail {
+  display: grid;
+  gap: 0.65rem;
+  align-content: start;
+}
+
+.work-index__search-rail .section-label {
+  margin: 0;
+}
+
+.work-index__search-count {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.work-index__search-field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.85rem;
+  align-items: center;
+  min-height: var(--control-height);
+  border-bottom: 1px solid var(--color-border-strong);
+  transition: border-color var(--duration-base) var(--ease-emphasized);
+}
+
+.work-index__search-field:focus-within {
+  border-bottom-color: var(--color-sage-dark);
+}
+
+.work-index__search input[type="search"] {
+  width: 100%;
+  min-width: 0;
+  min-height: var(--control-height);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+  letter-spacing: -0.03em;
+}
+
+.work-index__search input[type="search"]::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.work-index__search input[type="search"]::-webkit-search-decoration,
+.work-index__search input[type="search"]::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.work-index__search-shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 1.15rem;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.work-index__search-chip {
+  min-height: var(--control-height);
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition:
+    color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
+}
+
+.work-index__search-chip:hover,
+.work-index__search-chip:focus-visible {
+  color: var(--color-sage-dark);
+}
+
+.work-index__search-chip[aria-pressed="true"] {
+  border-bottom-color: var(--color-sage-dark);
+  color: var(--color-sage-dark);
+}
+
+.work-index__empty {
+  width: min(100%, var(--page-max));
+  margin: 0 auto;
+  padding: 0 var(--page-gutter) clamp(2rem, 4vw, 3rem);
+  color: var(--color-text-secondary);
+  font-size: clamp(0.95rem, 1.2vw, 1.08rem);
+  line-height: 1.7;
+}
+
 .work-index__toc {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -4574,8 +4684,6 @@ body:has(.observatory-hero) .site-header .site-header__status {
   width: min(100%, var(--page-max));
   margin-inline: auto;
   padding: 0 var(--page-gutter) clamp(3.5rem, 7vw, 6rem);
-  border-top: 1px solid var(--color-border-strong);
-  padding-top: 1.75rem;
 }
 
 .work-index__toc a {
@@ -4919,6 +5027,15 @@ body:has(.observatory-hero) .site-header .site-header__status {
     gap: 1.5rem;
   }
 
+  .work-index__search {
+    grid-template-columns: minmax(7rem, 0.3fr) minmax(20rem, 1fr);
+  }
+
+  .work-index__search-shortcuts {
+    grid-column: 2;
+    justify-content: flex-start;
+  }
+
   .project-register__row {
     grid-template-columns: minmax(6rem, 0.3fr) minmax(12rem, 0.75fr) minmax(0, 1fr);
   }
@@ -4988,6 +5105,21 @@ body:has(.observatory-hero) .site-header .site-header__status {
 
   .work-index__welcome .ui-action {
     width: 100%;
+  }
+
+  .work-index__search {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .work-index__search-shortcuts {
+    grid-column: auto;
+  }
+
+  .work-index__search input[type="search"] {
+    font-family: var(--font-body);
+    font-size: 16px;
+    letter-spacing: 0;
   }
 
   .work-index__toc {

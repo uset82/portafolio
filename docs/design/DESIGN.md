@@ -143,7 +143,7 @@ The first viewport is a poster: identity and promise on the left; observatory vi
 
 - Default: ordered editorial list with image, title, category, status, one-sentence contribution, and year only when verified.
 - Filters are introduced only when at least eight verified projects exist; until then, category anchor links suffice.
-- Implementation decision 2026-07-20: the current runtime has only three held concept records and no publishable project index, so `/work` deliberately ships no filter controls or filter URL state. Revisit only after eight verified public projects exist.
+- Implementation decision 2026-08-18: the public GitHub register now lists 62 projects, which clears the eight-project threshold. `/work` ships a cardless search field plus Playable and Astrology shortcuts. URL state uses `q` and `show`. All rows stay in the DOM; non-matches use `hidden`. Reset restores the full register.
 - If filters exist, they are real buttons, announce result count, retain all items in DOM, and expose a clear Reset. No-result copy explains how to recover.
 
 ### Case study

@@ -43,6 +43,10 @@ WAVE 4  ░░░░░░░░░░  Launch
 `M.13` Suno + YouTube links · `M.10` your Buy Me a Coffee handle · a Railway service for
 `My-Football-Game` · Gemini's AVIF is larger than its WebP and needs re-encoding
 
+### 2026-08-18 — Work register search
+
+`/work` now has a Find field plus **Playable** and **Astrology** shortcuts so a visitor can reach live demos and ASTROEA / Pináculo without scrolling the full 62-repo register. Search does not collect birth data. The apps still open on their own sites.
+
 ### 2026-08-16 — Work is the public GitHub register
 
 Work lists every **public** `uset82` repository (62 on 2026-08-16), grouped by practice (tools, AI, games, music, design, hardware, astrology/numerology, business, 3D, academic writing, plus forks and unfilled starts). Jacobs Golfspill sits in Games and is playable at https://jacobgolf.netlify.app/. Cosmos stays the room for **ASTROEA** and **Pináculo** to try. Arcade stays the games. Private repositories stay off the site (`Q.13`). Unlicensed repos remain readable, not MIT-open (`Q.12`). No invented case studies.
@@ -200,6 +204,11 @@ is identical to the current defaults. It is config hygiene, not a fix.
 
 - [ ] ☐ **M.1** · `GEMINI` · Track inventory: title, duration, tool, date, samples, collaborators
 - [ ] ☐ **M.7** · `GEMINI` · Image audit + convert the 2.5 MB poster to AVIF/WebP
+
+### User-directed
+
+- [x] ☑ **W.14** · `GROK` · Work register search — query plus Playable and Astrology shortcuts so visitors can find projects, play demos, and open ASTROEA / Pináculo — _done 2026-08-18. Find field, Playable, Astrology, `q`/`show` URL, 62 rows kept in the DOM. Verified `?q=astro` and `?show=playable`._
+- [x] ☑ **V.14** · `GROK` · Homepage Cosmos mark hydration — _done 2026-08-18. Tick coordinates are `toFixed(4)` strings so Node and the browser emit the same SVG attributes._
 
 ---
 

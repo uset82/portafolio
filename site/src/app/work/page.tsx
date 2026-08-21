@@ -7,7 +7,7 @@ import { ORBIT_PROJECTS } from "@/content/project-orbit";
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Work Carlos Alfredo Carpio Meza has been building since 2022. Public GitHub register grouped by practice, with an invitation to try and to contribute.",
+    "Work Carlos Alfredo Carpio Meza has been building since 2022. Public GitHub register grouped by practice, with search for projects, playable demos, and astrology apps.",
 };
 
 export default function WorkPage() {

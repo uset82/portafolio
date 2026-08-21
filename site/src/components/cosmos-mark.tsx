@@ -15,6 +15,10 @@ import { useEffect, useRef } from "react";
 const CX = 50;
 const CY = 50;
 
+function svgCoord(value: number): string {
+  return value.toFixed(4);
+}
+
 const ticks = Array.from({ length: 24 }, (_, index) => {
   const angle = ((index * 15 - 90) * Math.PI) / 180;
   const isHouse = index % 2 === 0;
@@ -24,10 +28,10 @@ const ticks = Array.from({ length: 24 }, (_, index) => {
   const sin = Math.sin(angle);
   return {
     key: index,
-    x1: CX + cos * inner,
-    y1: CY + sin * inner,
-    x2: CX + cos * outer,
-    y2: CY + sin * outer,
+    x1: svgCoord(CX + cos * inner),
+    y1: svgCoord(CY + sin * inner),
+    x2: svgCoord(CX + cos * outer),
+    y2: svgCoord(CY + sin * outer),
   };
 });
 
