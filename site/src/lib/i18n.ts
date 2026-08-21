@@ -72,7 +72,17 @@ export function splitLocale(pathname: string): { locale: Locale; path: string } 
  * the change where the counterpart is really there. Dynamic segments are
  * matched by their prefix: `/arcade/` covers every game page.
  */
-const TRANSLATED_EXACT = new Set<string>(["/", "/arcade"]);
+const TRANSLATED_EXACT = new Set<string>([
+  "/",
+  "/arcade",
+  "/work",
+  "/support",
+  "/contact",
+  "/story",
+  "/cosmos",
+  "/sound",
+  "/laboratory",
+]);
 const TRANSLATED_PREFIXES: readonly string[] = ["/arcade/"];
 
 export function hasTranslation(pathname: string): boolean {

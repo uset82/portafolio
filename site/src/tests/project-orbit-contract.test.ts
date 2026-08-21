@@ -44,7 +44,7 @@ test("Project Orbit renders one instrument and keeps a semantic navigation shell
     "the SVG must retire once the scene reports itself ready",
   );
 
-  assert.match(shell, /<nav className="project-orbit__all" data-scene-ready=\{sceneReady\}/);
+  assert.match(shell, /<nav\s+className="project-orbit__all"\s+data-scene-ready=\{sceneReady\}/);
   assert.doesNotMatch(shell, /project-orbit__hint/);
   assert.match(shell, /projects\.map\(\(project\) =>/);
   assert.match(shell, /onFocus=\{\(\) => setSelectedId\(project\.id\)\}/);

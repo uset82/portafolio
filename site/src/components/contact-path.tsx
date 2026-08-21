@@ -1,57 +1,50 @@
 import { ActionLink, StatusTag } from "@/components/ui";
+import { FOOTER_ES } from "@/content/i18n/records-es";
+import { ui } from "@/content/i18n/ui";
 import type { SiteMetadata } from "@/content/schemas";
+import { resolveHref, type Locale } from "@/lib/i18n";
 
 type ContactPathProps = {
   content: SiteMetadata["footer"];
+  locale?: Locale;
 };
 
-const privacyBoundaries = [
-  ["Public email", "Not published"],
-  ["Contact form", "Not enabled"],
-  ["Additional social accounts", "None approved"],
-  ["Availability", "No claim published"],
-] as const;
-
-export function ContactPath({ content }: ContactPathProps) {
+export function ContactPath({ content, locale = "en" }: ContactPathProps) {
+  const copy = ui(locale).contact;
+  const privacyBoundaries = copy.boundaries;
+  const status = locale === "es" ? FOOTER_ES.status : content.status;
+  const heading = locale === "es" ? FOOTER_ES.heading : content.heading;
   return (
     <main id="main-content" className="contact-path">
       <section className="contact-path__hero" aria-labelledby="contact-path-title">
         <div className="contact-path__rail">
-          <p className="section-label">Contact / Public boundary</p>
-          <StatusTag tone="hold">{content.status}</StatusTag>
+          <p className="section-label">{copy.label}</p>
+          <StatusTag tone="hold">{status}</StatusTag>
         </div>
 
         <div className="contact-path__identity">
-          <h1 id="contact-path-title">{content.heading}</h1>
-          <p>
-            No public email, form, booking route, or availability statement has been approved. Until
-            that decision is made, this page offers only Carlos&apos;s verified public GitHub
-            profile and clear paths back into the work.
-          </p>
+          <h1 id="contact-path-title">{heading}</h1>
+          <p>{copy.intro}</p>
         </div>
 
         <div className="contact-path__signal" aria-hidden="true">
-          <span>Signal / privacy first</span>
+          <span>{copy.signalLabel}</span>
           <i />
           <i />
           <i />
           <strong>CC</strong>
-          <small>One verified public channel</small>
+          <small>{copy.oneChannel}</small>
         </div>
       </section>
 
       <section className="contact-path__channel" aria-labelledby="contact-channel-title">
         <div>
-          <p className="section-label">Public channel / 01</p>
-          <h2 id="contact-channel-title">One verified profile. No hidden inbox.</h2>
+          <p className="section-label">{copy.channelLabel}</p>
+          <h2 id="contact-channel-title">{copy.channelHeading}</h2>
         </div>
 
         <div className="contact-path__channel-copy">
-          <p>
-            GitHub is the only public account Carlos has approved for this portfolio. It is offered
-            as a verified profile path—not as a response-time, availability, employment, or booking
-            promise.
-          </p>
+          <p>{copy.channelBody}</p>
           <ActionLink
             className="contact-path__github"
             variant="primary"
@@ -59,24 +52,20 @@ export function ContactPath({ content }: ContactPathProps) {
             prefetch={false}
           >
             <span>
-              <small>Verified external profile</small>
+              <small>{copy.verifiedProfile}</small>
               {content.secondaryAction.label}
             </span>
             <span aria-hidden="true">↗</span>
-            <span className="visually-hidden"> — external site</span>
+            <span className="visually-hidden">{ui(locale).common.externalSite}</span>
           </ActionLink>
         </div>
       </section>
 
       <section className="contact-path__privacy" aria-labelledby="contact-privacy-title">
         <header>
-          <p className="section-label">Privacy / 02</p>
-          <h2 id="contact-privacy-title">No contact data is collected here.</h2>
-          <p>
-            This route contains no message field, file upload, tracking form, private address, or
-            direct-contact value. The omitted options remain visible as decisions, not disguised as
-            working features.
-          </p>
+          <p className="section-label">{copy.privacyLabel}</p>
+          <h2 id="contact-privacy-title">{copy.privacyHeading}</h2>
+          <p>{copy.privacyBody}</p>
         </header>
 
         <dl>
@@ -93,18 +82,15 @@ export function ContactPath({ content }: ContactPathProps) {
       </section>
 
       <section className="contact-path__continuation" aria-labelledby="contact-next-title">
-        <p className="section-label">Continue / 03</p>
-        <h2 id="contact-next-title">Start with the work and the public story.</h2>
-        <p>
-          These routes contain the approved context currently available without asking for personal
-          information or implying an open engagement.
-        </p>
-        <nav aria-label="Contact route alternatives">
-          <ActionLink variant="primary" href="/work">
-            Explore Work
+        <p className="section-label">{copy.continueLabel}</p>
+        <h2 id="contact-next-title">{copy.continueHeading}</h2>
+        <p>{copy.continueBody}</p>
+        <nav aria-label={copy.alternativesAria}>
+          <ActionLink variant="primary" href={resolveHref(locale, "/work")}>
+            {copy.exploreWork}
           </ActionLink>
-          <ActionLink variant="secondary" href="/story">
-            Read Story
+          <ActionLink variant="secondary" href={resolveHref(locale, "/story")}>
+            {copy.readStory}
           </ActionLink>
         </nav>
       </section>

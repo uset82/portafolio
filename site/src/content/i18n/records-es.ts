@@ -72,6 +72,17 @@ export const HOME_ES = {
   },
 } as const;
 
+/** The approved public profile, restated in Spanish. */
+export const PROFILE_ES = {
+  eyebrow: "Perfil / CV",
+  heading: "Una práctica, muchas maneras de mirar.",
+  headingAccent: "muchas maneras",
+  role: "Ingeniero · Inventor · Tecnólogo creativo",
+  biography:
+    "Carlos trabaja entre la inteligencia artificial, la electrónica, la energía resiliente, la música, la astrología y la numerología. Su portafolio conecta la práctica de ingeniería con la experimentación creativa, y presenta el trabajo verificado por separado de los prototipos, los estudios personales y los conceptos futuros.",
+  practiceThreads: ["IA y electrónica", "Energía resiliente", "Música y sistemas simbólicos"],
+} as const;
+
 /**
  * Spreads the Spanish wording over the approved English metadata, so a page
  * gets a record of exactly the same shape with the same ids, hrefs and

@@ -1,52 +1,60 @@
 import { ActionLink, StatusTag } from "@/components/ui";
 import { CosmosMark } from "@/components/cosmos-mark";
 import { COSMOS_APPS, COSMOS_CONTRIBUTE } from "@/content/cosmos";
+import { COSMOS_CONTRIBUTE_ES, localizeCosmosApp } from "@/content/i18n/cosmos-es";
+import { HOME_ES } from "@/content/i18n/records-es";
+import { ui } from "@/content/i18n/ui";
 import type { SiteMetadata } from "@/content/schemas";
+import { resolveHref, type Locale } from "@/lib/i18n";
 
 type CosmosFoundationProps = {
   content: SiteMetadata["personalTeaser"];
+  locale?: Locale;
 };
 
-export function CosmosFoundation({ content }: CosmosFoundationProps) {
+export function CosmosFoundation({ content: source, locale = "en" }: CosmosFoundationProps) {
+  const copy = ui(locale).cosmos;
+  const apps = COSMOS_APPS.map((app) => localizeCosmosApp(app, locale));
+  const contribute = locale === "es" ? COSMOS_CONTRIBUTE_ES : COSMOS_CONTRIBUTE;
+  const content = locale === "es" ? { ...source, ...HOME_ES.personalTeaser } : source;
   return (
     <main id="main-content" className="cosmos-foundation">
       <section className="cosmos-foundation__hero" aria-labelledby="cosmos-foundation-title">
         <div className="cosmos-foundation__rail">
-          <p className="section-label">Cosmos / Personal practice</p>
+          <p className="section-label">{copy.label}</p>
           <StatusTag tone="neutral">{content.status}</StatusTag>
         </div>
 
         <div className="cosmos-foundation__identity">
-          <p>Two apps you can try and read</p>
-          <h1 id="cosmos-foundation-title">Personal systems for observing patterns and meaning.</h1>
+          <p>{copy.identity}</p>
+          <h1 id="cosmos-foundation-title">{copy.heading}</h1>
           <strong>{content.heading}</strong>
           <small>{content.description}</small>
         </div>
 
         <div className="cosmos-foundation__atlas" aria-hidden="true">
-          <span>Public apps / 02</span>
+          <span>{copy.atlasLabel}</span>
           <CosmosMark className="cosmos-foundation__mark" />
           <div className="cosmos-foundation__legend">
-            {COSMOS_APPS.map((app) => (
+            {apps.map((app) => (
               <span key={app.id}>{app.name}</span>
             ))}
           </div>
-          <small>Both apps are open to try</small>
+          <small>{copy.bothOpen}</small>
         </div>
       </section>
 
       <section className="cosmos-foundation__practices" aria-labelledby="cosmos-practices-title">
         <header>
-          <p className="section-label">Practice register / 01</p>
-          <h2 id="cosmos-practices-title">Two apps you can try and read.</h2>
+          <p className="section-label">{copy.registerLabel}</p>
+          <h2 id="cosmos-practices-title">{copy.registerHeading}</h2>
           <p>
-            ASTROEA and Pináculo are public work. This page points to them; it does not host them,
-            embed them, or collect birth data. {COSMOS_CONTRIBUTE.body}
+            {copy.registerBody} {contribute.body}
           </p>
         </header>
 
-        <ol aria-label="Cosmos apps">
-          {COSMOS_APPS.map((app, index) => (
+        <ol aria-label={copy.appsAria}>
+          {apps.map((app, index) => (
             <li key={app.id}>
               <span>{String(index + 1).padStart(2, "0")}</span>
               <div>
@@ -55,7 +63,7 @@ export function CosmosFoundation({ content }: CosmosFoundationProps) {
               </div>
               <p>{app.summary}</p>
               <small>{app.status}</small>
-              <nav aria-label={`${app.name} links`}>
+              <nav aria-label={copy.appLinksAria(app.name)}>
                 {app.tryUrl && app.tryLabel ? (
                   <ActionLink href={app.tryUrl} rel="noreferrer" target="_blank">
                     {app.tryLabel} <span aria-hidden="true">↗</span>
@@ -72,17 +80,14 @@ export function CosmosFoundation({ content }: CosmosFoundationProps) {
 
       <section className="cosmos-foundation__close" aria-labelledby="cosmos-close-title">
         <div className="cosmos-foundation__close-copy">
-          <p className="section-label">Close / 02</p>
-          <h2 id="cosmos-close-title">The apps are public. The private record stays private.</h2>
+          <p className="section-label">{copy.closeLabel}</p>
+          <h2 id="cosmos-close-title">{copy.closeHeading}</h2>
           <p>{content.claimsBoundary}</p>
-          <p>
-            This page does not collect names or birth dates, and it does not publish Carlos&apos;s
-            charts, journeys, or dates. ASTROEA and Pináculo live on their own sites.
-          </p>
+          <p>{copy.closeBody}</p>
         </div>
 
-        <nav aria-label="Cosmos routes">
-          {COSMOS_APPS.map((app, index) =>
+        <nav aria-label={copy.routesAria}>
+          {apps.map((app, index) =>
             app.tryUrl && app.tryLabel ? (
               <ActionLink
                 key={app.id}
@@ -95,11 +100,11 @@ export function CosmosFoundation({ content }: CosmosFoundationProps) {
               </ActionLink>
             ) : null,
           )}
-          <ActionLink variant="secondary" href="/work">
-            Explore Work
+          <ActionLink variant="secondary" href={resolveHref(locale, "/work")}>
+            {copy.exploreWork}
           </ActionLink>
-          <ActionLink variant="secondary" href="/story">
-            Read Story
+          <ActionLink variant="secondary" href={resolveHref(locale, "/story")}>
+            {copy.readStory}
           </ActionLink>
         </nav>
       </section>

@@ -1,4 +1,7 @@
 import { ActionLink, StatusTag } from "@/components/ui";
+import { localizeLaboratory } from "@/content/i18n/laboratory-es";
+import { ui } from "@/content/i18n/ui";
+import { resolveHref, type Locale } from "@/lib/i18n";
 import type { LaboratoryConcept, Project } from "@/content/schemas";
 
 type ConceptProject = Extract<Project, { status: "concept" | "preparation" }>;
@@ -6,66 +9,38 @@ type ElectronicsConcept = Extract<LaboratoryConcept, { artifactId: "electronics-
 type DroneConcept = Extract<LaboratoryConcept, { artifactId: "drone" }>;
 
 type LaboratoryIndexProps = {
+  locale?: Locale;
   futureEnergy: ConceptProject;
   electronicsConcept: ElectronicsConcept;
   droneConcept: DroneConcept;
 };
 
-const publicationBoundaries = [
-  {
-    label: "Evidence state",
-    value: "Concept",
-    detail:
-      "The public record contains visual and navigational concepts, not completed project proof.",
-  },
-  {
-    label: "Hardware state",
-    value: "Not represented as built",
-    detail:
-      "No working battery, electronics unit, chemistry, pressure rating, aircraft, flight controller, or physical prototype is claimed.",
-  },
-  {
-    label: "Software and data",
-    value: "No live system",
-    detail:
-      "No inference, model output, telemetry, connected device, or real-time data is running here.",
-  },
-  {
-    label: "Media and links",
-    value: "Held for evidence",
-    detail:
-      "External demos, repositories, photographs, and measurements remain absent until verified.",
-  },
-] as const;
-
 export function LaboratoryIndex({
   futureEnergy,
   electronicsConcept,
   droneConcept,
+  locale = "en",
 }: LaboratoryIndexProps) {
+  const copy = ui(locale).laboratory;
+  const energy = localizeLaboratory(futureEnergy, electronicsConcept, droneConcept, locale);
+  const publicationBoundaries = copy.boundaries;
   return (
     <main id="main-content" className="laboratory-index">
       <section className="laboratory-index__hero" aria-labelledby="laboratory-index-title">
         <div className="laboratory-index__rail">
-          <p className="section-label">Laboratory / Concept register</p>
-          <StatusTag tone="concept">Evidence boundary active</StatusTag>
+          <p className="section-label">{copy.label}</p>
+          <StatusTag tone="concept">{copy.boundaryActive}</StatusTag>
         </div>
 
         <div className="laboratory-index__identity">
-          <p>Software, energy, electronics, and aerial systems</p>
-          <h1 id="laboratory-index-title">Experiments where software meets matter.</h1>
-          <strong>
-            A working index for future energy, electronics / AI, and aerial systems in the
-            Laboratory.
-          </strong>
-          <small>
-            This page separates designed mechanisms from evidence-backed projects. Nothing here
-            implies functioning hardware, live AI, measured performance, or a public product.
-          </small>
+          <p>{copy.identity}</p>
+          <h1 id="laboratory-index-title">{copy.heading}</h1>
+          <strong>{copy.lead}</strong>
+          <small>{copy.note}</small>
         </div>
 
         <div className="laboratory-index__bench" aria-hidden="true">
-          <span>Open bench / 04</span>
+          <span>{copy.benchLabel}</span>
           <div className="laboratory-index__vessels">
             <i />
             <i />
@@ -78,34 +53,31 @@ export function LaboratoryIndex({
             <b />
           </div>
           <strong>03</strong>
-          <small>Concept mechanisms · no live data or flight claim</small>
+          <small>{copy.benchCaption}</small>
         </div>
       </section>
 
       <section className="laboratory-index__register" aria-labelledby="laboratory-register-title">
         <header>
-          <p className="section-label">Current register / 01</p>
-          <h2 id="laboratory-register-title">Three mechanisms, each with a visible limit.</h2>
-          <p>
-            Only Future Energy has a held case-study route; Electronics / AI and Aerial systems
-            remain in-scene Laboratory threads without separate product claims.
-          </p>
+          <p className="section-label">{copy.registerLabel}</p>
+          <h2 id="laboratory-register-title">{copy.registerHeading}</h2>
+          <p>{copy.registerBody}</p>
         </header>
 
-        <ol aria-label="Laboratory concepts">
+        <ol aria-label={copy.conceptsAria}>
           <li className="laboratory-index__entry laboratory-index__entry--energy">
             <span>01</span>
             <div className="laboratory-index__entry-title">
-              <p>{futureEnergy.tagline}</p>
-              <h3>{futureEnergy.title}</h3>
+              <p>{energy.futureEnergy.tagline}</p>
+              <h3>{energy.futureEnergy.title}</h3>
               <StatusTag tone="concept">{futureEnergy.status}</StatusTag>
             </div>
             <div className="laboratory-index__entry-copy">
-              <p>{futureEnergy.conceptStatement}</p>
-              <small>{futureEnergy.summary}</small>
+              <p>{energy.futureEnergy.conceptStatement}</p>
+              <small>{energy.futureEnergy.summary}</small>
             </div>
             <ActionLink href={`/work/${futureEnergy.slug}`}>
-              View held case study <span aria-hidden="true">→</span>
+              {copy.viewHeldCaseStudy} <span aria-hidden="true">→</span>
             </ActionLink>
             <div className="laboratory-index__energy-mark" aria-hidden="true">
               <i />
@@ -117,15 +89,15 @@ export function LaboratoryIndex({
           <li className="laboratory-index__entry laboratory-index__entry--electronics">
             <span>02</span>
             <div className="laboratory-index__entry-title">
-              <p>{electronicsConcept.descriptor}</p>
-              <h3>{electronicsConcept.title}</h3>
-              <StatusTag tone="hold">{electronicsConcept.statusLabel}</StatusTag>
+              <p>{energy.electronics.descriptor}</p>
+              <h3>{energy.electronics.title}</h3>
+              <StatusTag tone="hold">{energy.electronics.statusLabel}</StatusTag>
             </div>
             <div className="laboratory-index__entry-copy">
-              <p>{electronicsConcept.summary}</p>
-              <small>{electronicsConcept.boundary}</small>
+              <p>{energy.electronics.summary}</p>
+              <small>{energy.electronics.boundary}</small>
             </div>
-            <p className="laboratory-index__no-link">No separate public project route</p>
+            <p className="laboratory-index__no-link">{copy.noRoute}</p>
             <div className="laboratory-index__electronics-mark" aria-hidden="true">
               <i />
               <i />
@@ -137,28 +109,24 @@ export function LaboratoryIndex({
           <li className="laboratory-index__entry laboratory-index__entry--aerial">
             <span>03</span>
             <div className="laboratory-index__entry-title">
-              <p>{droneConcept.descriptor}</p>
-              <h3>{droneConcept.title}</h3>
-              <StatusTag tone="hold">{droneConcept.statusLabel}</StatusTag>
+              <p>{energy.drone.descriptor}</p>
+              <h3>{energy.drone.title}</h3>
+              <StatusTag tone="hold">{energy.drone.statusLabel}</StatusTag>
             </div>
             <div className="laboratory-index__entry-copy">
-              <p>{droneConcept.summary}</p>
-              <small>{droneConcept.boundary}</small>
+              <p>{energy.drone.summary}</p>
+              <small>{energy.drone.boundary}</small>
             </div>
-            <p className="laboratory-index__no-link">No separate public project route</p>
+            <p className="laboratory-index__no-link">{copy.noRoute}</p>
           </li>
         </ol>
       </section>
 
       <section className="laboratory-index__scope" aria-labelledby="laboratory-scope-title">
         <header>
-          <p className="section-label">Evidence ledger / 02</p>
-          <h2 id="laboratory-scope-title">Designed as concepts. Published with restraint.</h2>
-          <p>
-            The Laboratory can describe its intended visual language and public navigation. It
-            cannot substitute those intentions for source material, working demonstrations, or
-            measured outcomes.
-          </p>
+          <p className="section-label">{copy.ledgerLabel}</p>
+          <h2 id="laboratory-scope-title">{copy.ledgerHeading}</h2>
+          <p>{copy.ledgerBody}</p>
         </header>
 
         <dl>
@@ -179,25 +147,22 @@ export function LaboratoryIndex({
 
       <section className="laboratory-index__continuation" aria-labelledby="laboratory-next-title">
         <div className="laboratory-index__continuation-mark" aria-hidden="true">
-          <span>Runtime / static</span>
+          <span>{copy.runtimeLabel}</span>
           <strong>LAB</strong>
           <i />
-          <small>Semantic route remains complete</small>
+          <small>{copy.runtimeCaption}</small>
         </div>
 
         <div className="laboratory-index__continuation-copy">
-          <p className="section-label">Continue / 03</p>
-          <h2 id="laboratory-next-title">Follow the evidence, not the machinery.</h2>
-          <p>
-            Work lists the public GitHub register. Contact provides the approved public path without
-            implying a product enquiry, demonstration request, or open engagement.
-          </p>
-          <nav aria-label="Laboratory route alternatives">
-            <ActionLink variant="primary" href="/work">
-              Explore Work
+          <p className="section-label">{copy.continueLabel}</p>
+          <h2 id="laboratory-next-title">{copy.continueHeading}</h2>
+          <p>{copy.continueBody}</p>
+          <nav aria-label={copy.alternativesAria}>
+            <ActionLink variant="primary" href={resolveHref(locale, "/work")}>
+              {copy.exploreWork}
             </ActionLink>
-            <ActionLink variant="secondary" href="/contact">
-              Visit Contact
+            <ActionLink variant="secondary" href={resolveHref(locale, "/contact")}>
+              {copy.visitContact}
             </ActionLink>
           </nav>
         </div>

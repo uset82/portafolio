@@ -4,7 +4,10 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+import { localizeOrbitProject } from "@/content/i18n/project-orbit-es";
+import { ui } from "@/content/i18n/ui";
 import type { OrbitProject } from "@/content/project-orbit";
+import type { Locale } from "@/lib/i18n";
 
 import { ProjectOrbitAtomic } from "./project-orbit-atomic";
 
@@ -15,6 +18,7 @@ const LazyProjectOrbitScene = dynamic(
 
 export type ProjectOrbitProps = {
   projects: readonly OrbitProject[];
+  locale?: Locale;
 };
 
 /**
@@ -39,7 +43,12 @@ export type ProjectOrbitProps = {
  * pills instead — two label systems must never be visible at once, which is
  * what stacked eleven of them in one corner.
  */
-export function ProjectOrbit({ projects }: ProjectOrbitProps) {
+export function ProjectOrbit({ projects: source, locale = "en" }: ProjectOrbitProps) {
+  const copy = ui(locale).orbit;
+  const projects = useMemo(
+    () => source.map((project) => localizeOrbitProject(project, locale)),
+    [locale, source],
+  );
   const stageRef = useRef<HTMLDivElement>(null);
   const labelRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const [shouldMountScene, setShouldMountScene] = useState(false);
@@ -169,7 +178,7 @@ export function ProjectOrbit({ projects }: ProjectOrbitProps) {
             <button
               className="project-orbit__panel-close"
               type="button"
-              aria-label="Close project details"
+              aria-label={copy.close}
               onClick={() => setSelectedId(null)}
             >
               ×
@@ -179,14 +188,14 @@ export function ProjectOrbit({ projects }: ProjectOrbitProps) {
             <div className="project-orbit__panel-actions">
               {selected.destination === "assistant" ? (
                 <button type="button" onClick={() => openProject(selected)}>
-                  Ask CACM AI <span aria-hidden="true">↗</span>
+                  {copy.askAi} <span aria-hidden="true">↗</span>
                 </button>
               ) : (
                 <Link
                   href={selected.href}
                   {...(selected.external ? { target: "_blank", rel: "noreferrer noopener" } : {})}
                 >
-                  {selected.external ? "Open repository" : "View project"}{" "}
+                  {selected.external ? copy.openRepository : copy.viewProject}{" "}
                   <span aria-hidden="true">↗</span>
                 </Link>
               )}
@@ -198,8 +207,12 @@ export function ProjectOrbit({ projects }: ProjectOrbitProps) {
       {/* The instrument's affordances are pointer-only and hidden from assistive
        * technology. This rail is the keyboard, screen-reader and no-JavaScript
        * path to every system. */}
-      <nav className="project-orbit__all" data-scene-ready={sceneReady} aria-label="All systems">
-        <p>All systems</p>
+      <nav
+        className="project-orbit__all"
+        data-scene-ready={sceneReady}
+        aria-label={copy.allSystems}
+      >
+        <p>{copy.allSystems}</p>
         <ul>
           {projects.map((project) => (
             <li key={project.id}>

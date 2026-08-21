@@ -51,9 +51,13 @@ test("a Spanish page links to English for routes that are not translated yet", (
 
   // Untranslated routes send the reader to the English page rather than a 404.
   assert.equal(resolveHref("es", "/arcade"), "/es/arcade");
+  assert.equal(hasTranslation("/work"), true);
+
+  // Case-study routes under /work are not translated, so they stay English.
+  assert.equal(hasTranslation("/work/astraea"), false);
   assert.equal(
-    resolveHref("es", "/work"),
-    "/work",
+    resolveHref("es", "/work/astraea"),
+    "/work/astraea",
     "a route with no Spanish page must not be given an /es prefix",
   );
 });

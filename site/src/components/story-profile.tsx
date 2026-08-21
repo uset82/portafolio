@@ -1,18 +1,24 @@
 import { ActionLink, StatusTag } from "@/components/ui";
+import { PROFILE_ES } from "@/content/i18n/records-es";
+import { ui } from "@/content/i18n/ui";
 import type { SiteMetadata } from "@/content/schemas";
+import { resolveHref, type Locale } from "@/lib/i18n";
 
 type StoryProfileProps = {
   name: string;
   content: SiteMetadata["profileTeaser"];
+  locale?: Locale;
 };
 
-export function StoryProfile({ name, content }: StoryProfileProps) {
+export function StoryProfile({ name, content: source, locale = "en" }: StoryProfileProps) {
+  const copy = ui(locale).story;
+  const content = locale === "es" ? { ...source, ...PROFILE_ES } : source;
   return (
     <main id="main-content" className="story-profile">
       <section className="story-profile__hero" aria-labelledby="story-profile-title">
         <div className="story-profile__rail">
-          <p className="section-label">Story / Public profile</p>
-          <StatusTag tone="ready">Biography approved</StatusTag>
+          <p className="section-label">{copy.label}</p>
+          <StatusTag tone="ready">{copy.approved}</StatusTag>
         </div>
 
         <header className="story-profile__identity">
@@ -22,27 +28,27 @@ export function StoryProfile({ name, content }: StoryProfileProps) {
         </header>
 
         <div className="story-profile__portrait" aria-hidden="true">
-          <span>Profile study / 01</span>
+          <span>{copy.portraitLabel}</span>
           <strong>CC</strong>
           <i />
           <i />
-          <small>Typographic portrait</small>
+          <small>{copy.portraitCaption}</small>
         </div>
       </section>
 
       <section className="story-profile__narrative" aria-labelledby="story-narrative-title">
-        <p className="section-label">Perspective / 01</p>
-        <h2 id="story-narrative-title">The person behind the systems.</h2>
+        <p className="section-label">{copy.perspectiveLabel}</p>
+        <h2 id="story-narrative-title">{copy.perspectiveHeading}</h2>
         <p>{content.biography}</p>
       </section>
 
       <section className="story-profile__practice" aria-labelledby="story-practice-title">
         <header>
-          <p className="section-label">Practice / 02</p>
-          <h2 id="story-practice-title">Three threads, one evolving practice.</h2>
+          <p className="section-label">{copy.practiceLabel}</p>
+          <h2 id="story-practice-title">{copy.practiceHeading}</h2>
         </header>
 
-        <ol aria-label="Approved practice threads">
+        <ol aria-label={copy.practiceAria}>
           {content.practiceThreads.map((thread, index) => (
             <li key={thread}>
               <span>{String(index + 1).padStart(2, "0")}</span>
@@ -54,43 +60,36 @@ export function StoryProfile({ name, content }: StoryProfileProps) {
 
       <section className="story-profile__record" aria-labelledby="story-record-title">
         <div className="story-profile__record-heading">
-          <p className="section-label">Public record / 03</p>
-          <h2 id="story-record-title">A web-first CV, released carefully.</h2>
+          <p className="section-label">{copy.recordLabel}</p>
+          <h2 id="story-record-title">{copy.recordHeading}</h2>
         </div>
 
         <div className="story-profile__record-copy">
-          <p>
-            This page currently publishes only Carlos&apos;s approved role, biography, practice
-            areas, and public GitHub path. Experience, education, and skills remain withheld until a
-            privacy-safe web record is separately approved.
-          </p>
+          <p>{copy.recordBody}</p>
 
           <dl>
             <div>
-              <dt>Published now</dt>
-              <dd>Approved public biography and GitHub profile</dd>
+              <dt>{copy.publishedNow}</dt>
+              <dd>{copy.publishedNowValue}</dd>
             </div>
             <div>
-              <dt>Held for review</dt>
-              <dd>Career timeline, education, skills, portrait, and résumé file</dd>
+              <dt>{copy.heldForReview}</dt>
+              <dd>{copy.heldForReviewValue}</dd>
             </div>
           </dl>
 
-          <p className="story-profile__privacy">
-            No private résumé, portrait, location, direct contact detail, or unsupported career
-            claim is exposed by this route.
-          </p>
+          <p className="story-profile__privacy">{copy.privacy}</p>
 
-          <nav className="story-profile__actions" aria-label="Public profile paths">
-            <ActionLink variant="primary" href="/work">
-              Explore the work
+          <nav className="story-profile__actions" aria-label={copy.actionsAria}>
+            <ActionLink variant="primary" href={resolveHref(locale, "/work")}>
+              {copy.exploreWork}
             </ActionLink>
-            <ActionLink variant="secondary" href="/contact">
-              Visit Contact
+            <ActionLink variant="secondary" href={resolveHref(locale, "/contact")}>
+              {copy.visitContact}
             </ActionLink>
             <ActionLink variant="text" href={content.secondaryAction.href} prefetch={false}>
-              View GitHub <span aria-hidden="true">↗</span>
-              <span className="visually-hidden"> — external site</span>
+              {copy.viewGithub} <span aria-hidden="true">↗</span>
+              <span className="visually-hidden">{ui(locale).common.externalSite}</span>
             </ActionLink>
           </nav>
         </div>

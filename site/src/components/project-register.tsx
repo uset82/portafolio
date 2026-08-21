@@ -2,6 +2,9 @@
 
 import Link from "next/link";
 import { useId, useMemo, useSyncExternalStore, type FormEvent, type KeyboardEvent } from "react";
+import { localizeWorkEntry, WORK_GROUP_TITLES_ES } from "@/content/i18n/github-register-es";
+import { ui } from "@/content/i18n/ui";
+import { resolveHref, type Locale } from "@/lib/i18n";
 
 import { ActionButton, ActionLink } from "@/components/ui";
 import {
@@ -17,6 +20,7 @@ import {
 import { isWorkSearchActive, matchingWorkIds, type WorkSearchFacet } from "@/lib/work-search";
 
 export type ProjectRegisterProps = {
+  locale?: Locale;
   initialQuery?: string;
   initialFacet?: WorkSearchFacet;
 };
@@ -31,16 +35,20 @@ function formatCount(count: number) {
 
 function RepositoryRow({
   hidden,
-  repository,
+  repository: source,
   index,
+  locale,
 }: {
   hidden: boolean;
   repository: GithubWorkEntry;
   index: number;
+  locale: Locale;
 }) {
+  const copy = ui(locale).work;
+  const repository = localizeWorkEntry(source, locale);
   const titleId = `project-register-${repository.id}-title`;
   const meta = [
-    repository.kind === "fork" ? "Fork" : "Own",
+    repository.kind === "fork" ? copy.fork : copy.own,
     repository.language || null,
     repository.licenseLabel,
   ]
@@ -72,7 +80,11 @@ function RepositoryRow({
           </a>
         ) : null}
         {repository.roomHref && repository.roomLabel ? (
-          <Link className="project-register__link" href={repository.roomHref} prefetch={false}>
+          <Link
+            className="project-register__link"
+            href={resolveHref(locale, repository.roomHref)}
+            prefetch={false}
+          >
             <span>{repository.roomLabel}</span>
             <span aria-hidden="true">→</span>
           </Link>
@@ -94,7 +106,9 @@ function RepositoryRow({
 export function ProjectRegister({
   initialQuery = "",
   initialFacet = "all",
+  locale = "en",
 }: ProjectRegisterProps = {}) {
+  const copy = ui(locale).work;
   const searchId = useId();
   const countId = useId();
   const serverSnapshot = useMemo(
@@ -136,26 +150,23 @@ export function ProjectRegister({
     <main id="main-content" className="work-index">
       <section className="work-index__hero" aria-labelledby="work-index-title">
         <div className="work-index__rail">
-          <p className="section-label">Work / Register</p>
+          <p className="section-label">{copy.label}</p>
           <p className="work-index__count">
             <span>{projectCount}</span>
-            <small>public repositories</small>
+            <small>{copy.publicRepositories}</small>
           </p>
         </div>
 
-        <h1 id="work-index-title">Work from 2022 to now.</h1>
+        <h1 id="work-index-title">{copy.heading}</h1>
 
         <div className="work-index__intro">
-          <p>
-            This is the work I have been building since 2022. You are welcome to try what is open,
-            and to contribute. Private repositories stay off this page.
-          </p>
-          <nav className="work-index__welcome" aria-label="Try and contribute">
-            <ActionLink variant="primary" href="/cosmos">
-              Try
+          <p>{copy.intro}</p>
+          <nav className="work-index__welcome" aria-label={copy.welcomeAria}>
+            <ActionLink variant="primary" href={resolveHref(locale, "/cosmos")}>
+              {copy.try}
             </ActionLink>
-            <ActionLink variant="secondary" href="/support">
-              Contribute
+            <ActionLink variant="secondary" href={resolveHref(locale, "/support")}>
+              {copy.contribute}
             </ActionLink>
           </nav>
         </div>
@@ -164,7 +175,7 @@ export function ProjectRegister({
       <form
         className="work-index__search"
         role="search"
-        action="/work"
+        action={resolveHref(locale, "/work")}
         method="get"
         onSubmit={handleSubmit}
         onKeyDown={handleKeyDown}
@@ -172,10 +183,10 @@ export function ProjectRegister({
       >
         <div className="work-index__search-rail">
           <label className="section-label" htmlFor={searchId}>
-            Find
+            {copy.find}
           </label>
           <p id={countId} className="work-index__search-count" aria-live="polite">
-            {active ? `${formatCount(matchingIds.size)} matching` : "Search the register"}
+            {active ? copy.matching(formatCount(matchingIds.size)) : copy.searchPrompt}
           </p>
         </div>
 
@@ -188,13 +199,13 @@ export function ProjectRegister({
             autoComplete="off"
             spellCheck={false}
             enterKeyHint="search"
-            placeholder="Project, game, or astro"
+            placeholder={copy.placeholder}
             aria-describedby={countId}
             aria-controls="work-register-results"
             onChange={(event) => writeWorkSearchLocation(event.currentTarget.value, facet)}
           />
           <ActionButton type="reset" variant="text" hidden={!active}>
-            Clear
+            {copy.clear}
           </ActionButton>
         </div>
 
@@ -206,7 +217,7 @@ export function ProjectRegister({
             aria-pressed={facet === "playable"}
             onClick={() => handleFacetToggle("playable")}
           >
-            Playable
+            {copy.playable}
           </button>
           <button
             type="button"
@@ -214,12 +225,12 @@ export function ProjectRegister({
             aria-pressed={facet === "astrology"}
             onClick={() => handleFacetToggle("astrology")}
           >
-            Astrology
+            {copy.astrology}
           </button>
         </div>
       </form>
 
-      <nav className="work-index__toc" aria-label="Work groups">
+      <nav className="work-index__toc" aria-label={copy.groupsAria}>
         {GITHUB_REGISTER_GROUPS.map((group) => {
           const visibleCount = group.repositories.filter((repository) =>
             matchingIds.has(repository.id),
@@ -232,7 +243,7 @@ export function ProjectRegister({
               hidden={active && visibleCount === 0}
             >
               <span>{formatCount(active ? visibleCount : group.repositories.length)}</span>
-              <span>{group.title}</span>
+              <span>{locale === "es" ? WORK_GROUP_TITLES_ES[group.id] : group.title}</span>
             </a>
           );
         })}
@@ -244,9 +255,7 @@ export function ProjectRegister({
         tabIndex={-1}
       >
         {active && matchingIds.size === 0 ? (
-          <p className="work-index__empty">
-            No public repositories match. Clear the search to see the full register.
-          </p>
+          <p className="work-index__empty">{copy.empty}</p>
         ) : null}
 
         {GITHUB_REGISTER_GROUPS.map((group) => {
@@ -264,14 +273,16 @@ export function ProjectRegister({
               hidden={active && visibleCount === 0}
             >
               <header className="project-register__group-head">
-                <p className="section-label">{group.chartLabel}</p>
-                <h2 id={titleId}>{group.title}</h2>
+                <p className="section-label">{locale === "es" ? group.title : group.chartLabel}</p>
+                <h2 id={titleId}>
+                  {locale === "es" ? WORK_GROUP_TITLES_ES[group.id] : group.title}
+                </h2>
                 <p className="project-register__group-count">
                   <span>{formatCount(active ? visibleCount : group.repositories.length)}</span>
                   <small>
                     {(active ? visibleCount : group.repositories.length) === 1
-                      ? "repository"
-                      : "repositories"}
+                      ? copy.repository
+                      : copy.repositories}
                   </small>
                 </p>
               </header>
@@ -281,6 +292,7 @@ export function ProjectRegister({
                     <RepositoryRow
                       repository={repository}
                       index={index}
+                      locale={locale}
                       hidden={active && !matchingIds.has(repository.id)}
                     />
                   </li>
