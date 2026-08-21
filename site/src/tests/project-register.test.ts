@@ -163,6 +163,29 @@ test("QubeSolve is a playable game in the Games group with the live Netlify solv
   assert.match(markup, /href="\/arcade\/qubesolve"/);
 });
 
+test("3Doodle links to the live drawing app and to its arcade room", () => {
+  const doodle = GITHUB_REGISTER.find((repository) => repository.name === "3Doodle");
+  const markup = renderToStaticMarkup(createElement(ProjectRegister));
+
+  assert.ok(doodle);
+  assert.equal(doodle.tryUrl, "https://3doodle.netlify.app/draw");
+  assert.equal(doodle.tryLabel, "Draw with 3Doodle");
+  assert.equal(doodle.roomHref, "/arcade/3doodle");
+  assert.match(markup, /href="https:\/\/3doodle\.netlify\.app\/draw"/);
+  assert.match(markup, /href="\/arcade\/3doodle"/);
+});
+
+test("EFFATA links to the live product scanner and says it needs the camera", () => {
+  const effata = GITHUB_REGISTER.find((repository) => repository.name === "EFFATA");
+  const markup = renderToStaticMarkup(createElement(ProjectRegister));
+
+  assert.ok(effata);
+  assert.equal(effata.tryUrl, "https://effata.netlify.app/");
+  assert.equal(effata.tryLabel, "Scan with EFFATA");
+  assert.match(effata.description, /camera access/);
+  assert.match(markup, /href="https:\/\/effata\.netlify\.app\/"/);
+});
+
 test("opennemoclaw links to the live personal agent framework app", () => {
   const opennemoclaw = GITHUB_REGISTER.find((repository) => repository.name === "opennemoclaw");
   const opennemoclawsite = GITHUB_REGISTER.find(

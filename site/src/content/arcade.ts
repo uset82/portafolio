@@ -244,21 +244,28 @@ export const ARCADE_GAMES: readonly ArcadeGame[] = [
     title: "3Doodle",
     tagline: "Draw, and keep what you drew",
     description:
-      "A drawing canvas with a real back end, so sketches are stored rather than lost on refresh. The client is small; the database is what makes it a service rather than a static page.",
-    engine: "Vite and React, Express, Drizzle and Postgres",
+      "A drawing canvas for children: pick a colour, a brush size, and a tool, sketch an outline, then press Generate 3D and the result lands in the gallery beside the canvas. The live build carries its own back end, so a doodle is stored rather than lost on refresh.",
+    engine: "Vite and React, with an Express, Drizzle and Postgres back end",
     input: "Mouse or touch drawing",
-    controls: ["Draw with a pointer or a finger", "A mobile drawing layout ships with it"],
+    controls: [
+      "Draw with a pointer or a finger",
+      "Choose a colour, a brush size, or the eraser and fill tools",
+      "Press Generate 3D to send the sketch to the gallery",
+    ],
     mobile: "A mobile drawing layout ships with it.",
     needsCamera: false,
-    status: "preparing",
-    blockedBy:
-      "It needs a Postgres database alongside its service. The client build is only 2.7 MB - the database is the whole dependency.",
-    tier: "B",
-    source: { kind: "none" },
-    builtSize: "2.73 MB (2.71 MB client, 20 KB server)",
+    status: "playable",
+    tier: "C",
+    source: {
+      kind: "external",
+      url: "https://3doodle.netlify.app/draw",
+      provider: "Netlify",
+    },
+    builtSize:
+      "140 KB transferred from the live host (2.1 KB HTML, 126 KB JS, 12 KB CSS), 493 KB decoded",
     repository: "https://github.com/uset82/3Doodle",
     license: "No LICENSE file in the repository yet - all rights reserved by Carlos Carpio",
-    measuredOn: "2026-07-31",
+    measuredOn: "2026-08-21",
   },
   {
     id: "reactiongame",
@@ -339,5 +346,5 @@ export const ARCADE_SUMMARY = {
   description:
     "Every game here is mine. Some run in this page, some are waiting on hosting, and two run on hardware or a desktop runtime and never will. Each one says which it is, what it needs, and where the code lives.",
   measurementNote:
-    "Most build sizes come from a real build of each repository on 2026-07-31, not from repository size. Jacobs Golfspill was measured from its live Netlify host on 2026-08-16.",
+    "Most build sizes come from a real build of each repository on 2026-07-31, not from repository size. Jacobs Golfspill was measured from its live Netlify host on 2026-08-16, and 3Doodle from its live Netlify host on 2026-08-21.",
 } as const;

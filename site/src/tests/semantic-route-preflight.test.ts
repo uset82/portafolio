@@ -33,6 +33,8 @@ const coreRoutes: readonly CoreRoute[] = [
       "https://chaclacayo.netlify.app/",
       "https://qubesolve.netlify.app/",
       "https://opennemoclaw.netlify.app/",
+      "https://3doodle.netlify.app/draw",
+      "https://effata.netlify.app/",
       "/cosmos",
       "/support",
     ],
@@ -46,7 +48,12 @@ const coreRoutes: readonly CoreRoute[] = [
   {
     name: "Arcade",
     Page: ArcadePage,
-    expectedHrefs: ["/arcade/mandelbro", "/arcade/jacobgolf", "/arcade/qubesolve"],
+    expectedHrefs: [
+      "/arcade/mandelbro",
+      "/arcade/jacobgolf",
+      "/arcade/qubesolve",
+      "/arcade/3doodle",
+    ],
   },
   { name: "Support", Page: SupportPage, expectedHrefs: [] },
   { name: "Cosmos", Page: CosmosPage, expectedHrefs: ["/work", "/story"] },

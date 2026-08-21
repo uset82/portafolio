@@ -118,6 +118,24 @@ test("QubeSolve is playable from its live Netlify host", () => {
   assert.match(markup, /Play QubeSolve/);
 });
 
+test("3Doodle is playable from its live Netlify host", () => {
+  const doodle = findArcadeGame("3doodle");
+  assert.ok(doodle);
+  assert.equal(doodle.source.kind, "external");
+  assert.equal(resolveArcadeSource(doodle), "https://3doodle.netlify.app/draw");
+  assert.equal(isArcadeGamePlayable(doodle), true);
+
+  const markup = renderToStaticMarkup(
+    createElement(ArcadeGameDetail, {
+      game: doodle,
+      source: resolveArcadeSource(doodle),
+    }),
+  );
+
+  assert.doesNotMatch(markup, /<iframe/, "no frame may exist before an explicit click");
+  assert.match(markup, /Play 3Doodle/);
+});
+
 test("the play shell loads nothing before the visitor presses play", () => {
   const mandelbro = findArcadeGame("mandelbro");
   assert.ok(mandelbro);

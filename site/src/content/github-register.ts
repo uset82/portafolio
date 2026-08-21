@@ -42,6 +42,10 @@ const DESCRIPTION_OVERRIDES: Record<string, string> = {
   opennemoclaw:
     "A personal agent framework with modular local architecture, Docker integration, and policy controls.",
   opennemoclawsite: "Live companion website and documentation for OpenNemoClaw.",
+  "3Doodle":
+    "A children's drawing app: sketch on the canvas, press Generate 3D, and the result is kept in a gallery.",
+  EFFATA:
+    "A product health and safety scanner: it reads a barcode or an ingredient label and checks it for carcinogens, toxins, allergens and banned ingredients. The live app is in Spanish and asks for camera access before it can scan.",
 };
 
 const ROOM_OVERRIDES: Record<string, { href: string; label: string }> = {
@@ -81,6 +85,14 @@ const TRY_OVERRIDES: Record<string, { url: string; label: string }> = {
   chaclacayo: {
     url: "https://chaclacayo.netlify.app/",
     label: "Open Chaclacayo",
+  },
+  "3Doodle": {
+    url: "https://3doodle.netlify.app/draw",
+    label: "Draw with 3Doodle",
+  },
+  EFFATA: {
+    url: "https://effata.netlify.app/",
+    label: "Scan with EFFATA",
   },
 };
 
