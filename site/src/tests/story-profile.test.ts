@@ -62,9 +62,14 @@ test("The story plate upgrades its CC study to the emblem without losing the pos
     }),
   );
 
-  // Server output is the flat study. The canvas is client-only, so nothing
-  // WebGL may appear here, and the plate must not claim the emblem is present.
-  assert.match(markup, /<strong aria-hidden="true">CC<\/strong>/);
+  // Server output is the flat mark. The canvas is client-only, so nothing WebGL
+  // may appear here, and the plate must not claim the emblem is present.
+  //
+  // The poster has to be the SAME mark the model draws. It used to be a CC
+  // letterform, which meant the plate visibly showed one mark and then exchanged
+  // it for another during the second or so the model took to arrive.
+  assert.match(markup, /class="ca2m-poster story-profile__portrait-poster"/);
+  assert.doesNotMatch(markup, />CC</);
   assert.doesNotMatch(markup, /<canvas/i);
   assert.doesNotMatch(markup, /story-profile__portrait--emblem/);
 
@@ -85,7 +90,15 @@ test("The story plate upgrades its CC study to the emblem without losing the pos
   assert.doesNotMatch(plate, /surface="dark"/);
 
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
-  assert.match(styles, /\.story-profile__portrait--emblem strong\s*\{\s*opacity:\s*0/);
+  assert.match(
+    styles,
+    /\.story-profile__portrait--emblem \.story-profile__portrait-poster\s*\{\s*opacity:\s*0/,
+  );
+  // Poster and emblem must be declared as one box, so the mark cannot jump.
+  assert.match(
+    styles,
+    /\.story-profile__portrait > \.story-profile__portrait-poster,\s*\n\.story-profile__portrait > \.story-profile__portrait-emblem\s*\{/,
+  );
   // The poster must be gone before the emblem arrives. Without the delay the
   // emblem is already a third faded in while the CC is still on the plate, and
   // the two show as a pair of stacked marks rather than one replacing the other.

@@ -22,10 +22,12 @@ export type StoryPortraitProps = {
  * the point of it, and the emblem keeps it: still not a photograph, still an
  * identity standing in for one.
  *
- * The flat CC study is the poster and stays server-rendered, exactly as on the
- * contact disc. It fades rather than unmounting, so the plate cannot reflow when
- * the emblem arrives, and it remains the whole picture wherever WebGL or
- * JavaScript never runs.
+ * The poster is the same mark, drawn flat: the approved CA²M artwork masked to
+ * a single tone, server-rendered in the emblem's exact box. It used to be a CC
+ * letterform, which meant the plate visibly showed one mark and then swapped it
+ * for another. Now there is nothing to see swap — the mark simply gains
+ * dimension — and wherever WebGL or JavaScript never runs, the flat mark is
+ * still the right mark rather than a stand-in.
  */
 export function StoryPortrait({ topLabel, bottomLabel, emblemLabel }: StoryPortraitProps) {
   const [emblemReady, setEmblemReady] = useState(false);
@@ -39,7 +41,7 @@ export function StoryPortrait({ topLabel, bottomLabel, emblemLabel }: StoryPortr
       )}
     >
       <span aria-hidden="true">{topLabel}</span>
-      <strong aria-hidden="true">CC</strong>
+      <span className="ca2m-poster story-profile__portrait-poster" aria-hidden="true" />
       <Ca2mEmblem
         className="story-profile__portrait-emblem"
         label={emblemLabel}

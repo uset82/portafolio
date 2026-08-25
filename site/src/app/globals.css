@@ -3816,21 +3816,11 @@ body:has(.observatory-hero) .site-header .site-header__status {
   text-transform: uppercase;
 }
 
-.story-profile__portrait strong {
-  align-self: center;
-  font-family: var(--font-display);
-  font-size: clamp(7.5rem, 13vw, 12rem);
-  font-weight: 500;
-  letter-spacing: -0.1em;
-  line-height: 0.7;
-  text-align: center;
-  transition: opacity var(--duration-base) var(--ease-emphasized);
+.story-profile__portrait-poster {
+  background-color: var(--color-walnut);
 }
 
-/* The flat CC study is the poster. It keeps its grid slot and only fades, so the
- * plate cannot reflow when the emblem arrives, and it stays the whole picture
- * wherever WebGL or JavaScript never runs. */
-.story-profile__portrait--emblem strong {
+.story-profile__portrait--emblem .story-profile__portrait-poster {
   opacity: 0;
 }
 
@@ -3842,6 +3832,7 @@ body:has(.observatory-hero) .site-header .site-header__status {
  * marks rather than as one replacing the other. This also clears the first study
  * hairline by more than the vignette position did, so the rule reads as a rule
  * again instead of as a line struck through the mark. */
+.story-profile__portrait > .story-profile__portrait-poster,
 .story-profile__portrait > .story-profile__portrait-emblem {
   position: absolute;
   z-index: 1;
@@ -3853,9 +3844,14 @@ body:has(.observatory-hero) .site-header .site-header__status {
   width: 46%;
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* Only the emblem starts hidden. The poster starts visible — it is what the
+ * server sends and what a visitor without WebGL keeps. */
+.story-profile__portrait-emblem {
   opacity: 0;
   transition: opacity var(--duration-reveal) var(--ease-emphasized);
-  pointer-events: none;
 }
 
 /* A warm pool behind the mark, so dark bronze on a pale plate is seated rather
@@ -4100,10 +4096,6 @@ body:has(.observatory-hero) .site-header .site-header__status {
     align-self: end;
   }
 
-  .story-profile__portrait strong {
-    font-size: clamp(5rem, 10vw, 8rem);
-  }
-
   .story-profile__identity {
     grid-column: 2;
   }
@@ -4156,15 +4148,12 @@ body:has(.observatory-hero) .site-header .site-header__status {
     justify-self: stretch;
   }
 
-  .story-profile__portrait strong {
-    font-size: clamp(6.5rem, 34vw, 9rem);
-  }
-
   /* The plate turns landscape and short here, so the mark is sized against its
    * short edge: the vignette circle overflows it entirely, and 42% of this much
    * wider plate ran straight into both captions. (Expressed as a width, because
    * `width: auto` with an aspect ratio shrink-to-fits against R3F's own
    * full-width wrapper and comes out larger, not smaller.) */
+  .story-profile__portrait > .story-profile__portrait-poster,
   .story-profile__portrait > .story-profile__portrait-emblem {
     top: 43.3%;
     width: 30%;
@@ -4325,33 +4314,54 @@ body:has(.observatory-hero) .site-header .site-header__status {
   background: color-mix(in srgb, var(--color-buff) 12%, transparent);
 }
 
-.contact-path__signal strong {
-  position: relative;
-  z-index: 1;
-  color: var(--color-buff);
-  font-family: var(--font-display);
-  font-size: clamp(4.5rem, 8vw, 7rem);
-  font-weight: 500;
-  letter-spacing: -0.08em;
-  line-height: 0.75;
+
+/* The flat poster under both 3D emblems.
+ *
+ * It is the approved CA²M artwork used as an alpha mask rather than as an image,
+ * so one asset can be tinted to whatever the surface underneath needs — pale on
+ * the espresso disc, dark on the sage plate — and match the tone the model is
+ * struck in. `mask-size` is 86% because the scene frames the mark at
+ * `EMBLEM_TARGET_WORLD_SIZE / (2 × EMBLEM_FRAMED_HALF_EXTENT)` of its canvas,
+ * and the position is biased up to meet the scene's optical lift. Between them
+ * the flat mark and the model land on the same pixels.
+ */
+.ca2m-poster {
   transition: opacity var(--duration-base) var(--ease-emphasized);
+  -webkit-mask: url("/images/brand/ca2m-mark.png") center 47% / 86% no-repeat;
+  mask: url("/images/brand/ca2m-mark.png") center 47% / 86% no-repeat;
 }
 
-/* The flat monogram is the poster. It stays in the layout and only fades out, so
- * the disc never reflows at the moment the emblem arrives — and it remains the
- * whole picture wherever WebGL or JavaScript never runs. */
-.contact-path__signal--emblem strong {
+/* Poster and emblem occupy one box, so the upgrade is the mark gaining depth
+ * rather than one mark being exchanged for another. */
+/* Both selectors are child-qualified so they outrank `.contact-path__signal >
+ * span`, which styles the ring captions. The poster is a span too, and that rule
+ * was pinning it to the captions' `top: 11%`. */
+.contact-path__signal > .contact-path__signal-poster,
+.contact-path__signal > .contact-path__signal-emblem {
+  position: absolute;
+  z-index: 1;
+  /* Pinned to the disc's centre rather than left to the static position of each
+   * one's grid cell, which put them 67px apart and would have shown the mark
+   * jumping as the model arrived. */
+  top: 50%;
+  left: 50%;
+  /* Comfortably inside the medallion well below, so no stroke crosses its rim.
+   * An earlier pass ran to 62% and the mark's outer arc cut clean through two
+   * rings; 46% still let the C and the M feet touch the well's edge. */
+  width: 40%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+}
+
+.contact-path__signal-poster {
+  background-color: var(--color-off-white);
+}
+
+.contact-path__signal--emblem .contact-path__signal-poster {
   opacity: 0;
 }
 
 .contact-path__signal-emblem {
-  position: absolute;
-  z-index: 1;
-  /* Comfortably inside the medallion plate below, so no stroke ever crosses its
-   * rim. The first pass ran to 62% and the mark's outer arc cut clean through
-   * two rings; 46% still let the C and the M feet touch the plate edge. */
-  width: 40%;
-  aspect-ratio: 1;
   opacity: 0;
   transition: opacity var(--duration-reveal) var(--ease-emphasized);
 }
@@ -4397,7 +4407,7 @@ body:has(.observatory-hero) .site-header .site-header__status {
 /* The emblem is the only moving thing on this route. Reduced motion keeps the
  * resting pose the scene already holds, and swaps the cross-fade for a cut. */
 @media (prefers-reduced-motion: reduce) {
-  .contact-path__signal strong,
+  .ca2m-poster,
   .contact-path__signal-emblem {
     transition: none;
   }
@@ -10156,7 +10166,7 @@ body:has(.observatory-hero) .site-header .site-header__status {
 /* The emblem is the only moving thing on the story route. Reduced motion keeps
  * the resting pose the scene already holds, and swaps the cross-fade for a cut. */
 @media (prefers-reduced-motion: reduce) {
-  .story-profile__portrait strong,
+  .story-profile__portrait-poster,
   .story-profile__portrait-emblem {
     transition: none;
   }

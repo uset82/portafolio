@@ -82,9 +82,14 @@ test("Contact renders the 3D emblem over a monogram poster that survives without
   const content = siteContentSchema.parse(rawSiteContent).metadata.footer;
   const markup = renderToStaticMarkup(createElement(ContactPath, { content }));
 
-  // Server output is the poster: rings, captions, and the flat monogram. The
-  // canvas is client-only, so nothing WebGL may appear in this markup.
-  assert.match(markup, /<strong aria-hidden="true">CC<\/strong>/);
+  // Server output is the poster: rings, captions, and the flat mark. The canvas
+  // is client-only, so nothing WebGL may appear in this markup.
+  //
+  // The poster has to be the SAME mark the model draws. It used to be a CC
+  // monogram, which meant the disc visibly showed one mark and then exchanged it
+  // for another during the second or so the model took to arrive.
+  assert.match(markup, /class="ca2m-poster contact-path__signal-poster"/);
+  assert.doesNotMatch(markup, />CC</);
   assert.match(markup, /SIGNAL \/ PRIVACY FIRST/i);
   assert.match(markup, /One verified public channel/);
   assert.doesNotMatch(markup, /<canvas/i);
@@ -94,9 +99,20 @@ test("Contact renders the 3D emblem over a monogram poster that survives without
     path.join(process.cwd(), "src/components/contact-signal.tsx"),
     "utf8",
   );
-  // The monogram fades rather than unmounting, so the disc cannot reflow.
-  assert.match(disc, /<strong aria-hidden="true">CC<\/strong>/);
+  // The poster fades rather than unmounting, so the disc cannot reflow.
+  assert.match(disc, /ca2m-poster contact-path__signal-poster/);
   assert.match(disc, /surface="dark"/);
+
+  const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
+  // One artwork, masked, so each surface can tint it to the tone its model is
+  // struck in — and so the flat mark and the model are the same shape.
+  assert.match(styles, /\.ca2m-poster\s*\{[\s\S]*?mask:\s*url\("\/images\/brand\/ca2m-mark\.png"\)/);
+  // Poster and emblem must be declared as one box. Separate boxes are how the
+  // mark ends up jumping when the model replaces it.
+  assert.match(
+    styles,
+    /\.contact-path__signal > \.contact-path__signal-poster,\s*\n\.contact-path__signal > \.contact-path__signal-emblem\s*\{/,
+  );
 
   const boundary = readFileSync(
     path.join(process.cwd(), "src/components/ca2m-emblem.tsx"),
