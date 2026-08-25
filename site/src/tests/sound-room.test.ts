@@ -86,6 +86,24 @@ test("the published track plays on one press and states its rights", () => {
   assert.ok(!markup.includes("Load Suno"), "a direct file needs no provider gate");
 });
 
+test("a track is set as a pressing: shelf marks, a deck, and a labelled credit", () => {
+  const markup = renderToStaticMarkup(createElement(SoundRoom));
+
+  // The provider is named on the card, the way the video card names YouTube.
+  assert.match(markup, /class="sound-room__work-marks"[\s\S]*?ui-status[\s\S]*?Suno/);
+  // The player sits in its own recess rather than loose in the card.
+  assert.match(markup, /class="sound-room__deck"[\s\S]*?<audio/);
+  // The rights line is a labelled credit, not a trailing sentence.
+  assert.match(markup, /class="sound-room__credit"/);
+  assert.match(markup, /class="sound-room__credit-label">Rights</);
+  assert.match(markup, /class="sound-room__work-rights">Made by Carlos with Suno/);
+  // The grooves are ornament, so they are hidden from anyone being read to.
+  assert.match(markup, /class="sound-room__grooves" aria-hidden="true"/);
+
+  const spanish = renderToStaticMarkup(createElement(SoundRoom, { locale: "es" as const }));
+  assert.match(spanish, /class="sound-room__credit-label">Derechos</);
+});
+
 test("the Spanish shelf reads in Spanish, player label included", () => {
   const markup = renderToStaticMarkup(createElement(SoundRoom, { locale: "es" as const }));
 
@@ -94,7 +112,7 @@ test("the Spanish shelf reads in Spanish, player label included", () => {
   assert.match(markup, /no concede derechos de reutilización/);
   assert.match(markup, /bouzouki siempre por encima/);
 
-  for (const leak of ["audio player", "Listen on Suno", "grants no reuse rights"]) {
+  for (const leak of ["audio player", "Listen on Suno", "grants no reuse rights", "Rights"]) {
     assert.ok(!markup.includes(leak), `the Spanish shelf still says "${leak}"`);
   }
 });
@@ -248,6 +266,9 @@ test("the sound route mounts the room and keeps its responsive rules", () => {
   );
   assert.match(styles, /\.consent-embed__play\s*\{/);
   assert.match(styles, /\.consent-embed__play-glyph\s*\{/);
+  assert.match(styles, /\.sound-room__deck\s*\{/);
+  assert.match(styles, /\.sound-room__credit\s*\{[^}]*border-top:/);
+  assert.match(styles, /\.sound-room__grooves\s*\{/);
   assert.match(styles, /\.sound-room__empty\s*\{/);
   assert.match(styles, /\.sound-room__feature\s*\{/);
   assert.match(styles, /@media \(max-width: 47\.99rem\)[\s\S]*?\.sound-room__hero/);

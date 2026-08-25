@@ -61,7 +61,7 @@ export const MUSIC_TRACKS: readonly MusicTrack[] = [
     url: "https://suno.com/song/474592ab-7d93-4307-831b-7e447b11c11a",
     audioUrl: sunoAudioUrl("474592ab-7d93-4307-831b-7e447b11c11a"),
     description:
-      "Greek zorba and sirtaki traded against Punjabi bhangra, with the bouzouki always on top. Three and a half minutes, no vocals to speak of.",
+      "Greek zorba and sirtaki traded against Punjabi bhangra, with the bouzouki always on top.",
     licence:
       "Made by Carlos with Suno and put here by him. Listening is free; this page grants no reuse rights.",
   },

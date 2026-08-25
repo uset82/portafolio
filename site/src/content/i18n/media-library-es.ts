@@ -37,7 +37,7 @@ export const VIDEO_PROFILE_ES = {
 export const MUSIC_TRACKS_ES: Record<string, { description: string; licence: string }> = {
   "abc-on-crete-beach": {
     description:
-      "Zorba y sirtaki griegos frente a bhangra punyabí, con el bouzouki siempre por encima. Tres minutos y medio, casi sin voces.",
+      "Zorba y sirtaki griegos frente a bhangra punyabí, con el bouzouki siempre por encima.",
     licence:
       "Hecha por Carlos con Suno y puesta aquí por él. Escucharla es gratis; esta página no concede derechos de reutilización.",
   },

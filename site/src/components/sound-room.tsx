@@ -90,18 +90,23 @@ export function SoundRoom({ locale = "en" }: { locale?: Locale }) {
         {hasTracks ? (
           <ul className="sound-room__works" aria-label={copy.musicAria}>
             {tracks.map((track) => (
-              <li key={track.id}>
+              <li key={track.id} className="sound-room__track">
+                {/* Grooves, the way a pressing has them. Ornament, not a readout. */}
+                <span className="sound-room__grooves" aria-hidden="true" />
                 <div className="sound-room__work-head">
+                  <div className="sound-room__work-marks">
+                    <StatusTag>{MUSIC_PROFILE.platform}</StatusTag>
+                    {track.publishedOn ? (
+                      <p>{copy.published(formatLongDate(track.publishedOn, locale))}</p>
+                    ) : null}
+                  </div>
                   <h3>{track.title}</h3>
-                  {track.publishedOn ? (
-                    <p>{copy.published(formatLongDate(track.publishedOn, locale))}</p>
-                  ) : null}
                 </div>
                 {track.description ? (
                   <p className="sound-room__work-body">{track.description}</p>
                 ) : null}
                 {track.audioUrl ? (
-                  <div className="sound-room__player">
+                  <div className="sound-room__deck">
                     {/* No client JavaScript: the browser's own control is the player. */}
                     <audio
                       className="sound-room__audio"
@@ -129,7 +134,10 @@ export function SoundRoom({ locale = "en" }: { locale?: Locale }) {
                     {copy.listenOn(MUSIC_PROFILE.platform)} <span aria-hidden="true">&#8599;</span>
                   </ActionLink>
                 )}
-                <small className="sound-room__work-rights">{track.licence}</small>
+                <footer className="sound-room__credit">
+                  <p className="sound-room__credit-label">{copy.rightsLabel}</p>
+                  <small className="sound-room__work-rights">{track.licence}</small>
+                </footer>
               </li>
             ))}
           </ul>
