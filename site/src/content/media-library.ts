@@ -39,6 +39,12 @@ export type VideoWork = {
   videoId: string;
   publishedOn?: string;
   description?: string;
+  /**
+   * A local copy of the video's own first frame, so the shelf looks like the
+   * video it is offering instead of an empty panel. Serving it from this site
+   * keeps the provider uncontacted until the visitor asks for the player.
+   */
+  poster?: { src: string; alt: string; width: number; height: number };
 };
 
 /**
@@ -77,6 +83,12 @@ export const VIDEO_WORKS: readonly VideoWork[] = [
     publishedOn: "2026-08-10",
     description:
       "The song above as a video, generated in Hedra with Seedance 2.5. Three minutes fifty-three.",
+    poster: {
+      src: "/images/hedra-seedance-poster.jpg",
+      alt: "Four dancers in Punjabi dress leap barefoot on a Greek beach, with whitewashed houses, bougainvillea and a wooden fishing boat behind them. Overlaid title text reads: Turn your images to life and make them dance, with Hedra + Seedance 2.5.",
+      width: 1280,
+      height: 720,
+    },
   },
 ];
 
@@ -122,9 +134,17 @@ export const STRUDEL_AI = {
   repositoryLabel: "View the repository",
 } as const;
 
-/** Privacy-enhanced YouTube embed: no cookies until playback actually starts. */
-export function youtubeEmbedUrl(videoId: string): string {
-  return `https://www.youtube-nocookie.com/embed/${videoId}`;
+/**
+ * Privacy-enhanced YouTube embed: no cookies until playback actually starts.
+ *
+ * `autoplay` is honest here rather than intrusive. The frame is mounted only
+ * after a visitor has pressed a button naming the provider, so starting the
+ * video is the thing they just asked for, and it spares them a second press on
+ * YouTube's own play button. `playsinline` keeps it in the page on iOS.
+ */
+export function youtubeEmbedUrl(videoId: string, { autoplay = false } = {}): string {
+  const base = `https://www.youtube-nocookie.com/embed/${videoId}`;
+  return autoplay ? `${base}?autoplay=1&playsinline=1` : base;
 }
 
 /** Suno's own player for one song. It plays for visitors with no Suno account. */

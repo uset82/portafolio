@@ -166,9 +166,10 @@ export function SoundRoom({ locale = "en" }: { locale?: Locale }) {
                 <ConsentEmbed
                   provider={VIDEO_PROFILE.platform}
                   accessibleName={copy.onPlatform(work.title, VIDEO_PROFILE.platform)}
-                  embedUrl={youtubeEmbedUrl(work.videoId)}
+                  embedUrl={youtubeEmbedUrl(work.videoId, { autoplay: true })}
                   fallbackUrl={work.url}
                   privacyMode
+                  {...(work.poster ? { poster: work.poster } : {})}
                   locale={locale}
                 />
               </li>

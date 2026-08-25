@@ -62,6 +62,7 @@ const EN = {
     privacyEnhanced: "Privacy-enhanced URL",
     externalProvider: "External provider",
     load: (provider: string) => `Load ${provider}`,
+    loadAndPlay: (provider: string) => `Load ${provider} and play`,
     retry: (provider: string) => `Retry ${provider}`,
     openExternally: "Open externally",
     notice: (provider: string) =>
@@ -414,6 +415,7 @@ const ES: UiCopy = {
     privacyEnhanced: "URL con privacidad reforzada",
     externalProvider: "Proveedor externo",
     load: (provider: string) => `Cargar ${provider}`,
+    loadAndPlay: (provider: string) => `Cargar ${provider} y reproducir`,
     retry: (provider: string) => `Reintentar ${provider}`,
     openExternally: "Abrir en su sitio",
     notice: (provider: string) =>

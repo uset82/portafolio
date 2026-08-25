@@ -53,11 +53,17 @@ export function localizeTrack(track: MusicTrack, locale: Locale): MusicTrack {
   return { ...track, description: copy.description, licence: copy.licence };
 }
 
-/** Per-video prose, keyed by the video id in `VIDEO_WORKS`. */
-export const VIDEO_WORKS_ES: Record<string, { description: string }> = {
+/**
+ * Per-video prose, keyed by the video id in `VIDEO_WORKS`. `posterAlt` is
+ * translated too: a poster with text baked into it needs that text readable in
+ * the language of the page it sits on.
+ */
+export const VIDEO_WORKS_ES: Record<string, { description: string; posterAlt: string }> = {
   "hedra-seedance-2-5": {
     description:
       "El vídeo de la canción de arriba, generado en Hedra con Seedance 2.5. Tres minutos cincuenta y tres.",
+    posterAlt:
+      "Cuatro bailarines con ropa punyabí saltan descalzos en una playa griega, con casas encaladas, buganvillas y una barca de madera detrás. El título sobre la imagen dice, en inglés: da vida a tus imágenes y hazlas bailar, con Hedra + Seedance 2.5.",
   },
 };
 
@@ -68,7 +74,11 @@ export function localizeVideo(work: VideoWork, locale: Locale): VideoWork {
   const copy = VIDEO_WORKS_ES[work.id];
   if (!copy) return work;
 
-  return { ...work, description: copy.description };
+  return {
+    ...work,
+    description: copy.description,
+    ...(work.poster ? { poster: { ...work.poster, alt: copy.posterAlt } } : {}),
+  };
 }
 
 export const STRUDEL_AI_ES = {

@@ -7525,9 +7525,56 @@ body:has(.observatory-hero) .site-header .site-header__status {
 }
 
 /* The floor exists to give the gate room for its title and buttons. A loaded
-   player needs no floor, and keeping one would crop or letterbox the video. */
-.consent-embed:is([data-state="loading"], [data-state="ready"]) .consent-embed__viewport {
+   player needs no floor, and keeping one would crop or letterbox the video.
+   A poster needs none either: it is already the shape of the thing it shows. */
+.consent-embed:is([data-state="loading"], [data-state="ready"]) .consent-embed__viewport,
+.consent-embed--poster .consent-embed__viewport {
   min-height: 0;
+}
+
+/* The poster is the button: pressing the picture is how you start the video. */
+.consent-embed__play {
+  display: grid;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.consent-embed__play > * {
+  grid-area: 1 / 1;
+}
+
+.consent-embed__play-glyph {
+  place-self: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  background: rgb(28 22 18 / 62%);
+  box-shadow: 0 0.4rem 1.6rem rgb(28 22 18 / 34%);
+  transition: background 160ms ease;
+}
+
+.consent-embed__play-glyph::after {
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 1.5rem 0 0 1.7rem;
+  background: var(--color-off-white);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  content: "";
+}
+
+.consent-embed__play:is(:hover, :focus-visible) .consent-embed__play-glyph {
+  background: rgb(28 22 18 / 82%);
+}
+
+.consent-embed__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  padding: 0.9rem 1rem 0;
 }
 
 .consent-embed__poster,

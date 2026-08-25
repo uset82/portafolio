@@ -39,6 +39,12 @@ const defaultSandbox = "allow-scripts allow-same-origin allow-presentation";
  * after the visitor has asked for it by name.
  */
 const defaultAllow = "autoplay; fullscreen; picture-in-picture";
+/**
+ * A media card runs nearly the width of its column, so a narrower estimate here
+ * buys a smaller file and a visibly soft poster. Slight over-fetching is the
+ * cheaper mistake for an image the visitor is being asked to look at.
+ */
+const posterSizes = "(max-width: 48rem) 100vw, 80vw";
 
 export function ConsentEmbed({
   provider,
@@ -66,10 +72,20 @@ export function ConsentEmbed({
   };
 
   const notice = privacyNotice ?? copy.notice(provider);
+  /**
+   * With a poster the frame shows the work itself, so the poster is the button
+   * and the consent copy sits under it. Without one there is nothing to look
+   * at, so the gate states what it is and what pressing it will do.
+   */
+  const posterIsGate = Boolean(poster) && state !== "error";
 
   return (
     <section
-      className={cx("consent-embed media-frame", className)}
+      className={cx(
+        "consent-embed media-frame",
+        posterIsGate && "consent-embed--poster",
+        className,
+      )}
       data-state={state}
       aria-label={accessibleName}
       aria-describedby={`${noticeId} ${statusId}`}
@@ -89,6 +105,23 @@ export function ConsentEmbed({
             onLoad={() => setState("ready")}
             onError={() => setState("error")}
           />
+        ) : posterIsGate && poster ? (
+          <button
+            type="button"
+            className="consent-embed__play"
+            onClick={loadProvider}
+            aria-label={copy.loadAndPlay(provider)}
+          >
+            <Image
+              className="consent-embed__poster"
+              src={poster.src}
+              alt={poster.alt}
+              width={poster.width}
+              height={poster.height}
+              sizes={posterSizes}
+            />
+            <span className="consent-embed__play-glyph" aria-hidden="true" />
+          </button>
         ) : (
           <>
             {poster ? (
@@ -98,7 +131,7 @@ export function ConsentEmbed({
                 alt={poster.alt}
                 width={poster.width}
                 height={poster.height}
-                sizes="(max-width: 48rem) 100vw, 60vw"
+                sizes={posterSizes}
               />
             ) : (
               <div className="consent-embed__placeholder" aria-hidden="true">
@@ -127,6 +160,16 @@ export function ConsentEmbed({
           </>
         )}
       </div>
+      {posterIsGate ? (
+        <div className="consent-embed__meta">
+          <StatusTag tone={privacyMode ? "concept" : "hold"}>
+            {privacyMode ? copy.privacyEnhanced : copy.externalProvider}
+          </StatusTag>
+          <ActionLink href={fallbackUrl} target="_blank" rel="noreferrer">
+            {copy.openExternally} <span aria-hidden="true">&#8599;</span>
+          </ActionLink>
+        </div>
+      ) : null}
       <p id={noticeId} className="consent-embed__notice">
         {notice}
       </p>

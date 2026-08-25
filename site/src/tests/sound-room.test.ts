@@ -239,8 +239,15 @@ test("the sound route mounts the room and keeps its responsive rules", () => {
   assert.match(styles, /\.consent-embed__viewport\s*\{[^}]*width:\s*100%/);
   assert.match(
     styles,
-    /\.consent-embed:is\(\[data-state="loading"\], \[data-state="ready"\]\) \.consent-embed__viewport\s*\{\s*min-height:\s*0;/,
+    /\.consent-embed:is\(\[data-state="loading"\], \[data-state="ready"\]\) \.consent-embed__viewport,?[^{]*\{\s*min-height:\s*0;/,
   );
+  // A poster is already 16:9, so it drops the gate's floor for the same reason.
+  assert.match(
+    styles,
+    /\.consent-embed--poster \.consent-embed__viewport,?[^{]*\{\s*min-height:\s*0;/,
+  );
+  assert.match(styles, /\.consent-embed__play\s*\{/);
+  assert.match(styles, /\.consent-embed__play-glyph\s*\{/);
   assert.match(styles, /\.sound-room__empty\s*\{/);
   assert.match(styles, /\.sound-room__feature\s*\{/);
   assert.match(styles, /@media \(max-width: 47\.99rem\)[\s\S]*?\.sound-room__hero/);
