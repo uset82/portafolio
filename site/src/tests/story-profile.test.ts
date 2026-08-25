@@ -86,6 +86,13 @@ test("The story plate upgrades its CC study to the emblem without losing the pos
 
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
   assert.match(styles, /\.story-profile__portrait--emblem strong\s*\{\s*opacity:\s*0/);
+  // The poster must be gone before the emblem arrives. Without the delay the
+  // emblem is already a third faded in while the CC is still on the plate, and
+  // the two show as a pair of stacked marks rather than one replacing the other.
+  assert.match(
+    styles,
+    /\.story-profile__portrait--emblem \.story-profile__portrait-emblem\s*\{[\s\S]*?transition-delay:\s*var\(--duration-base\)/,
+  );
   assert.match(
     styles,
     /@media \(max-width: 47\.99rem\)[\s\S]*?\.story-profile__portrait-emblem\s*\{/,

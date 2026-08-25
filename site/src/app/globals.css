@@ -3834,17 +3834,18 @@ body:has(.observatory-hero) .site-header .site-header__status {
   opacity: 0;
 }
 
-/* Anchored to the decorative circle rather than to the plate. That circle is the
- * portrait vignette this slot has always been built around: 78% wide with its
- * top edge at 16%, which on a 4:5 plate puts its middle at 47.2% of the height.
+/* Anchored to where the CC poster's own optical centre falls, so the swap
+ * happens in place.
  *
- * The mark rides a little above that middle. Dead-centre put its feet exactly on
- * the first study hairline, which stopped reading as a rule under the mark and
- * started reading as a line struck through it. */
+ * Anchoring to the decorative vignette instead put the emblem 10 points of plate
+ * height below the poster, and during the cross-fade that read as two stacked
+ * marks rather than as one replacing the other. This also clears the first study
+ * hairline by more than the vignette position did, so the rule reads as a rule
+ * again instead of as a line struck through the mark. */
 .story-profile__portrait > .story-profile__portrait-emblem {
   position: absolute;
   z-index: 1;
-  top: 43.5%;
+  top: 33.3%;
   left: 50%;
   /* The mark is near-square where CC was wide and short, so matching CC on width
    * made it half again as tall and it crowded both the vignette and the study
@@ -3872,8 +3873,13 @@ body:has(.observatory-hero) .site-header .site-header__status {
   content: "";
 }
 
+/* The poster leaves before the emblem arrives. Co-locating the two is what stops
+ * them reading as two marks, but only sequencing stops them being visible at the
+ * same instant: the poster fades in 220ms, the emblem over 520ms, so without a
+ * delay the emblem is already a third of the way in while the CC is still there. */
 .story-profile__portrait--emblem .story-profile__portrait-emblem {
   opacity: 1;
+  transition-delay: var(--duration-base);
 }
 
 .story-profile__portrait i {
@@ -4160,8 +4166,8 @@ body:has(.observatory-hero) .site-header .site-header__status {
    * `width: auto` with an aspect ratio shrink-to-fits against R3F's own
    * full-width wrapper and comes out larger, not smaller.) */
   .story-profile__portrait > .story-profile__portrait-emblem {
-    top: 50%;
-    width: 32%;
+    top: 43.3%;
+    width: 30%;
   }
 
   .story-profile__narrative,
