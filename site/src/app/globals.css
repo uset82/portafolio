@@ -4172,6 +4172,7 @@ body:has(.observatory-hero) .site-header .site-header__status {
 }
 
 .contact-path__identity h1,
+.contact-path__call h2,
 .contact-path__channel h2,
 .contact-path__privacy h2,
 .contact-path__continuation h2 {
@@ -4267,8 +4268,76 @@ body:has(.observatory-hero) .site-header .site-header__status {
   font-weight: 500;
   letter-spacing: -0.08em;
   line-height: 0.75;
+  transition: opacity var(--duration-base) var(--ease-emphasized);
 }
 
+/* The flat monogram is the poster. It stays in the layout and only fades out, so
+ * the disc never reflows at the moment the emblem arrives — and it remains the
+ * whole picture wherever WebGL or JavaScript never runs. */
+.contact-path__signal--emblem strong {
+  opacity: 0;
+}
+
+.contact-path__signal-emblem {
+  position: absolute;
+  z-index: 1;
+  /* Comfortably inside the medallion plate below, so no stroke ever crosses its
+   * rim. The first pass ran to 62% and the mark's outer arc cut clean through
+   * two rings; 46% still let the C and the M feet touch the plate edge. */
+  width: 40%;
+  aspect-ratio: 1;
+  opacity: 0;
+  transition: opacity var(--duration-reveal) var(--ease-emphasized);
+}
+
+.contact-path__signal--emblem .contact-path__signal-emblem {
+  opacity: 1;
+}
+
+/* Three nested hairlines plus a lit object read as four unrelated circles. With
+ * the emblem present the dial re-spaces to an even 78 / 62 / 46 progression and
+ * the innermost ring stops being a drawn line: it becomes the medallion plate
+ * the mark is struck on, so the composition is one object instead of a stack. */
+.contact-path__signal--emblem > i {
+  transition:
+    width var(--duration-reveal) var(--ease-emphasized),
+    border-color var(--duration-reveal) var(--ease-emphasized);
+}
+
+.contact-path__signal--emblem > i:nth-of-type(2) {
+  width: 62%;
+}
+
+.contact-path__signal--emblem > i:nth-of-type(3) {
+  width: 50%;
+  border-color: color-mix(in srgb, var(--color-buff) 16%, transparent);
+  /* A well, not a raised plate. Sunk darker than the disc around it, the buff
+   * mark reads bright and proud of the surface; the lighter plate this replaced
+   * sat at the mark's own value and washed it out. */
+  background:
+    radial-gradient(circle at 50% 34%, rgb(20 12 6 / 34%), rgb(20 12 6 / 58%) 78%),
+    color-mix(in srgb, var(--color-deep-espresso) 46%, transparent);
+  box-shadow:
+    inset 0 0.125rem 0.75rem rgb(20 12 6 / 60%),
+    inset 0 -0.0625rem 0 color-mix(in srgb, var(--color-buff) 14%, transparent);
+}
+
+/* The emblem carries no interaction, so it must not swallow the disc's cursor. */
+.contact-path__signal-canvas,
+.contact-path__signal-canvas canvas {
+  pointer-events: none !important;
+}
+
+/* The emblem is the only moving thing on this route. Reduced motion keeps the
+ * resting pose the scene already holds, and swaps the cross-fade for a cut. */
+@media (prefers-reduced-motion: reduce) {
+  .contact-path__signal strong,
+  .contact-path__signal-emblem {
+    transition: none;
+  }
+}
+
+.contact-path__call,
 .contact-path__channel,
 .contact-path__privacy,
 .contact-path__continuation {
@@ -4280,10 +4349,113 @@ body:has(.observatory-hero) .site-header .site-header__status {
   border-bottom: 1px solid var(--color-border-soft);
 }
 
+/* Open call: the one offer this route makes, ahead of every boundary statement. */
+.contact-path__call {
+  grid-template-columns: minmax(20rem, 0.85fr) minmax(24rem, 1.15fr);
+  background: var(--color-linen);
+}
+
+.contact-path__project {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.contact-path__call-copy {
+  display: grid;
+  gap: 2.5rem;
+  align-content: start;
+}
+
+.contact-path__question {
+  max-width: 30ch;
+  margin: 0;
+  padding-left: clamp(1rem, 2vw, 1.75rem);
+  border-left: 2px solid var(--color-moss);
+  color: var(--color-text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.contact-path__call-copy > p:not(.contact-path__question):not(.contact-path__call-note) {
+  max-width: 42rem;
+  margin: 0;
+  color: var(--color-text-secondary-on-tint);
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  line-height: 1.75;
+}
+
+.contact-path__asks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.75rem, 3vw, 3rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contact-path__asks > li {
+  display: grid;
+  gap: 0.85rem;
+  align-content: start;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.contact-path__asks h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 1.9vw, 1.7rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.contact-path__asks > li > p:not(.contact-path__ask-meta):not(.section-label) {
+  margin: 0;
+  color: var(--color-text-secondary-on-tint);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.contact-path__asks .ui-action {
+  justify-self: start;
+  margin-top: 0.5rem;
+  gap: 0.5rem;
+}
+
+.contact-path__ask-meta {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.contact-path__call-note {
+  max-width: 44rem;
+  margin: 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
 .contact-path__channel {
   grid-template-columns: minmax(20rem, 0.9fr) minmax(24rem, 1.1fr);
 }
 
+.contact-path__call > header,
 .contact-path__channel > div:first-child,
 .contact-path__privacy header {
   display: grid;
@@ -4291,6 +4463,7 @@ body:has(.observatory-hero) .site-header .site-header__status {
   align-content: start;
 }
 
+.contact-path__call h2,
 .contact-path__channel h2,
 .contact-path__privacy h2,
 .contact-path__continuation h2 {
@@ -4413,10 +4586,15 @@ body:has(.observatory-hero) .site-header .site-header__status {
     grid-column: 2;
   }
 
+  /* The narrow rail column squeezed the disc to about 170px, which clipped both
+   * ring captions against the circular overflow and left the emblem too small to
+   * read. It gets its own full-width row instead, still ending right as on desktop. */
   .contact-path__signal {
-    grid-column: 1;
+    grid-column: 1 / -1;
     grid-row: 2;
     align-self: end;
+    justify-self: end;
+    width: min(100%, 22rem);
   }
 
   .contact-path__continuation {
@@ -4429,6 +4607,7 @@ body:has(.observatory-hero) .site-header .site-header__status {
     grid-column: 2;
   }
 
+  .contact-path__call,
   .contact-path__channel,
   .contact-path__privacy {
     grid-template-columns: 1fr;
@@ -4437,6 +4616,7 @@ body:has(.observatory-hero) .site-header .site-header__status {
 
 @media (max-width: 47.99rem) {
   .contact-path__hero,
+  .contact-path__call,
   .contact-path__channel,
   .contact-path__privacy,
   .contact-path__continuation {
@@ -4468,16 +4648,27 @@ body:has(.observatory-hero) .site-header .site-header__status {
     justify-self: start;
   }
 
+  .contact-path__call,
   .contact-path__channel,
   .contact-path__privacy,
   .contact-path__continuation {
     padding-block: 5rem;
   }
 
+  .contact-path__call h2,
   .contact-path__channel h2,
   .contact-path__privacy h2,
   .contact-path__continuation h2 {
     font-size: clamp(3rem, 13vw, 4.5rem);
+  }
+
+  .contact-path__asks {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-path__asks .ui-action {
+    justify-self: stretch;
+    width: 100%;
   }
 
   .contact-path__github {

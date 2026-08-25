@@ -1,5 +1,7 @@
+import { ContactSignal } from "@/components/contact-signal";
 import { ActionLink, StatusTag } from "@/components/ui";
 import { FOOTER_ES } from "@/content/i18n/records-es";
+import { OPEN_CALL_ROUTES } from "@/content/open-call";
 import { ui } from "@/content/i18n/ui";
 import type { SiteMetadata } from "@/content/schemas";
 import { resolveHref, type Locale } from "@/lib/i18n";
@@ -27,13 +29,59 @@ export function ContactPath({ content, locale = "en" }: ContactPathProps) {
           <p>{copy.intro}</p>
         </div>
 
-        <div className="contact-path__signal" aria-hidden="true">
-          <span>{copy.signalLabel}</span>
-          <i />
-          <i />
-          <i />
-          <strong>CC</strong>
-          <small>{copy.oneChannel}</small>
+        <ContactSignal
+          bottomLabel={copy.oneChannel}
+          emblemLabel={copy.emblemLabel}
+          topLabel={copy.signalLabel}
+        />
+      </section>
+
+      <section className="contact-path__call" aria-labelledby="contact-call-title">
+        <header>
+          <p className="section-label">{copy.callLabel}</p>
+          <h2 id="contact-call-title">{copy.callHeading}</h2>
+          <p className="contact-path__project">{copy.callProject}</p>
+        </header>
+
+        <div className="contact-path__call-copy">
+          <p className="contact-path__question">{copy.callQuestion}</p>
+          <p>{copy.callBody}</p>
+
+          <ul className="contact-path__asks" aria-label={copy.asksAria}>
+            <li>
+              <p className="section-label">{copy.askOneLabel}</p>
+              <h3>{copy.askOneHeading}</h3>
+              <p>{copy.askOneBody}</p>
+              <ActionLink
+                variant="primary"
+                href={OPEN_CALL_ROUTES.opportunity}
+                prefetch={false}
+              >
+                {copy.askOneAction}
+                <span aria-hidden="true">↗</span>
+                <span className="visually-hidden">{ui(locale).common.externalSite}</span>
+              </ActionLink>
+              <p className="contact-path__ask-meta">{copy.askOneMeta}</p>
+            </li>
+
+            <li>
+              <p className="section-label">{copy.askTwoLabel}</p>
+              <h3>{copy.askTwoHeading}</h3>
+              <p>{copy.askTwoBody}</p>
+              <ActionLink
+                variant="secondary"
+                href={OPEN_CALL_ROUTES.coFounder}
+                prefetch={false}
+              >
+                {copy.askTwoAction}
+                <span aria-hidden="true">↗</span>
+                <span className="visually-hidden">{ui(locale).common.externalSite}</span>
+              </ActionLink>
+              <p className="contact-path__ask-meta">{copy.askTwoMeta}</p>
+            </li>
+          </ul>
+
+          <p className="contact-path__call-note">{copy.callProjectNote}</p>
         </div>
       </section>
 

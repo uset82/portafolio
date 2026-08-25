@@ -111,7 +111,7 @@ test("homepage personal teaser names the public apps without publishing private 
 test("footer contact content exposes only the approved privacy-safe paths", () => {
   const { footer } = siteContentSchema.parse(rawSiteContent).metadata;
 
-  assert.equal(footer.status, "Public contact method pending");
+  assert.equal(footer.status, "Open call, one public route");
   assert.equal(footer.primaryAction.href, "/contact");
   assert.equal(footer.primaryAction.external, false);
   assert.equal(footer.secondaryAction.href, "https://github.com/uset82");

@@ -32,7 +32,7 @@ export const FOOTER_ES = {
   heading: "Convirtamos una idea difícil en un sistema que funciona.",
   description:
     "La vía de contacto sigue priorizando la privacidad mientras se decide el correo o el formulario público definitivo.",
-  status: "Método de contacto público pendiente",
+  status: "Convocatoria abierta, una vía pública",
 } as const;
 
 /** Falls back to the English label when a link has not been translated yet. */

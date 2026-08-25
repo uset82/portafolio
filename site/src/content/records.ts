@@ -232,7 +232,7 @@ export const rawSiteContent = {
       heading: "Let’s turn a difficult idea into a working system.",
       description:
         "The contact route remains privacy-first while the final public email or form decision is still open.",
-      status: "Public contact method pending",
+      status: "Open call, one public route",
       primaryAction: {
         id: "footer-visit-contact",
         label: "Visit Contact",

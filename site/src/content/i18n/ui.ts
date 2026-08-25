@@ -217,9 +217,32 @@ const EN = {
   contact: {
     label: "Contact / Public boundary",
     intro:
-      "No public email, form, booking route, or availability statement has been approved. Until that decision is made, this page offers only Carlos's verified public GitHub profile and clear paths back into the work.",
+      "No public email, form, or booking route is published here, and none is planned. What is published is an open call: one question, one public place to answer it, and one role Carlos is actively looking to fill.",
     signalLabel: "Signal / privacy first",
     oneChannel: "One verified public channel",
+    emblemLabel: "The CA²M emblem, turning slowly.",
+    callLabel: "Open call / 00",
+    callHeading: "No form. A question.",
+    callQuestion:
+      "What valuable opportunity is already right in front of you, waiting to be seen?",
+    callBody:
+      "Most people who want to build something stop in the same place: they believe they need a new idea first. Meanwhile the theses, prototypes, lab work, and shelved software already around them are never tested against a real market. I am looking for those, and for one person to look for them with me.",
+    callProject: "OpenEyes — working project name",
+    callProjectNote:
+      "OpenEyes is a proposal in progress, not a funded programme. Nothing below is a service, an engagement, or a promise of a reply.",
+    asksAria: "Open call routes",
+    askOneLabel: "Ask 01",
+    askOneHeading: "Bring an opportunity, not an idea.",
+    askOneBody:
+      "A finished thesis, a working prototype, a project that stopped, software nobody maintains any more. If it exists and nobody has yet asked who might need it, it qualifies. Submissions open as public GitHub issues: visible, dated, and free of private detail.",
+    askOneAction: "Submit an opportunity",
+    askOneMeta: "Public GitHub issue",
+    askTwoLabel: "Ask 02",
+    askTwoHeading: "One open role: a complementary co-founder.",
+    askTwoBody:
+      "Business development, commercialization, market analysis, software and AI, or industry networks across energy, ocean, health, and technology. This is the only availability claim on this site: one role, stated openly, with no employment, contract, or booking offer attached.",
+    askTwoAction: "Open a co-founder thread",
+    askTwoMeta: "Named ask, no booking route",
     channelLabel: "Public channel / 01",
     channelHeading: "One verified profile. No hidden inbox.",
     channelBody:
@@ -228,12 +251,12 @@ const EN = {
     privacyLabel: "Privacy / 02",
     privacyHeading: "No contact data is collected here.",
     privacyBody:
-      "This route contains no message field, file upload, tracking form, private address, or direct-contact value. The omitted options remain visible as decisions, not disguised as working features.",
+      "This route contains no message field, file upload, tracking form, private address, or direct-contact value. The open call leaves this site entirely: submissions are filed in public on GitHub, under GitHub's terms, and are never collected here. The omitted options remain visible as decisions, not disguised as working features.",
     boundaries: [
       ["Public email", "Not published"],
       ["Contact form", "Not enabled"],
       ["Additional social accounts", "None approved"],
-      ["Availability", "No claim published"],
+      ["Availability", "One open role, stated"],
     ] as readonly (readonly [string, string])[],
     continueLabel: "Continue / 03",
     continueHeading: "Start with the work and the public story.",
@@ -573,9 +596,32 @@ const ES: UiCopy = {
   contact: {
     label: "Contacto / Límite público",
     intro:
-      "No se ha aprobado ningún correo público, formulario, vía de reserva ni declaración de disponibilidad. Hasta que se decida, esta página ofrece solo el perfil público verificado de Carlos en GitHub y caminos claros de vuelta al trabajo.",
+      "Aquí no se publica correo público, formulario ni vía de reserva, y no está previsto hacerlo. Lo que sí se publica es una convocatoria abierta: una pregunta, un lugar público donde responderla y un puesto que Carlos busca cubrir ahora mismo.",
     signalLabel: "Señal / privacidad primero",
     oneChannel: "Un canal público verificado",
+    emblemLabel: "El emblema CA²M, girando despacio.",
+    callLabel: "Convocatoria abierta / 00",
+    callHeading: "Sin formulario. Una pregunta.",
+    callQuestion:
+      "¿Qué oportunidad valiosa ya está delante de ti, esperando a que alguien la vea?",
+    callBody:
+      "Casi todo el que quiere construir algo se detiene en el mismo punto: cree que primero necesita una idea nueva. Mientras tanto, las tesis, los prototipos, el trabajo de laboratorio y el software abandonado que ya tiene alrededor nunca se ponen a prueba frente a un mercado real. Busco justamente eso, y a una persona que lo busque conmigo.",
+    callProject: "OpenEyes — nombre de trabajo del proyecto",
+    callProjectNote:
+      "OpenEyes es una propuesta en curso, no un programa financiado. Nada de lo que sigue es un servicio, un encargo ni una promesa de respuesta.",
+    asksAria: "Vías de la convocatoria abierta",
+    askOneLabel: "Petición 01",
+    askOneHeading: "Trae una oportunidad, no una idea.",
+    askOneBody:
+      "Una tesis terminada, un prototipo que funciona, un proyecto que se detuvo, software que ya nadie mantiene. Si existe y todavía nadie ha preguntado quién podría necesitarlo, cuenta. Los envíos se abren como issues públicos de GitHub: visibles, fechados y sin ningún dato privado.",
+    askOneAction: "Enviar una oportunidad",
+    askOneMeta: "Issue público de GitHub",
+    askTwoLabel: "Petición 02",
+    askTwoHeading: "Un puesto abierto: cofundador complementario.",
+    askTwoBody:
+      "Desarrollo de negocio, comercialización, análisis de mercado, software e IA, o redes industriales en energía, océano, salud y tecnología. Esta es la única declaración de disponibilidad de este sitio: un puesto, dicho con claridad, sin oferta de empleo, contrato ni reserva.",
+    askTwoAction: "Abrir un hilo de cofundador",
+    askTwoMeta: "Petición concreta, sin vía de reserva",
     channelLabel: "Canal público / 01",
     channelHeading: "Un perfil verificado. Ninguna bandeja escondida.",
     channelBody:
@@ -584,12 +630,12 @@ const ES: UiCopy = {
     privacyLabel: "Privacidad / 02",
     privacyHeading: "Aquí no se recoge ningún dato de contacto.",
     privacyBody:
-      "Esta vía no tiene campo de mensaje, subida de archivos, formulario de seguimiento, dirección privada ni ningún dato de contacto directo. Las opciones omitidas siguen visibles como decisiones, no disfrazadas de funciones que ya funcionan.",
+      "Esta vía no tiene campo de mensaje, subida de archivos, formulario de seguimiento, dirección privada ni ningún dato de contacto directo. La convocatoria abierta sale por completo de este sitio: los envíos se registran en público en GitHub, bajo los términos de GitHub, y nunca se recogen aquí. Las opciones omitidas siguen visibles como decisiones, no disfrazadas de funciones que ya funcionan.",
     boundaries: [
       ["Correo público", "Sin publicar"],
       ["Formulario de contacto", "Sin activar"],
       ["Otras cuentas sociales", "Ninguna aprobada"],
-      ["Disponibilidad", "Sin declaración publicada"],
+      ["Disponibilidad", "Un puesto abierto, declarado"],
     ] as readonly (readonly [string, string])[],
     continueLabel: "Continuar / 03",
     continueHeading: "Empieza por el trabajo y por la historia pública.",
