@@ -3824,6 +3824,56 @@ body:has(.observatory-hero) .site-header .site-header__status {
   letter-spacing: -0.1em;
   line-height: 0.7;
   text-align: center;
+  transition: opacity var(--duration-base) var(--ease-emphasized);
+}
+
+/* The flat CC study is the poster. It keeps its grid slot and only fades, so the
+ * plate cannot reflow when the emblem arrives, and it stays the whole picture
+ * wherever WebGL or JavaScript never runs. */
+.story-profile__portrait--emblem strong {
+  opacity: 0;
+}
+
+/* Anchored to the decorative circle rather than to the plate. That circle is the
+ * portrait vignette this slot has always been built around: 78% wide with its
+ * top edge at 16%, which on a 4:5 plate puts its middle at 47.2% of the height.
+ *
+ * The mark rides a little above that middle. Dead-centre put its feet exactly on
+ * the first study hairline, which stopped reading as a rule under the mark and
+ * started reading as a line struck through it. */
+.story-profile__portrait > .story-profile__portrait-emblem {
+  position: absolute;
+  z-index: 1;
+  top: 43.5%;
+  left: 50%;
+  /* The mark is near-square where CC was wide and short, so matching CC on width
+   * made it half again as tall and it crowded both the vignette and the study
+   * hairlines. Sized to clear them instead. */
+  width: 46%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity var(--duration-reveal) var(--ease-emphasized);
+  pointer-events: none;
+}
+
+/* A warm pool behind the mark, so dark bronze on a pale plate is seated rather
+ * than floating. Painted before the canvas element, so it stays behind it. */
+.story-profile__portrait-emblem::before {
+  position: absolute;
+  inset: 10%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 54%,
+    color-mix(in srgb, var(--color-taupe) 34%, transparent),
+    color-mix(in srgb, var(--color-taupe) 12%, transparent) 55%,
+    transparent 72%
+  );
+  content: "";
+}
+
+.story-profile__portrait--emblem .story-profile__portrait-emblem {
+  opacity: 1;
 }
 
 .story-profile__portrait i {
@@ -4104,6 +4154,16 @@ body:has(.observatory-hero) .site-header .site-header__status {
     font-size: clamp(6.5rem, 34vw, 9rem);
   }
 
+  /* The plate turns landscape and short here, so the mark is sized against its
+   * short edge: the vignette circle overflows it entirely, and 42% of this much
+   * wider plate ran straight into both captions. (Expressed as a width, because
+   * `width: auto` with an aspect ratio shrink-to-fits against R3F's own
+   * full-width wrapper and comes out larger, not smaller.) */
+  .story-profile__portrait > .story-profile__portrait-emblem {
+    top: 50%;
+    width: 32%;
+  }
+
   .story-profile__narrative,
   .story-profile__practice,
   .story-profile__record {
@@ -4323,8 +4383,8 @@ body:has(.observatory-hero) .site-header .site-header__status {
 }
 
 /* The emblem carries no interaction, so it must not swallow the disc's cursor. */
-.contact-path__signal-canvas,
-.contact-path__signal-canvas canvas {
+.ca2m-emblem__canvas,
+.ca2m-emblem__canvas canvas {
   pointer-events: none !important;
 }
 
@@ -10083,6 +10143,15 @@ body:has(.observatory-hero) .site-header .site-header__status {
   .support-teaser:focus-within .support-teaser__mark,
   .support-teaser:hover .support-teaser__mark {
     transform: none;
+    transition: none;
+  }
+}
+
+/* The emblem is the only moving thing on the story route. Reduced motion keeps
+ * the resting pose the scene already holds, and swaps the cross-fade for a cut. */
+@media (prefers-reduced-motion: reduce) {
+  .story-profile__portrait strong,
+  .story-profile__portrait-emblem {
     transition: none;
   }
 }

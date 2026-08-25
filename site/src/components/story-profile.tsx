@@ -1,3 +1,4 @@
+import { StoryPortrait } from "@/components/story-portrait";
 import { ActionLink, StatusTag } from "@/components/ui";
 import { PROFILE_ES } from "@/content/i18n/records-es";
 import { ui } from "@/content/i18n/ui";
@@ -27,13 +28,11 @@ export function StoryProfile({ name, content: source, locale = "en" }: StoryProf
           <strong>{content.heading}</strong>
         </header>
 
-        <div className="story-profile__portrait" aria-hidden="true">
-          <span>{copy.portraitLabel}</span>
-          <strong>CC</strong>
-          <i />
-          <i />
-          <small>{copy.portraitCaption}</small>
-        </div>
+        <StoryPortrait
+          bottomLabel={copy.portraitCaption}
+          emblemLabel={copy.emblemLabel}
+          topLabel={copy.portraitLabel}
+        />
       </section>
 
       <section className="story-profile__narrative" aria-labelledby="story-narrative-title">

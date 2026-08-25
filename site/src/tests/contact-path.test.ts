@@ -90,16 +90,22 @@ test("Contact renders the 3D emblem over a monogram poster that survives without
   assert.doesNotMatch(markup, /<canvas/i);
   assert.doesNotMatch(markup, /contact-path__signal--emblem/);
 
-  const shell = readFileSync(
+  const disc = readFileSync(
     path.join(process.cwd(), "src/components/contact-signal.tsx"),
     "utf8",
   );
-  // The emblem must never be part of the route's first payload.
-  assert.match(shell, /ssr: false/);
-  assert.match(shell, /IntersectionObserver/);
-  assert.match(shell, /prefers-reduced-motion: reduce/);
   // The monogram fades rather than unmounting, so the disc cannot reflow.
-  assert.match(shell, /<strong aria-hidden="true">CC<\/strong>/);
+  assert.match(disc, /<strong aria-hidden="true">CC<\/strong>/);
+  assert.match(disc, /surface="dark"/);
+
+  const boundary = readFileSync(
+    path.join(process.cwd(), "src/components/ca2m-emblem.tsx"),
+    "utf8",
+  );
+  // The emblem must never be part of any route's first payload.
+  assert.match(boundary, /ssr: false/);
+  assert.match(boundary, /IntersectionObserver/);
+  assert.match(boundary, /prefers-reduced-motion: reduce/);
 });
 
 /**
@@ -126,7 +132,7 @@ test("The contact emblem spends its budget on triangles, not on maps nobody samp
     "utf8",
   );
   const scene = readFileSync(
-    path.join(process.cwd(), "src/components/contact-signal-scene.tsx"),
+    path.join(process.cwd(), "src/components/ca2m-emblem-scene.tsx"),
     "utf8",
   );
 
@@ -175,14 +181,14 @@ test("The contact emblem spends its budget on triangles, not on maps nobody samp
 
 test("The contact emblem stays legible and stays on the site palette", () => {
   const scene = readFileSync(
-    path.join(process.cwd(), "src/components/contact-signal-scene.tsx"),
+    path.join(process.cwd(), "src/components/ca2m-emblem-scene.tsx"),
     "utf8",
   );
 
   // CA²M is a reading monogram: off-axis its strokes collapse into each other.
   // It may sway, but it must never approach edge-on, and never make a revolution.
-  const yaw = Number(/SIGNAL_SWAY_YAW_DEGREES = ([\d.]+)/.exec(scene)?.[1]);
-  const pitch = Number(/SIGNAL_SWAY_PITCH_DEGREES = ([\d.]+)/.exec(scene)?.[1]);
+  const yaw = Number(/EMBLEM_SWAY_YAW_DEGREES = ([\d.]+)/.exec(scene)?.[1]);
+  const pitch = Number(/EMBLEM_SWAY_PITCH_DEGREES = ([\d.]+)/.exec(scene)?.[1]);
   assert.ok(yaw > 0 && yaw <= 20, `sway yaw of ${yaw}° must stay within 20° of face-on`);
   assert.ok(pitch > 0 && pitch <= 10, `sway pitch of ${pitch}° must stay within 10°`);
 
@@ -191,9 +197,10 @@ test("The contact emblem stays legible and stays on the site palette", () => {
   assert.match(scene, /new THREE\.MeshStandardMaterial\(/);
   // Which palette tone is a design call; that it comes from the palette at all
   // is the contract. An arbitrary literal here would bypass `palette:check`.
-  assert.match(scene, /color: new THREE\.Color\(naturalPalette\.\w+\)/);
-  assert.doesNotMatch(scene, /color: new THREE\.Color\(["'#]/);
+  assert.match(scene, /color: new THREE\.Color\(surface\.color\)/);
+  assert.match(scene, /color: naturalPalette\.\w+,/);
+  assert.doesNotMatch(scene, /new THREE\.Color\(["'#]/);
   // Scale is measured, never hand-tuned, so the asset cannot decide the layout.
   assert.match(scene, /new THREE\.Box3\(\)\.setFromObject/);
-  assert.doesNotMatch(scene, /SIGNAL_LOGO_SCALE/);
+  assert.doesNotMatch(scene, /EMBLEM_LOGO_SCALE/);
 });

@@ -52,3 +52,59 @@ test("Story keeps a cardless responsive composition with touch and reduced-motio
   assert.match(styles, /@media \(prefers-reduced-motion: reduce\)/);
   assert.doesNotMatch(page, /PageIntro|RecoveryState/);
 });
+
+test("The story plate upgrades its CC study to the emblem without losing the poster", () => {
+  const metadata = siteContentSchema.parse(rawSiteContent).metadata;
+  const markup = renderToStaticMarkup(
+    createElement(StoryProfile, {
+      name: metadata.name,
+      content: metadata.profileTeaser,
+    }),
+  );
+
+  // Server output is the flat study. The canvas is client-only, so nothing
+  // WebGL may appear here, and the plate must not claim the emblem is present.
+  assert.match(markup, /<strong aria-hidden="true">CC<\/strong>/);
+  assert.doesNotMatch(markup, /<canvas/i);
+  assert.doesNotMatch(markup, /story-profile__portrait--emblem/);
+
+  // This slot stands in for a portrait that the same page says is withheld, so
+  // the caption has to describe what is actually shown.
+  assert.match(markup, /Emblem in place of a portrait/);
+  assert.doesNotMatch(markup, /Typographic portrait/);
+  // And it must still never become a claim that a photograph is published.
+  assert.doesNotMatch(markup, /<(?:img|picture)\b/);
+
+  const plate = readFileSync(
+    path.join(process.cwd(), "src/components/story-portrait.tsx"),
+    "utf8",
+  );
+  // A pale mark would vanish on the sage plate: this placement is the inversion
+  // of the contact disc, not the same treatment retinted.
+  assert.match(plate, /surface="light"/);
+  assert.doesNotMatch(plate, /surface="dark"/);
+
+  const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
+  assert.match(styles, /\.story-profile__portrait--emblem strong\s*\{\s*opacity:\s*0/);
+  assert.match(
+    styles,
+    /@media \(max-width: 47\.99rem\)[\s\S]*?\.story-profile__portrait-emblem\s*\{/,
+  );
+});
+
+test("Both emblem placements share one scene, and each names its own ground", () => {
+  const scene = readFileSync(
+    path.join(process.cwd(), "src/components/ca2m-emblem-scene.tsx"),
+    "utf8",
+  );
+
+  // One asset, one scene, two treatments. A second copy of this scene is how
+  // the two placements would quietly drift apart.
+  assert.match(scene, /export type EmblemSurface = "dark" \| "light"/);
+  assert.match(scene, /const SURFACES: Record<EmblemSurface, SurfaceTreatment>/);
+
+  // Every colour in both treatments has to come from the palette contract,
+  // otherwise `palette:check` cannot see it.
+  const literals = scene.match(/#[0-9a-fA-F]{3,8}/g) ?? [];
+  assert.deepEqual(literals, [], `the scene must hold no colour literals: ${literals.join(", ")}`);
+});
