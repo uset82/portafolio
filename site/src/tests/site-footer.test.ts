@@ -22,8 +22,11 @@ test("footer closes with one honest contact path and one verified public profile
   // A short invitation, because this footer closes every page on the site. The
   // old line assumed a visitor who already had an idea, which is the assumption
   // the contact route it points at now explicitly rejects.
-  assert.match(markup, /Let’s find what already exists, and make it work\./);
+  assert.match(markup, /Let’s see what’s already there, and make it work\./);
   assert.doesNotMatch(markup, /turn a difficult idea into a working system/);
+  // Not "exists": most of what this points at has no material form yet, and
+  // this footer also closes pages about interpretation rather than objects.
+  assert.doesNotMatch(markup, /already exists/);
   assert.doesNotMatch(markup, /The contact route remains privacy-first/);
   assert.match(markup, /aria-label="Primary site navigation"/);
   assert.match(markup, /aria-label="Explore and external links"/);

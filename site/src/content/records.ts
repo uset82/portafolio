@@ -229,7 +229,16 @@ export const rawSiteContent = {
     },
     footer: {
       eyebrow: "Contact / 05",
-      heading: "Let’s find what already exists, and make it work.",
+      /**
+       * "See", not "find", and "there", not "exists".
+       *
+       * Most of what this line points at has no material form: the commercial
+       * opportunity inside a thesis does not exist yet, and this footer also
+       * closes pages about interpretation and symbol. "Exists" read as a thing
+       * on a shelf. The thesis on the contact route turns on seeing rather than
+       * finding, and an unseen opportunity is still there.
+       */
+      heading: "Let’s see what’s already there, and make it work.",
       description:
         "The contact route stays privacy-first: no public email and no form, and an open call in their place.",
       status: "Open call, one public route",

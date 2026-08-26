@@ -29,7 +29,7 @@ export const LINK_LABELS_ES: Record<string, string> = {
 
 export const FOOTER_ES = {
   eyebrow: "Contacto / 05",
-  heading: "Encontremos lo que ya existe y hagámoslo funcionar.",
+  heading: "Veamos lo que ya está ahí, y hagámoslo funcionar.",
   description:
     "La vía de contacto sigue priorizando la privacidad: sin correo público y sin formulario, y una convocatoria abierta en su lugar.",
   status: "Convocatoria abierta, una vía pública",
