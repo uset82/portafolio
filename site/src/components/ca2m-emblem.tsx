@@ -15,10 +15,20 @@ const LazyCa2mEmblemScene = dynamic(
 );
 
 /**
+ * The Network Information API, which is not in the DOM lib because it is not on
+ * a standards track. Only the two fields that say "do not spend my data" are
+ * declared, and both are optional: outside Chromium there is no `connection` at
+ * all, and the absence has to read as "no objection" rather than as thrift.
+ */
+type ThriftyNavigator = Navigator & {
+  connection?: { saveData?: boolean; effectiveType?: string };
+};
+
+/**
  * Keeps a failed emblem to itself.
  *
- * The scene throws during render if its chunk or its 808 KB model does not
- * arrive — a dropped request on a phone is enough. Unhandled, that throw reaches
+ * The scene throws during render if its chunk or its model does not arrive — a
+ * dropped request on a phone is enough. Unhandled, that throw reaches
  * the route, and Next replaces the whole page with its client error screen: the
  * biography, the privacy statement and the contact channel all lost because a
  * decorative mark could not be drawn. Caught here it costs exactly the mark.
@@ -74,44 +84,90 @@ export function Ca2mEmblem({ label, surface, className, onReady }: Ca2mEmblemPro
     return () => query.removeEventListener("change", update);
   }, []);
 
-  // Both placements sit in the first viewport, so this is not really a scroll
-  // gate — it is a guard against paying for 808 KB and a WebGL context on a
-  // route the visitor may be leaving again immediately.
+  // Fetching the emblem and building it are two decisions, and they used to be
+  // one. Both were taken when the plate came within 200px of the viewport, on
+  // the assumption — written into this file — that both placements sit in the
+  // first viewport and the gate would therefore fire on load. On a phone they do
+  // not: on a 454x674 viewport the story plate starts at y=790, below the fold.
+  // So the gate behaved as a real scroll gate, and every byte was spent after
+  // the visitor had already arrived at the plate and was looking at it. Measured
+  // on the deployed site, scrolling there kicked off 917 KB in one go and the
+  // mark took another 1.2s to appear on a fast connection. That wait is the
+  // delay, and it was arranged to happen in the worst possible place.
+  //
+  // Split, each half can happen when it should. The bytes are asked for while
+  // the visitor is still reading the top of the page, using time that was idle
+  // anyway; the WebGL context is still built only for someone about to see it.
   useEffect(() => {
-    // Ask for the model at the same moment as the chunk, rather than leaving the
-    // chunk to ask once it has arrived and run. Those two waits used to be paid
-    // one after the other: at 4 Mbit the chunk landed at 2.2s and the model only
-    // then started, so the emblem arrived at 4.2s. Started together, 3.6s.
-    //
-    // It sits on this decision rather than in render deliberately. Declared in
-    // render it goes into the server's HTML and starts a second earlier, which
-    // measured about 0.2s off the emblem — but it would then fetch 808 KB for
-    // every visitor, including the one this gate exists to spare and everyone
-    // who never gets an emblem at all because JavaScript or WebGL is missing.
+    let warmed = false;
+    // The chunk and the model, asked for together. Left to itself the chunk asks
+    // for the model only once it has arrived and run, so the two waits are paid
+    // one after the other.
     //
     // `crossOrigin` is not about origins. It is what makes this request's
     // credentials mode match the one three's `FileLoader` uses, without which
     // the browser treats the preload as a different request and fetches the
     // model twice.
-    const mount = () => {
+    const warm = () => {
+      if (warmed) return;
+      warmed = true;
       preload(EMBLEM_LOGO_URL, { as: "fetch", crossOrigin: "anonymous", fetchPriority: "low" });
+      void import("./ca2m-emblem-scene").catch(() => {
+        // A warm-up that fails costs nothing: the real import runs again when the
+        // scene mounts, and if that fails too the boundary below keeps the poster.
+      });
+    };
+
+    const mount = () => {
+      warm();
       setShouldMount(true);
+    };
+
+    // Someone who asked to be spared the bytes, or is on a connection where
+    // 446 KB of decoration would compete with the text, keeps the old behaviour:
+    // nothing is fetched until the plate is actually approaching.
+    const connection = (navigator as ThriftyNavigator).connection;
+    const thrifty =
+      connection?.saveData === true || /(^|-)2g$/.test(connection?.effectiveType ?? "");
+
+    // Idle rather than immediate, so the warm-up queues behind the page's own
+    // work instead of competing with it. The timeout is the ceiling for a page
+    // that never goes idle.
+    let idleHandle: number | undefined;
+    let timerHandle: number | undefined;
+    if (!thrifty) {
+      if (typeof window.requestIdleCallback === "function") {
+        idleHandle = window.requestIdleCallback(warm, { timeout: 2000 });
+      } else {
+        timerHandle = window.setTimeout(warm, 900);
+      }
+    }
+
+    const cancelWarmUp = () => {
+      if (idleHandle !== undefined) window.cancelIdleCallback(idleHandle);
+      if (timerHandle !== undefined) window.clearTimeout(timerHandle);
     };
 
     const target = frameRef.current;
     if (!target || typeof IntersectionObserver === "undefined") {
       mount();
-      return;
+      return cancelWarmUp;
     }
 
+    // Wider than the 200px it was. Mounting is no longer where the bytes are
+    // spent, so the only thing bought here is starting the parse and the WebGL
+    // context before the plate lands, rather than once it already has.
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries.some((entry) => entry.isIntersecting)) mount();
       },
-      { rootMargin: "200px" },
+      { rootMargin: "600px" },
     );
     observer.observe(target);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      cancelWarmUp();
+    };
   }, []);
 
   const handleReady = useCallback(() => onReady(), [onReady]);

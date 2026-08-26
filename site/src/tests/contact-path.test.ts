@@ -136,14 +136,20 @@ test("Contact renders the 3D emblem over a monogram poster that survives without
   // instead of waiting for that chunk to arrive and ask. `crossOrigin` is what
   // makes the browser reuse the response for three's own request rather than
   // fetching the model a second time.
-  //
-  // It has to hang off the mount decision and not off render: in render it goes
-  // into the server's HTML and fetches 808 KB for every visitor, including the
-  // ones this gate exists to spare and everyone who never gets an emblem at all.
   assert.match(
     boundary,
-    /const mount = \(\) => \{\s*preload\(EMBLEM_LOGO_URL, \{ as: "fetch", crossOrigin: "anonymous", fetchPriority: "low" \}\);\s*setShouldMount\(true\);/,
+    /const warm = \(\) => \{[\s\S]*?preload\(EMBLEM_LOGO_URL, \{ as: "fetch", crossOrigin: "anonymous", fetchPriority: "low" \}\);\s*void import\("\.\/ca2m-emblem-scene"\)/,
   );
+
+  // Fetching and mounting must stay separate decisions. Joined, both waited on
+  // the viewport, and the story plate is below the fold on a phone — so the
+  // whole payload was spent while the visitor was already looking at the empty
+  // plate. The warm-up runs on idle instead, using the time they spend reading.
+  assert.match(boundary, /requestIdleCallback\(warm, \{ timeout: 2000 \}\)/);
+  assert.match(boundary, /const mount = \(\) => \{\s*warm\(\);\s*setShouldMount\(true\);/);
+  // Anyone who asked to be spared the bytes keeps the fetch-on-approach behaviour.
+  assert.match(boundary, /saveData/);
+  assert.match(boundary, /if \(!thrifty\)/);
   // Naming the asset must not drag three into the page's first-load bundle.
   assert.match(boundary, /from "@\/components\/ca2m-emblem-asset"/);
   assert.doesNotMatch(boundary, /^import [^\n]*from "(?:three|@react-three)/m);
@@ -186,10 +192,11 @@ test("The contact emblem spends its budget on triangles, not on maps nobody samp
   );
 
   assert.equal(existsSync(emblem), true);
-  assert.ok(
-    statSync(emblem).size < 2 * 1024 * 1024,
-    "a 27rem mark on a text route stays below 2 MiB",
-  );
+  // The old ceiling here was 2 MiB, which the 808 KB derivative passed while
+  // being four times heavier than it needed to be. This one is set just above
+  // what the mark actually costs, so the next regression has to be declared.
+  const bytes = statSync(emblem).size;
+  assert.ok(bytes < 260_000, `the mark is fetched before a visitor scrolls to it: ${bytes} bytes`);
 
   // These two assertions are the shipped artifact, not the script that made it.
   //
@@ -197,7 +204,7 @@ test("The contact emblem spends its budget on triangles, not on maps nobody samp
   // and kept 1.49 MB of maps. CA-squared-M is thin strokes and fine bevels, so
   // that rounded every edge into wax — and the normal map, baked against the
   // 1.5M-triangle original, described a surface the decimation no longer had.
-  // Dropping all three maps paid for four times the geometry at half the bytes.
+  // Dropping all three maps is what left room to keep the edges at all.
   const gltf = readGlbJson(emblem);
   assert.equal(
     gltf.images?.length ?? 0,
@@ -212,12 +219,16 @@ test("The contact emblem spends its budget on triangles, not on maps nobody samp
       if (indices === undefined) return total;
       return total + (gltf.accessors?.[indices]?.count ?? 0) / 3;
     }, 0);
+  // A band rather than a floor. Too few and the bevels round off, which is the
+  // 2% pass this pipeline already rejected once; too many and the mark is paying
+  // for detail past the 243 device pixels it is ever drawn into. Both edges of
+  // the band were measured by rendering candidates through the shipped scene.
   assert.ok(
-    triangles > 60_000,
-    `the mark needs its edges: ${triangles} triangles is below the 60K floor`,
+    triangles >= 12_000 && triangles <= 30_000,
+    `the mark needs its edges and nothing past them: ${triangles} triangles`,
   );
 
-  assert.match(pipeline, /ratio: 0\.06/);
+  assert.match(pipeline, /ratio: 0\.012/);
   assert.match(pipeline, /setNormalTexture\(null\)/);
   assert.match(pipeline, /meshopt/);
 

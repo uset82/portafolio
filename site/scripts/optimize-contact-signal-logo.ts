@@ -103,11 +103,28 @@ async function main() {
   await document.transform(
     dedup({ keepUniqueNames: true }),
     weld(),
-    // CA²M is thin strokes, sharp counters and fine bevels. The first pass ran
-    // ratio 0.015 at a 2% error tolerance and rounded all of it off. This keeps
-    // the Project Orbit nucleus's triangle budget at a fifth of its tolerance,
-    // because this mark is read rather than admired from across a canvas.
-    simplify({ simplifier: MeshoptSimplifier, ratio: 0.06, error: 0.004 }),
+    // CA²M is thin strokes, sharp counters and fine bevels, and an early pass at
+    // ratio 0.015 with a 2% error tolerance rounded all of it off. The correction
+    // to that overshot: at ratio 0.06 the quota, not the error, is what stopped
+    // the simplifier — 1.5M triangles times 0.06 is exactly the 89,998 it
+    // produced, so it never reached the 0.004 it was allowed and the budget was
+    // never tested against anything.
+    //
+    // Tested, it is far too large. The mark is drawn into 162 CSS pixels on the
+    // story plate, and the renderer caps device pixel ratio at 1.5, so 243 pixels
+    // is the most it ever occupies — 89,998 triangles is three of them per pixel.
+    // Rendered through the shipped scene and compared pixel by pixel against that
+    // derivative, this ratio differs by a mean of 2.6/255, and by 2.5/255 when
+    // both are drawn at 420 pixels instead. Holding steady as the render grows is
+    // the part that matters: the residual is a slight shift in where the specular
+    // highlights fall, not a silhouette coming apart, which is the failure the
+    // 2% pass had. Below roughly 10K the error tolerance becomes binding and the
+    // curve flattens, so there is little left to win by cutting further.
+    //
+    // 808 KB to 198 KB. On the story route the model is fetched while the visitor
+    // is still reading, and that is the budget which decides whether it arrives
+    // before they scroll to it.
+    simplify({ simplifier: MeshoptSimplifier, ratio: 0.012, error: 0.002 }),
     prune({
       keepAttributes: false,
       keepExtras: true,
