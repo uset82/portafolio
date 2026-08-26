@@ -70,9 +70,12 @@ export const MUSIC_TRACKS: readonly MusicTrack[] = [
 /**
  * Videos Carlos has sent for publication, in the order he sent them.
  *
- * Unlike the Suno song, this one is listed on his channel (`isUnlisted: false`,
- * `playableInEmbed: true`), so its publication date can be shown. The title is
- * YouTube's own, and the watch URL drops the share token his link carried.
+ * Unlike the Suno song, these are listed on his channel, so their publication
+ * dates can be shown. Titles are YouTube's own, and the watch URLs drop the
+ * share tokens his links carried.
+ *
+ * Each poster is a local copy of the video's own frame. Serving it from here is
+ * what keeps YouTube uncontacted until a visitor actually asks for the player.
  */
 export const VIDEO_WORKS: readonly VideoWork[] = [
   {
@@ -86,6 +89,21 @@ export const VIDEO_WORKS: readonly VideoWork[] = [
     poster: {
       src: "/images/hedra-seedance-poster.jpg",
       alt: "Four dancers in Punjabi dress leap barefoot on a Greek beach, with whitewashed houses, bougainvillea and a wooden fishing boat behind them. Overlaid title text reads: Turn your images to life and make them dance, with Hedra + Seedance 2.5.",
+      width: 1280,
+      height: 720,
+    },
+  },
+  {
+    id: "the-second-flood",
+    title: "THE SECOND FLOOD",
+    url: "https://www.youtube.com/watch?v=jDZoQFzxnMQ",
+    videoId: "jDZoQFzxnMQ",
+    publishedOn: "2026-08-14",
+    description:
+      "Made for XPRIZE's FUTURE VISION contest with Flow by Google. Biblical, prophetic, futuristic: what has been will be again — unless we learn. A week of generating, fixing continuity, and rewriting the script around what Flow would render. Three minutes ten.",
+    poster: {
+      src: "/images/second-flood-poster.jpg",
+      alt: "Split scene under a lightning storm. On the left a bearded man in rope-bound sackcloth stands before a large wooden ark under construction. On the right a white humanoid robot marked AURA-9 and two men wade through a flooded city of curved white towers, lifting a lit survival pod with a sleeping person inside. Overlaid title text reads: THE SECOND FLOOD, WILL WE LEARN?",
       width: 1280,
       height: 720,
     },

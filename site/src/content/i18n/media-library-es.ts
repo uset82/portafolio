@@ -65,6 +65,12 @@ export const VIDEO_WORKS_ES: Record<string, { description: string; posterAlt: st
     posterAlt:
       "Cuatro bailarines con ropa punyabí saltan descalzos en una playa griega, con casas encaladas, buganvillas y una barca de madera detrás. El título sobre la imagen dice, en inglés: da vida a tus imágenes y hazlas bailar, con Hedra + Seedance 2.5.",
   },
+  "the-second-flood": {
+    description:
+      "Hecho para el concurso FUTURE VISION de XPRIZE con Flow de Google. Bíblico, profético, futurista: lo que fue volverá a ser, salvo que aprendamos. Una semana generando, arreglando la continuidad y reescribiendo el guión en torno a lo que Flow aceptaba representar. Tres minutos diez.",
+    posterAlt:
+      "Escena partida bajo una tormenta eléctrica. A la izquierda, un hombre barbudo con túnica de arpillera atada con cuerda está ante un gran arca de madera en construcción. A la derecha, un robot humanoide blanco marcado AURA-9 y dos hombres avanzan por una ciudad inundada de torres blancas curvas, levantando una cápsula de supervivencia iluminada con una persona dormida dentro. El título sobre la imagen dice, en inglés: THE SECOND FLOOD, WILL WE LEARN? — el segundo diluvio, ¿aprenderemos?",
+  },
 };
 
 /** Returns the video with its prose in `locale`. Titles and URLs never change. */
