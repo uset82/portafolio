@@ -171,6 +171,7 @@ test("service sends the bounded context first and returns its public source meta
     OPENROUTER_FALLBACK_MODELS: undefined,
     OPENROUTER_PRODUCTION_MODEL: undefined,
     OPENROUTER_PRODUCTION_FALLBACK_MODELS: undefined,
+    CC_AI_REASONING_EFFORT: undefined,
   });
   const response = await runCcAiCompletion(
     { message: "What is ASTRAEA?", history: [], locale: "en" },

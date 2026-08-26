@@ -10,6 +10,20 @@ const getStatusCode = (error: unknown) => {
   return typeof error.statusCode === "number" ? error.statusCode : undefined;
 };
 
+/* Every provider failure used to reach the visitor as one opaque sentence with
+ * nothing written server-side, so a retired model slug and a revoked API key
+ * were indistinguishable from the outside. Log the cause, never the credential
+ * or the visitor's question. */
+const logProviderFailure = (code: CcAiProviderError["code"], detail: Record<string, unknown>) => {
+  console.error("[cc-ai] provider failure", { code, ...detail });
+};
+
+const describeError = (error: unknown) => ({
+  name: error instanceof Error ? error.name : typeof error,
+  statusCode: getStatusCode(error),
+  message: error instanceof Error ? error.message.slice(0, 500) : undefined,
+});
+
 const normalizeProviderError = (error: unknown): CcAiProviderError => {
   if (error instanceof OpenRouterConfigurationError) {
     return new CcAiProviderError("configuration", false);
@@ -41,17 +55,41 @@ export function createOpenRouterChatProvider(environment?: OpenRouterEnvironment
           { signal: input.signal },
         );
 
-        if (!("choices" in response)) throw new CcAiProviderError("invalid_response", true);
-        const content = response.choices[0]?.message.content;
+        if (!("choices" in response)) {
+          logProviderFailure("invalid_response", { reason: "response carried no choices" });
+          throw new CcAiProviderError("invalid_response", true);
+        }
 
-        if (typeof content !== "string") {
+        const choice = response.choices[0];
+        const content = choice?.message.content;
+
+        if (typeof content !== "string" || content.trim() === "") {
+          /* `length` here means the model spent the whole completion budget on
+           * reasoning tokens and never started the answer, so the logged effort
+           * and token budget are the two dials that resolve it. */
+          logProviderFailure("invalid_response", {
+            reason:
+              choice?.finishReason === "length"
+                ? "completion budget exhausted before any answer text"
+                : "message content was not usable text",
+            finishReason: choice?.finishReason ?? null,
+            model: response.model,
+            maxOutputTokens: input.maxOutputTokens,
+            reasoningEffort: input.modelPolicy.reasoningEffort,
+          });
           throw new CcAiProviderError("invalid_response", true);
         }
 
         return { text: content, model: response.model };
       } catch (error) {
         if (error instanceof CcAiProviderError) throw error;
-        throw normalizeProviderError(error);
+
+        const normalized = normalizeProviderError(error);
+        logProviderFailure(normalized.code, {
+          ...describeError(error),
+          requestedModels: input.modelPolicy.requestedModels,
+        });
+        throw normalized;
       }
     },
   };

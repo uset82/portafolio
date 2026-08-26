@@ -21,10 +21,11 @@ export const buildOpenRouterChatRequest = ({
     ? { models: [...modelPolicy.requestedModels] }
     : { model: modelPolicy.primaryModel }),
   provider: { ...modelPolicy.provider },
-  /* Ox Alpha cannot disable thinking. The free preview is requested at max
-   * effort; the 180 s prototype budget is what lets that finish. The SDK
-   * outbound schema drops `exclude`, so only `effort` is sent. */
-  reasoning: { effort: "max" as const },
+  /* Effort is policy, not a constant: reasoning tokens are drawn from
+   * `maxCompletionTokens`, so pinning every model to max effort spent the whole
+   * budget on thinking and returned `finish_reason: "length"` with no content.
+   * The SDK outbound schema drops `exclude`, so only `effort` is sent. */
+  reasoning: { effort: modelPolicy.reasoningEffort },
   maxCompletionTokens: maxOutputTokens,
   stream: false as const,
 });

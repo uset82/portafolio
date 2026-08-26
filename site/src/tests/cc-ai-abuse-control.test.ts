@@ -22,6 +22,7 @@ const modelPolicy = createCcAiModelPolicy({
   OPENROUTER_FALLBACK_MODELS: undefined,
   OPENROUTER_PRODUCTION_MODEL: undefined,
   OPENROUTER_PRODUCTION_FALLBACK_MODELS: undefined,
+  CC_AI_REASONING_EFFORT: undefined,
 });
 
 const request = ({

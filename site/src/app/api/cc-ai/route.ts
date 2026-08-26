@@ -23,6 +23,7 @@ const modelPolicy = createCcAiModelPolicy({
   OPENROUTER_FALLBACK_MODELS: process.env.OPENROUTER_FALLBACK_MODELS,
   OPENROUTER_PRODUCTION_MODEL: process.env.OPENROUTER_PRODUCTION_MODEL,
   OPENROUTER_PRODUCTION_FALLBACK_MODELS: process.env.OPENROUTER_PRODUCTION_FALLBACK_MODELS,
+  CC_AI_REASONING_EFFORT: process.env.CC_AI_REASONING_EFFORT,
 });
 const abuseGuard = createCcAiAbuseGuardFromEnvironment({
   NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
@@ -43,9 +44,9 @@ const portfolioAudits = (() => {
   }
 })();
 
-/* Named reasoning models such as stealth/ox-alpha at max effort need more
- * than the old 30–60 s prototype budget. Production stays tighter.
- * CC_AI_TIMEOUT_MS overrides both and is capped at 180 s. */
+/* Named reasoning models need more than the old 30–60 s prototype budget once
+ * they think before answering. Production stays tighter. CC_AI_TIMEOUT_MS
+ * overrides both and is capped at 180 s. */
 const timeoutMs = resolveCcAiTimeoutMs(modelPolicy.mode, process.env.CC_AI_TIMEOUT_MS);
 
 export const POST = (request: Request) => {

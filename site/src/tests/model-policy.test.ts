@@ -15,6 +15,7 @@ const environment = (overrides: Partial<CcAiModelEnvironment> = {}): CcAiModelEn
   OPENROUTER_FALLBACK_MODELS: undefined,
   OPENROUTER_PRODUCTION_MODEL: undefined,
   OPENROUTER_PRODUCTION_FALLBACK_MODELS: undefined,
+  CC_AI_REASONING_EFFORT: undefined,
   ...overrides,
 });
 
@@ -28,6 +29,7 @@ test("model policy defaults to the variable free prototype router", () => {
     requestedModels: ["openrouter/free"],
     routingKind: "free-router",
     variableSelection: true,
+    reasoningEffort: "low",
     provider: {
       allowFallbacks: true,
       dataCollection: "deny",
@@ -46,21 +48,35 @@ test("prototype model can be overridden with a named free variant", () => {
   assert.equal(policy.variableSelection, false);
 });
 
-test("prototype policy accepts stealth/ox-alpha as a named extra model with the free-router fallback", () => {
+test("prototype policy accepts a paid named model with the free-router fallback", () => {
   const policy = createCcAiModelPolicy(
     environment({
-      OPENROUTER_MODEL: "stealth/ox-alpha",
+      OPENROUTER_MODEL: "z-ai/glm-5.3-flash",
       OPENROUTER_FALLBACK_MODELS: "openrouter/free",
     }),
   );
 
-  assert.equal(policy.primaryModel, "stealth/ox-alpha");
+  assert.equal(policy.primaryModel, "z-ai/glm-5.3-flash");
   assert.deepEqual(policy.fallbackModels, ["openrouter/free"]);
-  assert.deepEqual(policy.requestedModels, ["stealth/ox-alpha", "openrouter/free"]);
+  assert.deepEqual(policy.requestedModels, ["z-ai/glm-5.3-flash", "openrouter/free"]);
   assert.equal(policy.routingKind, "named-model");
   assert.equal(policy.variableSelection, false);
   assert.equal(policy.provider.dataCollection, "deny");
   assert.equal(policy.provider.zdr, false);
+});
+
+test("reasoning effort defaults to low and rejects unsupported levels", () => {
+  // Reasoning tokens are drawn from the completion budget, so the old hardcoded
+  // "max" spent all 4000 tokens thinking and returned empty content.
+  assert.equal(createCcAiModelPolicy(environment()).reasoningEffort, "low");
+  assert.equal(
+    createCcAiModelPolicy(environment({ CC_AI_REASONING_EFFORT: " HIGH " })).reasoningEffort,
+    "high",
+  );
+  assert.throws(
+    () => createCcAiModelPolicy(environment({ CC_AI_REASONING_EFFORT: "maximum" })),
+    /CC_AI_REASONING_EFFORT must be one of/,
+  );
 });
 
 test("ordered model fallbacks and strict provider constraints reach the OpenRouter request", () => {
@@ -84,10 +100,23 @@ test("ordered model fallbacks and strict provider constraints reach the OpenRout
       dataCollection: "deny",
       zdr: false,
     },
-    reasoning: { effort: "max" },
+    reasoning: { effort: "low" },
     maxCompletionTokens: 120,
     stream: false,
   });
+});
+
+test("configured reasoning effort reaches the OpenRouter request", () => {
+  const policy = createCcAiModelPolicy(
+    environment({ OPENROUTER_MODEL: "vendor/primary", CC_AI_REASONING_EFFORT: "medium" }),
+  );
+  const request = buildOpenRouterChatRequest({
+    messages: [{ role: "user", content: "Question" }],
+    modelPolicy: policy,
+    maxOutputTokens: 120,
+  });
+
+  assert.deepEqual(request.reasoning, { effort: "medium" });
 });
 
 test("prototype timeout defaults to 180s and stays capped", () => {

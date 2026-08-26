@@ -1,10 +1,26 @@
 export const DEFAULT_CC_AI_PROTOTYPE_MODEL = "openrouter/free";
 
+/* Reasoning tokens are billed against the same completion budget as the answer,
+ * so a high effort setting can consume the whole allowance and return
+ * `finish_reason: "length"` with empty content. `low` leaves room for prose on
+ * every model tried so far; raise it per deployment, not in code. */
+export const CC_AI_REASONING_EFFORTS = [
+  "none",
+  "minimal",
+  "low",
+  "medium",
+  "high",
+  "xhigh",
+  "max",
+] as const;
+export const DEFAULT_CC_AI_REASONING_EFFORT: CcAiReasoningEffort = "low";
+
 const MAX_FALLBACK_MODELS = 4;
 const MODEL_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._:/-]{0,159}$/;
 
 export type CcAiMode = "prototype" | "production";
 export type CcAiRoutingKind = "free-router" | "specific-free-model" | "named-model";
+export type CcAiReasoningEffort = (typeof CC_AI_REASONING_EFFORTS)[number];
 
 export type CcAiProviderPolicy = {
   allowFallbacks: true;
@@ -19,6 +35,7 @@ export type CcAiModelPolicy = {
   requestedModels: string[];
   routingKind: CcAiRoutingKind;
   variableSelection: boolean;
+  reasoningEffort: CcAiReasoningEffort;
   provider: CcAiProviderPolicy;
 };
 
@@ -28,6 +45,7 @@ export type CcAiModelEnvironment = {
   OPENROUTER_FALLBACK_MODELS: string | undefined;
   OPENROUTER_PRODUCTION_MODEL: string | undefined;
   OPENROUTER_PRODUCTION_FALLBACK_MODELS: string | undefined;
+  CC_AI_REASONING_EFFORT: string | undefined;
 };
 
 export class CcAiModelPolicyError extends Error {
@@ -41,6 +59,19 @@ const parseMode = (value: string | undefined): CcAiMode => {
   const mode = value?.trim() || "prototype";
   if (mode === "prototype" || mode === "production") return mode;
   throw new CcAiModelPolicyError("CC_AI_MODE must be prototype or production.");
+};
+
+const parseReasoningEffort = (value: string | undefined): CcAiReasoningEffort => {
+  const effort = value?.trim().toLowerCase();
+  if (!effort) return DEFAULT_CC_AI_REASONING_EFFORT;
+
+  const match = CC_AI_REASONING_EFFORTS.find((candidate) => candidate === effort);
+  if (!match) {
+    throw new CcAiModelPolicyError(
+      `CC_AI_REASONING_EFFORT must be one of ${CC_AI_REASONING_EFFORTS.join(", ")}.`,
+    );
+  }
+  return match;
 };
 
 const parseModel = (value: string, variableName: string) => {
@@ -115,6 +146,7 @@ export function createCcAiModelPolicy(environment: CcAiModelEnvironment): CcAiMo
     requestedModels: [primaryModel, ...fallbackModels],
     routingKind: getRoutingKind(primaryModel),
     variableSelection: primaryModel === "openrouter/free",
+    reasoningEffort: parseReasoningEffort(environment.CC_AI_REASONING_EFFORT),
     provider: {
       allowFallbacks: true,
       // Never let a provider retain prompts for training, in either mode.
