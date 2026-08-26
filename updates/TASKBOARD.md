@@ -39,12 +39,43 @@ WAVE 4  ░░░░░░░░░░  Launch
 (PR #1) · `SPEC.1` design system · `P.7` robots.txt · all of Wave 0
 **Open PRs:** 0. `brain:check` is wired into `pnpm test` and green.
 **Next up:** Codex `B.0` + `B.4` · Claude `V.1` then `SPEC.3` · Grok `V.12` · Gemini commit `M.7`
-**Waiting on you:** Deploy the Ox Alpha max-effort fix (reasoning.effort=max + 180 s
-prototype budget) · optional Railway `OPENROUTER_FALLBACK_MODELS=openrouter/free` ·
+**Waiting on you:** Railway still points CACM AI at the retired `stealth/ox-alpha`, which now
+returns 404 — set `OPENROUTER_MODEL=z-ai/glm-5.3-flash`, `OPENROUTER_FALLBACK_MODELS=openrouter/free`
+and `CC_AI_REASONING_EFFORT=low`, and confirm the deployed `OPENROUTER_API_KEY` is a live key ·
 `Q.10` books · `Q.11` flagships · `Q.12` MIT · `Q.13` private repos ·
 `M.13` more Suno and YouTube links (the first song plays in one press and its video is up) ·
 `M.11` the licence line for that track · `M.10` your Buy Me a Coffee handle · a Railway service for
 `My-Football-Game` · Gemini's AVIF is larger than its WebP and needs re-encoding
+
+### 2026-08-26 — CACM AI answers again
+
+The chat had three separate faults stacked on top of each other, and each one hid the next.
+
+A stale `OPENROUTER_API_KEY` sat in the **Windows user environment**. A real OS variable always
+outranks `.env.local` in Next.js, so every server started from a terminal used that key instead of
+the good one in the file. OpenRouter answered 401 `User not found`, which the route maps to
+"its server is not configured" — a message that points at the config file that was actually fine.
+The variable is deleted. Note that `setx NAME ""` does **not** fix this: it stores an empty value
+that still shadows the file.
+
+`stealth/ox-alpha` has been **retired**. OpenRouter returns 404 with "This model was ZAI's
+GLM-5.3 Flash", so the slug now fails wherever no fallback list is configured — which is exactly the
+"selected model provider is unavailable" screenshot. Local config moved to `z-ai/glm-5.3-flash`
+with the free router as backup. **Railway still needs the same change.**
+
+`reasoning.effort=max` was hardcoded in August for Ox Alpha, which could not stop thinking. That
+setting is charged against the same 4,000-token completion budget as the answer, so on any normal
+model it burned the whole allowance before writing a word: measured, `max` produced 4,126 reasoning
+tokens, `finish_reason: "length"` and **empty content** after 65 seconds, while `low` produced a
+complete 5,473-character answer in 18 seconds. Effort is now a setting
+(`CC_AI_REASONING_EFFORT`, default `low`), not a constant.
+
+Finally, the route used to discard the real cause of every failure, so a dead key and a dead model
+looked identical from the browser. The server now logs the normalized code, HTTP status, truncated
+provider message, finish reason, and requested model IDs — never the key, the question, or history.
+
+Verified on the dev server the browser uses: `POST /api/cc-ai` returns HTTP 200 with a full answer
+where it previously returned 503.
 
 ### 2026-08-26 — the mark sits in the middle of its plate on `/story`
 
@@ -178,7 +209,7 @@ I inspected the live Railway config instead of assuming. What is actually set:
 | `OPENROUTER_MODEL`                                         | **not set** → code default `openrouter/free`             |
 | `CC_AI_RATE_LIMIT` / `_WINDOW_SECONDS` / `_MAX_CONCURRENT` | **not set** → defaults 6 req / 60 s / 4 concurrent       |
 
-**2026-08-21 — extra OpenRouter model `stealth/ox-alpha`:** this is a model slug on the existing OpenRouter key, not a second API. Railway `OPENROUTER_MODEL=stealth/ox-alpha` is live. A leftover variable named `stealth/ox-alpha` is unused and can be deleted. Long “build an app” prompts timed out at the old 30 s prototype budget; the request now pins `reasoning.effort=max` and the prototype budget is 180 s. Optional backup: `OPENROUTER_FALLBACK_MODELS=openrouter/free`. Preview window and provider prompt-retention are documented on [openrouter.ai/stealth/ox-alpha](https://openrouter.ai/stealth/ox-alpha).
+**2026-08-21 — extra OpenRouter model `stealth/ox-alpha`:** ~~this is a model slug on the existing OpenRouter key, not a second API. Railway `OPENROUTER_MODEL=stealth/ox-alpha` is live. Long “build an app” prompts timed out at the old 30 s prototype budget; the request now pins `reasoning.effort=max` and the prototype budget is 180 s.~~ **Superseded 2026-08-26.** The stealth preview ended and the slug returns 404 as [`z-ai/glm-5.3-flash`](https://openrouter.ai/z-ai/glm-5.3-flash); `reasoning.effort=max` was also wrong on any model that can stop thinking, because it consumes the answer's token budget. Set Railway to `OPENROUTER_MODEL=z-ai/glm-5.3-flash`, `OPENROUTER_FALLBACK_MODELS=openrouter/free`, `CC_AI_REASONING_EFFORT=low`. The 180 s prototype budget stays. A leftover variable named `stealth/ox-alpha` is unused and can be deleted.
 
 **Decision: keep it on.** Reasoning:
 
