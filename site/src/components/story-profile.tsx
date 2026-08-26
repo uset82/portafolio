@@ -89,11 +89,7 @@ export function StoryProfile({ name, content: source, locale = "en" }: StoryProf
             <p className="section-label">{copy.builtLabel}</p>
             <h3>{copy.builtHeading}</h3>
             <p>{copy.builtBody}</p>
-            <ActionLink
-              variant="primary"
-              href={OPPORTUNITY_PROTOTYPE.href}
-              prefetch={false}
-            >
+            <ActionLink variant="primary" href={OPPORTUNITY_PROTOTYPE.href} prefetch={false}>
               {copy.builtAction}
               <span aria-hidden="true"> ↗</span>
               <span className="visually-hidden">{ui(locale).common.externalSite}</span>
