@@ -128,14 +128,16 @@ test("prototype timeout defaults to 180s and stays capped", () => {
 });
 
 test("a policy without fallbacks emits one model instead of a models sequence", () => {
-  const policy = createCcAiModelPolicy(environment({ OPENROUTER_MODEL: "vendor/primary" }));
+  // The free router is the one primary that genuinely stands alone: it is
+  // already the last resort, so nothing is appended behind it.
+  const policy = createCcAiModelPolicy(environment({ OPENROUTER_MODEL: "openrouter/free" }));
   const request = buildOpenRouterChatRequest({
     messages: [{ role: "user", content: "Question" }],
     modelPolicy: policy,
     maxOutputTokens: 120,
   });
 
-  assert.equal("model" in request ? request.model : undefined, "vendor/primary");
+  assert.equal("model" in request ? request.model : undefined, "openrouter/free");
   assert.equal("models" in request, false);
 });
 
@@ -209,4 +211,41 @@ test("provider policy always denies training and scopes zero-retention to produc
   );
   assert.equal(production.provider.dataCollection, "deny");
   assert.equal(production.provider.zdr, true);
+});
+
+test("a named prototype model keeps the free router behind it", () => {
+  // `stealth/ox-alpha` was withdrawn from OpenRouter's catalogue while it was
+  // the configured model. Every request 404'd, fell through to the unavailable
+  // branch, and found an empty fallback list behind it, so the assistant
+  // answered nothing at all until an environment variable was changed. A
+  // withdrawn model has to degrade, not take the route down with it.
+  const policy = createCcAiModelPolicy(environment({ OPENROUTER_MODEL: "stealth/ox-alpha" }));
+
+  assert.equal(policy.primaryModel, "stealth/ox-alpha");
+  assert.deepEqual(policy.fallbackModels, ["openrouter/free"]);
+  assert.deepEqual(policy.requestedModels, ["stealth/ox-alpha", "openrouter/free"]);
+});
+
+test("configured fallbacks are used exactly, with nothing appended", () => {
+  const policy = createCcAiModelPolicy(
+    environment({
+      OPENROUTER_MODEL: "vendor/primary",
+      OPENROUTER_FALLBACK_MODELS: "vendor/second,vendor/third",
+    }),
+  );
+
+  assert.deepEqual(policy.fallbackModels, ["vendor/second", "vendor/third"]);
+});
+
+test("production is left to its own fallbacks, free routes included never", () => {
+  const policy = createCcAiModelPolicy(
+    environment({
+      CC_AI_MODE: "production",
+      OPENROUTER_PRODUCTION_MODEL: "anthropic/claude-sonnet-4",
+    }),
+  );
+
+  // Production rejects free routes outright, so the prototype safety net must
+  // not follow it in and quietly break that rule.
+  assert.deepEqual(policy.fallbackModels, []);
 });

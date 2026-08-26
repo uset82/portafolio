@@ -139,11 +139,31 @@ export function createCcAiModelPolicy(environment: CcAiModelEnvironment): CcAiMo
     );
   }
 
+  /* A named prototype model can be withdrawn by the provider without notice.
+   * `stealth/ox-alpha` was: it left OpenRouter's catalogue entirely, so every
+   * request 404'd, fell through to the unavailable branch, and found an empty
+   * fallback list behind it. The assistant answered nothing until someone
+   * noticed and changed an environment variable.
+   *
+   * So prototype mode keeps the free router as a last resort whenever no
+   * fallbacks are configured. A withdrawn model now degrades instead of taking
+   * the assistant down, and an operator who does configure fallbacks still gets
+   * exactly the chain they asked for.
+   *
+   * Production is deliberately untouched: it rejects free routes a few lines
+   * above, and a paid fleet's fallbacks are a billing decision, not a default. */
+  const resolvedFallbacks =
+    mode === "prototype" &&
+    fallbackModels.length === 0 &&
+    primaryModel !== DEFAULT_CC_AI_PROTOTYPE_MODEL
+      ? [DEFAULT_CC_AI_PROTOTYPE_MODEL]
+      : fallbackModels;
+
   return {
     mode,
     primaryModel,
-    fallbackModels,
-    requestedModels: [primaryModel, ...fallbackModels],
+    fallbackModels: resolvedFallbacks,
+    requestedModels: [primaryModel, ...resolvedFallbacks],
     routingKind: getRoutingKind(primaryModel),
     variableSelection: primaryModel === "openrouter/free",
     reasoningEffort: parseReasoningEffort(environment.CC_AI_REASONING_EFFORT),

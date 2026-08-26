@@ -178,7 +178,10 @@ test("the CACM AI route double returns a deterministic response and records the 
   assert.equal(body.model.requested, CC_AI_TEST_MODEL);
   assert.equal(body.model.responded, CC_AI_TEST_MODEL);
   assert.equal(route.calls.length, 1);
-  assert.deepEqual(route.calls[0]?.requestedModels, [CC_AI_TEST_MODEL]);
+  // The free router rides behind any named prototype model, so a model the
+  // provider withdraws degrades rather than taking the route down. Seeing it
+  // here is the proof that the safety net survives the whole request path.
+  assert.deepEqual(route.calls[0]?.requestedModels, [CC_AI_TEST_MODEL, "openrouter/free"]);
   assert.deepEqual(route.calls[0]?.messages.at(-1), {
     role: "user",
     content: "What is Carlos building?",
