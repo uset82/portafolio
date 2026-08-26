@@ -19,7 +19,11 @@ test("footer closes with one honest contact path and one verified public profile
   const githubIndex = markup.indexOf('href="https://github.com/uset82"');
 
   assert.match(markup, /<footer class="site-footer" aria-labelledby="footer-contact-title">/);
-  assert.match(markup, /Let’s turn a difficult idea into a working system/);
+  // A short invitation, because this footer closes every page on the site. The
+  // old line assumed a visitor who already had an idea, which is the assumption
+  // the contact route it points at now explicitly rejects.
+  assert.match(markup, /Let’s find what already exists, and make it work\./);
+  assert.doesNotMatch(markup, /turn a difficult idea into a working system/);
   assert.doesNotMatch(markup, /The contact route remains privacy-first/);
   assert.match(markup, /aria-label="Primary site navigation"/);
   assert.match(markup, /aria-label="Explore and external links"/);

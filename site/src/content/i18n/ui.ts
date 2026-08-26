@@ -217,6 +217,17 @@ const EN = {
   },
   contact: {
     label: "Contact / Public boundary",
+    /**
+     * The route's own headline, no longer borrowed from the footer.
+     *
+     * The footer's line has to close any page on the site, so it stays a short
+     * invitation. This one only ever opens the contact route, so it can be the
+     * thesis in full — and it has to be, because the previous shared line
+     * ("turn a difficult idea into a working system") assumed a visitor who
+     * already had an idea, which is the exact assumption the open call below
+     * rejects.
+     */
+    heading: "The idea is not to have an idea. It is to see the opportunities.",
     intro:
       "No public email, form, or booking route is published here, and none is planned. What is published is an open call: one question, one public place to answer it, and one role Carlos is actively looking to fill.",
     signalLabel: "Signal / privacy first",
@@ -597,6 +608,7 @@ const ES: UiCopy = {
   },
   contact: {
     label: "Contacto / Límite público",
+    heading: "La idea no es tener una idea. Es ver las oportunidades.",
     intro:
       "Aquí no se publica correo público, formulario ni vía de reserva, y no está previsto hacerlo. Lo que sí se publica es una convocatoria abierta: una pregunta, un lugar público donde responderla y un puesto que Carlos busca cubrir ahora mismo.",
     signalLabel: "Señal / privacidad primero",

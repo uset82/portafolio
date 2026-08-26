@@ -15,7 +15,10 @@ test("Contact exposes one verified public profile without inventing a direct con
   const markup = renderToStaticMarkup(createElement(ContactPath, { content }));
 
   assert.match(markup, /<main id="main-content" class="contact-path">/);
-  assert.match(markup, /Let’s turn a difficult idea into a working system\./);
+  // The route carries the thesis itself now. The footer's shorter invitation has
+  // to close any page on the site; this one only ever opens the contact route.
+  assert.match(markup, /The idea is not to have an idea\. It is to see the opportunities\./);
+  assert.doesNotMatch(markup, /turn a difficult idea into a working system/);
   assert.match(markup, /Open call, one public route/);
   assert.match(markup, /One verified profile\. No hidden inbox\./);
   assert.match(markup, /href="https:\/\/github\.com\/uset82"/);

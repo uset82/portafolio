@@ -15,7 +15,6 @@ export function ContactPath({ content, locale = "en" }: ContactPathProps) {
   const copy = ui(locale).contact;
   const privacyBoundaries = copy.boundaries;
   const status = locale === "es" ? FOOTER_ES.status : content.status;
-  const heading = locale === "es" ? FOOTER_ES.heading : content.heading;
   return (
     <main id="main-content" className="contact-path">
       <section className="contact-path__hero" aria-labelledby="contact-path-title">
@@ -25,7 +24,7 @@ export function ContactPath({ content, locale = "en" }: ContactPathProps) {
         </div>
 
         <div className="contact-path__identity">
-          <h1 id="contact-path-title">{heading}</h1>
+          <h1 id="contact-path-title">{copy.heading}</h1>
           <p>{copy.intro}</p>
         </div>
 

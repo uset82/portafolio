@@ -229,9 +229,9 @@ export const rawSiteContent = {
     },
     footer: {
       eyebrow: "Contact / 05",
-      heading: "Let’s turn a difficult idea into a working system.",
+      heading: "Let’s find what already exists, and make it work.",
       description:
-        "The contact route remains privacy-first while the final public email or form decision is still open.",
+        "The contact route stays privacy-first: no public email and no form, and an open call in their place.",
       status: "Open call, one public route",
       primaryAction: {
         id: "footer-visit-contact",

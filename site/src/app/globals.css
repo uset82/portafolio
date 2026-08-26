@@ -4239,9 +4239,12 @@ body:has(.observatory-hero) .site-header .site-header__status {
   text-wrap: balance;
 }
 
+/* Sized for the thesis, which is 64 characters against the 49 of the footer
+ * line it replaced. At the old 10ch and 8.8rem it ran to nine lines. */
 .contact-path__identity h1 {
-  max-width: 10ch;
-  font-size: clamp(4.4rem, 8vw, 8.8rem);
+  max-width: 17ch;
+  font-size: clamp(2.9rem, 5.4vw, 5.6rem);
+  line-height: 0.95;
 }
 
 .contact-path__identity > p {
