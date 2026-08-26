@@ -108,6 +108,21 @@ export const VIDEO_WORKS: readonly VideoWork[] = [
       height: 720,
     },
   },
+  {
+    id: "stillness-frequency-perfect-place",
+    title: "Stillness Frequency x Perfect Place (Mashup)",
+    url: "https://www.youtube.com/watch?v=OFpVP2qTbGw",
+    videoId: "OFpVP2qTbGw",
+    publishedOn: "2026-01-29",
+    description:
+      "Made in Krea from a song written in Suno: Stillness Frequency against Perfect Place. A moonlit winter forest, barely moving, for the length of the track. Four minutes forty-eight.",
+    poster: {
+      src: "/images/stillness-frequency-poster.jpg",
+      alt: "A woman with long white hair, in a dark blue-grey gown embroidered at the waist, stands among snow-laden pines and looks back over her bare shoulder. A full moon shows through the branches above her. The frame is vertical, set inside black bars.",
+      width: 1280,
+      height: 720,
+    },
+  },
 ];
 
 export const MUSIC_PROFILE = {

@@ -71,6 +71,12 @@ export const VIDEO_WORKS_ES: Record<string, { description: string; posterAlt: st
     posterAlt:
       "Escena partida bajo una tormenta eléctrica. A la izquierda, un hombre barbudo con túnica de arpillera atada con cuerda está ante un gran arca de madera en construcción. A la derecha, un robot humanoide blanco marcado AURA-9 y dos hombres avanzan por una ciudad inundada de torres blancas curvas, levantando una cápsula de supervivencia iluminada con una persona dormida dentro. El título sobre la imagen dice, en inglés: THE SECOND FLOOD, WILL WE LEARN? — el segundo diluvio, ¿aprenderemos?",
   },
+  "stillness-frequency-perfect-place": {
+    description:
+      "Hecho en Krea a partir de una canción escrita en Suno: Stillness Frequency contra Perfect Place. Un bosque invernal a la luz de la luna, apenas en movimiento, durante toda la pista. Cuatro minutos cuarenta y ocho.",
+    posterAlt:
+      "Una mujer de pelo blanco y largo, con un vestido azul grisáceo bordado en la cintura, está entre pinos cargados de nieve y mira por encima del hombro desnudo. Una luna llena asoma entre las ramas sobre ella. El encuadre es vertical y va enmarcado en franjas negras.",
+  },
 };
 
 /** Returns the video with its prose in `locale`. Titles and URLs never change. */
