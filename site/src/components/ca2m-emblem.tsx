@@ -66,22 +66,6 @@ export function Ca2mEmblem({ label, surface, className, onReady }: Ca2mEmblemPro
   const [shouldMount, setShouldMount] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
 
-  // Nothing asks for the model until the scene chunk has arrived and run, so the
-  // two waits used to be paid one after the other: on a 4 Mbit connection the
-  // chunk landed at 2.2s and the model only then began, finishing at 4.2s. This
-  // element renders on the server, so declaring the model here puts it in the
-  // document head and it downloads while the chunk is still on its way.
-  //
-  // Low priority on purpose. At the default the model competes with the
-  // JavaScript that has to run before anything can use it, which would trade a
-  // faster emblem for slower hydration across the whole page; at low it takes
-  // the bandwidth the scripts are not using.
-  //
-  // `crossOrigin` is not about origins here. It is what makes this request's
-  // credentials mode match the one three's `FileLoader` uses, without which the
-  // browser treats the preload as a different request and fetches 808 KB twice.
-  preload(EMBLEM_LOGO_URL, { as: "fetch", crossOrigin: "anonymous", fetchPriority: "low" });
-
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
     const update = () => setReducedMotion(query.matches);
@@ -94,15 +78,35 @@ export function Ca2mEmblem({ label, surface, className, onReady }: Ca2mEmblemPro
   // gate — it is a guard against paying for 808 KB and a WebGL context on a
   // route the visitor may be leaving again immediately.
   useEffect(() => {
+    // Ask for the model at the same moment as the chunk, rather than leaving the
+    // chunk to ask once it has arrived and run. Those two waits used to be paid
+    // one after the other: at 4 Mbit the chunk landed at 2.2s and the model only
+    // then started, so the emblem arrived at 4.2s. Started together, 3.6s.
+    //
+    // It sits on this decision rather than in render deliberately. Declared in
+    // render it goes into the server's HTML and starts a second earlier, which
+    // measured about 0.2s off the emblem — but it would then fetch 808 KB for
+    // every visitor, including the one this gate exists to spare and everyone
+    // who never gets an emblem at all because JavaScript or WebGL is missing.
+    //
+    // `crossOrigin` is not about origins. It is what makes this request's
+    // credentials mode match the one three's `FileLoader` uses, without which
+    // the browser treats the preload as a different request and fetches the
+    // model twice.
+    const mount = () => {
+      preload(EMBLEM_LOGO_URL, { as: "fetch", crossOrigin: "anonymous", fetchPriority: "low" });
+      setShouldMount(true);
+    };
+
     const target = frameRef.current;
     if (!target || typeof IntersectionObserver === "undefined") {
-      setShouldMount(true);
+      mount();
       return;
     }
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) setShouldMount(true);
+        if (entries.some((entry) => entry.isIntersecting)) mount();
       },
       { rootMargin: "200px" },
     );

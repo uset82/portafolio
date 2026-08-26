@@ -132,14 +132,17 @@ test("Contact renders the 3D emblem over a monogram poster that survives without
   assert.match(boundary, /IntersectionObserver/);
   assert.match(boundary, /prefers-reduced-motion: reduce/);
 
-  // The model is declared from this boundary, which the server renders, so it
-  // downloads alongside the scene chunk instead of waiting for it to arrive and
-  // ask. Low priority keeps it from competing with the scripts that must run
-  // first; `crossOrigin` is what makes the browser reuse it for three's own
-  // request rather than fetching the model a second time.
+  // The model is asked for at the same moment as the chunk that will use it,
+  // instead of waiting for that chunk to arrive and ask. `crossOrigin` is what
+  // makes the browser reuse the response for three's own request rather than
+  // fetching the model a second time.
+  //
+  // It has to hang off the mount decision and not off render: in render it goes
+  // into the server's HTML and fetches 808 KB for every visitor, including the
+  // ones this gate exists to spare and everyone who never gets an emblem at all.
   assert.match(
     boundary,
-    /preload\(EMBLEM_LOGO_URL, \{ as: "fetch", crossOrigin: "anonymous", fetchPriority: "low" \}\)/,
+    /const mount = \(\) => \{\s*preload\(EMBLEM_LOGO_URL, \{ as: "fetch", crossOrigin: "anonymous", fetchPriority: "low" \}\);\s*setShouldMount\(true\);/,
   );
   // Naming the asset must not drag three into the page's first-load bundle.
   assert.match(boundary, /from "@\/components\/ca2m-emblem-asset"/);
