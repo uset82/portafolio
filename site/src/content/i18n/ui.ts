@@ -235,8 +235,7 @@ const EN = {
     emblemLabel: "The CA²M emblem, turning slowly.",
     callLabel: "Open call / 00",
     callHeading: "No form. A question.",
-    callQuestion:
-      "What valuable opportunity is already right in front of you, waiting to be seen?",
+    callQuestion: "What valuable opportunity is already right in front of you, waiting to be seen?",
     callBody:
       "Most people who want to build something stop in the same place: they believe they need a new idea first. Meanwhile the theses, prototypes, lab work, and shelved software already around them are never tested against a real market. I am looking for those, and for one person to look for them with me.",
     callProject: "OpenEyes — working project name",
@@ -616,8 +615,7 @@ const ES: UiCopy = {
     emblemLabel: "El emblema CA²M, girando despacio.",
     callLabel: "Convocatoria abierta / 00",
     callHeading: "Sin formulario. Una pregunta.",
-    callQuestion:
-      "¿Qué oportunidad valiosa ya está delante de ti, esperando a que alguien la vea?",
+    callQuestion: "¿Qué oportunidad valiosa ya está delante de ti, esperando a que alguien la vea?",
     callBody:
       "Casi todo el que quiere construir algo se detiene en el mismo punto: cree que primero necesita una idea nueva. Mientras tanto, las tesis, los prototipos, el trabajo de laboratorio y el software abandonado que ya tiene alrededor nunca se ponen a prueba frente a un mercado real. Busco justamente eso, y a una persona que lo busque conmigo.",
     callProject: "OpenEyes — nombre de trabajo del proyecto",

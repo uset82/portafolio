@@ -100,7 +100,11 @@ const SURFACES: Record<EmblemSurface, SurfaceTreatment> = {
     ambient: { color: naturalPalette.orbitAmbient, intensity: 0.72 },
     key: { color: naturalPalette.sand, intensity: 2.05 },
     fill: { color: naturalPalette.paleSage, intensity: 0.5 },
-    sky: [naturalPalette.orbitEnvHighlight, naturalPalette.orbitEnvMid, naturalPalette.orbitEnvBlack],
+    sky: [
+      naturalPalette.orbitEnvHighlight,
+      naturalPalette.orbitEnvMid,
+      naturalPalette.orbitEnvBlack,
+    ],
     band: { from: 0.1, to: 0.36, alpha: 0.62 },
   },
   light: {

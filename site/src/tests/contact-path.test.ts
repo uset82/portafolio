@@ -98,10 +98,7 @@ test("Contact renders the 3D emblem over a monogram poster that survives without
   assert.doesNotMatch(markup, /<canvas/i);
   assert.doesNotMatch(markup, /contact-path__signal--emblem/);
 
-  const disc = readFileSync(
-    path.join(process.cwd(), "src/components/contact-signal.tsx"),
-    "utf8",
-  );
+  const disc = readFileSync(path.join(process.cwd(), "src/components/contact-signal.tsx"), "utf8");
   // The poster fades rather than unmounting, so the disc cannot reflow.
   assert.match(disc, /ca2m-poster contact-path__signal-poster/);
   assert.match(disc, /surface="dark"/);
@@ -109,7 +106,10 @@ test("Contact renders the 3D emblem over a monogram poster that survives without
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
   // One artwork, masked, so each surface can tint it to the tone its model is
   // struck in — and so the flat mark and the model are the same shape.
-  assert.match(styles, /\.ca2m-poster\s*\{[\s\S]*?mask:\s*url\("\/images\/brand\/ca2m-mark\.png"\)/);
+  assert.match(
+    styles,
+    /\.ca2m-poster\s*\{[\s\S]*?mask:\s*url\("\/images\/brand\/ca2m-mark\.png"\)/,
+  );
   // Poster and emblem must be declared as one box. Separate boxes are how the
   // mark ends up jumping when the model replaces it.
   assert.match(
@@ -117,10 +117,7 @@ test("Contact renders the 3D emblem over a monogram poster that survives without
     /\.contact-path__signal > \.contact-path__signal-poster,\s*\n\.contact-path__signal > \.contact-path__signal-emblem\s*\{/,
   );
 
-  const boundary = readFileSync(
-    path.join(process.cwd(), "src/components/ca2m-emblem.tsx"),
-    "utf8",
-  );
+  const boundary = readFileSync(path.join(process.cwd(), "src/components/ca2m-emblem.tsx"), "utf8");
   // The emblem must never be part of any route's first payload.
   assert.match(boundary, /ssr: false/);
   assert.match(boundary, /IntersectionObserver/);

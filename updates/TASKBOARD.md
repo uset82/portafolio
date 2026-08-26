@@ -46,6 +46,25 @@ prototype budget) · optional Railway `OPENROUTER_FALLBACK_MODELS=openrouter/fre
 `M.11` the licence line for that track · `M.10` your Buy Me a Coffee handle · a Railway service for
 `My-Football-Game` · Gemini's AVIF is larger than its WebP and needs re-encoding
 
+### 2026-08-26 — the mark sits in the middle of its plate on `/story`
+
+On `/story` the CA²M mark hung in the upper third of the profile plate: two decorative hairlines ran
+across it, one of them close enough to read as a line struck through the mark, and a circle was
+cropped by the bottom-right corner. The whole lower half of the plate was empty.
+
+The plate is now built outwards from the mark instead of around it. The mark is at dead centre, and so
+are the two rings it now sits in: a registration circle with a struck rim, and inside it a pale well
+with an ivory mount that answers the plate's own inset mat — the same medallion language as the
+contact disc, inverted for a light plate. The two captions, **Profile study / 01** at the head and
+**Emblem in place of a portrait** at the foot, each carry a rule, and everything between them belongs
+to the mark. Nothing crosses it any more.
+
+On a phone the plate was a 16:10 letterbox, which between those two rules left about 120 px of clear
+height — the mark alone filled it, which is why it had been pushed off-centre to find room. It is a
+square plate there now, capped so it cannot grow to 700 px on a wide phone, carrying one ring rather
+than two. Measured 418×523 on desktop and 358×358 at 390 px, with mark, well and ring sharing one
+centre in both.
+
 ### 2026-08-21 — the song's video is on the site too
 
 The video shelf is no longer empty: **HEDRA × SEEDANCE 2.5**, the video for the track above, is on

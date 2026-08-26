@@ -80,10 +80,7 @@ test("The story plate upgrades its CC study to the emblem without losing the pos
   // And it must still never become a claim that a photograph is published.
   assert.doesNotMatch(markup, /<(?:img|picture)\b/);
 
-  const plate = readFileSync(
-    path.join(process.cwd(), "src/components/story-portrait.tsx"),
-    "utf8",
-  );
+  const plate = readFileSync(path.join(process.cwd(), "src/components/story-portrait.tsx"), "utf8");
   // A pale mark would vanish on the sage plate: this placement is the inversion
   // of the contact disc, not the same treatment retinted.
   assert.match(plate, /surface="light"/);
@@ -110,6 +107,46 @@ test("The story plate upgrades its CC study to the emblem without losing the pos
     styles,
     /@media \(max-width: 47\.99rem\)[\s\S]*?\.story-profile__portrait-emblem\s*\{/,
   );
+});
+
+test("The plate is built outwards from the mark, and nothing crosses it", () => {
+  const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
+
+  const markBox = styles.match(
+    /\.story-profile__portrait > \.story-profile__portrait-poster,\n\.story-profile__portrait > \.story-profile__portrait-emblem \{([\s\S]*?)\n\}/,
+  );
+  assert.ok(markBox, "poster and emblem must share one declared box");
+  // The mark is the subject of this plate. It used to hang a third of the way
+  // down it, which is what read as a mark that had slipped out of place.
+  assert.match(markBox[1], /top:\s*50%/);
+  assert.match(markBox[1], /left:\s*50%/);
+
+  const ring = styles.match(/\n\.story-profile__portrait i \{([\s\S]*?)\n\}/);
+  assert.ok(ring, "the plate's rings must be declared");
+  // Concentric with the mark rather than laid across it: the pair of hairlines
+  // this replaced ran through the mark at the width the mark itself needed.
+  assert.match(ring[1], /top:\s*50%/);
+  assert.match(ring[1], /left:\s*50%/);
+  assert.match(ring[1], /border-radius:\s*50%/);
+  assert.doesNotMatch(ring[1], /height:\s*1px/);
+  // Behind the mark, so the well's tint cannot wash over it.
+  assert.match(ring[1], /z-index:\s*0/);
+
+  // The decorative circle that the plate's bottom-right corner cropped is gone.
+  assert.doesNotMatch(styles, /\.story-profile__portrait::(?:before|after)/);
+
+  // Each caption carries its own rule, which is what hands the mark the field
+  // between them.
+  assert.match(styles, /\.story-profile__portrait > span \{[\s\S]*?border-bottom:/);
+  assert.match(styles, /\.story-profile__portrait small \{[\s\S]*?border-top:/);
+
+  // Narrow: a square plate, because a 16:10 one left no field to centre in, and
+  // one ring, because two would have crossed the caption rules to fit.
+  assert.match(
+    styles,
+    /@media \(max-width: 47\.99rem\)[\s\S]*?\.story-profile__portrait \{[\s\S]*?aspect-ratio:\s*1;/,
+  );
+  assert.match(styles, /\.story-profile__portrait i:first-of-type \{\s*display:\s*none;/);
 });
 
 test("Both emblem placements share one scene, and each names its own ground", () => {

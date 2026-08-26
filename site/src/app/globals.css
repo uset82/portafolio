@@ -3770,7 +3770,10 @@ body:has(.observatory-hero) .site-header .site-header__status {
  * ring cropped by the plate. */
 .story-profile__portrait {
   --plate-ring-outer: 84%;
-  --plate-ring-inner: 60%;
+  /* The well has to hold the mark at its widest, which is not its resting pose:
+   * the emblem sways 13 degrees, and at 60% the C came within a few pixels of
+   * the rim on the far side of that turn. */
+  --plate-ring-inner: 64%;
 
   position: relative;
   display: grid;
@@ -4337,7 +4340,6 @@ body:has(.observatory-hero) .site-header .site-header__status {
   border-color: var(--color-buff);
   background: color-mix(in srgb, var(--color-buff) 12%, transparent);
 }
-
 
 /* The flat poster under both 3D emblems.
  *

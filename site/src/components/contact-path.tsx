@@ -51,11 +51,7 @@ export function ContactPath({ content, locale = "en" }: ContactPathProps) {
               <p className="section-label">{copy.askOneLabel}</p>
               <h3>{copy.askOneHeading}</h3>
               <p>{copy.askOneBody}</p>
-              <ActionLink
-                variant="primary"
-                href={OPEN_CALL_ROUTES.opportunity}
-                prefetch={false}
-              >
+              <ActionLink variant="primary" href={OPEN_CALL_ROUTES.opportunity} prefetch={false}>
                 {copy.askOneAction}
                 <span aria-hidden="true">↗</span>
                 <span className="visually-hidden">{ui(locale).common.externalSite}</span>
@@ -67,11 +63,7 @@ export function ContactPath({ content, locale = "en" }: ContactPathProps) {
               <p className="section-label">{copy.askTwoLabel}</p>
               <h3>{copy.askTwoHeading}</h3>
               <p>{copy.askTwoBody}</p>
-              <ActionLink
-                variant="secondary"
-                href={OPEN_CALL_ROUTES.coFounder}
-                prefetch={false}
-              >
+              <ActionLink variant="secondary" href={OPEN_CALL_ROUTES.coFounder} prefetch={false}>
                 {copy.askTwoAction}
                 <span aria-hidden="true">↗</span>
                 <span className="visually-hidden">{ui(locale).common.externalSite}</span>

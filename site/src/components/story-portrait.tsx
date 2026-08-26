@@ -35,10 +35,7 @@ export function StoryPortrait({ topLabel, bottomLabel, emblemLabel }: StoryPortr
 
   return (
     <div
-      className={cx(
-        "story-profile__portrait",
-        emblemReady && "story-profile__portrait--emblem",
-      )}
+      className={cx("story-profile__portrait", emblemReady && "story-profile__portrait--emblem")}
     >
       <span aria-hidden="true">{topLabel}</span>
       <span className="ca2m-poster story-profile__portrait-poster" aria-hidden="true" />
@@ -48,6 +45,8 @@ export function StoryPortrait({ topLabel, bottomLabel, emblemLabel }: StoryPortr
         onReady={handleReady}
         surface="light"
       />
+      {/* The rings the mark is mounted in: a registration circle and the well
+          inside it, both drawn in CSS and concentric with the mark. */}
       <i aria-hidden="true" />
       <i aria-hidden="true" />
       <small aria-hidden="true">{bottomLabel}</small>
