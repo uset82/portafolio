@@ -56,6 +56,7 @@ test("homepage profile teaser stays approval-backed and excludes private CV mate
   assert.deepEqual(profileTeaser.practiceThreads, [
     "AI and electronics",
     "Resilient energy",
+    "Chemistry and commercialisation",
     "Music and symbolic systems",
   ]);
   assert.equal(profileTeaser.primaryAction.href, "/story");

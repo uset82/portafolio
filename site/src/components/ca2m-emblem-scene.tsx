@@ -4,28 +4,10 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { Suspense, useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 
+import { EMBLEM_LOGO_URL } from "@/components/ca2m-emblem-asset";
 import { useGLTF } from "@/components/three/drei-tools";
 import { LazyThreeCanvas } from "@/components/three/lazy-three-canvas";
 import { naturalPalette } from "@/styles/palette";
-
-/**
- * The CA²M emblem, struck rather than plated.
- *
- * Shared by the contact signal disc and the story profile plate. The asset was
- * authored as baked copper PBR at high metalness, which is the most saturated
- * thing anywhere near a site built from espresso, buff and sage — so the mark is
- * re-struck at render time in a single palette tone, taking its depth from light
- * and from its own bevels rather than from hue or from any map.
- *
- * It faces the reader and sways a few degrees about that axis. CA²M is a reading
- * monogram: turned off-axis its strokes collapse into each other, so it must
- * never approach edge-on.
- *
- * `ca2m-logo-signal.glb` carries no textures at all. See
- * `scripts/optimize-contact-signal-logo.ts` for why they were traded for
- * triangles.
- */
-const EMBLEM_LOGO_URL = "/images/brand/ca2m-logo-signal.glb";
 
 /**
  * The emblem's largest dimension, in world units. Scale is derived from the
@@ -343,6 +325,23 @@ export type Ca2mEmblemSceneProps = {
   onReady: () => void;
 };
 
+/**
+ * The CA²M emblem, struck rather than plated.
+ *
+ * Shared by the contact signal disc and the story profile plate. The asset was
+ * authored as baked copper PBR at high metalness, which is the most saturated
+ * thing anywhere near a site built from espresso, buff and sage — so the mark is
+ * re-struck at render time in a single palette tone, taking its depth from light
+ * and from its own bevels rather than from hue or from any map.
+ *
+ * It faces the reader and sways a few degrees about that axis. CA²M is a reading
+ * monogram: turned off-axis its strokes collapse into each other, so it must
+ * never approach edge-on.
+ *
+ * `ca2m-logo-signal.glb` carries no textures at all. See
+ * `scripts/optimize-contact-signal-logo.ts` for why they were traded for
+ * triangles, and `ca2m-emblem-asset.ts` for why its path is declared elsewhere.
+ */
 export function Ca2mEmblemScene({
   accessibleLabel,
   surface,

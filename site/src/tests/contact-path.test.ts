@@ -106,10 +106,19 @@ test("Contact renders the 3D emblem over a monogram poster that survives without
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
   // One artwork, masked, so each surface can tint it to the tone its model is
   // struck in — and so the flat mark and the model are the same shape.
-  assert.match(
-    styles,
-    /\.ca2m-poster\s*\{[\s\S]*?mask:\s*url\("\/images\/brand\/ca2m-mark\.png"\)/,
-  );
+  const poster = styles.match(/\n\.ca2m-poster \{([\s\S]*?)\n\}/);
+  assert.ok(poster, "the shared poster must be declared");
+  assert.match(poster[1], /--ca2m-mark:\s*url\("\/images\/brand\/ca2m-mark\.png"\)/);
+  // The artwork's transparency carries its own render's shading, so a single
+  // mask layer paints a washed ghost of the mark rather than the mark. Layers
+  // composite as a union: repeating it is what returns solid ink.
+  const layers = poster[1].match(/\n {2}mask: ([^;]*);/);
+  assert.ok(layers, "the poster must declare the unprefixed mask");
+  assert.equal((layers[1].match(/var\(--ca2m-mark\)/g) ?? []).length, 4);
+  assert.match(poster[1], /-webkit-mask: (?:var\(--ca2m-mark\), ){3}var\(--ca2m-mark\);/);
+  // Poster out and emblem in have to run at one duration, or the exchange dips
+  // through a moment with neither mark at full strength.
+  assert.match(poster[1], /transition: opacity var\(--duration-reveal\)/);
   // Poster and emblem must be declared as one box. Separate boxes are how the
   // mark ends up jumping when the model replaces it.
   assert.match(
@@ -122,6 +131,27 @@ test("Contact renders the 3D emblem over a monogram poster that survives without
   assert.match(boundary, /ssr: false/);
   assert.match(boundary, /IntersectionObserver/);
   assert.match(boundary, /prefers-reduced-motion: reduce/);
+
+  // The model is declared from this boundary, which the server renders, so it
+  // downloads alongside the scene chunk instead of waiting for it to arrive and
+  // ask. Low priority keeps it from competing with the scripts that must run
+  // first; `crossOrigin` is what makes the browser reuse it for three's own
+  // request rather than fetching the model a second time.
+  assert.match(
+    boundary,
+    /preload\(EMBLEM_LOGO_URL, \{ as: "fetch", crossOrigin: "anonymous", fetchPriority: "low" \}\)/,
+  );
+  // Naming the asset must not drag three into the page's first-load bundle.
+  assert.match(boundary, /from "@\/components\/ca2m-emblem-asset"/);
+  assert.doesNotMatch(boundary, /^import [^\n]*from "(?:three|@react-three)/m);
+
+  // A model that never arrives has to cost the mark and nothing else. The scene
+  // throws out of render when its chunk or its model fails, and unhandled that
+  // throw reaches the route: blocking the model in a real browser replaced the
+  // whole page — biography, privacy statement, contact channel — with Next's
+  // client error screen. Caught, the flat poster simply stays.
+  assert.match(boundary, /static getDerivedStateFromError/);
+  assert.match(boundary, /<EmblemFailureBoundary>[\s\S]*?<LazyCa2mEmblemScene/);
 });
 
 /**
@@ -188,7 +218,15 @@ test("The contact emblem spends its budget on triangles, not on maps nobody samp
   assert.match(pipeline, /setNormalTexture\(null\)/);
   assert.match(pipeline, /meshopt/);
 
-  assert.match(scene, /ca2m-logo-signal\.glb/);
+  const asset = readFileSync(
+    path.join(process.cwd(), "src/components/ca2m-emblem-asset.ts"),
+    "utf8",
+  );
+  assert.match(asset, /EMBLEM_LOGO_URL = "\/images\/brand\/ca2m-logo-signal\.glb"/);
+  // One declaration of the path, so the preload and the loader cannot drift onto
+  // two different URLs and fetch the model twice.
+  assert.match(scene, /import \{ EMBLEM_LOGO_URL \} from "@\/components\/ca2m-emblem-asset"/);
+  assert.doesNotMatch(scene, /"\/images\/brand\/ca2m-logo-signal\.glb"/);
   // A demand-driven canvas has to request its own frames, and must stop when hidden.
   assert.match(scene, /if \(!document\.hidden\) state\.invalidate\(\)/);
   assert.match(scene, /if \(reducedMotion \|\| !swayRef\.current\) return/);

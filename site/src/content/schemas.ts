@@ -1218,7 +1218,7 @@ export const profileTeaserSchema = z
     headingAccent: z.string().min(3).max(40).optional(),
     role: z.string().min(12).max(100),
     biography: z.string().min(80).max(500),
-    practiceThreads: z.array(z.string().min(3).max(40)).length(3),
+    practiceThreads: z.array(z.string().min(3).max(40)).length(4),
     primaryAction: linkSchema,
     secondaryAction: linkSchema,
     verification: z.literal("user-approved"),

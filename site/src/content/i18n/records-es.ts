@@ -80,7 +80,12 @@ export const PROFILE_ES = {
   role: "Ingeniero · Inventor · Tecnólogo creativo",
   biography:
     "Carlos trabaja entre la inteligencia artificial, la electrónica, la energía resiliente, la música, la astrología y la numerología. Su portafolio conecta la práctica de ingeniería con la experimentación creativa, y presenta el trabajo verificado por separado de los prototipos, los estudios personales y los conceptos futuros.",
-  practiceThreads: ["IA y electrónica", "Energía resiliente", "Música y sistemas simbólicos"],
+  practiceThreads: [
+    "IA y electrónica",
+    "Energía resiliente",
+    "Química y comercialización",
+    "Música y sistemas simbólicos",
+  ],
 } as const;
 
 /**

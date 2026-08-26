@@ -1,4 +1,5 @@
 import { StoryPortrait } from "@/components/story-portrait";
+import { OPPORTUNITY_PAPER, OPPORTUNITY_PROTOTYPE } from "@/content/opportunity";
 import { ActionLink, StatusTag } from "@/components/ui";
 import { PROFILE_ES } from "@/content/i18n/records-es";
 import { ui } from "@/content/i18n/ui";
@@ -39,6 +40,67 @@ export function StoryProfile({ name, content: source, locale = "en" }: StoryProf
         <p className="section-label">{copy.perspectiveLabel}</p>
         <h2 id="story-narrative-title">{copy.perspectiveHeading}</h2>
         <p>{content.biography}</p>
+      </section>
+
+      {/* The route's own evidence: research he did not do, in a field he cannot
+          read, and the prototype that came out of seeing it anyway. The paper is
+          open access under CC BY, so it is cited in full rather than alluded to,
+          and labelled plainly as somebody else's work. */}
+      <section className="story-profile__opportunity" aria-labelledby="story-opportunity-title">
+        <header>
+          <p className="section-label">{copy.opportunityLabel}</p>
+          <h2 id="story-opportunity-title">{copy.opportunityHeading}</h2>
+        </header>
+
+        <div className="story-profile__opportunity-copy">
+          <p>{copy.opportunityBody}</p>
+
+          <figure className="story-profile__paper">
+            <figcaption>
+              <span className="section-label">{copy.foundLabel}</span>
+              <span className="story-profile__paper-flag">{copy.foundNotMine}</span>
+            </figcaption>
+            <blockquote cite={OPPORTUNITY_PAPER.href}>{OPPORTUNITY_PAPER.title}</blockquote>
+            <p className="story-profile__paper-authors">{OPPORTUNITY_PAPER.authors}</p>
+            <dl>
+              <div>
+                <dt>{OPPORTUNITY_PAPER.journal}</dt>
+                <dd>{OPPORTUNITY_PAPER.citation}</dd>
+              </div>
+              <div>
+                <dt>{copy.foundInstitution}</dt>
+                <dd>{OPPORTUNITY_PAPER.institution}</dd>
+              </div>
+              <div>
+                <dt>{copy.foundLicence}</dt>
+                <dd>{OPPORTUNITY_PAPER.licence}</dd>
+              </div>
+            </dl>
+            <ActionLink variant="text" href={OPPORTUNITY_PAPER.href} prefetch={false}>
+              {copy.foundRead}
+              <span aria-hidden="true"> ↗</span>
+              <span className="visually-hidden">{ui(locale).common.externalSite}</span>
+            </ActionLink>
+          </figure>
+
+          <p>{copy.opportunityTurn}</p>
+
+          <div className="story-profile__built">
+            <p className="section-label">{copy.builtLabel}</p>
+            <h3>{copy.builtHeading}</h3>
+            <p>{copy.builtBody}</p>
+            <ActionLink
+              variant="primary"
+              href={OPPORTUNITY_PROTOTYPE.href}
+              prefetch={false}
+            >
+              {copy.builtAction}
+              <span aria-hidden="true"> ↗</span>
+              <span className="visually-hidden">{ui(locale).common.externalSite}</span>
+            </ActionLink>
+            <p className="story-profile__built-meta">{copy.builtMeta}</p>
+          </div>
+        </div>
       </section>
 
       <section className="story-profile__practice" aria-labelledby="story-practice-title">

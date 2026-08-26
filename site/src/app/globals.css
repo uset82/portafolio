@@ -3869,13 +3869,15 @@ body:has(.observatory-hero) .site-header .site-header__status {
   content: "";
 }
 
-/* The poster leaves before the emblem arrives. Co-locating the two is what stops
- * them reading as two marks, but only sequencing stops them being visible at the
- * same instant: the poster fades in 220ms, the emblem over 520ms, so without a
- * delay the emblem is already a third of the way in while the CC is still there. */
+/* One mark, dissolving in place: equal durations, equal easing, no delay, so the
+ * ink the poster gives up is exactly the ink the model takes on.
+ *
+ * The emblem used to be held back by the poster's whole fade. That was right
+ * while the poster was a CC letterform, where two different marks overlapping
+ * would have read as a pair — but with the same mark on both sides the pause
+ * read as the mark blinking out and coming back half a second later. */
 .story-profile__portrait--emblem .story-profile__portrait-emblem {
   opacity: 1;
-  transition-delay: var(--duration-base);
 }
 
 /* The contact disc's medallion language inverted onto a light plate: pale rings
@@ -3988,6 +3990,217 @@ body:has(.observatory-hero) .site-header .site-header__status {
   font-family: var(--font-display);
   font-size: clamp(1.55rem, 2.4vw, 2.45rem);
   font-weight: 500;
+}
+
+
+/* Opportunity: the route's one piece of evidence.
+ *
+ * The paper is set as a specimen rather than as prose — a bordered card with the
+ * citation laid out like an index entry — because the whole point of this
+ * section is that the thing already existed, finished, before Carlos touched it.
+ * Prose would absorb it into his own voice; a card keeps it visibly someone
+ * else's. The prototype below is the only part that is his, and it is the only
+ * part that carries a filled button.
+ */
+.story-profile__opportunity {
+  display: grid;
+  grid-template-columns: minmax(7rem, 0.25fr) minmax(24rem, 1.05fr) minmax(18rem, 0.7fr);
+  gap: clamp(2rem, 5vw, 6rem);
+  width: min(100%, var(--page-max));
+  margin-inline: auto;
+  padding: clamp(5rem, 9vw, 9rem) var(--page-gutter);
+  border-bottom: 1px solid var(--color-border-soft);
+  background: var(--color-canvas-soft);
+}
+
+.story-profile__opportunity > header {
+  display: grid;
+  gap: 1.5rem;
+  align-content: start;
+  grid-column: 1 / 3;
+}
+
+.story-profile__opportunity h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(3.4rem, 6.2vw, 6.8rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+  text-wrap: balance;
+}
+
+.story-profile__opportunity-copy {
+  display: grid;
+  gap: 2.5rem;
+  grid-column: 2 / -1;
+  align-content: start;
+  max-width: 46rem;
+}
+
+.story-profile__opportunity-copy > p {
+  margin: 0;
+  color: var(--color-text-secondary-on-tint);
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  line-height: 1.75;
+}
+
+/* The specimen. */
+.story-profile__paper {
+  display: grid;
+  gap: 1.25rem;
+  margin: 0;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border: 1px solid var(--color-taupe);
+  background: var(--color-sage-pale);
+  /* Sitting slightly proud of the page, the way a card laid on a desk does. */
+  box-shadow: 0 1.25rem 2.5rem -1.5rem rgb(46 36 23 / 40%);
+}
+
+.story-profile__paper figcaption {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-walnut) 30%, transparent);
+}
+
+/* Said plainly, because everything else on this page is his and this is not. */
+.story-profile__paper-flag {
+  color: var(--color-text-muted);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.story-profile__paper blockquote {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.1vw, 1.9rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.story-profile__paper-authors {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.story-profile__paper dl {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0;
+  padding-top: 1rem;
+  border-top: 1px solid color-mix(in srgb, var(--color-walnut) 22%, transparent);
+}
+
+.story-profile__paper dl > div {
+  display: grid;
+  grid-template-columns: minmax(8rem, 0.4fr) 1fr;
+  gap: 1rem;
+}
+
+.story-profile__paper dt {
+  color: var(--color-text-muted);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.story-profile__paper dd {
+  margin: 0;
+  color: var(--color-text-secondary-on-tint);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.story-profile__paper .ui-action {
+  justify-self: start;
+}
+
+/* What followed. The rule above it is the whole argument of the section: this
+ * did not start here, it started in the card. */
+.story-profile__built {
+  display: grid;
+  gap: 0.85rem;
+  align-content: start;
+  padding-top: 2rem;
+  border-top: 2px solid var(--color-moss);
+}
+
+.story-profile__built h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 2.4vw, 2.45rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+.story-profile__built > p {
+  margin: 0;
+  color: var(--color-text-secondary-on-tint);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.story-profile__built .ui-action {
+  justify-self: start;
+  margin-top: 0.75rem;
+}
+
+.story-profile__built-meta {
+  color: var(--color-text-muted);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 48rem) and (max-width: 70rem) {
+  .story-profile__opportunity {
+    grid-template-columns: minmax(7rem, 0.25fr) minmax(22rem, 1fr);
+  }
+
+  .story-profile__opportunity > header,
+  .story-profile__opportunity-copy {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 47.99rem) {
+  .story-profile__opportunity {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding-block: 5rem;
+  }
+
+  .story-profile__opportunity > header,
+  .story-profile__opportunity-copy {
+    grid-column: 1;
+  }
+
+  .story-profile__opportunity h2 {
+    font-size: clamp(3rem, 13vw, 4.5rem);
+  }
+
+  .story-profile__paper dl > div {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+
+  .story-profile__built .ui-action {
+    justify-self: stretch;
+    width: 100%;
+  }
 }
 
 .story-profile__record {
@@ -4350,11 +4563,23 @@ body:has(.observatory-hero) .site-header .site-header__status {
  * `EMBLEM_TARGET_WORLD_SIZE / (2 × EMBLEM_FRAMED_HALF_EXTENT)` of its canvas,
  * and the position is biased up to meet the scene's optical lift. Between them
  * the flat mark and the model land on the same pixels.
+ *
+ * The artwork is itself a render, and its transparency carries that render's
+ * shading: only 8% of its inked pixels are near-opaque, and 60% of them are
+ * half-transparent with ink on all four sides. Masked once, a flat tone through
+ * it comes out as a washed ghost of the mark — which is what the plate showed
+ * for the second or more before the model arrived. Mask layers composite as a
+ * union, so laying the artwork over itself lifts that shading back to solid ink
+ * (0.68 average coverage to 0.89) while the empty field, the counters and the
+ * antialiased outline stay exactly where the artwork puts them.
  */
 .ca2m-poster {
-  transition: opacity var(--duration-base) var(--ease-emphasized);
-  -webkit-mask: url("/images/brand/ca2m-mark.png") center 47% / 86% no-repeat;
-  mask: url("/images/brand/ca2m-mark.png") center 47% / 86% no-repeat;
+  --ca2m-mark: url("/images/brand/ca2m-mark.png") center 47% / 86% no-repeat;
+
+  /* The emblem's own fade, so the exchange holds constant ink. */
+  transition: opacity var(--duration-reveal) var(--ease-emphasized);
+  -webkit-mask: var(--ca2m-mark), var(--ca2m-mark), var(--ca2m-mark), var(--ca2m-mark);
+  mask: var(--ca2m-mark), var(--ca2m-mark), var(--ca2m-mark), var(--ca2m-mark);
 }
 
 /* Poster and emblem occupy one box, so the upgrade is the mark gaining depth

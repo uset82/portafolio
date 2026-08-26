@@ -24,7 +24,7 @@ test("Story publishes the approved profile and an explicit privacy-safe CV bound
   assert.match(markup, /Engineer · Inventor · Creative Technologist/);
   assert.match(markup, /presenting verified work separately from prototypes/);
   assert.match(markup, /Biography approved/);
-  assert.equal((markup.match(/<li>/g) ?? []).length, 3);
+  assert.equal((markup.match(/<li>/g) ?? []).length, 4);
   assert.match(markup, /Experience, education, and skills remain withheld/);
   assert.match(markup, /href="\/work"/);
   assert.match(markup, /href="\/contact"/);
@@ -96,12 +96,22 @@ test("The story plate upgrades its CC study to the emblem without losing the pos
     styles,
     /\.story-profile__portrait > \.story-profile__portrait-poster,\s*\n\.story-profile__portrait > \.story-profile__portrait-emblem\s*\{/,
   );
-  // The poster must be gone before the emblem arrives. Without the delay the
-  // emblem is already a third faded in while the CC is still on the plate, and
-  // the two show as a pair of stacked marks rather than one replacing the other.
+  // The exchange is a dissolve in place, so the mark is never absent from the
+  // plate. The emblem used to be held back by the poster's whole fade — right
+  // when the poster was a CC letterform and two marks would have overlapped,
+  // wrong once both sides draw the same mark, where the pause showed as the mark
+  // blinking out and returning half a second later.
+  const arrival = styles.match(
+    /\.story-profile__portrait--emblem \.story-profile__portrait-emblem \{([\s\S]*?)\n\}/,
+  );
+  assert.ok(arrival, "the emblem's arrival must be declared");
+  assert.match(arrival[1], /opacity:\s*1/);
+  assert.doesNotMatch(arrival[1], /transition-delay/);
+  // Both halves of the dissolve run at one duration and one easing, so the ink
+  // the poster gives up is the ink the model takes on.
   assert.match(
     styles,
-    /\.story-profile__portrait--emblem \.story-profile__portrait-emblem\s*\{[\s\S]*?transition-delay:\s*var\(--duration-base\)/,
+    /\.story-profile__portrait-emblem \{\s*opacity: 0;\s*transition: opacity var\(--duration-reveal\) var\(--ease-emphasized\);/,
   );
   assert.match(
     styles,

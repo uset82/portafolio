@@ -205,7 +205,12 @@ export const rawSiteContent = {
       role: "Engineer · Inventor · Creative Technologist",
       biography:
         "Carlos works across artificial intelligence, electronics, resilient energy, music, astrology, and numerology. His portfolio connects engineering practice with creative experimentation, presenting verified work separately from prototypes, personal studies, and future concepts.",
-      practiceThreads: ["AI and electronics", "Resilient energy", "Music and symbolic systems"],
+      practiceThreads: [
+        "AI and electronics",
+        "Resilient energy",
+        "Chemistry and commercialisation",
+        "Music and symbolic systems",
+      ],
       primaryAction: {
         id: "explore-profile-cv",
         label: "Explore profile and CV",
