@@ -10053,6 +10053,12 @@ body:has(.observatory-hero) .site-header .site-header__status {
 .arcade-teaser__cabinet {
   position: relative;
   display: grid;
+  /* It is a link now, so it has to look like one under the pointer. The lift and
+   * the joystick tilt below were already firing on hover while nothing here was
+   * clickable, which is the fake affordance this removes. */
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
   width: min(100%, 24rem);
   aspect-ratio: 4 / 5;
   justify-self: end;
@@ -10068,6 +10074,12 @@ body:has(.observatory-hero) .site-header .site-header__status {
 .arcade-teaser:focus-within .arcade-teaser__cabinet,
 .arcade-teaser:hover .arcade-teaser__cabinet {
   transform: translateY(-0.35rem);
+}
+
+/* The press itself: the cabinet settles back onto the page under the pointer. */
+.arcade-teaser__cabinet:active {
+  transform: translateY(0);
+  transition-duration: var(--duration-fast);
 }
 
 .arcade-teaser__cabinet-label,

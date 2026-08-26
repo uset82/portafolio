@@ -60,6 +60,18 @@ test("the arcade teaser carries responsive and reduced-motion paths", () => {
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
 
   assert.match(styles, /\.arcade-teaser:hover \.arcade-teaser__cabinet/);
+  // The cabinet lifts and its joystick tilts on hover, and it tells the reader
+  // to press play. For a long time none of that was clickable. Whatever else
+  // changes here, it must stay a real route, and it must not become a second
+  // announced copy of the link beside it.
+  const teaserSource = readFileSync(
+    path.join(process.cwd(), "src/components/arcade/arcade-teaser.tsx"),
+    "utf8",
+  );
+  assert.match(teaserSource, /className="arcade-teaser__cabinet"/);
+  assert.match(teaserSource, /href=\{localeHref\(locale, "\/arcade"\)\}[\s\S]*?tabIndex=\{-1\}/);
+  assert.match(styles, /\.arcade-teaser__cabinet \{[\s\S]*?cursor:\s*pointer/);
+  assert.match(styles, /\.arcade-teaser__cabinet:active/);
   assert.match(styles, /@media \(max-width: 61\.99rem\)[\s\S]*?\.arcade-teaser\s*\{/);
   assert.match(styles, /\.arcade-teaser__action\s*\{[\s\S]*?width:\s*100%/);
   assert.match(

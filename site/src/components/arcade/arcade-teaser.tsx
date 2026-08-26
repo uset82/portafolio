@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { ActionLink } from "@/components/ui";
 import { ui } from "@/content/i18n/ui";
 import { localeHref, type Locale } from "@/lib/i18n";
@@ -42,7 +44,22 @@ export function ArcadeTeaser({ playable, total, locale = "en" }: ArcadeTeaserPro
         </ActionLink>
       </div>
 
-      <div className="arcade-teaser__cabinet" aria-hidden="true">
+      {/* The cabinet is drawn with a joystick and two buttons, it lifts and its
+          joystick tilts when the section is hovered, and it says "press play".
+          It was a picture. Everything it promised, it now does: the whole
+          cabinet is the route to the arcade.
+
+          Hidden from assistive technology and out of the tab order on purpose —
+          the "Enter the Arcade" link beside it goes to the same place and is the
+          one that gets announced, so this adds a target for a pointer without
+          adding a second identical stop for everyone else. */}
+      <Link
+        className="arcade-teaser__cabinet"
+        href={localeHref(locale, "/arcade")}
+        aria-hidden="true"
+        tabIndex={-1}
+        prefetch={false}
+      >
         <span className="arcade-teaser__cabinet-label">{copy.cabinet(total)}</span>
         <div className="arcade-teaser__screen">
           <svg className="arcade-teaser__mark" viewBox="0 0 96 72" focusable="false">
@@ -72,7 +89,7 @@ export function ArcadeTeaser({ playable, total, locale = "en" }: ArcadeTeaserPro
           <i />
         </div>
         <small>{hasPlayable ? "Press play to load" : "Nothing loads on its own"}</small>
-      </div>
+      </Link>
     </section>
   );
 }
