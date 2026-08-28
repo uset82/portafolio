@@ -117,12 +117,9 @@ const isLoopbackOrigin = (originUrl: string) => {
   }
 };
 
-const verifyRequestOrigin = (request: Request, configuredOrigin: string | undefined) => {
-  const fetchSite = request.headers.get("sec-fetch-site")?.toLowerCase();
-  if (fetchSite && fetchSite !== "same-origin" && fetchSite !== "none") {
-    throw new CcAiAbuseError("forbidden", false);
-  }
+const CANONICAL_PRODUCTION_ORIGIN = "https://carloscarpio.dev";
 
+const verifyRequestOrigin = (request: Request, configuredOrigin: string | undefined) => {
   const source = request.headers.get("origin") ?? request.headers.get("referer");
   if (!source || source === "null") throw new CcAiAbuseError("forbidden", false);
 
@@ -135,10 +132,32 @@ const verifyRequestOrigin = (request: Request, configuredOrigin: string | undefi
 
   const requestOrigin = new URL(request.url).origin;
 
-  if (sourceOrigin === configuredOrigin || sourceOrigin === requestOrigin) {
+  // 1. Direct match with configured origin, request URL origin, or canonical production origin
+  if (
+    sourceOrigin === configuredOrigin ||
+    sourceOrigin === requestOrigin ||
+    sourceOrigin === CANONICAL_PRODUCTION_ORIGIN
+  ) {
     return;
   }
 
+  // 2. Match reverse-proxy forwarded host (e.g. Railway, Vercel)
+  const forwardedHost =
+    request.headers.get("x-forwarded-host")?.split(",")[0]?.trim() ??
+    request.headers.get("host")?.split(",")[0]?.trim();
+  if (forwardedHost) {
+    const forwardedProto =
+      request.headers.get("x-forwarded-proto")?.split(",")[0]?.trim() ?? "https";
+    if (
+      sourceOrigin === `${forwardedProto}://${forwardedHost}` ||
+      sourceOrigin === `https://${forwardedHost}` ||
+      sourceOrigin === `http://${forwardedHost}`
+    ) {
+      return;
+    }
+  }
+
+  // 3. Local loopback origins during development
   if (
     isLoopbackOrigin(sourceOrigin) &&
     (isLoopbackOrigin(requestOrigin) || (configuredOrigin && isLoopbackOrigin(configuredOrigin)))
@@ -259,7 +278,11 @@ export function createInMemoryCcAiAbuseGuard({
 export function createCcAiAbuseGuardFromEnvironment(
   environment: CcAiAbuseEnvironment,
 ): CcAiAbuseGuard {
-  const allowedOrigin = environment.NEXT_PUBLIC_SITE_URL?.trim();
+  const allowedOrigin =
+    environment.NEXT_PUBLIC_SITE_URL?.trim() ||
+    (typeof process !== "undefined" && process.env.NODE_ENV === "production"
+      ? CANONICAL_PRODUCTION_ORIGIN
+      : undefined);
   return createInMemoryCcAiAbuseGuard({
     ...(allowedOrigin ? { allowedOrigin } : {}),
     requestLimit: parsePositiveInteger(environment.CC_AI_RATE_LIMIT, 6, "CC_AI_RATE_LIMIT"),
