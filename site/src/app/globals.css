@@ -7219,6 +7219,14 @@ body:has(.observatory-hero) .site-header .site-header__status {
   color: var(--color-text-secondary-on-tint);
 }
 
+/* Each section is a two-column grid: sticky header, then everything else. The
+   "everything else" has to arrive as ONE element — a section that hands the
+   grid three or more children gets them auto-placed into a second row, which
+   slides the remainder back under the sticky header and overlaps the type. */
+.codeancestry__body {
+  min-width: 0;
+}
+
 .codeancestry__prose {
   display: grid;
   gap: 1.5rem;

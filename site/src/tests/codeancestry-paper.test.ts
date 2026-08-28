@@ -123,6 +123,33 @@ test("both languages carry the same record ids, so neither can drift", () => {
   assert.equal(CODEANCESTRY_ES.origin.paragraphs.length, CODEANCESTRY.origin.paragraphs.length);
 });
 
+test("every section hands the grid exactly two children, so nothing wraps under the sticky header", () => {
+  // The sections are two-column grids: a sticky header, then one body element.
+  // A third child is auto-placed into a second row, which puts it back under
+  // the header and overlaps the type — which is exactly what shipped once.
+  const sections = english.match(
+    /<section class="codeancestry__(?:origin|section)[^"]*"[^>]*>[\s\S]*?<\/section>/g,
+  );
+  assert.ok(sections);
+  assert.equal(sections.length, 9);
+
+  for (const section of sections) {
+    const inner = section.replace(/^<section[^>]*>/, "").replace(/<\/section>$/, "");
+    let depth = 0;
+    let topLevel = 0;
+    for (const tag of inner.match(/<\/?[a-z][a-z0-9]*\b[^>]*>/g) ?? []) {
+      if (tag.startsWith("</")) {
+        depth -= 1;
+        continue;
+      }
+      if (depth === 0) topLevel += 1;
+      if (!tag.endsWith("/>") && !/^<(?:br|hr|img|input|meta|link)\b/.test(tag)) depth += 1;
+    }
+    const name = section.slice(0, section.indexOf(">") + 1);
+    assert.equal(topLevel, 2, `${name} has ${topLevel} grid children, expected header + body`);
+  }
+});
+
 test("the paper route keeps its responsive and reduced-motion path", () => {
   const styles = readFileSync(path.join(process.cwd(), "src/app/globals.css"), "utf8");
   const page = readFileSync(

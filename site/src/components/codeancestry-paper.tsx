@@ -94,18 +94,20 @@ export function CodeAncestryPaper({ locale = "en" }: CodeAncestryPaperProps) {
           <h2 id="codeancestry-origin-title">{paper.origin.heading}</h2>
         </header>
 
-        <div className="codeancestry__prose">
-          {paper.origin.paragraphs.map((paragraph) => (
-            <p key={paragraph.slice(0, 32)}>{paragraph}</p>
-          ))}
-        </div>
+        <div className="codeancestry__body">
+          <div className="codeancestry__prose">
+            {paper.origin.paragraphs.map((paragraph) => (
+              <p key={paragraph.slice(0, 32)}>{paragraph}</p>
+            ))}
+          </div>
 
-        <figure className="codeancestry__question">
-          <blockquote>
-            <p>{paper.origin.question}</p>
-          </blockquote>
-          <figcaption>{paper.origin.questionCaption}</figcaption>
-        </figure>
+          <figure className="codeancestry__question">
+            <blockquote>
+              <p>{paper.origin.question}</p>
+            </blockquote>
+            <figcaption>{paper.origin.questionCaption}</figcaption>
+          </figure>
+        </div>
       </section>
 
       <section className="codeancestry__section" aria-labelledby="codeancestry-model-title">
@@ -133,13 +135,15 @@ export function CodeAncestryPaper({ locale = "en" }: CodeAncestryPaperProps) {
           <p>{paper.agent.body}</p>
         </header>
 
-        <p className="codeancestry__subhead">{paper.agent.manifestLabel}</p>
-        <PaperRegister
-          entries={paper.agent.manifest}
-          label={paper.agent.manifestAria}
-          modifier="compact"
-        />
-        <p className="codeancestry__closing-note">{paper.agent.neutrality}</p>
+        <div className="codeancestry__body">
+          <p className="codeancestry__subhead">{paper.agent.manifestLabel}</p>
+          <PaperRegister
+            entries={paper.agent.manifest}
+            label={paper.agent.manifestAria}
+            modifier="compact"
+          />
+          <p className="codeancestry__closing-note">{paper.agent.neutrality}</p>
+        </div>
       </section>
 
       <section className="codeancestry__section" aria-labelledby="codeancestry-propagation-title">
@@ -149,36 +153,38 @@ export function CodeAncestryPaper({ locale = "en" }: CodeAncestryPaperProps) {
           <p>{paper.propagation.body}</p>
         </header>
 
-        <p className="codeancestry__subhead">{paper.propagation.pipelineLabel}</p>
-        <ol className="codeancestry__pipeline" aria-label={paper.propagation.pipelineAria}>
-          {paper.propagation.pipeline.map((step, index) => (
-            <li key={step}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              {step}
-            </li>
-          ))}
-        </ol>
+        <div className="codeancestry__body">
+          <p className="codeancestry__subhead">{paper.propagation.pipelineLabel}</p>
+          <ol className="codeancestry__pipeline" aria-label={paper.propagation.pipelineAria}>
+            {paper.propagation.pipeline.map((step, index) => (
+              <li key={step}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                {step}
+              </li>
+            ))}
+          </ol>
 
-        <p className="codeancestry__subhead">{paper.propagation.fitnessLabel}</p>
-        <p className="codeancestry__prose-line">{paper.propagation.fitnessBody}</p>
-        <dl className="codeancestry__fitness" aria-label={paper.propagation.fitnessAria}>
-          {paper.propagation.fitness.map((dimension) => (
-            <div key={dimension.id}>
-              <dt>
-                <b aria-hidden="true">{dimension.term}</b>
-                {dimension.gloss}
-              </dt>
-              <dd>{dimension.body}</dd>
-            </div>
-          ))}
-        </dl>
+          <p className="codeancestry__subhead">{paper.propagation.fitnessLabel}</p>
+          <p className="codeancestry__prose-line">{paper.propagation.fitnessBody}</p>
+          <dl className="codeancestry__fitness" aria-label={paper.propagation.fitnessAria}>
+            {paper.propagation.fitness.map((dimension) => (
+              <div key={dimension.id}>
+                <dt>
+                  <b aria-hidden="true">{dimension.term}</b>
+                  {dimension.gloss}
+                </dt>
+                <dd>{dimension.body}</dd>
+              </div>
+            ))}
+          </dl>
 
-        <p className="codeancestry__subhead">{paper.propagation.guardrailsLabel}</p>
-        <PaperRegister
-          entries={paper.propagation.guardrails}
-          label={paper.propagation.guardrailsAria}
-          modifier="compact"
-        />
+          <p className="codeancestry__subhead">{paper.propagation.guardrailsLabel}</p>
+          <PaperRegister
+            entries={paper.propagation.guardrails}
+            label={paper.propagation.guardrailsAria}
+            modifier="compact"
+          />
+        </div>
       </section>
 
       <section
@@ -238,23 +244,29 @@ export function CodeAncestryPaper({ locale = "en" }: CodeAncestryPaperProps) {
           <p>{paper.limits.body}</p>
         </header>
 
-        <PaperRegister entries={paper.limits.items} label={paper.limits.aria} modifier="compact" />
+        <div className="codeancestry__body">
+          <PaperRegister
+            entries={paper.limits.items}
+            label={paper.limits.aria}
+            modifier="compact"
+          />
 
-        <p className="codeancestry__subhead">{paper.limits.ledgerLabel}</p>
-        <dl className="codeancestry__ledger">
-          {paper.limits.ledger.map((item, index) => (
-            <div key={item.label}>
-              <dt>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                {item.label}
-              </dt>
-              <dd>
-                <strong>{item.value}</strong>
-                <small>{item.detail}</small>
-              </dd>
-            </div>
-          ))}
-        </dl>
+          <p className="codeancestry__subhead">{paper.limits.ledgerLabel}</p>
+          <dl className="codeancestry__ledger">
+            {paper.limits.ledger.map((item, index) => (
+              <div key={item.label}>
+                <dt>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  {item.label}
+                </dt>
+                <dd>
+                  <strong>{item.value}</strong>
+                  <small>{item.detail}</small>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </section>
 
       <section className="codeancestry__continuation" aria-labelledby="codeancestry-close-title">
