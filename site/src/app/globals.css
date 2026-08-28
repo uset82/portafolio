@@ -6573,6 +6573,81 @@ body:has(.observatory-hero) .site-header .site-header__status {
   transform: translateY(-0.35rem);
 }
 
+/* CodeAncestry's register mark: a root genome, two descendants, and one
+   proposal that travels back up on hover — the paper's backward transfer. */
+.laboratory-index__lineage-mark {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 1.75rem;
+  width: clamp(5rem, 8vw, 7rem);
+  aspect-ratio: 1;
+  opacity: 0.65;
+}
+
+.laboratory-index__lineage-mark::before,
+.laboratory-index__lineage-mark::after {
+  position: absolute;
+  top: 24%;
+  left: 50%;
+  width: 44%;
+  height: 1px;
+  content: "";
+  background: var(--color-walnut);
+  transform-origin: left center;
+}
+
+.laboratory-index__lineage-mark::before {
+  transform: rotate(58deg);
+}
+
+.laboratory-index__lineage-mark::after {
+  transform: rotate(122deg);
+}
+
+.laboratory-index__lineage-mark i {
+  position: absolute;
+  width: 0.8rem;
+  aspect-ratio: 1;
+  border: 1px solid var(--color-walnut);
+}
+
+.laboratory-index__lineage-mark i:first-child {
+  top: 16%;
+  left: 50%;
+  background: var(--color-buff);
+  transform: translateX(-50%);
+}
+
+.laboratory-index__lineage-mark i:nth-child(2) {
+  bottom: 14%;
+  left: 6%;
+  background: color-mix(in srgb, var(--color-sage-muted) 48%, transparent);
+}
+
+.laboratory-index__lineage-mark i:nth-child(3) {
+  right: 6%;
+  bottom: 14%;
+  background: color-mix(in srgb, var(--color-taupe) 42%, transparent);
+}
+
+.laboratory-index__lineage-mark b {
+  position: absolute;
+  bottom: 24%;
+  left: 24%;
+  width: 0.5rem;
+  aspect-ratio: 1;
+  border: 1px solid var(--color-walnut);
+  border-radius: 50%;
+  background: var(--color-clay);
+  transition: transform var(--duration-base) var(--ease-standard);
+}
+
+.laboratory-index__entry--lineage:focus-within .laboratory-index__lineage-mark b,
+.laboratory-index__entry--lineage:hover .laboratory-index__lineage-mark b {
+  transform: translate(0.85rem, -1.35rem);
+}
+
 .laboratory-index__scope {
   grid-template-columns: minmax(20rem, 0.8fr) minmax(28rem, 1.2fr);
   background: var(--color-sage-pale);
@@ -6851,7 +6926,8 @@ body:has(.observatory-hero) .site-header .site-header__status {
   }
 
   .laboratory-index__energy-mark,
-  .laboratory-index__electronics-mark {
+  .laboratory-index__electronics-mark,
+  .laboratory-index__lineage-mark {
     display: none;
   }
 
@@ -6871,6 +6947,808 @@ body:has(.observatory-hero) .site-header .site-header__status {
 
   .laboratory-index__continuation nav .ui-action {
     width: 100%;
+  }
+}
+
+/* CodeAncestry is the Laboratory's written thread: a paper, so it reads as a
+   paper — one column of argument, numbered registers, and a boundary ledger
+   that stays as loud as the proposal. */
+.codeancestry {
+  min-height: 100svh;
+  overflow: clip;
+  background: var(--color-canvas);
+}
+
+.codeancestry__hero {
+  display: grid;
+  grid-template-columns: minmax(7rem, 0.25fr) minmax(24rem, 1.1fr) minmax(16rem, 0.65fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  width: min(100%, var(--page-max));
+  min-height: 100svh;
+  margin-inline: auto;
+  padding: calc(var(--header-height) + clamp(3rem, 7vw, 7rem)) var(--page-gutter)
+    clamp(4rem, 7vw, 7rem);
+  align-content: center;
+  border-bottom: 1px solid var(--color-border-soft);
+  background: var(--color-linen);
+}
+
+.codeancestry__rail {
+  display: grid;
+  grid-column: 1;
+  grid-row: 1;
+  gap: 1.25rem;
+  align-self: start;
+}
+
+.codeancestry__rail .ui-status {
+  justify-self: start;
+}
+
+.codeancestry__identity {
+  display: grid;
+  grid-column: 2;
+  grid-row: 1;
+  align-content: center;
+}
+
+.codeancestry__identity > p {
+  margin: 0 0 1.2rem;
+  color: var(--color-text-secondary-on-tint);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.codeancestry__identity h1,
+.codeancestry__origin h2,
+.codeancestry__section h2,
+.codeancestry__continuation h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+  text-wrap: balance;
+}
+
+.codeancestry__identity h1 {
+  font-size: clamp(3.6rem, 7vw, 7.4rem);
+}
+
+.codeancestry__identity > strong {
+  max-width: 34rem;
+  margin-top: 1.75rem;
+  color: var(--color-text-secondary-on-tint);
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 1.9vw, 1.9rem);
+  font-weight: 500;
+  line-height: 1.16;
+}
+
+.codeancestry__identity > small {
+  margin-top: 1.25rem;
+  color: var(--color-text-secondary-on-tint);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.codeancestry__abstract {
+  display: grid;
+  grid-column: 2;
+  grid-row: 2;
+  gap: 1rem;
+  max-width: var(--reading-max);
+  margin-top: 2.5rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--color-border-soft);
+}
+
+.codeancestry__abstract p {
+  margin: 0;
+  color: var(--color-text-secondary-on-tint);
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  line-height: 1.75;
+}
+
+.codeancestry__abstract small {
+  color: var(--color-text-secondary-on-tint);
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
+
+.codeancestry__lineage {
+  position: relative;
+  display: grid;
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  width: min(100%, 24rem);
+  aspect-ratio: 4 / 5;
+  justify-self: end;
+  align-self: center;
+  padding: 1.5rem;
+  overflow: hidden;
+  align-content: space-between;
+  border: 1px solid var(--color-walnut);
+  background: var(--color-sage-pale);
+  box-shadow: inset 0 0 0 0.75rem color-mix(in srgb, var(--color-canvas) 28%, transparent);
+  transition: transform var(--duration-base) var(--ease-emphasized);
+}
+
+.codeancestry__hero:focus-within .codeancestry__lineage,
+.codeancestry__hero:hover .codeancestry__lineage {
+  transform: translateY(-0.35rem);
+}
+
+.codeancestry__lineage > span,
+.codeancestry__lineage > small {
+  position: relative;
+  z-index: 2;
+  color: var(--color-text-muted);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.codeancestry__lineage-graph {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  align-self: center;
+}
+
+.codeancestry__lineage-root,
+.codeancestry__lineage-child {
+  position: absolute;
+  width: 1.5rem;
+  aspect-ratio: 1;
+  border: 1px solid var(--color-walnut);
+}
+
+.codeancestry__lineage-root {
+  top: 12%;
+  left: 50%;
+  background: var(--color-buff);
+  transform: translateX(-50%);
+}
+
+.codeancestry__lineage-child--left {
+  bottom: 16%;
+  left: 8%;
+  background: color-mix(in srgb, var(--color-sage-muted) 52%, transparent);
+}
+
+.codeancestry__lineage-child--right {
+  right: 8%;
+  bottom: 16%;
+  background: color-mix(in srgb, var(--color-taupe) 46%, transparent);
+}
+
+.codeancestry__lineage-edge {
+  position: absolute;
+  top: 22%;
+  left: 50%;
+  width: 46%;
+  height: 1px;
+  background: var(--color-walnut);
+  transform-origin: left center;
+}
+
+.codeancestry__lineage-edge--right {
+  transform: rotate(56deg);
+}
+
+.codeancestry__lineage-edge--left {
+  transform: rotate(124deg);
+}
+
+/* The proposal returning to its ancestor: a dashed path, because a proposal is
+   not an adoption. It only completes while the figure is being attended to. */
+.codeancestry__lineage-return {
+  position: absolute;
+  top: 26%;
+  left: 20%;
+  width: 1px;
+  height: 44%;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--color-clay) 0 0.3rem,
+    transparent 0.3rem 0.6rem
+  );
+  transform: scaleY(0.45);
+  transform-origin: bottom center;
+  transition: transform var(--duration-base) var(--ease-emphasized);
+}
+
+.codeancestry__hero:focus-within .codeancestry__lineage-return,
+.codeancestry__hero:hover .codeancestry__lineage-return {
+  transform: scaleY(1);
+}
+
+.codeancestry__origin,
+.codeancestry__section,
+.codeancestry__continuation {
+  display: grid;
+  gap: clamp(2rem, 5vw, 5rem);
+  width: min(100%, var(--page-max));
+  margin-inline: auto;
+  padding: clamp(4.5rem, 8vw, 8rem) var(--page-gutter);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.codeancestry__origin,
+.codeancestry__section {
+  grid-template-columns: minmax(18rem, 0.7fr) minmax(32rem, 1.3fr);
+  align-items: start;
+}
+
+.codeancestry__section--stack {
+  background: var(--color-sage-pale);
+}
+
+.codeancestry__origin header,
+.codeancestry__section header {
+  position: sticky;
+  top: calc(var(--header-height) + 2rem);
+  display: grid;
+  gap: 1.5rem;
+  align-content: start;
+}
+
+.codeancestry__origin h2,
+.codeancestry__section h2,
+.codeancestry__continuation h2 {
+  font-size: clamp(2.6rem, 4.4vw, 4.6rem);
+}
+
+.codeancestry__origin header > p:last-child,
+.codeancestry__section header > p:last-child,
+.codeancestry__continuation-copy > p {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.75;
+}
+
+.codeancestry__section--stack header > p:last-child {
+  color: var(--color-text-secondary-on-tint);
+}
+
+.codeancestry__prose {
+  display: grid;
+  gap: 1.5rem;
+  max-width: var(--reading-max);
+}
+
+.codeancestry__prose p,
+.codeancestry__prose-line {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: clamp(1rem, 1.15vw, 1.1rem);
+  line-height: 1.8;
+}
+
+.codeancestry__prose-line {
+  max-width: var(--reading-max);
+  margin-bottom: 2rem;
+}
+
+.codeancestry__question {
+  max-width: var(--reading-max);
+  margin: 2.5rem 0 0;
+  padding-left: clamp(1.25rem, 2vw, 2rem);
+  border-left: 1px solid var(--color-walnut);
+}
+
+.codeancestry__question blockquote {
+  margin: 0;
+}
+
+.codeancestry__question blockquote p {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.4vw, 2.3rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.codeancestry__question figcaption {
+  margin-top: 1rem;
+  color: var(--color-text-muted);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.codeancestry__subhead {
+  margin: 0 0 1.25rem;
+  color: var(--color-text-primary);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.codeancestry__subhead:not(:first-child) {
+  margin-top: 3.5rem;
+}
+
+.codeancestry__entries,
+.codeancestry__pipeline,
+.codeancestry__layers,
+.codeancestry__questions {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.codeancestry__entry {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(9rem, 0.5fr) minmax(16rem, 1fr);
+  gap: 1.25rem;
+  padding: 1.5rem 0;
+  align-items: start;
+  border-top: 1px solid var(--color-border-soft);
+}
+
+.codeancestry__entries > li:last-child {
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.codeancestry__entry > span {
+  color: var(--color-text-muted);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.codeancestry__entry-title {
+  display: grid;
+  gap: 0.4rem;
+  align-content: start;
+}
+
+.codeancestry__entry-title h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.2vw, 2.1rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.codeancestry__entries--compact .codeancestry__entry-title h3 {
+  font-size: clamp(1.15rem, 1.5vw, 1.45rem);
+}
+
+.codeancestry__entry-title p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.codeancestry__entry-body {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.codeancestry__pipeline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.codeancestry__pipeline li {
+  display: flex;
+  gap: 0.5rem;
+  min-height: var(--control-height);
+  padding: 0.6rem 0.9rem;
+  align-items: center;
+  border: 1px solid var(--color-border-soft);
+  color: var(--color-text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.codeancestry__pipeline li span {
+  color: var(--color-text-muted);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+}
+
+.codeancestry__pipeline li:last-child {
+  border-color: var(--color-walnut);
+  background: color-mix(in srgb, var(--color-buff) 55%, transparent);
+  color: var(--color-text-primary);
+}
+
+.codeancestry__fitness {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0;
+  margin: 0;
+  border-top: 1px solid var(--color-border-soft);
+}
+
+.codeancestry__fitness > div {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem 1rem 1rem 0;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.codeancestry__fitness dt {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.codeancestry__fitness dt b {
+  color: var(--color-walnut);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.codeancestry__fitness dd {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.codeancestry__layers {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.codeancestry__layers li {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(10rem, 0.62fr) minmax(16rem, 1fr);
+  gap: 1.25rem;
+  padding: 1.25rem;
+  align-items: start;
+  border: 1px solid var(--color-walnut);
+  background: color-mix(in srgb, var(--color-canvas) 62%, transparent);
+}
+
+.codeancestry__layers li > span {
+  color: var(--color-text-muted);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.codeancestry__layers li > div {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.codeancestry__layers h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.6vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.codeancestry__layers li > div p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.codeancestry__layers li > p {
+  margin: 0;
+  color: var(--color-text-secondary-on-tint);
+  font-size: 0.85rem;
+  line-height: 1.65;
+}
+
+.codeancestry__questions {
+  display: grid;
+  border-top: 1px solid var(--color-border-soft);
+}
+
+.codeancestry__questions li {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  gap: 1.25rem;
+  padding: 1.1rem 0;
+  align-items: baseline;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.codeancestry__questions li span {
+  color: var(--color-walnut);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.codeancestry__questions li p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.codeancestry__closing-note {
+  max-width: var(--reading-max);
+  margin: 2.5rem 0 0;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.75;
+}
+
+.codeancestry__ledger {
+  margin: 0;
+  border-top: 1px solid var(--color-walnut);
+}
+
+.codeancestry__ledger > div {
+  display: grid;
+  grid-template-columns: minmax(11rem, 0.6fr) 1fr;
+  gap: 1.25rem;
+  padding-block: 1rem;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.codeancestry__ledger dt {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.codeancestry__ledger dt span {
+  color: var(--color-text-muted);
+  font-size: 0.6rem;
+}
+
+.codeancestry__ledger dd {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+}
+
+.codeancestry__ledger dd strong {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 1.7vw, 1.55rem);
+  font-weight: 500;
+}
+
+.codeancestry__ledger dd small {
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.codeancestry__continuation {
+  grid-template-columns: minmax(18rem, 0.72fr) minmax(26rem, 1.28fr);
+  align-items: end;
+  color: var(--color-text-on-dark);
+  background: var(--color-deep-espresso);
+}
+
+.codeancestry__continuation-copy {
+  display: grid;
+  grid-column: 2;
+  gap: 2rem;
+  align-content: end;
+}
+
+.codeancestry__continuation .section-label,
+.codeancestry__continuation-copy > p {
+  color: rgb(254 244 234 / 68%);
+}
+
+.codeancestry__continuation h2 {
+  color: var(--color-text-on-dark);
+}
+
+.codeancestry__continuation nav {
+  display: flex;
+  grid-column: 2;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.codeancestry__continuation .ui-action--primary {
+  border-color: var(--color-buff);
+  background: var(--color-buff);
+  color: var(--color-deep-espresso);
+}
+
+.codeancestry__continuation .ui-action--primary:hover {
+  background: var(--color-off-white);
+}
+
+.codeancestry__continuation .ui-action--secondary {
+  border-color: rgb(254 244 234 / 36%);
+  color: var(--color-text-on-dark);
+}
+
+.codeancestry__continuation .ui-action--secondary:hover {
+  background: rgb(254 244 234 / 10%);
+}
+
+@media (min-width: 48rem) and (max-width: 70rem) {
+  .codeancestry__hero {
+    grid-template-columns: minmax(7rem, 0.25fr) minmax(22rem, 1fr);
+  }
+
+  .codeancestry__identity,
+  .codeancestry__abstract {
+    grid-column: 2;
+  }
+
+  .codeancestry__lineage {
+    grid-column: 1;
+    grid-row: 3;
+    width: min(100%, 18rem);
+    justify-self: start;
+    align-self: start;
+  }
+
+  .codeancestry__origin,
+  .codeancestry__section,
+  .codeancestry__continuation {
+    grid-template-columns: 1fr;
+  }
+
+  .codeancestry__origin header,
+  .codeancestry__section header {
+    position: static;
+  }
+
+  .codeancestry__continuation-copy,
+  .codeancestry__continuation nav {
+    grid-column: 1;
+  }
+
+  .codeancestry__entry,
+  .codeancestry__layers li {
+    grid-template-columns: 2rem 1fr;
+  }
+
+  .codeancestry__entry-title,
+  .codeancestry__entry-body,
+  .codeancestry__layers li > div,
+  .codeancestry__layers li > p {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 47.99rem) {
+  .codeancestry__hero,
+  .codeancestry__origin,
+  .codeancestry__section,
+  .codeancestry__continuation {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .codeancestry__hero {
+    min-height: 0;
+    padding-top: calc(var(--header-height) + 3rem);
+  }
+
+  .codeancestry__rail,
+  .codeancestry__identity,
+  .codeancestry__abstract,
+  .codeancestry__lineage,
+  .codeancestry__continuation-copy,
+  .codeancestry__continuation nav {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .codeancestry__identity h1 {
+    font-size: clamp(3.2rem, 15vw, 5rem);
+  }
+
+  .codeancestry__abstract {
+    margin-top: 0;
+  }
+
+  .codeancestry__lineage {
+    width: 100%;
+    max-width: none;
+    aspect-ratio: 4 / 5;
+    justify-self: stretch;
+  }
+
+  .codeancestry__origin,
+  .codeancestry__section,
+  .codeancestry__continuation {
+    padding-block: 4rem;
+  }
+
+  .codeancestry__origin header,
+  .codeancestry__section header {
+    position: static;
+  }
+
+  .codeancestry__origin h2,
+  .codeancestry__section h2,
+  .codeancestry__continuation h2 {
+    font-size: clamp(2.2rem, 10vw, 3.4rem);
+  }
+
+  .codeancestry__entry,
+  .codeancestry__layers li {
+    grid-template-columns: 2rem 1fr;
+    gap: 0.9rem;
+  }
+
+  .codeancestry__entry-title,
+  .codeancestry__entry-body,
+  .codeancestry__layers li > div,
+  .codeancestry__layers li > p {
+    grid-column: 2;
+  }
+
+  .codeancestry__ledger > div {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+
+  .codeancestry__continuation nav {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .codeancestry__continuation nav .ui-action {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .codeancestry__lineage,
+  .codeancestry__lineage-return,
+  .laboratory-index__lineage-mark b {
+    transition: none;
+  }
+
+  .codeancestry__hero:focus-within .codeancestry__lineage,
+  .codeancestry__hero:hover .codeancestry__lineage,
+  .laboratory-index__entry--lineage:focus-within .laboratory-index__lineage-mark b,
+  .laboratory-index__entry--lineage:hover .laboratory-index__lineage-mark b {
+    transform: none;
+  }
+
+  .codeancestry__lineage-return,
+  .codeancestry__hero:focus-within .codeancestry__lineage-return,
+  .codeancestry__hero:hover .codeancestry__lineage-return {
+    transform: scaleY(1);
   }
 }
 

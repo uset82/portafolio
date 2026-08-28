@@ -82,6 +82,7 @@ const TRANSLATED_EXACT = new Set<string>([
   "/cosmos",
   "/sound",
   "/laboratory",
+  "/laboratory/codeancestry",
 ]);
 const TRANSLATED_PREFIXES: readonly string[] = ["/arcade/"];
 

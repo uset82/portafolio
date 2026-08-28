@@ -47,6 +47,40 @@ and `CC_AI_REASONING_EFFORT=low`, and confirm the deployed `OPENROUTER_API_KEY` 
 `M.11` the licence line for that track · `M.10` your Buy Me a Coffee handle · a Railway service for
 `My-Football-Game` · Gemini's AVIF is larger than its WebP and needs re-encoding
 
+### 2026-08-28 — CodeAncestry joins the Laboratory as its fourth thread, and it is a paper
+
+The Laboratory register now runs `01` Future Energy · `02` Electronics / AI · `03` Aerial systems ·
+`04` CodeAncestry, and the fourth entry is a different kind of object from the first three. The
+other threads are designed mechanisms held back from any hardware claim. CodeAncestry is a written
+concept paper — a proposal for a semantic lineage layer above Git, in which a project carries a
+machine-readable genome, a capability is a traceable gene, an intentional change is an attested
+mutation, and a descendant may carry a bounded lineage agent that stays connected to its relatives.
+
+It is **not** a `laboratoryConcept`. That schema is a two-member union tied to the observatory's 3D
+artifacts, and the paper has no scene mesh and no hardware boundary to draw. It lives in its own
+content module instead, `site/src/content/codeancestry.ts`, with a full Spanish record beside it.
+Both languages carry the same record ids, and a test fails if either drifts.
+
+The paper has its own route in both languages, `/laboratory/codeancestry` and
+`/es/laboratory/codeancestry`, carrying the argument in ten sections: origin, the five-word
+vocabulary, the four reproduction modes, Agent DNA, propagation and its guardrails, the five-layer
+architecture, the six roadmap phases, eight research questions, the stated limits, and the close.
+The route publishes a four-row boundary ledger and nothing softer: no protocol, registry, lineage
+engine, agent network, or hosted service is running; no implementation result, benchmark, or user
+study is reported; it is not an accepted specification; and the name is a working title with naming,
+domain, and trademark checks still outstanding. The local static prototype is not mentioned, linked,
+or implied anywhere on the site.
+
+Evidence: `pnpm test:unit` 563/563 green including the new `codeancestry-paper.test.ts` ·
+`tsc --noEmit`, `eslint --max-warnings=0`, `prettier --check`, `content:check`, `palette:check`,
+`boundary:check` all clean · `next build` prerenders both routes as static · rendered and measured
+in the browser at desktop, 768, and 375: no page-level horizontal overflow from the route, sticky
+section headers travel correctly, mobile collapses to one column with full-width actions.
+
+Separately, and not caused by this work: **the site header's desktop navigation overflows the
+viewport at ~768 px** on every route that shows the language switch — `/laboratory`, `/cosmos`, and
+the new page all report a 875 px scroll width against a 753 px client width. Worth its own task.
+
 ### 2026-08-26 — CACM AI answers again
 
 The chat had three separate faults stacked on top of each other, and each one hid the next.

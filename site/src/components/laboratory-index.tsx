@@ -1,4 +1,6 @@
 import { ActionLink, StatusTag } from "@/components/ui";
+import { CODEANCESTRY_HREF } from "@/content/codeancestry";
+import { localizeCodeAncestry } from "@/content/i18n/codeancestry-es";
 import { localizeLaboratory } from "@/content/i18n/laboratory-es";
 import { ui } from "@/content/i18n/ui";
 import { resolveHref, type Locale } from "@/lib/i18n";
@@ -23,6 +25,10 @@ export function LaboratoryIndex({
 }: LaboratoryIndexProps) {
   const copy = ui(locale).laboratory;
   const energy = localizeLaboratory(futureEnergy, electronicsConcept, droneConcept, locale);
+  // The fourth thread is a paper rather than a mechanism, so it carries its own
+  // content record instead of a Laboratory concept: it has no scene artifact,
+  // and its boundary is about software claims rather than hardware ones.
+  const codeAncestry = localizeCodeAncestry(locale).register;
   const publicationBoundaries = copy.boundaries;
   return (
     <main id="main-content" className="laboratory-index">
@@ -52,7 +58,7 @@ export function LaboratoryIndex({
             <i />
             <b />
           </div>
-          <strong>03</strong>
+          <strong>04</strong>
           <small>{copy.benchCaption}</small>
         </div>
       </section>
@@ -118,6 +124,28 @@ export function LaboratoryIndex({
               <small>{energy.drone.boundary}</small>
             </div>
             <p className="laboratory-index__no-link">{copy.noRoute}</p>
+          </li>
+
+          <li className="laboratory-index__entry laboratory-index__entry--lineage">
+            <span>04</span>
+            <div className="laboratory-index__entry-title">
+              <p>{codeAncestry.descriptor}</p>
+              <h3>CodeAncestry</h3>
+              <StatusTag tone="concept">{codeAncestry.statusLabel}</StatusTag>
+            </div>
+            <div className="laboratory-index__entry-copy">
+              <p>{codeAncestry.summary}</p>
+              <small>{codeAncestry.boundary}</small>
+            </div>
+            <ActionLink href={resolveHref(locale, CODEANCESTRY_HREF)}>
+              {codeAncestry.linkLabel} <span aria-hidden="true">→</span>
+            </ActionLink>
+            <div className="laboratory-index__lineage-mark" aria-hidden="true">
+              <i />
+              <i />
+              <i />
+              <b />
+            </div>
           </li>
         </ol>
       </section>

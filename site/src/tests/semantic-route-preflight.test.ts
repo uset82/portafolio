@@ -7,6 +7,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import ArcadePage from "@/app/(en)/arcade/page";
 import ContactPage from "@/app/(en)/contact/page";
 import CosmosPage from "@/app/(en)/cosmos/page";
+import CodeAncestryPage from "@/app/(en)/laboratory/codeancestry/page";
 import LaboratoryPage from "@/app/(en)/laboratory/page";
 import SoundPage from "@/app/(en)/sound/page";
 import StoryPage from "@/app/(en)/story/page";
@@ -52,7 +53,12 @@ const coreRoutes: readonly CoreRoute[] = [
   {
     name: "Laboratory",
     Page: LaboratoryPage,
-    expectedHrefs: ["/work/future-energy", "/work", "/contact"],
+    expectedHrefs: ["/work/future-energy", "/laboratory/codeancestry", "/work", "/contact"],
+  },
+  {
+    name: "CodeAncestry",
+    Page: CodeAncestryPage,
+    expectedHrefs: ["/laboratory", "/work", "/contact"],
   },
   { name: "Sound", Page: SoundPage, expectedHrefs: ["/arcade", "/support", "/work"] },
   {
@@ -107,11 +113,14 @@ test("every static primary route keeps one semantic main landmark, one h1, and i
 
 test("held public rooms retain truthful no-media and no-collection boundaries", () => {
   const laboratory = renderRoute(LaboratoryPage);
+  const codeAncestry = renderRoute(CodeAncestryPage);
   const sound = renderRoute(SoundPage);
   const cosmos = renderRoute(CosmosPage);
   const contact = renderRoute(ContactPage);
 
   assert.doesNotMatch(laboratory, /<(?:audio|video|iframe|canvas)\b/);
+  // The concept paper is prose: no media, no form, no running system.
+  assert.doesNotMatch(codeAncestry, /<(?:audio|video|iframe|canvas|form|button|input)\b/);
   // Sound is no longer held: it ships a player, which still fetches nothing
   // until a visitor presses play.
   assert.doesNotMatch(sound, /<(?:video|iframe)\b/);

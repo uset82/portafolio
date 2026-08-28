@@ -36,7 +36,7 @@ function getDroneConcept(): Extract<LaboratoryConcept, { artifactId: "drone" }> 
   return concept;
 }
 
-test("Laboratory exposes three bounded concepts without claiming working hardware, live AI, or flight", () => {
+test("Laboratory exposes four bounded threads without claiming working hardware, live AI, flight, or a running protocol", () => {
   assert.equal(siteContent.laboratoryConcepts.length, 2);
   assert.equal(
     siteContentSchema.safeParse({
@@ -59,10 +59,11 @@ test("Laboratory exposes three bounded concepts without claiming working hardwar
   assert.match(markup, /<main id="main-content" class="laboratory-index">/);
   assert.match(markup, /Experiments where software meets matter\./);
   assert.match(markup, /Evidence boundary active/);
-  assert.equal((markup.match(/class="laboratory-index__entry /g) ?? []).length, 3);
+  assert.equal((markup.match(/class="laboratory-index__entry /g) ?? []).length, 4);
   assert.match(markup, />Future Energy<\/h3>/);
   assert.match(markup, />Electronics \/ AI<\/h3>/);
   assert.match(markup, />Aerial systems<\/h3>/);
+  assert.match(markup, />CodeAncestry<\/h3>/);
   assert.equal((markup.match(/Concept only/g) ?? []).length, 2);
   assert.match(markup, /visual and navigational Laboratory concept/);
   assert.match(
@@ -74,6 +75,10 @@ test("Laboratory exposes three bounded concepts without claiming working hardwar
   assert.match(markup, /No flight performance, autonomous operation, working flight controller/);
   assert.equal((markup.match(/<dt>/g) ?? []).length, 4);
   assert.match(markup, /href="\/work\/future-energy"/);
+  assert.match(markup, /href="\/laboratory\/codeancestry"/);
+  // The paper thread claims a written proposal and nothing more.
+  assert.match(markup, /Paper only/);
+  assert.match(markup, /No protocol, registry, lineage engine, agent network, or hosted service/);
   assert.match(markup, /href="\/work"/);
   assert.match(markup, /href="\/contact"/);
   assert.doesNotMatch(markup, /<(?:img|picture|video|audio|iframe|canvas|form|button)\b/);
