@@ -145,7 +145,7 @@ export const SOUND_ROOM = {
   eyebrow: "Sound / 02",
   heading: "Music you can hear, and video you can watch.",
   description:
-    "Music made with Suno, video published on YouTube, and StrudelAI — a live-coding music system open for testing.",
+    "Music made with Suno, video published on YouTube, and interactive sound systems like KEYLIT and StrudelAI open for testing.",
   emptyState: {
     music:
       "No track is embedded here yet. The full published catalogue is on Suno in the meantime.",
@@ -153,10 +153,34 @@ export const SOUND_ROOM = {
       "No video is embedded here yet. The full published channel is on YouTube in the meantime.",
   },
   playbackNote:
-    "Press play and the music streams straight from Suno; nothing is asked of anyone before that. Video players still load on click, and the StrudelAI test build opens in its own site.",
+    "Press play and the music streams straight from Suno; nothing is asked of anyone before that. Video players still load on click, and sound system test builds open in their own sites.",
 } as const;
 
-export const STRUDEL_AI = {
+export type SoundSystem = {
+  id: string;
+  title: string;
+  status: string;
+  summary: string;
+  demoUrl: string;
+  demoLabel: string;
+  repositoryUrl: string;
+  repositoryLabel: string;
+};
+
+export const KEYLIT: SoundSystem = {
+  id: "keylit",
+  title: "KEYLIT",
+  status: "Open for testing",
+  summary:
+    "Free AI piano tutor that hears you on the page. It lights the next key, you play it, then it lights the one after. Built for the OpenAI WebMCP Challenge.",
+  demoUrl: "https://keyboard-midi.uset182.chatgpt.site/",
+  demoLabel: "Open the test build",
+  repositoryUrl: "https://github.com/uset82/keylit",
+  repositoryLabel: "View the repository",
+} as const;
+
+export const STRUDEL_AI: SoundSystem = {
+  id: "strudelai",
   title: "StrudelAI",
   status: "Open for testing",
   summary:
@@ -166,6 +190,8 @@ export const STRUDEL_AI = {
   repositoryUrl: "https://github.com/uset82/StrudelAI",
   repositoryLabel: "View the repository",
 } as const;
+
+export const SOUND_SYSTEMS: readonly SoundSystem[] = [KEYLIT, STRUDEL_AI];
 
 /**
  * Privacy-enhanced YouTube embed: no cookies until playback actually starts.

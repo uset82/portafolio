@@ -9,8 +9,11 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { ConsentEmbed } from "@/components/media";
 import { SoundRoom } from "@/components/sound-room";
 import {
+  KEYLIT,
   MUSIC_PROFILE,
   MUSIC_TRACKS,
+  SOUND_SYSTEMS,
+  type SoundSystem,
   STRUDEL_AI,
   sunoAudioUrl,
   sunoEmbedUrl,
@@ -21,10 +24,21 @@ import {
 import { MUSIC_TRACKS_ES, VIDEO_WORKS_ES } from "@/content/i18n/media-library-es";
 import { formatLongDate } from "@/lib/i18n";
 
-test("StrudelAI is the featured public test build", () => {
+test("KEYLIT and StrudelAI are the featured public test builds", () => {
   const markup = renderToStaticMarkup(createElement(SoundRoom));
 
+  assert.equal(SOUND_SYSTEMS.length, 2);
+  assert.deepEqual(
+    SOUND_SYSTEMS.map((system: SoundSystem) => system.id),
+    ["keylit", "strudelai"],
+  );
+
   assert.match(markup, /sound-room__feature/);
+  assert.match(markup, /KEYLIT/);
+  assert.match(markup, new RegExp(KEYLIT.demoUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  assert.match(markup, new RegExp(KEYLIT.repositoryUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  assert.match(markup, /Free AI piano tutor/i);
+
   assert.match(markup, /StrudelAI/);
   assert.match(markup, /Open for testing/);
   assert.match(markup, new RegExp(STRUDEL_AI.demoUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));

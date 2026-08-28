@@ -4,17 +4,17 @@ import {
   MUSIC_PROFILE,
   MUSIC_TRACKS,
   SOUND_ROOM,
-  STRUDEL_AI,
+  SOUND_SYSTEMS,
   VIDEO_PROFILE,
   VIDEO_WORKS,
   youtubeEmbedUrl,
 } from "@/content/media-library";
 import {
+  localizeSoundSystem,
   localizeTrack,
   localizeVideo,
   MUSIC_PROFILE_ES,
   SOUND_ROOM_ES,
-  STRUDEL_AI_ES,
   VIDEO_PROFILE_ES,
 } from "@/content/i18n/media-library-es";
 import { ui } from "@/content/i18n/ui";
@@ -23,8 +23,9 @@ import { formatLongDate, resolveHref, type Locale } from "@/lib/i18n";
 /**
  * The Sound room.
  *
- * Two shelves, music and video. An empty shelf states that it is empty and
- * points at the public profile rather than inventing a track list.
+ * Two shelves, music and video, plus interactive sound systems. An empty shelf
+ * states that it is empty and points at the public profile rather than inventing
+ * a track list.
  *
  * A track with a direct audio file plays through the browser's own control, so
  * one press is enough and no provider's application is loaded. A work that only
@@ -35,11 +36,11 @@ export function SoundRoom({ locale = "en" }: { locale?: Locale }) {
   const copy = ui(locale).sound;
   const es = locale === "es";
   const room = es ? SOUND_ROOM_ES : SOUND_ROOM;
-  const strudel = es ? { ...STRUDEL_AI, ...STRUDEL_AI_ES } : STRUDEL_AI;
   const music = es ? { ...MUSIC_PROFILE, ...MUSIC_PROFILE_ES } : MUSIC_PROFILE;
   const video = es ? { ...VIDEO_PROFILE, ...VIDEO_PROFILE_ES } : VIDEO_PROFILE;
   const tracks = MUSIC_TRACKS.map((track) => localizeTrack(track, locale));
   const videos = VIDEO_WORKS.map((work) => localizeVideo(work, locale));
+  const systems = SOUND_SYSTEMS.map((system) => localizeSoundSystem(system, locale));
   const hasTracks = tracks.length > 0;
   const hasVideos = videos.length > 0;
 
@@ -58,27 +59,33 @@ export function SoundRoom({ locale = "en" }: { locale?: Locale }) {
         </div>
       </section>
 
-      <section className="sound-room__feature" aria-labelledby="sound-room-strudel-title">
-        <header>
-          <p className="section-label">{copy.systemLabel}</p>
-          <StatusTag tone="ready">{strudel.status}</StatusTag>
-          <h2 id="sound-room-strudel-title">{strudel.title}</h2>
-          <p>{strudel.summary}</p>
-        </header>
-        <nav aria-label={copy.strudelPathsAria}>
-          <ActionLink variant="primary" href={STRUDEL_AI.demoUrl} target="_blank" rel="noreferrer">
-            {strudel.demoLabel} <span aria-hidden="true">&#8599;</span>
-          </ActionLink>
-          <ActionLink
-            variant="secondary"
-            href={STRUDEL_AI.repositoryUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {strudel.repositoryLabel} <span aria-hidden="true">&#8599;</span>
-          </ActionLink>
-        </nav>
-      </section>
+      {systems.map((system) => (
+        <section
+          key={system.id}
+          className="sound-room__feature"
+          aria-labelledby={`sound-room-${system.id}-title`}
+        >
+          <header>
+            <p className="section-label">{copy.systemLabel}</p>
+            <StatusTag tone="ready">{system.status}</StatusTag>
+            <h2 id={`sound-room-${system.id}-title`}>{system.title}</h2>
+            <p>{system.summary}</p>
+          </header>
+          <nav aria-label={system.title}>
+            <ActionLink variant="primary" href={system.demoUrl} target="_blank" rel="noreferrer">
+              {system.demoLabel} <span aria-hidden="true">&#8599;</span>
+            </ActionLink>
+            <ActionLink
+              variant="secondary"
+              href={system.repositoryUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {system.repositoryLabel} <span aria-hidden="true">&#8599;</span>
+            </ActionLink>
+          </nav>
+        </section>
+      ))}
 
       <section className="sound-room__shelf" aria-labelledby="sound-room-music-title">
         <header>
