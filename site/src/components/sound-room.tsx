@@ -29,6 +29,15 @@ import { formatLongDate, resolveHref, type Locale } from "@/lib/i18n";
 const formatFolio = (order: number) => String(order).padStart(2, "0");
 
 /**
+ * A name written in capitals, like KEYLIT, standing beside one written in camel
+ * case, like StrudelAI. Cormorant's x-height is 0.39 of its size, so the two
+ * cannot share one optical setting at the same font-size: the capitals present
+ * an unbroken wall where the camel-case name reads mostly at x-height. The
+ * title carries the distinction so the stylesheet can correct for it.
+ */
+const isSetInCapitals = (title: string) => /[A-Za-z]/.test(title) && title === title.toUpperCase();
+
+/**
  * The Sound room.
  *
  * Two shelves, music and video, plus interactive sound systems. An empty shelf
@@ -88,7 +97,12 @@ export function SoundRoom({ locale = "en" }: { locale?: Locale }) {
             </div>
 
             <div className="sound-room__identity">
-              <h2 id={`sound-room-${system.id}-title`}>{system.title}</h2>
+              <h2
+                id={`sound-room-${system.id}-title`}
+                data-caps={isSetInCapitals(system.title) || undefined}
+              >
+                {system.title}
+              </h2>
               <p>{system.summary}</p>
               <nav aria-label={system.title}>
                 <ActionLink
