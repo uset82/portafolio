@@ -82,6 +82,32 @@ test("abuse guard rejects cross-site, same-site, and unverifiable request origin
   }
 });
 
+test("abuse guard accepts same-origin and local loopback development origins", () => {
+  const localGuard = createInMemoryCcAiAbuseGuard({ allowedOrigin: "http://localhost:3000" });
+
+  for (const localSource of [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:3001",
+    "http://127.0.0.1:3001",
+    "http://[::1]:3000",
+  ]) {
+    const localReq = new Request("http://localhost:3000/api/cc-ai", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        origin: localSource,
+        "sec-fetch-site": "same-origin",
+        "x-vercel-forwarded-for": "127.0.0.1",
+      },
+      body: JSON.stringify({ message: "Question" }),
+    });
+    const lease = localGuard.acquire(localReq);
+    assert.ok(lease);
+    lease.release();
+  }
+});
+
 test("abuse guard applies fixed-window limits to both IP and server session", () => {
   const guard = createInMemoryCcAiAbuseGuard({
     allowedOrigin: origin,

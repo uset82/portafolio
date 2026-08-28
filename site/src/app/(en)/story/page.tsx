@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Story",
   description:
     "Carlos Alfredo Carpio Meza's approved public biography, creative-engineering practice, and privacy-safe CV publication status.",
+  alternates: { canonical: "/story", languages: { en: "/story", es: "/es/story" } },
 };
 
 export default function StoryPage() {

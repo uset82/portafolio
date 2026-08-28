@@ -18,6 +18,10 @@ export const metadata: Metadata = {
   title: "Laboratorio",
   description:
     "Un registro prudente de los hilos de Laboratorio de Carlos Alfredo Carpio Meza: Future Energy, Electrónica / IA y Sistemas aéreos, sin afirmar hardware en funcionamiento, sistemas en vivo ni rendimiento de vuelo.",
+  alternates: {
+    canonical: "/es/laboratory",
+    languages: { en: "/laboratory", es: "/es/laboratory" },
+  },
 };
 
 export default function LaboratoryPageEs() {

@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   title: "Laboratory",
   description:
     "A concept-safe register for Carlos Alfredo Carpio Meza's Future Energy, Electronics / AI, and Aerial systems Laboratory threads, without claims of functioning hardware, live systems, or flight performance.",
+  alternates: { canonical: "/laboratory", languages: { en: "/laboratory", es: "/es/laboratory" } },
 };
 
 export default function LaboratoryPage() {

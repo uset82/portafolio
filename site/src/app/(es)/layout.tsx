@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 
 import { SiteDocument } from "@/components/site-document";
+import { siteUrl } from "@/lib/site-url";
 
 import "../globals.css";
 
@@ -12,6 +13,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: siteUrl,
   title: {
     default: "Carlos Alfredo Carpio Meza — Ingeniero, inventor, tecnólogo creativo",
     template: "%s — Carlos Alfredo Carpio Meza",

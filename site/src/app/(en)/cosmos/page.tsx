@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Cosmos",
   description:
     "Try ASTROEA, an astrology app inspired by astro.com, and Pináculo, a numerology app with interpretations that draw on Carl Jung. Creative and personal practice—not scientific, medical, or predictive advice.",
+  alternates: { canonical: "/cosmos", languages: { en: "/cosmos", es: "/es/cosmos" } },
 };
 
 export default function CosmosPage() {

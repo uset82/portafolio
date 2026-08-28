@@ -1,21 +1,24 @@
 import type { MetadataRoute } from "next";
 
+import { absoluteUrl } from "@/lib/site-url";
+
 /**
- * The Railway deployment is an unapproved preview, not an authorized production
- * launch (see `maintaskplan.md` Phase 8). Every page already sends
- * `<meta name="robots" content="noindex">`, but `/robots.txt` did not exist and
- * resolved to the 404 page, so crawlers received no directive at the origin level.
+ * The site now serves its approved production origin, https://carloscarpio.dev,
+ * so the blanket disallow that guarded the unapproved Railway preview is lifted.
  *
- * Disallow everything until production launch is approved. At that point this file
- * becomes the place to allow crawling and declare the sitemap.
+ * `/ana/` stays closed: it is the internal Ana surface, and `/ana/debug` already
+ * sends `robots: { index: false, follow: false }`. `/api/` is closed for the same
+ * reason — those routes answer the application, not a reader.
  */
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
         userAgent: "*",
-        disallow: ["/", "/ana/"],
+        allow: "/",
+        disallow: ["/ana/", "/api/"],
       },
     ],
+    sitemap: absoluteUrl("/sitemap.xml"),
   };
 }

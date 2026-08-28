@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Contact",
   description:
     "Carlos Alfredo Carpio Meza's privacy-first contact route with one verified public GitHub profile and no unapproved direct contact details.",
+  alternates: { canonical: "/contact", languages: { en: "/contact", es: "/es/contact" } },
 };
 
 export default function ContactPage() {

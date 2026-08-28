@@ -58,8 +58,8 @@ export const rawSiteContent = {
       kind: "external-page",
       owner: "Carlos Carpio",
       public: true,
-      url: "https://carloscarpio.up.railway.app/",
-      checkedOn: "2026-08-13",
+      url: "https://carloscarpio.dev/",
+      checkedOn: "2026-08-28",
       notes:
         "The public homepage includes Enter the Observatory and presents the Observatory as the first-room visual frame, not a separate product.",
     },

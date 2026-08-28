@@ -16,7 +16,12 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
   const { slug } = await params;
   const system = selectedSystems.find((item) => item.slug === slug);
-  return system ? { title: system.title } : {};
+  if (!system) return {};
+
+  /* Case studies render in English only — there is no `/es/work/[slug]` route —
+   * so they declare a canonical without language alternates, matching the shape
+   * the sitemap uses for these paths. */
+  return { title: system.title, alternates: { canonical: `/work/${slug}` } };
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {

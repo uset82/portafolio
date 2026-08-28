@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Work",
   description:
     "Work Carlos Alfredo Carpio Meza has been building since 2022. Public GitHub register grouped by practice, with search for projects, playable demos, and astrology apps.",
+  alternates: { canonical: "/work", languages: { en: "/work", es: "/es/work" } },
 };
 
 export default function WorkPage() {

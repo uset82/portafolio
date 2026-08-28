@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Arcade",
   description:
     "Games built by Carlos Alfredo Carpio Meza: which ones you can play in the browser right now, which are waiting on hosting, and which run on hardware instead.",
+  alternates: { canonical: "/arcade", languages: { en: "/arcade", es: "/es/arcade" } },
 };
 
 export default function ArcadePage() {

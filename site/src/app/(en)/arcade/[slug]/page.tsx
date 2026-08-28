@@ -15,7 +15,16 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: ArcadeGamePageProps): Promise<Metadata> {
   const { slug } = await params;
   const game = findArcadeGame(slug);
-  return game ? { title: game.title, description: game.description } : {};
+  if (!game) return {};
+
+  return {
+    title: game.title,
+    description: game.description,
+    alternates: {
+      canonical: `/arcade/${slug}`,
+      languages: { en: `/arcade/${slug}`, es: `/es/arcade/${slug}` },
+    },
+  };
 }
 
 export default async function ArcadeGamePage({ params }: ArcadeGamePageProps) {

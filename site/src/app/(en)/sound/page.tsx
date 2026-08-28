@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Sound",
   description:
     "Music from Suno, video on YouTube, and StrudelAI open for testing. The song plays in one press; the video loads on click.",
+  alternates: { canonical: "/sound", languages: { en: "/sound", es: "/es/sound" } },
 };
 
 export default function SoundPage() {

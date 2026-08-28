@@ -100,6 +100,23 @@ const getClientAddress = (request: Request) => {
   return forwarded?.split(",")[0]?.trim() || "unavailable";
 };
 
+const isLoopbackHostname = (hostname: string) =>
+  hostname === "localhost" ||
+  hostname === "127.0.0.1" ||
+  hostname === "[::1]" ||
+  hostname === "::1" ||
+  hostname === "0.0.0.0" ||
+  hostname.endsWith(".localhost");
+
+const isLoopbackOrigin = (originUrl: string) => {
+  try {
+    const parsed = new URL(originUrl);
+    return isLoopbackHostname(parsed.hostname);
+  } catch {
+    return false;
+  }
+};
+
 const verifyRequestOrigin = (request: Request, configuredOrigin: string | undefined) => {
   const fetchSite = request.headers.get("sec-fetch-site")?.toLowerCase();
   if (fetchSite && fetchSite !== "same-origin" && fetchSite !== "none") {
@@ -116,8 +133,20 @@ const verifyRequestOrigin = (request: Request, configuredOrigin: string | undefi
     throw new CcAiAbuseError("forbidden", false);
   }
 
-  const targetOrigin = configuredOrigin ?? new URL(request.url).origin;
-  if (sourceOrigin !== targetOrigin) throw new CcAiAbuseError("forbidden", false);
+  const requestOrigin = new URL(request.url).origin;
+
+  if (sourceOrigin === configuredOrigin || sourceOrigin === requestOrigin) {
+    return;
+  }
+
+  if (
+    isLoopbackOrigin(sourceOrigin) &&
+    (isLoopbackOrigin(requestOrigin) || (configuredOrigin && isLoopbackOrigin(configuredOrigin)))
+  ) {
+    return;
+  }
+
+  throw new CcAiAbuseError("forbidden", false);
 };
 
 const createSessionCookie = (request: Request, sessionId: string) => {
