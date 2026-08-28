@@ -10164,9 +10164,15 @@ body:has(.observatory-hero) .site-header .site-header__status {
   line-height: 1.7;
 }
 
+/* The hero states this page's grammar: a narrow rail of marks beside a wide
+   column of voice. The systems dropped that grammar and stacked as plain blocks,
+   so a second system read as the first one repeated. They sit on the hero's grid
+   now, and the rail carries the folio that makes the pair a sequence. */
 .sound-room__feature {
   display: grid;
-  gap: clamp(1.75rem, 3vw, 2.5rem);
+  grid-template-columns: minmax(7rem, 0.25fr) minmax(20rem, 1.05fr);
+  gap: clamp(2rem, 5vw, 6rem);
+  align-items: start;
   width: min(100%, var(--page-max));
   margin-inline: auto;
   padding: clamp(3rem, 6vw, 5.5rem) var(--page-gutter);
@@ -10174,16 +10180,36 @@ body:has(.observatory-hero) .site-header .site-header__status {
   background: var(--color-linen);
 }
 
-.sound-room__feature header {
-  max-width: 44rem;
+/* Consecutive systems are one shelf, not two pages. The second opens tighter so
+   the eye reads 00 and 01 as a series instead of starting the page over. */
+.sound-room__feature + .sound-room__feature {
+  padding-top: clamp(1.5rem, 3vw, 2.75rem);
 }
 
 .sound-room__feature .section-label {
-  margin: 0 0 0.85rem;
+  margin: 0;
+  color: var(--color-text-secondary-on-tint);
 }
 
-.sound-room__feature .ui-status {
-  margin-bottom: 1.25rem;
+/* A catalogue folio, set in the display serif at reading scale. Tabular figures
+   hold 00 and 01 to one width, so the rail keeps a true edge down the page.
+   Oak rather than taupe: the numeral is ornament and carries `aria-hidden`, but
+   at 3.34:1 it clears the large-text ratio on its own instead of resting on the
+   decorative exemption — and taupe read as a faded artifact, not a mark. */
+.sound-room__folio {
+  font-family: var(--font-display);
+  font-size: clamp(3.25rem, 6vw, 4.75rem);
+  font-weight: 300;
+  line-height: 0.78;
+  letter-spacing: -0.045em;
+  color: var(--color-oak);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.sound-room__feature .sound-room__identity {
+  align-content: start;
+  gap: clamp(1.25rem, 2.5vw, 1.75rem);
+  max-width: 44rem;
 }
 
 .sound-room__feature h2 {
@@ -10197,10 +10223,25 @@ body:has(.observatory-hero) .site-header .site-header__status {
   text-wrap: balance;
 }
 
-.sound-room__feature header > p:last-child {
+/* KEYLIT beside StrudelAI: identical font-size, different optical mass. At 64px
+   this face measures a 40px cap height against a 25px x-height, so a name in
+   capitals presents an unbroken wall while a camel-case one reads mostly at
+   x-height and looks the lighter of the two. The -0.05em tracking compounds it —
+   that setting suits display lowercase, and closes capitals up until they crowd.
+   Capitals therefore come down a step and open out, which is the correction
+   metal type made with a smaller size and looser spacing for the same reason. */
+.sound-room__feature h2[data-caps] {
+  font-size: clamp(2.3rem, 4.45vw, 4.45rem);
+  letter-spacing: 0.012em;
+}
+
+/* Linen is a tint, and the tokens are explicit that secondary copy on a tint
+   needs the darker ink to hold AA. This paragraph was reading in the untinted
+   secondary. */
+.sound-room__feature .sound-room__identity > p {
   max-width: 38rem;
-  margin: 1.25rem 0 0;
-  color: var(--color-text-secondary);
+  margin: 0;
+  color: var(--color-text-secondary-on-tint);
   font-size: clamp(1rem, 1.3vw, 1.2rem);
   line-height: 1.55;
 }
@@ -10801,6 +10842,35 @@ body:has(.observatory-hero) .site-header .site-header__status {
     grid-template-columns: 1fr;
     gap: 2rem;
     padding-top: calc(var(--header-height) + 2.5rem);
+  }
+
+  /* One column: the rail becomes a header strip, and the folio sits beside its
+     own label rather than looming over a narrow measure. */
+  .sound-room__feature {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .sound-room__feature .sound-room__rail {
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "label label"
+      "folio status";
+    align-items: center;
+    gap: 0.75rem 1rem;
+  }
+
+  .sound-room__feature .sound-room__rail .section-label {
+    grid-area: label;
+  }
+
+  .sound-room__folio {
+    grid-area: folio;
+    font-size: 2.5rem;
+  }
+
+  .sound-room__feature .sound-room__rail .ui-status {
+    grid-area: status;
   }
 
   .arcade-index__game-spec > div {

@@ -21,6 +21,23 @@ import { ui } from "@/content/i18n/ui";
 import { formatLongDate, resolveHref, type Locale } from "@/lib/i18n";
 
 /**
+ * The page reads as one numbered catalogue — systems, then Music, then Video —
+ * so a system's folio is its position, not a constant. The label used to be the
+ * literal string "System / 00", which was right while one system existed and
+ * silently stamped 00 on every one of them once a second arrived.
+ */
+const formatFolio = (order: number) => String(order).padStart(2, "0");
+
+/**
+ * A name written in capitals, like KEYLIT, standing beside one written in camel
+ * case, like StrudelAI. Cormorant's x-height is 0.39 of its size, so the two
+ * cannot share one optical setting at the same font-size: the capitals present
+ * an unbroken wall where the camel-case name reads mostly at x-height. The
+ * title carries the distinction so the stylesheet can correct for it.
+ */
+const isSetInCapitals = (title: string) => /[A-Za-z]/.test(title) && title === title.toUpperCase();
+
+/**
  * The Sound room.
  *
  * Two shelves, music and video, plus interactive sound systems. An empty shelf
@@ -59,33 +76,56 @@ export function SoundRoom({ locale = "en" }: { locale?: Locale }) {
         </div>
       </section>
 
-      {systems.map((system) => (
-        <section
-          key={system.id}
-          className="sound-room__feature"
-          aria-labelledby={`sound-room-${system.id}-title`}
-        >
-          <header>
-            <p className="section-label">{copy.systemLabel}</p>
-            <StatusTag tone="ready">{system.status}</StatusTag>
-            <h2 id={`sound-room-${system.id}-title`}>{system.title}</h2>
-            <p>{system.summary}</p>
-          </header>
-          <nav aria-label={system.title}>
-            <ActionLink variant="primary" href={system.demoUrl} target="_blank" rel="noreferrer">
-              {system.demoLabel} <span aria-hidden="true">&#8599;</span>
-            </ActionLink>
-            <ActionLink
-              variant="secondary"
-              href={system.repositoryUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {system.repositoryLabel} <span aria-hidden="true">&#8599;</span>
-            </ActionLink>
-          </nav>
-        </section>
-      ))}
+      {systems.map((system, order) => {
+        const folio = formatFolio(order);
+
+        return (
+          <section
+            key={system.id}
+            className="sound-room__feature"
+            aria-labelledby={`sound-room-${system.id}-title`}
+          >
+            <div className="sound-room__rail">
+              <p className="section-label">{copy.systemLabel(folio)}</p>
+              {/* The folio is the label again at reading scale, for the eye
+                  alone: the section label above it already says the number, so
+                  a second announcement would only repeat it. */}
+              <span className="sound-room__folio" aria-hidden="true">
+                {folio}
+              </span>
+              <StatusTag tone="ready">{system.status}</StatusTag>
+            </div>
+
+            <div className="sound-room__identity">
+              <h2
+                id={`sound-room-${system.id}-title`}
+                data-caps={isSetInCapitals(system.title) || undefined}
+              >
+                {system.title}
+              </h2>
+              <p>{system.summary}</p>
+              <nav aria-label={system.title}>
+                <ActionLink
+                  variant="primary"
+                  href={system.demoUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {system.demoLabel} <span aria-hidden="true">&#8599;</span>
+                </ActionLink>
+                <ActionLink
+                  variant="secondary"
+                  href={system.repositoryUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {system.repositoryLabel} <span aria-hidden="true">&#8599;</span>
+                </ActionLink>
+              </nav>
+            </div>
+          </section>
+        );
+      })}
 
       <section className="sound-room__shelf" aria-labelledby="sound-room-music-title">
         <header>
