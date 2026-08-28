@@ -1,19 +1,31 @@
 /**
- * `NEXT_PUBLIC_SITE_URL` is already the approved origin for OpenRouter's
- * `HTTP-Referer` and the CACM AI origin allowlist, so canonical and Open Graph
- * URLs read that same variable rather than introducing a second source of
- * truth. Local runs set it to http://localhost:3000, which keeps dev previews
- * from advertising production URLs.
+ * The canonical origin of the launched site. This is a fact, not configuration:
+ * `metadataBase`, the sitemap, and every canonical tag must agree on one origin
+ * or search engines resolve the disagreement by dropping pages.
  *
- * Unlike `buildOpenRouterOptions`, this cannot throw on a malformed value: there
- * a bad variable fails one API call, but `metadataBase` and `sitemap` are read
- * during the build, so raising would take the whole deployment down. Anything
- * unparseable falls back to the production origin instead.
+ * Production therefore ignores `NEXT_PUBLIC_SITE_URL` entirely. `next build`
+ * sets `NODE_ENV=production`, so a deployment cannot silently start advertising
+ * a preview host because a dashboard variable was reverted or never updated —
+ * a failure that ships green and only surfaces once pages leave the index. It
+ * also means a preview deployment canonicalizes to production rather than
+ * competing with it for the same content.
+ *
+ * Outside production the variable is honoured, so `next dev` keeps advertising
+ * http://localhost:3000 instead of the live domain. Unlike
+ * `buildOpenRouterOptions`, an unusable value cannot throw here: metadata is
+ * read during the build, so raising would take the whole deployment down.
  */
 const PRODUCTION_ORIGIN = "https://carloscarpio.dev";
 
-const resolveSiteUrl = (value: string | undefined): URL => {
-  const candidate = value?.trim();
+export type SiteUrlEnvironment = {
+  NODE_ENV?: string | undefined;
+  NEXT_PUBLIC_SITE_URL?: string | undefined;
+};
+
+export const resolveSiteUrl = (environment: SiteUrlEnvironment): URL => {
+  if (environment.NODE_ENV === "production") return new URL(PRODUCTION_ORIGIN);
+
+  const candidate = environment.NEXT_PUBLIC_SITE_URL?.trim();
   if (!candidate || !URL.canParse(candidate)) return new URL(PRODUCTION_ORIGIN);
 
   const url = new URL(candidate);
@@ -21,6 +33,9 @@ const resolveSiteUrl = (value: string | undefined): URL => {
   return usable ? url : new URL(PRODUCTION_ORIGIN);
 };
 
-export const siteUrl = resolveSiteUrl(process.env.NEXT_PUBLIC_SITE_URL);
+export const siteUrl = resolveSiteUrl({
+  NODE_ENV: process.env.NODE_ENV,
+  NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+});
 
 export const absoluteUrl = (path: string): string => new URL(path, siteUrl).toString();
