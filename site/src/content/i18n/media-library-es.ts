@@ -5,14 +5,14 @@
  * point at exactly the same places. Track titles stay as the platform stores
  * them; only the prose around a track is translated.
  */
-import type { MusicTrack, VideoWork } from "@/content/media-library";
+import type { MusicTrack, SoundSystem, VideoWork } from "@/content/media-library";
 import type { Locale } from "@/lib/i18n";
 
 export const SOUND_ROOM_ES = {
   eyebrow: "Sonido / 02",
   heading: "Música que puedes oír y vídeo que puedes ver.",
   description:
-    "Música hecha con Suno, vídeo publicado en YouTube y KEYLIT, un tutor de piano con IA gratuito abierto para probar.",
+    "Música hecha con Suno, vídeo publicado en YouTube y sistemas de sonido interactivos como KEYLIT y StrudelAI abiertos para probar.",
   emptyState: {
     music:
       "Todavía no hay ninguna pista incrustada aquí. Mientras tanto, el catálogo publicado completo está en Suno.",
@@ -20,7 +20,7 @@ export const SOUND_ROOM_ES = {
       "Todavía no hay ningún vídeo incrustado aquí. Mientras tanto, el canal publicado completo está en YouTube.",
   },
   playbackNote:
-    "Pulsa play y la música se transmite directamente desde Suno; antes de eso no se le pide nada a nadie. Los reproductores de vídeo siguen cargándose al hacer clic, y la versión de prueba de KEYLIT se abre en su propio sitio.",
+    "Pulsa play y la música se transmite directamente desde Suno; antes de eso no se le pide nada a nadie. Los reproductores de vídeo siguen cargándose al hacer clic, y las versiones de prueba de los sistemas de sonido se abren en su propio sitio.",
 } as const;
 
 export const MUSIC_PROFILE_ES = {
@@ -108,3 +108,18 @@ export const STRUDEL_AI_ES = {
   demoLabel: "Abrir la versión de prueba",
   repositoryLabel: "Ver el repositorio",
 } as const;
+
+export const SOUND_SYSTEMS_ES: Record<
+  string,
+  { status: string; summary: string; demoLabel: string; repositoryLabel: string }
+> = {
+  keylit: KEYLIT_ES,
+  strudelai: STRUDEL_AI_ES,
+};
+
+export function localizeSoundSystem(system: SoundSystem, locale: Locale): SoundSystem {
+  if (locale === "en") return system;
+  const copy = SOUND_SYSTEMS_ES[system.id];
+  if (!copy) return system;
+  return { ...system, ...copy };
+}
