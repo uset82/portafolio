@@ -1,16 +1,16 @@
 import { ConsentEmbed } from "@/components/media";
 import { ActionLink, StatusTag } from "@/components/ui";
 import {
+  KEYLIT,
   MUSIC_PROFILE,
   MUSIC_TRACKS,
   SOUND_ROOM,
-  SOUND_SYSTEMS,
   VIDEO_PROFILE,
   VIDEO_WORKS,
   youtubeEmbedUrl,
 } from "@/content/media-library";
 import {
-  localizeSoundSystem,
+  KEYLIT_ES,
   localizeTrack,
   localizeVideo,
   MUSIC_PROFILE_ES,
@@ -23,7 +23,7 @@ import { formatLongDate, resolveHref, type Locale } from "@/lib/i18n";
 /**
  * The Sound room.
  *
- * Two shelves, music and video, plus interactive sound systems. An empty shelf
+ * Two shelves, music and video, plus a featured interactive sound system. An empty shelf
  * states that it is empty and points at the public profile rather than inventing
  * a track list.
  *
@@ -36,11 +36,11 @@ export function SoundRoom({ locale = "en" }: { locale?: Locale }) {
   const copy = ui(locale).sound;
   const es = locale === "es";
   const room = es ? SOUND_ROOM_ES : SOUND_ROOM;
+  const keylit = es ? { ...KEYLIT, ...KEYLIT_ES } : KEYLIT;
   const music = es ? { ...MUSIC_PROFILE, ...MUSIC_PROFILE_ES } : MUSIC_PROFILE;
   const video = es ? { ...VIDEO_PROFILE, ...VIDEO_PROFILE_ES } : VIDEO_PROFILE;
   const tracks = MUSIC_TRACKS.map((track) => localizeTrack(track, locale));
   const videos = VIDEO_WORKS.map((work) => localizeVideo(work, locale));
-  const systems = SOUND_SYSTEMS.map((system) => localizeSoundSystem(system, locale));
   const hasTracks = tracks.length > 0;
   const hasVideos = videos.length > 0;
 
@@ -59,33 +59,27 @@ export function SoundRoom({ locale = "en" }: { locale?: Locale }) {
         </div>
       </section>
 
-      {systems.map((system) => (
-        <section
-          key={system.id}
-          className="sound-room__feature"
-          aria-labelledby={`sound-room-${system.id}-title`}
-        >
-          <header>
-            <p className="section-label">{copy.systemLabel}</p>
-            <StatusTag tone="ready">{system.status}</StatusTag>
-            <h2 id={`sound-room-${system.id}-title`}>{system.title}</h2>
-            <p>{system.summary}</p>
-          </header>
-          <nav aria-label={system.title}>
-            <ActionLink variant="primary" href={system.demoUrl} target="_blank" rel="noreferrer">
-              {system.demoLabel} <span aria-hidden="true">&#8599;</span>
-            </ActionLink>
-            <ActionLink
-              variant="secondary"
-              href={system.repositoryUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {system.repositoryLabel} <span aria-hidden="true">&#8599;</span>
-            </ActionLink>
-          </nav>
-        </section>
-      ))}
+      <section className="sound-room__feature" aria-labelledby="sound-room-keylit-title">
+        <header>
+          <p className="section-label">{copy.systemLabel}</p>
+          <StatusTag tone="ready">{keylit.status}</StatusTag>
+          <h2 id="sound-room-keylit-title">{keylit.title}</h2>
+          <p>{keylit.summary}</p>
+        </header>
+        <nav aria-label={keylit.title}>
+          <ActionLink variant="primary" href={KEYLIT.demoUrl} target="_blank" rel="noreferrer">
+            {keylit.demoLabel} <span aria-hidden="true">&#8599;</span>
+          </ActionLink>
+          <ActionLink
+            variant="secondary"
+            href={KEYLIT.repositoryUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {keylit.repositoryLabel} <span aria-hidden="true">&#8599;</span>
+          </ActionLink>
+        </nav>
+      </section>
 
       <section className="sound-room__shelf" aria-labelledby="sound-room-music-title">
         <header>
