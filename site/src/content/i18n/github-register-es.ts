@@ -30,6 +30,10 @@ export const WORK_GROUP_TITLES_ES: Record<WorkGroupId, string> = {
 /** The descriptions this site writes, keyed by repository name. */
 export const DESCRIPTIONS_ES: Record<string, string> = {
   portafolio: "Este sitio de portafolio.",
+  blenderSVG:
+    "Kurva: un lienzo de diseño local para personajes, SVG y Blender. Dibuja o suelta una imagen, obtén vectores limpios por capas que son tuyos, previsualízalos en Blender si lo tienes instalado y pide una edición a un agente solo cuando tú lo actives. Gratis y de código abierto, y se ejecuta en tu máquina.",
+  Pistola:
+    "Un editor 3D nativo de IA: describe un objeto y obtén una escena editable. FreeCAD y Multi-Agent-CAD convierten un brief en geometría real, y Cursor, VS Code o Codex pueden manejar el mismo espacio de trabajo por MCP.",
   mentora:
     "Fork de una base Mentora de la universidad. Carlos es el desarrollador principal de esta copia.",
   Jacobgolf:
@@ -71,6 +75,8 @@ export const DESCRIPTIONS_ES: Record<string, string> = {
 
 /** Call-to-action labels, keyed by repository name. */
 export const TRY_LABELS_ES: Record<string, string> = {
+  blenderSVG: "Abrir Kurva",
+  Pistola: "Abrir el espacio de trabajo de Pistola",
   StrudelAI: "Prueba StrudelAI",
   Jacobgolf: "Jugar a Jacobs Golfspill",
   QubeSolve: "Resolver con QubeSolve",
@@ -98,6 +104,7 @@ const ROOM_LABELS_ES: Record<string, string> = {
   "On Sound": "En Sonido",
   "On Cosmos": "En Cosmos",
   "On Arcade": "En Arcade",
+  "Case study": "Caso de estudio",
 };
 
 const OTHER_LABELS_ES: Record<string, string> = {

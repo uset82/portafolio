@@ -1,6 +1,12 @@
 import type { SiteContent, SourceReference } from "@/content/schemas";
 
-const DEFAULT_MAX_CONTEXT_CHARACTERS = 8_000;
+/* Kurva and Pistola were added as approved public projects, which gave the
+ * public record two more eligible entries. At 8,000 characters the last entry
+ * no longer fit the system message and the context silently reported itself as
+ * truncated, so the default budget is raised to carry the whole current public
+ * record while leaving room for the next addition. This is a context budget,
+ * not a model window: the ceiling is unchanged and still bounds the payload. */
+const DEFAULT_MAX_CONTEXT_CHARACTERS = 16_000;
 const MIN_CONTEXT_CHARACTERS = 2_000;
 const MAX_CONTEXT_CHARACTERS = 20_000;
 

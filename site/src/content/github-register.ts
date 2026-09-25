@@ -31,6 +31,10 @@ const TITLE_OVERRIDES: Record<string, string> = {
 
 const DESCRIPTION_OVERRIDES: Record<string, string> = {
   portafolio: "This portfolio site.",
+  blenderSVG:
+    "Kurva: a local design canvas for characters, SVG and Blender. Sketch or drop in a picture, get clean layered vectors you own, preview them in Blender if it is installed, and ask an agent for an edit only when you turn one on. Free and open source, and it runs on your machine.",
+  Pistola:
+    "An AI-native 3D editor: describe an object and get an editable scene. FreeCAD and Multi-Agent-CAD turn a brief into real geometry, and Cursor, VS Code or Codex can drive the same workspace over MCP.",
   mentora: "Fork of a college Mentora base. Carlos is the primary developer of this copy.",
   Jacobgolf:
     "A browser mini golf challenge in HTML5 canvas and vanilla JavaScript. Made by Carlos's son Jacob at nine years old: his own idea, and his own fixes.",
@@ -72,9 +76,19 @@ const DESCRIPTION_OVERRIDES: Record<string, string> = {
 const ROOM_OVERRIDES: Record<string, { href: string; label: string }> = {
   portafolio: { href: "/", label: "This site" },
   StrudelAI: { href: "/sound", label: "On Sound" },
+  blenderSVG: { href: "/work/kurva", label: "Case study" },
+  Pistola: { href: "/work/pistola", label: "Case study" },
 };
 
 const TRY_OVERRIDES: Record<string, { url: string; label: string }> = {
+  blenderSVG: {
+    url: "https://kurva.agency/",
+    label: "Open Kurva",
+  },
+  Pistola: {
+    url: "https://pistola.canner.app/",
+    label: "Open the Pistola workspace",
+  },
   StrudelAI: {
     url: "https://strudelzeroai.app.canner.ca/",
     label: "Try StrudelAI",
@@ -265,6 +279,8 @@ const GROUP_BY_NAME: Record<string, WorkGroupId> = {
   "avatar-studio": "design",
   diagramcloner: "design",
   portafolio: "design",
+  blenderSVG: "design",
+  Pistola: "design",
   chaclacayo: "websites",
   pacha: "websites",
   RS232_VHD_DE2115: "hardware",

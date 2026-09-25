@@ -64,7 +64,7 @@ test("the Work route features Project Orbit and lists the public GitHub register
   assert.match(markup, /Work from 2022 to now/);
   assert.match(markup, /role="search"/);
   assert.match(markup, /Project, game, or astro/);
-  assert.equal((markup.match(/class="project-register__row"/g) ?? []).length, 62);
+  assert.equal((markup.match(/class="project-register__row"/g) ?? []).length, 64);
   assert.match(markup, /href="https:\/\/github.com\/uset82\/ASTROEA"/);
   assert.match(markup, /href="https:\/\/github.com\/uset82\/pinaculo"/);
   assert.doesNotMatch(markup, /brain-private|marcoloco|ask-bank-ai/);

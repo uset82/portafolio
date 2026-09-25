@@ -47,6 +47,37 @@ and `CC_AI_REASONING_EFFORT=low`, and confirm the deployed `OPENROUTER_API_KEY` 
 `M.11` the licence line for that track · `M.10` your Buy Me a Coffee handle · a Railway service for
 `My-Football-Game` · Gemini's AVIF is larger than its WebP and needs re-encoding
 
+### 2026-09-25 — Kurva and Pistola are on the site
+
+Two Design & Web projects Carlos just built are now part of the portfolio, both as **full case
+studies** and both in the Work register.
+
+- `/work/kurva` — `https://kurva.agency/`, canonical repo `uset82/blenderSVG` (public, MIT,
+  TypeScript). `kurva.agency`'s own install text clones that repo, which is why it is the one the
+  register and the case study point at.
+- `/work/pistola` — the public editor at `https://pistola.canner.app/`, repo `uset82/Pistola`.
+  Carlos's original link (`canner.ca/dashboard/projects/pistolacodex`) is a private dashboard route
+  and is deliberately **not** published.
+
+Carlos confirmed the attribution before anything shipped: Pistola is his own `uset82` work, and the
+other names on that repo's commit history — `Animesh Patel`, `cursoragent` — are contributors and
+agents, not co-owners.
+
+Both are seated in the **Project Orbit** and both appear in the Work register under Design, which
+grows **62 → 64 public repos**. That also means two facts worth remembering next time someone adds a
+project:
+
+1. The flat SVG orbit is a **literal orthographic projection** of the 3D ring math, not a separate
+   drawing. The two new seats were derived from that projection (fitted to the nine existing seats,
+   accurate to ~5 px), so a future addition should be computed the same way rather than placed by eye.
+2. Adding two eligible public records pushed the CACM AI context past its character budget and the
+   builder's overflow `break` quietly returned `truncated: true`. The budget went 8,000 → 16,000
+   (ceiling 20,000 unchanged, measured need 13,616). Worth re-checking after any content growth.
+
+One test failure remains and is **not** from this work: `brain-check.test.ts` expects the CLI to exit
+`1` on a `rights: "pending"` project and it exits `0`. It fails identically on a stashed clean tree.
+Left alone rather than forcing an exit code in production logic to satisfy a test.
+
 ### 2026-08-28 — CodeAncestry joins the Laboratory as its fourth thread, and it is a paper
 
 The Laboratory register now runs `01` Future Energy · `02` Electronics / AI · `03` Aerial systems ·
