@@ -21,6 +21,7 @@
     "ana:audit": "tsx ../scripts/ana-audit-repositories.ts",
     "repo2agent": "tsx ../scripts/repo2agent.ts",
     "boundary:check": "tsx scripts/validate-server-boundaries.ts",
+  "metadata:check": "tsx scripts/validate-metadata.ts",
     "assets:check": "tsx scripts/check-3d-assets.ts",
     "immersive:check": "tsx scripts/validate-immersive-build.ts",
     "assets:optimize": "tsx scripts/optimize-3d-asset.ts",
@@ -30,7 +31,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "verify:prebuild": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test",
-    "verify": "pnpm verify:prebuild && pnpm build && pnpm immersive:check"
+    "verify": "pnpm verify:prebuild && pnpm build && pnpm immersive:check && pnpm metadata:check"
   },
   "dependencies": {
     "@openrouter/sdk": "0.13.65",
