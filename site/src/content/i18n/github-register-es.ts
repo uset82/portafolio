@@ -31,7 +31,7 @@ export const WORK_GROUP_TITLES_ES: Record<WorkGroupId, string> = {
 export const DESCRIPTIONS_ES: Record<string, string> = {
   portafolio: "Este sitio de portafolio.",
   blenderSVG:
-    "Kurva: un lienzo de diseño local para personajes, SVG y Blender. Dibuja o suelta una imagen, obtén vectores limpios por capas que son tuyos, previsualízalos en Blender si lo tienes instalado y pide una edición a un agente solo cuando tú lo actives. Gratis y de código abierto, y se ejecuta en tu máquina.",
+    "Un lienzo de diseño local para personajes, SVG y Blender. Dibuja o suelta una imagen, obtén vectores limpios por capas que son tuyos, previsualízalos en Blender si lo tienes instalado y pide una edición a un agente solo cuando tú lo actives. Gratis y de código abierto, y se ejecuta en tu máquina.",
   Pistola:
     "Un editor 3D nativo de IA: describe un objeto y obtén una escena editable. FreeCAD y Multi-Agent-CAD convierten un brief en geometría real, y Cursor, VS Code o Codex pueden manejar el mismo espacio de trabajo por MCP.",
   mentora:
