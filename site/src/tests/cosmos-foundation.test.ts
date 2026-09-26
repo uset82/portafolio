@@ -62,3 +62,32 @@ test("Cosmos keeps a cardless responsive atlas with touch and reduced-motion saf
   assert.match(styles, /@media \(prefers-reduced-motion: reduce\)/);
   assert.doesNotMatch(page, /PageIntro|RecoveryState/);
 });
+
+test("Cosmos identity mark stays circular without 3D tilt transforms", () => {
+  const markComponent = readFileSync(
+    path.join(process.cwd(), "src/components/cosmos-mark.tsx"),
+    "utf8",
+  );
+
+  assert.doesNotMatch(
+    markComponent,
+    /perspective\(/,
+    "Mark must not apply perspective that would squash the circle",
+  );
+  assert.doesNotMatch(
+    markComponent,
+    /rotateX\(/,
+    "Mark must not apply rotateX that would squash the circle",
+  );
+  assert.doesNotMatch(
+    markComponent,
+    /rotateY\(/,
+    "Mark must not apply rotateY that would squash the circle",
+  );
+  assert.match(markComponent, /rotate\(/, "Mark should keep 2D rotation for compass behavior");
+  assert.match(
+    markComponent,
+    /@media \(prefers-reduced-motion: reduce\)|prefers-reduced-motion/,
+    "Mark must respect reduced motion preference",
+  );
+});
