@@ -4812,7 +4812,8 @@ body:has(.observatory-hero) .site-header .site-header__status {
   line-height: 1.75;
 }
 
-.contact-path__github {
+.contact-path__github,
+.contact-path__email {
   display: grid;
   grid-template-columns: 1fr auto;
   min-height: 7rem;
@@ -4821,7 +4822,8 @@ body:has(.observatory-hero) .site-header .site-header__status {
   text-align: left;
 }
 
-.contact-path__github > span:first-child {
+.contact-path__github > span:first-child,
+.contact-path__email > span:first-child {
   display: grid;
   gap: 0.35rem;
   font-family: var(--font-display);
@@ -4829,7 +4831,16 @@ body:has(.observatory-hero) .site-header .site-header__status {
   font-weight: 500;
 }
 
-.contact-path__github small {
+/* An address is one unbroken token, and a long one. It wraps inside the card
+   rather than widening it, and sits a step below the profile name because a
+   machine-readable string does not want display scale. */
+.contact-path__email > span:first-child {
+  font-size: clamp(1.15rem, 2vw, 1.75rem);
+  overflow-wrap: anywhere;
+}
+
+.contact-path__github small,
+.contact-path__email small {
   font-family: var(--font-body);
   font-size: 0.62rem;
   font-weight: 600;
@@ -4837,7 +4848,8 @@ body:has(.observatory-hero) .site-header .site-header__status {
   text-transform: uppercase;
 }
 
-.contact-path__github > span[aria-hidden="true"] {
+.contact-path__github > span[aria-hidden="true"],
+.contact-path__email > span[aria-hidden="true"] {
   font-size: 1.7rem;
 }
 
@@ -4997,7 +5009,8 @@ body:has(.observatory-hero) .site-header .site-header__status {
     width: 100%;
   }
 
-  .contact-path__github {
+  .contact-path__github,
+  .contact-path__email {
     min-height: 6.25rem;
   }
 

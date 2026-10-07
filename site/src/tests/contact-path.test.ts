@@ -20,17 +20,22 @@ test("Contact exposes one verified public profile without inventing a direct con
   assert.match(markup, /The idea is not to have an idea\. It is to see the opportunities\./);
   assert.doesNotMatch(markup, /turn a difficult idea into a working system/);
   assert.match(markup, /Open call, one public route/);
-  assert.match(markup, /One verified profile\. No hidden inbox\./);
+  assert.match(markup, /One verified profile, one published address\./);
   assert.match(markup, /href="https:\/\/github\.com\/uset82"/);
   assert.equal((markup.match(/href="https:\/\/github\.com\/uset82"/g) ?? []).length, 1);
   assert.match(markup, /not as a response-time, availability, employment, or booking promise/);
   assert.equal((markup.match(/<dt>/g) ?? []).length, 4);
-  assert.match(markup, /Public email/);
-  assert.match(markup, /Not published/);
+  assert.match(markup, /<dt><span>01<\/span>Public email<\/dt><dd>Published<\/dd>/);
   assert.match(markup, /href="\/work"/);
   assert.match(markup, /href="\/story"/);
   assert.doesNotMatch(markup, /<(?:form|input|textarea|select|button|address)\b/);
-  assert.doesNotMatch(markup, /(?:mailto:|tel:|street address|phone number)/i);
+
+  /* One address is published on purpose; see docs/content/public-email-approval.md.
+     This guard narrows rather than lifts: exactly one mailto may appear, it must be
+     the approved address, and every other direct-contact value stays forbidden. */
+  assert.equal((markup.match(/mailto:/g) ?? []).length, 1);
+  assert.match(markup, /href="mailto:carlos@carloscarpio\.dev"/);
+  assert.doesNotMatch(markup, /(?:tel:|street address|phone number)/i);
 });
 
 test("Contact makes the OpenEyes offer through public GitHub issues, not an inbox", () => {
@@ -59,7 +64,15 @@ test("Contact makes the OpenEyes offer through public GitHub issues, not an inbo
   // The boundary rows stay honest now that one availability claim exists.
   assert.match(markup, /One open role, stated/);
   assert.doesNotMatch(markup, /<(?:form|input|textarea|select|button|address)\b/);
-  assert.doesNotMatch(markup, /(?:mailto:|tel:)/i);
+
+  /* The published address is a route in the channel section. The open call has to
+     keep landing on public issues, so no inbox may appear inside it. */
+  const callSection = markup.slice(
+    markup.indexOf("contact-path__call"),
+    markup.indexOf("contact-path__channel"),
+  );
+  assert.doesNotMatch(callSection, /mailto:/i);
+  assert.doesNotMatch(markup, /tel:/i);
 });
 
 test("Contact keeps a cardless responsive hierarchy with touch and reduced-motion safeguards", () => {
@@ -94,7 +107,7 @@ test("Contact renders the 3D emblem over a monogram poster that survives without
   assert.match(markup, /class="ca2m-poster contact-path__signal-poster"/);
   assert.doesNotMatch(markup, />CC</);
   assert.match(markup, /SIGNAL \/ PRIVACY FIRST/i);
-  assert.match(markup, /One verified public channel/);
+  assert.match(markup, /Two public routes, no form/);
   assert.doesNotMatch(markup, /<canvas/i);
   assert.doesNotMatch(markup, /contact-path__signal--emblem/);
 

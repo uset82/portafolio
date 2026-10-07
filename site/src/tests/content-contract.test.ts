@@ -128,9 +128,18 @@ test("footer contact content exposes only the approved privacy-safe paths", () =
   assert.equal(footer.secondaryAction.href, "https://github.com/uset82");
   assert.equal(footer.secondaryAction.external, true);
   assert.ok(footer.sourceIds.includes("approved-public-profile"));
+
+  /* The one approved direct-contact value, traced back to its approval record. */
+  assert.equal(footer.contactAction?.href, "mailto:carlos@carloscarpio.dev");
+  assert.equal(footer.contactAction?.kind, "contact");
+  assert.equal(footer.contactAction?.external, false);
+  assert.ok(footer.sourceIds.includes("approved-public-email"));
+
+  /* Publishing one domain address did not open the gate: a personal-provider
+     address, a phone number, or a booking promise is still a regression. */
   assert.doesNotMatch(
     JSON.stringify(footer),
-    /(?:mailto:|@(?:gmail|outlook|protonmail)|phone|street address|available for hire|book a call)/i,
+    /(?:@(?:gmail|outlook|protonmail)|phone|street address|available for hire|book a call)/i,
   );
 });
 

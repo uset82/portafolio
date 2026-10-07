@@ -31,6 +31,17 @@ export const rawSiteContent = {
       checkedOn: "2026-07-19",
     },
     {
+      id: "approved-public-email",
+      label: "Carlos-approved public email address",
+      kind: "user-approval",
+      owner: "Carlos Carpio",
+      public: true,
+      path: "../docs/content/public-email-approval.md",
+      checkedOn: "2026-10-07",
+      notes:
+        "Approved publishing carlos@carloscarpio.dev on the contact route in both locales, reversing the earlier no-public-email position. No form, no collection, and no response-time or booking promise attached.",
+    },
+    {
       id: "approved-public-profile",
       label: "Carlos-approved public profile and biography",
       kind: "user-approval",
@@ -289,7 +300,7 @@ export const rawSiteContent = {
        */
       heading: "Let’s see what’s already there, and make it work.",
       description:
-        "The contact route stays privacy-first: no public email and no form, and an open call in their place.",
+        "The contact route stays privacy-first: one published address, no form, and an open call beside them.",
       status: "Open call, one public route",
       primaryAction: {
         id: "footer-visit-contact",
@@ -309,8 +320,28 @@ export const rawSiteContent = {
         sourceIds: ["approved-public-profile", "github-uset82"],
         external: true,
       },
+      /**
+       * `external: false` because a mailto link does not leave for another
+       * site; it hands the address to whatever mail client the visitor already
+       * uses. Marking it external would promise a destination page that the
+       * link never opens.
+       */
+      contactAction: {
+        id: "footer-email-carlos",
+        label: "carlos@carloscarpio.dev",
+        href: "mailto:carlos@carloscarpio.dev",
+        kind: "contact",
+        verification: "user-approved",
+        sourceIds: ["approved-public-email"],
+        external: false,
+      },
       verification: "reference-approved",
-      sourceIds: ["approved-public-profile", "github-uset82", "foundation-decision"],
+      sourceIds: [
+        "approved-public-profile",
+        "approved-public-email",
+        "github-uset82",
+        "foundation-decision",
+      ],
     },
     verification: "reference-approved",
     sourceIds: ["approved-main-ui", "approved-design-copy", "approved-public-profile"],
