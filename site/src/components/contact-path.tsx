@@ -97,6 +97,24 @@ export function ContactPath({ content, locale = "en" }: ContactPathProps) {
             <span aria-hidden="true">↗</span>
             <span className="visually-hidden">{ui(locale).common.externalSite}</span>
           </ActionLink>
+
+          {/* Optional in the schema, because the route spent its first year
+              arguing that no address existed. No arrow and no external-site
+              note: a mailto opens whatever mail client the visitor already
+              uses, so it neither navigates nor leaves for another site. */}
+          {content.contactAction ? (
+            <ActionLink
+              className="contact-path__email"
+              variant="secondary"
+              href={content.contactAction.href}
+              prefetch={false}
+            >
+              <span>
+                <small>{copy.publishedAddress}</small>
+                {content.contactAction.label}
+              </span>
+            </ActionLink>
+          ) : null}
         </div>
       </section>
 

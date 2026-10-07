@@ -31,7 +31,7 @@ export const FOOTER_ES = {
   eyebrow: "Contacto / 05",
   heading: "Veamos lo que ya está ahí, y hagámoslo funcionar.",
   description:
-    "La vía de contacto sigue priorizando la privacidad: sin correo público y sin formulario, y una convocatoria abierta en su lugar.",
+    "La vía de contacto sigue priorizando la privacidad: una dirección publicada, sin formulario, y una convocatoria abierta al lado.",
   status: "Convocatoria abierta, una vía pública",
 } as const;
 
