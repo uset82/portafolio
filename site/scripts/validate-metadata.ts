@@ -56,7 +56,9 @@ const routeForOutputFile = (file: string) => {
 const normalizeRoute = (route: string) =>
   route.length > 1 && route.endsWith("/") ? route.slice(0, -1) : route;
 
-const matchAll = (source: string, pattern: string) => [...source.matchAll(new RegExp(pattern, "g"))];
+const matchAll = (source: string, pattern: string) => [
+  ...source.matchAll(new RegExp(pattern, "g")),
+];
 
 const readBuildArtifact = async (relativePath: string, description: string) => {
   try {
@@ -84,7 +86,10 @@ async function validateRobots() {
   const directives = robots.split("\n").map((line) => line.trim());
 
   const sitemapDirective = directives.find((line) => line.startsWith("Sitemap:"));
-  invariant(sitemapDirective, "robots.txt must declare a Sitemap so crawlers can find every route.");
+  invariant(
+    sitemapDirective,
+    "robots.txt must declare a Sitemap so crawlers can find every route.",
+  );
   assertCanonicalOrigin(
     sitemapDirective.slice("Sitemap:".length).trim(),
     "The robots.txt Sitemap declaration",
