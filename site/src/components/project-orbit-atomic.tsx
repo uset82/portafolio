@@ -64,8 +64,10 @@ function railPoint(rail: RailConfig, thetaDegrees: number) {
  * Repo2Agent↔SmartChatbot and ARCADE↔Avatar Studio (equator),
  * StrudelAI↔iFoundYou (upper diagonals), SOUND LAB↔ASTRAEA (lower
  * diagonals). PINÁCULO, the eleventh system, takes the remaining seat on the
- * lower-right diagonal arc, exactly as in the reference composition. Labels
- * hang outward from the centre so none of them cross the instrument.
+ * lower-right diagonal arc, exactly as in the reference composition. KURVA
+ * and PISTOLA are the twelfth and thirteenth, and they take the first free
+ * seat on each diagonal arc that clears the existing nodes. Labels hang
+ * outward from the centre so none of them cross the instrument.
  */
 const ATOMIC_NODES: Record<string, NodeConfig> = {
   "3doodle": {
@@ -155,6 +157,22 @@ const ATOMIC_NODES: Record<string, NodeConfig> = {
     labelX: 500,
     labelY: 560,
     labelAlign: "center",
+  },
+  kurva: {
+    id: "kurva",
+    cx: 530,
+    cy: 390,
+    labelX: 530,
+    labelY: 440,
+    labelAlign: "center",
+  },
+  pistola: {
+    id: "pistola",
+    cx: 731,
+    cy: 351,
+    labelX: 766,
+    labelY: 391,
+    labelAlign: "left",
   },
 };
 

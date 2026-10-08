@@ -108,6 +108,43 @@ test("abuse guard accepts same-origin and local loopback development origins", (
   }
 });
 
+test("abuse guard accepts canonical production origin and reverse-proxy forwarded host", () => {
+  const defaultGuard = createInMemoryCcAiAbuseGuard();
+
+  // Production origin directly on container port
+  const prodReq = new Request("http://0.0.0.0:3000/api/cc-ai", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      origin: "https://carloscarpio.dev",
+      "x-forwarded-host": "carloscarpio.dev",
+      "x-forwarded-proto": "https",
+      "x-real-ip": "203.0.113.195",
+    },
+    body: JSON.stringify({ message: "Question" }),
+  });
+  const lease1 = defaultGuard.acquire(prodReq);
+  assert.ok(lease1);
+  lease1.release();
+
+  // In-app browser (e.g. Messenger / Instagram / Telegram) with cross-site fetch-site
+  const webviewReq = new Request("http://0.0.0.0:3000/api/cc-ai", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      origin: "https://carloscarpio.dev",
+      "sec-fetch-site": "cross-site",
+      "x-forwarded-host": "carloscarpio.dev",
+      "x-forwarded-proto": "https",
+      "x-real-ip": "203.0.113.195",
+    },
+    body: JSON.stringify({ message: "Question" }),
+  });
+  const lease2 = defaultGuard.acquire(webviewReq);
+  assert.ok(lease2);
+  lease2.release();
+});
+
 test("abuse guard applies fixed-window limits to both IP and server session", () => {
   const guard = createInMemoryCcAiAbuseGuard({
     allowedOrigin: origin,

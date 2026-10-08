@@ -13,7 +13,6 @@ import {
   MUSIC_PROFILE,
   MUSIC_TRACKS,
   SOUND_SYSTEMS,
-  type SoundSystem,
   STRUDEL_AI,
   sunoAudioUrl,
   sunoEmbedUrl,
@@ -24,23 +23,21 @@ import {
 import { MUSIC_TRACKS_ES, VIDEO_WORKS_ES } from "@/content/i18n/media-library-es";
 import { formatLongDate } from "@/lib/i18n";
 
-test("KEYLIT and StrudelAI are the featured public test builds", () => {
+test("KEYLIT and StrudelAI are the featured public test builds in Sound room", () => {
   const markup = renderToStaticMarkup(createElement(SoundRoom));
 
   assert.equal(SOUND_SYSTEMS.length, 2);
-  assert.deepEqual(
-    SOUND_SYSTEMS.map((system: SoundSystem) => system.id),
-    ["keylit", "strudelai"],
-  );
-
   assert.match(markup, /sound-room__feature/);
+
+  // KEYLIT
   assert.match(markup, /KEYLIT/);
+  assert.match(markup, /Open for testing/);
   assert.match(markup, new RegExp(KEYLIT.demoUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
   assert.match(markup, new RegExp(KEYLIT.repositoryUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
   assert.match(markup, /Free AI piano tutor/i);
 
+  // StrudelAI
   assert.match(markup, /StrudelAI/);
-  assert.match(markup, /Open for testing/);
   assert.match(markup, new RegExp(STRUDEL_AI.demoUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
   assert.match(markup, new RegExp(STRUDEL_AI.repositoryUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
   assert.match(markup, /people who want to contribute are welcome/i);

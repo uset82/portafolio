@@ -36,6 +36,14 @@ const ORBIT_ES: Record<string, { description: string; category: string }> = {
     description: "Patrones de música generativa escritos como código en vivo.",
     category: "Música",
   },
+  kurva: {
+    description: "Un lienzo de diseño local de la imagen al SVG por capas y Blender.",
+    category: "Diseño",
+  },
+  pistola: {
+    description: "Di el objeto y obtén una escena 3D editable y geometría CAD.",
+    category: "Diseño",
+  },
   "3doodle": {
     description: "Dibuja en tres dimensiones directamente en el navegador.",
     category: "Creativo",

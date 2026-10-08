@@ -54,6 +54,8 @@ test("current public ledger exposes only approved profile and contact facts", ()
       "public-observatory-frame",
       "public-strudelai-test",
       "public-cosmos-apps",
+      "project-kurva",
+      "project-pistola",
     ],
   );
   assert.deepEqual(
@@ -67,6 +69,10 @@ test("current public ledger exposes only approved profile and contact facts", ()
       "public-astraea-demo",
       "github-pinaculo",
       "public-pinaculo-demo",
+      "github-kurva",
+      "public-kurva-site",
+      "github-pistola",
+      "public-pistola-editor",
     ],
   );
   assert.match(
@@ -77,7 +83,11 @@ test("current public ledger exposes only approved profile and contact facts", ()
   assert.doesNotMatch(context.systemMessage, /private résumé/);
   assert.match(context.systemMessage, /StrudelAI is a public live-coding music system/);
   assert.match(context.systemMessage, /Pináculo is a public numerology repository/);
-  assert.doesNotMatch(context.systemMessage, /Status: prototype/);
+  /* `baseContent` is the raw approved record: ASTROEA and Pináculo are still
+   * unpublished there, so no status may leak for them. Kurva and Pistola are
+   * published evidence projects and are expected to carry their own status. */
+  assert.doesNotMatch(context.systemMessage, /"title": "ASTROEA"/);
+  assert.doesNotMatch(context.systemMessage, /Status: prototype[^"]*"[^"]*ASTROEA/);
 });
 
 test("builder includes only approved public records with traceable source IDs", () => {
@@ -92,6 +102,8 @@ test("builder includes only approved public records with traceable source IDs", 
       "public-strudelai-test",
       "public-cosmos-apps",
       "project-astraea",
+      "project-kurva",
+      "project-pistola",
     ],
   );
   assert.deepEqual(
@@ -106,6 +118,10 @@ test("builder includes only approved public records with traceable source IDs", 
       "github-pinaculo",
       "public-pinaculo-demo",
       "public-portfolio-source",
+      "github-kurva",
+      "public-kurva-site",
+      "github-pistola",
+      "public-pistola-editor",
     ],
   );
   assert.match(context.systemMessage, /\[source-id\]/);
@@ -131,6 +147,8 @@ test("a record with any private source dependency is excluded", () => {
       "public-observatory-frame",
       "public-strudelai-test",
       "public-cosmos-apps",
+      "project-kurva",
+      "project-pistola",
     ],
   );
   assert.doesNotMatch(context.systemMessage, /approved-main-ui|mainUI/);
@@ -195,7 +213,7 @@ test("service sends the bounded context first and returns its public source meta
   );
 
   assert.deepEqual(response.knowledge, {
-    records: 6,
+    records: 8,
     sourceIds: [
       "approved-public-profile",
       "github-uset82",
@@ -206,6 +224,10 @@ test("service sends the bounded context first and returns its public source meta
       "github-pinaculo",
       "public-pinaculo-demo",
       "public-portfolio-source",
+      "github-kurva",
+      "public-kurva-site",
+      "github-pistola",
+      "public-pistola-editor",
     ],
     truncated: false,
   });

@@ -30,14 +30,14 @@ test("every public repository is classified into exactly one Work group", () => 
     group.repositories.map((repository) => repository.name),
   );
 
-  assert.equal(GITHUB_REGISTER_META.count, 62);
-  assert.equal(GITHUB_REGISTER.length, 62);
-  assert.equal(groupedNames.length, 62);
+  assert.equal(GITHUB_REGISTER_META.count, 64);
+  assert.equal(GITHUB_REGISTER.length, 64);
+  assert.equal(groupedNames.length, 64);
   assert.deepEqual(
     [...groupedNames].sort(),
     [...GITHUB_REGISTER.map((repository) => repository.name)].sort(),
   );
-  assert.equal(new Set(groupedNames).size, 62);
+  assert.equal(new Set(groupedNames).size, 64);
   assert.deepEqual(
     GITHUB_REGISTER_GROUPS.map((group) => group.id),
     [
@@ -63,8 +63,8 @@ test("project register renders grouped public repositories as ordered, linkable 
 
   assert.match(markup, /<main id="main-content" class="work-index">/);
   assert.match(markup, /aria-label="Work groups"/);
-  assert.equal(GITHUB_REGISTER_META.count, 62);
-  assert.equal((markup.match(/class="project-register__row"/g) ?? []).length, 62);
+  assert.equal(GITHUB_REGISTER_META.count, 64);
+  assert.equal((markup.match(/class="project-register__row"/g) ?? []).length, 64);
   assert.equal((markup.match(/class="project-register__group"/g) ?? []).length, 13);
 
   for (const group of GITHUB_REGISTER_GROUPS) {
@@ -281,8 +281,11 @@ test("work search keeps every row in the DOM and hides non-matches", () => {
   const astroIds = matchingWorkIds(GITHUB_REGISTER_GROUPS, "astro", "all");
   const playableIds = matchingWorkIds(GITHUB_REGISTER_GROUPS, "", "playable");
 
-  assert.equal((astro.match(/class="project-register__row"/g) ?? []).length, 62);
-  assert.equal((astro.match(/class="project-register__row"[^>]*hidden/g) ?? []).length, 60);
+  assert.equal((astro.match(/class="project-register__row"/g) ?? []).length, 64);
+  assert.equal(
+    (astro.match(/class="project-register__row"[^>]*hidden/g) ?? []).length,
+    64 - astroIds.size,
+  );
   assert.match(astro, /href="https:\/\/astraia\.netlify\.app\/"/);
   assert.match(astro, /href="https:\/\/pinaculo\.netlify\.app\/"/);
   assert.match(astro, />Try ASTROEA</);
@@ -290,12 +293,12 @@ test("work search keeps every row in the DOM and hides non-matches", () => {
   assert.equal(astroIds.size, 2);
   assert.equal(
     (playable.match(/class="project-register__row"[^>]*hidden/g) ?? []).length,
-    62 - playableIds.size,
+    64 - playableIds.size,
   );
   assert.match(playable, /aria-pressed="true">Playable</);
   assert.match(empty, /No public repositories match/);
   assert.match(empty, /Clear the search to see the full register/);
-  assert.equal((empty.match(/class="project-register__row"[^>]*hidden/g) ?? []).length, 62);
+  assert.equal((empty.match(/class="project-register__row"[^>]*hidden/g) ?? []).length, 64);
 });
 
 test("project register is readable without animation and keeps focus, touch, and mobile contracts", () => {

@@ -9,7 +9,7 @@ const siteContent = siteContentSchema.parse(rawSiteContent);
 export const metadata: Metadata = {
   title: "Contacto",
   description:
-    "La vía de contacto de Carlos Alfredo Carpio Meza, con la privacidad por delante: un perfil público verificado de GitHub y ningún dato de contacto directo sin aprobar.",
+    "La vía de contacto de Carlos Alfredo Carpio Meza, con la privacidad por delante: un perfil público verificado de GitHub, una dirección publicada y ningún formulario.",
   alternates: { canonical: "/es/contact", languages: { en: "/contact", es: "/es/contact" } },
 };
 

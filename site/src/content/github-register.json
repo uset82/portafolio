@@ -1,9 +1,35 @@
 {
   "source": "github.com/uset82",
-  "checkedOn": "2026-08-16",
+  "checkedOn": "2026-09-25",
   "visibility": "public-only",
-  "count": 62,
+  "count": 64,
   "repositories": [
+    {
+      "name": "blenderSVG",
+      "description": "",
+      "fork": false,
+      "archived": false,
+      "language": "TypeScript",
+      "url": "https://github.com/uset82/blenderSVG",
+      "homepageUrl": "https://kurva.agency/",
+      "license": "mit",
+      "licenseName": "MIT License",
+      "createdAt": "2026-09-23",
+      "pushedAt": "2026-09-25"
+    },
+    {
+      "name": "Pistola",
+      "description": "",
+      "fork": false,
+      "archived": false,
+      "language": "TypeScript",
+      "url": "https://github.com/uset82/Pistola",
+      "homepageUrl": "https://pistola.canner.app/",
+      "license": "",
+      "licenseName": "",
+      "createdAt": "2026-09-17",
+      "pushedAt": "2026-09-23"
+    },
     {
       "name": "portafolio",
       "description": "",

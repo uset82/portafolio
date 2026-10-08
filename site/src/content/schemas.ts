@@ -1296,11 +1296,37 @@ export const contactFooterSchema = z
     status: z.string().min(8).max(60),
     primaryAction: linkSchema,
     secondaryAction: linkSchema,
+    /**
+     * Optional because the route argued for years that no address existed, and
+     * the schema should keep describing a footer that publishes none.
+     */
+    contactAction: linkSchema.optional(),
     verification: z.literal("reference-approved"),
     sourceIds: z.array(idSchema).min(1),
   })
   .strict()
   .superRefine((footer, context) => {
+    /* A published address is the one direct-contact value this site carries, so
+       it may only ever be a mailto link declared as such. Anything else here
+       would be a booking route wearing the contact slot's name. */
+    if (footer.contactAction) {
+      if (!footer.contactAction.href.startsWith("mailto:")) {
+        context.addIssue({
+          code: "custom",
+          path: ["contactAction", "href"],
+          message: "Footer contact action must be a mailto link",
+        });
+      }
+
+      if (footer.contactAction.kind !== "contact") {
+        context.addIssue({
+          code: "custom",
+          path: ["contactAction", "kind"],
+          message: "Footer contact action must be declared as a contact route",
+        });
+      }
+    }
+
     if (footer.primaryAction.external || footer.primaryAction.href !== "/contact") {
       context.addIssue({
         code: "custom",

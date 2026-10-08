@@ -13,9 +13,9 @@ import {
 test("approved display records satisfy the site content contract", () => {
   const content = siteContentSchema.parse(rawSiteContent);
 
-  assert.equal(content.projects.length, 3);
+  assert.equal(content.projects.length, 5);
   assert.equal(content.mediaWorks.length, 0);
-  const [astraea, pinaculo, futureEnergy] = content.projects;
+  const [astraea, pinaculo, futureEnergy, kurva, pistola] = content.projects;
   assert.equal(astraea?.title, "ASTROEA");
   assert.equal(astraea?.publication, "ready");
   assert.equal(astraea?.status, "prototype");
@@ -24,6 +24,16 @@ test("approved display records satisfy the site content contract", () => {
   assert.equal(futureEnergy?.slug, "future-energy");
   assert.equal(futureEnergy?.status, "concept");
   assert.equal(futureEnergy?.publication, "hold");
+  // The two Design and web case studies, added as evidence projects rather
+  // than concepts: each carries real links, a contribution and an approach.
+  assert.equal(kurva?.slug, "kurva");
+  assert.equal(kurva?.status, "prototype");
+  assert.equal(kurva?.publication, "ready");
+  assert.equal(kurva?.rights, "owned");
+  assert.equal(pistola?.slug, "pistola");
+  assert.equal(pistola?.status, "prototype");
+  assert.equal(pistola?.publication, "ready");
+  assert.equal(pistola?.rights, "owned");
 });
 
 test("homepage identity content stays focused and approval-backed", () => {
@@ -118,9 +128,18 @@ test("footer contact content exposes only the approved privacy-safe paths", () =
   assert.equal(footer.secondaryAction.href, "https://github.com/uset82");
   assert.equal(footer.secondaryAction.external, true);
   assert.ok(footer.sourceIds.includes("approved-public-profile"));
+
+  /* The one approved direct-contact value, traced back to its approval record. */
+  assert.equal(footer.contactAction?.href, "mailto:carlos@carloscarpio.dev");
+  assert.equal(footer.contactAction?.kind, "contact");
+  assert.equal(footer.contactAction?.external, false);
+  assert.ok(footer.sourceIds.includes("approved-public-email"));
+
+  /* Publishing one domain address did not open the gate: a personal-provider
+     address, a phone number, or a booking promise is still a regression. */
   assert.doesNotMatch(
     JSON.stringify(footer),
-    /(?:mailto:|@(?:gmail|outlook|protonmail)|phone|street address|available for hire|book a call)/i,
+    /(?:@(?:gmail|outlook|protonmail)|phone|street address|available for hire|book a call)/i,
   );
 });
 
