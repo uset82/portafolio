@@ -9,8 +9,8 @@ import { useEffect, useRef } from "react";
  * The triangle is the pinnacle, rising from the horizon (ASC–DSC) toward MC.
  * The line below the base is IC / the unpublished side. No zodiac glyphs.
  *
- * Gyroscope / Compass: Rotates dynamically with phone orientation, gravity tilt,
- * touch-drag, and scroll momentum on iOS & Android like a compass.
+ * Compass: Rotates dynamically (2D Z-axis) with phone orientation, touch-drag,
+ * and scroll momentum on iOS & Android like a compass. No 3D tilt on the identity mark.
  */
 const CX = 50;
 const CY = 50;
@@ -53,28 +53,17 @@ export function CosmosMark({ className, enableCompass = true }: CosmosMarkProps)
     let animId: number;
     let currentAngle = 0;
     let targetAngle = 0;
-    let currentTiltX = 0;
-    let targetTiltX = 0;
-    let currentTiltY = 0;
-    let targetTiltY = 0;
     let isTouching = false;
     let hasMotionSource = false;
 
     const updateFrame = () => {
-      // Shortest path interpolation for circular compass angle
       let diff = (targetAngle - currentAngle) % 360;
       if (diff > 180) diff -= 360;
       if (diff < -180) diff += 360;
       currentAngle += diff * 0.1;
 
-      currentTiltX += (targetTiltX - currentTiltX) * 0.1;
-      currentTiltY += (targetTiltY - currentTiltY) * 0.1;
-
       if (dialRef.current) {
         dialRef.current.style.transform = `rotate(${currentAngle.toFixed(2)}deg)`;
-      }
-      if (containerRef.current) {
-        containerRef.current.style.transform = `perspective(600px) rotateX(${currentTiltX.toFixed(2)}deg) rotateY(${currentTiltY.toFixed(2)}deg)`;
       }
 
       animId = requestAnimationFrame(updateFrame);
@@ -90,11 +79,6 @@ export function CosmosMark({ className, enableCompass = true }: CosmosMarkProps)
       } else if (event.alpha !== null && !isNaN(event.alpha)) {
         targetAngle = -event.alpha;
       }
-
-      if (event.beta !== null && event.gamma !== null) {
-        targetTiltX = Math.max(-15, Math.min(15, (event.beta - 45) * 0.3));
-        targetTiltY = Math.max(-15, Math.min(15, event.gamma * 0.3));
-      }
     };
 
     // 2. Device Motion / Gravity Sensor (Fallback for all mobile devices)
@@ -105,11 +89,8 @@ export function CosmosMark({ className, enableCompass = true }: CosmosMarkProps)
         const x = acc.x;
         const y = acc.y;
         if (Math.abs(x) > 0.3 || Math.abs(y) > 0.3) {
-          // Angle of device in hand relative to gravity
           const gravityAngle = Math.atan2(x, y) * (180 / Math.PI);
           targetAngle = -gravityAngle;
-          targetTiltX = Math.max(-15, Math.min(15, (y - 5) * 1.5));
-          targetTiltY = Math.max(-15, Math.min(15, x * 1.5));
         }
       }
     };
@@ -130,13 +111,9 @@ export function CosmosMark({ className, enableCompass = true }: CosmosMarkProps)
       const rect = containerRef.current?.getBoundingClientRect();
       if (!rect) return;
       const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
       const deltaX = (event.clientX - centerX) / (window.innerWidth / 2);
-      const deltaY = (event.clientY - centerY) / (window.innerHeight / 2);
 
       targetAngle = deltaX * 24;
-      targetTiltX = -deltaY * 12;
-      targetTiltY = deltaX * 12;
     };
 
     const handlePointerDown = (event: PointerEvent) => {
