@@ -77,6 +77,11 @@ export const VIDEO_WORKS_ES: Record<string, { description: string; posterAlt: st
     posterAlt:
       "Una mujer de pelo blanco y largo, con un vestido azul grisáceo bordado en la cintura, está entre pinos cargados de nieve y mira por encima del hombro desnudo. Una luna llena asoma entre las ramas sobre ella. El encuadre es vertical y va enmarcado en franjas negras.",
   },
+  "que-vuelvan-vivos": {
+    description: "Vídeo creado con Grokbot y música generada con SunoAI. Tres minutos veintiocho.",
+    posterAlt:
+      "Un grupo de hombres con tocados de plumas, collares de cuentas y pintura corporal avanza por una calle con bastones de madera. En la parte inferior se lee: «¿O justicia sin que otra vida se pierda?»",
+  },
 };
 
 /** Returns the video with its prose in `locale`. Titles and URLs never change. */

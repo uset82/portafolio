@@ -168,7 +168,12 @@ test("only the media Carlos sent is shelved", () => {
   );
   assert.deepEqual(
     VIDEO_WORKS.map((work) => work.id),
-    ["hedra-seedance-2-5", "the-second-flood", "stillness-frequency-perfect-place"],
+    [
+      "hedra-seedance-2-5",
+      "the-second-flood",
+      "stillness-frequency-perfect-place",
+      "que-vuelvan-vivos",
+    ],
   );
 });
 

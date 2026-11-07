@@ -123,6 +123,21 @@ export const VIDEO_WORKS: readonly VideoWork[] = [
       height: 720,
     },
   },
+  {
+    id: "que-vuelvan-vivos",
+    title: "Que vuelvan Vivos",
+    url: "https://www.youtube.com/watch?v=cjirXskHKT8",
+    videoId: "cjirXskHKT8",
+    publishedOn: "2026-10-24",
+    description:
+      "Video created with Grokbot and music generated with SunoAI. Three minutes twenty-eight.",
+    poster: {
+      src: "/images/que-vuelvan-vivos-poster.jpg",
+      alt: "A group of men wearing feathered headdresses, beaded necklaces and body paint march forward through a street, carrying wooden staffs. A caption at the bottom reads, in Spanish: ¿O justicia sin que otra vida se pierda?",
+      width: 1280,
+      height: 720,
+    },
+  },
 ];
 
 export const MUSIC_PROFILE = {
