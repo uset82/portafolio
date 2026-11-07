@@ -28,6 +28,15 @@ test("The Maya atom film is the lead visual on both Work routes", () => {
     "the film must lead the page, with the link rail below it",
   );
 
+  // The section is visual only on /work. The heading survives for the document
+  // outline and the landmark name, but it is never painted, and the eyebrow,
+  // supporting line and caption are gone.
+  assert.match(component, /className="visually-hidden"/);
+  assert.doesNotMatch(component, /copy\.eyebrow/);
+  assert.doesNotMatch(component, /copy\.line/);
+  assert.doesNotMatch(component, /copy\.caption/);
+  assert.doesNotMatch(component, /<figcaption/);
+
   // The still is the server-rendered first paint and the no-JS view.
   assert.match(component, /<Image/);
   assert.match(component, /alt=\{copy\.alt\}/);

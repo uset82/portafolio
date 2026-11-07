@@ -90,11 +90,8 @@ const EN = {
     allSystems: "All systems",
   },
   atomFilm: {
-    eyebrow: "Project Orbit / Maya edition",
     title: "The atom, rebuilt in Maya.",
-    line: "A ten-second loop of the CA²M atom: project medallions travelling their orbits, bearings gliding along the rails, and a nucleus turning in depth.",
     alt: "Front view of the CA²M atom: four brass orbital rings, project medallions and a gold CA²M monogram at the centre, lit against a dark background.",
-    caption: "Rendered study · Maya / Arnold · ten-second seamless loop",
     play: "Play the ten-second atom film",
   },
   laboratory: {
@@ -505,11 +502,8 @@ const ES: UiCopy = {
     allSystems: "Todos los sistemas",
   },
   atomFilm: {
-    eyebrow: "Project Orbit / edición Maya",
     title: "El átomo, reconstruido en Maya.",
-    line: "Un bucle de diez segundos del átomo CA²M: los medallones recorren sus órbitas, los rodamientos se deslizan por los rieles y el núcleo gira en profundidad.",
     alt: "Vista frontal del átomo CA²M: cuatro anillos orbitales de latón, medallones de proyectos y un monograma CA²M dorado en el centro, iluminado sobre un fondo oscuro.",
-    caption: "Estudio renderizado · Maya / Arnold · bucle continuo de diez segundos",
     play: "Reproducir la película del átomo (10 s)",
   },
   laboratory: {

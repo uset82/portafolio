@@ -134,13 +134,12 @@ export function Ca2mAtomFilm({ locale = "en" }: Ca2mAtomFilmProps) {
 
   return (
     <section className="ca2m-atom-film" aria-labelledby="ca2m-atom-film-title">
-      <header className="ca2m-atom-film__head">
-        <p className="ca2m-atom-film__eyebrow">{copy.eyebrow}</p>
-        <h2 id="ca2m-atom-film-title" className="ca2m-atom-film__title">
-          {copy.title}
-        </h2>
-        <p className="ca2m-atom-film__line">{copy.line}</p>
-      </header>
+      {/* The heading stays in the document so the section keeps a landmark name
+       * and an outline entry, but it is no longer painted: on /work the atom
+       * speaks for itself. */}
+      <h2 id="ca2m-atom-film-title" className="visually-hidden">
+        {copy.title}
+      </h2>
 
       <figure className="ca2m-atom-film__figure">
         <div className="ca2m-atom-film__frame">
@@ -172,7 +171,6 @@ export function Ca2mAtomFilm({ locale = "en" }: Ca2mAtomFilmProps) {
             </button>
           ) : null}
         </div>
-        <figcaption className="ca2m-atom-film__caption">{copy.caption}</figcaption>
       </figure>
     </section>
   );
