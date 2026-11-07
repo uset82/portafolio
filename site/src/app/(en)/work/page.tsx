@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { Ca2mAtomFilm } from "@/components/ca2m-atom-film";
 import { ProjectOrbit } from "@/components/project-orbit";
 import { ProjectRegister } from "@/components/project-register";
 import { ORBIT_PROJECTS } from "@/content/project-orbit";
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 export default function WorkPage() {
   return (
     <>
+      <Ca2mAtomFilm />
       <ProjectOrbit projects={ORBIT_PROJECTS} />
       <ProjectRegister />
     </>
