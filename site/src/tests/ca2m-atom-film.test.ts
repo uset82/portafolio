@@ -16,9 +16,16 @@ test("The Maya atom film is the lead visual on both Work routes", () => {
   assert.match(component, /^"use client";/);
   assert.match(englishWork, /<Ca2mAtomFilm \/>/);
   assert.match(spanishWork, /<Ca2mAtomFilm locale="es" \/>/);
+
+  // /work must show exactly ONE atom. The Maya film owns it; the interactive
+  // instrument is gone, and only a link rail remains to reach the projects.
+  assert.doesNotMatch(englishWork, /<ProjectOrbit/);
+  assert.doesNotMatch(spanishWork, /<ProjectOrbit/);
+  assert.match(englishWork, /<ProjectSystemsNav \/>/);
+  assert.match(spanishWork, /<ProjectSystemsNav locale="es" \/>/);
   assert.ok(
-    englishWork.indexOf("<Ca2mAtomFilm") < englishWork.indexOf("<ProjectOrbit"),
-    "the exported film must come before the interactive instrument",
+    englishWork.indexOf("<Ca2mAtomFilm") < englishWork.indexOf("<ProjectSystemsNav"),
+    "the film must lead the page, with the link rail below it",
   );
 
   // The still is the server-rendered first paint and the no-JS view.
@@ -42,7 +49,7 @@ test("The Maya atom film is the lead visual on both Work routes", () => {
   assert.match(component, /onClick=\{play\}/);
 
   assert.match(styles, /\.ca2m-atom-film__video\[data-visible="true"\]/);
-  assert.match(styles, /\.ca2m-atom-film \+ \.project-orbit-section/);
+  assert.match(styles, /\.project-systems__link/);
 });
 
 test("The Maya atom film ships local, size-bounded media and translated copy", () => {

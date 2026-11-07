@@ -11521,11 +11521,73 @@ body:has(.observatory-hero) .site-header .site-header__status {
   letter-spacing: 0.04em;
 }
 
-/* The orbit's negative top margin exists to tuck it under the Observatory hero.
- * On /work the film owns the top of the page, so that overlap would pull the
- * instrument up into the film's caption. */
-.ca2m-atom-film + .project-orbit-section {
-  margin-top: 0;
+/* The interactive Project Orbit instrument was replaced on /work by the Maya
+ * atom film, so the page shows exactly one atom. This rail keeps every
+ * "Selected System" reachable without drawing a second one. */
+.project-systems {
+  width: min(100%, var(--page-max));
+  margin-inline: auto;
+  padding: 2.75rem var(--page-gutter) 3.25rem;
+  text-align: center;
+}
+
+.project-systems__eyebrow {
+  margin: 0 0 1.25rem;
+  color: var(--color-text-secondary);
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.project-systems__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.625rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-systems__link {
+  display: inline-flex;
+  min-height: 2.2rem;
+  align-items: center;
+  padding: 0.5rem 0.875rem;
+  border: 1px solid color-mix(in srgb, var(--color-walnut) 28%, transparent);
+  border-radius: 999px;
+  color: var(--color-text-secondary);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition:
+    border-color var(--duration-fast) var(--ease-standard),
+    background-color var(--duration-fast) var(--ease-standard),
+    color var(--duration-fast) var(--ease-standard);
+}
+
+.project-systems__link:hover,
+.project-systems__link:focus-visible {
+  border-color: var(--orbit-bronze);
+  background: transparent;
+  color: var(--color-deep-espresso);
+}
+
+@media (max-width: 47.99rem) {
+  .project-systems {
+    padding-top: 2rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .project-systems__list {
+    gap: 0.4rem;
+  }
+
+  .project-systems__link {
+    min-height: 2.35rem;
+    padding-inline: 0.6875rem;
+    font-size: 0.625rem;
+  }
 }
 
 @media (max-width: 47.99rem) {

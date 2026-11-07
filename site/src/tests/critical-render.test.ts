@@ -57,10 +57,20 @@ test("the recovery state keeps 404 visitors oriented with two known routes", () 
   assert.match(markup, /Nothing is lost/);
 });
 
-test("the Work route features Project Orbit and lists the public GitHub register", () => {
+test("the Work route leads with the Maya atom film and lists the public GitHub register", () => {
   const markup = renderToStaticMarkup(createElement(WorkPage));
 
-  assert.match(markup, /class="project-orbit-section"/);
+  // Exactly one atom: the exported film, never the interactive instrument.
+  assert.match(markup, /class="ca2m-atom-film"/);
+  assert.doesNotMatch(markup, /class="project-orbit-section"/);
+  assert.doesNotMatch(markup, /project-orbit__instrument/);
+  assert.match(markup, /class="project-systems"/);
+
+  // The link rail must keep every destination the immersive gate asserts on.
+  ["/work/astraea", "/work/pinaculo", "/work/future-energy", "/laboratory"].forEach((href) =>
+    assert.match(markup, new RegExp(`href="${href}"`)),
+  );
+
   assert.match(markup, /Work from 2022 to now/);
   assert.match(markup, /role="search"/);
   assert.match(markup, /Project, game, or astro/);
