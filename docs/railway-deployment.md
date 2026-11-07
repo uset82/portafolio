@@ -39,3 +39,9 @@ The homepage video and poster are under `site/public/videos/robot-water-sequence
 Treat the first successful Railway deployment as a preview, not an authorized production launch. Complete the hosted route, media, accessibility, metadata, security-header, caching, and failure-path checks in `maintaskplan.md` before production approval.
 
 If a later preview regresses, use the service deployment history to redeploy the last verified successful deployment. Record its deployment ID and public URL in the task-plan evidence before calling the rollback path tested.
+
+## Build failures inside the image
+
+`next build` in Next.js 16 uses Turbopack by default. Turbopack allocates compiler memory outside the V8 heap, so `NODE_OPTIONS=--max-old-space-size=3072` and `experimental.cpus: 1` in `site/next.config.ts` do not bound it. On a memory-limited image builder the step is OOM-killed (exit 137) with no error message, and the previous deployment stays live.
+
+The Dockerfile therefore pins the image build to `pnpm build --webpack`, which honours both limits. Keep that flag when upgrading Next.js, and keep the default `pnpm build` for local and GitHub Actions builds. A silent "Build image" failure means the builder ran out of resources, not that the commit's content is broken: check the GitHub Actions verification run for the same commit first, then use **Deploy Latest Commit** to retry.

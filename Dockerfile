@@ -18,7 +18,12 @@ COPY site/ ./
 ARG NEXT_PUBLIC_SITE_URL
 ENV NEXT_PUBLIC_SITE_URL="${NEXT_PUBLIC_SITE_URL}"
 
-RUN pnpm build
+# Next 16 defaults `next build` to Turbopack. Its native compiler allocates
+# outside the V8 heap, so the 3 GB cap and the single-worker throttle in
+# site/next.config.ts do not bound it; Railway's image builder OOM-kills the
+# step with no error output and keeps the previous deployment live. Webpack
+# stays inside the capped heap and honours that throttle.
+RUN pnpm build --webpack
 RUN pnpm prune --prod
 
 FROM node:22-bookworm-slim AS runtime
